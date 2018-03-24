@@ -1,0 +1,11 @@
+xSDR6000/Embedded/* linguist-vendored
+xSDR6000/Documentation/* linguist-vendored
+xLib6000.framework/* linguist-vendored
+AudioLibrary.framework/* linguist-vendored
+XCGLogger.framework/* linguist-vendored
+ObjcExceptionBridging.framework/* linguist-vendored
+SwiftyUserDefaults.framework/* linguist-vendored
+OpusOSX.framework/* linguist-vendored
+
+
+
