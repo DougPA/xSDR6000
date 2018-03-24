@@ -5,8 +5,7 @@
 Builds on macOS 10.13.1 using XCode 9.2 using Swift 4 with a Deployment
 Target of macOS 10.11
 
-The Metal branch is the only current branch. It REQUIRES a Mac that is comaptible
-with Metal.
+There is now only one Branch (master), it REQUIRES Metal.
 
 ==========================================================================
 
