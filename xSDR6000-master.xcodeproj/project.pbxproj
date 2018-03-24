@@ -7,20 +7,169 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		913F7EC52066DBBE00F35E9B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7EC42066DBBE00F35E9B /* AppDelegate.swift */; };
-		913F7EC72066DBBE00F35E9B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7EC62066DBBE00F35E9B /* ViewController.swift */; };
-		913F7EC92066DBBE00F35E9B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 913F7EC82066DBBE00F35E9B /* Assets.xcassets */; };
-		913F7ECC2066DBBE00F35E9B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 913F7ECA2066DBBE00F35E9B /* Main.storyboard */; };
+		913F7F2A2066DC7A00F35E9B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 913F7ED52066DC7900F35E9B /* Assets.xcassets */; };
+		913F7F2B2066DC7A00F35E9B /* Preferences.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 913F7ED72066DC7900F35E9B /* Preferences.storyboard */; };
+		913F7F2C2066DC7A00F35E9B /* Panafall.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 913F7ED92066DC7900F35E9B /* Panafall.storyboard */; };
+		913F7F2D2066DC7A00F35E9B /* Side.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 913F7EDB2066DC7900F35E9B /* Side.storyboard */; };
+		913F7F2E2066DC7A00F35E9B /* RadioPicker.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 913F7EDD2066DC7900F35E9B /* RadioPicker.storyboard */; };
+		913F7F2F2066DC7A00F35E9B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 913F7EDF2066DC7900F35E9B /* Main.storyboard */; };
+		913F7F302066DC7A00F35E9B /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7EE32066DC7900F35E9B /* Keychain.swift */; };
+		913F7F312066DC7A00F35E9B /* JWTDecode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7EE52066DC7900F35E9B /* JWTDecode.swift */; };
+		913F7F322066DC7A00F35E9B /* JWT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7EE62066DC7900F35E9B /* JWT.swift */; };
+		913F7F332066DC7A00F35E9B /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7EE72066DC7900F35E9B /* Errors.swift */; };
+		913F7F342066DC7A00F35E9B /* URLSessionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7EE92066DC7900F35E9B /* URLSessionExtension.swift */; };
+		913F7F352066DC7A00F35E9B /* DictionaryExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7EEA2066DC7900F35E9B /* DictionaryExtensions.swift */; };
+		913F7F362066DC7A00F35E9B /* DataExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7EEB2066DC7900F35E9B /* DataExtensions.swift */; };
+		913F7F372066DC7A00F35E9B /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7EEC2066DC7900F35E9B /* StringExtension.swift */; };
+		913F7F382066DC7A00F35E9B /* SwiftyExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7EED2066DC7900F35E9B /* SwiftyExtensions.swift */; };
+		913F7F392066DC7A00F35E9B /* Auth0ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7EEF2066DC7900F35E9B /* Auth0ViewController.swift */; };
+		913F7F3B2066DC7A00F35E9B /* WANRadioPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7EF12066DC7900F35E9B /* WANRadioPickerViewController.swift */; };
+		913F7F3C2066DC7A00F35E9B /* LANRadioPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7EF22066DC7900F35E9B /* LANRadioPickerViewController.swift */; };
+		913F7F3D2066DC7A00F35E9B /* PanafallButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7EF42066DC7900F35E9B /* PanafallButtonView.swift */; };
+		913F7F3E2066DC7A00F35E9B /* PanafallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7EF52066DC7900F35E9B /* PanafallViewController.swift */; };
+		913F7F3F2066DC7A00F35E9B /* PanafallsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7EF62066DC7900F35E9B /* PanafallsViewController.swift */; };
+		913F7F402066DC7A00F35E9B /* PanafallButtonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7EF72066DC7900F35E9B /* PanafallButtonViewController.swift */; };
+		913F7F412066DC7A00F35E9B /* AppExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7EF92066DC7900F35E9B /* AppExtensions.swift */; };
+		913F7F422066DC7A00F35E9B /* Band.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7EFB2066DC7900F35E9B /* Band.swift */; };
+		913F7F432066DC7A00F35E9B /* Defaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 913F7EFC2066DC7900F35E9B /* Defaults.plist */; };
+		913F7F442066DC7A00F35E9B /* BandSegments.plist in Resources */ = {isa = PBXBuildFile; fileRef = 913F7EFD2066DC7900F35E9B /* BandSegments.plist */; };
+		913F7F452066DC7A00F35E9B /* Filters.plist in Resources */ = {isa = PBXBuildFile; fileRef = 913F7EFE2066DC7900F35E9B /* Filters.plist */; };
+		913F7F462066DC7A00F35E9B /* OpusManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7EFF2066DC7900F35E9B /* OpusManager.swift */; };
+		913F7F472066DC7A00F35E9B /* ParameterMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7F002066DC7900F35E9B /* ParameterMonitor.swift */; };
+		913F7F482066DC7A00F35E9B /* ColorsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7F022066DC7900F35E9B /* ColorsViewController.swift */; };
+		913F7F492066DC7A00F35E9B /* PreferencesTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7F032066DC7900F35E9B /* PreferencesTabViewController.swift */; };
+		913F7F4A2066DC7A00F35E9B /* BandButtonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7F052066DC7900F35E9B /* BandButtonViewController.swift */; };
+		913F7F4C2066DC7A00F35E9B /* MainWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7F082066DC7900F35E9B /* MainWindowController.swift */; };
+		913F7F4E2066DC7A00F35E9B /* RadioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7F0A2066DC7900F35E9B /* RadioViewController.swift */; };
+		913F7F4F2066DC7A00F35E9B /* FlagViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7F0C2066DC7A00F35E9B /* FlagViewController.swift */; };
+		913F7F502066DC7A00F35E9B /* DbLegendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7F0D2066DC7A00F35E9B /* DbLegendView.swift */; };
+		913F7F522066DC7A00F35E9B /* PanadapterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7F0F2066DC7A00F35E9B /* PanadapterViewController.swift */; };
+		913F7F532066DC7A00F35E9B /* FrequencyLegendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7F102066DC7A00F35E9B /* FrequencyLegendView.swift */; };
+		913F7F542066DC7A00F35E9B /* PanadapterRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7F112066DC7A00F35E9B /* PanadapterRenderer.swift */; };
+		913F7F572066DC7A00F35E9B /* PanadapterShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 913F7F142066DC7A00F35E9B /* PanadapterShaders.metal */; };
+		913F7F582066DC7A00F35E9B /* SideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7F162066DC7A00F35E9B /* SideViewController.swift */; };
+		913F7F592066DC7A00F35E9B /* RxViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7F172066DC7A00F35E9B /* RxViewController.swift */; };
+		913F7F5A2066DC7A00F35E9B /* EqViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7F182066DC7A00F35E9B /* EqViewController.swift */; };
+		913F7F5B2066DC7A00F35E9B /* PCWViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7F192066DC7A00F35E9B /* PCWViewController.swift */; };
+		913F7F5C2066DC7A00F35E9B /* PhoneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7F1A2066DC7A00F35E9B /* PhoneViewController.swift */; };
+		913F7F5D2066DC7A00F35E9B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7F1B2066DC7A00F35E9B /* AppDelegate.swift */; };
+		913F7F5F2066DC7A00F35E9B /* Grayscale.tex in Resources */ = {isa = PBXBuildFile; fileRef = 913F7F1F2066DC7A00F35E9B /* Grayscale.tex */; };
+		913F7F602066DC7A00F35E9B /* Dark.tex in Resources */ = {isa = PBXBuildFile; fileRef = 913F7F202066DC7A00F35E9B /* Dark.tex */; };
+		913F7F612066DC7A00F35E9B /* Deuteranopia.tex in Resources */ = {isa = PBXBuildFile; fileRef = 913F7F212066DC7A00F35E9B /* Deuteranopia.tex */; };
+		913F7F622066DC7A00F35E9B /* TimeLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7F222066DC7A00F35E9B /* TimeLayer.swift */; };
+		913F7F642066DC7A00F35E9B /* Basic.tex in Resources */ = {isa = PBXBuildFile; fileRef = 913F7F242066DC7A00F35E9B /* Basic.tex */; };
+		913F7F652066DC7A00F35E9B /* Purple.tex in Resources */ = {isa = PBXBuildFile; fileRef = 913F7F252066DC7A00F35E9B /* Purple.tex */; };
+		913F7F662066DC7A00F35E9B /* WaterfallRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7F262066DC7A00F35E9B /* WaterfallRenderer.swift */; };
+		913F7F672066DC7A00F35E9B /* Tritanopia.tex in Resources */ = {isa = PBXBuildFile; fileRef = 913F7F272066DC7A00F35E9B /* Tritanopia.tex */; };
+		913F7F682066DC7A00F35E9B /* WaterfallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7F282066DC7A00F35E9B /* WaterfallViewController.swift */; };
+		913F7F692066DC7A00F35E9B /* WaterfallShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 913F7F292066DC7A00F35E9B /* WaterfallShaders.metal */; };
+		913F7F7E2066E6F600F35E9B /* xLib6000.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 913F7F772066E6F500F35E9B /* xLib6000.framework */; };
+		913F7F7F2066E6F600F35E9B /* xLib6000.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 913F7F772066E6F500F35E9B /* xLib6000.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		913F7F802066E6F600F35E9B /* AudioLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 913F7F792066E6F500F35E9B /* AudioLibrary.framework */; };
+		913F7F812066E6F600F35E9B /* AudioLibrary.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 913F7F792066E6F500F35E9B /* AudioLibrary.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		913F7F822066E6F600F35E9B /* XCGLogger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 913F7F7A2066E6F500F35E9B /* XCGLogger.framework */; };
+		913F7F832066E6F600F35E9B /* XCGLogger.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 913F7F7A2066E6F500F35E9B /* XCGLogger.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		913F7F842066E6F600F35E9B /* SwiftyUserDefaults.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 913F7F7B2066E6F600F35E9B /* SwiftyUserDefaults.framework */; };
+		913F7F852066E6F600F35E9B /* SwiftyUserDefaults.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 913F7F7B2066E6F600F35E9B /* SwiftyUserDefaults.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		913F7F862066E6F600F35E9B /* OpusOSX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 913F7F7C2066E6F600F35E9B /* OpusOSX.framework */; };
+		913F7F872066E6F600F35E9B /* OpusOSX.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 913F7F7C2066E6F600F35E9B /* OpusOSX.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		913F7F882066E6F600F35E9B /* ObjcExceptionBridging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 913F7F7D2066E6F600F35E9B /* ObjcExceptionBridging.framework */; };
+		913F7F892066E6F600F35E9B /* ObjcExceptionBridging.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 913F7F7D2066E6F600F35E9B /* ObjcExceptionBridging.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		913F7F8A2066E6F600F35E9B /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				913F7F7F2066E6F600F35E9B /* xLib6000.framework in Embed Frameworks */,
+				913F7F872066E6F600F35E9B /* OpusOSX.framework in Embed Frameworks */,
+				913F7F892066E6F600F35E9B /* ObjcExceptionBridging.framework in Embed Frameworks */,
+				913F7F852066E6F600F35E9B /* SwiftyUserDefaults.framework in Embed Frameworks */,
+				913F7F812066E6F600F35E9B /* AudioLibrary.framework in Embed Frameworks */,
+				913F7F832066E6F600F35E9B /* XCGLogger.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		913F7EC12066DBBE00F35E9B /* xSDR6000-master.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "xSDR6000-master.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		913F7EC42066DBBE00F35E9B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		913F7EC62066DBBE00F35E9B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		913F7EC82066DBBE00F35E9B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		913F7ECB2066DBBE00F35E9B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		913F7ECD2066DBBE00F35E9B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		913F7EC12066DBBE00F35E9B /* xSDR6000.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = xSDR6000.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		913F7ECE2066DBBE00F35E9B /* xSDR6000_master.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = xSDR6000_master.entitlements; sourceTree = "<group>"; };
+		913F7ED42066DC7800F35E9B /* xSDR6000-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "xSDR6000-Bridging-Header.h"; sourceTree = "<group>"; };
+		913F7ED52066DC7900F35E9B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		913F7ED82066DC7900F35E9B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Preferences.storyboard; sourceTree = "<group>"; };
+		913F7EDA2066DC7900F35E9B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Panafall.storyboard; sourceTree = "<group>"; };
+		913F7EDC2066DC7900F35E9B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Side.storyboard; sourceTree = "<group>"; };
+		913F7EDE2066DC7900F35E9B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = RadioPicker.storyboard; sourceTree = "<group>"; };
+		913F7EE02066DC7900F35E9B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Main.storyboard; sourceTree = "<group>"; };
+		913F7EE32066DC7900F35E9B /* Keychain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
+		913F7EE52066DC7900F35E9B /* JWTDecode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JWTDecode.swift; sourceTree = "<group>"; };
+		913F7EE62066DC7900F35E9B /* JWT.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JWT.swift; sourceTree = "<group>"; };
+		913F7EE72066DC7900F35E9B /* Errors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
+		913F7EE92066DC7900F35E9B /* URLSessionExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLSessionExtension.swift; sourceTree = "<group>"; };
+		913F7EEA2066DC7900F35E9B /* DictionaryExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DictionaryExtensions.swift; sourceTree = "<group>"; };
+		913F7EEB2066DC7900F35E9B /* DataExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataExtensions.swift; sourceTree = "<group>"; };
+		913F7EEC2066DC7900F35E9B /* StringExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
+		913F7EED2066DC7900F35E9B /* SwiftyExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyExtensions.swift; sourceTree = "<group>"; };
+		913F7EEF2066DC7900F35E9B /* Auth0ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Auth0ViewController.swift; sourceTree = "<group>"; };
+		913F7EF12066DC7900F35E9B /* WANRadioPickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WANRadioPickerViewController.swift; sourceTree = "<group>"; };
+		913F7EF22066DC7900F35E9B /* LANRadioPickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LANRadioPickerViewController.swift; sourceTree = "<group>"; };
+		913F7EF42066DC7900F35E9B /* PanafallButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PanafallButtonView.swift; sourceTree = "<group>"; };
+		913F7EF52066DC7900F35E9B /* PanafallViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PanafallViewController.swift; sourceTree = "<group>"; };
+		913F7EF62066DC7900F35E9B /* PanafallsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PanafallsViewController.swift; sourceTree = "<group>"; };
+		913F7EF72066DC7900F35E9B /* PanafallButtonViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PanafallButtonViewController.swift; sourceTree = "<group>"; };
+		913F7EF92066DC7900F35E9B /* AppExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppExtensions.swift; sourceTree = "<group>"; };
+		913F7EFB2066DC7900F35E9B /* Band.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Band.swift; sourceTree = "<group>"; };
+		913F7EFC2066DC7900F35E9B /* Defaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Defaults.plist; sourceTree = "<group>"; };
+		913F7EFD2066DC7900F35E9B /* BandSegments.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = BandSegments.plist; sourceTree = "<group>"; };
+		913F7EFE2066DC7900F35E9B /* Filters.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Filters.plist; sourceTree = "<group>"; };
+		913F7EFF2066DC7900F35E9B /* OpusManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpusManager.swift; sourceTree = "<group>"; };
+		913F7F002066DC7900F35E9B /* ParameterMonitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParameterMonitor.swift; sourceTree = "<group>"; };
+		913F7F022066DC7900F35E9B /* ColorsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorsViewController.swift; sourceTree = "<group>"; };
+		913F7F032066DC7900F35E9B /* PreferencesTabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesTabViewController.swift; sourceTree = "<group>"; };
+		913F7F052066DC7900F35E9B /* BandButtonViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BandButtonViewController.swift; sourceTree = "<group>"; };
+		913F7F062066DC7900F35E9B /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		913F7F082066DC7900F35E9B /* MainWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainWindowController.swift; sourceTree = "<group>"; };
+		913F7F0A2066DC7900F35E9B /* RadioViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RadioViewController.swift; sourceTree = "<group>"; };
+		913F7F0C2066DC7A00F35E9B /* FlagViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlagViewController.swift; sourceTree = "<group>"; };
+		913F7F0D2066DC7A00F35E9B /* DbLegendView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DbLegendView.swift; sourceTree = "<group>"; };
+		913F7F0F2066DC7A00F35E9B /* PanadapterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PanadapterViewController.swift; sourceTree = "<group>"; };
+		913F7F102066DC7A00F35E9B /* FrequencyLegendView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FrequencyLegendView.swift; sourceTree = "<group>"; };
+		913F7F112066DC7A00F35E9B /* PanadapterRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PanadapterRenderer.swift; sourceTree = "<group>"; };
+		913F7F142066DC7A00F35E9B /* PanadapterShaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = PanadapterShaders.metal; sourceTree = "<group>"; };
+		913F7F162066DC7A00F35E9B /* SideViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideViewController.swift; sourceTree = "<group>"; };
+		913F7F172066DC7A00F35E9B /* RxViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxViewController.swift; sourceTree = "<group>"; };
+		913F7F182066DC7A00F35E9B /* EqViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EqViewController.swift; sourceTree = "<group>"; };
+		913F7F192066DC7A00F35E9B /* PCWViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PCWViewController.swift; sourceTree = "<group>"; };
+		913F7F1A2066DC7A00F35E9B /* PhoneViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhoneViewController.swift; sourceTree = "<group>"; };
+		913F7F1B2066DC7A00F35E9B /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		913F7F1F2066DC7A00F35E9B /* Grayscale.tex */ = {isa = PBXFileReference; lastKnownFileType = file; path = Grayscale.tex; sourceTree = "<group>"; };
+		913F7F202066DC7A00F35E9B /* Dark.tex */ = {isa = PBXFileReference; lastKnownFileType = file; path = Dark.tex; sourceTree = "<group>"; };
+		913F7F212066DC7A00F35E9B /* Deuteranopia.tex */ = {isa = PBXFileReference; lastKnownFileType = file; path = Deuteranopia.tex; sourceTree = "<group>"; };
+		913F7F222066DC7A00F35E9B /* TimeLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeLayer.swift; sourceTree = "<group>"; };
+		913F7F242066DC7A00F35E9B /* Basic.tex */ = {isa = PBXFileReference; lastKnownFileType = file; path = Basic.tex; sourceTree = "<group>"; };
+		913F7F252066DC7A00F35E9B /* Purple.tex */ = {isa = PBXFileReference; lastKnownFileType = file; path = Purple.tex; sourceTree = "<group>"; };
+		913F7F262066DC7A00F35E9B /* WaterfallRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaterfallRenderer.swift; sourceTree = "<group>"; };
+		913F7F272066DC7A00F35E9B /* Tritanopia.tex */ = {isa = PBXFileReference; lastKnownFileType = file; path = Tritanopia.tex; sourceTree = "<group>"; };
+		913F7F282066DC7A00F35E9B /* WaterfallViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaterfallViewController.swift; sourceTree = "<group>"; };
+		913F7F292066DC7A00F35E9B /* WaterfallShaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = WaterfallShaders.metal; sourceTree = "<group>"; };
+		913F7F6B2066DD5A00F35E9B /* ObjcExceptionBridging.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ObjcExceptionBridging.framework; sourceTree = "<group>"; };
+		913F7F6C2066DD5A00F35E9B /* AudioLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AudioLibrary.framework; sourceTree = "<group>"; };
+		913F7F6D2066DD5A00F35E9B /* OpusOSX.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OpusOSX.framework; sourceTree = "<group>"; };
+		913F7F6E2066DD5A00F35E9B /* SwiftyUserDefaults.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SwiftyUserDefaults.framework; sourceTree = "<group>"; };
+		913F7F6F2066DD5A00F35E9B /* xLib6000.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = xLib6000.framework; sourceTree = "<group>"; };
+		913F7F702066DD5A00F35E9B /* XCGLogger.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = XCGLogger.framework; sourceTree = "<group>"; };
+		913F7F772066E6F500F35E9B /* xLib6000.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = xLib6000.framework; sourceTree = "<group>"; };
+		913F7F782066E6F500F35E9B /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		913F7F792066E6F500F35E9B /* AudioLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AudioLibrary.framework; sourceTree = "<group>"; };
+		913F7F7A2066E6F500F35E9B /* XCGLogger.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = XCGLogger.framework; sourceTree = "<group>"; };
+		913F7F7B2066E6F600F35E9B /* SwiftyUserDefaults.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SwiftyUserDefaults.framework; sourceTree = "<group>"; };
+		913F7F7C2066E6F600F35E9B /* OpusOSX.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OpusOSX.framework; sourceTree = "<group>"; };
+		913F7F7D2066E6F600F35E9B /* ObjcExceptionBridging.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ObjcExceptionBridging.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -28,6 +177,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				913F7F7E2066E6F600F35E9B /* xLib6000.framework in Frameworks */,
+				913F7F862066E6F600F35E9B /* OpusOSX.framework in Frameworks */,
+				913F7F882066E6F600F35E9B /* ObjcExceptionBridging.framework in Frameworks */,
+				913F7F842066E6F600F35E9B /* SwiftyUserDefaults.framework in Frameworks */,
+				913F7F802066E6F600F35E9B /* AudioLibrary.framework in Frameworks */,
+				913F7F822066E6F600F35E9B /* XCGLogger.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -37,15 +192,23 @@
 		913F7EB82066DBBE00F35E9B = {
 			isa = PBXGroup;
 			children = (
+				913F7F792066E6F500F35E9B /* AudioLibrary.framework */,
+				913F7F7D2066E6F600F35E9B /* ObjcExceptionBridging.framework */,
+				913F7F7C2066E6F600F35E9B /* OpusOSX.framework */,
+				913F7F782066E6F500F35E9B /* README.md */,
+				913F7F7B2066E6F600F35E9B /* SwiftyUserDefaults.framework */,
+				913F7F7A2066E6F500F35E9B /* XCGLogger.framework */,
+				913F7F772066E6F500F35E9B /* xLib6000.framework */,
 				913F7EC32066DBBE00F35E9B /* xSDR6000-master */,
 				913F7EC22066DBBE00F35E9B /* Products */,
+				913F7F6A2066DD5900F35E9B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
 		913F7EC22066DBBE00F35E9B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				913F7EC12066DBBE00F35E9B /* xSDR6000-master.app */,
+				913F7EC12066DBBE00F35E9B /* xSDR6000.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -53,34 +216,221 @@
 		913F7EC32066DBBE00F35E9B /* xSDR6000-master */ = {
 			isa = PBXGroup;
 			children = (
-				913F7EC42066DBBE00F35E9B /* AppDelegate.swift */,
-				913F7EC62066DBBE00F35E9B /* ViewController.swift */,
-				913F7EC82066DBBE00F35E9B /* Assets.xcassets */,
-				913F7ECA2066DBBE00F35E9B /* Main.storyboard */,
-				913F7ECD2066DBBE00F35E9B /* Info.plist */,
+				913F7ED52066DC7900F35E9B /* Assets.xcassets */,
+				913F7F1B2066DC7A00F35E9B /* AppDelegate.swift */,
+				913F7EF92066DC7900F35E9B /* AppExtensions.swift */,
+				913F7F062066DC7900F35E9B /* Info.plist */,
 				913F7ECE2066DBBE00F35E9B /* xSDR6000_master.entitlements */,
+				913F7ED42066DC7800F35E9B /* xSDR6000-Bridging-Header.h */,
+				913F7F072066DC7900F35E9B /* Radio */,
+				913F7EF32066DC7900F35E9B /* Panafall */,
+				913F7F0B2066DC7A00F35E9B /* Panadapter */,
+				913F7F1D2066DC7A00F35E9B /* Waterfall */,
+				913F7F042066DC7900F35E9B /* Buttons */,
+				913F7F012066DC7900F35E9B /* Preferences */,
+				913F7F152066DC7A00F35E9B /* Side */,
+				913F7ED62066DC7900F35E9B /* Base.lproj */,
+				913F7EFA2066DC7900F35E9B /* Misc */,
+				913F7F1C2066DC7A00F35E9B /* Documentation */,
+				913F7EE12066DC7900F35E9B /* CommonCode */,
 			);
 			path = "xSDR6000-master";
+			sourceTree = "<group>";
+		};
+		913F7ED62066DC7900F35E9B /* Base.lproj */ = {
+			isa = PBXGroup;
+			children = (
+				913F7ED72066DC7900F35E9B /* Preferences.storyboard */,
+				913F7ED92066DC7900F35E9B /* Panafall.storyboard */,
+				913F7EDB2066DC7900F35E9B /* Side.storyboard */,
+				913F7EDD2066DC7900F35E9B /* RadioPicker.storyboard */,
+				913F7EDF2066DC7900F35E9B /* Main.storyboard */,
+			);
+			path = Base.lproj;
+			sourceTree = "<group>";
+		};
+		913F7EE12066DC7900F35E9B /* CommonCode */ = {
+			isa = PBXGroup;
+			children = (
+				913F7EE22066DC7900F35E9B /* Misc */,
+				913F7EE82066DC7900F35E9B /* Extensions */,
+				913F7EEE2066DC7900F35E9B /* RadioPicker */,
+			);
+			path = CommonCode;
+			sourceTree = "<group>";
+		};
+		913F7EE22066DC7900F35E9B /* Misc */ = {
+			isa = PBXGroup;
+			children = (
+				913F7EE32066DC7900F35E9B /* Keychain.swift */,
+				913F7EE42066DC7900F35E9B /* JWTDecode */,
+			);
+			path = Misc;
+			sourceTree = "<group>";
+		};
+		913F7EE42066DC7900F35E9B /* JWTDecode */ = {
+			isa = PBXGroup;
+			children = (
+				913F7EE52066DC7900F35E9B /* JWTDecode.swift */,
+				913F7EE62066DC7900F35E9B /* JWT.swift */,
+				913F7EE72066DC7900F35E9B /* Errors.swift */,
+			);
+			path = JWTDecode;
+			sourceTree = "<group>";
+		};
+		913F7EE82066DC7900F35E9B /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				913F7EE92066DC7900F35E9B /* URLSessionExtension.swift */,
+				913F7EEA2066DC7900F35E9B /* DictionaryExtensions.swift */,
+				913F7EEB2066DC7900F35E9B /* DataExtensions.swift */,
+				913F7EEC2066DC7900F35E9B /* StringExtension.swift */,
+				913F7EED2066DC7900F35E9B /* SwiftyExtensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		913F7EEE2066DC7900F35E9B /* RadioPicker */ = {
+			isa = PBXGroup;
+			children = (
+				913F7EEF2066DC7900F35E9B /* Auth0ViewController.swift */,
+				913F7EF12066DC7900F35E9B /* WANRadioPickerViewController.swift */,
+				913F7EF22066DC7900F35E9B /* LANRadioPickerViewController.swift */,
+			);
+			path = RadioPicker;
+			sourceTree = "<group>";
+		};
+		913F7EF32066DC7900F35E9B /* Panafall */ = {
+			isa = PBXGroup;
+			children = (
+				913F7EF42066DC7900F35E9B /* PanafallButtonView.swift */,
+				913F7EF52066DC7900F35E9B /* PanafallViewController.swift */,
+				913F7EF62066DC7900F35E9B /* PanafallsViewController.swift */,
+				913F7EF72066DC7900F35E9B /* PanafallButtonViewController.swift */,
+			);
+			path = Panafall;
+			sourceTree = "<group>";
+		};
+		913F7EFA2066DC7900F35E9B /* Misc */ = {
+			isa = PBXGroup;
+			children = (
+				913F7EFB2066DC7900F35E9B /* Band.swift */,
+				913F7EFC2066DC7900F35E9B /* Defaults.plist */,
+				913F7EFD2066DC7900F35E9B /* BandSegments.plist */,
+				913F7EFE2066DC7900F35E9B /* Filters.plist */,
+				913F7EFF2066DC7900F35E9B /* OpusManager.swift */,
+				913F7F002066DC7900F35E9B /* ParameterMonitor.swift */,
+			);
+			path = Misc;
+			sourceTree = "<group>";
+		};
+		913F7F012066DC7900F35E9B /* Preferences */ = {
+			isa = PBXGroup;
+			children = (
+				913F7F022066DC7900F35E9B /* ColorsViewController.swift */,
+				913F7F032066DC7900F35E9B /* PreferencesTabViewController.swift */,
+			);
+			path = Preferences;
+			sourceTree = "<group>";
+		};
+		913F7F042066DC7900F35E9B /* Buttons */ = {
+			isa = PBXGroup;
+			children = (
+				913F7F052066DC7900F35E9B /* BandButtonViewController.swift */,
+			);
+			path = Buttons;
+			sourceTree = "<group>";
+		};
+		913F7F072066DC7900F35E9B /* Radio */ = {
+			isa = PBXGroup;
+			children = (
+				913F7F082066DC7900F35E9B /* MainWindowController.swift */,
+				913F7F0A2066DC7900F35E9B /* RadioViewController.swift */,
+			);
+			path = Radio;
+			sourceTree = "<group>";
+		};
+		913F7F0B2066DC7A00F35E9B /* Panadapter */ = {
+			isa = PBXGroup;
+			children = (
+				913F7F0C2066DC7A00F35E9B /* FlagViewController.swift */,
+				913F7F0D2066DC7A00F35E9B /* DbLegendView.swift */,
+				913F7F0F2066DC7A00F35E9B /* PanadapterViewController.swift */,
+				913F7F102066DC7A00F35E9B /* FrequencyLegendView.swift */,
+				913F7F112066DC7A00F35E9B /* PanadapterRenderer.swift */,
+				913F7F142066DC7A00F35E9B /* PanadapterShaders.metal */,
+			);
+			path = Panadapter;
+			sourceTree = "<group>";
+		};
+		913F7F152066DC7A00F35E9B /* Side */ = {
+			isa = PBXGroup;
+			children = (
+				913F7F162066DC7A00F35E9B /* SideViewController.swift */,
+				913F7F172066DC7A00F35E9B /* RxViewController.swift */,
+				913F7F182066DC7A00F35E9B /* EqViewController.swift */,
+				913F7F192066DC7A00F35E9B /* PCWViewController.swift */,
+				913F7F1A2066DC7A00F35E9B /* PhoneViewController.swift */,
+			);
+			path = Side;
+			sourceTree = "<group>";
+		};
+		913F7F1C2066DC7A00F35E9B /* Documentation */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Documentation;
+			sourceTree = "<group>";
+		};
+		913F7F1D2066DC7A00F35E9B /* Waterfall */ = {
+			isa = PBXGroup;
+			children = (
+				913F7F1F2066DC7A00F35E9B /* Grayscale.tex */,
+				913F7F202066DC7A00F35E9B /* Dark.tex */,
+				913F7F212066DC7A00F35E9B /* Deuteranopia.tex */,
+				913F7F222066DC7A00F35E9B /* TimeLayer.swift */,
+				913F7F242066DC7A00F35E9B /* Basic.tex */,
+				913F7F252066DC7A00F35E9B /* Purple.tex */,
+				913F7F262066DC7A00F35E9B /* WaterfallRenderer.swift */,
+				913F7F272066DC7A00F35E9B /* Tritanopia.tex */,
+				913F7F282066DC7A00F35E9B /* WaterfallViewController.swift */,
+				913F7F292066DC7A00F35E9B /* WaterfallShaders.metal */,
+			);
+			path = Waterfall;
+			sourceTree = "<group>";
+		};
+		913F7F6A2066DD5900F35E9B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				913F7F6C2066DD5A00F35E9B /* AudioLibrary.framework */,
+				913F7F6B2066DD5A00F35E9B /* ObjcExceptionBridging.framework */,
+				913F7F6D2066DD5A00F35E9B /* OpusOSX.framework */,
+				913F7F6E2066DD5A00F35E9B /* SwiftyUserDefaults.framework */,
+				913F7F702066DD5A00F35E9B /* XCGLogger.framework */,
+				913F7F6F2066DD5A00F35E9B /* xLib6000.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		913F7EC02066DBBE00F35E9B /* xSDR6000-master */ = {
+		913F7EC02066DBBE00F35E9B /* xSDR6000 */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 913F7ED12066DBBE00F35E9B /* Build configuration list for PBXNativeTarget "xSDR6000-master" */;
+			buildConfigurationList = 913F7ED12066DBBE00F35E9B /* Build configuration list for PBXNativeTarget "xSDR6000" */;
 			buildPhases = (
 				913F7EBD2066DBBE00F35E9B /* Sources */,
 				913F7EBE2066DBBE00F35E9B /* Frameworks */,
 				913F7EBF2066DBBE00F35E9B /* Resources */,
+				913F7F8A2066E6F600F35E9B /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = "xSDR6000-master";
+			name = xSDR6000;
 			productName = "xSDR6000-master";
-			productReference = 913F7EC12066DBBE00F35E9B /* xSDR6000-master.app */;
+			productReference = 913F7EC12066DBBE00F35E9B /* xSDR6000.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -95,7 +445,8 @@
 				TargetAttributes = {
 					913F7EC02066DBBE00F35E9B = {
 						CreatedOnToolsVersion = 9.2;
-						ProvisioningStyle = Automatic;
+						LastSwiftMigration = 0920;
+						ProvisioningStyle = Manual;
 					};
 				};
 			};
@@ -112,7 +463,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				913F7EC02066DBBE00F35E9B /* xSDR6000-master */,
+				913F7EC02066DBBE00F35E9B /* xSDR6000 */,
 			);
 		};
 /* End PBXProject section */
@@ -122,8 +473,21 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				913F7EC92066DBBE00F35E9B /* Assets.xcassets in Resources */,
-				913F7ECC2066DBBE00F35E9B /* Main.storyboard in Resources */,
+				913F7F452066DC7A00F35E9B /* Filters.plist in Resources */,
+				913F7F612066DC7A00F35E9B /* Deuteranopia.tex in Resources */,
+				913F7F642066DC7A00F35E9B /* Basic.tex in Resources */,
+				913F7F2C2066DC7A00F35E9B /* Panafall.storyboard in Resources */,
+				913F7F432066DC7A00F35E9B /* Defaults.plist in Resources */,
+				913F7F2A2066DC7A00F35E9B /* Assets.xcassets in Resources */,
+				913F7F652066DC7A00F35E9B /* Purple.tex in Resources */,
+				913F7F2E2066DC7A00F35E9B /* RadioPicker.storyboard in Resources */,
+				913F7F672066DC7A00F35E9B /* Tritanopia.tex in Resources */,
+				913F7F5F2066DC7A00F35E9B /* Grayscale.tex in Resources */,
+				913F7F2F2066DC7A00F35E9B /* Main.storyboard in Resources */,
+				913F7F2B2066DC7A00F35E9B /* Preferences.storyboard in Resources */,
+				913F7F2D2066DC7A00F35E9B /* Side.storyboard in Resources */,
+				913F7F602066DC7A00F35E9B /* Dark.tex in Resources */,
+				913F7F442066DC7A00F35E9B /* BandSegments.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -134,18 +498,89 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				913F7EC72066DBBE00F35E9B /* ViewController.swift in Sources */,
-				913F7EC52066DBBE00F35E9B /* AppDelegate.swift in Sources */,
+				913F7F342066DC7A00F35E9B /* URLSessionExtension.swift in Sources */,
+				913F7F382066DC7A00F35E9B /* SwiftyExtensions.swift in Sources */,
+				913F7F5C2066DC7A00F35E9B /* PhoneViewController.swift in Sources */,
+				913F7F502066DC7A00F35E9B /* DbLegendView.swift in Sources */,
+				913F7F3C2066DC7A00F35E9B /* LANRadioPickerViewController.swift in Sources */,
+				913F7F4F2066DC7A00F35E9B /* FlagViewController.swift in Sources */,
+				913F7F332066DC7A00F35E9B /* Errors.swift in Sources */,
+				913F7F302066DC7A00F35E9B /* Keychain.swift in Sources */,
+				913F7F472066DC7A00F35E9B /* ParameterMonitor.swift in Sources */,
+				913F7F462066DC7A00F35E9B /* OpusManager.swift in Sources */,
+				913F7F5A2066DC7A00F35E9B /* EqViewController.swift in Sources */,
+				913F7F312066DC7A00F35E9B /* JWTDecode.swift in Sources */,
+				913F7F4A2066DC7A00F35E9B /* BandButtonViewController.swift in Sources */,
+				913F7F662066DC7A00F35E9B /* WaterfallRenderer.swift in Sources */,
+				913F7F692066DC7A00F35E9B /* WaterfallShaders.metal in Sources */,
+				913F7F572066DC7A00F35E9B /* PanadapterShaders.metal in Sources */,
+				913F7F5D2066DC7A00F35E9B /* AppDelegate.swift in Sources */,
+				913F7F3D2066DC7A00F35E9B /* PanafallButtonView.swift in Sources */,
+				913F7F402066DC7A00F35E9B /* PanafallButtonViewController.swift in Sources */,
+				913F7F622066DC7A00F35E9B /* TimeLayer.swift in Sources */,
+				913F7F542066DC7A00F35E9B /* PanadapterRenderer.swift in Sources */,
+				913F7F492066DC7A00F35E9B /* PreferencesTabViewController.swift in Sources */,
+				913F7F532066DC7A00F35E9B /* FrequencyLegendView.swift in Sources */,
+				913F7F422066DC7A00F35E9B /* Band.swift in Sources */,
+				913F7F592066DC7A00F35E9B /* RxViewController.swift in Sources */,
+				913F7F4C2066DC7A00F35E9B /* MainWindowController.swift in Sources */,
+				913F7F412066DC7A00F35E9B /* AppExtensions.swift in Sources */,
+				913F7F5B2066DC7A00F35E9B /* PCWViewController.swift in Sources */,
+				913F7F522066DC7A00F35E9B /* PanadapterViewController.swift in Sources */,
+				913F7F582066DC7A00F35E9B /* SideViewController.swift in Sources */,
+				913F7F3E2066DC7A00F35E9B /* PanafallViewController.swift in Sources */,
+				913F7F482066DC7A00F35E9B /* ColorsViewController.swift in Sources */,
+				913F7F3F2066DC7A00F35E9B /* PanafallsViewController.swift in Sources */,
+				913F7F682066DC7A00F35E9B /* WaterfallViewController.swift in Sources */,
+				913F7F392066DC7A00F35E9B /* Auth0ViewController.swift in Sources */,
+				913F7F372066DC7A00F35E9B /* StringExtension.swift in Sources */,
+				913F7F362066DC7A00F35E9B /* DataExtensions.swift in Sources */,
+				913F7F4E2066DC7A00F35E9B /* RadioViewController.swift in Sources */,
+				913F7F322066DC7A00F35E9B /* JWT.swift in Sources */,
+				913F7F352066DC7A00F35E9B /* DictionaryExtensions.swift in Sources */,
+				913F7F3B2066DC7A00F35E9B /* WANRadioPickerViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		913F7ECA2066DBBE00F35E9B /* Main.storyboard */ = {
+		913F7ED72066DC7900F35E9B /* Preferences.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				913F7ECB2066DBBE00F35E9B /* Base */,
+				913F7ED82066DC7900F35E9B /* Base */,
+			);
+			name = Preferences.storyboard;
+			sourceTree = "<group>";
+		};
+		913F7ED92066DC7900F35E9B /* Panafall.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				913F7EDA2066DC7900F35E9B /* Base */,
+			);
+			name = Panafall.storyboard;
+			sourceTree = "<group>";
+		};
+		913F7EDB2066DC7900F35E9B /* Side.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				913F7EDC2066DC7900F35E9B /* Base */,
+			);
+			name = Side.storyboard;
+			sourceTree = "<group>";
+		};
+		913F7EDD2066DC7900F35E9B /* RadioPicker.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				913F7EDE2066DC7900F35E9B /* Base */,
+			);
+			name = RadioPicker.storyboard;
+			sourceTree = "<group>";
+		};
+		913F7EDF2066DC7900F35E9B /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				913F7EE02066DC7900F35E9B /* Base */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -201,7 +636,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -252,7 +687,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -263,13 +698,25 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = "xSDR6000-master/xSDR6000_master.entitlements";
-				CODE_SIGN_STYLE = Automatic;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = "";
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = "";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = "xSDR6000-master/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				OTHER_SWIFT_FLAGS = "-D XSDR6000";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.k3tzr.xSDR6000-master";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "xSDR6000-master/xSDR6000-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
@@ -278,13 +725,23 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = "xSDR6000-master/xSDR6000_master.entitlements";
-				CODE_SIGN_STYLE = Automatic;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = "";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = "";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = "xSDR6000-master/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				OTHER_SWIFT_FLAGS = "-D XSDR6000";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.k3tzr.xSDR6000-master";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "xSDR6000-master/xSDR6000-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
@@ -301,7 +758,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		913F7ED12066DBBE00F35E9B /* Build configuration list for PBXNativeTarget "xSDR6000-master" */ = {
+		913F7ED12066DBBE00F35E9B /* Build configuration list for PBXNativeTarget "xSDR6000" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				913F7ED22066DBBE00F35E9B /* Debug */,

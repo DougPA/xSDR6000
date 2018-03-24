@@ -1,0 +1,11 @@
+framework module xLib6000 {
+  umbrella header "xLib6000.h"
+
+  export *
+  module * { export * }
+}
+
+module xLib6000.Swift {
+    header "xLib6000-Swift.h"
+    requires objc
+}
