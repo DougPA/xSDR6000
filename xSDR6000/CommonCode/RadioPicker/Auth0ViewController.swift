@@ -42,7 +42,7 @@ final class Auth0ViewController             : NSViewController, WKNavigationDele
   static let kState                         = "ypfolhnqwpedrxdb"
 
   static let smartLinkURL = """
-  https://frtest.auth0.com/authorize?client_id=\(kClientId)\
+  \(kAuth0Domain)authorize?client_id=\(kClientId)\
   &redirect_uri=\(kRedirect)\
   &response_type=\(kResponseType)\
   &scope=\(kScope)\
