@@ -199,7 +199,7 @@
 				913F7F7B2066E6F600F35E9B /* SwiftyUserDefaults.framework */,
 				913F7F7A2066E6F500F35E9B /* XCGLogger.framework */,
 				913F7F772066E6F500F35E9B /* xLib6000.framework */,
-				913F7EC32066DBBE00F35E9B /* xSDR6000-master */,
+				913F7EC32066DBBE00F35E9B /* xSDR6000 */,
 				913F7EC22066DBBE00F35E9B /* Products */,
 				913F7F6A2066DD5900F35E9B /* Frameworks */,
 			);
@@ -213,7 +213,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		913F7EC32066DBBE00F35E9B /* xSDR6000-master */ = {
+		913F7EC32066DBBE00F35E9B /* xSDR6000 */ = {
 			isa = PBXGroup;
 			children = (
 				913F7ED52066DC7900F35E9B /* Assets.xcassets */,
@@ -234,7 +234,7 @@
 				913F7F1C2066DC7A00F35E9B /* Documentation */,
 				913F7EE12066DC7900F35E9B /* CommonCode */,
 			);
-			path = "xSDR6000-master";
+			path = xSDR6000;
 			sourceTree = "<group>";
 		};
 		913F7ED62066DC7900F35E9B /* Base.lproj */ = {
@@ -450,7 +450,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 913F7EBC2066DBBE00F35E9B /* Build configuration list for PBXProject "xSDR6000-master" */;
+			buildConfigurationList = 913F7EBC2066DBBE00F35E9B /* Build configuration list for PBXProject "xSDR6000" */;
 			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -708,14 +708,14 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				INFOPLIST_FILE = "xSDR6000-master/Info.plist";
+				INFOPLIST_FILE = xSDR6000/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				OTHER_SWIFT_FLAGS = "-D XSDR6000";
-				PRODUCT_BUNDLE_IDENTIFIER = "net.k3tzr.xSDR6000-master";
+				PRODUCT_BUNDLE_IDENTIFIER = net.k3tzr.xSDR6000;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "xSDR6000-master/xSDR6000-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "xSDR6000/xSDR6000-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 			};
@@ -735,14 +735,14 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				INFOPLIST_FILE = "xSDR6000-master/Info.plist";
+				INFOPLIST_FILE = xSDR6000/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				OTHER_SWIFT_FLAGS = "-D XSDR6000";
-				PRODUCT_BUNDLE_IDENTIFIER = "net.k3tzr.xSDR6000-master";
+				PRODUCT_BUNDLE_IDENTIFIER = net.k3tzr.xSDR6000;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "xSDR6000-master/xSDR6000-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "xSDR6000/xSDR6000-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
@@ -750,7 +750,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		913F7EBC2066DBBE00F35E9B /* Build configuration list for PBXProject "xSDR6000-master" */ = {
+		913F7EBC2066DBBE00F35E9B /* Build configuration list for PBXProject "xSDR6000" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				913F7ECF2066DBBE00F35E9B /* Debug */,
