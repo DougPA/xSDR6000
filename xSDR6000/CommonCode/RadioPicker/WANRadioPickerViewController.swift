@@ -357,7 +357,23 @@ final class WANRadioPickerViewController    : NSViewController, NSTableViewDeleg
     
     // is there a Token?
     if let token = parseTokenResponse(data: data) {
-      // YES,return it
+      do {
+        
+        let jwt = try decode(jwt: token)
+        
+        // validate id token; see https://auth0.com/docs/tokens/id-token#validate-an-id-token
+        if !isJWTValid(jwt) {
+          // log the error
+          _api.log.msg("JWT token not valid", level: .error, function: #function, file: #file, line: #line)
+          return nil
+        }
+        
+      } catch let error as NSError {
+        // log the error
+        _api.log.msg("Error decoding JWT token: \(error.localizedDescription)", level: .error, function: #function, file: #file, line: #line)
+        return nil
+      }
+      
       return token
     }
     // NO token
@@ -431,7 +447,36 @@ final class WANRadioPickerViewController    : NSViewController, NSTableViewDeleg
     let image = NSImage(contentsOf: url)
     _gravatarView.image = image
   }
-  
+  /// check if a JWT token is valid
+  ///
+  /// - Parameter jwt:                  a JWT token
+  /// - Returns:                        valid / invalid
+  ///
+  private func isJWTValid(_ jwt: JWT) -> Bool {
+    // see: https://auth0.com/docs/tokens/id-token#validate-an-id-token
+    // validate only the claims
+    
+    // 1.
+    // Token expiration: The current date/time must be before the expiration date/time listed in the exp claim (which
+    // is a Unix timestamp).
+    guard let expiresAt = jwt.expiresAt, Date() < expiresAt else { return false }
+    
+    // 2.
+    // Token issuer: The iss claim denotes the issuer of the JWT. The value must match the the URL of your Auth0
+    // tenant. For JWTs issued by Auth0, iss holds your Auth0 domain with a https:// prefix and a / suffix:
+    // https://YOUR_AUTH0_DOMAIN/.
+    var claim = jwt.claim(name: "iss")
+    guard let domain = claim.string, domain == Auth0ViewController.kAuth0Domain else { return false }
+    
+    // 3.
+    // Token audience: The aud claim identifies the recipients that the JWT is intended for. The value must match the
+    // Client ID of your Auth0 Client.
+    claim = jwt.claim(name: "aud")
+    guard let clientId = claim.string, clientId == Auth0ViewController.kClientId else { return false }
+    
+    return true
+  }
+
   // ----------------------------------------------------------------------------
   // MARK: - WanServer Delegate methods
   
@@ -513,6 +558,12 @@ final class WANRadioPickerViewController    : NSViewController, NSTableViewDeleg
       // try to get the JSON Web Token
       let jwt = try decode(jwt: idToken)
       
+      // validate id token; see https://auth0.com/docs/tokens/id-token#validate-an-id-token
+      if !isJWTValid(jwt) {
+        
+        _api.log.msg("JWT token not valid", level: .error, function: #function, file: #file, line: #line)
+        return
+      }
       // save the Log On email (if any)
       var claim = jwt.claim(name: kClaimEmail)
       if let email = claim.string {
@@ -534,7 +585,7 @@ final class WANRadioPickerViewController    : NSViewController, NSTableViewDeleg
       if let expiresAt = jwt.expiresAt {
         expireDate = expiresAt
       }
-
+      
     } catch let error as NSError {
       
       // log the error & exit
@@ -550,11 +601,11 @@ final class WANRadioPickerViewController    : NSViewController, NSTableViewDeleg
     
     // save id token with expiry date
     _delegate?.token = Token(value: idToken, expiresAt: expireDate)
-
+    
     // connect to SmartLink server
     connectWanServer(token: idToken)
   }
-  
+
   // ----------------------------------------------------------------------------
   // MARK: - NSTableView DataSource methods
   

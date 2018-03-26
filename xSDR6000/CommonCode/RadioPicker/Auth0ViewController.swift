@@ -34,6 +34,7 @@ protocol Auth0ControllerDelegate {
 
 final class Auth0ViewController             : NSViewController, WKNavigationDelegate {
 
+  static let kAuth0Domain                   = "https://frtest.auth0.com/"
   static let kClientId                      = "4Y9fEIIsVYyQo5u6jr7yBWc4lV5ugC2m"
   static let kRedirect                      = "https://frtest.auth0.com/mobile"
   static let kResponseType                  = "token"
