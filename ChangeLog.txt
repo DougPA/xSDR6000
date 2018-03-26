@@ -1,0 +1,7 @@
+xSDR6000 Change Log
+
+v0.9.937
+
+added this file - ChangeLog.txt
+Changed project name & project folder from xSDR6000-master to xSDR6000
+added run script to increment build version when recompiled
