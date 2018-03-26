@@ -1,5 +1,9 @@
 xSDR6000 Change Log
 
+v0.9.939
+
+Auth0ViewController.swift - used kAuth0Domain in smartLinkURL property
+
 v0.9.938
 
 WanRadioPickerViewController.swift - added: isJWTValid(_ jwt: JWT) -> Bool & usage
