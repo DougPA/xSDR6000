@@ -2,7 +2,7 @@
 ## Mac Client for the FlexRadio (TM) 6000 series software defined radios.
 ### Provides functionality similar to the FlexRadio (TM) SmartSDR (TM) app.
 
-Builds on macOS 10.13.1 using XCode 9.3 using Swift 4.1 with a Deployment
+Built on macOS 10.13.4 using XCode 9.3 using Swift 4.1 with a Deployment
 Target of macOS 10.11
 
 There is now only one Branch (master), it REQUIRES Metal.
@@ -24,6 +24,8 @@ To compile this application, you must have
 xLib6000.framework, SwiftyUserDefaults.framework, XCGLogger.framework,
 ObjcExceptionBridging.framework, AudioLibrary.framework & OpusOSX.framework
 in the same folder  as the xCode project file (xSDR6000.xcodeproj) ( i.e. in ${PROJECT_DIR} )
+
+They must be built for the same version of Swift as you are currently using (4.1 in my case).
 
 A DEBUG executable is contained in the Release if you would rather not build
 from sources. It has the necessary frameworks embedded in it.
