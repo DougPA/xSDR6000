@@ -365,7 +365,7 @@ extension PanadapterRenderer                : PanadapterStreamHandler {
     _numberOfBins = dataFrame.numberOfBins
     
     // put the Intensities into the current Spectrum Buffer
-    _spectrumBuffers[_currentFrameIndex].contents().copyBytes(from: dataFrame.bins, count: dataFrame.numberOfBins * MemoryLayout<ushort>.stride)
+    _spectrumBuffers[_currentFrameIndex].contents().copyMemory(from: dataFrame.bins, byteCount: dataFrame.numberOfBins * MemoryLayout<ushort>.stride)
     
     DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
       self._metalView.draw()
