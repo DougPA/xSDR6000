@@ -1,5 +1,5 @@
-xSDR6000-master/CommonCode/CocoaAsyncSocket/* linguist-vendored
-xSDR6000-master/Documentation/* linguist-vendored
+xSDR6000/CommonCode/CocoaAsyncSocket/* linguist-vendored
+xSDR6000/Documentation/* linguist-vendored
 xLib6000.framework/* linguist-vendored
 AudioLibrary.framework/* linguist-vendored
 XCGLogger.framework/* linguist-vendored

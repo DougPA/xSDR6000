@@ -6,6 +6,9 @@ Target of macOS 10.10
 
 NOTE: The Swift 4 Branch has been eliminated, the Master Branch is now the sole repository.
 
+This version includes the library-side code to support SmartLink (see xAPITester or xSDR6000 for
+an example of the client-side code needed to implement SmartLink).
+
 Version 1.0.1 is a reorganization of the file structure to reflect the use of Common Code between this
 framework and xAPITesterSL and xSDR6000
 
