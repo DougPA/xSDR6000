@@ -548,7 +548,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
       }
     }
   }
-  
+
   // ----------------------------------------------------------------------------
   // MARK: - Observation methods
   
@@ -560,6 +560,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     #keyPath(Radio.tnfEnabled),
     #keyPath(Radio.fullDuplexEnabled)
   ]
+  
   private let _opusKeyPaths = [
     #keyPath(Opus.remoteRxOn),
     #keyPath(Opus.remoteTxOn),
@@ -568,15 +569,15 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   /// Add / Remove property observations
   ///
   /// - Parameters:
-  ///   - object: the object of the observations
-  ///   - paths: an array of KeyPaths
-  ///   - add: add / remove (defaults to add)
+  ///   - object:           the object of the observations
+  ///   - paths:            an array of KeyPaths
+  ///   - add:              add / remove (defaults to add)
   ///
   private func observations<T: NSObject>(_ object: T, paths: [String], remove: Bool = false) {
-    
+
     // for each KeyPath Add / Remove observations
     for keyPath in paths {
-      
+
       if remove { object.removeObserver(self, forKeyPath: keyPath, context: nil) }
       else { object.addObserver(self, forKeyPath: keyPath, options: [.initial, .new], context: nil) }
     }
@@ -584,10 +585,10 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   /// Process changes to observed keyPaths (may arrive on any thread)
   ///
   /// - Parameters:
-  ///   - keyPath: the KeyPath that changed
-  ///   - object: the Object of the KeyPath
-  ///   - change: a change dictionary
-  ///   - context: a pointer to a context (if any)
+  ///   - keyPath:          the KeyPath that changed
+  ///   - object:           the Object of the KeyPath
+  ///   - change:           a change dictionary
+  ///   - context:          a pointer to a context (if any)
   ///
   override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
     
