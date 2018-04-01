@@ -130,8 +130,9 @@ class OpusManager                           : NSObject, OpusStreamHandler, AFSou
     _outputSoundcard?.stop()
     
     // de-allocate the Rx buffer list
-    _rxBufferList.deallocate(capacity: 2)
-    
+//    _rxBufferList.deallocate(capacity: 2)
+    _rxBufferList.deallocate()
+
   }
   /// Start/Stop the Opus Rx stream processing
   ///
