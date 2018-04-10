@@ -1,55 +1,66 @@
 # xSDR6000
 ## Mac Client for the FlexRadio (TM) 6000 series software defined radios.
-### Provides functionality similar to the FlexRadio (TM) SmartSDR (TM) app.
 
-Built on macOS 10.13.4 using XCode 9.3 using Swift 4.1 with a Deployment
-Target of macOS 10.11
+### Built on:
+*  macOS 10.13.4 (Deployment Target of macOS 10.10)
+*  XCode 9.3
+* Swift 4.1
 
-There is now only one Branch (master), it REQUIRES Metal.
 
-==========================================================================
+**This version supports SmartLink (TM).**  
+**There is now only one Branch (master), it REQUIRES Metal**  
 
-NOTE: This app is a "work in progress" and is not fully functional.
+## Usage
 
-Portions of this app do not work and changes may be added from time to time
-which will break all or part of this app. Releases will be created at
-relatively stable points, please use them.
+Provides functionality similar to the FlexRadio (TM) SmartSDR (TM) app.
 
-Direct questions and/or comments to:  douglas.adams@me.com
+**NOTE: This app is a "work in progress" and is not fully functional**  
 
-==========================================================================
+Portions of this app do not work and changes may be added from time to time which will break all or part of this app.  
+Releases will be created at relatively stable points, please use them.  
 
-***** IMPORTANT NOTE *****
-To compile this application, you must have
-xLib6000.framework, SwiftyUserDefaults.framework, XCGLogger.framework,
-ObjcExceptionBridging.framework, AudioLibrary.framework & OpusOSX.framework
-in the same folder  as the xCode project file (xSDR6000.xcodeproj) ( i.e. in ${PROJECT_DIR} )
 
-They must be built for the same version of Swift as you are currently using (4.1 in my case).
+If you want to learn more about the 6000 series API, please take a look at the xLib6000 project. 
 
-A DEBUG executable is contained in the Release if you would rather not build
-from sources. It has the necessary frameworks embedded in it.
+* https://github.com/DougPA/xLib6000
 
-==========================================================================
+To explore the 6000 series API, please take a look at the xAPITester project.
 
-FRAMEWORK CREDITS:
+* https://github.com/DougPA/xAPITester
+
+
+## Builds
+
+A compiled RELEASE build executable (with  embedded frameworks) is contained in the GitHub  
+Release if you would rather not build from sources.  
+
+If you require a DEBUG build you will have to build from sources. The required frameworks are   
+contained in this repo.
+
+
+## Comments / Questions
+
+douglas.adams@me.com
+
+
+## Credits
 
 AudioLibrary: 
 
-http://www.w7ay.net/site/Software/Audio%20Library/index.html
+* http://www.w7ay.net/site/Software/Audio%20Library/index.html
 
 XCGLogger & ObjcExceptionBridging:
 
-https://github.com/DaveWoodCom/XCGLogger
+* https://github.com/DaveWoodCom/XCGLogger
 
 SwiftyUserDefaults:
 
-https://github.com/radex/SwiftyUserDefaults
+* https://github.com/radex/SwiftyUserDefaults
 
 OpusOSX:
 
-https://opus-codec.org/downloads/
+* https://opus-codec.org/downloads/
 
 xLib6000:
 
-https://github.com/DougPA/xLib6000
+* https://github.com/DougPA/xLib6000
