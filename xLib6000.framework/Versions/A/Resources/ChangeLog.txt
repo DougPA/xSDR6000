@@ -1,25 +1,5 @@
 xLib6000 Change Log
 
-v1.0.15
-
-Compiled with Xcode 9.3, Swift 4.1
-Updated CocoaAsyncSocket to v7.6.3
-
-
-v1.0.12
-
-APi.swift - changed setConnectionState(...) to public from internal
-Api.swift - added testerDelegate property & usage
-
-v1.0.7
-
-Api.swift - added connectionHandle property
-Radio.swift - removed connectionHandle property
-Radio.swift - changed usage of connectionHandle to use property on Api.swift
-Radio.swift - removed isWan property from initializer
-TcpManager.swift - removed default value for isWan from connect(...) method
-UdpManager.swift - removed default value for isWan from bind(...) method
-
 v1.0.5
 
 Radio.swift - removed default value for isWan from initializer

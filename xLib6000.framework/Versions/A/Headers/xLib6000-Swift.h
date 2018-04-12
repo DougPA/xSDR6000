@@ -659,6 +659,7 @@ SWIFT_CLASS("_TtC8xLib60005Slice")
 
 
 @interface Slice (SWIFT_EXTENSION(xLib6000))
+@property (nonatomic) BOOL autoPan;
 @property (nonatomic) NSInteger daxClients;
 @property (nonatomic) BOOL daxTxEnabled;
 @property (nonatomic) BOOL diversityChild;
