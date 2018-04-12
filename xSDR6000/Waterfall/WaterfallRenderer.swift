@@ -12,10 +12,6 @@ import MetalKit
 
 public final class WaterfallRenderer: NSObject {
   
-  
-  
-  //  NOTE:
-  //
   //  The intensity values are expected to be UInt16's between zero and UInt16.max.
   //
   //  The Radio sends an array of size ??? (larger than frame.width). The portion of the
@@ -66,7 +62,15 @@ public final class WaterfallRenderer: NSObject {
   //                                                      |                 |
   //                                                  startingBin         EndingBin
   //
+
+  // values chosen to accomodate the largest possible waterfall
+  static let kTextureWidth                  = 3360                          // must be >= max number of Bins
+  static let kTextureHeight                 = 2048                          // must be >= max number of lines
+  static let kMaxTextures                   = 3                             // number of Intensity textures
   
+  // arbitrary choice of a reasonable number of color gradations for the waterfall
+  static let kGradientSize                  = 256                           // number of colors in a gradient
+
   // ----------------------------------------------------------------------------
   // MARK: - Public properties
   
@@ -84,6 +88,12 @@ public final class WaterfallRenderer: NSObject {
     var lineNumber                          : UInt32                        // line in Texture
   }
   
+  struct Params {
+    var vertices                            : [Vertex]
+    var intensities                         : MTLTexture
+    var topLine                             : Int
+  }
+  
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
   var radio: Radio?                         = Api.sharedInstance.radio
@@ -98,7 +108,7 @@ public final class WaterfallRenderer: NSObject {
   private var _start                        : Int { return _center - (_bandwidth/2) }
   private var _end                          : Int  { return _center + (_bandwidth/2) }
   
-  private var _waterfallVertices              : [Vertex] = [
+  private var _waterfallVertices            : [Vertex] = [
     Vertex(coord: float2(-1.0, -1.0), texCoord: float2( 0.0, 1.0)),         // v0 - bottom left
     Vertex(coord: float2(-1.0,  1.0), texCoord: float2( 0.0, 0.0)),         // v1 - top    left
     Vertex(coord: float2( 1.0, -1.0), texCoord: float2( 1.0, 1.0)),         // v2 - bottom right
@@ -119,8 +129,9 @@ public final class WaterfallRenderer: NSObject {
   
   private var _colorTexture                 : MTLTexture!                   //
   private var _gradientTexture              : MTLTexture!                   // color gradient
-  private var _intensityTextures            = [MTLTexture]()                // intensities array
-  
+//  private var _intensityTextures            = [MTLTexture]()                // intensities array
+  private var _parameters                   = [Params]()                    // draw parameters array
+
   private var _samplerState                 : MTLSamplerState!              // sampler for draw texture
   private var _commandQueue                 : MTLCommandQueue!              // Metal queue
   
@@ -134,11 +145,7 @@ public final class WaterfallRenderer: NSObject {
     MTLSizeMake(WaterfallRenderer.kTextureWidth / self._threadGroupCount.width, WaterfallRenderer.kTextureHeight / self._threadGroupCount.height, 1)
   }()
   
-  private var _textureTopLine               = 0                             // current top Line in _drawTexture
-  
-  private var _firstBinFreq                 : CGFloat = 0                   // Frequency of first Bin in Hz
-  private var _binBandwidth                 : CGFloat = 0                   // Bandwidth of a single bin in Hz
-  private var _autoBlackLevel               : UInt16 = 0                    // Blacklevel supplied by Radio
+//  private var _textureTopLine               = 0                             // current top Line in _drawTexture
   
   private var _frameBoundarySemaphore       = DispatchSemaphore(value: WaterfallRenderer.kMaxTextures)
   private let _waterQ                       = DispatchQueue(label: ".waterQ", attributes: [.concurrent])
@@ -147,8 +154,24 @@ public final class WaterfallRenderer: NSObject {
   //
   private var __frameSize                     = CGSize(width: 0.0, height: 0.0)
   private var __textureIndex                  = 0                             // mod kMaxTextures
+
+  private var __firstBinFreq                 : CGFloat = 0                   // Frequency of first Bin in Hz
+  private var __binBandwidth                 : CGFloat = 0                   // Bandwidth of a single bin in Hz
+  private var __autoBlackLevel               : UInt16 = 0                    // Blacklevel supplied by Radio
   //
   // ----- Backing properties - SHOULD NOT BE ACCESSED DIRECTLY -----------------------------------
+  
+  private var _firstBinFreq: CGFloat {
+    get { return _waterQ.sync { __firstBinFreq } }
+    set { _waterQ.sync( flags: .barrier){ __firstBinFreq = newValue } } }
+  
+  private var _binBandwidth: CGFloat {
+    get { return _waterQ.sync { __binBandwidth } }
+    set { _waterQ.sync( flags: .barrier){ __binBandwidth = newValue } } }
+  
+  private var _autoBlackLevel: UInt16 {
+    get { return _waterQ.sync { __autoBlackLevel } }
+    set { _waterQ.sync( flags: .barrier){ __autoBlackLevel = newValue } } }
   
   private var _frameSize: CGSize {
     get { return _waterQ.sync { __frameSize } }
@@ -162,14 +185,6 @@ public final class WaterfallRenderer: NSObject {
   private let kWaterfallVertex              = "waterfall_vertex"            // name of waterfall vertex function
   private let kWaterfallFragment            = "waterfall_fragment"          // name of waterfall fragment function
   private let kComputeGradient              = "convert"                     // name of waterfall kernel function
-  
-  // values chosen to accomodate the largest possible waterfall
-  static let kTextureWidth                  = 3360                          // must be >= max number of Bins
-  static let kTextureHeight                 = 2048                          // must be >= max number of lines
-  static let kMaxTextures                   = 3                             // number of Intensity textures
-  
-  // arbitrary choice of a reasonable number of color gradations for the waterfall
-  static let kGradientSize                  = 256                           // number of colors in a gradient
   
   // ----------------------------------------------------------------------------
   // MARK: - Initialization
@@ -208,7 +223,6 @@ public final class WaterfallRenderer: NSObject {
     
     _constants.blackLevel = blackLevel
     _constants.colorGain = Float(colorGain)/100.0
-    _constants.lineNumber = UInt32(_textureTopLine)
     
     // Mapping of the Constants struct
     //  <------ 16 ------>                      blackLevel
@@ -221,14 +235,31 @@ public final class WaterfallRenderer: NSObject {
     let bufferPtr = _constantsBuffer!.contents()
     memcpy(bufferPtr, &_constants, MemoryLayout.stride(ofValue: _constants))
   }  
+  /// Copy constants to the Constants Buffer
+  ///
+  func updateLine(_ line: Int) {
+    
+    _constants.lineNumber = UInt32(line)
+    
+    // Mapping of the Constants struct
+    //  <------ 16 ------>                      blackLevel
+    //  <--------------- 32 ---------------->   colorGain
+    //  <--------------- 32 ---------------->   lineNumber
+    
+    // update the Constants buffer
+    //      NOTE: simple copy, only possible due to the arrangement of the struct with no padding
+    ///
+    let bufferPtr = _constantsBuffer!.contents()
+    memcpy(bufferPtr, &_constants, MemoryLayout.stride(ofValue: _constants))
+  }
   /// Re-initialize the Waterfall
   ///
   func restart() {
     
     // force the waterfall to initialize the texture usage
-    _textureTopLine = 0
-    _binBandwidth = 0
-    _firstBinFreq = 0
+//    _parameters[_textureIndex].topLine = 0
+//    _binBandwidth = 0
+//    _firstBinFreq = 0
   }
   /// Set the Metal view clear color
   ///
@@ -276,14 +307,28 @@ public final class WaterfallRenderer: NSObject {
     intensityTextureDescriptor.width = WaterfallRenderer.kTextureWidth
     intensityTextureDescriptor.usage = [.shaderRead, .shaderWrite]
     
-    // populate the array of Intensity textures
+    // populate the array of Draw Parameters
     for _ in 0..<WaterfallRenderer.kMaxTextures {
       // create an Intensity texture
       let intensityTexture = _device.makeTexture(descriptor: intensityTextureDescriptor)!
-      // append it to the array of Textures
-      _intensityTextures.append( intensityTexture )
+      
+      let vertices            : [Vertex] = [
+        Vertex(coord: float2(-1.0, -1.0), texCoord: float2( 0.0, 1.0)),         // v0 - bottom left
+        Vertex(coord: float2(-1.0,  1.0), texCoord: float2( 0.0, 0.0)),         // v1 - top    left
+        Vertex(coord: float2( 1.0, -1.0), texCoord: float2( 1.0, 1.0)),         // v2 - bottom right
+        Vertex(coord: float2( 1.0,  1.0), texCoord: float2( 1.0, 0.0))          // v3 - top    right
+      ]
+
+      
+      
+      // create a params instance
+      let params = Params(vertices: vertices, intensities: intensityTexture, topLine: 0)
+
+      // append it to the array of Draw Parameters
+      _parameters.append(params)
     }
-    
+    _waterfallVerticesLength = MemoryLayout<Vertex>.stride * _parameters[0].vertices.count
+
     // get the Library (contains all compiled .metal files in this project)
     let library = _device.makeDefaultLibrary()
     
@@ -332,8 +377,8 @@ public final class WaterfallRenderer: NSObject {
       let h = _computePipelineState.maxTotalThreadsPerThreadgroup / w
       _threadsPerThreadgroup = MTLSizeMake(w, h, 1)
       
-      _threadsPerGrid = MTLSize(width: _intensityTextures[0].width,
-                                height: _intensityTextures[0].height,
+      _threadsPerGrid = MTLSize(width: _parameters[0].intensities.width,
+                                height: _parameters[0].intensities.height,
                                 depth: 1)
     } else {
       
@@ -350,8 +395,6 @@ public final class WaterfallRenderer: NSObject {
     
     // create and save a Gradient Sampler State
     _gradientSamplerState = _device.makeSamplerState(descriptor: gradientSamplerDescriptor)
-    
-    _waterfallVerticesLength = MemoryLayout<Vertex>.stride * _waterfallVertices.count
   }
   /// Copy a gradient array to the gradient Texture
   ///
@@ -402,29 +445,29 @@ extension WaterfallRenderer                 : MTKViewDelegate {
       computeEncoder.pushDebugGroup("Compute")
       
       // set the pipeline state
-      computeEncoder.setComputePipelineState(self._computePipelineState)
+      computeEncoder.setComputePipelineState(_computePipelineState)
       
       // choose and bind the input Texture
-      computeEncoder.setTexture(self._intensityTextures[self._textureIndex], index: 0)
+      computeEncoder.setTexture(_parameters[_textureIndex].intensities, index: 0)
       
       // bind the output Texture
-      computeEncoder.setTexture(self._colorTexture, index: 1)
+      computeEncoder.setTexture(_colorTexture, index: 1)
       
       // bind the Gradient texture
-      computeEncoder.setTexture(self._gradientTexture, index: 2)
+      computeEncoder.setTexture(_gradientTexture, index: 2)
       
       // bind the Constants buffer
-      computeEncoder.setBuffer(self._constantsBuffer, offset: 0, index: 0)
+      computeEncoder.setBuffer(_constantsBuffer, offset: 0, index: 0)
       
       // bind the Sampler state
-      computeEncoder.setSamplerState(self._gradientSamplerState, index: 0)
+      computeEncoder.setSamplerState(_gradientSamplerState, index: 0)
       
       // perform the computation
       if #available(OSX 10.13, *) {
-        computeEncoder.dispatchThreads(self._threadsPerGrid, threadsPerThreadgroup: self._threadsPerThreadgroup)
+        computeEncoder.dispatchThreads(_threadsPerGrid, threadsPerThreadgroup: _threadsPerThreadgroup)
       } else {
         // Fallback on earlier versions
-        computeEncoder.dispatchThreadgroups(self._threadGroups, threadsPerThreadgroup: self._threadGroupCount)
+        computeEncoder.dispatchThreadgroups(_threadGroups, threadsPerThreadgroup: _threadGroupCount)
       }
       computeEncoder.popDebugGroup()
       
@@ -440,16 +483,16 @@ extension WaterfallRenderer                 : MTKViewDelegate {
       renderEncoder.pushDebugGroup("Draw")
       
       // set the pipeline state
-      renderEncoder.setRenderPipelineState(self._waterfallPipelineState)
+      renderEncoder.setRenderPipelineState(_waterfallPipelineState)
       
       // bind the vertices
-      renderEncoder.setVertexBytes(UnsafeRawPointer(self._waterfallVertices), length: self._waterfallVerticesLength, index: 0)
+      renderEncoder.setVertexBytes(UnsafeRawPointer(_parameters[_textureIndex].vertices), length: _waterfallVerticesLength, index: 0)
       
       // bind the Color texture
-      renderEncoder.setFragmentTexture(self._colorTexture, index: 0)
+      renderEncoder.setFragmentTexture(_colorTexture, index: 0)
       
       // bind the Sampler state
-      renderEncoder.setFragmentSamplerState(self._samplerState, index: 0)
+      renderEncoder.setFragmentSamplerState(_samplerState, index: 0)
       
       // Draw the triangles
       renderEncoder.drawPrimitives(type: .triangleStrip, vertexStart: 0, vertexCount: 4)
@@ -460,7 +503,7 @@ extension WaterfallRenderer                 : MTKViewDelegate {
       renderEncoder.popDebugGroup()
       
       // present the drawable to the screen
-      cmdBuffer.present(self._metalView.currentDrawable!)
+      cmdBuffer.present(_metalView.currentDrawable!)
       
       // signal on completion
       cmdBuffer.addCompletedHandler() { _ in self._frameBoundarySemaphore.signal() }
@@ -477,7 +520,7 @@ extension WaterfallRenderer                 : MTKViewDelegate {
 
 extension WaterfallRenderer                 : WaterfallStreamHandler {
   
-  //  dataFrame Struct Layout: (see xLib6000 WaterfallFrame)
+  //  frame Layout: (see xLib6000 WaterfallFrame)
   //
   //  public var firstBinFreq: CGFloat                        // Frequency of first Bin in Hz
   //  public var binBandwidth: CGFloat                        // Bandwidth of a single bin in Hz
@@ -488,65 +531,70 @@ extension WaterfallRenderer                 : WaterfallStreamHandler {
   //  public var bins: [UInt16]                               // Array of bin values
   //
   
-  /// Process the UDP Stream Data for the Waterfall (called on the waterfallQ)
+  /// Process the UDP Stream Data for the Waterfall (arrives on the streamQ)
   ///
-  /// - Parameter dataFrame:  a waterfall dataframe struct
+  /// - Parameter dataFrame:        a waterfall frame
   ///
-  public func waterfallStreamHandler(_ dataframe: WaterfallFrame ) {
+  public func streamHandler(_ frame: WaterfallFrame ) {
     
     // wait for an available Intensity Texture
     _frameBoundarySemaphore.wait()
     
+    // calculate the Top Line for this frame
+    let newTopLine = ( _parameters[_textureIndex].topLine == 0 ? WaterfallRenderer.kTextureHeight - 1 : _parameters[_textureIndex].topLine - 1 )
+
     // set the index to the next Intensity Texture
     _textureIndex = (_textureIndex + 1) % WaterfallRenderer.kMaxTextures
     
     // recalc values initially or when center/bandwidth changes
-    if dataframe.binBandwidth != _binBandwidth || dataframe.firstBinFreq != _firstBinFreq {
+    if frame.binBandwidth != _binBandwidth || frame.firstBinFreq != _firstBinFreq {
       
       // calculate the starting & ending bin numbers
-      let startingBin = Float( (CGFloat(_start) - dataframe.firstBinFreq) / dataframe.binBandwidth )
-      let endingBin = Float( (CGFloat(_end) - dataframe.firstBinFreq) / dataframe.binBandwidth )
+      let startingBin = Float( (CGFloat(_start) - frame.firstBinFreq) / frame.binBandwidth )
+      let endingBin = Float( (CGFloat(_end) - frame.firstBinFreq) / frame.binBandwidth )
       
-      // set the texture left edge (in clip space, i.e. 0.0 to 1.0)
-      let leftSide = startingBin / Float(WaterfallRenderer.kTextureWidth - 1)
-      _waterfallVertices[0].texCoord.x = leftSide                     // clip space value for bottom left x
-      _waterfallVertices[1].texCoord.x = leftSide                     // clip space value for top left x
-      
-      // set the texture right edge (in clip space, i.e. 0.0 to 1.0)
-      let rightSide = endingBin / Float(WaterfallRenderer.kTextureWidth - 1)
-      _waterfallVertices[2].texCoord.x = rightSide                    // clip space value for bottom right x
-      _waterfallVertices[3].texCoord.x = rightSide                    // clip space value for top right x
+      // update all of the x vertices
+      for i in 0..<WaterfallRenderer.kMaxTextures {
+        // set the texture left edge (in clip space, i.e. 0.0 to 1.0)
+        let leftSide = startingBin / Float(WaterfallRenderer.kTextureWidth - 1)
+        _parameters[i].vertices[0].texCoord.x = leftSide    // clip space value for bottom left x
+        _parameters[i].vertices[1].texCoord.x = leftSide    // clip space value for top left x
+        
+        // set the texture right edge (in clip space, i.e. 0.0 to 1.0)
+        let rightSide = endingBin / Float(WaterfallRenderer.kTextureWidth - 1)
+        _parameters[i].vertices[2].texCoord.x = rightSide   // clip space value for bottom right x
+        _parameters[i].vertices[3].texCoord.x = rightSide   // clip space value for top right x
+      }
     }
     // record the current values
-    _autoBlackLevel = UInt16(dataframe.autoBlackLevel)
-    _binBandwidth = dataframe.binBandwidth
-    _firstBinFreq = dataframe.firstBinFreq
+    _autoBlackLevel = UInt16(frame.autoBlackLevel)
+    _binBandwidth = frame.binBandwidth
+    _firstBinFreq = frame.firstBinFreq
     
     // set y coordinates of the top of the texture (in clip space, i.e. 0.0 to 1.0)
-    let topIndex = Float(_textureTopLine)                                 // index into texture
+    let topIndex = Float(_parameters[_textureIndex].topLine)            // index into texture
     let topSide = topIndex / Float(WaterfallRenderer.kTextureHeight - 1)   // clip space value for index
-    _waterfallVertices[3].texCoord.y = topSide                          // clip space value for top right y
-    _waterfallVertices[1].texCoord.y = topSide                          // clip space value for top left y
-    
+    _parameters[_textureIndex].vertices[3].texCoord.y = topSide         // clip space value for top right y
+    _parameters[_textureIndex].vertices[1].texCoord.y = topSide         // clip space value for top left y
+
     // set y coordinates of the bottom of the texture (in clip space, i.e. 0.0 to 1.0)
-    let bottomIndex = Float(_textureTopLine) + Float(_frameSize.height - 1)    // index into texture
+    let bottomIndex = Float(_parameters[_textureIndex].topLine) + Float(_frameSize.height - 1)    // index into texture
     let bottomSide = bottomIndex / Float(WaterfallRenderer.kTextureHeight - 1) // clip space value for index
-    _waterfallVertices[2].texCoord.y = bottomSide                       // clip space value for bottom right y
-    _waterfallVertices[0].texCoord.y = bottomSide                       // clip space value for bottom left y
-    
-    // set the Uniforms
-    updateConstants(autoBlack: _waterfall!.autoBlackEnabled, blackLevel: _waterfall!.blackLevel, colorGain: _waterfall!.colorGain )
+    _parameters[_textureIndex].vertices[2].texCoord.y = bottomSide      // clip space value for bottom right y
+    _parameters[_textureIndex].vertices[0].texCoord.y = bottomSide      // clip space value for bottom left y
+
+    // set the Top Line
+    _parameters[_textureIndex].topLine = newTopLine
+    updateLine(newTopLine)
     
     // copy the Intensities into the current texture
-    let binsPtr = UnsafeRawPointer(dataframe.bins).bindMemory(to: UInt8.self, capacity: dataframe.numberOfBins * MemoryLayout<UInt16>.size)
-    let region = MTLRegionMake1D(0, dataframe.numberOfBins)
-    _intensityTextures[_textureIndex].replace(region: region, mipmapLevel: 0, withBytes: binsPtr, bytesPerRow: WaterfallRenderer.kTextureWidth * MemoryLayout<UInt16>.size)
+    let binsPtr = UnsafeRawPointer(frame.bins).bindMemory(to: UInt8.self, capacity: frame.numberOfBins * MemoryLayout<UInt16>.size)
+    let region = MTLRegionMake1D(0, frame.numberOfBins)
+    _parameters[_textureIndex].intensities.replace(region: region, mipmapLevel: 0, withBytes: binsPtr, bytesPerRow: WaterfallRenderer.kTextureWidth * MemoryLayout<UInt16>.size)
     
-    // decrement the texture line that is used as the "top" line of the display
-    _textureTopLine = ( _textureTopLine == 0 ? WaterfallRenderer.kTextureHeight - 1 : _textureTopLine - 1 )
     
-    DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
+//    DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
       self._metalView.draw()
-    }
+//    }
   }
 }

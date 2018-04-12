@@ -13,18 +13,6 @@
 		913F7F2D2066DC7A00F35E9B /* Side.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 913F7EDB2066DC7900F35E9B /* Side.storyboard */; };
 		913F7F2E2066DC7A00F35E9B /* RadioPicker.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 913F7EDD2066DC7900F35E9B /* RadioPicker.storyboard */; };
 		913F7F2F2066DC7A00F35E9B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 913F7EDF2066DC7900F35E9B /* Main.storyboard */; };
-		913F7F302066DC7A00F35E9B /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7EE32066DC7900F35E9B /* Keychain.swift */; };
-		913F7F312066DC7A00F35E9B /* JWTDecode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7EE52066DC7900F35E9B /* JWTDecode.swift */; };
-		913F7F322066DC7A00F35E9B /* JWT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7EE62066DC7900F35E9B /* JWT.swift */; };
-		913F7F332066DC7A00F35E9B /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7EE72066DC7900F35E9B /* Errors.swift */; };
-		913F7F342066DC7A00F35E9B /* URLSessionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7EE92066DC7900F35E9B /* URLSessionExtension.swift */; };
-		913F7F352066DC7A00F35E9B /* DictionaryExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7EEA2066DC7900F35E9B /* DictionaryExtensions.swift */; };
-		913F7F362066DC7A00F35E9B /* DataExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7EEB2066DC7900F35E9B /* DataExtensions.swift */; };
-		913F7F372066DC7A00F35E9B /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7EEC2066DC7900F35E9B /* StringExtension.swift */; };
-		913F7F382066DC7A00F35E9B /* SwiftyExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7EED2066DC7900F35E9B /* SwiftyExtensions.swift */; };
-		913F7F392066DC7A00F35E9B /* Auth0ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7EEF2066DC7900F35E9B /* Auth0ViewController.swift */; };
-		913F7F3B2066DC7A00F35E9B /* WANRadioPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7EF12066DC7900F35E9B /* WANRadioPickerViewController.swift */; };
-		913F7F3C2066DC7A00F35E9B /* LANRadioPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7EF22066DC7900F35E9B /* LANRadioPickerViewController.swift */; };
 		913F7F3D2066DC7A00F35E9B /* PanafallButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7EF42066DC7900F35E9B /* PanafallButtonView.swift */; };
 		913F7F3E2066DC7A00F35E9B /* PanafallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7EF52066DC7900F35E9B /* PanafallViewController.swift */; };
 		913F7F3F2066DC7A00F35E9B /* PanafallsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7EF62066DC7900F35E9B /* PanafallsViewController.swift */; };
@@ -75,6 +63,17 @@
 		913F7F872066E6F600F35E9B /* OpusOSX.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 913F7F7C2066E6F600F35E9B /* OpusOSX.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		913F7F882066E6F600F35E9B /* ObjcExceptionBridging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 913F7F7D2066E6F600F35E9B /* ObjcExceptionBridging.framework */; };
 		913F7F892066E6F600F35E9B /* ObjcExceptionBridging.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 913F7F7D2066E6F600F35E9B /* ObjcExceptionBridging.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9185B07A207D71EA004D4C40 /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9185B06C207D71E9004D4C40 /* Keychain.swift */; };
+		9185B07B207D71EA004D4C40 /* JWTDecode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9185B06E207D71E9004D4C40 /* JWTDecode.swift */; };
+		9185B07C207D71EA004D4C40 /* JWT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9185B06F207D71E9004D4C40 /* JWT.swift */; };
+		9185B07D207D71EA004D4C40 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9185B070207D71E9004D4C40 /* Errors.swift */; };
+		9185B07E207D71EA004D4C40 /* DictionaryExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9185B072207D71E9004D4C40 /* DictionaryExtensions.swift */; };
+		9185B07F207D71EA004D4C40 /* DataExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9185B073207D71E9004D4C40 /* DataExtensions.swift */; };
+		9185B080207D71EA004D4C40 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9185B074207D71E9004D4C40 /* StringExtensions.swift */; };
+		9185B081207D71EA004D4C40 /* URLSessionExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9185B075207D71E9004D4C40 /* URLSessionExtensions.swift */; };
+		9185B082207D71EA004D4C40 /* Auth0ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9185B077207D71E9004D4C40 /* Auth0ViewController.swift */; };
+		9185B083207D71EA004D4C40 /* WANRadioPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9185B078207D71E9004D4C40 /* WANRadioPickerViewController.swift */; };
+		9185B084207D71EA004D4C40 /* LANRadioPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9185B079207D71E9004D4C40 /* LANRadioPickerViewController.swift */; };
 		91A2D8D9206946E100676728 /* ChangeLog.txt in Resources */ = {isa = PBXBuildFile; fileRef = 91A2D8D8206946E100676728 /* ChangeLog.txt */; };
 /* End PBXBuildFile section */
 
@@ -107,18 +106,6 @@
 		913F7EDC2066DC7900F35E9B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Side.storyboard; sourceTree = "<group>"; };
 		913F7EDE2066DC7900F35E9B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = RadioPicker.storyboard; sourceTree = "<group>"; };
 		913F7EE02066DC7900F35E9B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Main.storyboard; sourceTree = "<group>"; };
-		913F7EE32066DC7900F35E9B /* Keychain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
-		913F7EE52066DC7900F35E9B /* JWTDecode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JWTDecode.swift; sourceTree = "<group>"; };
-		913F7EE62066DC7900F35E9B /* JWT.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JWT.swift; sourceTree = "<group>"; };
-		913F7EE72066DC7900F35E9B /* Errors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
-		913F7EE92066DC7900F35E9B /* URLSessionExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLSessionExtension.swift; sourceTree = "<group>"; };
-		913F7EEA2066DC7900F35E9B /* DictionaryExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DictionaryExtensions.swift; sourceTree = "<group>"; };
-		913F7EEB2066DC7900F35E9B /* DataExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataExtensions.swift; sourceTree = "<group>"; };
-		913F7EEC2066DC7900F35E9B /* StringExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
-		913F7EED2066DC7900F35E9B /* SwiftyExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyExtensions.swift; sourceTree = "<group>"; };
-		913F7EEF2066DC7900F35E9B /* Auth0ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Auth0ViewController.swift; sourceTree = "<group>"; };
-		913F7EF12066DC7900F35E9B /* WANRadioPickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WANRadioPickerViewController.swift; sourceTree = "<group>"; };
-		913F7EF22066DC7900F35E9B /* LANRadioPickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LANRadioPickerViewController.swift; sourceTree = "<group>"; };
 		913F7EF42066DC7900F35E9B /* PanafallButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PanafallButtonView.swift; sourceTree = "<group>"; };
 		913F7EF52066DC7900F35E9B /* PanafallViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PanafallViewController.swift; sourceTree = "<group>"; };
 		913F7EF62066DC7900F35E9B /* PanafallsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PanafallsViewController.swift; sourceTree = "<group>"; };
@@ -171,6 +158,17 @@
 		913F7F7B2066E6F600F35E9B /* SwiftyUserDefaults.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SwiftyUserDefaults.framework; sourceTree = "<group>"; };
 		913F7F7C2066E6F600F35E9B /* OpusOSX.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OpusOSX.framework; sourceTree = "<group>"; };
 		913F7F7D2066E6F600F35E9B /* ObjcExceptionBridging.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ObjcExceptionBridging.framework; sourceTree = "<group>"; };
+		9185B06C207D71E9004D4C40 /* Keychain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
+		9185B06E207D71E9004D4C40 /* JWTDecode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JWTDecode.swift; sourceTree = "<group>"; };
+		9185B06F207D71E9004D4C40 /* JWT.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JWT.swift; sourceTree = "<group>"; };
+		9185B070207D71E9004D4C40 /* Errors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
+		9185B072207D71E9004D4C40 /* DictionaryExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DictionaryExtensions.swift; sourceTree = "<group>"; };
+		9185B073207D71E9004D4C40 /* DataExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataExtensions.swift; sourceTree = "<group>"; };
+		9185B074207D71E9004D4C40 /* StringExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
+		9185B075207D71E9004D4C40 /* URLSessionExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLSessionExtensions.swift; sourceTree = "<group>"; };
+		9185B077207D71E9004D4C40 /* Auth0ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Auth0ViewController.swift; sourceTree = "<group>"; };
+		9185B078207D71E9004D4C40 /* WANRadioPickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WANRadioPickerViewController.swift; sourceTree = "<group>"; };
+		9185B079207D71E9004D4C40 /* LANRadioPickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LANRadioPickerViewController.swift; sourceTree = "<group>"; };
 		91A2D8D8206946E100676728 /* ChangeLog.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ChangeLog.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -203,6 +201,7 @@
 				913F7F7A2066E6F500F35E9B /* XCGLogger.framework */,
 				913F7F772066E6F500F35E9B /* xLib6000.framework */,
 				913F7EC32066DBBE00F35E9B /* xSDR6000 */,
+				9185B06A207D71E9004D4C40 /* CommonClientCode */,
 				913F7EC22066DBBE00F35E9B /* Products */,
 				913F7F6A2066DD5900F35E9B /* Frameworks */,
 			);
@@ -226,15 +225,14 @@
 				912F14882069555A00B5D9B1 /* xSDR6000.entitlements */,
 				913F7ED42066DC7800F35E9B /* xSDR6000-Bridging-Header.h */,
 				913F7ED62066DC7900F35E9B /* Base.lproj */,
-				913F7F042066DC7900F35E9B /* Buttons */,
-				913F7EFA2066DC7900F35E9B /* Misc */,
-				913F7F0B2066DC7A00F35E9B /* Panadapter */,
-				913F7EF32066DC7900F35E9B /* Panafall */,
-				913F7F012066DC7900F35E9B /* Preferences */,
 				913F7F072066DC7900F35E9B /* Radio */,
+				913F7EF32066DC7900F35E9B /* Panafall */,
 				913F7F152066DC7A00F35E9B /* Side */,
+				913F7F042066DC7900F35E9B /* Buttons */,
+				913F7F0B2066DC7A00F35E9B /* Panadapter */,
 				913F7F1D2066DC7A00F35E9B /* Waterfall */,
-				913F7EE12066DC7900F35E9B /* CommonCode */,
+				913F7F012066DC7900F35E9B /* Preferences */,
+				913F7EFA2066DC7900F35E9B /* Misc */,
 				913F7F1C2066DC7A00F35E9B /* Documentation */,
 			);
 			path = xSDR6000;
@@ -250,57 +248,6 @@
 				913F7EDF2066DC7900F35E9B /* Main.storyboard */,
 			);
 			path = Base.lproj;
-			sourceTree = "<group>";
-		};
-		913F7EE12066DC7900F35E9B /* CommonCode */ = {
-			isa = PBXGroup;
-			children = (
-				913F7EE22066DC7900F35E9B /* Misc */,
-				913F7EE82066DC7900F35E9B /* Extensions */,
-				913F7EEE2066DC7900F35E9B /* RadioPicker */,
-			);
-			path = CommonCode;
-			sourceTree = "<group>";
-		};
-		913F7EE22066DC7900F35E9B /* Misc */ = {
-			isa = PBXGroup;
-			children = (
-				913F7EE32066DC7900F35E9B /* Keychain.swift */,
-				913F7EE42066DC7900F35E9B /* JWTDecode */,
-			);
-			path = Misc;
-			sourceTree = "<group>";
-		};
-		913F7EE42066DC7900F35E9B /* JWTDecode */ = {
-			isa = PBXGroup;
-			children = (
-				913F7EE52066DC7900F35E9B /* JWTDecode.swift */,
-				913F7EE62066DC7900F35E9B /* JWT.swift */,
-				913F7EE72066DC7900F35E9B /* Errors.swift */,
-			);
-			path = JWTDecode;
-			sourceTree = "<group>";
-		};
-		913F7EE82066DC7900F35E9B /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				913F7EE92066DC7900F35E9B /* URLSessionExtension.swift */,
-				913F7EEA2066DC7900F35E9B /* DictionaryExtensions.swift */,
-				913F7EEB2066DC7900F35E9B /* DataExtensions.swift */,
-				913F7EEC2066DC7900F35E9B /* StringExtension.swift */,
-				913F7EED2066DC7900F35E9B /* SwiftyExtensions.swift */,
-			);
-			path = Extensions;
-			sourceTree = "<group>";
-		};
-		913F7EEE2066DC7900F35E9B /* RadioPicker */ = {
-			isa = PBXGroup;
-			children = (
-				913F7EEF2066DC7900F35E9B /* Auth0ViewController.swift */,
-				913F7EF12066DC7900F35E9B /* WANRadioPickerViewController.swift */,
-				913F7EF22066DC7900F35E9B /* LANRadioPickerViewController.swift */,
-			);
-			path = RadioPicker;
 			sourceTree = "<group>";
 		};
 		913F7EF32066DC7900F35E9B /* Panafall */ = {
@@ -415,6 +362,57 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		9185B06A207D71E9004D4C40 /* CommonClientCode */ = {
+			isa = PBXGroup;
+			children = (
+				9185B06B207D71E9004D4C40 /* Misc */,
+				9185B071207D71E9004D4C40 /* Extensions */,
+				9185B076207D71E9004D4C40 /* RadioPicker */,
+			);
+			name = CommonClientCode;
+			path = ../CommonClientCode;
+			sourceTree = "<group>";
+		};
+		9185B06B207D71E9004D4C40 /* Misc */ = {
+			isa = PBXGroup;
+			children = (
+				9185B06C207D71E9004D4C40 /* Keychain.swift */,
+				9185B06D207D71E9004D4C40 /* JWTDecode */,
+			);
+			path = Misc;
+			sourceTree = "<group>";
+		};
+		9185B06D207D71E9004D4C40 /* JWTDecode */ = {
+			isa = PBXGroup;
+			children = (
+				9185B06E207D71E9004D4C40 /* JWTDecode.swift */,
+				9185B06F207D71E9004D4C40 /* JWT.swift */,
+				9185B070207D71E9004D4C40 /* Errors.swift */,
+			);
+			path = JWTDecode;
+			sourceTree = "<group>";
+		};
+		9185B071207D71E9004D4C40 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				9185B072207D71E9004D4C40 /* DictionaryExtensions.swift */,
+				9185B073207D71E9004D4C40 /* DataExtensions.swift */,
+				9185B074207D71E9004D4C40 /* StringExtensions.swift */,
+				9185B075207D71E9004D4C40 /* URLSessionExtensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		9185B076207D71E9004D4C40 /* RadioPicker */ = {
+			isa = PBXGroup;
+			children = (
+				9185B077207D71E9004D4C40 /* Auth0ViewController.swift */,
+				9185B078207D71E9004D4C40 /* WANRadioPickerViewController.swift */,
+				9185B079207D71E9004D4C40 /* LANRadioPickerViewController.swift */,
+			);
+			path = RadioPicker;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -519,47 +517,46 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				913F7F342066DC7A00F35E9B /* URLSessionExtension.swift in Sources */,
-				913F7F382066DC7A00F35E9B /* SwiftyExtensions.swift in Sources */,
 				913F7F5C2066DC7A00F35E9B /* PhoneViewController.swift in Sources */,
 				913F7F502066DC7A00F35E9B /* DbLegendView.swift in Sources */,
-				913F7F3C2066DC7A00F35E9B /* LANRadioPickerViewController.swift in Sources */,
 				913F7F4F2066DC7A00F35E9B /* FlagViewController.swift in Sources */,
-				913F7F332066DC7A00F35E9B /* Errors.swift in Sources */,
-				913F7F302066DC7A00F35E9B /* Keychain.swift in Sources */,
 				913F7F472066DC7A00F35E9B /* ParameterMonitor.swift in Sources */,
 				913F7F462066DC7A00F35E9B /* OpusManager.swift in Sources */,
 				913F7F5A2066DC7A00F35E9B /* EqViewController.swift in Sources */,
-				913F7F312066DC7A00F35E9B /* JWTDecode.swift in Sources */,
 				913F7F4A2066DC7A00F35E9B /* BandButtonViewController.swift in Sources */,
+				9185B07D207D71EA004D4C40 /* Errors.swift in Sources */,
+				9185B083207D71EA004D4C40 /* WANRadioPickerViewController.swift in Sources */,
 				913F7F662066DC7A00F35E9B /* WaterfallRenderer.swift in Sources */,
 				913F7F692066DC7A00F35E9B /* WaterfallShaders.metal in Sources */,
 				913F7F572066DC7A00F35E9B /* PanadapterShaders.metal in Sources */,
 				913F7F5D2066DC7A00F35E9B /* AppDelegate.swift in Sources */,
+				9185B080207D71EA004D4C40 /* StringExtensions.swift in Sources */,
 				913F7F3D2066DC7A00F35E9B /* PanafallButtonView.swift in Sources */,
 				913F7F402066DC7A00F35E9B /* PanafallButtonViewController.swift in Sources */,
 				913F7F622066DC7A00F35E9B /* TimeLayer.swift in Sources */,
+				9185B081207D71EA004D4C40 /* URLSessionExtensions.swift in Sources */,
 				913F7F542066DC7A00F35E9B /* PanadapterRenderer.swift in Sources */,
 				913F7F492066DC7A00F35E9B /* PreferencesTabViewController.swift in Sources */,
 				913F7F532066DC7A00F35E9B /* FrequencyLegendView.swift in Sources */,
+				9185B07F207D71EA004D4C40 /* DataExtensions.swift in Sources */,
 				913F7F422066DC7A00F35E9B /* Band.swift in Sources */,
 				913F7F592066DC7A00F35E9B /* RxViewController.swift in Sources */,
 				913F7F4C2066DC7A00F35E9B /* MainWindowController.swift in Sources */,
+				9185B07B207D71EA004D4C40 /* JWTDecode.swift in Sources */,
 				913F7F412066DC7A00F35E9B /* AppExtensions.swift in Sources */,
 				913F7F5B2066DC7A00F35E9B /* PCWViewController.swift in Sources */,
+				9185B082207D71EA004D4C40 /* Auth0ViewController.swift in Sources */,
 				913F7F522066DC7A00F35E9B /* PanadapterViewController.swift in Sources */,
 				913F7F582066DC7A00F35E9B /* SideViewController.swift in Sources */,
+				9185B07C207D71EA004D4C40 /* JWT.swift in Sources */,
+				9185B07E207D71EA004D4C40 /* DictionaryExtensions.swift in Sources */,
 				913F7F3E2066DC7A00F35E9B /* PanafallViewController.swift in Sources */,
 				913F7F482066DC7A00F35E9B /* ColorsViewController.swift in Sources */,
 				913F7F3F2066DC7A00F35E9B /* PanafallsViewController.swift in Sources */,
+				9185B084207D71EA004D4C40 /* LANRadioPickerViewController.swift in Sources */,
 				913F7F682066DC7A00F35E9B /* WaterfallViewController.swift in Sources */,
-				913F7F392066DC7A00F35E9B /* Auth0ViewController.swift in Sources */,
-				913F7F372066DC7A00F35E9B /* StringExtension.swift in Sources */,
-				913F7F362066DC7A00F35E9B /* DataExtensions.swift in Sources */,
 				913F7F4E2066DC7A00F35E9B /* RadioViewController.swift in Sources */,
-				913F7F322066DC7A00F35E9B /* JWT.swift in Sources */,
-				913F7F352066DC7A00F35E9B /* DictionaryExtensions.swift in Sources */,
-				913F7F3B2066DC7A00F35E9B /* WANRadioPickerViewController.swift in Sources */,
+				9185B07A207D71EA004D4C40 /* Keychain.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

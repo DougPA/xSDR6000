@@ -1,11 +1,22 @@
 xSDR6000 Change Log
 
+v0.9.945
+
+Replaced all observation code in Waterfall, Panadapter, Opus & RadioViewController
+Added UserDefaults extensions into AppExtensions.swift
+PanadapterRenderer.swift - removed unnecessary "self." usage
+WaterfallRenderer.swift - removed unnecessary "self." usage
+WaterfallRenderer.swift - added parameters array to contain Param struct w/use in draw(...)
+WaterfallRenderer.swift - removed topLine from upDateConstants(...)
+WaterfallRenderer.swift - added upDateLine(...) to update topLine
+
 v0.9.944
 
 Recompiled xLib6000 (incorporated v7.6.3 of CocoaAsyncSocket), XCGLogger, SwiftyUserDEfaults with Xcode 9.3 / Swift 4.1
 Recompiled xSDR6000 after updates to libraries
 Updated Project Settings to new recommendations
 Replaced a few deprecated methods
+Waterfall, Panadapter & Opus.swift - renamed ...StreamHandler(_dataFrame:) to streamHandler(_frame:)
 
 v0.9.939
 

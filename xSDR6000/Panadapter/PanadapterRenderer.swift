@@ -296,37 +296,37 @@ extension PanadapterRenderer                : MTKViewDelegate {
       encoder.pushDebugGroup("Fill")
       
       // set the Spectrum pipeline state
-      encoder.setRenderPipelineState(self._pipelineState)
+      encoder.setRenderPipelineState(_pipelineState)
       
       // bind the active Spectrum buffer
-      encoder.setVertexBuffer(self._spectrumBuffers[self._currentFrameIndex], offset: 0, index: self.kSpectrumBufferIndex)
+      encoder.setVertexBuffer(_spectrumBuffers[_currentFrameIndex], offset: 0, index: kSpectrumBufferIndex)
       
       // bind the Constants
-      encoder.setVertexBytes(&self._constants, length: MemoryLayout.size(ofValue: self._constants), index: self.kConstantsBufferIndex)
+      encoder.setVertexBytes(&_constants, length: MemoryLayout.size(ofValue: _constants), index: kConstantsBufferIndex)
       
       // is the Panadapter "filled"?
       if self._fillLevel > 1 {
         
         // YES, bind the Fill Color
-        encoder.setVertexBytes(&self._colorArray[self.kFillColor], length: MemoryLayout.size(ofValue: self._colorArray[self.kFillColor]), index: self.kColorBufferIndex)
+        encoder.setVertexBytes(&_colorArray[kFillColor], length: MemoryLayout.size(ofValue: _colorArray[kFillColor]), index: kColorBufferIndex)
         
         // Draw filled
-        encoder.drawIndexedPrimitives(type: .triangleStrip, indexCount: self._numberOfBins * 2, indexType: .uint16, indexBuffer: self._spectrumIndicesBuffer, indexBufferOffset: 0)
+        encoder.drawIndexedPrimitives(type: .triangleStrip, indexCount: _numberOfBins * 2, indexType: .uint16, indexBuffer: _spectrumIndicesBuffer, indexBufferOffset: 0)
       }
       encoder.popDebugGroup()
       encoder.pushDebugGroup("Line")
       
       // bind the Line Color
-      encoder.setVertexBytes(&self._colorArray[self.kLineColor], length: MemoryLayout.size(ofValue: self._colorArray[self.kLineColor]), index: self.kColorBufferIndex)
+      encoder.setVertexBytes(&_colorArray[kLineColor], length: MemoryLayout.size(ofValue: _colorArray[kLineColor]), index: kColorBufferIndex)
       
       // Draw as a Line
-      encoder.drawPrimitives(type: .lineStrip, vertexStart: 0, vertexCount: self._numberOfBins)
+      encoder.drawPrimitives(type: .lineStrip, vertexStart: 0, vertexCount: _numberOfBins)
       
       // finish using this encoder
       encoder.endEncoding()
       
       // present the drawable to the screen
-      cmdBuffer.present(self._metalView.currentDrawable!)
+      cmdBuffer.present(_metalView.currentDrawable!)
       
       // signal on completion
       cmdBuffer.addCompletedHandler() { _ in self._frameBoundarySemaphore.signal() }
@@ -341,7 +341,8 @@ extension PanadapterRenderer                : MTKViewDelegate {
 // MARK: - PanadapterStreamHandler protocol methods
 
 extension PanadapterRenderer                : PanadapterStreamHandler {
-  
+
+
   //  DataFrame Layout: (see xLib6000 PanadapterFrame)
   //
   //  public var startingBinIndex: Int                    // Index of first bin
@@ -351,21 +352,22 @@ extension PanadapterRenderer                : PanadapterStreamHandler {
   //  public var bins: [UInt16]                           // Array of bin values
   //
   
-  //
-  // Process the UDP Stream Data for the Panadapter
-  //
-  public func panadapterStreamHandler(_ dataFrame: PanadapterFrame) {
-    
+  /// Process the UDP Stream Data for the Panadapter (arrives on the streamQ)
+  ///
+  /// - Parameter frame:        a Panadapter frame
+  ///
+  public func streamHandler(_ frame: PanadapterFrame) {
+
     _frameBoundarySemaphore.wait()
     
     // move to using the next spectrumBuffer
     _currentFrameIndex = (_currentFrameIndex + 1) % PanadapterRenderer.kNumberSpectrumBuffers
     
     // dataFrame.numberOfBins is the number of horizontal pixels in the spectrum waveform
-    _numberOfBins = dataFrame.numberOfBins
+    _numberOfBins = frame.numberOfBins
     
     // put the Intensities into the current Spectrum Buffer
-    _spectrumBuffers[_currentFrameIndex].contents().copyMemory(from: dataFrame.bins, byteCount: dataFrame.numberOfBins * MemoryLayout<ushort>.stride)
+    _spectrumBuffers[_currentFrameIndex].contents().copyMemory(from: frame.bins, byteCount: frame.numberOfBins * MemoryLayout<ushort>.stride)
     
     DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
       self._metalView.draw()

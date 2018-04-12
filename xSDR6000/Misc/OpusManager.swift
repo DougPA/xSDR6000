@@ -200,14 +200,14 @@ class OpusManager                           : NSObject, OpusStreamHandler, AFSou
   
   // ----------------------------------------------------------------------------
   // MARK: - OpusStreamHandler protocol methods
-  //      called by Opus, executes on the udpQ
+  //      called by Opus, executes on the streamQ
   //
   
   /// Process an Opus Rx stream
   ///
   /// - Parameter frame: an Opus Rx Frame
   ///
-  func opusStreamHandler(_ frame: OpusFrame) {
+  func streamHandler(_ frame: OpusFrame) {
     
     // perform Opus decoding
     let result = opus_decode_float(_decoder, frame.samples, Int32(frame.numberOfSamples), _rxInterleavedPtr, Int32(_tenMsSampleCount * MemoryLayout<Float>.size * kNumberOfChannels), Int32(0))

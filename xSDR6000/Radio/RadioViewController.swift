@@ -550,6 +550,80 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   }
 
   // ----------------------------------------------------------------------------
+  // MARK: - NEW Observation methods
+
+  private var _radioObservers   = [NSKeyValueObservation]()
+  private var _opusObservers    = [NSKeyValueObservation]()
+
+  /// Add observers for Radio properties
+  ///
+  private func addRadioObservers(_ radio: Radio) {
+    
+    _radioObservers = [
+      radio.observe(\.lineoutGain, options: [.initial, .new], changeHandler: radioObserver),
+      radio.observe(\.lineoutMute, options: [.initial, .new], changeHandler: radioObserver),
+      radio.observe(\.headphoneGain, options: [.initial, .new], changeHandler: radioObserver),
+      radio.observe(\.headphoneMute, options: [.initial, .new], changeHandler: radioObserver),
+      radio.observe(\.tnfEnabled, options: [.initial, .new], changeHandler: radioObserver),
+      radio.observe(\.fullDuplexEnabled, options: [.initial, .new], changeHandler: radioObserver)
+    ]
+  }
+  /// Add observers for Opus properties
+  ///
+  private func addOpusObservers(_ opus: Opus) {
+    
+    _opusObservers = [
+      opus.observe(\.remoteRxOn, options: [.initial, .new], changeHandler: opusObserver),
+      opus.observe(\.remoteTxOn, options: [.initial, .new], changeHandler: opusObserver),
+      opus.observe(\.rxStreamStopped, options: [.initial, .new], changeHandler: opusObserver),
+    ]
+  }
+  /// Remove observers
+  ///
+  /// - Parameter observers:            an array of NSKeyValueObservation
+  ///
+  func removeObservers(_ observers: [NSKeyValueObservation]) {
+
+    for observer in observers {
+      observer.invalidate()
+    }
+  }
+  /// Respond to Radio observations
+  ///
+  /// - Parameters:
+  ///   - object:                       the object holding the properties
+  ///   - change:                       the change
+  ///
+  private func radioObserver(_ radio: Radio, _ change: Any) {
+
+    // interact with the UI
+    DispatchQueue.main.async { [unowned self] in
+
+      self._mainWindowController?.lineoutGain.integerValue = radio.lineoutGain
+
+      self._mainWindowController?.lineoutMute.state = radio.lineoutMute ? NSControl.StateValue.on : NSControl.StateValue.off
+
+      self._mainWindowController?.headphoneGain.integerValue = radio.headphoneGain
+
+      self._mainWindowController?.headphoneMute.state = radio.headphoneMute ? NSControl.StateValue.on : NSControl.StateValue.off
+
+      self._mainWindowController?.tnfEnabled.state = radio.tnfEnabled ? NSControl.StateValue.on : NSControl.StateValue.off
+
+      self._mainWindowController?.fdxEnabled.state = radio.fullDuplexEnabled ? NSControl.StateValue.on : NSControl.StateValue.off
+    }
+  }
+  /// Respond to Opus observations
+  ///
+  /// - Parameters:
+  ///   - object:                       the object holding the properties
+  ///   - change:                       the change
+  ///
+  private func opusObserver(_ opus: Opus, _ change: Any) {
+    
+    // FIXME: need code
+  }
+
+  // ----------------------------------------------------------------------------
   // MARK: - Observation methods
   
   private let _radioKeyPaths = [
@@ -713,7 +787,8 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     Defaults[.guiFirmwareSupport] = kGuiFirmwareSupport
     
     // observe changes to Radio properties
-    observations(_api.radio!, paths: _radioKeyPaths)
+//    observations(_api.radio!, paths: _radioKeyPaths)
+    addRadioObservers(_api.radio!)
   }
   /// Process .tcpDidDisconnect Notification
   ///
@@ -815,11 +890,11 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     
     // the Opus class has been initialized
     if let opus = note.object as? Opus {
-      
+
       DispatchQueue.main.sync { [unowned self] in
-        
+
         // add Opus property observations
-        self.observations(opus, paths: self._opusKeyPaths)
+        self.addOpusObservers(opus)
       }
     }
   }
@@ -830,12 +905,12 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   @objc private func opusWillBeRemoved(_ note: Notification) {
     
     // an Opus class will be removed
-    if let opus = note.object as? Opus {
-      
+    if let _ = note.object as? Opus {
+
       DispatchQueue.main.sync { [unowned self] in
-        
+
         // remove Opus property observations
-        self.observations(opus, paths: self._opusKeyPaths, remove: true)
+        self.removeObservers(self._opusObservers)
       }
     }
   }
@@ -850,7 +925,8 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   func closeRadio() {
     
     // remove observations of Radio properties
-    observations(_api.radio!, paths: _radioKeyPaths, remove: true)
+//    observations(_api.radio!, paths: _radioKeyPaths, remove: true)
+    removeObservers(_radioObservers)
     
     _api.disconnect(reason: .normal)
   }
