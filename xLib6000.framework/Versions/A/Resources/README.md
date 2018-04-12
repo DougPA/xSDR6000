@@ -1,38 +1,43 @@
 # xLib6000
 ## Mac implementation of the FlexRadio (TM) series 6000 software defined radios API (FlexLib)
 
-Builds on macOS 10.13.3 using XCode 9.2 (9c40b) using Swift 4 with a Deployment
-Target of macOS 10.10
-
-NOTE: The Swift 4 Branch has been eliminated, the Master Branch is now the sole repository.
-
-This version includes the library-side code to support SmartLink (see xAPITester or xSDR6000 for
-an example of the client-side code needed to implement SmartLink).
-
-Version 1.0.1 is a reorganization of the file structure to reflect the use of Common Code between this
-framework and xAPITesterSL and xSDR6000
-
-==========================================================================
-
-This framework provides most of the capability of FlexLib but does not 
-provide an identical interface due to the differences between the Windows
-and macOS environments and system services.
-
-CocoaAsyncSocket is embedded in this project as source code
-(version 7.6.1 as of 2017-06-24
-see https://github.com/robbiehanson/CocoaAsyncSocket)
+### Built on:
+*  macOS 10.13.4 (Deployment Target of macOS 10.10)
+*  XCode 9.3
+* Swift 4.1
 
 
-==========================================================================
+**This version supports SmartLink (TM).**
 
-Comments and/or questions to:    douglas.adams@me.com
 
-==========================================================================
+## Usage
 
-Once compiled, the framework should be placed in a folder on your Mac where
-frameworks can be referenced (typically ~/Library/Frameworks)
+This framework provides most of the capability of FlexLib but does not provide an identical  interface due to the  
+differences between the Windows and macOS environments and system services.
 
-A compiled DEBUG build framework is contained in the GitHub Release if
-you would rather not build from sources.
+If you want to learn more about the 6000 series API, please take a look at the xAPITester project. It uses this framework.
 
-If you require a RELEASE build you will have to build from sources.
+* https://github.com/DougPA/xAPITester
+
+For an example of a SmartSDR-like client for the Mac, please take a look at the xSDR6000 project. It uses this framework.
+
+* https://github.com/DougPA/xSDR6000
+
+
+## Builds
+
+A compiled DEBUG build executable is contained in the GitHub Release if you would rather not build from sources.  
+
+If you require a RELEASE build you will have to build from sources.   
+
+
+## Comments / Questions
+
+douglas.adams@me.com
+
+
+## Credits
+
+Version 7.6.3 of CocoaAsyncSocket is embedded in this project as source code. It can be found on GitHub at:  
+
+* https://github.com/robbiehanson/CocoaAsyncSocket

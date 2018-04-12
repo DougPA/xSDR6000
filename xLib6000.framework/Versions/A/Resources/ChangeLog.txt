@@ -1,8 +1,47 @@
 xLib6000 Change Log
 
+v1.0.14
+
+Opus.swift - rename _id property to id
+Api.swift - in disconnect(reason:) changed object in .radioWillBeRemoved from activeRadio to radio
+Api.swift - in send(_:diagnostic:replyTo:) added testerDelegate?.addReplyHandler(_:replyTuple:)
+
+v1.0.13
+
+Updated project settings to Xcode 9.3 recommendations
+Replaced CocoaAsyncSocket with newer version (7.6.3)
+Restructured folders to eliminate the "CommonCode" folder
+API & Radio.swift - renamed API Delegate method streamHandler(...) to vitaParser(...)
+Vita.swift - renamed VitaHandler protocol to VitaProcessor
+AudioStream, IqStream, MicAudioStream, Opus, Panadapter & Waterfall.swift - renamed VitaHandler to VitaProcessor
+Panadapter.swift - replaced literal 4096 with kMaxBins = 5120
+Radio.swift - refactored vitaParser(...) code
+Radio.swift - moved processing of Meter UDP streams to Meter.swift (class method vitaProcessor(...))
+
+*** Client Facing ****
+AudioStream, IqStream, MicAudioStream, Opus, Panadapter & Waterfall.swift - renamed the methods inside their
+      ...StreamHandlerProtocols from ...StreamHandler to streamHandler
+
+v1.0.12
+
+Merged branch v1.0.5x (changes to Slice.swift and SliceCommands.swift) for autoPan property
+APi.swift - changed setConnectionState(...) to public from internal
+Api.swift - added testerDelegate property & usage
+
+v1.0.7
+
+Api.swift - added connectionHandle & isWan properties
+Radio.swift - removed connectionHandle  & isWan properties
+Radio.swift - changed usage of connectionHandle & isWan to use properties on Api.swift
+Radio.swift - removed isWan property from initializer
+TcpManager.swift - removed default value for isWan from connect(...) method
+UdpManager.swift - removed default value for isWan from bind(...) method
+
 v1.0.5
 
 Radio.swift - removed default value for isWan from initializer
+Slice.swift - added autoPan (Bool) property
+SliceCommands.swift - added autoPan to sliceTune(...) method
 
 v1.0.4
 
