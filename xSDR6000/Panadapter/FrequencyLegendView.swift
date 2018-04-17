@@ -29,8 +29,6 @@ public final class FrequencyLegendView      : NSView {
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
 
-
-  
   private var _center                       : Int {return panadapter!.center }
   private var _bandwidth                    : Int { return panadapter!.bandwidth }
   private var _start                        : Int { return _center - (_bandwidth/2) }

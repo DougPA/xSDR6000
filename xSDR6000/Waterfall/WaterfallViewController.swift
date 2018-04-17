@@ -174,13 +174,8 @@ func loadGradient(index: Int) -> [UInt8] {
   ///
   private func setupObservations() {
 
-    // begin observations (defaults, panadapter & waterfall)
-//    observations(UserDefaults.standard, paths: _defaultsKeyPaths)
-//    observations(panadapter!, paths: _panadapterKeyPaths)
-//    observations(_waterfall!, paths: _waterfallKeyPaths)
-    addPanadapterObservers(panadapter!)
-    addWaterfallObservers(_waterfall!)
-    addDefaultsObservers()
+    // begin observations (panadapter, waterfall & Defaults)
+    createBaseObservations(&_baseObservations)
     
     // add notification subscriptions
     addNotifications()
@@ -188,47 +183,36 @@ func loadGradient(index: Int) -> [UInt8] {
 
   // ----------------------------------------------------------------------------
   // MARK: - NEW Observation methods
+
+  private var _baseObservations        = [NSKeyValueObservation]()
   
-  private var _panadapterObservers   = [NSKeyValueObservation]()
-  private var _waterfallObservers    = [NSKeyValueObservation]()
-  private var _defaultsObservers    = [NSKeyValueObservation]()
-  
-  /// Add observers for Panadapter properties
+  /// Add observations of various properties
   ///
-  private func addPanadapterObservers(_ object: Panadapter) {
+  private func createBaseObservations(_ observations: inout [NSKeyValueObservation]) {
     
-    _panadapterObservers = [
-      object.observe(\.band, options: [.initial, .new], changeHandler: panadapterObserver),
+    observations = [
+      panadapter!.observe(\.band, options: [.initial, .new], changeHandler: panadapterObserver),
+      _waterfall!.observe(\.autoBlackEnabled, options: [.initial, .new], changeHandler: waterfallObserverLevels),
+      _waterfall!.observe(\.blackLevel, options: [.initial, .new], changeHandler: waterfallObserverLevels),
+      _waterfall!.observe(\.colorGain, options: [.initial, .new], changeHandler: waterfallObserverLevels),
+      _waterfall!.observe(\.gradientIndex, options: [.initial, .new], changeHandler: waterfallObserverGradient),
+      Defaults.observe(\.spectrumBackground, options: [.initial, .new], changeHandler: defaultsObserver)
     ]
   }
-  /// Add observers for Waterfall properties
+  /// Invalidate observations (optionally remove)
   ///
-  private func addWaterfallObservers(_ object: Waterfall) {
+  /// - Parameters:
+  ///   - observations:                 an array of NSKeyValueObservation
+  ///   - remove:                       remove all enabled
+  ///
+  func invalidateObservations(_ observations: inout [NSKeyValueObservation], remove: Bool = true) {
     
-    _waterfallObservers = [
-      object.observe(\.autoBlackEnabled, options: [.initial, .new], changeHandler: waterfallObserverLevels),
-      object.observe(\.blackLevel, options: [.initial, .new], changeHandler: waterfallObserverLevels),
-      object.observe(\.colorGain, options: [.initial, .new], changeHandler: waterfallObserverLevels),
-      object.observe(\.gradientIndex, options: [.initial, .new], changeHandler: waterfallObserverGradient),
-    ]
-  }
-  /// Add observers for Defaults properties
-  ///
-  private func addDefaultsObservers() {
-    
-    _defaultsObservers = [
-      Defaults.observe(\.spectrumBackground, options: [.initial, .new], changeHandler: defaultsObserver),
-    ]
-  }
-  /// Remove observers
-  ///
-  /// - Parameter observers:            an array of NSKeyValueObservation
-  ///
-  func removeObservers(_ observers: [NSKeyValueObservation]) {
-    
-    for observer in observers {
-      observer.invalidate()
+    // invalidate each observation
+    for observation in observations {
+      observation.invalidate()
     }
+    // if specified, remove the tokens
+    if remove { observations.removeAll() }
   }
   /// Respond to Panadapter observations
   ///
@@ -237,7 +221,7 @@ func loadGradient(index: Int) -> [UInt8] {
   ///   - change:                       the change
   ///
   private func panadapterObserver(_ object: Panadapter, _ change: Any) {
-    
+
       // force the Waterfall to restart
       self._waterfallRenderer.restart()
   }
@@ -259,7 +243,7 @@ func loadGradient(index: Int) -> [UInt8] {
   ///   - change:                       the change
   ///
   private func waterfallObserverGradient(_ object: Waterfall, _ change: Any) {
-    
+
       // reload the Gradient
       self._waterfallRenderer.setGradient(self.loadGradient(index: self._waterfall!.gradientIndex) )
   }
@@ -270,7 +254,7 @@ func loadGradient(index: Int) -> [UInt8] {
   ///   - change:                       the change
   ///
   private func defaultsObserver(_ object: UserDefaults, _ change: Any) {
-    
+
       // reset the spectrum background color
       let color = Defaults[.spectrumBackground]
       self._waterfallView.clearColor = MTLClearColor(red: Double(color.redComponent),
@@ -278,79 +262,6 @@ func loadGradient(index: Int) -> [UInt8] {
                                                      blue: Double(color.blueComponent),
                                                      alpha: Double(color.alphaComponent) )
   }
-
-  // ----------------------------------------------------------------------------
-  // MARK: - Observation Methods
-  
-//  private let _defaultsKeyPaths = [
-//    "spectrumBackground"
-//  ]
-//  
-//  private let _panadapterKeyPaths = [
-//    #keyPath(Panadapter.band)
-//  ]
-//  
-//  private let _waterfallKeyPaths = [
-//    #keyPath(Waterfall.autoBlackEnabled),
-//    #keyPath(Waterfall.blackLevel),
-//    #keyPath(Waterfall.colorGain),
-//    #keyPath(Waterfall.gradientIndex)
-//  ]
-//  
-//  /// Add / Remove property observations
-//  ///
-//  /// - Parameters:
-//  ///   - object:         the object of the observations
-//  ///   - paths:          an array of KeyPaths
-//  ///   - add:            add / remove (defaults to add)
-//  ///
-//  private func observations<T: NSObject>(_ object: T, paths: [String], remove: Bool = false) {
-//
-//    // for each KeyPath Add / Remove observations
-//    for keyPath in paths {
-//
-//      if remove { object.removeObserver(self, forKeyPath: keyPath, context: nil) }
-//      else { object.addObserver(self, forKeyPath: keyPath, options: [.initial, .new], context: nil) }
-//    }
-//  }
-//  /// Observe properties
-//  ///
-//  /// - Parameters:
-//  ///   - keyPath:        the registered KeyPath
-//  ///   - object:         object containing the KeyPath
-//  ///   - change:         dictionary of values
-//  ///   - context:        context (if any)
-//  ///
-//  override public func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-//
-//    switch keyPath! {
-//
-//    // Defaults
-//    case "spectrumBackground":
-//      // reset the spectrum background color
-//      let color = Defaults[.spectrumBackground]
-//      _waterfallView.clearColor = MTLClearColor(red: Double(color.redComponent),
-//                                            green: Double(color.greenComponent),
-//                                            blue: Double(color.blueComponent),
-//                                            alpha: Double(color.alphaComponent) )
-//    // Panadapter
-//    case #keyPath(Panadapter.band):
-//      // force the Waterfall to restart
-//      _waterfallRenderer.restart()
-//
-//    // Waterfall
-//    case #keyPath(Waterfall.autoBlackEnabled), #keyPath(Waterfall.blackLevel), #keyPath(Waterfall.colorGain):
-//      // update the levels
-//      _waterfallRenderer.updateConstants(autoBlack: _waterfall!.autoBlackEnabled, blackLevel: _waterfall!.blackLevel, colorGain: _waterfall!.colorGain)
-//
-//    case #keyPath(Waterfall.gradientIndex):
-//      // reload the Gradient
-//      _waterfallRenderer.setGradient(loadGradient(index: _waterfall!.gradientIndex) )
-//
-//    default:
-//      Log.sharedInstance.msg("Invalid observation - \(keyPath!)", level: .error, function: #function, file: #file, line: #line)
-//    }
-//  }
   
   // ----------------------------------------------------------------------------
   // MARK: - Notification Methods
@@ -373,24 +284,17 @@ func loadGradient(index: Int) -> [UInt8] {
     if let waterfall = note.object as? Waterfall {
 
       // YES, log the event
-      Log.sharedInstance.msg("ID = \(waterfall.id.hex), watVc = \(self)", level: .debug, function: #function, file: #file, line: #line)
+      Log.sharedInstance.msg("ID = \(waterfall.id.hex)", level: .debug, function: #function, file: #file, line: #line)
 
       // stop processing waterfall data
       waterfall.delegate = nil
 
-//      _waterfallView?.delegate = nil
-
-//      // remove Defaults property observers
-//      observations(UserDefaults.standard, paths: _defaultsKeyPaths, remove: true)
-//
-//      // remove Panadapter property observers
-//      observations(panadapter!, paths: _panadapterKeyPaths, remove: true)
-//
-//      // remove Waterfall property observers
-//      observations(waterfall, paths: _waterfallKeyPaths, remove: true)
-
+      // invalidate all property observers
+      invalidateObservations(&_baseObservations)
+      
       // remove the UI components of the Panafall
-      DispatchQueue.main.async { [unowned self] in
+      DispatchQueue.main.sync { [unowned self] in
+        
         // remove the entire PanafallButtonViewController hierarchy
         let panafallButtonVc = self.parent!.parent!
         panafallButtonVc.removeFromParentViewController()

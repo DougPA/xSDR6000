@@ -94,9 +94,9 @@ final class PanafallButtonViewController    : NSViewController {
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
   
-  private var _panafallViewController       : PanafallViewController!
-  private var _panadapterViewController     : PanadapterViewController!
-  private var _waterfallViewController      : WaterfallViewController!
+  private weak var _panafallViewController       : PanafallViewController?
+  private weak var _panadapterViewController     : PanadapterViewController?
+  private weak var _waterfallViewController      : WaterfallViewController?
   
   private var _center                       : Int {return panadapter!.center }
   private var _bandwidth                    : Int { return panadapter!.bandwidth }
@@ -132,21 +132,21 @@ final class PanafallButtonViewController    : NSViewController {
       (segue.destinationController as! NSViewController).representedObject = representedObject
       
       // save a reference to the Panafall view controller
-      _panafallViewController = segue.destinationController as! PanafallViewController
+      _panafallViewController = segue.destinationController as? PanafallViewController
       
       // pass the Radio & Panadapter
       _panafallViewController!.radio = radio
       _panafallViewController!.panadapter = panadapter
       
       // give the PanadapterViewController & waterfallViewControllers a copy of Radio & Panadapter
-      _panadapterViewController = _panafallViewController!.splitViewItems[kPanadapterSplitViewItem].viewController as! PanadapterViewController
-      _waterfallViewController = _panafallViewController!.splitViewItems[kWaterfallSplitViewItem].viewController as! WaterfallViewController
+      _panadapterViewController = _panafallViewController!.splitViewItems[kPanadapterSplitViewItem].viewController as? PanadapterViewController
+      _waterfallViewController = _panafallViewController!.splitViewItems[kWaterfallSplitViewItem].viewController as? WaterfallViewController
       
-      _panadapterViewController.radio = radio
-      _panadapterViewController.panadapter = panadapter
+      _panadapterViewController!.radio = radio
+      _panadapterViewController!.panadapter = panadapter
       
-      _waterfallViewController.radio = radio
-      _waterfallViewController.panadapter = panadapter
+      _waterfallViewController!.radio = radio
+      _waterfallViewController!.panadapter = panadapter
       
     case kAntennaPopover, kDisplayPopover, kDaxPopover:
       

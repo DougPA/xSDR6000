@@ -34,7 +34,7 @@ final class PanafallViewController          : NSSplitViewController {
   private var _end                          : Int { return _center + (_bandwidth/2) }
   private var _hzPerUnit                    : CGFloat { return CGFloat(_end - _start) / view.frame.width }
   
-  private var _panadapterViewController     : PanadapterViewController? { return _panadapterSplitViewItem.viewController as? PanadapterViewController }
+  private weak var _panadapterViewController     : PanadapterViewController? { return _panadapterSplitViewItem.viewController as? PanadapterViewController }
   
   // gesture recognizer related
   private var _doubleClick                  : NSClickGestureRecognizer!

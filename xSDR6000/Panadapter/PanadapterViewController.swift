@@ -45,7 +45,7 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
   
-  @IBOutlet private var _frequencyLegendView  : FrequencyLegendView!
+  @IBOutlet private weak var _frequencyLegendView  : FrequencyLegendView!
   @IBOutlet private weak var _dbLegendView    : DbLegendView!
   @IBOutlet private weak var _panadapterView  : MTKView!
 
@@ -88,9 +88,6 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
     
 //    Swift.print("PanadapterViewController - viewDidLoad")
     
-    // add notification subscriptions
-    addNotifications()
-    
     // determine how the various views are blended on screen
     _panadapterView.compositingFilter = _filter
     _dbLegendView.compositingFilter = _filter
@@ -130,28 +127,24 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
     _frequencyLegendView.panadapter = panadapter
     _dbLegendView.panadapter = panadapter
 
-    // begin observations (defaults, panadapter & radio)
-//    observations(UserDefaults.standard, paths: _defaultsKeyPaths)
-//    observations(panadapter!, paths: _panadapterKeyPaths)
-//    observations(radio!, paths: _radioKeyPaths)
-    addDefaultsObservers()
-    addPanadapterObservers(panadapter!)
-    addRadioObservers(radio!)
-
+    setupObservations()
+    
     // make the Renderer the Stream Handler
     panadapter?.delegate = _panadapterRenderer
   }
   /// View did layout
   ///
-  override func viewDidLayout() {
-
-    // tell the Panadapter to tell the Radio the current dimensions
-    panadapter?.xPixels = view.frame.width
-    panadapter?.yPixels = view.frame.height
-
-    // update the Constant values with the new size
-    _panadapterRenderer.updateConstants(size: view.frame.size)
-  }
+//  override func viewDidLayout() {
+//
+//    Swift.print("pan id = \(panadapter!.id.hex), self = \(self)")
+//
+//    // tell the Panadapter to tell the Radio the current dimensions
+//    panadapter?.xPixels = view.frame.width
+//    panadapter?.yPixels = view.frame.height
+//
+//    // update the Constant values with the new size
+//    _panadapterRenderer.updateConstants(size: view.frame.size)
+//  }
   
 //  deinit {
 //
@@ -160,6 +153,17 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
   
   // ----------------------------------------------------------------------------
   // MARK: - Internal methods
+
+  /// start observations & Notification
+  ///
+  private func setupObservations() {
+
+    // add notification subscriptions
+    addNotifications()
+
+    // begin observations (defaults, panadapter & radio)
+    createBaseObservations(&_baseObservations)
+  }
   
   // force a redraw of a view
   
@@ -417,18 +421,15 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
 
   // ----------------------------------------------------------------------------
   // MARK: - NEW Observation methods
-  
-  private var _defaultsObservers    = [NSKeyValueObservation]()
-  private var _panadapterObservers  = [NSKeyValueObservation]()
-  private var _radioObservers       = [NSKeyValueObservation]()
-  private var _sliceObservers       = [NSKeyValueObservation]()
-  private var _tnfObservers         = [NSKeyValueObservation]()
-  
-  /// Add observers for Defaults properties
+
+  private var _baseObservations    = [NSKeyValueObservation]()
+  private var _tnfObservations     = [NSKeyValueObservation]()
+
+  /// Add observations of various properties
   ///
-  private func addDefaultsObservers() {
-    
-    _defaultsObservers = [
+  private func createBaseObservations(_ observations: inout [NSKeyValueObservation]) {
+
+    observations = [
       Defaults.observe(\.bandMarker, options: [.initial, .new], changeHandler: redrawObserver),
       Defaults.observe(\.dbLegend, options: [.initial, .new], changeHandler: redrawObserver),
       Defaults.observe(\.dbLegendSpacing, options: [.initial, .new], changeHandler: redrawObserver),
@@ -446,56 +447,48 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
       Defaults.observe(\.fillLevel, options: [.initial, .new], changeHandler: defaultsObserver),
       Defaults.observe(\.spectrum, options: [.initial, .new], changeHandler: defaultsObserver),
       Defaults.observe(\.spectrumBackground, options: [.initial, .new], changeHandler: defaultsObserver),
-    ]
-  }
-  /// Add observers for Panadapter properties
-  ///
-  private func addPanadapterObservers(_ object: Panadapter) {
-    
-    _panadapterObservers = [
-      object.observe(\.bandwidth, options: [.initial, .new], changeHandler: redrawObserver),
-      object.observe(\.center, options: [.initial, .new], changeHandler: redrawObserver),
-    ]
-  }
-  /// Add observers for Radio properties
-  ///
-  private func addRadioObservers(_ object: Radio) {
-    
-    _radioObservers = [
-      object.observe(\.tnfEnabled, options: [.initial, .new], changeHandler: redrawObserver),
+
+      panadapter!.observe(\.bandwidth, options: [.initial, .new], changeHandler: redrawObserver),
+      panadapter!.observe(\.center, options: [.initial, .new], changeHandler: redrawObserver),
+      
+      radio!.observe(\.tnfEnabled, options: [.initial, .new], changeHandler: redrawObserver),
     ]
   }
   /// Add observers for Slice properties
   ///
-  private func addSliceObservers(_ object: xLib6000.Slice) {
-    
-    _sliceObservers = [
-      object.observe(\.active, options: [.initial, .new], changeHandler: redrawObserver),
-      object.observe(\.filterHigh, options: [.initial, .new], changeHandler: redrawObserver),
-      object.observe(\.filterLow, options: [.initial, .new], changeHandler: redrawObserver),
-      object.observe(\.frequency, options: [.initial, .new], changeHandler: redrawObserver),
-    ]
+    private func createSliceObservations(_ observations: inout [NSKeyValueObservation], object: xLib6000.Slice ) {
+
+      observations = [
+        object.observe(\.active, options: [.initial, .new], changeHandler: redrawObserver),
+        object.observe(\.filterHigh, options: [.initial, .new], changeHandler: redrawObserver),
+        object.observe(\.filterLow, options: [.initial, .new], changeHandler: redrawObserver),
+        object.observe(\.frequency, options: [.initial, .new], changeHandler: redrawObserver)
+      ]
   }
   /// Add observers for Tnf properties
   ///
-  private func addTnfObservers(_ object: Tnf) {
-    
-    _tnfObservers = [
-      object.observe(\.depth, options: [.initial, .new], changeHandler: redrawObserver),
-      object.observe(\.frequency, options: [.initial, .new], changeHandler: redrawObserver),
-      object.observe(\.width, options: [.initial, .new], changeHandler: redrawObserver),
-      object.observe(\.permanent, options: [.initial, .new], changeHandler: redrawObserver),
-    ]
+  private func addTnfObservations(_ observations: inout [NSKeyValueObservation], object: Tnf ) {
+
+    observations.append( object.observe(\.depth, options: [.initial, .new], changeHandler: redrawObserver) )
+    observations.append( object.observe(\.depth, options: [.initial, .new], changeHandler: redrawObserver) )
+    observations.append( object.observe(\.frequency, options: [.initial, .new], changeHandler: redrawObserver) )
+    observations.append( object.observe(\.width, options: [.initial, .new], changeHandler: redrawObserver) )
+    observations.append( object.observe(\.permanent, options: [.initial, .new], changeHandler: redrawObserver) )
   }
-  /// Remove observers
+  /// Invalidate observations (optionally remove)
   ///
-  /// - Parameter observers:            an array of NSKeyValueObservation
+  /// - Parameters:
+  ///   - observations:                 an array of NSKeyValueObservation
+  ///   - remove:                       remove all enabled
   ///
-  func removeObservers(_ observers: [NSKeyValueObservation]) {
-    
-    for observer in observers {
-      observer.invalidate()
+  func invalidateObservations(_ observations: inout [NSKeyValueObservation], remove: Bool = true) {
+
+    // invalidate each observation
+    for observation in observations {
+      observation.invalidate()
     }
+    // if specified, remove the tokens
+    if remove { observations.removeAll() }
   }
   /// Respond to Defaults observations
   ///
@@ -504,9 +497,9 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
   ///   - change:                       the change
   ///
   private func defaultsObserver(_ object: UserDefaults, _ change: Any) {
-    
+
     _panadapterRenderer.updateColor(spectrumColor: Defaults[.spectrum], fillLevel: Defaults[.fillLevel], fillColor: Defaults[.spectrum])
-    
+
     // Panadapter background color
     let color = Defaults[.spectrumBackground]
     _panadapterView.clearColor = MTLClearColor(red: Double(color.redComponent),
@@ -521,11 +514,11 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
   ///   - change:                       the change
   ///
   private func redrawObserver(_ object: Any, _ change: Any) {
-    
+
     _frequencyLegendView.redraw()
     _dbLegendView.redraw()
   }
-//
+
 //  // ----------------------------------------------------------------------------
 //  // MARK: - Observation Methods
 //
@@ -661,14 +654,29 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
   ///
   private func addNotifications() {
     
-    NC.makeObserver(self, with: #selector(sliceHasBeenAdded(_:)), of: .sliceHasBeenAdded, object: nil)
+    NC.makeObserver(self, with: #selector(frameDidChange(_:)), of: NSView.frameDidChangeNotification.rawValue, object: view)
 
+    NC.makeObserver(self, with: #selector(panadapterWillBeRemoved(_:)), of: .panadapterWillBeRemoved, object: panadapter!)
+    
     NC.makeObserver(self, with: #selector(tnfHasBeenAdded(_:)), of: .tnfHasBeenAdded, object: nil)
-
+    
     NC.makeObserver(self, with: #selector(tnfWillBeRemoved(_:)), of: .tnfWillBeRemoved, object: nil)
 
-    // only receive removal Notifications sent by this Panadapter
-    NC.makeObserver(self, with: #selector(panadapterWillBeRemoved(_:)), of: .panadapterWillBeRemoved, object: panadapter!)
+
+    NC.makeObserver(self, with: #selector(sliceHasBeenAdded(_:)), of: .sliceHasBeenAdded, object: nil)
+  }
+  /// Process frameDidChange Notification
+  ///
+  /// - Parameter note:       a Notification instance
+  ///
+  @objc private func frameDidChange(_ note: Notification) {
+    
+    // tell the Panadapter to tell the Radio the current dimensions
+    panadapter?.xPixels = view.frame.width
+    panadapter?.yPixels = view.frame.height
+    
+    // update the Constant values with the new size
+    _panadapterRenderer.updateConstants(size: view.frame.size)
   }
   /// Process .panadapterWillBeRemoved Notification
   ///
@@ -682,29 +690,17 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
       // stop processing Panadapter streams
       panadapter.delegate = nil
       
-//      _panadapterView?.delegate = nil
-      
       // YES, log the event
-      Log.sharedInstance.msg("ID = \(panadapter.id.hex), panVC = \(self)", level: .debug, function: #function, file: #file, line: #line)
+      Log.sharedInstance.msg("ID = \(panadapter.id.hex)", level: .debug, function: #function, file: #file, line: #line)
       
-//      // remove Tnf property observers
-//      observations(slice, paths: _sliceKeyPaths, remove: true)
-
-      // remove Slice property observers
-      for flag in _frequencyLegendView.flags {
-//        observations(flag.slice!, paths: _sliceKeyPaths, remove: true)
-
-        removeFlag(for: flag.slice!)
-      }
-
-//      // remove Defaults property observers
-//      observations(Defaults, paths: _defaultsKeyPaths, remove: true)
+//      for flag in _frequencyLegendView.flags {
 //
-//      // remove Radio property observers
-//      observations(radio!, paths: _radioKeyPaths, remove: true)
-//
-//      // remove Panadapter property observers
-//      observations(panadapter, paths: _panadapterKeyPaths, remove: true)
+//        // remove the Slice Flag & property observations
+//        removeFlag(for: flag.slice!)
+//      }
+
+      // invalidate Base property observations
+      invalidateObservations(&_baseObservations)
     }
   }
   /// Process .sliceHasBeenAdded Notification
@@ -715,23 +711,19 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
 
     // does the Notification contain a Slice object?
     if let slice = note.object as? xLib6000.Slice {
-
-      // YES, on this panadapter?
-      if slice.panadapterId == panadapter!.id {
-
+      
+      // YES, is the slice on this Panadapter?
+      if let panadapter = panadapter, slice.panadapterId == panadapter.id {
+        
         // YES, log the event
-        Log.sharedInstance.msg("ID = \(slice.id), pan = \(panadapter!.id.hex)", level: .debug, function: #function, file: #file, line: #line)
-
-        // YES, add observations of this Slice
-//        observations(slice, paths: _sliceKeyPaths)
-        addSliceObservers(slice)
-
+        Log.sharedInstance.msg("ID = \(slice.id), pan = \(panadapter.id.hex)", level: .debug, function: #function, file: #file, line: #line)
+        
         // observe removal of this Slice
-        NC.makeObserver(self, with: #selector(sliceWillBeRemoved(_:)), of: .sliceWillBeRemoved, object: slice as Any)
-
-        // add a Flag
+        NC.makeObserver(self, with: #selector(sliceWillBeRemoved(_:)), of: .sliceWillBeRemoved, object: slice)
+        
+        // add a Flag & Observations of this Slice
         addFlag(for: slice)
-
+        
         // force a redraw
         _frequencyLegendView.redraw()
       }
@@ -742,22 +734,19 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
   /// - Parameter note:       a Notification instance
   ///
   @objc private func sliceWillBeRemoved(_ note: Notification) {
-
+    
     // does the Notification contain a Slice object?
     if let slice = note.object as? xLib6000.Slice {
-
-      // YES, on this panadapter?
-      if slice.panadapterId == panadapter!.id {
-
+      
+      // YES, is the slice on this Panadapter?
+      if let panadapter = panadapter, slice.panadapterId == panadapter.id  {
+        
         // YES, log the event
-        Log.sharedInstance.msg("ID = \(slice.id), pan = \(panadapter!.id.hex)", level: .debug, function: #function, file: #file, line: #line)
-
-        // YES, remove observations of this Slice
-//        observations(slice, paths: _sliceKeyPaths, remove: true)
-
-        // remove the Flag
+        Log.sharedInstance.msg("ID = \(slice.id), pan = \(panadapter.id.hex)", level: .debug, function: #function, file: #file, line: #line)
+        
+        // remove the Flag & Observations of this Slice
         removeFlag(for: slice)
-
+        
         // force a redraw
         _frequencyLegendView.redraw()
       }
@@ -775,10 +764,9 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
       // YES, log the event
       Log.sharedInstance.msg("ID = \(tnf.id)", level: .debug, function: #function, file: #file, line: #line)
 
-      // add observations of this Tnf
-//      observations(tnf, paths: _tnfKeyPaths)
-      addTnfObservers(tnf)
-
+      // add observations for this Tnf
+      addTnfObservations(&_tnfObservations, object: tnf)
+      
       // force a redraw
       _frequencyLegendView.redraw()
     }
@@ -790,16 +778,18 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
   @objc private func tnfWillBeRemoved(_ note: Notification) {
 
     // does the Notification contain a Tnf object?
-    if let tnf = note.object as? Tnf {
+    if let tnfToRemove = note.object as? Tnf {
 
       // YES, log the event
-      Log.sharedInstance.msg("ID = \(tnf.id)", level: .debug, function: #function, file: #file, line: #line)
+      Log.sharedInstance.msg("ID = \(tnfToRemove.id)", level: .debug, function: #function, file: #file, line: #line)
 
-//      // remove observations of this Tnf
-//      observations(tnf, paths: _tnfKeyPaths, remove: true)
-
-      // remove the Tnf
-      radio!.tnfs[tnf.id] = nil
+      // invalidate & remove all of the Tnf observations
+      invalidateObservations(&_tnfObservations)
+      
+      // put back all except the one being removed
+      for (_, tnf) in radio!.tnfs {
+        if tnf != tnfToRemove { addTnfObservations(&_tnfObservations, object: tnf) }
+      }
 
       // force a redraw
       _frequencyLegendView.redraw()
@@ -821,6 +811,9 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
 
     // set its Slice
     flagVc.slice = slice
+    
+    // create the Slice observations
+    createSliceObservations( &flagVc.observations, object: slice)
 
     _frequencyLegendView.flags.append(flagVc)
 
@@ -845,6 +838,9 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
     for (i, flagVc) in _frequencyLegendView.flags.enumerated() where flagVc.slice == slice {
 
       Log.sharedInstance.msg("Slice \(flagVc.slice!.id)", level: .debug, function: #function, file: #file, line: #line)
+      
+      // remove the Slice observers
+      invalidateObservations(&flagVc.observations)
       
       indexToRemove = i
 

@@ -61,10 +61,10 @@ class PanafallsViewController               : NSSplitViewController {
   ///
   @objc private func panadapterHasBeenAdded(_ note: Notification) {
     // a Panadapter model has been added to the Panadapters collection and Initialized
-    
+
     // does the Notification contain a Panadapter?
     if let panadapter = note.object as? Panadapter {
-      
+
       // YES, log the event
       Log.sharedInstance.msg("ID = \(panadapter.id.hex)", level: .debug, function: #function, file: #file, line: #line)
     }

@@ -19,10 +19,11 @@ class FlagViewController                    : NSViewController {
   // MARK: - Internal properties
   
   @objc weak var slice                      : xLib6000.Slice?
-  var onLeft                                = true
-  
+  internal var onLeft                       = true
+  internal var observations                 = [NSKeyValueObservation]()
+
   private var _position                     = NSPoint(x: 0.0, y: 0.0)
-  
+
   private let kFlagOffset                   : CGFloat = 15.0/2.0
     
   // ----------------------------------------------------------------------------

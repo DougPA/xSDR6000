@@ -369,8 +369,8 @@ extension PanadapterRenderer                : PanadapterStreamHandler {
     // put the Intensities into the current Spectrum Buffer
     _spectrumBuffers[_currentFrameIndex].contents().copyMemory(from: frame.bins, byteCount: frame.numberOfBins * MemoryLayout<ushort>.stride)
     
-    DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
+//    DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
       self._metalView.draw()
-    }
+//    }
   }
 }
