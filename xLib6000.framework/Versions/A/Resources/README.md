@@ -15,6 +15,9 @@
 This framework provides most of the capability of FlexLib but does not provide an identical  interface due to the  
 differences between the Windows and macOS environments and system services.
 
+The "xLib6000 Overview.pdf" file in the Documentation folder contains an overview of the structure of this framework  
+and an explanation of the Tcp and Udp data flows.  
+
 If you want to learn more about the 6000 series API, please take a look at the xAPITester project. It uses this framework.
 
 * https://github.com/DougPA/xAPITester

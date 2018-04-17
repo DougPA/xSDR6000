@@ -2,6 +2,7 @@ xLib6000 Change Log
 
 v1.0.14
 
+Added Documentation folder and "xLib6000 Overview.pdf" file
 Opus.swift - rename _id property to id
 Api.swift - in disconnect(reason:) changed object in .radioWillBeRemoved from activeRadio to radio
 Api.swift - in send(_:diagnostic:replyTo:) added testerDelegate?.addReplyHandler(_:replyTuple:)
