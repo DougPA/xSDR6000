@@ -1,5 +1,10 @@
 xSDR6000 Change Log
 
+v0.9.946
+
+Corrected GitHub issue with CommonClientCode folder
+
+
 v0.9.945
 
 Replaced all observation code in Waterfall, Panadapter, Opus & RadioViewController
