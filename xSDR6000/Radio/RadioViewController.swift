@@ -504,7 +504,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
         guard let token = Meter.Units(rawValue: meter.units) else {
           
           // unknown Units, log it and ignore it
-          Log.sharedInstance.msg("Unknown units - \(meter.units) on Meter \(meter.name)", level: .debug, function: #function, file: #file, line: #line)
+          Log.sharedInstance.msg("Unknown units - \(meter.units) on Meter \(meter.name)", level: .warning, function: #function, file: #file, line: #line)
           return
         }
         // make a short version of the Units
@@ -742,8 +742,6 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     
     NC.makeObserver(self, with: #selector(tcpDidConnect(_:)), of: .tcpDidConnect, object: nil)
     
-    //        NC.makeObserver(self, with: #selector(tcpDidDisconnect(_:)), of: .tcpDidDisconnect, object: nil)
-    //
     NC.makeObserver(self, with: #selector(meterHasBeenAdded(_:)), of: .meterHasBeenAdded, object: nil)
     
     NC.makeObserver(self, with: #selector(radioHasBeenAdded(_:)), of: .radioHasBeenAdded, object: nil)
