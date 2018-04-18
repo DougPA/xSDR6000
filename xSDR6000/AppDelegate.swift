@@ -129,12 +129,7 @@ final class AppDelegate                     : NSObject, NSApplicationDelegate, L
       
     case .severe:
       log.severe(msg, functionName: function, fileName: file, lineNumber: line)
-      
     }
-  }
-  func applicationDidFinishLaunching(_ notification: Notification) {
-    
-    msg("xLib6000 version = \(xLib6000VersionNumber)", level: .info, function: #function, file: #file, line: #line)
   }
 }
 
