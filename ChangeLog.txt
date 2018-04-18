@@ -3,7 +3,6 @@ xSDR6000 Change Log
 v0.9.947
 
 Copied latest xLib6000 into project (v1.0.16)
-AppDelegate.swift - added logging of xLib6000 version (major.minor)
 
 v0.9.946
 
