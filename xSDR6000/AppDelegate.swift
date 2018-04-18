@@ -132,7 +132,10 @@ final class AppDelegate                     : NSObject, NSApplicationDelegate, L
       
     }
   }
-  
+  func applicationDidFinishLaunching(_ notification: Notification) {
+    
+    msg("xLib6000 version = \(xLib6000VersionNumber)", level: .info, function: #function, file: #file, line: #line)
+  }
 }
 
 

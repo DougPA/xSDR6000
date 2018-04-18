@@ -1,5 +1,19 @@
 xLib6000 Change Log
 
+v1.0.16
+
+AppExtensions.swift - added conditional use of compactMap vs flatMap
+Radio.swift - in vitaParser(..) simplified UDP Stream Error message
+
+v1.0.15
+
+xLib6000 Overview.pdf - corrected error in Udp stream path drawing
+Vita.swift - corrected payload usage, replaced UnsafeRawPointer to payload with payload data array
+Corresponding changes to all Dynamic Models with Udp Streams
+Vita.swift - made string produced by desc() method more readable
+Vita.swift - in class encodeAsData(_:) added code to handle trailer
+Radio.swift - corrected "UDP Stream error" log message
+
 v1.0.14
 
 Added Documentation folder and "xLib6000 Overview.pdf" file
