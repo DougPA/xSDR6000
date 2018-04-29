@@ -385,8 +385,8 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
     let slice = hitTestSlice(at: freq, thisPanOnly: false)
     if let slice = slice {
       
-      // YES, make all Slices inactive
-      for (_, s) in radio!.slices {
+      // YES, make the active Slice inactive
+      for (_, s) in radio!.slices where s.active {
         
         s.active = false
       }
@@ -459,10 +459,10 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
     private func createSliceObservations(_ observations: inout [NSKeyValueObservation], object: xLib6000.Slice ) {
 
       observations = [
-        object.observe(\.active, options: [.initial, .new], changeHandler: redrawObserver),
-        object.observe(\.filterHigh, options: [.initial, .new], changeHandler: redrawObserver),
-        object.observe(\.filterLow, options: [.initial, .new], changeHandler: redrawObserver),
-        object.observe(\.frequency, options: [.initial, .new], changeHandler: redrawObserver)
+        object.observe(\xLib6000.Slice.active, options: [.initial, .new], changeHandler: redrawObserver),
+        object.observe(\xLib6000.Slice.filterHigh, options: [.initial, .new], changeHandler: redrawObserver),
+        object.observe(\xLib6000.Slice.filterLow, options: [.initial, .new], changeHandler: redrawObserver),
+        object.observe(\xLib6000.Slice.frequency, options: [.initial, .new], changeHandler: redrawObserver)
       ]
   }
   /// Add observers for Tnf properties
@@ -514,137 +514,10 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
   ///   - change:                       the change
   ///
   private func redrawObserver(_ object: Any, _ change: Any) {
-
+    
     _frequencyLegendView.redraw()
     _dbLegendView.redraw()
   }
-
-//  // ----------------------------------------------------------------------------
-//  // MARK: - Observation Methods
-//
-//  private let _defaultsKeyPaths = [
-//    "bandMarker",
-//    "dbLegend",
-//    "dbLegendSpacing",
-//    "fillLevel",
-//    "frequencyLegend",
-//    "gridLines",
-//    "gridLinesDashed",
-//    "gridLineWidth",
-//    "sliceActive",
-//    "showMarkers",
-//    "sliceFilter",
-//    "sliceInactive",
-//    "spectrum",
-//    "spectrumBackground",
-//    "tnfActive",
-//    "tnfInactive"
-//  ]
-//
-//  private let _tnfKeyPaths = [
-//    #keyPath(Tnf.depth),
-//    #keyPath(Tnf.frequency),
-//    #keyPath(Tnf.width),
-//    #keyPath(Tnf.permanent)
-//    ]
-//
-//  private let _radioKeyPaths = [
-//    #keyPath(Radio.tnfEnabled)
-//  ]
-//
-//  private let _panadapterKeyPaths = [
-//    #keyPath(Panadapter.bandwidth),
-//    #keyPath(Panadapter.center)
-//  ]
-//
-//  private let _sliceKeyPaths = [
-//    #keyPath(xLib6000.Slice.active),
-//    #keyPath(xLib6000.Slice.filterHigh),
-//    #keyPath(xLib6000.Slice.filterLow),
-//    #keyPath(xLib6000.Slice.frequency)
-//  ]
-//
-//  /// Add / Remove property observations
-//  ///
-//  /// - Parameters:
-//  ///   - object:         the object of the observations
-//  ///   - paths:          an array of KeyPaths
-//  ///   - add:            add / remove (defaults to add)
-//  ///
-//  private func observations<T: NSObject>(_ object: T, paths: [String], remove: Bool = false) {
-//
-//    // for each KeyPath Add / Remove observations
-//    for keyPath in paths {
-//
-//      if remove { object.removeObserver(self, forKeyPath: keyPath, context: nil) }
-//      else { object.addObserver(self, forKeyPath: keyPath, options: [.initial, .new], context: nil) }
-//    }
-//  }
-//  /// Observe properties
-//  ///
-//  /// - Parameters:
-//  ///   - keyPath:        the registered KeyPath
-//  ///   - object:         object containing the KeyPath
-//  ///   - change:         dictionary of values
-//  ///   - context:        context (if any)
-//  ///
-//  override public func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-//
-//    switch keyPath! {
-//
-//    // FrequencyLegend colors
-//    case "frequencyLegend", "bandMarker":
-//      _frequencyLegendView.redraw()
-//
-//    // DbLegend colors & spacing
-//    case "dbLegend", "dbLegendSpacing":
-//      _dbLegendView.redraw()
-//
-//    // Panadapter grid lines
-//    case "gridLines", "gridLinesDashed", "gridLineWidth":
-//      _frequencyLegendView.redraw()
-//      _dbLegendView.redraw()
-//
-//    // Panadapter spectrum colors
-//    case "spectrum", "fillLevel":
-//      _panadapterRenderer.updateColor(spectrumColor: Defaults[.spectrum], fillLevel: Defaults[.fillLevel], fillColor: Defaults[.spectrum])
-//
-//    // Panadapter background color
-//    case "spectrumBackground":
-//      let color = Defaults[.spectrumBackground]
-//      _panadapterView.clearColor = MTLClearColor(red: Double(color.redComponent),
-//                                                 green: Double(color.greenComponent),
-//                                                 blue: Double(color.blueComponent),
-//                                                 alpha: Double(color.alphaComponent) )
-//    // Band Marker enable
-//    case "showMarkers":
-//      _frequencyLegendView.redraw()
-//
-//    // Panadapter properties (center / bandwidth)
-//    case #keyPath(Panadapter.center), #keyPath(Panadapter.bandwidth):
-//      _frequencyLegendView.redraw()
-//
-//    // Tnf enable & colors
-//    case #keyPath(Radio.tnfEnabled):
-//      fallthrough
-//    case "tnfActive", "tnfInactive":
-//      fallthrough
-//    // Tnf properties
-//    case #keyPath(Tnf.frequency), #keyPath(Tnf.depth), #keyPath(Tnf.width), #keyPath(Tnf.permanent):
-//      _frequencyLegendView.redraw()
-//
-//    // Slice colors
-//    case "sliceActive", "sliceInactive", "sliceFilter":
-//      fallthrough
-//    // Slice properties
-//    case #keyPath(xLib6000.Slice.frequency), #keyPath(xLib6000.Slice.filterLow), #keyPath(xLib6000.Slice.filterHigh), #keyPath(xLib6000.Slice.active):
-//      _frequencyLegendView.redraw()
-//      break
-//
-//    default:
-//      Log.sharedInstance.msg("Invalid observation - \(keyPath!)", level: .error, function: #function, file: #file, line: #line)
-//    }
-//  }
   
   // ----------------------------------------------------------------------------
   // MARK: - Notification Methods
@@ -813,7 +686,7 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
     flagVc.slice = slice
     
     // create the Slice observations
-    createSliceObservations( &flagVc.observations, object: slice)
+    createSliceObservations( &flagVc.sliceObservations, object: flagVc.slice!)
 
     _frequencyLegendView.flags.append(flagVc)
 
@@ -840,7 +713,7 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
       Log.sharedInstance.msg("Slice \(flagVc.slice!.id)", level: .debug, function: #function, file: #file, line: #line)
       
       // remove the Slice observers
-      invalidateObservations(&flagVc.observations)
+      invalidateObservations(&flagVc.sliceObservations)
       
       indexToRemove = i
 

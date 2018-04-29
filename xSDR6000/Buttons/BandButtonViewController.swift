@@ -82,7 +82,7 @@ class BandButtonViewController              : NSViewController {
       break
     }
     // tell the Panadapter
-    (representedObject as! Panadapter).band = band
+    (representedObject as! PanafallButtonViewController).panadapter!.band = band
   }
   
 }

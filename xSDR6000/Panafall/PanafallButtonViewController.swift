@@ -20,76 +20,20 @@ final class PanafallButtonViewController    : NSViewController {
   // MARK: - Internal properties
   
   var radio: Radio?                         = Api.sharedInstance.radio
-  weak var panadapter                       : Panadapter?
-  weak var waterfall                        : Waterfall? { return radio!.waterfalls[panadapter!.waterfallId] }
+  @objc dynamic weak var panadapter         : Panadapter?
+  @objc dynamic weak var waterfall          : Waterfall? { return radio!.waterfalls[panadapter!.waterfallId] }
   
   @IBOutlet weak var buttonView             : PanafallButtonView!
   
   // used by bindings in Popovers
   //Panafall
-  @objc dynamic var antList: [Radio.AntennaPort]
-    { return radio!.antennaList }
-  
-  @objc dynamic var average: Int {
-    get { return panadapter!.average }
-    set { panadapter!.average = newValue } }
-  
-  @objc dynamic var daxIqChannel: Int {
-    get { return panadapter!.daxIqChannel }
-    set { panadapter!.daxIqChannel = newValue } }
-  
   @objc dynamic var fillLevel: Int {
     get { return Defaults[.fillLevel] }
     set { Defaults[.fillLevel] = newValue } }
   
-  @objc dynamic var fps: Int {
-    get { return panadapter!.fps }
-    set { panadapter!.fps = newValue } }
-  
-  @objc dynamic var loopA: Bool {
-    get { return panadapter!.loopAEnabled }
-    set { panadapter!.loopAEnabled = newValue } }
-  
-  @objc dynamic var rfGain: Int {
-    get { return panadapter!.rfGain }
-    set { panadapter!.rfGain = newValue } }
-  
-  @objc dynamic var rxAnt: String {
-    get { return panadapter!.rxAnt }
-    set { panadapter!.rxAnt = newValue } }
-  
-  @objc dynamic var weightedAverage: Bool {
-    get { return panadapter!.weightedAverageEnabled }
-    set { panadapter!.weightedAverageEnabled = newValue } }
-  
   // Waterfall
-  @objc dynamic var autoBlackEnabled: Bool {
-    get { return waterfall!.autoBlackEnabled }
-    set { waterfall!.autoBlackEnabled = newValue } }
-  
-  @objc dynamic var blackLevel: Int {
-    get { return waterfall!.blackLevel }
-    set { waterfall!.blackLevel = newValue } }
-  
-  @objc dynamic var colorGain: Int {
-    get { return waterfall!.colorGain }
-    set { waterfall!.colorGain = newValue } }
-  
-  @objc dynamic var gradientIndex: Int {
-    get { return waterfall!.gradientIndex }
-    set { waterfall!.gradientIndex = newValue } }
-  
-  @objc dynamic var gradientName: String
-  { return gradientNames[waterfall!.gradientIndex] }
-  
   @objc dynamic var gradientNames: [String]
   { return WaterfallViewController.gradientNames }
-  
-  @objc dynamic var lineDuration: Int {
-    get { return waterfall!.lineDuration }
-    set { waterfall!.lineDuration = newValue } }
-  
-  @objc dynamic let daxChoices              = ["None", "1", "2", "3", "4"]
   
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
@@ -148,15 +92,10 @@ final class PanafallButtonViewController    : NSViewController {
       _waterfallViewController!.radio = radio
       _waterfallViewController!.panadapter = panadapter
       
-    case kAntennaPopover, kDisplayPopover, kDaxPopover:
+    case kAntennaPopover, kDisplayPopover, kDaxPopover, kBandPopover:
       
       // pass the Popovers a reference to this controller
       (segue.destinationController as! NSViewController).representedObject = self
-      
-    case kBandPopover:
-      
-      // pass the Band Popover a reference to the Panadapter
-      (segue.destinationController as! NSViewController).representedObject = panadapter!
       
     default:
       break

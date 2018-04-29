@@ -191,7 +191,9 @@ func loadGradient(index: Int) -> [UInt8] {
   private func createBaseObservations(_ observations: inout [NSKeyValueObservation]) {
     
     observations = [
-      panadapter!.observe(\.band, options: [.initial, .new], changeHandler: panadapterObserver),
+      panadapter!.observe(\.band, options: [.initial, .new], changeHandler: panadapterBandchange),
+      panadapter!.observe(\.bandwidth, options: [.initial, .new], changeHandler: panadapterUpdate),
+      panadapter!.observe(\.center, options: [.initial, .new], changeHandler: panadapterUpdate),
       _waterfall!.observe(\.autoBlackEnabled, options: [.initial, .new], changeHandler: waterfallObserverLevels),
       _waterfall!.observe(\.blackLevel, options: [.initial, .new], changeHandler: waterfallObserverLevels),
       _waterfall!.observe(\.colorGain, options: [.initial, .new], changeHandler: waterfallObserverLevels),
@@ -220,10 +222,21 @@ func loadGradient(index: Int) -> [UInt8] {
   ///   - object:                       the object holding the properties
   ///   - change:                       the change
   ///
-  private func panadapterObserver(_ object: Panadapter, _ change: Any) {
+  private func panadapterUpdate(_ object: Panadapter, _ change: Any) {
 
-      // force the Waterfall to restart
-      self._waterfallRenderer.restart()
+      // update the Waterfall
+      self._waterfallRenderer.update()
+  }
+  /// Respond to Panadapter observations
+  ///
+  /// - Parameters:
+  ///   - object:                       the object holding the properties
+  ///   - change:                       the change
+  ///
+  private func panadapterBandchange(_ object: Panadapter, _ change: Any) {
+    
+    // force the Waterfall to restart
+    self._waterfallRenderer.bandChange()
   }
   /// Respond to Waterfall observations
   ///

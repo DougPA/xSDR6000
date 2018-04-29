@@ -79,6 +79,10 @@ public final class FrequencyLegendView      : NSView {
     drawSlices()
     
     positionFlags()
+    
+    for flagVc in flags {
+      flagVc.view.needsDisplay = true
+    }
 
     drawTnfs()
 
@@ -201,7 +205,7 @@ public final class FrequencyLegendView      : NSView {
     // interact with the UI
     DispatchQueue.main.async {
       // force a redraw
-      self.needsDisplay = true
+      self.needsDisplay = true      
     }
   }
   

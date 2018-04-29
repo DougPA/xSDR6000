@@ -61,14 +61,11 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   private var _mainWindowController         : MainWindowController?
   private var _notifications                = [NSObjectProtocol]()          // Notification observers
   private var _radioPickerTabViewController : NSTabViewController?          // RadioPicker sheet controller
-  private var _voltageTempMonitor           : ParameterMonitor?             // the Voltage/Temp ParameterMonitor
   
   private let _opusManager                  = OpusManager()
   
   private let kGuiFirmwareSupport           = "2.0.19.x"                    // Radio firmware supported by this App
   private let kxLib6000Identifier           = "net.k3tzr.xLib6000"          // Bundle identifier for xLib6000
-  private let kVoltageMeter                 = "+13.8b"                      // Short name of voltage meter
-  private let kPaTempMeter                  = "patemp"                      // Short name of temperature meter
   private let kVoltageTemperature           = "VoltageTemp"                 // Identifier of toolbar VoltageTemperature toolbarItem
 
   private let kMainStoryboard               = "Main"                        // Storyboard identifier
@@ -96,6 +93,9 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   
   private var activity                        : NSObjectProtocol?
   
+  private var _voltageMeterAvailable          = false
+  private var _temperatureMeterAvailable      = false
+
   // ----------------------------------------------------------------------------
   // MARK: - Overriden methods
   
@@ -458,96 +458,6 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     }
     return defaultRadioParameters
   }
-  /// An observed Meter has been updated
-  ///
-  /// - Parameter meter: the Meter
-  ///
-  @objc private func meterUpdated(_ note: Notification) {
-    
-    // if the note contains a Meter
-    if let meter = note.object as? Meter {
-      
-      // process the update
-      processMeterUpdate(meter)
-    }
-  }
-  /// The value of a meter needs to be processed
-  ///
-  /// - Parameter meter: a Meter instance
-  ///
-  private func processMeterUpdate(_ meter: Meter) {
-    
-    // interact with the UI
-    DispatchQueue.main.async {
-      
-      // if no reference to the toolbar item
-      if self._voltageTempMonitor == nil {
-        
-        // get the toolbar
-        if let toolbar = NSApp.mainWindow?.toolbar {
-          
-          // find the VoltageTemperature toolbar item
-          let items = toolbar.items.filter( {$0.itemIdentifier.rawValue == self.kVoltageTemperature} )
-          
-          // there should be only one
-          if items.count == 1 {
-            
-            // save a reference to it
-            self._voltageTempMonitor = items[0] as? ParameterMonitor
-          }
-        }
-      }
-      // if found, get the units
-      if self._voltageTempMonitor != nil {
-        
-        // check for unknown Units
-        guard let token = Meter.Units(rawValue: meter.units) else {
-          
-          // unknown Units, log it and ignore it
-          Log.sharedInstance.msg("Unknown units - \(meter.units) on Meter \(meter.name)", level: .warning, function: #function, file: #file, line: #line)
-          return
-        }
-        // make a short version of the Units
-        var shortUnits = ""
-        
-        switch token {
-          
-        case .amps:
-          shortUnits = "a"
-        case .dbfs:
-          shortUnits = "f"
-        case .dbm:
-          shortUnits = "d"
-        case .degc:
-          shortUnits = "c"
-        case .swr:
-          shortUnits = "s"
-        case .volts:
-          shortUnits = "v"
-        }
-        
-        // set the value & units
-        if meter.name == self.kVoltageMeter {
-          
-          // Top (Voltage), set the high / low limits
-          self._voltageTempMonitor?.topLimits.high = meter.high
-          self._voltageTempMonitor?.topLimits.low = meter.low
-          // set the value & units
-          self._voltageTempMonitor?.topUnits = shortUnits
-          self._voltageTempMonitor?.topValue = meter.value
-          
-        } else if meter.name == self.kPaTempMeter {
-          
-          // Bottom (Temperature), set the high / low limits
-          self._voltageTempMonitor?.bottomLimits.high = meter.high
-          self._voltageTempMonitor?.bottomLimits.low = meter.low
-          // set the value & units
-          self._voltageTempMonitor?.bottomUnits = shortUnits
-          self._voltageTempMonitor?.bottomValue = meter.value
-        }
-      }
-    }
-  }
 
   // ----------------------------------------------------------------------------
   // MARK: - NEW Observation methods
@@ -558,7 +468,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   /// Add observers for Radio properties
   ///
   private func addRadioObservers(_ radio: Radio) {
-    
+   
     _radioObservers = [
       radio.observe(\.lineoutGain, options: [.initial, .new], changeHandler: radioObserver),
       radio.observe(\.lineoutMute, options: [.initial, .new], changeHandler: radioObserver),
@@ -622,116 +532,6 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     
     // FIXME: need code
   }
-
-  // ----------------------------------------------------------------------------
-  // MARK: - Observation methods
-  
-  private let _radioKeyPaths = [
-    #keyPath(Radio.lineoutGain),
-    #keyPath(Radio.lineoutMute),
-    #keyPath(Radio.headphoneGain),
-    #keyPath(Radio.headphoneMute),
-    #keyPath(Radio.tnfEnabled),
-    #keyPath(Radio.fullDuplexEnabled)
-  ]
-  
-  private let _opusKeyPaths = [
-    #keyPath(Opus.remoteRxOn),
-    #keyPath(Opus.remoteTxOn),
-    #keyPath(Opus.rxStreamStopped)
-  ]
-  /// Add / Remove property observations
-  ///
-  /// - Parameters:
-  ///   - object:           the object of the observations
-  ///   - paths:            an array of KeyPaths
-  ///   - add:              add / remove (defaults to add)
-  ///
-  private func observations<T: NSObject>(_ object: T, paths: [String], remove: Bool = false) {
-
-    // for each KeyPath Add / Remove observations
-    for keyPath in paths {
-
-      if remove { object.removeObserver(self, forKeyPath: keyPath, context: nil) }
-      else { object.addObserver(self, forKeyPath: keyPath, options: [.initial, .new], context: nil) }
-    }
-  }
-  /// Process changes to observed keyPaths (may arrive on any thread)
-  ///
-  /// - Parameters:
-  ///   - keyPath:          the KeyPath that changed
-  ///   - object:           the Object of the KeyPath
-  ///   - change:           a change dictionary
-  ///   - context:          a pointer to a context (if any)
-  ///
-  override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-    
-    if let kp = keyPath, let ch = change {
-      
-      if kp != "springLoaded" {
-        
-        // interact with the UI
-        DispatchQueue.main.async { [unowned self] in
-          
-          switch kp {
-            
-          case #keyPath(Radio.lineoutGain):
-            self._mainWindowController?.lineoutGain.integerValue = ch[.newKey] as! Int
-            
-          case #keyPath(Radio.lineoutMute):
-            self._mainWindowController?.lineoutMute.state = (ch[.newKey] as! Bool) ? NSControl.StateValue.on : NSControl.StateValue.off
-            
-          case #keyPath(Radio.headphoneGain):
-            self._mainWindowController?.headphoneGain.integerValue = ch[.newKey] as! Int
-            
-          case #keyPath(Radio.headphoneMute):
-            self._mainWindowController?.headphoneMute.state = (ch[.newKey] as! Bool) ? NSControl.StateValue.on : NSControl.StateValue.off
-            
-          case #keyPath(Radio.tnfEnabled):
-            self._mainWindowController?.tnfEnabled.state = (ch[.newKey] as! Bool) ? NSControl.StateValue.on : NSControl.StateValue.off
-            
-          case #keyPath(Radio.fullDuplexEnabled):
-            self._mainWindowController?.fdxEnabled.state = (ch[.newKey] as! Bool) ? NSControl.StateValue.on : NSControl.StateValue.off
-            
-          case #keyPath(Opus.remoteRxOn):
-            
-            if let opus = object as? Opus, let start = ch[.newKey] as? Bool{
-              
-              if start == true && opus.delegate == nil {
-                
-                // Opus starting, supply a decoder
-                self._opusManager.rxAudio(true)
-                opus.delegate = self._opusManager
-                
-              } else if start == false && opus.delegate != nil {
-                
-                // opus stopping, remove the decoder
-                self._opusManager.rxAudio(false)
-                opus.delegate = nil
-              }
-            }
-            
-          case #keyPath(Opus.remoteTxOn):
-            
-            if let opus = object as? Opus, let start = ch[.newKey] as? Bool{
-              
-              // Tx Opus starting / stopping
-              self._opusManager.txAudio( start, opus: opus )
-            }
-            
-          case #keyPath(Opus.rxStreamStopped):
-            
-            // FIXME: Implement this
-            break
-            
-          default:
-            // log and ignore any other keyPaths
-            Log.sharedInstance.msg("Unknown observation - \(String(describing: keyPath))", level: .error, function: #function, file: #file, line: #line)
-          }
-        }
-      }
-    }
-  }
   
   // ----------------------------------------------------------------------------
   // MARK: - Notification Methods
@@ -785,7 +585,6 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     Defaults[.guiFirmwareSupport] = kGuiFirmwareSupport
     
     // observe changes to Radio properties
-//    observations(_api.radio!, paths: _radioKeyPaths)
     addRadioObservers(_api.radio!)
   }
   /// Process .tcpDidDisconnect Notification
@@ -810,13 +609,20 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     if let meter = note.object as? Meter {
       
       // is it one we need to watch?
-      if meter.name == self.kVoltageMeter || meter.name == self.kPaTempMeter {
+      switch meter.name {
+      case Api.MeterShortName.voltageAfterFuse.rawValue:
+        _voltageMeterAvailable = true
+      
+      case Api.MeterShortName.temperaturePa.rawValue:
+        _temperatureMeterAvailable = true
+      
+      default:
+        break
+      }
+      if _voltageMeterAvailable && _temperatureMeterAvailable {
         
-        // YES, process the initial meter reading
-        processMeterUpdate(meter)
-        
-        // subscribe to its updates
-        NC.makeObserver(self, with: #selector(meterUpdated(_:)), of: .meterUpdated, object: meter)
+        // start the Voltage/Temperature monitor
+        self._mainWindowController?.voltageTempMonitor?.activate(radio: _api.radio!, meterShortNames: [.voltageAfterFuse, .temperaturePa], units: ["v", "c"])
       }
     }
   }
@@ -829,23 +635,20 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     // the Radio class has been initialized
     if let radio = note.object as? Radio {
       
-//      // remember the active Radio
-//      self.radio = radio
-
       Log.sharedInstance.msg("\(radio.nickname)", level: .info, function: #function, file: #file, line: #line)
 
       DispatchQueue.main.sync { [unowned self] in
         
         // Get a reference to the Window Controller containing the toolbar items
         self._mainWindowController = self.view.window?.windowController as? MainWindowController
-        
-        // Initialize the toolbar items
+
         self._mainWindowController?.lineoutGain.integerValue = radio.lineoutGain
         self._mainWindowController?.lineoutMute.state = radio.lineoutMute ? NSControl.StateValue.on : NSControl.StateValue.off
         self._mainWindowController?.headphoneGain.integerValue = radio.headphoneGain
         self._mainWindowController?.headphoneMute.state = radio.headphoneMute ? NSControl.StateValue.on : NSControl.StateValue.off
-        self._mainWindowController?.window?.viewsNeedDisplay = true
-        
+        self._mainWindowController?.tnfEnabled.state = radio.tnfEnabled ? NSControl.StateValue.on : NSControl.StateValue.off        
+        self._mainWindowController?.fdxEnabled.state = radio.fullDuplexEnabled ? NSControl.StateValue.on : NSControl.StateValue.off
+
         let title = (_api.activeRadio == nil ? "" : " (\(_api.activeRadio!.nickname ?? "") @ \(_api.activeRadio!.ipAddress))")
         self.view.window?.title = "xSDR6000\(title)"
       }

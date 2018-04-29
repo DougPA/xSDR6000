@@ -27,6 +27,8 @@ class MainWindowController                  : NSWindowController {
   @IBOutlet weak var cwxEnabled             : NSButton!
   @IBOutlet weak var fdxEnabled             : NSButton!
   
+  @IBOutlet weak var voltageTempMonitor     : ParameterMonitor?
+  
   // ----------------------------------------------------------------------------
   // MARK: - Overridden methods
   

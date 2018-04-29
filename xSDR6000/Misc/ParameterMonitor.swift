@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import xLib6000
 
 // --------------------------------------------------------------------------------
 // MARK: - Parameter Monitor class implementation
@@ -17,59 +18,113 @@ class ParameterMonitor: NSToolbarItem {
   // ----------------------------------------------------------------------------
   // MARK: - Public properties
   
-  open var topLimits                        : (high: Float, low: Float) = (0.0, 0.0)
-  open var bottomLimits                     : (high: Float, low: Float) = (0.0, 0.0)
-  
-  open var colors                           : (high: NSColor, normal: NSColor, low: NSColor) = (NSColor.red, NSColor.green, NSColor.yellow)
-  
-  open var formatString                     = "%0.2f"
-  
-  open var topUnits                         = ""
-  open var bottomUnits                      = ""
-  
-  // format & display the top value
-  open var topValue: Float = 0 {
-    didSet {
-      if topValue > topLimits.high {
-        
-        topField.backgroundColor = colors.high
-        
-      } else if topValue < topLimits.low {
-        
-        topField.backgroundColor = colors.low
-        
-      } else {
-        
-        topField.backgroundColor = colors.normal
-        
-      }
-      topField.stringValue = String(format: formatString + "\(topUnits)" , topValue)
-    }
-  }
-  
-  // format & display the bottom value
-  open var bottomValue: Float = 0 {
-    didSet {
-      if bottomValue > bottomLimits.high {
-        
-        bottomField.backgroundColor = colors.high
-        
-      } else if bottomValue < bottomLimits.low {
-        
-        bottomField.backgroundColor = colors.low
-        
-      } else {
-        
-        bottomField.backgroundColor = colors.normal
-      }
-      bottomField.stringValue = String(format: "%0.2f\(bottomUnits)" , bottomValue)
-    }
-  }
+  public var colors                         : (high: NSColor, normal: NSColor, low: NSColor) = (NSColor.red, NSColor.green, NSColor.yellow)
+  public var formatString                   = "%0.2f"
   
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
   
-  @IBOutlet private var topField            : NSTextField!                  // top text field
-  @IBOutlet private var bottomField         : NSTextField!                  // bottom text field
+  @IBOutlet private var topField            : NSTextField!
+  @IBOutlet private var bottomField         : NSTextField!
+
+  private weak var _radio                   : Radio?
+  private var _id                           : NSToolbarItem.Identifier
+  private var _meterShortNames              = [Api.MeterShortName]()
+  private var _units                        = [String]()
+  private var _observations                 = [NSKeyValueObservation]()
   
+  private let kTopValue                     = 0
+  private let kBottomValue                  = 1
+
+  // ----------------------------------------------------------------------------
+  // MARK: - Initialization
+  
+  override init(itemIdentifier: NSToolbarItem.Identifier) {
+    _id = itemIdentifier
+    
+    super.init(itemIdentifier: itemIdentifier)
+  }
+
+  // ----------------------------------------------------------------------------
+  // MARK: - Internal methods
+  
+  /// Activate this Parameter Monitor
+  ///
+  /// - Parameters:
+  ///   - radio:              a reference to the Radio class
+  ///   - meterShortNames:    an array of MeterShortNames
+  ///   - units:              an array of units
+  ///
+  func activate(radio: Radio, meterShortNames: [Api.MeterShortName], units: [String]) {
+    
+    _radio = radio
+    _meterShortNames = meterShortNames
+    _units = units
+    
+    // for the first two short names (others are ignored)
+    for i in kTopValue...kBottomValue {
+      
+      // is there a Meter by that name?
+      if let meter = radio.findMeteryBy(shortName: _meterShortNames[i].rawValue) {
+        
+        // YES, observe it's value
+        _observations.append( meter.observe(\.value, options: [.new],changeHandler: updateValue))
+      }
+    }
+  }
+
+  // ----------------------------------------------------------------------------
+  // MARK: - Private methods
+  
+  /// Update the value of the ParameterMonitor
+  ///
+  /// - Parameters:
+  ///   - object:             an observed object
+  ///   - change:             a change dictionary
+  ///
+  private func updateValue(_ object: Any, _ change: Any) {
+
+    let meter = object as! Meter
+
+    // which Meter?
+    switch meter.name {
+    case _meterShortNames[kTopValue].rawValue:
+      // top one
+      updateField(topField, for: meter, units: _units[kTopValue])
+
+    case _meterShortNames[kBottomValue].rawValue:
+      // bottom one
+      updateField(bottomField, for: meter, units: _units[kBottomValue])
+
+    default:
+      // should never happen
+      break
+    }
+  }
+  /// Update a field
+  ///
+  /// - Parameters:
+  ///   - field:              the textfield
+  ///   - meter:              a reference to a Meter
+  ///   - units:              the units
+  ///
+  private func updateField(_ field: NSTextField, for meter: Meter, units: String) {
+    
+    DispatchQueue.main.async { [unowned self] in
+      
+      // determine the background color
+      switch meter.value {
+      case ...meter.low:                                    // < low
+        field.backgroundColor = self.colors.low
+      case meter.high...:                                   // > high
+        field.backgroundColor = self.colors.high
+      case meter.low...meter.high:                          // between low & high
+        field.backgroundColor = self.colors.normal
+      default:                                              // should never happen
+        field.backgroundColor = self.colors.normal
+      }
+      // set the field value
+      field.stringValue = String(format: self.formatString + " \(units)" , meter.value)
+    }
+  }
 }

@@ -252,14 +252,20 @@ public final class WaterfallRenderer: NSObject {
     let bufferPtr = _constantsBuffer!.contents()
     memcpy(bufferPtr, &_constants, MemoryLayout.stride(ofValue: _constants))
   }
-  /// Re-initialize the Waterfall
+  /// Change bands & adjust the Waterfall
   ///
-  func restart() {
+  func bandChange() {
+
+    _parameters[_textureIndex].topLine = 0
+    _binBandwidth = 0
+    _firstBinFreq = 0
+  }
+  /// Update the Waterfall
+  ///
+  func update() {
     
-    // force the waterfall to initialize the texture usage
-//    _parameters[_textureIndex].topLine = 0
-//    _binBandwidth = 0
-//    _firstBinFreq = 0
+    _binBandwidth = 0
+    _firstBinFreq = 0
   }
   /// Set the Metal view clear color
   ///
