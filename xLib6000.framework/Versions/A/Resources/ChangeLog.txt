@@ -1,5 +1,42 @@
 xLib6000 Change Log
 
+v1.0.20
+
+SliceCommands.swift - corrected audioCmd and properties that use it
+Slice.swift - added static names() to AgcMode enum
+Slice.swift - added @objc dynamic agcNames property
+
+v1.0.19
+
+Notifications.swift - added sliceMeterHasBeenAdded
+Meter.swift - moved code that handles "Slice Meters" from parseStatus(...) to parseProperties(...)
+Slice.swift - added missing "_q.sync" & "@objc dynamic" to meters property
+Panadapter.swift - added daxChannels & daxChoices properties
+Radio.swift - added findMeteryBy(id:)
+Radio.swift - Added update(_:value:key:)
+Radio.swift - Replaced cases in parseProperties() with update version
+Radio.swift - changed parseMeterListReply(_:) to "lowercase" meter names instead of "uppercase" them
+Api.swift - added MeterShortName enum
+Api.swift - added metersToSubscribe: parameter to connect(_:clientName:isGui:primaryCmdTypes:secondaryCmdTypes:subscriptionCmdTypes:)
+Radio.swift - added property _metersToSubscribe
+Radio.swift - added metersToSubscribe: parameter to init(api:objectQ:)
+Radio.swift - rewrote parseMeterListReply(_:) to generate sub messages for all meters in _metersToSubscribe
+
+v1.0.18
+
+Meter.swift - added NSObject to class declaration
+Meter.swift - changed "description" property to "desc"
+Added update(_:value:key:) to each model (dynamic & static)
+Replaced cases in parseProperties() with update version
+Edited comments and repositioned source code in all Models
+Panadapter.swift - corrected error in parseProperties() for .loopBEnabled
+Interlock.swift - corrected error in parseProperties() for .tx1Delay
+Interlock.swift - corrected error in parseProperties() for .tx1Enabled
+
+v1.0.17
+
+SliceCommands.swift - corrected sliceLock(_:), changed "0x\(id)" to " 0x\(id)"
+
 v1.0.16
 
 AppExtensions.swift - added conditional use of compactMap vs flatMap
