@@ -143,5 +143,13 @@
 	<string></string>
 	<key>smartLinkTokenExpiry</key>
 	<date>2018-03-20T14:45:11Z</date>
+	<key>quickMode0</key>
+	<string>USB</string>
+	<key>quickMode1</key>
+	<string>LSB</string>
+	<key>quickMode2</key>
+	<string>CW</string>
+	<key>quickMode3</key>
+	<string>AM</string>
 </dict>
 </plist>

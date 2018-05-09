@@ -64,6 +64,7 @@
 		913F7F882066E6F600F35E9B /* ObjcExceptionBridging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 913F7F7D2066E6F600F35E9B /* ObjcExceptionBridging.framework */; };
 		913F7F892066E6F600F35E9B /* ObjcExceptionBridging.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 913F7F7D2066E6F600F35E9B /* ObjcExceptionBridging.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		91475E5020A28E4600ACE77D /* Flag.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 91475E4E20A28E4600ACE77D /* Flag.storyboard */; };
+		91475E5220A34C2D00ACE77D /* ModeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91475E5120A34C2D00ACE77D /* ModeViewController.swift */; };
 		9185B0D4208683C7004D4C40 /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9185B0C6208683C7004D4C40 /* Keychain.swift */; };
 		9185B0D5208683C7004D4C40 /* JWTDecode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9185B0C8208683C7004D4C40 /* JWTDecode.swift */; };
 		9185B0D6208683C7004D4C40 /* JWT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9185B0C9208683C7004D4C40 /* JWT.swift */; };
@@ -159,6 +160,7 @@
 		913F7F7C2066E6F600F35E9B /* OpusOSX.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OpusOSX.framework; sourceTree = "<group>"; };
 		913F7F7D2066E6F600F35E9B /* ObjcExceptionBridging.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ObjcExceptionBridging.framework; sourceTree = "<group>"; };
 		91475E4F20A28E4600ACE77D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Flag.storyboard; sourceTree = "<group>"; };
+		91475E5120A34C2D00ACE77D /* ModeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModeViewController.swift; sourceTree = "<group>"; };
 		9185B0C6208683C7004D4C40 /* Keychain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
 		9185B0C8208683C7004D4C40 /* JWTDecode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JWTDecode.swift; sourceTree = "<group>"; };
 		9185B0C9208683C7004D4C40 /* JWT.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JWT.swift; sourceTree = "<group>"; };
@@ -303,12 +305,13 @@
 		913F7F0B2066DC7A00F35E9B /* Panadapter */ = {
 			isa = PBXGroup;
 			children = (
-				913F7F0C2066DC7A00F35E9B /* FlagViewController.swift */,
 				913F7F0D2066DC7A00F35E9B /* DbLegendView.swift */,
-				913F7F0F2066DC7A00F35E9B /* PanadapterViewController.swift */,
+				913F7F0C2066DC7A00F35E9B /* FlagViewController.swift */,
 				913F7F102066DC7A00F35E9B /* FrequencyLegendView.swift */,
+				91475E5120A34C2D00ACE77D /* ModeViewController.swift */,
 				913F7F112066DC7A00F35E9B /* PanadapterRenderer.swift */,
 				913F7F142066DC7A00F35E9B /* PanadapterShaders.metal */,
+				913F7F0F2066DC7A00F35E9B /* PanadapterViewController.swift */,
 			);
 			path = Panadapter;
 			sourceTree = "<group>";
@@ -513,6 +516,7 @@
 				913F7F572066DC7A00F35E9B /* PanadapterShaders.metal in Sources */,
 				913F7F5D2066DC7A00F35E9B /* AppDelegate.swift in Sources */,
 				9185B0DA208683C7004D4C40 /* StringExtensions.swift in Sources */,
+				91475E5220A34C2D00ACE77D /* ModeViewController.swift in Sources */,
 				913F7F3D2066DC7A00F35E9B /* PanafallButtonView.swift in Sources */,
 				913F7F402066DC7A00F35E9B /* PanafallButtonViewController.swift in Sources */,
 				913F7F622066DC7A00F35E9B /* TimeLayer.swift in Sources */,

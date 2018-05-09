@@ -13,20 +13,48 @@ import xLib6000
 // MARK: - Flag View Controller class implementation
 // --------------------------------------------------------------------------------
 
-@objcMembers final public class FlagViewController       : NSViewController {
+final public class FlagViewController       : NSViewController {
   
   static let kSliceLetters : [String]       = ["A", "B", "C", "D", "E", "F", "G", "H"]
   
   // ----------------------------------------------------------------------------
   // MARK: - Internal properties
   
-  dynamic weak var slice                    : xLib6000.Slice?
-  dynamic var formattedFilter               : String {
+  @objc dynamic weak var slice                    : xLib6000.Slice?
+  @objc dynamic var formattedFilter               : String {
     return String(format: "%3.1fk", Float(slice!.filterHigh - slice!.filterLow)/1000.0)
   }
-  dynamic var alpha                         : String {
+  @objc dynamic var alpha                         : String {
     return FlagViewController.kSliceLetters[Int(slice!.id)!]
   }
+
+  @objc dynamic public let filterChoices    = [                             // Names of filters (by mode)
+    "AM"    : ["5.6k", "6.0k", "8.0k", "10k", "12k", "14k", "16k", "20k"],
+    "SAM"   : ["5.6k", "6.0k", "8.0k", "10k", "12k", "14k", "16k", "20k"],
+    "CW"    : ["50", "100", "250", "400", "800", "1.0k", "1.5k", "3.0k"],
+    "USB"   : ["1.6k", "1.8k", "2.1k", "2.4k", "2.7k", "2.9k", "3.3k", "4.0k"],
+    "LSB"   : ["1.6k", "1.8k", "2.1k", "2.4k", "2.7k", "2.9k", "3.3k", "4.0k"],
+    "FM"    : [],
+    "NFM"   : [],
+    "DFM"   : ["6.0k", "8.0k", "10k", "12k", "14k", "16k", "18k", "20k"],
+    "DIGU"  : ["100", "300", "600", "1.0k", "1.5k", "2.0k", "3.0k", "5.0k"],
+    "DIGL"  : ["100", "300", "600", "1.0k", "1.5k", "2.0k", "3.0k", "5.0k"],
+    "RTTY"  : ["250", "300", "350", "400", "500", "1.0k", "1.5k", "3.0k"]
+  ]
+  @objc dynamic public let filterValues    = [                              // Values of filters (by mode)
+    "AM"    : [5_600, 6_000, 8_000, 10_000, 12_000, 14_000, 16_000, 20_000],
+    "SAM"   : [5_600, 6_000, 8_000, 10_000, 12_000, 14_000, 16_000, 20_000],
+    "CW"    : [50, 100, 250, 400, 800, 1_000, 1_500, 3_000],
+    "USB"   : [1_600, 1_800, 2_100, 2_400, 2_700, 2_900, 3_300, 4_000],
+    "LSB"   : [1_600, 1_800, 2_100, 2_400, 2_700, 2_900, 3_300, 4_000],
+    "FM"    : [],
+    "NFM"   : [],
+    "DFM"   : [6_000, 8_000, 10_000, 12_000, 14_000, 16_000, 18_000, 20_000],
+    "DIGU"  : [100, 300, 600, 1_000, 1_500, 2_000, 3_000, 5_000],
+    "DIGL"  : [100, 300, 600, 1_000, 1_500, 2_000, 3_000, 5_000],
+    "RTTY"  : [250, 300, 350, 400, 500, 1_000, 1_500, 3_000]
+  ]
+
   var onLeft                                = true
   var sliceObservations                     = [NSKeyValueObservation]()
   
@@ -137,6 +165,7 @@ import xLib6000
       
       // get the selected tab
       _viewController = _storyBoard!.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier(rawValue: id)) as? NSViewController
+      
       _viewController!.representedObject = slice! as Any
 
       // open the display area with the appropriate height

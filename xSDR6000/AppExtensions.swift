@@ -62,7 +62,11 @@
     static let spectrumStyle                = DefaultsKey<Int>("spectrumStyle")
     static let toolbar                      = DefaultsKey<NSColor>("toolbar")
     static let useLowBw                     = DefaultsKey<Bool>("useLowBw")
-    
+    static let quickMode0                   = DefaultsKey<String>("quickMode0")
+    static let quickMode1                   = DefaultsKey<String>("quickMode1")
+    static let quickMode2                   = DefaultsKey<String>("quickMode2")
+    static let quickMode3                   = DefaultsKey<String>("quickMode3")
+
     // Colors common to all Panafalls
     static let bandEdge                     = DefaultsKey<NSColor>("bandEdge")
     static let bandMarker                   = DefaultsKey<NSColor>("bandMarker")
