@@ -54,7 +54,10 @@ final class PanafallViewController          : NSSplitViewController {
   private let kNormalTnf                    = "Normal"
   private let kDeepTnf                      = "Deep"
   private let kVeryDeepTnf                  = "Very Deep"
-  
+
+  private let kTnfFindWidth: CGFloat        = 0.01                          // * bandwidth = Tnf tolerance multiplier
+  private let kSliceFindWidth: CGFloat      = 0.01                          // * bandwidth = Slice tolerance multiplier
+
   // ----------------------------------------------------------------------------
   // MARK: - Overridden methods
   
@@ -87,7 +90,7 @@ final class PanafallViewController          : NSSplitViewController {
     if theEvent.deltaY != 0 {
       
       // find the Active Slice
-      if let slice = radio!.findActiveSliceOn(panadapter!.id) {
+      if let slice = Slice.findActive(with: panadapter!.id) {
         
         // use the Slice's step value, unless the Shift key is down
         var step = slice.step
@@ -124,7 +127,7 @@ final class PanafallViewController          : NSSplitViewController {
     let mouseFrequency = Int(mouseLocation.x * _hzPerUnit) + _start
     
     // is there an active Slice
-    if let slice = radio!.findActiveSliceOn(panadapter!.id) {
+    if let slice = Slice.findActive(with: panadapter!.id) {
       
       // YES, force it to the nearest step value
       let delta = (mouseFrequency % slice.step)
@@ -142,7 +145,7 @@ final class PanafallViewController          : NSSplitViewController {
     } else {
       
       // NO, create one at the mouse position
-      radio!.sliceCreate(panadapter: panadapter!, frequency: mouseFrequency)
+      xLib6000.Slice.create(panadapter: panadapter!, frequency: mouseFrequency)
     }
     // redraw the Slices
     _panadapterViewController?.redrawSlices()
@@ -164,7 +167,7 @@ final class PanafallViewController          : NSSplitViewController {
     let mouseFrequency = Int(mouseLocation.x * _hzPerUnit) + _start
     
     // is the Frequency inside a Slice?
-    let slice = radio!.findSliceOn(panadapter!.id, byFrequency: mouseFrequency, panafallBandwidth: _bandwidth)
+    let slice = xLib6000.Slice.find(with: panadapter!.id, byFrequency: mouseFrequency, minWidth: Int( CGFloat(_bandwidth) * kSliceFindWidth ))
     if let slice = slice {
       
       // YES, mouse is in a Slice
@@ -181,7 +184,7 @@ final class PanafallViewController          : NSSplitViewController {
     }
     
     // is the Frequency inside a Tnf?
-    let tnf = radio!.findTnfBy(frequency: mouseFrequency, panafallBandwidth: _bandwidth)
+    let tnf = Tnf.findBy(frequency: mouseFrequency, minWidth: Int( CGFloat(_bandwidth) * kTnfFindWidth ))
     if let tnf = tnf {
       
       // YES, mouse is in a TNF
@@ -232,17 +235,18 @@ final class PanafallViewController          : NSSplitViewController {
       
     case kCreateSlice:        // tell the Radio to create a new Slice
       let freq = (sender.representedObject! as! NSNumber).intValue
-      radio!.sliceCreate(panadapter: panadapter!, frequency: freq)
+      xLib6000.Slice.create(panadapter: panadapter!, frequency: freq)
       
     case kRemoveSlice:        // tell the Radio to remove the Slice
-      radio!.sliceRemove((sender.representedObject as! xLib6000.Slice).id)
+     (sender.representedObject as! xLib6000.Slice).remove()
       
     case kCreateTnf:          // tell the Radio to create a new Tnf
       let freq = (sender.representedObject! as! NSNumber).intValue
-      radio!.tnfCreate(frequency: freq, panadapter: panadapter!)
+      Tnf.create(frequency: freq.hzToMhz())
       
     case kRemoveTnf:          // tell the Radio to remove the Tnf
-      radio!.tnfRemove(tnf: sender.representedObject as! Tnf)
+      let tnf = sender.representedObject as! Tnf
+      tnf.remove()
       
     case kPermanentTnf:           // update the Tnf
       (sender.representedObject as! Tnf).permanent = !(sender.representedObject as! Tnf).permanent

@@ -65,7 +65,7 @@ class ParameterMonitor: NSToolbarItem {
     for i in kTopValue...kBottomValue {
       
       // is there a Meter by that name?
-      if let meter = radio.findMeteryBy(shortName: _meterShortNames[i].rawValue) {
+      if let meter = Meter.findBy(shortName: _meterShortNames[i].rawValue) {
         
         // YES, observe it's value
         _observations.append( meter.observe(\.value, options: [.new],changeHandler: updateValue))

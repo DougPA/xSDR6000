@@ -21,32 +21,30 @@ import xLib6000
   // MARK: - Internal properties
   
   dynamic weak var slice                    : xLib6000.Slice?
+  dynamic var formattedFilter               : String {
+    return String(format: "%3.1fk", Float(slice!.filterHigh - slice!.filterLow)/1000.0)
+  }
+  dynamic var alpha                         : String {
+    return FlagViewController.kSliceLetters[Int(slice!.id)!]
+  }
   var onLeft                                = true
   var sliceObservations                     = [NSKeyValueObservation]()
   
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
-  
-  @IBOutlet private weak var _nbButton     : NSButton!
-  @IBOutlet private weak var _nrButton     : NSButton!
-  @IBOutlet private weak var _anfButton    : NSButton!
-  @IBOutlet private weak var _qskButton    : NSButton!
-  
-  @IBOutlet private weak var _txButton      : NSButton!
-  @IBOutlet private weak var _alpha         : NSTextField!
-  @IBOutlet private weak var _filter        : NSTextField!
-  @IBOutlet private weak var _rcvAntenna    : NSPopUpButton!
-  @IBOutlet private weak var _xmitAntenna   : NSPopUpButton!
-  @IBOutlet private weak var _lock          : NSButton!
-  
+    
   @IBOutlet private weak var _sMeter        : NSLevelIndicator!
+  @IBOutlet weak var _nbButton              : NSButton!
   
   @IBOutlet weak var _containerView         : NSView!
-  @IBOutlet var _tabViewHeight              : NSLayoutConstraint!
+  @IBOutlet weak var _containerViewHeight   : NSLayoutConstraint!
   
   private var _tabViewController            : NSTabViewController?
   private var _previousTabIndex             : Int?
-  
+
+  private var _storyBoard                   : NSStoryboard?
+  private var _viewController               : NSViewController?
+
   //  private var _popoverVc                    : NSViewController?
   //  private var _activeButton                 : NSButton?
   //  private var _audioPopover                 : Any?
@@ -65,132 +63,34 @@ import xLib6000
     
     view.translatesAutoresizingMaskIntoConstraints = false
     
+    // get the storyboard
+    _storyBoard = NSStoryboard(name: NSStoryboard.Name(rawValue: "Flag"), bundle: nil)
+    
+    // close the display area
+    _containerViewHeight.constant = 0 
+
     // set the background color of the Flag
     view.layer?.backgroundColor = NSColor.lightGray.cgColor
-    //    view.layer?.backgroundColor = NSColor.darkGray.cgColor
-    
-    // derive the Slice letter
-    if let index = Int(slice!.id), index < FlagViewController.kSliceLetters.count {
-      _alpha.stringValue = FlagViewController.kSliceLetters[index]
-    } else {
-      _alpha.stringValue = "?"
-    }
-    
-    _nbButton.state = slice!.nbEnabled ? NSControl.StateValue.on : NSControl.StateValue.off
-    _nrButton.state = slice!.nrEnabled ? NSControl.StateValue.on : NSControl.StateValue.off
-    _anfButton.state = slice!.anfEnabled ? NSControl.StateValue.on : NSControl.StateValue.off
-    _qskButton.state = slice!.qskEnabled ? NSControl.StateValue.on : NSControl.StateValue.off
-    
-    let width = Float(slice!.filterHigh - slice!.filterLow)/1000.0
-    _filter.stringValue = String(format: "%3.1fk", width)
-    _filter.toolTip = "Filter"
-    
-    _rcvAntenna.toolTip = "Receive"
-    _xmitAntenna.toolTip = "Transmit"
-    
-    _lock.state = (slice!.locked ? NSControl.StateValue.on : NSControl.StateValue.off)
-    
-    // begin observations (slice)
-    createObservations(&_observations, object: slice!)
+
+//    // begin observations (slice)
+//    createObservations(&_observations, object: slice!)
     
     addNotifications()
   }
   
-  public override func prepare(for segue: NSStoryboardSegue, sender: Any?) {
-    
-    if segue.identifier!.rawValue == "TabViewEmbed" {
-      _tabViewController = segue.destinationController as? NSTabViewController
-      
-      // give the initially selected tab a reference to the User Defaults
-      _tabViewController!.tabView.selectedTabViewItem?.viewController?.representedObject = slice!
-    }
-  }
   // ----------------------------------------------------------------------------
   // MARK: - Action methods
   
-  @IBAction func nbButton(_ sender: NSButton) {
-    slice!.nbEnabled = (sender.state == NSControl.StateValue.on)
-  }
-  
-  @IBAction func nrButton(_ sender: NSButton) {
-    slice!.nrEnabled = (sender.state == NSControl.StateValue.on)
-  }
-  
-  @IBAction func anfButton(_ sender: NSButton) {
-    slice!.anfEnabled = (sender.state == NSControl.StateValue.on)
-  }
-  
-  @IBAction func qskButton(_ sender: NSButton) {
-    slice!.qskEnabled = (sender.state == NSControl.StateValue.on)
-  }
-  
-  @IBAction func txButton(_ sender: NSButton) {
-    slice!.txEnabled = (sender.state == NSControl.StateValue.on)
-  }
-  
-  @IBAction func lockButton(_ sender: NSButton) {
-    slice!.locked = (sender.state == NSControl.StateValue.on)
-  }
-  
-  @IBAction func audButton(_ sender: Any) {
-    tabClicked(index: 0)
-  }
-  
-  @IBAction func dspButton(_ sender: Any) {
-    tabClicked(index: 1)
-  }
-  
-  @IBAction func modeButton(_ sender: Any) {
-    tabClicked(index: 2)
-  }
-  
-  @IBAction func ritButton(_ sender: Any) {
-    tabClicked(index: 3)
-  }
-  
-  @IBAction func daxButton(_ sender: Any) {
-    tabClicked(index: 4)
-  }
-  
-  private func tabClicked(index: Int) {
+  /// One of the "tab" view buttons has been clicked
+  ///
+  /// - Parameter sender:         the button
+  ///
+  @IBAction func buttons(_ sender: NSButton) {
     
-    let state = (_previousTabIndex, index, _tabViewHeight.constant)
-    
-    switch state {
-      
-    case (nil, _, _):
-      // NO PREVIOUS TAB - expand it & select tab
-      _tabViewController?.selectedTabViewItemIndex = index      
-      _tabViewHeight.constant = kTabViewOpen
-      view.frame.origin.y = view.frame.origin.y - kTabViewOpen
-      
-    case (_, _previousTabIndex, kTabViewClosed):
-      // SAME TAB AS PREVIOUS, IS COLLAPSED - expand it
-      _tabViewHeight.constant = kTabViewOpen
-      view.frame.origin.y = view.frame.origin.y - kTabViewOpen
-      
-    case (_, _previousTabIndex, kTabViewOpen):
-      // SAME TAB AS PREVIOUS, IS EXPANDED - collapse it
-      _tabViewHeight.constant = kTabViewClosed
-      view.frame.origin.y = view.frame.origin.y + kTabViewOpen
-      
-    case (_, _, 0):
-      // DIFFERENT TAB FROM PREVIOUS, IS COLLAPSED - expand it
-      _tabViewController?.selectedTabViewItemIndex = index
-
-      _tabViewHeight.constant = kTabViewOpen
-      view.frame.origin.y = view.frame.origin.y - kTabViewOpen
-      
-    default:
-      // DIFFERENT TAB FROM PREVIOUS, IS EXPANDED - select it
-      _tabViewController?.selectedTabViewItemIndex = index
-    }
-    // give the selected tab a reference to the User Defaults
-    _tabViewController!.tabView.selectedTabViewItem?.viewController?.representedObject = slice!
-
-    _previousTabIndex = index
+    // display / hide the selected view
+    selectView(sender.identifier!.rawValue)
   }
-  
+
   // ----------------------------------------------------------------------------
   // MARK: - Internal methods
   
@@ -222,40 +122,103 @@ import xLib6000
   }
   
   // ----------------------------------------------------------------------------
+  // MARK: - Private methods
+  
+  /// Select a view to display
+  ///
+  /// - Parameter id:             the ID of the selected view
+  ///
+  private func selectView(_ id: String) {
+    var flagAdjustMinus = true
+    
+    switch (_viewController, id) {
+      
+    case (nil, _):                                          // NO PREVIOUS TAB
+      
+      // get the selected tab
+      _viewController = _storyBoard!.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier(rawValue: id)) as? NSViewController
+      _viewController!.representedObject = slice! as Any
+
+      // open the display area with the appropriate height
+      _containerViewHeight.constant = _viewController!.view.frame.size.height
+      
+      // add the view
+      _containerView.addSubview(_viewController!.view)
+      
+    case (_, _viewController!.identifier!.rawValue):        // SAME TAB AS PREVIOUS
+      
+      if _containerViewHeight.constant == kTabViewClosed {
+        
+        // is closed, open the display area with the appropriate height
+        _containerViewHeight.constant = _viewController!.view.frame.size.height
+        
+      } else {
+        
+        // is open, close the display area
+        _containerViewHeight.constant = kTabViewClosed
+        
+        flagAdjustMinus = false
+      }
+      
+    default:                                                // DIFFERENT TAB FROM PREVIOUS
+      
+      // remove the current tab
+      _viewController!.view.removeFromSuperview()
+      
+      // if open, adjust the flag position
+      if _containerViewHeight.constant != kTabViewClosed { view.frame.origin.y = view.frame.origin.y + _viewController!.view.frame.size.height }
+      
+      // get the selected tab
+      _viewController = _storyBoard!.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier(rawValue: id)) as? NSViewController
+      _viewController!.representedObject = slice! as Any
+
+      // open the display area with the appropriate height
+      _containerViewHeight.constant = _viewController!.view.frame.size.height
+      
+      // add the tab
+      _containerView.addSubview(_viewController!.view)
+    }
+    
+    // adjust the flag position
+    let tabHeight = _viewController!.view.frame.size.height
+    view.frame.origin.y = view.frame.origin.y + (flagAdjustMinus ? -tabHeight : tabHeight)
+  }
+
+  // ----------------------------------------------------------------------------
   // MARK: - NEW Observation methods
   
   private var _observations    = [NSKeyValueObservation]()
   
   /// Add observers for Slice properties
   ///
-  private func createObservations(_ observations: inout [NSKeyValueObservation], object: xLib6000.Slice ) {
-    
-    observations = [
-      object.observe(\.txEnabled, options: [.new], changeHandler: observer),
-      object.observe(\.nbEnabled, options: [.new], changeHandler: observer),
-      object.observe(\.nrEnabled, options: [.new], changeHandler: observer),
-      object.observe(\.anfEnabled, options: [.new], changeHandler: observer),
-      object.observe(\.qskEnabled, options: [.new], changeHandler: observer),
-      object.observe(\.filterHigh, options: [.new], changeHandler: observer),
-      object.observe(\.filterLow, options: [.new], changeHandler: observer),
-      object.observe(\.locked, options: [.new], changeHandler: observer)
-    ]
-  }
-  private func observer(_ object: Any, _ change: Any) {
-    
-    DispatchQueue.main.async { [unowned self] in
-      self._txButton.state = self.slice!.txEnabled ? NSControl.StateValue.on : NSControl.StateValue.off
-      self._nbButton.state = self.slice!.nbEnabled ? NSControl.StateValue.on : NSControl.StateValue.off
-      self._nrButton.state = self.slice!.nrEnabled ? NSControl.StateValue.on : NSControl.StateValue.off
-      self._anfButton.state = self.slice!.anfEnabled ? NSControl.StateValue.on : NSControl.StateValue.off
-      self._qskButton.state = self.slice!.qskEnabled ? NSControl.StateValue.on : NSControl.StateValue.off
-      
-      let width = Float(self.slice!.filterHigh - self.slice!.filterLow)/1000.0
-      self._filter.stringValue = String(format: "%3.1fk", width)
-      
-      self._lock.state = (self.slice!.locked ? NSControl.StateValue.on : NSControl.StateValue.off)
-    }
-  }
+//  private func createObservations(_ observations: inout [NSKeyValueObservation], object: xLib6000.Slice ) {
+//
+//    observations = [
+//      object.observe(\.txEnabled, options: [.new], changeHandler: observer),
+//      object.observe(\.nbEnabled, options: [.initial, .new], changeHandler: observer),
+//      object.observe(\.nrEnabled, options: [.new], changeHandler: observer),
+//      object.observe(\.anfEnabled, options: [.new], changeHandler: observer),
+//      object.observe(\.qskEnabled, options: [.new], changeHandler: observer),
+//      object.observe(\.filterHigh, options: [.new], changeHandler: observer),
+//      object.observe(\.filterLow, options: [.new], changeHandler: observer),
+//      object.observe(\.locked, options: [.new], changeHandler: observer)
+//    ]
+//  }
+//  private func observer(_ object: Any, _ change: Any) {
+//
+//    DispatchQueue.main.async { [unowned self] in
+//      self._txButton.state = self.slice!.txEnabled ? NSControl.StateValue.on : NSControl.StateValue.off
+//      self._nbButton.state = self.slice!.nbEnabled ? NSControl.StateValue.on : NSControl.StateValue.off
+//      self._nrButton.state = self.slice!.nrEnabled ? NSControl.StateValue.on : NSControl.StateValue.off
+//      self._anfButton.state = self.slice!.anfEnabled ? NSControl.StateValue.on : NSControl.StateValue.off
+//      self._qskButton.state = self.slice!.qskEnabled ? NSControl.StateValue.on : NSControl.StateValue.off
+
+//      let width = Float(self.slice!.filterHigh - self.slice!.filterLow)/1000.0
+//      self._filter.stringValue = String(format: "%3.1fk", width)
+//
+//      self._lock.state = (self.slice!.locked ? NSControl.StateValue.on : NSControl.StateValue.off)
+//    }
+//  }
   
   // ----------------------------------------------------------------------------
   // MARK: - Notification Methods

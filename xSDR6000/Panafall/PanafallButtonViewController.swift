@@ -153,7 +153,7 @@ final class PanafallButtonViewController    : NSViewController {
     buttonView.removeTrackingArea()
     
     // tell the Radio to remove this Panafall
-    radio!.panafallRemove(panadapter!.id)
+    panadapter!.remove()
   }
   /// Create a new Slice (if possible)
   ///
@@ -162,7 +162,7 @@ final class PanafallButtonViewController    : NSViewController {
   @IBAction func rx(_ sender: NSButton) {
     
     // tell the Radio (hardware) to add a Slice on this Panadapter
-    radio!.sliceCreate(panadapter: panadapter!)
+    xLib6000.Slice.create(panadapter: panadapter!)
   }
   /// Create a new Tnf
   ///
@@ -171,6 +171,6 @@ final class PanafallButtonViewController    : NSViewController {
   @IBAction func tnf(_ sender: NSButton) {
     
     // tell the Radio (hardware) to add a Tnf on this Panadapter
-    radio!.tnfCreate(frequency: 0, panadapter: panadapter!)
+    Tnf.create(frequency: "")
   }
 }

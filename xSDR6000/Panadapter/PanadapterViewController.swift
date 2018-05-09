@@ -677,7 +677,7 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
     Log.sharedInstance.msg("Slice \(slice.id)", level: .debug, function: #function, file: #file, line: #line)
     
     // get the Storyboard containing a Flag View Controller
-    let sb = NSStoryboard(name: NSStoryboard.Name(rawValue: "Panafall"), bundle: nil)
+    let sb = NSStoryboard(name: NSStoryboard.Name(rawValue: "Flag"), bundle: nil)
 
     // create a Flag View Controller
     let flagVc = sb.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier(rawValue: "Flag")) as! FlagViewController

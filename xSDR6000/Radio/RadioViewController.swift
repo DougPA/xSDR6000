@@ -187,7 +187,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   @IBAction func panButton(_ sender: AnyObject) {
     
     // dimensions are dummy values; when created, will be resized to fit its view
-    _api.radio?.panafallCreate(CGSize(width: 50, height: 50))
+    Panadapter.create(CGSize(width: 50, height: 50))
   }
   /// Respond to the Remote Rx button
   ///
@@ -195,14 +195,18 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   ///
   @IBAction func remoteRxButton(_ sender: NSButton) {
     
+    // FIXME:
+    
     // ask the Radio (hardware) to start/stop Rx Opus
-    _api.radio?.remoteRxAudioRequest(sender.state == NSControl.StateValue.on)
+//    _opusManager.remoteRxAudioRequest(sender.state == NSControl.StateValue.on)
   }
   /// Respond to the Remote Tx button
   ///
   /// - Parameter sender: the Button
   ///
   @IBAction func remoteTxButton(_ sender: NSButton) {
+        
+    // FIXME:
     
     // ask the Radio (hardware) to start/stop Tx Opus
     _api.radio?.transmit.micSelection = (sender.state == NSControl.StateValue.on ? "PC" : "MIC")
