@@ -1,0 +1,763 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
+{\fonttbl\f0\fmodern\fcharset0 CourierNewPSMT;\f1\fmodern\fcharset0 CourierNewPS-BoldMT;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
+\margl1440\margr1440\vieww51000\viewh28800\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs32 \cf0 Commands as of v1.0.22\
+as\
+
+\f1\b AmplifierCommands:
+\f0\b0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf0 \
+  internal enum Token : String \{\
+    case ant\
+    case ip\
+    case model\
+    case mode        // never received from Radio (values = KOperate or kStandby)\
+    case port\
+    case serialNumber                       = "serial_num"\
+  \}\
+	\
+	"amplifier set " + "\\(id) " + .ant.rawValue + "=\\(value)"\
+	"amplifier set " + "\\(id) " + .ip.rawValue + "=\\(value)"\
+	"amplifier set " + "\\(id) " + .model.rawValue + "=\\(value)"\
+	"amplifier set " + "\\(id) " + .mode.rawValue + "=\\(value)"\
+	"amplifier set " + "\\(id) " + .port.rawValue + "=\\(value)"\
+	"amplifier set " + "\\(id) " + .serialNumber.rawValue + "=\\(value)"\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+
+\f1\b AtuCommands:
+\f0\b0 \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf0   internal enum Token: String \{\
+    case status\
+    case enabled          = "atu_enabled"\
+    case memoriesEnabled  = "memories_enabled"\
+    case usingMemories    = "using_mem"\
+  \}\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+   "atu clear"\
+   "atu bypass"\
+   "atu start"\
+   "atu set " + .memoriesEnabled.rawValue + "=\\(value.asNumber())"\
+   "atu set " + .enabled.rawValue + "=\\(value.asNumber())"\
+\
+
+\f1\b AudioStreamCommands:
+\f0\b0 \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf0   internal enum Token: String \{\
+    case daxChannel                         = "dax"\
+    case daxClients                         = "dax_clients"\
+    case inUse                              = "in_use"\
+    case ip\
+    case port\
+    case slice\
+  \}\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0   \
+   "audio stream " + "\\(id.hex) slice \\(_slice.id) " + "gain" + " \\(value)")\
+\
+
+\f1\b CwxCommands:
+\f0\b0 \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf0   internal enum Token : String \{\
+    case breakInDelay   = "break_in_delay"\
+    case qskEnabled     = "qsk_enabled"\
+    case erase\
+    case sent\
+    case wpm            = "wpm"\
+  \}\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf0 	"cwx " + "\cf2 delay\cf0 " + " \\(value)"\
+	\
+	"cwx " + .qskEnabled.rawValue + " \\(value.asNumber())"\
+	"cwx " + .wpm.rawValue + " \\(value)"\
+	"cwx " + "clear")\
+	"cwx " + "erase \\(numberOfChars)")\
+	"cwx " + "erase \\(numberOfChars)" + " \\(radioIndex)")\
+\
+	"cwx insert " + "\\(index) \\"" + msg + "\\" \\(block)", replyTo: replyHandler)\
+	"cwx insert " + "\\(index) \\"" + msg + "\\"", replyTo: replyHandler)\
+\
+	"cwx macro " + "save \\(index+1)" + " \\"" + msg + "\\"")\
+	"cwx macro " + "send \\(index) \\(block)", replyTo: replyHandler)\
+	"cwx macro " + "send \\(index)", replyTo: replyHandler)\
+\
+	"cwx send " + "\\"" + msg + "\\" \\(block)", replyTo: replyHandler)\
+	"cwx send " + "\\"" + msg + "\\"", replyTo: replyHandler)\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+
+\f1\b EqualizerCommands:
+\f0\b0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf0 \
+  internal enum Token : String \{\
+    case level63Hz                          = "63hz"\
+    case level125Hz                         = "125hz"\
+    case level250Hz                         = "250hz"\
+    case level500Hz                         = "500hz"\
+    case level1000Hz                        = "1000hz"\
+    case level2000Hz                        = "2000hz"\
+    case level4000Hz                        = "4000hz"\
+    case level8000Hz                        = "8000hz"\
+    case enabled                            = "mode"\
+  \}\
+	\
+	"eq " + "\\(id) " + .enabled.rawValue + "=\\(newValue.asNumber())"\
+	"eq " + "\\(id) " + .level63Hz.rawValue + "=\\(newValue)"\
+	"eq " + "\\(id) " + .level125Hz.rawValue + "=\\(newValue)"\
+	"eq " + "\\(id) " + .level250Hz.rawValue + "=\\(newValue)"\
+	"eq " + "\\(id) " + .level500Hz.rawValue + "=\\(newValue)"\
+	"eq " + "\\(id) " + .level1000Hz.rawValue + "=\\(newValue)"\
+	"eq " + "\\(id) " + .level2000Hz.rawValue + "=\\(newValue)"\
+	"eq " + "\\(id) " + .level4000Hz.rawValue + "=\\(newValue)"\
+	"eq " + "\\(id) " + printerpr.level8000Hz.rawValue + "=\\(newValue)"\
+\pard\tx395\pardeftab395\pardirnatural\partightenfactor0
+\cf0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f1\b \cf0 InterlockCommands:
+\f0\b0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf0 \
+  internal enum Token: String \{\
+    case accTxEnabled        = "acc_tx_enabled"\
+    case accTxDelay         = "acc_tx_delay"\
+    case accTxReqEnabled    = "acc_txreq_enable"\
+    case accTxReqPolarity   = "acc_txreq_polarity"\
+    case rcaTxReqEnabled    = "rca_txreq_enable"\
+    case rcaTxReqPolarity   = "rca_txreq_polarity"\
+    case reason\
+    case source\
+    case state\
+    case timeout\
+    case txAllowed          = "tx_allowed"\
+    case txDelay            = "tx_delay"\
+    case tx1Enabled         = "tx1_enabled"\
+    case tx1Delay           = "tx1_delay"\
+    case tx2Enabled         = "tx2_enabled"\
+    case tx2Delay           = "tx2_delay"\
+    case tx3Enabled         = "tx3_enabled"\
+    case tx3Delay           = "tx3_delay"\
+  \}\
+  \
+	"interlock " + .accTxEnabled.rawValue + "=\\(newValue.asLetter())"\
+  	"interlock " + .accTxDelay.rawValue + "=\\(newValue)"\
+  	"interlock " + .accTxReqEnabled.rawValue + "=\\(newValue.asNumber())"\
+  	"interlock " + .accTxReqPolarity.rawValue + "=\\(newValue.asNumber())"\
+  	"interlock " + .rcaTxReqEnabled.rawValue + "=\\(newValue.asLetter())"\
+  	"interlock " + .rcaTxReqPolarity.rawValue + "=\\(newValue.asLetter())"\
+  	"interlock " + .timeout.rawValue + "=\\(newValue)"\
+  	"interlock " + .tx1Enabled.rawValue + "=\\(newValue.asLetter())"\
+  	"interlock " + .tx1Delay.rawValue + "=\\(newValue)"\
+  	"interlock " + .tx2Enabled.rawValue + "=\\(newValue.asLetter())"\
+  	"interlock " + .tx2Delay.rawValue + "=\\(newValue)"\
+  	"interlock " + .tx3Enabled.rawValue + "=\\(newValue.asLetter())"\
+  	"interlock " + .tx3Delay.rawValue + "=\\(newValue)"\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+\
+
+\f1\b IqStreamCommands:
+\f0\b0 \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf0   internal enum Token: String \{\
+    case available\
+    case capacity\
+    case daxIqChannel                       = "daxiq"\
+    case inUse                              = "in_use"\
+    case ip\
+    case pan\
+    case port\
+    case rate\
+    case streaming\
+  \}\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+   "dax iq " + .rate.rawValue + "=\\(value)"\
+\
+
+\f1\b MemoryCommands:
+\f0\b0 \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf0   internal enum Token : String \{\
+    case digitalLowerOffset                 = "digl_offset"\
+    case digitalUpperOffset                 = "digu_offset"\
+    case frequency                          = "freq"\
+    case group\
+    case highlight\
+    case highlightColor                     = "highlight_color"\
+    case mode\
+    case name\
+    case owner\
+    case repeaterOffsetDirection            = "repeater"\
+    case repeaterOffset                     = "repeater_offset"\
+    case rfPower                            = "power"\
+    case rttyMark                           = "rtty_mark"\
+    case rttyShift                          = "rtty_shift"\
+    case rxFilterHigh                       = "rx_filter_high"\
+    case rxFilterLow                        = "rx_filter_low"\
+    case step\
+    case squelchEnabled                     = "squelch"\
+    case squelchLevel                       = "squelch_level"\
+    case toneMode                           = "tone_mode"\
+    case toneValue                          = "tone_value"\
+  \}\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf0 	"memory apply \\(id)"\
+	"memory create"\
+	"memory remove \\(id)"\
+  \
+	"memory set " + "\\(id) " + .digitalLowerOffset.rawValue + "=\\(value)"\
+  	"memory set " + "\\(id) " + .digitalUpperOffset.rawValue + "=\\(value)"\
+  	"memory set " + "\\(id) " + .rxFilterHigh.rawValue + "=\\(value)"\
+  	"memory set " + "\\(id) " + .rxFilterLow.rawValue + "=\\(value)"\
+  	"memory set " + "\\(id) " + .frequency.rawValue + "=\\(value)"\
+  	"memory set " + "\\(id) " + .group.rawValue + "=\\(value)"\
+  	"memory set " + "\\(id) " + .mode.rawValue + "=\\(value)"\
+  	"memory set " + "\\(id) " + .name.rawValue + "=\\(value)"\
+  	"memory set " + "\\(id) " + .repeaterOffset.rawValue + "=\\(value)"\
+  	"memory set " + "\\(id) " + .repeaterOffsetDirection.rawValue + "=\\(value)"\
+  	"memory set " + "\\(id) " + .owner.rawValue + "=\\(value)"\
+  	"memory set " + "\\(id) " + .rfPower.rawValue + "=\\(value)"\
+  	"memory set " + "\\(id) " + .rttyMark.rawValue + "=\\(value)"\
+  	"memory set " + "\\(id) " + .rttyShift.rawValue + "=\\(value)"\
+  	"memory set " + "\\(id) " + .squelchEnabled.rawValue + "=\\(value.asNumber())"\
+  	"memory set " + "\\(id) " + .squelchLevel.rawValue + "=\\(value)"\
+  	"memory set " + "\\(id) " + .step.rawValue + "=\\(value)"\
+  	"memory set " + "\\(id) " + .toneMode.rawValue + "=\\(value)"\
+	"memory set " + "\\(id) " + .toneValue.rawValue + "=\\(value)"\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+
+\f1\b MeterCommands:
+\f0\b0 \
+\
+   "sub meter " + "\\(id)"\
+\
+
+\f1\b OpusCommands:
+\f0\b0 \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf0   internal enum Token : String \{\
+    case ipAddress          = "ip"\
+    case port\
+    case remoteRxOn         = "rx_on"\
+    case remoteTxOn         = "tx_on"\
+    case rxStreamStopped    = "opus_rx_stream_stopped"\
+  \}\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+   "remote_audio " + .remoteRxOn.rawValue + "\\(value.asNumber())"\
+   "remote_audio " + .remoteTxOn.rawValue + "\\(value.asNumber())"\
+\
+
+\f1\b PanadapterCommands:
+\f0\b0 \
+ \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf0   internal enum Token : String \{\
+    // on Panadapter\
+    case antList                    = "ant_list"\
+    case average\
+    case band\
+    case bandwidth\
+    case center\
+    case daxIqChannel               = "daxiq"\
+    case fps\
+    case loopAEnabled               = "loopa"\
+    case loopBEnabled               = "loopb"\
+    case maxBw                      = "max_bw"\
+    case maxDbm                     = "max_dbm"\
+    case minBw                      = "min_bw"\
+    case minDbm                     = "min_dbm"\
+    case preamp                     = "pre"\
+    case rfGain                     = "rfgain"\
+    case rxAnt                      = "rxant"\
+    case waterfallId                = "waterfall"\
+    case weightedAverageEnabled     = "weighted_average"\
+    case wide\
+    case wnbEnabled                 = "wnb"\
+    case wnbLevel                   = "wnb_level"\
+    case wnbUpdating                = "wnb_updating"\
+    case xPixels                    = "x_pixels"\
+    case xvtrLabel                  = "xvtr"\
+    case yPixels                    = "y_pixels"\
+  \}\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0  \
+   "display pan " + "rf_gain_info " + "\\(id.hex)"\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf0    "display panafall set " + "\\(id.hex)" + .average.rawValue + "=\\(value)"\
+   "display panafall set " + "\\(id.hex)" + .band.rawValue + "=\\(value)"\
+   "display panafall set " + "\\(id.hex)" + .bandwidth.rawValue + "=\\(newValue.hzToMhz()) + " autocenter=1")\
+   "display panafall set " + "\\(id.hex)" + .center.rawValue + "=\\(newValue.hzToMhz())"\
+   "display panafall set " + "\\(id.hex)" + .daxIqChannel.rawValue + "=\\(value)"\
+   "display panafall set " + "\\(id.hex)" + .fps.rawValue + "=\\(value)"\
+   "display panafall set " + "\\(id.hex)" + .n1mmSpectrumEnable.rawValue + "=\\(newValue.asNumber())"\
+   "display panafall set " + "\\(id.hex)" + .n1mmAddress.rawValue + "=\\(value)"\
+   "display panafall set " + "\\(id.hex)" + .n1mmPort.rawValue + "=\\(value)"\
+   "display panafall set " + "\\(id.hex)" + .n1mmRadio.rawValue + "=\\(value)"\
+   "display panafall set " + "\\(id.hex)" + .loopAEnabled.rawValue + "=\\(newValue.asNumber())"\
+   "display panafall set " + "\\(id.hex)" + .loopBEnabled.rawValue + "=\\(newValue.asNumber())"\
+   "display panafall set " + "\\(id.hex)" + .maxDbm.rawValue + "=\\(value)"\
+   "display panafall set " + "\\(id.hex)" + .minDbm.rawValue + "=\\(value)"\
+   "display panafall set " + "\\(id.hex)" + .rfGain.rawValue + "=\\(value)"\
+   "display panafall set " + "\\(id.hex)" + .rxAnt.rawValue + "=\\(value)"\
+   "display panafall set " + "\\(id.hex)" + .weightedAverageEnabled.rawValue + "=\\(newValue.asNumber())"\
+   "display panafall set " + "\\(id.hex)" + .wnbEnabled.rawValue + "=\\(newValue.asNumber())"\
+   "display panafall set " + "\\(id.hex)" + .wnbLevel.rawValue + "=\\(value)"\
+   \
+	"display panafall set " + "\\(id.hex)" + "\cf2 xpixels\cf0 " + "=\\(value)"\
+   "display panafall set " + "\\(id.hex)" + "\cf2 ypixels\cf0 " + "=\\(value)"\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+
+\f1\b ProfileCommands:
+\f0\b0 \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf0   public enum Token: String \{\
+    case global\
+    case mic\
+    case tx\
+  \}\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf0    "profile " + \\(token).rawValue + " load \\"\\(value)\\""\
+	"profile " + \\(token).rawValue + " delete \\"" + \\(name) + \\""\
+	"profile " + \\(token).rawValue + " save \\"" + \\(name) + \\""\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+\
+
+\f1\b RadioCommands:
+\f0\b0 \
+\
+  Api.Command.antList.rawValue, replyTo: callback == nil ? defaultReplyHandler : callback)\
+  Api.Command.clientProgram.rawValue + "low_bw_connect", replyTo: callback)\
+  Api.Command.clientProgram.rawValue + "start_persistence off", replyTo: callback)\
+  Transmit.kCwCmd + "key immediate" + " \\(state.asNumber())", replyTo: callback)\
+  return Radio.kLicenseCmd + "refresh", replyTo: callback)\
+  Radio.kCmd + RadioToken.staticNetParams.rawValue + " reset", replyTo: callback)\
+  Opus.kCmd + Opus.Token.remoteRxOn.rawValue + " \\(value.asNumber())", replyTo: callback)\
+  Radio.kCmd + RadioToken.staticNetParams.rawValue + " reset", replyTo: callback)\
+  Radio.kXmitCmd + " \\(value.asNumber())", replyTo: callback)\
+  Radio.kStreamRemoveCmd + "\\(id.hex)", replyTo: callback)\
+  Radio.kUptimeCmd, replyTo: callback == nil ? defaultReplyHandler : callback)\
+  Xvtr.kRemoveCmd + "\\(id)", replyTo: callback)\
+  Radio.kApfCmd + token.rawValue + "=\\(value)")\
+  Radio.kMixerCmd + token + " \\(value)")\
+  Radio.kSetCmd + token.rawValue + "=\\(value)")\
+  Radio.kCmd + token.rawValue + " \\(value)")\
+  Radio.kCmd + token1.rawValue + " " + token2.rawValue + " " + token3.rawValue + "=\\(value)")\
+  Radio.kCmd + "name" + " \\(newValue)") \} \} \}\
+  Radio.kCmd + "screensaver" + " \\(newValue)") \} \} \}\
+  Radio.kCmd + "pll_start") \} \} \} \}\
+  Radio.kCmd + RadioToken.staticNetParams.rawValue + " " + RadioToken.ip.rawValue + "=\\(staticIp) " + RadioToken.gateway.rawValue + "=\\(newValue) " + RadioToken.netmask.rawValue + "=\\(staticNetmask)") \} \} \}\
+  Radio.kCmd + RadioToken.staticNetParams.rawValue + " " + RadioToken.ip.rawValue + "=\\(staticIp) " + RadioToken.gateway.rawValue + "=\\(newValue) " + RadioToken.netmask.rawValue + "=\\(staticNetmask)") \} \} \}\
+  Radio.kCmd + RadioToken.staticNetParams.rawValue + " " + RadioToken.ip.rawValue + "=\\(staticIp) " + RadioToken.gateway.rawValue + "=\\(newValue) " + RadioToken.netmask.rawValue + "=\\(staticNetmask)") \} \} \}\
+\
+
+\f1\b SliceCommands:\
+
+\f0\b0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf0   internal enum Token : String \{\
+    case active\
+    case agcMode                    = "agc_mode"\
+    case agcOffLevel                = "agc_off_level"\
+    case agcThreshold               = "agc_threshold"\
+    case anfEnabled                 = "anf"\
+    case anfLevel                   = "anf_level"\
+    case apfEnabled                 = "apf"\
+    case apfLevel                   = "apf_level"\
+    case audioGain                  = "audio_gain"\
+    case audioMute                  = "audio_mute"\
+    case audioPan                   = "audio_pan"\
+    case daxChannel                 = "dax"\
+    case daxClients                 = "dax_clients"\
+    case daxTxEnabled               = "dax_tx"\
+    case dfmPreDeEmphasisEnabled    = "dfm_pre_de_emphasis"\
+    case digitalLowerOffset         = "digl_offset"\
+    case digitalUpperOffset         = "digu_offset"\
+    case diversityEnabled           = "diversity"\
+    case diversityChild             = "diversity_child"\
+    case diversityIndex             = "diversity_index"\
+    case diversityParent            = "diversity_parent"\
+    case filterHigh                 = "filter_hi"\
+    case filterLow                  = "filter_lo"\
+    case fmDeviation                = "fm_deviation"\
+    case fmRepeaterOffset           = "fm_repeater_offset_freq"\
+    case fmToneBurstEnabled         = "fm_tone_burst"\
+    case fmToneMode                 = "fm_tone_mode"\
+    case fmToneFreq                 = "fm_tone_value"\
+    case frequency                  = "rf_frequency"\
+    case ghost\
+    case inUse                      = "in_use"\
+    case locked                     = "lock"\
+    case loopAEnabled               = "loopa"\
+    case loopBEnabled               = "loopb"\
+    case mode\
+    case modeList                   = "mode_list"\
+    case nbEnabled                  = "nb"\
+    case nbLevel                    = "nb_level"\
+    case nrEnabled                  = "nr"\
+    case nrLevel                    = "nr_level"\
+    case owner\
+    case panadapterId               = "pan"\
+    case playbackEnabled            = "play"\
+    case postDemodBypassEnabled     = "post_demod_bypass"\
+    case postDemodHigh              = "post_demod_high"\
+    case postDemodLow               = "post_demod_low"\
+    case qskEnabled                 = "qsk"\
+    case recordEnabled              = "record"\
+    case recordTime                 = "record_time"\
+    case repeaterOffsetDirection    = "repeater_offset_dir"\
+    case rfGain                     = "rfgain"\
+    case ritEnabled                 = "rit_on"\
+    case ritOffset                  = "rit_freq"\
+    case rttyMark                   = "rtty_mark"\
+    case rttyShift                  = "rtty_shift"\
+    case rxAnt                      = "rxant"\
+    case rxAntList                  = "ant_list"\
+    case squelchEnabled             = "squelch"\
+    case squelchLevel               = "squelch_level"\
+    case step\
+    case stepList                   = "step_list"\
+    case txEnabled                  = "tx"\
+    case txAnt                      = "txant"\
+    case txAntList                  = "tx_ant_list"\
+    case txOffsetFreq               = "tx_offset_freq"\
+    case wide\
+    case wnbEnabled                 = "wnb"\
+    case wnbLevel                   = "wnb_level"\
+    case xitEnabled                 = "xit_on"\
+    case xitOffset                  = "xit_freq"\
+  \}\
+  	\
+	"audio client 0 slice " + "0x\\(id)" + " gain" + " \\(value)"\
+  	"audio client 0 slice " + "0x\\(id)" + " mute" + " \\(value.asNumber())"\
+  	"audio client 0 slice " + "0x\\(id)" + " pan" + " \\(value)"\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf0   	"filt " + "0x\\(id)" + " \\(filterLow)" + " \\(filterHigh)"\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf0 	"slice " + "\\(newValue == true ? "lock" : "unlock") + " 0x\\(id)"\
+\
+   "slice set " + "0x\\(id)" + .active.rawValue + "=\\(newValue.asNumber())"\
+   "slice set " + "0x\\(id)" + .agcMode.rawValue + "=\\(newValue)"\
+   "slice set " + "0x\\(id)" + .agcOffLevel.rawValue + "=\\(newValue)"\
+   "slice set " + "0x\\(id)" + .agcThreshold.rawValue + "=\\(newValue)"\
+   "slice set " + "0x\\(id)" + .anfEnabled.rawValue + "=\\(newValue.asNumber())"\
+   "slice set " + "0x\\(id)" + .anfLevel.rawValue + "=\\(newValue)" \}\
+   "slice set " + "0x\\(id)" + .apfEnabled.rawValue + "=\\(newValue.asNumber())"\
+   "slice set " + "0x\\(id)" + .apfLevel.rawValue + "=\\(newValue)"\
+   "slice set " + "0x\\(id)" + .daxChannel.rawValue + "=\\(newValue)"\
+   "slice set " + "0x\\(id)" + .dfmPreDeEmphasisEnabled.rawValue + "=\\(newValue.asNumber())"\
+   "slice set " + "0x\\(id)" + .digitalLowerOffset.rawValue + "=\\(newValue)"\
+   "slice set " + "0x\\(id)" + .digitalUpperOffset.rawValue + "=\\(newValue)"\
+   "slice set " + "0x\\(id)" + .diversityEnabled.rawValue + "=\\(newValue.asNumber())"\
+   "slice set " + "0x\\(id)" + .fmDeviation.rawValue + "=\\(newValue)"\
+   "slice set " + "0x\\(id)" + .fmRepeaterOffset.rawValue + "=\\(newValue)"\
+   "slice set " + "0x\\(id)" + .fmToneBurstEnabled.rawValue + "=\\(newValue.asNumber())"\
+   "slice set " + "0x\\(id)" + .fmToneFreq.rawValue + "=\\(newValue)"\
+   "slice set " + "0x\\(id)" + .fmToneMode.rawValue + "=\\(newValue)"\
+   "slice set " + "0x\\(id)" + .loopAEnabled.rawValue + "=\\(newValue.asNumber())"\
+   "slice set " + "0x\\(id)" + .loopBEnabled.rawValue + "=\\(newValue.asNumber())"\
+   "slice set " + "0x\\(id)" + .mode.rawValue + "=\\(newValue)"\
+   "slice set " + "0x\\(id)" + .nbEnabled.rawValue + "=\\(newValue.asNumber())"\
+   "slice set " + "0x\\(id)" + .nbLevel.rawValue + "=\\(newValue)"\
+   "slice set " + "0x\\(id)" + .nrEnabled.rawValue + "=\\(newValue.asNumber())"\
+   "slice set " + "0x\\(id)" + .nrLevel.rawValue + "=\\(newValue)"\
+   "slice set " + "0x\\(id)" + .playbackEnabled.rawValue + "=\\(newValue.asNumber())"\
+   "slice set " + "0x\\(id)" + .recordEnabled.rawValue + "=\\(newValue.asNumber())"\
+   "slice set " + "0x\\(id)" + .repeaterOffsetDirection.rawValue + "=\\(newValue)"\
+   "slice set " + "0x\\(id)" + .rfGain.rawValue + "=\\(newValue)"\
+   "slice set " + "0x\\(id)" + .ritEnabled.rawValue + "=\\(newValue.asNumber())"\
+   "slice set " + "0x\\(id)" + .ritOffset.rawValue + "=\\(newValue)"\
+   "slice set " + "0x\\(id)" + .rttyMark.rawValue + "=\\(newValue)"\
+   "slice set " + "0x\\(id)" + .rttyShift.rawValue + "=\\(newValue)"\
+   "slice set " + "0x\\(id)" + .rxAnt.rawValue + "=\\(newValue)"\
+   "slice set " + "0x\\(id)" + .step.rawValue + "=\\(newValue)"\
+   "slice set " + "0x\\(id)" + .stepList.rawValue + "=\\(newValue)"\
+   "slice set " + "0x\\(id)" + .squelchEnabled.rawValue + "=\\(newValue.asNumber())"\
+   "slice set " + "0x\\(id)" + .squelchLevel.rawValue + "=\\(newValue)"\
+   "slice set " + "0x\\(id)" + .txAnt.rawValue + "=\\(newValue)"\
+   "slice set " + "0x\\(id)" + .txEnabled.rawValue + "=\\(newValue.asNumber())"\
+   "slice set " + "0x\\(id)" + .txOffsetFreq.rawValue + "=\\(newValue)"\
+   "slice set " + "0x\\(id)" + .wnbEnabled.rawValue + "=\\(newValue.asNumber())"\
+   "slice set " + "0x\\(id)" + .wnbLevel.rawValue + "=\\(newValue)"\
+   "slice set " + "0x\\(id)" + .xitEnabled.rawValue + "=\\(newValue.asNumber())"\
+   "slice set " + "0x\\(id)" + .xitOffset.rawValue + "=\\(newValue)"\
+\
+   "slice tune " + "0x\\(id)" + " \\(value.hzToMhz())" + " autopan=\\(_autoPan.asNumber())"\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+
+\f1\b TnfCommands:\
+
+\f0\b0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf0   internal enum Token : String \{\
+    case depth\
+    case frequency      = "freq"\
+    case permanent\
+    case width\
+  \}\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+	"tnf create " + "freq" + "=\\(value)"\
+	"tnf remove " + "\\(id)"\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf0 	 "tnf set " + "\\(id) " + .depth.rawValue + "=\\(value)"\
+  	 "tnf set " + "\\(id) " + .frequency.rawValue + "=\\(value.hzToMhz())"\
+  	 "tnf set " + "\\(id) " + .permanent.rawValue + "=\\(value.asNumber())"\
+  	 "tnf set " + "\\(id) " + .width.rawValue + "=\\(value.hzToMhz())"\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+
+\f1\b TransmitCommands:\
+
+\f0\b0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf0   internal enum Token: String \{\
+    case amCarrierLevel           = "am_carrier_level"\
+    case companderEnabled         = "compander"\
+    case companderLevel           = "compander_level"\
+    case cwBreakInDelay           = "break_in_delay"\
+    case cwBreakInEnabled         = "break_in"\
+    case cwIambicEnabled          = "iambic"\
+    case cwIambicMode             = "iambic_mode"\
+    case cwlEnabled               = "cwl_enabled"\
+    case cwPitch                  = "pitch"\
+    case cwSidetoneEnabled        = "sidetone"\
+    case cwSpeed                  = "speed"\
+    case cwSwapPaddles            = "swap_paddles"\
+    case cwSyncCwxEnabled         = "synccwx"\
+    case daxEnabled               = "dax"\
+    case frequency                = "freq"\
+    case hwAlcEnabled             = "hwalc_enabled"\
+    case inhibit\
+    case maxPowerLevel            = "max_power_level"\
+    case metInRxEnabled           = "met_in_rx"\
+    case micAccEnabled            = "mic_acc"\
+    case micBoostEnabled          = "mic_boost"\
+    case micBiasEnabled           = "mic_bias"\
+    case micLevel                 = "mic_level"\
+    case micSelection             = "mic_selection"\
+    case rawIqEnabled             = "raw_iq_enable"\
+    case rfPower                  = "rfpower"\
+    case speechProcessorEnabled   = "speech_processor_enable"\
+    case speechProcessorLevel     = "speech_processor_level"\
+    case tune\
+    case tunePower                = "tunepower"\
+    case txFilterChanges          = "tx_filter_changes_allowed"\
+    case txFilterHigh             = "hi"\
+    case txFilterLow              = "lo"\
+    case txInWaterfallEnabled     = "show_tx_in_waterfall"\
+    case txMonitorAvailable       = "mon_available"\
+    case txMonitorEnabled         = "sb_monitor"\
+    case txMonitorGainCw          = "mon_gain_cw"\
+    case txMonitorGainSb          = "mon_gain_sb"\
+    case txMonitorPanCw           = "mon_pan_cw"\
+    case txMonitorPanSb           = "mon_pan_sb"\
+    case txRfPowerChanges         = "tx_rf_power_changes_allowed"\
+    case voxEnabled               = "vox_enable"\
+    case voxDelay                 = "vox_delay"\
+    case voxLevel                 = "vox_level"\
+  \}\
+\
+  	"cw " + .cwBreakInDelay.rawValue + " \\(value)"\
+  	"cw " + .cwBreakInEnabled.rawValue + " \\(value.asNumber())"\
+  	"cw " + .cwIambicEnabled.rawValue + " \\(value.asNumber())"\
+  	"cw " + "mode" + " \\(value)"\
+  	"cw " + .cwlEnabled.rawValue + " \\(value.asNumber())"\
+  	"cw " + .cwPitch.rawValue + " \\(value)"\
+  	"cw " + .cwSidetoneEnabled.rawValue + " \\(value.asNumber())"\
+  	"cw " + "wpm" + " \\(value)"\
+  	"cw " + "swap" + " \\(value.asNumber())"\
+  	"cw " + .cwSyncCwxEnabled.rawValue + " \\(value.asNumber())"\
+  	"cw " + "weight" + " \\(value)"\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf0   	"mic " + "acc" + " \\(value.asNumber())"\
+  	"mic " + "bias" + " \\(value.asNumber())"\
+  	"mic " + "boost" + " \\(value.asNumber())"\
+  	"mic " + "input" + " \\(value)"\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf0 	"transmit " + .tune.rawValue + " \\(value)")\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf0   	"transmit set " + "am_carrier" + "=\\(value)\
+  	"transmit set " + .companderEnabled.rawValue + "=\\(value.asNumber())"\
+  	"transmit set " + .companderLevel.rawValue + "=\\(value)"\
+  	"transmit set " + "auto_space" + "=\\(value.asNumber())\
+  	"transmit set " + .daxEnabled.rawValue + "=\\(value.asNumber())"\
+  	"transmit set " + .hwAlcEnabled.rawValue + "=\\(value.asNumber())"\
+  	"transmit set " + .inhibit.rawValue + "=\\(value.asNumber())"\
+  	"transmit set " + .maxPowerLevel.rawValue + "=\\(value)"\
+  	"transmit set " + .metInRxEnabled.rawValue + "=\\(value.asNumber())"\
+  	"transmit set " + "miclevel" + "=\\(value)\
+  	"transmit set " + .rfPower.rawValue + "=\\(value)"\
+  	"transmit set " + .speechProcessorEnabled.rawValue + "=\\(value.asNumber())"\
+  	"transmit set " + .speechProcessorLevel.rawValue + "=\\(value)"\
+  	"transmit set " + "ssb_peak_control" + "=\\(value.asNumber())\
+  	"transmit set " + .tunePower.rawValue + "=\\(value)"\
+  	"transmit set " + "filter_high" + "=\\(value)\
+  	"transmit set " + "filter_low" + "=\\(value)\
+  	"transmit set " + .txInWaterfallEnabled.rawValue + "=\\(value.asNumber())"\
+  	"transmit set " + "mon" + "=\\(value.asNumber())\
+  	"transmit set " + .txMonitorGainCw.rawValue + "=\\(value)"\
+  	"transmit set " + .txMonitorGainSb.rawValue + "=\\(value)"\
+  	"transmit set " + .txMonitorPanCw.rawValue + "=\\(value)"\
+  	"transmit set " + .txMonitorPanSb.rawValue + "=\\(value)"\
+  	"transmit set " + .voxEnabled.rawValue + "=\\(value.asNumber())"\
+  	"transmit set " + .voxDelay.rawValue + "=\\(value)"\
+  	"transmit set " + .voxLevel.rawValue + "=\\(value)"\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+
+\f1\b TxAudioStreamCommands:\
+
+\f0\b0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf0   internal enum Token: String \{\
+    case daxTx      = "dax_tx"\
+    case inUse      = "in_use"\
+    case ip\
+    case port\
+  \}\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+   "dax tx " + "\\(value.asNumber())"\
+\
+
+\f1\b UsbCableCommands:
+\f0\b0 \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf0   internal enum Token : String \{\
+    case autoReport       = "auto_report"\
+    case band\
+    case cableType        = "type"\
+    case dataBits         = "data_bits"\
+    case enable\
+    case flowControl      = "flow_control"\
+    case name\
+    case parity\
+    case pluggedIn        = "plugged_in"\
+    case polarity\
+    case preamp\
+    case source\
+    case sourceRxAnt      = "source_rx_ant"\
+    case sourceSlice      = "source_slice"\
+    case sourceTxAnt      = "source_tx_ant"\
+    case speed\
+    case stopBits         = "stop_bits"\
+    case usbLog           = "log"\
+  \}\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf0 	 "usb_cable set " + "\\(id) " + .autoReport.rawValue + "=\\(value.asNumber())"\
+  	 "usb_cable set " + "\\(id) " + .band.rawValue + "=\\(value)"\
+  	 "usb_cable set " + "\\(id) " + .dataBits.rawValue + "=\\(value)"\
+  	 "usb_cable set " + "\\(id) " + .enable.rawValue + "=\\(value.asNumber())"\
+  	 "usb_cable set " + "\\(id) " + .flowControl.rawValue + "=\\(value)"\
+  	 "usb_cable set " + "\\(id) " + .name.rawValue + "=\\(value)"\
+  	 "usb_cable set " + "\\(id) " + .parity.rawValue + "=\\(value)"\
+  	 "usb_cable set " + "\\(id) " + .pluggedIn.rawValue + "=\\(value.asNumber())"\
+  	 "usb_cable set " + "\\(id) " + .polarity.rawValue + "=\\(value)")\
+  	 "usb_cable set " + "\\(id) " + .preamp.rawValue + "=\\(value)"\
+  	 "usb_cable set " + "\\(id) " + .source.rawValue + "=\\(value)"\
+  	 "usb_cable set " + "\\(id) " + .sourceRxAnt.rawValue + "=\\(value)"\
+  	 "usb_cable set " + "\\(id) " + .sourceSlice.rawValue + "=\\(value)"\
+  	 "usb_cable set " + "\\(id) " + .sourceTxAn.rawValue + "=\\(value)"\
+  	 "usb_cable set " + "\\(id) " + .speed.rawValue + "=\\(value)"\
+  	 "usb_cable set " + "\\(id) " + .stopBits.rawValue + "=\\(value)"\
+  	 "usb_cable set " + "\\(id) " + .usbLog.rawValue + "=\\(value.asNumber())"\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+
+\f1\b WaterfallCommands:
+\f0\b0 \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf0   internal enum Token : String \{\
+    case autoBlackEnabled     = "auto_black"\
+    case blackLevel           = "black_level"\
+    case colorGain            = "color_gain"\
+    case gradientIndex        = "gradient_index"\
+    case lineDuration         = "line_duration"\
+  \}\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf0    "display panafall set " + "\\id.hex) " + .autoBlackEnabled.rawValue + "=\\(value.asNumber())"\
+   "display panafall set " + "\\id.hex) " + .blackLevel.rawValue + "=\\(value)"\
+   "display panafall set " + "\\id.hex) " + .colorGain.rawValue + "=\\(value)"\
+   "display panafall set " + "\\id.hex) " + .gradientIndex.rawValue + "=\\(value)"\
+   "display panafall set " + "\\id.hex) " + .lineDuration.rawValue + "=\\(value)"\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+
+\f1\b XvtrCommands:
+\f0\b0 \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf0   internal enum Token : String \{\
+    case name\
+    case ifFrequency        = "if_freq"\
+    case inUse              = "in_use"\
+    case isValid            = "is_valid"\
+    case loError            = "lo_error"\
+    case maxPower           = "max_power"\
+    case order\
+    case preferred\
+    case rfFrequency        = "rf_freq"\
+    case rxGain             = "rx_gain"\
+    case rxOnly             = "rx_only"\
+    case twoMeterInt        = "two_meter_int"\
+  \}\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf0 	"xvtr set " + "\\(id) " + .ifFrequency.rawValue + "=\\(value)"\
+  	"xvtr set " + "\\(id) " + .loError.rawValue + "=\\(value)"\
+  	"xvtr set " + "\\(id) " + .name.rawValue + "=\\(value)"\
+  	"xvtr set " + "\\(id) " + .maxPower.rawValue + "=\\(value)"\
+  	"xvtr set " + "\\(id) " + .order.rawValue + "=\\(value)"\
+  	"xvtr set " + "\\(id) " + .rfFrequency.rawValue + "=\\(value)"\
+  	"xvtr set " + "\\(id) " + .rxGain.rawValue + "=\\(value)"\
+  	"xvtr set " + "\\(id) " + .rxOnly.rawValue + "=\\(value)"\
+\
+}

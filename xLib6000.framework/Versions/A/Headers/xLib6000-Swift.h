@@ -458,7 +458,7 @@ SWIFT_CLASS("_TtC8xLib60004Opus")
 
 SWIFT_CLASS("_TtC8xLib600010Panadapter")
 @interface Panadapter : NSObject
-@property (nonatomic, readonly, copy) NSArray<NSString *> * _Nonnull daxChoices;
+@property (nonatomic, readonly, copy) NSArray<NSString *> * _Nonnull daxIqChoices;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_DEPRECATED_MSG("-init is unavailable");
 @end
@@ -622,6 +622,7 @@ SWIFT_CLASS("_TtC8xLib600012RadioFactory")
 SWIFT_CLASS("_TtC8xLib60005Slice")
 @interface Slice : NSObject
 @property (nonatomic, copy) NSArray<NSString *> * _Nonnull agcNames;
+@property (nonatomic, readonly, copy) NSArray<NSString *> * _Nonnull daxChoices;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_DEPRECATED_MSG("-init is unavailable");
 @end
@@ -700,6 +701,7 @@ SWIFT_CLASS("_TtC8xLib60005Slice")
 @property (nonatomic) BOOL qskEnabled;
 @property (nonatomic) float recordLength;
 @property (nonatomic, copy) NSArray<NSString *> * _Nonnull rxAntList;
+@property (nonatomic, copy) NSArray<NSString *> * _Nonnull txAntList;
 @property (nonatomic) BOOL wide;
 @property (nonatomic, copy) NSDictionary<NSString *, Meter *> * _Nonnull meters;
 @end
@@ -755,6 +757,7 @@ SWIFT_CLASS("_TtC8xLib60008Transmit")
 @property (nonatomic) NSInteger maxPowerLevel;
 @property (nonatomic) BOOL metInRxEnabled;
 @property (nonatomic) NSInteger micLevel;
+@property (nonatomic) BOOL moxEnabled;
 @property (nonatomic) NSInteger rfPower;
 @property (nonatomic) BOOL speechProcessorEnabled;
 @property (nonatomic) NSInteger speechProcessorLevel;

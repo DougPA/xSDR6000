@@ -63,7 +63,7 @@
 		913F7F872066E6F600F35E9B /* OpusOSX.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 913F7F7C2066E6F600F35E9B /* OpusOSX.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		913F7F882066E6F600F35E9B /* ObjcExceptionBridging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 913F7F7D2066E6F600F35E9B /* ObjcExceptionBridging.framework */; };
 		913F7F892066E6F600F35E9B /* ObjcExceptionBridging.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 913F7F7D2066E6F600F35E9B /* ObjcExceptionBridging.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		913F974A209F8BF2007A5273 /* Flag.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 913F9748209F8BF2007A5273 /* Flag.storyboard */; };
+		91475E5020A28E4600ACE77D /* Flag.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 91475E4E20A28E4600ACE77D /* Flag.storyboard */; };
 		9185B0D4208683C7004D4C40 /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9185B0C6208683C7004D4C40 /* Keychain.swift */; };
 		9185B0D5208683C7004D4C40 /* JWTDecode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9185B0C8208683C7004D4C40 /* JWTDecode.swift */; };
 		9185B0D6208683C7004D4C40 /* JWT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9185B0C9208683C7004D4C40 /* JWT.swift */; };
@@ -158,7 +158,7 @@
 		913F7F7B2066E6F600F35E9B /* SwiftyUserDefaults.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SwiftyUserDefaults.framework; sourceTree = "<group>"; };
 		913F7F7C2066E6F600F35E9B /* OpusOSX.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OpusOSX.framework; sourceTree = "<group>"; };
 		913F7F7D2066E6F600F35E9B /* ObjcExceptionBridging.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ObjcExceptionBridging.framework; sourceTree = "<group>"; };
-		913F9749209F8BF2007A5273 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = xSDR6000/Base.lproj/Flag.storyboard; sourceTree = "<group>"; };
+		91475E4F20A28E4600ACE77D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Flag.storyboard; sourceTree = "<group>"; };
 		9185B0C6208683C7004D4C40 /* Keychain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
 		9185B0C8208683C7004D4C40 /* JWTDecode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JWTDecode.swift; sourceTree = "<group>"; };
 		9185B0C9208683C7004D4C40 /* JWT.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JWT.swift; sourceTree = "<group>"; };
@@ -240,7 +240,7 @@
 		913F7ED62066DC7900F35E9B /* Base.lproj */ = {
 			isa = PBXGroup;
 			children = (
-				913F9748209F8BF2007A5273 /* Flag.storyboard */,
+				91475E4E20A28E4600ACE77D /* Flag.storyboard */,
 				913F7EDF2066DC7900F35E9B /* Main.storyboard */,
 				913F7ED92066DC7900F35E9B /* Panafall.storyboard */,
 				913F7ED72066DC7900F35E9B /* Preferences.storyboard */,
@@ -473,7 +473,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				913F974A209F8BF2007A5273 /* Flag.storyboard in Resources */,
+				91475E5020A28E4600ACE77D /* Flag.storyboard in Resources */,
 				913F7F452066DC7A00F35E9B /* Filters.plist in Resources */,
 				913F7F612066DC7A00F35E9B /* Deuteranopia.tex in Resources */,
 				913F7F642066DC7A00F35E9B /* Basic.tex in Resources */,
@@ -585,10 +585,10 @@
 			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
-		913F9748209F8BF2007A5273 /* Flag.storyboard */ = {
+		91475E4E20A28E4600ACE77D /* Flag.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				913F9749209F8BF2007A5273 /* Base */,
+				91475E4F20A28E4600ACE77D /* Base */,
 			);
 			name = Flag.storyboard;
 			sourceTree = "<group>";

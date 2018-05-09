@@ -1,8 +1,53 @@
 xLib6000 Change Log
 
+v1.1.2
+
+Panadapter.swift - renamed daxChoices & daxChannels -> daxIqChoices & daxIqChanneld
+Slice.swift - added daxChoices & daxChannels
+Slice.swift - added txAntList property
+all models - removed update(_:value:key:)
+Api.swift - added update(_:value:key:)
+all models - changed update(_:value:key:) to _api.update(_:value:key:)
+RadioCommands.swift - refactored Gateway commands
+Radio.swift - changed _api from "internal" to "private"
+RadioCommands.swift - changed usage of _api to Api.sharedInstance
+RadioCommands.swift - corrected "nickName", "radioScreensaver" & "startOffset" commands
+
+v1.1.1
+
+Radio.swift - moved atuClear(callback:), atuStart(callback:) & atuBypass(callback:) to AtuCommands.swift
+Radio.swift - moved memoryApply(id:callback:), memoryCreate(), memoryRemove(id:callback:) to MemoryCommands.swift
+Radio.swift - moved all helper methods to class methods on the object
+Radio.swift - refactored to use update(_:value:key:) in parseInfoReply(_:) & parseVersionReply(_:)
+on each object, in the <object>Commands.swift file, simplified names of instance methods (removed the name of the object as part of the method name)
+on each object, in the <object>Commands.swift file, made "create" a class method and "remove" an instance method
+SliceCommands.swift - corrected filterCmd(low:high:) and its usage
+AudioStream, MicAudioStream, IqStream & TxAudioStream.swift - corrected test in class parseStatus(_:radio:queue:inUse:) for class isStatusForThisClient(_:)
+FlexErrors.swift - refactored
+Api.swift - added testerModeEnabled property, used in class isStatusForThisClient(_:) to allow the xAPITester to see all streams
+
+============================================================
+
+v1.0.22
+
+interlockCommands.swift - corrected accTxDelay command
+Commands.rtf - added (located in the Documentation folder)
+SliceCommands.swift - corrected audioMute command (added asNumber())
+SliceCommands.swift - corrected filterHigh & filterLow commands
+SliceCommands.swift - removed sliceStatusCmd(_:_:) - unused
+UsbCableCommands.swift - corrected sourSlice command
+
+v1.0.21
+
+Slice.swift - moved setRecord(_:) to SliceCommands.swift
+Slice.swift - moved setPlay(_:) to SliceCommands.swift
+Memory.swift - moved select() to MemoryCommands.swift
+MeterCommands.swift - added class func subscribeToId(_:)
+Radio.swift - used MeterCommands subscribeToId(_:) in parseMeterListReply
+
 v1.0.20
 
-SliceCommands.swift - corrected audioCmd and properties that use it
+SliceCommands.swift - corrected audioCmd, changed "token=value" to "token value"
 Slice.swift - added static names() to AgcMode enum
 Slice.swift - added @objc dynamic agcNames property
 
