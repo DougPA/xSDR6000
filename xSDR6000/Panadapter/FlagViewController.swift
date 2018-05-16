@@ -28,32 +28,32 @@ final public class FlagViewController       : NSViewController {
     return FlagViewController.kSliceLetters[Int(slice!.id)!]
   }
 
-  @objc dynamic public let filterChoices    = [                             // Names of filters (by mode)
-    "AM"    : ["5.6k", "6.0k", "8.0k", "10k", "12k", "14k", "16k", "20k"],
-    "SAM"   : ["5.6k", "6.0k", "8.0k", "10k", "12k", "14k", "16k", "20k"],
-    "CW"    : ["50", "100", "250", "400", "800", "1.0k", "1.5k", "3.0k"],
-    "USB"   : ["1.6k", "1.8k", "2.1k", "2.4k", "2.7k", "2.9k", "3.3k", "4.0k"],
-    "LSB"   : ["1.6k", "1.8k", "2.1k", "2.4k", "2.7k", "2.9k", "3.3k", "4.0k"],
-    "FM"    : [],
-    "NFM"   : [],
-    "DFM"   : ["6.0k", "8.0k", "10k", "12k", "14k", "16k", "18k", "20k"],
-    "DIGU"  : ["100", "300", "600", "1.0k", "1.5k", "2.0k", "3.0k", "5.0k"],
-    "DIGL"  : ["100", "300", "600", "1.0k", "1.5k", "2.0k", "3.0k", "5.0k"],
-    "RTTY"  : ["250", "300", "350", "400", "500", "1.0k", "1.5k", "3.0k"]
-  ]
-  @objc dynamic public let filterValues    = [                              // Values of filters (by mode)
-    "AM"    : [5_600, 6_000, 8_000, 10_000, 12_000, 14_000, 16_000, 20_000],
-    "SAM"   : [5_600, 6_000, 8_000, 10_000, 12_000, 14_000, 16_000, 20_000],
-    "CW"    : [50, 100, 250, 400, 800, 1_000, 1_500, 3_000],
-    "USB"   : [1_600, 1_800, 2_100, 2_400, 2_700, 2_900, 3_300, 4_000],
-    "LSB"   : [1_600, 1_800, 2_100, 2_400, 2_700, 2_900, 3_300, 4_000],
-    "FM"    : [],
-    "NFM"   : [],
-    "DFM"   : [6_000, 8_000, 10_000, 12_000, 14_000, 16_000, 18_000, 20_000],
-    "DIGU"  : [100, 300, 600, 1_000, 1_500, 2_000, 3_000, 5_000],
-    "DIGL"  : [100, 300, 600, 1_000, 1_500, 2_000, 3_000, 5_000],
-    "RTTY"  : [250, 300, 350, 400, 500, 1_000, 1_500, 3_000]
-  ]
+//  @objc dynamic public let filterChoices          = [                       // Names of filters (by mode)
+//    "AM"    : ["5.6k", "6.0k", "8.0k", "10k", "12k", "14k", "16k", "20k"],
+//    "SAM"   : ["5.6k", "6.0k", "8.0k", "10k", "12k", "14k", "16k", "20k"],
+//    "CW"    : ["50", "100", "250", "400", "800", "1.0k", "1.5k", "3.0k"],
+//    "USB"   : ["1.6k", "1.8k", "2.1k", "2.4k", "2.7k", "2.9k", "3.3k", "4.0k"],
+//    "LSB"   : ["1.6k", "1.8k", "2.1k", "2.4k", "2.7k", "2.9k", "3.3k", "4.0k"],
+//    "FM"    : [],
+//    "NFM"   : [],
+//    "DFM"   : ["6.0k", "8.0k", "10k", "12k", "14k", "16k", "18k", "20k"],
+//    "DIGU"  : ["100", "300", "600", "1.0k", "1.5k", "2.0k", "3.0k", "5.0k"],
+//    "DIGL"  : ["100", "300", "600", "1.0k", "1.5k", "2.0k", "3.0k", "5.0k"],
+//    "RTTY"  : ["250", "300", "350", "400", "500", "1.0k", "1.5k", "3.0k"]
+//  ]
+//  @objc dynamic public let filterValues    = [                              // Values of filters (by mode)
+//    "AM"    : [5_600, 6_000, 8_000, 10_000, 12_000, 14_000, 16_000, 20_000],
+//    "SAM"   : [5_600, 6_000, 8_000, 10_000, 12_000, 14_000, 16_000, 20_000],
+//    "CW"    : [50, 100, 250, 400, 800, 1_000, 1_500, 3_000],
+//    "USB"   : [1_600, 1_800, 2_100, 2_400, 2_700, 2_900, 3_300, 4_000],
+//    "LSB"   : [1_600, 1_800, 2_100, 2_400, 2_700, 2_900, 3_300, 4_000],
+//    "FM"    : [],
+//    "NFM"   : [],
+//    "DFM"   : [6_000, 8_000, 10_000, 12_000, 14_000, 16_000, 18_000, 20_000],
+//    "DIGU"  : [100, 300, 600, 1_000, 1_500, 2_000, 3_000, 5_000],
+//    "DIGL"  : [100, 300, 600, 1_000, 1_500, 2_000, 3_000, 5_000],
+//    "RTTY"  : [250, 300, 350, 400, 500, 1_000, 1_500, 3_000]
+//  ]
 
   var onLeft                                = true
   var sliceObservations                     = [NSKeyValueObservation]()
@@ -104,6 +104,7 @@ final public class FlagViewController       : NSViewController {
 //    createObservations(&_observations, object: slice!)
     
     addNotifications()
+    sMeter()
   }
   
   // ----------------------------------------------------------------------------
@@ -159,7 +160,7 @@ final public class FlagViewController       : NSViewController {
   private func selectView(_ id: String) {
     var flagAdjustMinus = true
     
-    switch (_viewController, id) {
+    switch (_viewController, id + "vc") {
       
     case (nil, _):                                          // NO PREVIOUS TAB
       
@@ -256,7 +257,7 @@ final public class FlagViewController       : NSViewController {
   ///     (as of 10.11, subscriptions are automatically removed on deinit when using the Selector-based approach)
   ///
   private func addNotifications() {
-    
+
     NC.makeObserver(self, with: #selector(sliceMeterHasBeenAdded(_:)), of: .sliceMeterHasBeenAdded, object: nil)
   }
   private var _levelObservation    : NSKeyValueObservation?
@@ -266,26 +267,25 @@ final public class FlagViewController       : NSViewController {
   /// - Parameter note:       a Notification instance
   ///
   @objc private func sliceMeterHasBeenAdded(_ note: Notification) {
-    
+
     // does the Notification contain a Meter object for this Slice?
     if let meter = note.object as? Meter, meter.number == slice!.id {
+      sMeter()
+    }
+  }
+  
+  func sMeter() {
+    
+    // get the S-Meter for this slice
+    for (_, meter) in slice!.meters where meter.name == Api.MeterShortName.signalPassband.rawValue {
       
-      // add observations for the needed Meters
-      switch meter.name {
+      // S-Meter
+      _levelObservation = meter.observe(\.value, options: [.initial, .new]) { (meter, change) in
         
-      case Api.MeterShortName.signalPassband.rawValue:
-        
-        // S-Meter
-        _levelObservation = meter.observe(\.value, options: [.initial, .new]) { (meter, change) in
-          
-          // process observations of the S-Meter
-          DispatchQueue.main.async { [unowned self] in
-            self._sMeter.floatValue = meter.value
-          }
+        // process observations of the S-Meter
+        DispatchQueue.main.async { [unowned self] in
+          self._sMeter.floatValue = meter.value
         }
-        
-      default:
-        break
       }
     }
   }

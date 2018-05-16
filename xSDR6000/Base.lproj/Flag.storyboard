@@ -420,10 +420,10 @@
             </objects>
             <point key="canvasLocation" x="2396" y="138"/>
         </scene>
-        <!--AUD-->
+        <!--audVC-->
         <scene sceneID="eew-05-KAY">
             <objects>
-                <viewController title="AUD" identifier="AUD" storyboardIdentifier="AUD" id="kM0-OI-M2p" sceneMemberID="viewController">
+                <viewController title="audVC" identifier="AUDvc" storyboardIdentifier="AUD" id="kM0-OI-M2p" userLabel="audVC" sceneMemberID="viewController">
                     <view key="view" id="LkQ-yf-PwG">
                         <rect key="frame" x="0.0" y="0.0" width="239" height="85"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -451,12 +451,12 @@
                             </slider>
                             <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="FEl-bw-dKr">
                                 <rect key="frame" x="20" y="9" width="70" height="26"/>
-                                <popUpButtonCell key="cell" type="push" title="None" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="oXU-9X-KEm" id="VhP-xa-T5H">
+                                <popUpButtonCell key="cell" type="push" title="None" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="oXU-9X-KEm" id="VhP-xa-T5H">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="menu"/>
                                     <menu key="menu" id="S4d-QJ-EER">
                                         <items>
-                                            <menuItem title="None" id="oXU-9X-KEm">
+                                            <menuItem title="None" state="on" id="oXU-9X-KEm">
                                                 <modifierMask key="keyEquivalentModifierMask"/>
                                             </menuItem>
                                         </items>
@@ -516,10 +516,10 @@
             </objects>
             <point key="canvasLocation" x="1853" y="433"/>
         </scene>
-        <!--DSP-->
+        <!--dspVC-->
         <scene sceneID="v6z-wA-6gD">
             <objects>
-                <viewController title="DSP" identifier="DSP" storyboardIdentifier="DSP" id="Xq5-Es-VCO" sceneMemberID="viewController">
+                <viewController identifier="DSPvc" storyboardIdentifier="DSP" id="Xq5-Es-VCO" userLabel="dspVC" sceneMemberID="viewController">
                     <view key="view" id="fJQ-hb-hVs">
                         <rect key="frame" x="0.0" y="0.0" width="239" height="102"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -648,10 +648,10 @@
             </objects>
             <point key="canvasLocation" x="2128" y="441"/>
         </scene>
-        <!--MODE-->
+        <!--modeVC-->
         <scene sceneID="kHj-z6-cr7">
             <objects>
-                <viewController title="MODE" identifier="MODE" storyboardIdentifier="MODE" id="jnR-au-HBU" customClass="ModeViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="modeVC" identifier="MODEvc" storyboardIdentifier="MODE" id="jnR-au-HBU" userLabel="modeVC" customClass="ModeViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="f3R-2d-cJB">
                         <rect key="frame" x="0.0" y="0.0" width="239" height="76"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -673,8 +673,8 @@
                                             </menu>
                                         </popUpButtonCell>
                                         <connections>
-                                            <binding destination="jnR-au-HBU" name="content" keyPath="representedObject.modeList" id="2PD-MC-8Be"/>
                                             <binding destination="jnR-au-HBU" name="selectedValue" keyPath="representedObject.mode" previousBinding="2PD-MC-8Be" id="59S-g0-wsx"/>
+                                            <binding destination="jnR-au-HBU" name="content" keyPath="representedObject.modeList" id="2PD-MC-8Be"/>
                                         </connections>
                                     </popUpButton>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="W6n-fT-26X">
@@ -915,10 +915,10 @@
             </objects>
             <point key="canvasLocation" x="2395.5" y="428"/>
         </scene>
-        <!--XRIT-->
+        <!--xritVC-->
         <scene sceneID="MGs-5q-XWg">
             <objects>
-                <viewController title="XRIT" identifier="XRIT" storyboardIdentifier="XRIT" id="pG7-fD-vJI" sceneMemberID="viewController">
+                <viewController identifier="XRITvc" storyboardIdentifier="XRIT" id="pG7-fD-vJI" userLabel="xritVC" sceneMemberID="viewController">
                     <view key="view" id="vZI-Mq-qLU">
                         <rect key="frame" x="0.0" y="0.0" width="239" height="76"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1051,10 +1051,10 @@
             </objects>
             <point key="canvasLocation" x="2667" y="428"/>
         </scene>
-        <!--DAX-->
+        <!--daxVC-->
         <scene sceneID="04g-g8-NSs">
             <objects>
-                <viewController title="DAX" identifier="DAX" storyboardIdentifier="DAX" id="qHG-cG-Dd3" sceneMemberID="viewController">
+                <viewController title="daxVC" identifier="DAXvc" storyboardIdentifier="DAX" id="qHG-cG-Dd3" userLabel="daxVC" sceneMemberID="viewController">
                     <view key="view" id="XNf-ih-hpv">
                         <rect key="frame" x="0.0" y="0.0" width="239" height="64"/>
                         <autoresizingMask key="autoresizingMask"/>

@@ -24,7 +24,7 @@ final public class ModeViewController       : NSViewController {
     set { (representedObject as! xLib6000.Slice).mode = newValue }
   }
   
-  @objc dynamic public let filterChoices    = [                             // Names of filters (by mode)
+  static let filterChoices    = [                             // Names of filters (by mode)
     "AM"    : ["5.6k", "6.0k", "8.0k", "10k", "12k", "14k", "16k", "20k"],
     "SAM"   : ["5.6k", "6.0k", "8.0k", "10k", "12k", "14k", "16k", "20k"],
     "CW"    : ["50", "100", "250", "400", "800", "1.0k", "1.5k", "3.0k"],
@@ -37,7 +37,7 @@ final public class ModeViewController       : NSViewController {
     "DIGL"  : ["100", "300", "600", "1.0k", "1.5k", "2.0k", "3.0k", "5.0k"],
     "RTTY"  : ["250", "300", "350", "400", "500", "1.0k", "1.5k", "3.0k"]
   ]
-  @objc dynamic public let filterValues    = [                              // Values of filters (by mode)
+  static let filterValues    = [                              // Values of filters (by mode)
     "AM"    : [5_600, 6_000, 8_000, 10_000, 12_000, 14_000, 16_000, 20_000],
     "SAM"   : [5_600, 6_000, 8_000, 10_000, 12_000, 14_000, 16_000, 20_000],
     "CW"    : [50, 100, 250, 400, 800, 1_000, 1_500, 3_000],
@@ -69,7 +69,7 @@ final public class ModeViewController       : NSViewController {
   @IBOutlet weak var _filter6               : NSButton!
   @IBOutlet weak var _filter7               : NSButton!
   
-  private var _observations    = [NSKeyValueObservation]()
+  private var _observations                 = [NSKeyValueObservation]()
   
   // ----------------------------------------------------------------------------
   // MARK: - Overridden methods
@@ -111,7 +111,7 @@ final public class ModeViewController       : NSViewController {
   
   @IBAction func filterButtons(_ sender: NSButton) {
     
-    guard let filters = filterValues[mode] else { return }
+    guard let filters = ModeViewController.filterValues[mode] else { return }
     
     let filterValue = filters[sender.tag]
     
@@ -143,7 +143,7 @@ final public class ModeViewController       : NSViewController {
     DispatchQueue.main.async { [unowned self] in
       let slice = object as! xLib6000.Slice
       
-      let filterMode = self.filterChoices[slice.mode] ?? self.filterChoices["AM"]!
+      let filterMode = ModeViewController.filterChoices[slice.mode] ?? ModeViewController.filterChoices["AM"]!
       self._filter0.title = filterMode[0]
       self._filter1.title = filterMode[1]
       self._filter2.title = filterMode[2]
