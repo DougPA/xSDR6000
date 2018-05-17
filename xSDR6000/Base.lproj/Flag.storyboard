@@ -61,9 +61,6 @@
                                             <color key="textColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
-                                        <connections>
-                                            <binding destination="Lmw-yC-7qh" name="value" keyPath="formattedFilter" id="oDi-Qb-3mc"/>
-                                        </connections>
                                     </textField>
                                     <button toolTip="Xmit" translatesAutoresizingMaskIntoConstraints="NO" id="NJS-lu-NIG">
                                         <rect key="frame" x="116" y="2" width="33" height="22"/>
@@ -87,9 +84,6 @@
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
-                                        <connections>
-                                            <binding destination="Lmw-yC-7qh" name="value" keyPath="alpha" id="Mnv-Lq-wH6"/>
-                                        </connections>
                                     </textField>
                                 </subviews>
                                 <visibilityPriorities>
@@ -411,8 +405,10 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="_alpha" destination="mTg-CM-4KQ" id="ndm-Fr-6pH"/>
                         <outlet property="_containerView" destination="iEN-c9-g7u" id="13y-VU-F0a"/>
                         <outlet property="_containerViewHeight" destination="RNe-DO-M1h" id="8Aq-va-B5k"/>
+                        <outlet property="_filter" destination="pDZ-kB-g8v" id="7gb-dg-Xho"/>
                         <outlet property="_sMeter" destination="zQl-hd-Hm1" id="CjY-MM-Yy1"/>
                     </connections>
                 </viewController>
