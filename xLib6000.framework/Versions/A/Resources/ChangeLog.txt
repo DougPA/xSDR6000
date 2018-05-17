@@ -1,5 +1,16 @@
 xLib6000 Change Log
 
+v1.1.3
+
+Api.swift - added "sub meter all" into allSubscriptionCommands()
+Radio.swift - removed the _metersToSubscribe property
+Meter.swift - corrected the logic in parseStatus(_:radio:queue:inUse:) for NOT inUse
+MeterCommands.swift - changed listRequest(callback: ) to NOT use the defaultReplyHandler
+Radio.swift - commented out the meterList case in defaultReplyHandler(_:seqNum:responseValue:reply:)
+Radio.swift - commented out the parseMeterListReply(_:) method
+All Models - changed _api and _q property from var to let
+Api.swift - changed kApiFirmwareSupport to 2.2.8.x
+
 v1.1.2
 
 Panadapter.swift - renamed daxChoices & daxChannels -> daxIqChoices & daxIqChanneld
@@ -19,12 +30,15 @@ Radio.swift - moved atuClear(callback:), atuStart(callback:) & atuBypass(callbac
 Radio.swift - moved memoryApply(id:callback:), memoryCreate(), memoryRemove(id:callback:) to MemoryCommands.swift
 Radio.swift - moved all helper methods to class methods on the object
 Radio.swift - refactored to use update(_:value:key:) in parseInfoReply(_:) & parseVersionReply(_:)
-on each object, in the <object>Commands.swift file, simplified names of instance methods (removed the name of the object as part of the method name)
-on each object, in the <object>Commands.swift file, made "create" a class method and "remove" an instance method
 SliceCommands.swift - corrected filterCmd(low:high:) and its usage
 AudioStream, MicAudioStream, IqStream & TxAudioStream.swift - corrected test in class parseStatus(_:radio:queue:inUse:) for class isStatusForThisClient(_:)
-FlexErrors.swift - refactored
 Api.swift - added testerModeEnabled property, used in class isStatusForThisClient(_:) to allow the xAPITester to see all streams
+
+*** Client Facing ****
+FlexErrors.swift - refactored
+on each object, in the <object>Commands.swift file, simplified names of instance methods (removed the name of the object as part of the method name)
+on each object, in the <object>Commands.swift file, made "create" a class method and "remove" an instance method
+
 
 ============================================================
 
@@ -42,18 +56,21 @@ v1.0.21
 Slice.swift - moved setRecord(_:) to SliceCommands.swift
 Slice.swift - moved setPlay(_:) to SliceCommands.swift
 Memory.swift - moved select() to MemoryCommands.swift
-MeterCommands.swift - added class func subscribeToId(_:)
 Radio.swift - used MeterCommands subscribeToId(_:) in parseMeterListReply
+
+*** Client Facing ****
+MeterCommands.swift - added class func subscribeToId(_:)
 
 v1.0.20
 
 SliceCommands.swift - corrected audioCmd, changed "token=value" to "token value"
+
+*** Client Facing ****
 Slice.swift - added static names() to AgcMode enum
 Slice.swift - added @objc dynamic agcNames property
 
 v1.0.19
 
-Notifications.swift - added sliceMeterHasBeenAdded
 Meter.swift - moved code that handles "Slice Meters" from parseStatus(...) to parseProperties(...)
 Slice.swift - added missing "_q.sync" & "@objc dynamic" to meters property
 Panadapter.swift - added daxChannels & daxChoices properties
@@ -63,20 +80,26 @@ Radio.swift - Replaced cases in parseProperties() with update version
 Radio.swift - changed parseMeterListReply(_:) to "lowercase" meter names instead of "uppercase" them
 Api.swift - added MeterShortName enum
 Api.swift - added metersToSubscribe: parameter to connect(_:clientName:isGui:primaryCmdTypes:secondaryCmdTypes:subscriptionCmdTypes:)
+Radio.swift - rewrote parseMeterListReply(_:) to generate sub messages for all meters in _metersToSubscribe
+
+*** Client Facing ****
 Radio.swift - added property _metersToSubscribe
 Radio.swift - added metersToSubscribe: parameter to init(api:objectQ:)
-Radio.swift - rewrote parseMeterListReply(_:) to generate sub messages for all meters in _metersToSubscribe
+Notifications.swift - added sliceMeterHasBeenAdded
+
 
 v1.0.18
 
-Meter.swift - added NSObject to class declaration
-Meter.swift - changed "description" property to "desc"
 Added update(_:value:key:) to each model (dynamic & static)
 Replaced cases in parseProperties() with update version
 Edited comments and repositioned source code in all Models
 Panadapter.swift - corrected error in parseProperties() for .loopBEnabled
 Interlock.swift - corrected error in parseProperties() for .tx1Delay
 Interlock.swift - corrected error in parseProperties() for .tx1Enabled
+
+*** Client Facing ****
+Meter.swift - added NSObject to class declaration
+Meter.swift - changed "description" property to "desc"
 
 v1.0.17
 
@@ -90,18 +113,22 @@ Radio.swift - in vitaParser(..) simplified UDP Stream Error message
 v1.0.15
 
 xLib6000 Overview.pdf - corrected error in Udp stream path drawing
-Vita.swift - corrected payload usage, replaced UnsafeRawPointer to payload with payload data array
-Corresponding changes to all Dynamic Models with Udp Streams
 Vita.swift - made string produced by desc() method more readable
 Vita.swift - in class encodeAsData(_:) added code to handle trailer
 Radio.swift - corrected "UDP Stream error" log message
 
+*** Client Facing ****
+Vita.swift - corrected payload usage, replaced UnsafeRawPointer to payload with payload data array
+Corresponding changes to all Dynamic Models with Udp Streams
+
 v1.0.14
 
 Added Documentation folder and "xLib6000 Overview.pdf" file
+Api.swift - in send(_:diagnostic:replyTo:) added testerDelegate?.addReplyHandler(_:replyTuple:)
+
+*** Client Facing ****
 Opus.swift - rename _id property to id
 Api.swift - in disconnect(reason:) changed object in .radioWillBeRemoved from activeRadio to radio
-Api.swift - in send(_:diagnostic:replyTo:) added testerDelegate?.addReplyHandler(_:replyTuple:)
 
 v1.0.13
 
