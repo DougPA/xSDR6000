@@ -43,7 +43,7 @@ class WaterfallViewController               : NSViewController, NSGestureRecogni
   @IBOutlet private weak var _waterfallView : MTKView!
   @IBOutlet private weak var _timeView      : NSView!
   
-  private var _waterfallRenderer              : WaterfallRenderer!
+  private var _waterfallRenderer            : WaterfallRenderer!
 
   private weak var _waterfall               : Waterfall? { return radio!.waterfalls[panadapter!.waterfallId] }
   private var _center                       : Int { return panadapter!.center }

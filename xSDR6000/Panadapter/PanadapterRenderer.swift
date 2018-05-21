@@ -340,8 +340,7 @@ extension PanadapterRenderer                : MTKViewDelegate {
 // ----------------------------------------------------------------------------
 // MARK: - PanadapterStreamHandler protocol methods
 
-extension PanadapterRenderer                : PanadapterStreamHandler {
-
+extension PanadapterRenderer                : StreamHandler {
 
   //  DataFrame Layout: (see xLib6000 PanadapterFrame)
   //
@@ -354,10 +353,12 @@ extension PanadapterRenderer                : PanadapterStreamHandler {
   
   /// Process the UDP Stream Data for the Panadapter (arrives on the streamQ)
   ///
-  /// - Parameter frame:        a Panadapter frame
+  /// - Parameter streamFrame:        a Panadapter frame
   ///
-  public func streamHandler(_ frame: PanadapterFrame) {
-
+  public func streamHandler<T>(_ streamFrame: T) {
+    
+    guard let frame = streamFrame as? PanadapterFrame else { return }
+    
     _frameBoundarySemaphore.wait()
     
     // move to using the next spectrumBuffer

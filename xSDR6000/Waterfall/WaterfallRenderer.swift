@@ -524,7 +524,7 @@ extension WaterfallRenderer                 : MTKViewDelegate {
 // MARK: - WaterfallStreamHandler protocol methods
 //
 
-extension WaterfallRenderer                 : WaterfallStreamHandler {
+extension WaterfallRenderer                 : StreamHandler {
   
   //  frame Layout: (see xLib6000 WaterfallFrame)
   //
@@ -539,10 +539,12 @@ extension WaterfallRenderer                 : WaterfallStreamHandler {
   
   /// Process the UDP Stream Data for the Waterfall (arrives on the streamQ)
   ///
-  /// - Parameter dataFrame:        a waterfall frame
+  /// - Parameter streamFrame:        a Panadapter frame
   ///
-  public func streamHandler(_ frame: WaterfallFrame ) {
+  public func streamHandler<T>(_ streamFrame: T) {
     
+    guard let frame = streamFrame as? WaterfallFrame else { return }
+
     // wait for an available Intensity Texture
     _frameBoundarySemaphore.wait()
     

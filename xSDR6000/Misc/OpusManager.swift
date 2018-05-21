@@ -12,7 +12,7 @@ import OpusOSX
 import AudioLibrary
 import Accelerate
 
-class OpusManager                           : NSObject, OpusStreamHandler, AFSoundcardDelegate {
+class OpusManager                           : NSObject, StreamHandler, AFSoundcardDelegate {
   
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
@@ -207,8 +207,10 @@ class OpusManager                           : NSObject, OpusStreamHandler, AFSou
   ///
   /// - Parameter frame: an Opus Rx Frame
   ///
-  func streamHandler(_ frame: OpusFrame) {
+  func streamHandler<T>(_ streamFrame: T) {
     
+    guard let frame = streamFrame as? OpusFrame else { return }
+
     // perform Opus decoding
     let result = opus_decode_float(_decoder, frame.samples, Int32(frame.numberOfSamples), _rxInterleavedPtr, Int32(_tenMsSampleCount * MemoryLayout<Float>.size * kNumberOfChannels), Int32(0))
     
