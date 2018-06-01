@@ -64,7 +64,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   
   private let _opusManager                  = OpusManager()
   
-  private let kGuiFirmwareSupport           = "2.0.19.x"                    // Radio firmware supported by this App
+  private let kGuiFirmwareSupport           = "2.2.8.x"                     // Radio firmware supported by this App
   private let kxLib6000Identifier           = "net.k3tzr.xLib6000"          // Bundle identifier for xLib6000
   private let kVoltageTemperature           = "VoltageTemp"                 // Identifier of toolbar VoltageTemperature toolbarItem
 
@@ -95,6 +95,8 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   
   private var _voltageMeterAvailable          = false
   private var _temperatureMeterAvailable      = false
+  private var _apiVersion                     = ""
+  private var _appVersion                     = ""
 
   // ----------------------------------------------------------------------------
   // MARK: - Overriden methods
@@ -113,6 +115,10 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     // register the User defaults
     setupDefaults()
     
+    // obtain & report component versions
+    captureVersionInfo()
+    setTitle()
+
     // add notification subscriptions
     addNotifications()
     
@@ -419,6 +425,37 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   // ----------------------------------------------------------------------------
   // MARK: - Private methods
   
+  /// Fnd & report versions for this app and the underlying library
+  ///
+  fileprivate func captureVersionInfo() {
+    
+    // get the version info from xLib6000
+    let frameworkBundle = Bundle(identifier: kxLib6000Identifier)
+    var version = frameworkBundle?.object(forInfoDictionaryKey: kVersionKey) ?? "0"
+    var build = frameworkBundle?.object(forInfoDictionaryKey: kBuildKey) ?? "0"
+    _apiVersion = "\(version).\(build)"
+    
+    Defaults[.apiVersion] = _apiVersion
+    Defaults[.apiFirmwareSupport] = _api.kApiFirmwareSupport
+    
+    // get the version info for this app
+    version = Bundle.main.object(forInfoDictionaryKey: kVersionKey) ?? "0"
+    build = Bundle.main.object(forInfoDictionaryKey: kBuildKey) ?? "0"
+    _appVersion = "\(version).\(build)"
+    
+    Defaults[.guiVersion] = _appVersion
+    Defaults[.guiFirmwareSupport] = kGuiFirmwareSupport
+    
+    Log.sharedInstance.msg("\(kClientName) v\(_appVersion), xLib6000 v\(_apiVersion)", level: .info, function: #function, file: #file, line: #line)
+  }
+  
+  
+  func setTitle() {
+    let title = (_api.activeRadio == nil ? "" : "- Connected to \(_api.activeRadio!.nickname ?? "") @ \(_api.activeRadio!.ipAddress)")
+    DispatchQueue.main.async {
+      self.view.window?.title = "\(kClientName) v\(self._appVersion), xLib6000 v\(self._apiVersion) \(title)"
+    }
+  }
   /// Setup & Register User Defaults
   ///
   private func setupDefaults() {
@@ -570,24 +607,6 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     Defaults[.radioFirmwareVersion] = _api.activeRadio!.firmwareVersion!
     Defaults[.radioModel] = _api.activeRadio!.model
     
-    // get the version info from xLib6000
-    let frameworkBundle = Bundle(identifier: kxLib6000Identifier)
-    let apiVersion = frameworkBundle?.object(forInfoDictionaryKey: kVersionKey) ?? "0"
-    let apiBuild = frameworkBundle?.object(forInfoDictionaryKey: kBuildKey) ?? "0"
-    
-    Defaults[.apiVersion] = "\(apiVersion).\(apiBuild)"
-    
-    Log.sharedInstance.msg("Using xLib6000 version " + Defaults[.apiVersion], level: .info, function: #function, file: #file, line: #line)
-    
-    Defaults[.apiFirmwareSupport] = _api.kApiFirmwareSupport
-    
-    // get the version info for this app
-    let appVersion = Bundle.main.object(forInfoDictionaryKey: kVersionKey) ?? "0"
-    let appBuild = Bundle.main.object(forInfoDictionaryKey: kBuildKey) ?? "0"
-    
-    Defaults[.guiVersion] = "\(appVersion).\(appBuild)"
-    Defaults[.guiFirmwareSupport] = kGuiFirmwareSupport
-    
     // observe changes to Radio properties
     addRadioObservers(_api.radio!)
   }
@@ -652,10 +671,8 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
         self._mainWindowController?.headphoneMute.state = radio.headphoneMute ? NSControl.StateValue.on : NSControl.StateValue.off
         self._mainWindowController?.tnfEnabled.state = radio.tnfEnabled ? NSControl.StateValue.on : NSControl.StateValue.off        
         self._mainWindowController?.fdxEnabled.state = radio.fullDuplexEnabled ? NSControl.StateValue.on : NSControl.StateValue.off
-
-        let title = (_api.activeRadio == nil ? "" : " (\(_api.activeRadio!.nickname ?? "") @ \(_api.activeRadio!.ipAddress))")
-        self.view.window?.title = "xSDR6000\(title)"
       }
+      setTitle()
     }
   }
   /// Process .radioWillBeRemoved Notification
@@ -684,8 +701,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     Log.sharedInstance.msg("", level: .info, function: #function, file: #file, line: #line)
     
     // update the window title
-    let title = ""
-    self.view.window?.title = "xSDR6000\(title)"
+    setTitle()
   }
   /// Process .opusHasBeenAdded Notification
   ///
