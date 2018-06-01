@@ -90,7 +90,6 @@ final public class ModeViewController       : NSViewController {
   // MARK: - Action methods
 
   @IBAction func quickModeButtons(_ sender: NSButton) {
-    var mode = ""
     
     switch sender.tag {
     case 0:
@@ -102,10 +101,9 @@ final public class ModeViewController       : NSViewController {
     case 3:
       mode = Defaults[.quickMode3]
     default:
-      mode = "AM"
+      // unknown tag
+      break
     }
-    // Select the mode
-    (representedObject as! xLib6000.Slice).mode = mode
   }
   
   
