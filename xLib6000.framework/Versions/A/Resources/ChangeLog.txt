@@ -1,5 +1,22 @@
 xLib6000 Change Log
 
+v1.1.5
+
+Api.swift - added static property daxIqChannels
+Radio.swift - modified parseReply(_:) to pass replies to the defaultReplyHandler
+Api.swift - made kNoError a static
+Radio.swift - removed "private let kNoError = "0", used static in Api.swift
+Tnf.swift - added code in parseStatus(_:radio:queue:inUse:) to process tnf removed
+
+v1.1.4
+
+*** Client Facing ****
+all dynamic models with streams - changed the function signature of the StreamHandler method (see Protocols.swift)
+
+refactored many of the protocols and moved them to the Protocols.swift file
+Meters.swift - added code to vitaProcessor(_:) to ignore duplicate meters in a single Vita packet
+Slice.swift - added findActive()
+
 v1.1.3
 
 Api.swift - added "sub meter all" into allSubscriptionCommands()
