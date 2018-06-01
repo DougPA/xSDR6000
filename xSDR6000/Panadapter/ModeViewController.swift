@@ -105,15 +105,37 @@ final public class ModeViewController       : NSViewController {
       break
     }
   }
-  
-  
+  /// Respond to one of the Filter buttons
+  ///
+  /// - Parameter sender:           a button
+  ///
   @IBAction func filterButtons(_ sender: NSButton) {
     
     guard let filters = ModeViewController.filterValues[mode] else { return }
     
     let filterValue = filters[sender.tag]
     
-    Swift.print("filter = \(filterValue)")
+    let slice = representedObject as! xLib6000.Slice
+    
+    switch mode {
+    case "RTTY", "DFM", "AM", "SAM":
+      slice.filterLow = -filterValue/2
+      slice.filterHigh = +filterValue/2
+    case "CW", "USB", "DIGU":
+      slice.filterLow = +100
+      slice.filterHigh = +filterValue + 100
+    case "LSB", "DIGL":
+      slice.filterLow = -filterValue - 100
+      slice.filterHigh = -100
+    case "FM":
+      slice.filterLow = -8_000
+      slice.filterHigh = +8_000
+    case "NFM":
+      slice.filterLow = -5_500
+      slice.filterHigh = +5_500
+    default:
+      break
+    }
   }
     
   // ----------------------------------------------------------------------------
@@ -127,15 +149,24 @@ final public class ModeViewController       : NSViewController {
   // ----------------------------------------------------------------------------
   // MARK: - Observation methods
   
-  // Add observers for Slice properties
-  
+  /// Add observers for Slice properties
+  ///
+  /// - Parameters:
+  ///   - observations:             an array of NSKeyValueObservation
+  ///   - object:                   the object
+  ///
   private func createObservations(_ observations: inout [NSKeyValueObservation], object: xLib6000.Slice ) {
     
     observations = [
       object.observe(\.mode, options: [.initial, .new], changeHandler: observer),
     ]
   }
-  
+  /// Process observations
+  ///
+  /// - Parameters:
+  ///   - object:                   the object being observed
+  ///   - change:                   the change
+  ///
   private func observer(_ object: Any, _ change: Any) {
     
     DispatchQueue.main.async { [unowned self] in
@@ -152,5 +183,4 @@ final public class ModeViewController       : NSViewController {
       self._filter7.title = filterMode[7]
     }
   }
-  
 }
