@@ -32,6 +32,12 @@ final public class FlagViewController       : NSViewController {
   @IBOutlet private weak var _sMeter        : NSLevelIndicator!
   @IBOutlet private weak var _filter        : NSTextField!
   
+  @IBOutlet weak var _audButton             : NSButton!
+  @IBOutlet weak var _dspButton             : NSButton!
+  @IBOutlet weak var _modeButton            : NSButton!
+  @IBOutlet weak var _xritButton            : NSButton!
+  @IBOutlet weak var _daxButton             : NSButton!
+  
   @IBOutlet weak var _containerView         : NSView!
   @IBOutlet weak var _containerViewHeight   : NSLayoutConstraint!
   
@@ -86,6 +92,16 @@ final public class FlagViewController       : NSViewController {
   ///
   @IBAction func buttons(_ sender: NSButton) {
     
+    // is the button "on"?
+    if sender.state == NSControl.StateValue.on {
+      
+      // YES, turn off any other buttons
+      if sender != _audButton { _audButton.state = NSControl.StateValue.off}
+      if sender != _dspButton { _dspButton.state = NSControl.StateValue.off}
+      if sender != _modeButton { _modeButton.state = NSControl.StateValue.off}
+      if sender != _xritButton { _xritButton.state = NSControl.StateValue.off}
+      if sender != _daxButton { _daxButton.state = NSControl.StateValue.off}
+    }
     // display / hide the selected view
     selectView(sender.identifier!.rawValue)
   }
