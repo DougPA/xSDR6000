@@ -132,24 +132,6 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
     // make the Renderer the Stream Handler
     panadapter?.delegate = _panadapterRenderer
   }
-  /// View did layout
-  ///
-//  override func viewDidLayout() {
-//
-//    Swift.print("pan id = \(panadapter!.id.hex), self = \(self)")
-//
-//    // tell the Panadapter to tell the Radio the current dimensions
-//    panadapter?.xPixels = view.frame.width
-//    panadapter?.yPixels = view.frame.height
-//
-//    // update the Constant values with the new size
-//    _panadapterRenderer.updateConstants(size: view.frame.size)
-//  }
-  
-//  deinit {
-//
-//    Swift.print("PanadapterViewController - deinit")
-//  }
   
   // ----------------------------------------------------------------------------
   // MARK: - Internal methods
@@ -179,15 +161,6 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
   func redrawSlices() {
     _frequencyLegendView.redraw()
   }
-  /// Redraw after a resize
-  ///
-//  func frameDidChange() {
-//
-//    // after a resize, redraw display components
-//    redrawDbLegend()
-//    redrawFrequencyLegend()
-//    redrawSlices()
-//  }
   /// Respond to Pan gesture (left mouse down)
   ///
   /// - Parameter gr:         the Pan Gesture Recognizer
@@ -534,7 +507,6 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
     NC.makeObserver(self, with: #selector(tnfHasBeenAdded(_:)), of: .tnfHasBeenAdded, object: nil)
     
     NC.makeObserver(self, with: #selector(tnfWillBeRemoved(_:)), of: .tnfWillBeRemoved, object: nil)
-
 
     NC.makeObserver(self, with: #selector(sliceHasBeenAdded(_:)), of: .sliceHasBeenAdded, object: nil)
   }
