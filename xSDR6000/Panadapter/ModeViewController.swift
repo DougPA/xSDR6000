@@ -15,15 +15,7 @@ import SwiftyUserDefaults
 // --------------------------------------------------------------------------------
 
 final public class ModeViewController       : NSViewController {
-  
-// ----------------------------------------------------------------------------
-// MARK: - Internal properties
 
-  @objc dynamic public var mode             : String {
-    get { return (representedObject as! xLib6000.Slice).mode }
-    set { (representedObject as! xLib6000.Slice).mode = newValue }
-  }
-  
   static let filterChoices    = [                             // Names of filters (by mode)
     "AM"    : ["5.6k", "6.0k", "8.0k", "10k", "12k", "14k", "16k", "20k"],
     "SAM"   : ["5.6k", "6.0k", "8.0k", "10k", "12k", "14k", "16k", "20k"],
@@ -51,6 +43,13 @@ final public class ModeViewController       : NSViewController {
     "RTTY"  : [250, 300, 350, 400, 500, 1_000, 1_500, 3_000]
   ]
 
+// ----------------------------------------------------------------------------
+// MARK: - Internal properties
+
+  @objc dynamic public var mode             : String {
+    get { return (representedObject as! xLib6000.Slice).mode }
+    set { (representedObject as! xLib6000.Slice).mode = newValue }
+  }
   
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
@@ -89,6 +88,10 @@ final public class ModeViewController       : NSViewController {
   // ----------------------------------------------------------------------------
   // MARK: - Action methods
 
+  /// Respond to one of the Quick Mode buttons
+  ///
+  /// - Parameter sender:         the button
+  ///
   @IBAction func quickModeButtons(_ sender: NSButton) {
     
     switch sender.tag {
@@ -107,33 +110,43 @@ final public class ModeViewController       : NSViewController {
   }
   /// Respond to one of the Filter buttons
   ///
-  /// - Parameter sender:           a button
+  /// - Parameter sender:           the button
   ///
   @IBAction func filterButtons(_ sender: NSButton) {
     
+    // get the possible filters for the current mode
     guard let filters = ModeViewController.filterValues[mode] else { return }
     
+    // get the width of the filter
     let filterValue = filters[sender.tag]
     
     let slice = representedObject as! xLib6000.Slice
     
-    switch mode {
-    case "RTTY", "DFM", "AM", "SAM":
+    // position the filter based on mode
+    switch Slice.Mode(rawValue: mode)! {
+    case .rtty, .dfm, .am, .sam:
       slice.filterLow = -filterValue/2
       slice.filterHigh = +filterValue/2
-    case "CW", "USB", "DIGU":
+    case .cw, .usb, .digu:
       slice.filterLow = +100
       slice.filterHigh = +filterValue + 100
-    case "LSB", "DIGL":
+    case .lsb, .digl:
       slice.filterLow = -filterValue - 100
       slice.filterHigh = -100
-    case "FM":
+    case .fm:
       slice.filterLow = -8_000
       slice.filterHigh = +8_000
-    case "NFM":
+    case .nfm:
       slice.filterLow = -5_500
       slice.filterHigh = +5_500
-    default:
+
+    // FIXME: are these needed?
+
+    case .dsb:
+      break
+    case .dstr:
+      break
+    case .fdv:
       break
     }
   }
