@@ -6,7 +6,12 @@ Api.swift - added static property daxIqChannels
 Radio.swift - modified parseReply(_:) to pass replies to the defaultReplyHandler
 Api.swift - made kNoError a static
 Radio.swift - removed "private let kNoError = "0", used static in Api.swift
+Radio.swift - added code in parseStatus(_:), case tnf, to recognize tnf removed
+Radio.swift - added code in defaultReplyHandler(_:seqNum:responseValue:reply:) for tnf removal
 Tnf.swift - added code in parseStatus(_:radio:queue:inUse:) to process tnf removed
+Slice.swift - commented out dsb, dstr & fdv in Mode enum
+Slice.swift - removed usage of dsb, dstr & fdv modes
+Memory.swift - removed usage of dsb, dstr & fdv modes
 
 v1.1.4
 
