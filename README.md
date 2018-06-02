@@ -2,8 +2,8 @@
 ## Mac Client for the FlexRadio (TM) 6000 series software defined radios.
 
 ### Built on:
-*  macOS 10.13.4 (Deployment Target of macOS 10.11)
-*  XCode 9.3
+*  macOS 10.13.5 (Deployment Target of macOS 10.11)
+*  XCode 9.4
 * Swift 4.1
 
 
