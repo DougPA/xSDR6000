@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14109"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14113"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
         <capability name="stacking Non-gravity area distributions on NSStackView" minToolsVersion="7.0" minSystemVersion="10.11"/>
     </dependencies>
@@ -295,7 +295,7 @@
                                             <constraint firstAttribute="width" constant="48" id="eDu-pw-cB3"/>
                                         </constraints>
                                         <buttonCell key="cell" type="push" title="AUD" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Hg8-SB-l23">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
                                         <connections>
@@ -308,7 +308,7 @@
                                             <constraint firstAttribute="width" constant="48" id="DNO-PY-kZ0"/>
                                         </constraints>
                                         <buttonCell key="cell" type="push" title="DSP" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="vbW-PN-XsJ">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
                                         <connections>
@@ -321,7 +321,7 @@
                                             <constraint firstAttribute="width" constant="48" id="rg1-eR-8f7"/>
                                         </constraints>
                                         <buttonCell key="cell" type="push" title="DIGU" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="IYZ-lB-ayB">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
                                         <connections>
@@ -335,7 +335,7 @@
                                             <constraint firstAttribute="width" constant="48" id="YeE-YN-YHt"/>
                                         </constraints>
                                         <buttonCell key="cell" type="push" title="XRIT" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="yMS-OM-Men">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
                                         <connections>
@@ -348,7 +348,7 @@
                                             <constraint firstAttribute="width" constant="48" id="0gB-bu-xG0"/>
                                         </constraints>
                                         <buttonCell key="cell" type="push" title="DAX" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="VHW-35-iep">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
                                         <connections>
@@ -406,10 +406,15 @@
                     </view>
                     <connections>
                         <outlet property="_alpha" destination="mTg-CM-4KQ" id="ndm-Fr-6pH"/>
+                        <outlet property="_audButton" destination="SMb-Ix-2gr" id="EWd-2w-IJg"/>
                         <outlet property="_containerView" destination="iEN-c9-g7u" id="13y-VU-F0a"/>
                         <outlet property="_containerViewHeight" destination="RNe-DO-M1h" id="8Aq-va-B5k"/>
+                        <outlet property="_daxButton" destination="k1s-c0-aSp" id="WvV-js-Mc8"/>
+                        <outlet property="_dspButton" destination="Txi-xh-v4g" id="WEM-qJ-dYV"/>
                         <outlet property="_filter" destination="pDZ-kB-g8v" id="7gb-dg-Xho"/>
+                        <outlet property="_modeButton" destination="Jwm-II-OG6" id="35t-e3-fp7"/>
                         <outlet property="_sMeter" destination="zQl-hd-Hm1" id="CjY-MM-Yy1"/>
+                        <outlet property="_xritButton" destination="GJJ-wv-I2E" id="6jm-F9-evK"/>
                     </connections>
                 </viewController>
                 <customObject id="aAz-fc-KOY" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
