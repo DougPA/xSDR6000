@@ -420,7 +420,6 @@ public final class FrequencyLegendView      : NSView {
       previousFlagVc = currentFlagVc
     }
   }
-
   /// Draw the Filter Outline
   ///
   /// - Parameter slice:  this Slice
@@ -495,5 +494,4 @@ public final class FrequencyLegendView      : NSView {
       }
     }
   }
-
 }
