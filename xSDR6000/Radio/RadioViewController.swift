@@ -95,8 +95,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   
   private var _voltageMeterAvailable          = false
   private var _temperatureMeterAvailable      = false
-  private var _apiVersion                     = ""
-  private var _appVersion                     = ""
+  private var _versions                       : (api: String, app: String)?
 
   // ----------------------------------------------------------------------------
   // MARK: - Overriden methods
@@ -112,12 +111,11 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     // give the Log object (in the API) access to our logger
     Log.sharedInstance.delegate = (NSApp.delegate as! LogHandler)
     
-    // register the User defaults
-    setupDefaults()
+    // setup & register Defaults
+    defaults(from: "Defaults.plist")
     
-    // obtain & report component versions
-    captureVersionInfo()
-    setTitle()
+    // set the window title
+    title()
 
     // add notification subscriptions
     addNotifications()
@@ -282,30 +280,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   ///
   @IBAction func tabEq(_ sender: NSButton) {
     
-    if sender.state == NSControl.StateValue.on {
-      
-      // get the Storyboard containing the Side views
-      let sb = NSStoryboard(name: NSStoryboard.Name(rawValue: kSideStoryboard), bundle: nil)
-      
-      // create an Equalizer view controller
-      let vc = sb.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier(rawValue: kEqualizerIdentifier)) as! EqViewController
-      
-      // give it a reference to its Radio object
-      vc.representedObject = _api.radio
-      
-      // add it to the Side View
-      _sideViewController!.insertChildViewController(vc, at: 1)
-      
-      // tell the SplitView to adjust
-      _sideViewController!.splitView.adjustSubviews()
-      
-    } else {
-      
-      // remove it from the Side View
-      for (i, vc) in _sideViewController!.childViewControllers.enumerated() where vc is EqViewController {
-        _sideViewController!.removeChildViewController(at: i)
-      }
-    }
+    sideView( kEqualizerIdentifier, show: (sender.state == NSControl.StateValue.on) )
   }
   /// Respond to the Pcw button (Side view)
   ///
@@ -313,30 +288,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   ///
   @IBAction func tabPcw(_ sender: NSButton) {
     
-    if sender.state == NSControl.StateValue.on {
-      
-      // create a new Equalizer UI
-      let sb = NSStoryboard(name: NSStoryboard.Name(rawValue: kSideStoryboard), bundle: nil)
-      
-      // create an Pcw view controller
-      let vc = sb.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier(rawValue: kPcwIdentifier)) as! PCWViewController
-      
-      // give it a reference to its Radio object
-      vc.representedObject = _api.radio
-      
-      // add it to the Side View
-      _sideViewController!.insertChildViewController(vc, at: 1)
-      
-      // tell the SplitView to adjust
-      _sideViewController!.splitView.adjustSubviews()
-      
-    } else {
-      
-      // remove it from the Side View
-      for (i, vc) in _sideViewController!.childViewControllers.enumerated() where vc is PCWViewController {
-        _sideViewController!.removeChildViewController(at: i)
-      }
-    }
+    sideView( kPcwIdentifier, show: (sender.state == NSControl.StateValue.on) )
   }
   /// Respond to the Phne button (Side view)
   ///
@@ -344,30 +296,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   ///
   @IBAction func tabPhne(_ sender: NSButton) {
     
-    if sender.state == NSControl.StateValue.on {
-      
-      // create a new Equalizer UI
-      let sb = NSStoryboard(name: NSStoryboard.Name(rawValue: kSideStoryboard), bundle: nil)
-      
-      // create an Phone view controller
-      let vc = sb.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier(rawValue: kPhoneIdentifier)) as! PhoneViewController
-      
-      // give it a reference to its Radio object
-      vc.representedObject = _api.radio
-      
-      // add it to the Side View
-      _sideViewController!.insertChildViewController(vc, at: 1)
-      
-      // tell the SplitView to adjust
-      _sideViewController!.splitView.adjustSubviews()
-      
-    } else {
-      
-      // remove it from the Side View
-      for (i, vc) in _sideViewController!.childViewControllers.enumerated() where vc is PhoneViewController {
-        _sideViewController!.removeChildViewController(at: i)
-      }
-    }
+    sideView( kPhoneIdentifier, show: (sender.state == NSControl.StateValue.on) )
   }
   /// Respond to the Rx button (Side view)
   ///
@@ -375,30 +304,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   ///
   @IBAction func tabRx(_ sender: NSButton) {
     
-    if sender.state == NSControl.StateValue.on {
-      
-      // create a new Equalizer UI
-      let sb = NSStoryboard(name: NSStoryboard.Name(rawValue: kSideStoryboard), bundle: nil)
-      
-      // create an Rx view controller
-      let vc = sb.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier(rawValue: kRxIdentifier)) as! NSViewController
-      
-      // give it a reference to its Radio object
-      vc.representedObject = _api.radio
-      
-      // add it to the Side View
-      _sideViewController!.insertChildViewController(vc, at: 1)
-      
-      // tell the SplitView to adjust
-      _sideViewController!.splitView.adjustSubviews()
-      
-    } else {
-      
-      // remove it from the Side View
-      for (i, vc) in _sideViewController!.childViewControllers.enumerated() where vc is RxViewController {
-        _sideViewController!.removeChildViewController(at: i)
-      }
-    }
+    sideView( kRxIdentifier, show: (sender.state == NSControl.StateValue.on) )
   }
   /// Respond to the Tx button (Side view)
   ///
@@ -424,50 +330,25 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   
   // ----------------------------------------------------------------------------
   // MARK: - Private methods
-  
-  /// Fnd & report versions for this app and the underlying library
+    
+  /// Set the Window's title
   ///
-  fileprivate func captureVersionInfo() {
+  func title() {
     
-    // get the version info from xLib6000
-    let frameworkBundle = Bundle(identifier: kxLib6000Identifier)
-    var version = frameworkBundle?.object(forInfoDictionaryKey: kVersionKey) ?? "0"
-    var build = frameworkBundle?.object(forInfoDictionaryKey: kBuildKey) ?? "0"
-    _apiVersion = "\(version).\(build)"
+    // have the versions been captured?
+    if _versions == nil {
+      // NO, get the versions
+      _versions = versionInfo(framework: kxLib6000Identifier)
+      
+      // log them
+      Log.sharedInstance.msg("\(kClientName) v\(_versions!.app), xLib6000 v\(_versions!.api)", level: .info, function: #function, file: #file, line: #line)
+    }
     
-    Defaults[.apiVersion] = _apiVersion
-    Defaults[.apiFirmwareSupport] = _api.kApiFirmwareSupport
-    
-    // get the version info for this app
-    version = Bundle.main.object(forInfoDictionaryKey: kVersionKey) ?? "0"
-    build = Bundle.main.object(forInfoDictionaryKey: kBuildKey) ?? "0"
-    _appVersion = "\(version).\(build)"
-    
-    Defaults[.guiVersion] = _appVersion
-    Defaults[.guiFirmwareSupport] = kGuiFirmwareSupport
-    
-    Log.sharedInstance.msg("\(kClientName) v\(_appVersion), xLib6000 v\(_apiVersion)", level: .info, function: #function, file: #file, line: #line)
-  }
-  
-  
-  func setTitle() {
+    // format and set the window title
     let title = (_api.activeRadio == nil ? "" : "- Connected to \(_api.activeRadio!.nickname ?? "") @ \(_api.activeRadio!.ipAddress)")
     DispatchQueue.main.async {
-      self.view.window?.title = "\(kClientName) v\(self._appVersion), xLib6000 v\(self._apiVersion) \(title)"
+      self.view.window?.title = "\(kClientName) v\(self._versions!.app), xLib6000 v\(self._versions!.api) \(title)"
     }
-  }
-  /// Setup & Register User Defaults
-  ///
-  private func setupDefaults() {
-    
-    // get the URL of the defaults file
-    let defaultsUrl = Bundle.main.url(forResource: "Defaults", withExtension: "plist")!
-    
-    // load the contents
-    let myDefaults = NSDictionary(contentsOf: defaultsUrl)!
-    
-    // register the defaults
-    Defaults.register(defaults: myDefaults as! Dictionary<String, Any>)
   }
   /// Check if there is a Default Radio
   ///
@@ -499,9 +380,43 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     }
     return defaultRadioParameters
   }
+  /// Display / Hide a side view
+  ///
+  /// - Parameters:
+  ///   - identifier:     a Storyboard identifier
+  ///   - show:           show?
+  ///
+  private func sideView(_ identifier: String, show: Bool) {
+    
+    // show or hide?
+    if show {
+      
+      // SHOW, get the Storyboard
+      let sb = NSStoryboard(name: NSStoryboard.Name(rawValue: kSideStoryboard), bundle: nil)
+      
+      // create a view controller
+      let vc = sb.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier(rawValue: identifier) ) as! NSViewController
+      
+      // give it a reference to its Radio object
+      vc.representedObject = _api.radio
+      
+      // add it to the Side View
+      _sideViewController!.insertChildViewController(vc, at: 1)
+      
+      // tell the SplitView to adjust
+      _sideViewController!.splitView.adjustSubviews()
+      
+    } else {
+      
+      // HIDE, remove it from the Side View
+      for (i, vc) in _sideViewController!.childViewControllers.enumerated() where vc.identifier == NSUserInterfaceItemIdentifier(rawValue: identifier) {
+        _sideViewController!.removeChildViewController(at: i)
+      }
+    }
+  }
 
   // ----------------------------------------------------------------------------
-  // MARK: - NEW Observation methods
+  // MARK: - Observation methods
 
   private var _radioObservers   = [NSKeyValueObservation]()
   private var _opusObservers    = [NSKeyValueObservation]()
@@ -610,19 +525,6 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     // observe changes to Radio properties
     addRadioObservers(_api.radio!)
   }
-  /// Process .tcpDidDisconnect Notification
-  ///
-  /// - Parameter note: a Notification instance
-  ///
-  //    @objc private func tcpDidDisconnect(_ note: Notification) {
-  //
-  //        // the TCP connection has disconnected
-  //        if (note.object as! Radio.DisconnectReason) != .closed {
-  //
-  //            // not a normal disconnect
-  //            openRadioPicker(self)
-  //        }
-  //    }
   /// Process .meterHasBeenAdded Notification
   ///
   /// - Parameter note: a Notification instance
@@ -672,7 +574,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
         self._mainWindowController?.tnfEnabled.state = radio.tnfEnabled ? NSControl.StateValue.on : NSControl.StateValue.off        
         self._mainWindowController?.fdxEnabled.state = radio.fullDuplexEnabled ? NSControl.StateValue.on : NSControl.StateValue.off
       }
-      setTitle()
+      title()
     }
   }
   /// Process .radioWillBeRemoved Notification
@@ -701,7 +603,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     Log.sharedInstance.msg("", level: .info, function: #function, file: #file, line: #line)
     
     // update the window title
-    setTitle()
+    title()
   }
   /// Process .opusHasBeenAdded Notification
   ///
