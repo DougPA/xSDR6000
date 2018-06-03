@@ -177,10 +177,13 @@
                                     <constraint firstAttribute="width" constant="33" id="ScI-so-Pde"/>
                                     <constraint firstAttribute="height" constant="38" id="VnU-wY-B06"/>
                                 </constraints>
-                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="Unlocked" imagePosition="only" alignment="center" alternateImage="Locked" lineBreakMode="truncatingTail" imageScaling="proportionallyUpOrDown" inset="2" id="QrL-OY-YpP">
+                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="Unlocked" imagePosition="only" alignment="center" alternateImage="Locked" lineBreakMode="truncatingTail" imageScaling="proportionallyUpOrDown" sound="Pop" inset="2" id="QrL-OY-YpP">
                                     <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <binding destination="Lmw-yC-7qh" name="value" keyPath="slice.locked" id="59D-LC-pvD"/>
+                                </connections>
                             </button>
                             <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Upu-MJ-yvx" userLabel="Frequency">
                                 <rect key="frame" x="54" y="191" width="188" height="31"/>
@@ -471,10 +474,6 @@
                                     <binding destination="kM0-OI-M2p" name="content" keyPath="representedObject.agcNames" id="C6D-c7-cbD"/>
                                 </connections>
                             </popUpButton>
-                            <imageView translatesAutoresizingMaskIntoConstraints="NO" id="R9N-eh-lmp">
-                                <rect key="frame" x="20" y="50" width="23" height="30"/>
-                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="NSTouchBarAudioOutputVolumeHighTemplate" id="8yz-CJ-lVZ"/>
-                            </imageView>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1Is-ZQ-5rl">
                                 <rect key="frame" x="25" y="35" width="12" height="17"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="L" id="fFb-j2-PeE">
@@ -491,31 +490,43 @@
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
+                            <button translatesAutoresizingMaskIntoConstraints="NO" id="Ibz-Hr-qrU">
+                                <rect key="frame" x="15" y="51" width="33" height="32"/>
+                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="Speaker-On" imagePosition="only" alignment="center" alternateImage="Speaker-Off" lineBreakMode="truncatingTail" imageScaling="proportionallyUpOrDown" sound="Pop" inset="2" id="Nsy-dG-TcX">
+                                    <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <binding destination="kM0-OI-M2p" name="value" keyPath="representedObject.audioMute" id="nON-Ds-E9d"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="R9N-eh-lmp" firstAttribute="centerY" secondItem="nxC-80-uqM" secondAttribute="centerY" constant="1.5" id="3Sn-Q5-O6r"/>
-                            <constraint firstItem="1Is-ZQ-5rl" firstAttribute="centerX" secondItem="R9N-eh-lmp" secondAttribute="centerX" id="5Gn-Fk-0tC"/>
-                            <constraint firstItem="aGr-c3-Qeq" firstAttribute="leading" secondItem="IQM-e9-DXN" secondAttribute="trailing" constant="9" id="5St-Wv-nJn"/>
-                            <constraint firstItem="aGr-c3-Qeq" firstAttribute="top" secondItem="LkQ-yf-PwG" secondAttribute="top" constant="33" id="8K0-JK-fMn"/>
-                            <constraint firstItem="8T0-Ls-6Dh" firstAttribute="trailing" secondItem="IQM-e9-DXN" secondAttribute="trailing" id="8pE-Ku-xP0"/>
-                            <constraint firstItem="nxC-80-uqM" firstAttribute="leading" secondItem="IQM-e9-DXN" secondAttribute="leading" id="8zA-ks-TVJ"/>
-                            <constraint firstItem="8T0-Ls-6Dh" firstAttribute="centerY" secondItem="FEl-bw-dKr" secondAttribute="centerY" id="9xj-sg-pV7"/>
-                            <constraint firstAttribute="trailing" secondItem="aGr-c3-Qeq" secondAttribute="trailing" constant="7" id="AKc-ZB-ijV"/>
-                            <constraint firstItem="FEl-bw-dKr" firstAttribute="top" secondItem="1Is-ZQ-5rl" secondAttribute="bottom" constant="2" id="Jci-gx-1Wu"/>
-                            <constraint firstItem="nxC-80-uqM" firstAttribute="leading" secondItem="R9N-eh-lmp" secondAttribute="trailing" constant="15" id="VQb-Sr-27l"/>
-                            <constraint firstItem="FEl-bw-dKr" firstAttribute="leading" secondItem="LkQ-yf-PwG" secondAttribute="leading" constant="22" id="bMz-ZL-hoY"/>
-                            <constraint firstItem="IQM-e9-DXN" firstAttribute="top" secondItem="nxC-80-uqM" secondAttribute="bottom" constant="8" symbolic="YES" id="dhq-AX-CJz"/>
-                            <constraint firstItem="nxC-80-uqM" firstAttribute="trailing" secondItem="IQM-e9-DXN" secondAttribute="trailing" id="jjw-IF-yF1"/>
-                            <constraint firstItem="R9N-eh-lmp" firstAttribute="leading" secondItem="LkQ-yf-PwG" secondAttribute="leading" constant="20" symbolic="YES" id="qKK-nK-x3c"/>
-                            <constraint firstItem="1Is-ZQ-5rl" firstAttribute="centerY" secondItem="IQM-e9-DXN" secondAttribute="centerY" id="qed-28-1RH"/>
-                            <constraint firstAttribute="bottom" secondItem="1Is-ZQ-5rl" secondAttribute="bottom" constant="35" id="uay-cg-auL"/>
-                            <constraint firstItem="8T0-Ls-6Dh" firstAttribute="leading" secondItem="FEl-bw-dKr" secondAttribute="trailing" constant="17" id="xPt-qj-CvW"/>
+                            <constraint firstItem="1Is-ZQ-5rl" firstAttribute="baseline" secondItem="aGr-c3-Qeq" secondAttribute="baseline" id="2Ij-Ed-Hde"/>
+                            <constraint firstItem="FEl-bw-dKr" firstAttribute="baseline" secondItem="8T0-Ls-6Dh" secondAttribute="baseline" id="6Q3-IX-Hpv"/>
+                            <constraint firstItem="IQM-e9-DXN" firstAttribute="trailing" secondItem="8T0-Ls-6Dh" secondAttribute="trailing" id="HNj-aU-lch"/>
+                            <constraint firstItem="nxC-80-uqM" firstAttribute="leading" secondItem="IQM-e9-DXN" secondAttribute="leading" id="KHN-Ww-lch"/>
+                            <constraint firstItem="Ibz-Hr-qrU" firstAttribute="centerX" secondItem="1Is-ZQ-5rl" secondAttribute="centerX" id="QC2-Os-Kbn"/>
+                            <constraint firstItem="IQM-e9-DXN" firstAttribute="leading" secondItem="1Is-ZQ-5rl" secondAttribute="trailing" constant="23" id="QQY-yg-ItA"/>
+                            <constraint firstItem="aGr-c3-Qeq" firstAttribute="leading" secondItem="IQM-e9-DXN" secondAttribute="trailing" constant="9" id="Rf1-6Q-sz6"/>
+                            <constraint firstItem="Ibz-Hr-qrU" firstAttribute="leading" secondItem="LkQ-yf-PwG" secondAttribute="leading" constant="15" id="cbr-gG-0WV"/>
+                            <constraint firstItem="FEl-bw-dKr" firstAttribute="top" secondItem="Ibz-Hr-qrU" secondAttribute="bottom" constant="18" id="dKh-pw-5yv"/>
+                            <constraint firstItem="Ibz-Hr-qrU" firstAttribute="top" secondItem="LkQ-yf-PwG" secondAttribute="top" constant="2" id="eqJ-iO-gGu"/>
+                            <constraint firstItem="nxC-80-uqM" firstAttribute="trailing" secondItem="IQM-e9-DXN" secondAttribute="trailing" id="es1-rP-TaM"/>
+                            <constraint firstItem="FEl-bw-dKr" firstAttribute="leading" secondItem="LkQ-yf-PwG" secondAttribute="leading" constant="22" id="h6H-7I-PQ7"/>
+                            <constraint firstItem="IQM-e9-DXN" firstAttribute="centerY" secondItem="aGr-c3-Qeq" secondAttribute="centerY" id="iFk-ej-lMd"/>
+                            <constraint firstAttribute="trailing" secondItem="aGr-c3-Qeq" secondAttribute="trailing" constant="7" id="jWn-XB-lIA"/>
+                            <constraint firstItem="8T0-Ls-6Dh" firstAttribute="leading" secondItem="FEl-bw-dKr" secondAttribute="trailing" constant="17" id="l55-pS-yXa"/>
+                            <constraint firstItem="Ibz-Hr-qrU" firstAttribute="centerY" secondItem="nxC-80-uqM" secondAttribute="centerY" id="r4q-4T-WQB"/>
+                            <constraint firstItem="IQM-e9-DXN" firstAttribute="top" secondItem="nxC-80-uqM" secondAttribute="bottom" constant="8" symbolic="YES" id="rBb-zw-D0V"/>
+                            <constraint firstItem="FEl-bw-dKr" firstAttribute="top" secondItem="1Is-ZQ-5rl" secondAttribute="bottom" constant="2" id="t68-ez-Pq7"/>
+                            <constraint firstItem="nxC-80-uqM" firstAttribute="leading" secondItem="Ibz-Hr-qrU" secondAttribute="trailing" constant="10" id="wAg-CJ-ej8"/>
                         </constraints>
                     </view>
                 </viewController>
                 <customObject id="xFi-Dm-AMR" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1853" y="433"/>
+            <point key="canvasLocation" x="1852.5" y="432.5"/>
         </scene>
         <!--dspVC-->
         <scene sceneID="v6z-wA-6gD">
@@ -1097,9 +1108,11 @@
     </scenes>
     <resources>
         <image name="Locked" width="128" height="128"/>
-        <image name="NSTouchBarAudioOutputVolumeHighTemplate" width="23" height="30"/>
+        <image name="Speaker-Off" width="512" height="512"/>
+        <image name="Speaker-On" width="512" height="512"/>
         <image name="TX-off" width="32" height="32"/>
         <image name="TX-on" width="32" height="32"/>
         <image name="Unlocked" width="128" height="128"/>
+        <sound name="Pop"/>
     </resources>
 </document>

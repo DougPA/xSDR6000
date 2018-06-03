@@ -142,12 +142,12 @@ final public class ModeViewController       : NSViewController {
 
     // FIXME: are these needed?
 
-    case .dsb:
-      break
-    case .dstr:
-      break
-    case .fdv:
-      break
+//    case .dsb:
+//      break
+//    case .dstr:
+//      break
+//    case .fdv:
+//      break
     }
   }
     
