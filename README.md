@@ -3,7 +3,7 @@
 
 ### Built on:
 *  macOS 10.13.5 (Deployment Target of macOS 10.11)
-*  XCode 9.4
+*  Xcode 9.4
 * Swift 4.1
 
 
@@ -73,6 +73,9 @@ xLib6000:
 ## Known Issues
 
 * Although the side area will open/close, many / all of the side panels are not yet implemented
+* CWX is not implemented
+* Tx Remote / Rx Remote (i.e. Opus) has issues
+* Memories are not fully implemented
 
 Please reports any bugs you observe to douglas.adams@me.com
 
