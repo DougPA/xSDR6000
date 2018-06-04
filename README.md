@@ -8,7 +8,7 @@
 
 
 **This version supports SmartLink (TM).**  
-**There is now only one Branch (master), it REQUIRES Metal**  
+**It REQUIRES a Mac that supports Metal**  
 
 ## Usage
 
@@ -27,6 +27,10 @@ If you want to learn more about the 6000 series API, please take a look at the x
 To explore the 6000 series API, please take a look at the xAPITester project.
 
 * https://github.com/DougPA/xAPITester
+
+If you require a Mac version of DAX and/or CAT, please see.
+
+* https://dl3lsm.blogspot.com
 
 
 ## Builds
@@ -64,3 +68,12 @@ OpusOSX:
 xLib6000:
 
 * https://github.com/DougPA/xLib6000
+
+
+## Known Issues
+
+* Although the side area will open/close, many / all of the side panels are not yet implemented
+
+Please reports any bugs you observe to douglas.adams@me.com
+
+
