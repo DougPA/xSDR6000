@@ -1,5 +1,9 @@
 xLib6000 Change Log
 
+v1.1.6
+
+IqStream, Meter, Panadapter, Slice & Tnf.swift - refactored all "find" functions
+
 v1.1.5
 
 Api.swift - added static property daxIqChannels
