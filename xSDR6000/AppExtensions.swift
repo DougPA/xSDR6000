@@ -175,6 +175,29 @@ extension  UserDefaults {
   
 }
 
+extension FileManager {
+  
+  /// Get / create the Application Support folder
+  ///
+  static var appFolder : URL {
+    let fileManager = FileManager.default
+    let urls = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask )
+    let appFolderUrl = urls.first!.appendingPathComponent( Bundle.main.bundleIdentifier! )
+    
+    // does the folder exist?
+    if !fileManager.fileExists( atPath: appFolderUrl.path ) {
+      
+      // NO, create it
+      do {
+        try fileManager.createDirectory( at: appFolderUrl, withIntermediateDirectories: false, attributes: nil)
+      } catch let error as NSError {
+        fatalError("Error creating App Support folder: \(error.localizedDescription)")
+      }
+    }
+    return appFolderUrl
+  }
+}
+
 extension NSBezierPath {
   
   /// Draw a Horizontal line

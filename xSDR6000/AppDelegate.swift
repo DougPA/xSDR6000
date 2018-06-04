@@ -45,24 +45,24 @@ final class AppDelegate                     : NSObject, NSApplicationDelegate, L
       
     #endif
     
-    // log into the Application Support folder for this App (~/Library/Application Support/net.k3tzr.xSDR6000)
-    let fileManager = FileManager()
-    let urls = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask ) as [URL]
-    let appFolder = urls.first!.appendingPathComponent( Bundle.main.bundleIdentifier! )
-    
-    // does the folder exist?
-    if !fileManager.fileExists( atPath: appFolder.path ) {
-      
-      // NO, create it
-      do {
-        try fileManager.createDirectory( at: appFolder, withIntermediateDirectories: false, attributes: nil)
-      } catch let error as NSError {
-        fatalError("Error creating App Support folder: \(error.localizedDescription)")
-      }
-    }
+//     log into the Application Support folder for this App (~/Library/Application Support/net.k3tzr.xSDR6000)
+//    let fileManager = FileManager()
+//    let urls = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask ) as [URL]
+//    let appFolder = urls.first!.appendingPathComponent( Bundle.main.bundleIdentifier! )
+//
+//    // does the folder exist?
+//    if !fileManager.fileExists( atPath: appFolder.path ) {
+//
+//      // NO, create it
+//      do {
+//        try fileManager.createDirectory( at: appFolder, withIntermediateDirectories: false, attributes: nil)
+//      } catch let error as NSError {
+//        fatalError("Error creating App Support folder: \(error.localizedDescription)")
+//      }
+//    }
     
     // Create a file log destination
-    let fileDestination = AutoRotatingFileDestination(writeToFile: appFolder.appendingPathComponent(AppDelegate.kLogFile), identifier: "advancedLogger.autoRotatingFileDestination")
+    let fileDestination = AutoRotatingFileDestination(writeToFile: FileManager.appFolder.appendingPathComponent(AppDelegate.kLogFile), identifier: "advancedLogger.autoRotatingFileDestination")
     
     // Optionally set some configuration options
     fileDestination.targetMaxFileSize       = 1_048_576                     // 2^20
