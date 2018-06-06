@@ -4,7 +4,7 @@
 ### Built on:
 *  macOS 10.13.5 (Deployment Target of macOS 10.11)
 *  Xcode 9.4
-* Swift 4.1
+*  Swift 4.1
 
 
 **This version supports SmartLink (TM).**  
