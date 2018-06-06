@@ -211,56 +211,56 @@
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="130" id="ko7-sv-L1F"/>
                                                 </constraints>
-                                                <sliderCell key="cell" alignment="left" minValue="-10" maxValue="10" tickMarkPosition="right" numberOfTickMarks="11" allowsTickMarkValuesOnly="YES" sliderType="linear" id="Xwc-QE-t11"/>
+                                                <sliderCell key="cell" continuous="YES" alignment="left" minValue="-10" maxValue="10" tickMarkPosition="right" numberOfTickMarks="11" allowsTickMarkValuesOnly="YES" sliderType="linear" id="Xwc-QE-t11"/>
                                                 <connections>
                                                     <action selector="slider:" target="yhz-wz-Qrr" id="efR-2t-Ft4"/>
                                                 </connections>
                                             </slider>
                                             <slider horizontalHuggingPriority="750" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="xoM-9B-O0F">
                                                 <rect key="frame" x="35" y="-3" width="24" height="135"/>
-                                                <sliderCell key="cell" alignment="left" minValue="-10" maxValue="10" tickMarkPosition="right" numberOfTickMarks="11" allowsTickMarkValuesOnly="YES" sliderType="linear" id="w7W-SU-GmU"/>
+                                                <sliderCell key="cell" continuous="YES" alignment="left" minValue="-10" maxValue="10" tickMarkPosition="right" numberOfTickMarks="11" allowsTickMarkValuesOnly="YES" sliderType="linear" id="w7W-SU-GmU"/>
                                                 <connections>
                                                     <action selector="slider:" target="yhz-wz-Qrr" id="crI-Dv-GFg"/>
                                                 </connections>
                                             </slider>
                                             <slider horizontalHuggingPriority="750" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="PYE-YJ-aoe">
                                                 <rect key="frame" x="72" y="-3" width="24" height="135"/>
-                                                <sliderCell key="cell" alignment="left" minValue="-10" maxValue="10" tickMarkPosition="right" numberOfTickMarks="11" allowsTickMarkValuesOnly="YES" sliderType="linear" id="869-Bl-Jwn"/>
+                                                <sliderCell key="cell" continuous="YES" alignment="left" minValue="-10" maxValue="10" tickMarkPosition="right" numberOfTickMarks="11" allowsTickMarkValuesOnly="YES" sliderType="linear" id="869-Bl-Jwn"/>
                                                 <connections>
                                                     <action selector="slider:" target="yhz-wz-Qrr" id="2d8-LC-eOR"/>
                                                 </connections>
                                             </slider>
                                             <slider horizontalHuggingPriority="750" tag="3" translatesAutoresizingMaskIntoConstraints="NO" id="hiV-ff-Uno">
                                                 <rect key="frame" x="109" y="-3" width="24" height="135"/>
-                                                <sliderCell key="cell" alignment="left" minValue="-10" maxValue="10" tickMarkPosition="right" numberOfTickMarks="11" allowsTickMarkValuesOnly="YES" sliderType="linear" id="Kg0-Zg-JaJ"/>
+                                                <sliderCell key="cell" continuous="YES" alignment="left" minValue="-10" maxValue="10" tickMarkPosition="right" numberOfTickMarks="11" allowsTickMarkValuesOnly="YES" sliderType="linear" id="Kg0-Zg-JaJ"/>
                                                 <connections>
                                                     <action selector="slider:" target="yhz-wz-Qrr" id="Nxx-Ze-yt4"/>
                                                 </connections>
                                             </slider>
                                             <slider horizontalHuggingPriority="750" tag="4" translatesAutoresizingMaskIntoConstraints="NO" id="oOo-lK-PI9">
                                                 <rect key="frame" x="146" y="-3" width="24" height="135"/>
-                                                <sliderCell key="cell" alignment="left" minValue="-10" maxValue="10" tickMarkPosition="right" numberOfTickMarks="11" allowsTickMarkValuesOnly="YES" sliderType="linear" id="nBf-YL-Za1"/>
+                                                <sliderCell key="cell" continuous="YES" alignment="left" minValue="-10" maxValue="10" tickMarkPosition="right" numberOfTickMarks="11" allowsTickMarkValuesOnly="YES" sliderType="linear" id="nBf-YL-Za1"/>
                                                 <connections>
                                                     <action selector="slider:" target="yhz-wz-Qrr" id="xlS-wX-H2i"/>
                                                 </connections>
                                             </slider>
                                             <slider horizontalHuggingPriority="750" tag="5" translatesAutoresizingMaskIntoConstraints="NO" id="taR-Pd-Lro">
                                                 <rect key="frame" x="183" y="-3" width="24" height="135"/>
-                                                <sliderCell key="cell" alignment="left" minValue="-10" maxValue="10" tickMarkPosition="right" numberOfTickMarks="11" allowsTickMarkValuesOnly="YES" sliderType="linear" id="jX0-f5-wn5"/>
+                                                <sliderCell key="cell" continuous="YES" alignment="left" minValue="-10" maxValue="10" tickMarkPosition="right" numberOfTickMarks="11" allowsTickMarkValuesOnly="YES" sliderType="linear" id="jX0-f5-wn5"/>
                                                 <connections>
                                                     <action selector="slider:" target="yhz-wz-Qrr" id="gS1-GI-9rl"/>
                                                 </connections>
                                             </slider>
                                             <slider horizontalHuggingPriority="750" tag="6" translatesAutoresizingMaskIntoConstraints="NO" id="O7s-Hg-TAQ">
                                                 <rect key="frame" x="220" y="-3" width="24" height="135"/>
-                                                <sliderCell key="cell" alignment="left" minValue="-10" maxValue="10" tickMarkPosition="right" numberOfTickMarks="11" allowsTickMarkValuesOnly="YES" sliderType="linear" id="AVV-SK-wf2"/>
+                                                <sliderCell key="cell" continuous="YES" alignment="left" minValue="-10" maxValue="10" tickMarkPosition="right" numberOfTickMarks="11" allowsTickMarkValuesOnly="YES" sliderType="linear" id="AVV-SK-wf2"/>
                                                 <connections>
                                                     <action selector="slider:" target="yhz-wz-Qrr" id="LD9-SE-TTy"/>
                                                 </connections>
                                             </slider>
                                             <slider horizontalHuggingPriority="750" tag="7" translatesAutoresizingMaskIntoConstraints="NO" id="zJp-OB-Evw">
                                                 <rect key="frame" x="257" y="-3" width="24" height="135"/>
-                                                <sliderCell key="cell" alignment="left" minValue="-10" maxValue="10" tickMarkPosition="right" numberOfTickMarks="11" allowsTickMarkValuesOnly="YES" sliderType="linear" id="udi-eR-Rhk"/>
+                                                <sliderCell key="cell" continuous="YES" alignment="left" minValue="-10" maxValue="10" tickMarkPosition="right" numberOfTickMarks="11" allowsTickMarkValuesOnly="YES" sliderType="linear" id="udi-eR-Rhk"/>
                                                 <connections>
                                                     <action selector="slider:" target="yhz-wz-Qrr" id="XgS-0E-TXc"/>
                                                 </connections>
