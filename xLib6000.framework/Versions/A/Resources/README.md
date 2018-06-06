@@ -3,8 +3,8 @@
 
 ### Built on:
 *  macOS 10.13.5 (Deployment Target of macOS 10.10)
-*  XCode 9.4
-* Swift 4.1
+*  Xcode 9.4
+*  Swift 4.1
 
 
 **This version supports SmartLink (TM).**
@@ -26,6 +26,10 @@ For an example of a SmartSDR-like client for the Mac, please take a look at the 
 
 * https://github.com/DougPA/xSDR6000
 
+If you require a Mac version of DAX and/or CAT, please see.
+
+* https://dl3lsm.blogspot.com
+
 
 ## Builds
 
@@ -44,3 +48,10 @@ douglas.adams@me.com
 Version 7.6.3 of CocoaAsyncSocket is embedded in this project as source code. It can be found on GitHub at:  
 
 * https://github.com/robbiehanson/CocoaAsyncSocket
+
+
+## Known Issues
+
+* Opus streams are implemented but may not work and/or will generate errors on some Macs
+
+Please reports any bugs you observe to douglas.adams@me.com

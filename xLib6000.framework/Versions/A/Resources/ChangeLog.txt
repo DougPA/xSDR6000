@@ -1,8 +1,15 @@
 xLib6000 Change Log
 
+v1.1.7
+
+
+
+
 v1.1.6
 
 IqStream, Meter, Panadapter, Slice & Tnf.swift - refactored all "find" functions
+moved statics KMin & kMax from Radio to Api; renamed to kControlMin & kControlMax; usage corrected in multiple files
+moved statics KNotInUse & kRemoved from Radio to Api; usage corrected in multiple files
 
 v1.1.5
 
