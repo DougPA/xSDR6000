@@ -591,6 +591,9 @@ extension WaterfallRenderer                 : StreamHandler {
     _parameters[_textureIndex].vertices[2].texCoord.y = bottomSide      // clip space value for bottom right y
     _parameters[_textureIndex].vertices[0].texCoord.y = bottomSide      // clip space value for bottom left y
 
+    // set the Waterfall constants
+    updateConstants(autoBlack: _waterfall!.autoBlackEnabled, blackLevel: _waterfall!.blackLevel, colorGain: _waterfall!.colorGain)
+    
     // set the Top Line
     _parameters[_textureIndex].topLine = newTopLine
     updateLine(newTopLine)

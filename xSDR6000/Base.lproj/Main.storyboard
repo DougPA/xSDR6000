@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14109"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14113"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
         <capability name="stacking Non-gravity area distributions on NSStackView" minToolsVersion="7.0" minSystemVersion="10.11"/>
     </dependencies>
@@ -1052,7 +1052,7 @@
         <!--Side Buttons-->
         <scene sceneID="Kz4-nX-gwb">
             <objects>
-                <viewController storyboardIdentifier="SideButtons" id="Ng6-KG-b9V" userLabel="Side Buttons" sceneMemberID="viewController">
+                <viewController identifier="SideButtonsVC" storyboardIdentifier="SideButtons" id="Ng6-KG-b9V" userLabel="Side Buttons" sceneMemberID="viewController">
                     <view key="view" wantsLayer="YES" id="iRD-Cc-O72">
                         <rect key="frame" x="0.0" y="0.0" width="374" height="61"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1060,54 +1060,54 @@
                             <stackView distribution="fillEqually" orientation="horizontal" alignment="centerY" spacing="1" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" horizontalClippingResistancePriority="750" verticalClippingResistancePriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dnK-lm-Wdo">
                                 <rect key="frame" x="2" y="2" width="370" height="57"/>
                                 <subviews>
-                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="r8z-hs-Frl">
+                                    <button identifier="TX" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="r8z-hs-Frl">
                                         <rect key="frame" x="-1" y="11" width="83" height="32"/>
                                         <buttonCell key="cell" type="push" title="TX" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="jnR-Dq-Fgw">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
                                         <connections>
-                                            <action selector="tabTx:" target="B8G-bD-9Yv" id="49c-J8-UWm"/>
+                                            <action selector="sideButtons:" target="B8G-bD-9Yv" id="Iv1-u3-YOE"/>
                                         </connections>
                                     </button>
-                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="AYb-2A-FnE">
+                                    <button identifier="PCW" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="AYb-2A-FnE">
                                         <rect key="frame" x="71" y="11" width="83" height="32"/>
                                         <buttonCell key="cell" type="push" title="P/CW" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="gvl-fH-D26">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
                                         <connections>
-                                            <action selector="tabPcw:" target="B8G-bD-9Yv" id="BLl-zT-Igo"/>
+                                            <action selector="sideButtons:" target="B8G-bD-9Yv" id="XeD-R1-Wig"/>
                                         </connections>
                                     </button>
-                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Yxo-C4-hxr">
+                                    <button identifier="PHONE" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Yxo-C4-hxr">
                                         <rect key="frame" x="143" y="11" width="85" height="32"/>
                                         <buttonCell key="cell" type="push" title="PHONE" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="f7p-LP-nti">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
                                         <connections>
-                                            <action selector="tabPhne:" target="B8G-bD-9Yv" id="Ude-lP-AJk"/>
+                                            <action selector="sideButtons:" target="B8G-bD-9Yv" id="gGb-xb-K0s"/>
                                         </connections>
                                     </button>
-                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Tl0-hE-qcP">
+                                    <button identifier="RX" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Tl0-hE-qcP">
                                         <rect key="frame" x="217" y="11" width="82" height="32"/>
                                         <buttonCell key="cell" type="push" title="RX" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Ff1-Ai-752">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
                                         <connections>
-                                            <action selector="tabRx:" target="B8G-bD-9Yv" id="Ltt-fH-VcS"/>
+                                            <action selector="sideButtons:" target="B8G-bD-9Yv" id="KLD-WF-WjY"/>
                                         </connections>
                                     </button>
-                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wNE-9n-tsI">
+                                    <button identifier="EQ" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wNE-9n-tsI">
                                         <rect key="frame" x="288" y="11" width="83" height="32"/>
                                         <buttonCell key="cell" type="push" title="EQ" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="tj2-6o-RHR">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
                                         <connections>
-                                            <action selector="tabEq:" target="B8G-bD-9Yv" id="13f-CL-5g5"/>
+                                            <action selector="sideButtons:" target="B8G-bD-9Yv" id="qoY-mn-liG"/>
                                         </connections>
                                     </button>
                                 </subviews>

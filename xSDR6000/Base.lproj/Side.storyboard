@@ -9,10 +9,10 @@
         <capability name="stacking Non-gravity area distributions on NSStackView" minToolsVersion="7.0" minSystemVersion="10.11"/>
     </dependencies>
     <scenes>
-        <!--Equalizer-->
+        <!--Eq View Controller-->
         <scene sceneID="8kI-qh-C60">
             <objects>
-                <viewController identifier="Equalizer" storyboardIdentifier="Equalizer" id="yhz-wz-Qrr" userLabel="Equalizer" customClass="EqViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="EQ" id="yhz-wz-Qrr" customClass="EqViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" wantsLayer="YES" id="EPz-Xv-tol">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="170"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -338,10 +338,10 @@
             </objects>
             <point key="canvasLocation" x="38.5" y="895"/>
         </scene>
-        <!--Receiver-->
+        <!--Rx View Controller-->
         <scene sceneID="gCM-WQ-uiQ">
             <objects>
-                <viewController storyboardIdentifier="Rx" id="hIy-IV-XVI" userLabel="Receiver" customClass="RxViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="RX" id="hIy-IV-XVI" customClass="RxViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
                     <customView key="view" id="4qZ-4f-OBR" userLabel="Slice Flag">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="258"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -714,10 +714,37 @@
             </objects>
             <point key="canvasLocation" x="47.5" y="1328"/>
         </scene>
-        <!--PCW-->
+        <!--View Controller-->
+        <scene sceneID="c7q-1P-0zz">
+            <objects>
+                <viewController storyboardIdentifier="TX" id="jqe-kd-5d6" sceneMemberID="viewController">
+                    <view key="view" id="246-rc-7iy">
+                        <rect key="frame" x="0.0" y="0.0" width="376" height="192"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lhy-HQ-SoQ">
+                                <rect key="frame" x="173" y="87" width="30" height="17"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="TBD" id="XRQ-Al-t1b">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="lhy-HQ-SoQ" firstAttribute="centerY" secondItem="246-rc-7iy" secondAttribute="centerY" id="pf5-gh-Eqp"/>
+                            <constraint firstItem="lhy-HQ-SoQ" firstAttribute="centerX" secondItem="246-rc-7iy" secondAttribute="centerX" id="vp0-fL-1At"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <customObject id="YCa-fW-84b" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="614" y="517"/>
+        </scene>
+        <!--View Controller-->
         <scene sceneID="JSR-vZ-9PL">
             <objects>
-                <viewController storyboardIdentifier="PCW" id="CNy-BK-6hp" userLabel="PCW" customClass="PCWViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PCW" id="CNy-BK-6hp" customClass="PCWViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" wantsLayer="YES" id="lRw-Dq-Co8">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="271"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1077,10 +1104,10 @@
             </objects>
             <point key="canvasLocation" x="614.5" y="945.5"/>
         </scene>
-        <!--Phone-->
+        <!--Phone View Controller-->
         <scene sceneID="Aly-LI-5PS">
             <objects>
-                <viewController storyboardIdentifier="Phone" id="4Er-qS-ODr" userLabel="Phone" customClass="PhoneViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PHONE" id="4Er-qS-ODr" customClass="PhoneViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" wantsLayer="YES" id="V5K-Dt-M7N">
                         <rect key="frame" x="0.0" y="0.0" width="366" height="231"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1105,7 +1132,10 @@
                                         <constraints>
                                             <constraint firstAttribute="width" constant="250" id="MGR-Ij-krt"/>
                                         </constraints>
-                                        <sliderCell key="cell" state="on" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" numberOfTickMarks="11" sliderType="linear" id="cwf-qd-EiD"/>
+                                        <sliderCell key="cell" continuous="YES" state="on" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" numberOfTickMarks="11" sliderType="linear" id="cwf-qd-EiD"/>
+                                        <connections>
+                                            <binding destination="4Er-qS-ODr" name="value" keyPath="transmit.carrierLevel" id="aIh-8z-46O"/>
+                                        </connections>
                                     </slider>
                                 </subviews>
                                 <visibilityPriorities>
@@ -1129,13 +1159,19 @@
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
+                                        <connections>
+                                            <binding destination="4Er-qS-ODr" name="value" keyPath="transmit.voxEnabled" id="DAl-Iw-jlO"/>
+                                        </connections>
                                     </button>
                                     <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kMb-sH-99b">
                                         <rect key="frame" x="102" y="2" width="254" height="24"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="250" id="auD-2s-9tO"/>
                                         </constraints>
-                                        <sliderCell key="cell" state="on" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" numberOfTickMarks="11" sliderType="linear" id="kIX-Sv-Re3"/>
+                                        <sliderCell key="cell" continuous="YES" state="on" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" numberOfTickMarks="11" sliderType="linear" id="kIX-Sv-Re3"/>
+                                        <connections>
+                                            <binding destination="4Er-qS-ODr" name="value" keyPath="transmit.voxLevel" id="pzN-gI-ttX"/>
+                                        </connections>
                                     </slider>
                                 </subviews>
                                 <constraints>
@@ -1171,7 +1207,10 @@
                                         <constraints>
                                             <constraint firstAttribute="width" constant="250" id="2bd-6G-rG0"/>
                                         </constraints>
-                                        <sliderCell key="cell" state="on" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" numberOfTickMarks="11" sliderType="linear" id="X9V-QM-lH1"/>
+                                        <sliderCell key="cell" continuous="YES" state="on" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" numberOfTickMarks="11" sliderType="linear" id="X9V-QM-lH1"/>
+                                        <connections>
+                                            <binding destination="4Er-qS-ODr" name="value" keyPath="transmit.voxDelay" id="Gda-3H-Zft"/>
+                                        </connections>
                                     </slider>
                                 </subviews>
                                 <constraints>
@@ -1199,13 +1238,19 @@
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
+                                        <connections>
+                                            <binding destination="4Er-qS-ODr" name="value" keyPath="transmit.companderEnabled" id="du2-Wm-H5V"/>
+                                        </connections>
                                     </button>
                                     <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="e4x-Sf-lLa">
                                         <rect key="frame" x="102" y="2" width="254" height="24"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="250" id="vR6-Bq-gj7"/>
                                         </constraints>
-                                        <sliderCell key="cell" state="on" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" numberOfTickMarks="11" sliderType="linear" id="ZvG-9K-7oX"/>
+                                        <sliderCell key="cell" continuous="YES" state="on" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" numberOfTickMarks="11" sliderType="linear" id="ZvG-9K-7oX"/>
+                                        <connections>
+                                            <binding destination="4Er-qS-ODr" name="value" keyPath="transmit.companderLevel" id="kDB-Dl-3ly"/>
+                                        </connections>
                                     </slider>
                                 </subviews>
                                 <constraints>
@@ -1273,10 +1318,16 @@
                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
+                                        <connections>
+                                            <binding destination="4Er-qS-ODr" name="value" keyPath="transmit.txFilterLow" id="d7O-yh-P47"/>
+                                        </connections>
                                     </textField>
                                     <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="RJR-QA-4Fr">
                                         <rect key="frame" x="93" y="-2" width="19" height="27"/>
-                                        <stepperCell key="cell" continuous="YES" alignment="left" maxValue="100" id="bZR-kY-f3Z"/>
+                                        <stepperCell key="cell" continuous="YES" alignment="left" increment="50" maxValue="10000" id="bZR-kY-f3Z"/>
+                                        <connections>
+                                            <binding destination="4Er-qS-ODr" name="value" keyPath="transmit.txFilterLow" id="gZU-ab-3OQ"/>
+                                        </connections>
                                     </stepper>
                                     <textField verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ydo-0C-AiX">
                                         <rect key="frame" x="117" y="1" width="60" height="22"/>
@@ -1288,10 +1339,16 @@
                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
+                                        <connections>
+                                            <binding destination="4Er-qS-ODr" name="value" keyPath="transmit.txFilterHigh" id="5Pa-t8-O7U"/>
+                                        </connections>
                                     </textField>
-                                    <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="57r-Nf-jWZ">
+                                    <stepper identifier="Phone" horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="57r-Nf-jWZ">
                                         <rect key="frame" x="182" y="-2" width="19" height="27"/>
-                                        <stepperCell key="cell" continuous="YES" alignment="left" maxValue="100" id="JSp-ie-HAM"/>
+                                        <stepperCell key="cell" continuous="YES" alignment="left" increment="50" maxValue="10000" id="JSp-ie-HAM"/>
+                                        <connections>
+                                            <binding destination="4Er-qS-ODr" name="value" keyPath="transmit.txFilterHigh" id="Wmf-Ap-B6N"/>
+                                        </connections>
                                     </stepper>
                                 </subviews>
                                 <constraints>
@@ -1333,6 +1390,7 @@
                     </view>
                 </viewController>
                 <customObject id="G8a-pZ-uWz" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+                <userDefaultsController representsSharedInstance="YES" id="Rz9-8Z-EwQ"/>
             </objects>
             <point key="canvasLocation" x="614" y="1290"/>
         </scene>

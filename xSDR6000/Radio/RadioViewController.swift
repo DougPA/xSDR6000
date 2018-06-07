@@ -274,58 +274,13 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   
   // ----- SIDE BUTTONS -----
   
-  /// Respond to the Eq button (Side view)
+  /// Respond to one of the Side buttons
   ///
   /// - Parameter sender: the Button
   ///
-  @IBAction func tabEq(_ sender: NSButton) {
+  @IBAction func sideButtons(_ sender: NSButton) {
     
-    sideView( kEqualizerIdentifier, show: (sender.state == NSControl.StateValue.on) )
-  }
-  /// Respond to the Pcw button (Side view)
-  ///
-  /// - Parameter sender: the Button
-  ///
-  @IBAction func tabPcw(_ sender: NSButton) {
-    
-    sideView( kPcwIdentifier, show: (sender.state == NSControl.StateValue.on) )
-  }
-  /// Respond to the Phne button (Side view)
-  ///
-  /// - Parameter sender: the Button
-  ///
-  @IBAction func tabPhne(_ sender: NSButton) {
-    
-    sideView( kPhoneIdentifier, show: (sender.state == NSControl.StateValue.on) )
-  }
-  /// Respond to the Rx button (Side view)
-  ///
-  /// - Parameter sender: the Button
-  ///
-  @IBAction func tabRx(_ sender: NSButton) {
-    
-    sideView( kRxIdentifier, show: (sender.state == NSControl.StateValue.on) )
-  }
-  /// Respond to the Tx button (Side view)
-  ///
-  /// - Parameter sender: the Button
-  ///
-  @IBAction func tabTx(_ sender: NSButton) {
-    
-    if sender.state == NSControl.StateValue.on {
-      
-      // FIXME: Code needed
-      
-      // show the tab
-      print("txTab - SHOW")
-      
-    } else {
-      
-      // FIXME: Code needed
-      
-      // hide the tab
-      print("txTab - HIDE")
-    }
+    sideView( sender.identifier!.rawValue, show: (sender.state == NSControl.StateValue.on) )
   }
   
   // ----------------------------------------------------------------------------
@@ -395,7 +350,9 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
       let sb = NSStoryboard(name: NSStoryboard.Name(rawValue: kSideStoryboard), bundle: nil)
       
       // create a view controller
-      let vc = sb.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier(rawValue: identifier) ) as! NSViewController
+      let sbIdentifier = NSStoryboard.SceneIdentifier( rawValue: identifier)
+      let vc = sb.instantiateController(withIdentifier: sbIdentifier ) as! NSViewController
+      vc.identifier = NSUserInterfaceItemIdentifier(rawValue: identifier)
       
       // give it a reference to its Radio object
       vc.representedObject = _api.radio
@@ -409,8 +366,8 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     } else {
       
       // HIDE, remove it from the Side View
-      for (i, vc) in _sideViewController!.childViewControllers.enumerated() where vc.identifier == NSUserInterfaceItemIdentifier(rawValue: identifier) {
-        _sideViewController!.removeChildViewController(at: i)
+      for (i, vc) in _sideViewController!.childViewControllers.enumerated() where vc.identifier!.rawValue == identifier {
+          _sideViewController!.removeChildViewController(at: i)
       }
     }
   }
