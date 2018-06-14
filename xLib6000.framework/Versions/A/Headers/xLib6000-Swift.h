@@ -513,12 +513,17 @@ SWIFT_CLASS("_TtC8xLib60007Profile")
 
 
 @interface Profile (SWIFT_EXTENSION(xLib6000))
-@property (nonatomic, copy) NSString * _Nonnull currentGlobalProfile;
-@property (nonatomic, copy) NSString * _Nonnull currentMicProfile;
-@property (nonatomic, copy) NSString * _Nonnull currentTxProfile;
+@property (nonatomic, copy) NSString * _Nonnull globalProfileSelection;
+@property (nonatomic, copy) NSString * _Nonnull micProfileSelection;
+@property (nonatomic, copy) NSString * _Nonnull txProfileSelection;
 @end
 
 
+@interface Profile (SWIFT_EXTENSION(xLib6000))
+@property (nonatomic, copy) NSArray<NSString *> * _Nonnull globalProfileList;
+@property (nonatomic, copy) NSArray<NSString *> * _Nonnull micProfileList;
+@property (nonatomic, copy) NSArray<NSString *> * _Nonnull txProfileList;
+@end
 
 @class Transmit;
 @class Wan;
@@ -535,6 +540,10 @@ SWIFT_CLASS("_TtC8xLib60005Radio")
 @property (nonatomic, readonly, strong) Transmit * _Null_unspecified transmit;
 @property (nonatomic, readonly, strong) Wan * _Null_unspecified wan;
 @property (nonatomic, readonly, strong) Waveform * _Null_unspecified waveform;
+@property (nonatomic, readonly, copy) NSArray<NSString *> * _Nonnull antennaList;
+@property (nonatomic, readonly, copy) NSArray<NSString *> * _Nonnull micList;
+@property (nonatomic, readonly, copy) NSArray<NSString *> * _Nonnull rfGainList;
+@property (nonatomic, readonly, copy) NSArray<NSString *> * _Nonnull sliceList;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_DEPRECATED_MSG("-init is unavailable");
 @end

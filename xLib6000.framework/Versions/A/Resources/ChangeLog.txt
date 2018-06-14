@@ -1,9 +1,29 @@
 xLib6000 Change Log
 
+v1.1.9
+
+Slice.swift - uppercased mode in parseProperties(_:)
+Slice.swift - changed Mode enum to be all uppercase
+various - changed all uses of the Mode enum to be uppercase
+
+v1.1.8
+
+AudioStreamCommands.swift - made sending of gain command conditional on !Api.sharedInstance.testerModeEnabled
+Slice.swift - removed $0.active from class func find(with:)
+AudioStream.swift - added class func find(with:)
+Slice.swift - added code in parseProperties(_:) to set AudioStream.slice to nil when Slice.daxChannel goes to zero
+Profile.swift - corrected parseProperties(_:) switch statement to use the "_" version of the properties
+
 v1.1.7
 
-
-
+EqualizerCommands.swift - corrected level commands ("<band>Hz" vs "<band>hz")
+Api.swift - made statics kId, kDomainId & kBundleIdentifier public
+Api.swift - added "@objc dynamic" to public var radio
+TransmitCommands.swift - corrected micAccEnabled, micBiasEnabled, micBoostEnabled commands
+Radio.swift - made antList, rfGainList, micList, sliceList "@objc dynamic"
+Radio.swift - refactored Profiles throughout
+Profile.swift, ProfileCommands.swift - refactored
+Notifications.swift - refactored profile notifications
 
 v1.1.6
 
