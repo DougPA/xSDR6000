@@ -317,7 +317,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     if defaultRadio.ipAddress != "" && defaultRadio.port != 0 {
       
       // allow time to hear the UDP broadcasts
-      usleep(1500)
+      usleep(1_500_000)
       
       // has the default Radio been found?
       for (_, foundRadio) in _api.availableRadios.enumerated() where foundRadio == defaultRadio {
