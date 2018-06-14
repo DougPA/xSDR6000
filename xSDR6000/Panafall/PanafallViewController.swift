@@ -98,9 +98,16 @@ final class PanafallViewController          : NSSplitViewController {
           // step value when the Shift key is down
           step /= 10
         }
-        // Increase or Decrease?
-        let incr = theEvent.deltaY < 0 ? step : -step
         
+        var incr = 0
+        // is scrolling "natural" or "classic" (as set in macOS System Preferences)
+        if theEvent.isDirectionInvertedFromDevice {
+          // natural
+          incr = theEvent.deltaY < 0 ? step : -step
+        } else {
+          // classic
+          incr = theEvent.deltaY < 0 ? -step : step
+        }
         // update the frequency
         adjustSliceFrequency(slice, incr: incr)
       }
