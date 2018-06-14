@@ -76,10 +76,10 @@ final public class ModeViewController       : NSViewController {
   public override func viewDidLoad() {
     super.viewDidLoad()
     
-    _quickMode0.title = Defaults[.quickMode0]
-    _quickMode1.title = Defaults[.quickMode1]
-    _quickMode2.title = Defaults[.quickMode2]
-    _quickMode3.title = Defaults[.quickMode3]
+    _quickMode0.title = Defaults[.quickMode0].uppercased()
+    _quickMode1.title = Defaults[.quickMode1].uppercased()
+    _quickMode2.title = Defaults[.quickMode2].uppercased()
+    _quickMode3.title = Defaults[.quickMode3].uppercased()
 
     // begin observations
     createObservations(&_observations, object: representedObject as! xLib6000.Slice )
@@ -96,13 +96,13 @@ final public class ModeViewController       : NSViewController {
     
     switch sender.tag {
     case 0:
-      mode = Defaults[.quickMode0]
+      mode = Defaults[.quickMode0].uppercased()
     case 1:
-      mode = Defaults[.quickMode1]
+      mode = Defaults[.quickMode1].uppercased()
     case 2:
-      mode = Defaults[.quickMode2]
+      mode = Defaults[.quickMode2].uppercased()
     case 3:
-      mode = Defaults[.quickMode3]
+      mode = Defaults[.quickMode3].uppercased()
     default:
       // unknown tag
       break
@@ -124,19 +124,19 @@ final public class ModeViewController       : NSViewController {
     
     // position the filter based on mode
     switch Slice.Mode(rawValue: mode)! {
-    case .rtty, .dfm, .am, .sam:
+    case .RTTY, .DFM, .AM, .SAM:
       slice.filterLow = -filterValue/2
       slice.filterHigh = +filterValue/2
-    case .cw, .usb, .digu:
+    case .CW, .USB, .DIGU:
       slice.filterLow = +100
       slice.filterHigh = +filterValue + 100
-    case .lsb, .digl:
+    case .LSB, .DIGL:
       slice.filterLow = -filterValue - 100
       slice.filterHigh = -100
-    case .fm:
+    case .FM:
       slice.filterLow = -8_000
       slice.filterHigh = +8_000
-    case .nfm:
+    case .NFM:
       slice.filterLow = -5_500
       slice.filterHigh = +5_500
 
@@ -185,7 +185,7 @@ final public class ModeViewController       : NSViewController {
     DispatchQueue.main.async { [unowned self] in
       let slice = object as! xLib6000.Slice
       
-      let filterMode = ModeViewController.filterChoices[slice.mode] ?? ModeViewController.filterChoices["AM"]!
+      let filterMode = ModeViewController.filterChoices[slice.mode] ?? ModeViewController.filterChoices["am"]!
       self._filter0.title = filterMode[0]
       self._filter1.title = filterMode[1]
       self._filter2.title = filterMode[2]

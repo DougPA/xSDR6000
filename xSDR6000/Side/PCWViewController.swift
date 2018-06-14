@@ -7,13 +7,17 @@
 //
 
 import Cocoa
+import xLib6000
 
-class PCWViewController                     : NSViewController {
-  
+class PCWViewController                         : NSViewController {
+
+  @objc dynamic public var radio                : Radio {
+    return representedObject as! Radio }
+
   override func viewWillAppear() {
     super.viewWillAppear()
     
-    view.layer?.backgroundColor = NSColor.gray.cgColor
+    view.layer?.backgroundColor = NSColor.lightGray.cgColor
   }
   
 }

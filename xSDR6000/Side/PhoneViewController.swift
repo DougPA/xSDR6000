@@ -15,19 +15,9 @@ class PhoneViewController                   : NSViewController {
     return (representedObject as! Radio).transmit
   }
   
-//  private var _radio                        : Radio!                        // radio class
-  
   // ----------------------------------------------------------------------------
   // MARK: - Overriden methods
-  
-  override func viewDidLoad() {
-    super.viewDidLoad()
     
-//    // get references to the Radio & the Equalizers
-//    _radio = representedObject as! Radio
-    
-  }
-  
   override func viewWillAppear() {
     super.viewWillAppear()
     
