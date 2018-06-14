@@ -257,7 +257,7 @@ final public class FlagViewController       : NSViewController {
   @objc private func sliceMeterHasBeenAdded(_ note: Notification) {
 
     // does the Notification contain a Meter object for this Slice?
-    if let meter = note.object as? Meter, meter.number == slice!.id {
+    if let meter = note.object as? Meter, meter.number == slice?.id {
       sMeter()
     }
   }
