@@ -99,11 +99,11 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
     // get the list of possible Db level spacings
     _dbLegendSpacings = Defaults[.dbLegendSpacings]
     
-//    // Click, LEFT in panadapter
-//    _clickLeft = NSClickGestureRecognizer(target: self, action: #selector(clickLeft(_:)))
-//    _clickLeft.buttonMask = kLeftButton
-//    _clickLeft.delegate = self
-//    _dbLegendView.addGestureRecognizer(_clickLeft)
+    // Click, LEFT in panadapter
+    _clickLeft = NSClickGestureRecognizer(target: self, action: #selector(clickLeft(_:)))
+    _clickLeft.buttonMask = kLeftButton
+    _clickLeft.delegate = self
+    _panadapterView.addGestureRecognizer(_clickLeft)
 
     // Click, RIGHT in panadapter
     _clickRight = NSClickGestureRecognizer(target: self, action: #selector(clickRight(_:)))
@@ -655,6 +655,7 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
     let flagVc = sb.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier(rawValue: "Flag")) as! FlagViewController
 
     // set its Slice
+    flagVc.panadapter = panadapter
     flagVc.slice = slice
     
     // create the Slice observations

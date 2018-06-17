@@ -21,13 +21,19 @@ final public class FlagViewController       : NSViewController {
   // MARK: - Internal properties
   
   @objc dynamic weak var slice              : xLib6000.Slice?
+  @objc dynamic weak var panadapter         : Panadapter?
+
+  @objc dynamic var frequency               : Int {
+    get { return slice!.frequency}
+    set { repositionCenter(center: panadapter!.center, frequency: slice!.frequency, newFrequency: newValue) ; slice!.frequency = newValue }
+  }
 
   var onLeft                                = true
   var sliceObservations                     = [NSKeyValueObservation]()
   
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
-    
+  
   @IBOutlet private weak var _alpha         : NSTextField!
   @IBOutlet private weak var _sMeter        : NSLevelIndicator!
   @IBOutlet private weak var _filter        : NSTextField!
@@ -43,10 +49,10 @@ final public class FlagViewController       : NSViewController {
   
   private var _tabViewController            : NSTabViewController?
   private var _previousTabIndex             : Int?
-
+  
   private var _storyBoard                   : NSStoryboard?
   private var _viewController               : NSViewController?
-
+  
   private var _position                     = NSPoint(x: 0.0, y: 0.0)
   
   private let kFlagOffset                   : CGFloat = 15.0/2.0
@@ -66,13 +72,13 @@ final public class FlagViewController       : NSViewController {
     
     // close the display area
     _containerViewHeight.constant = 0 
-
+    
     // set the background color of the Flag
     view.layer?.backgroundColor = NSColor.lightGray.cgColor
     
     // set the Alpha ID
     _alpha.stringValue = FlagViewController.kSliceLetters[Int(slice!.id)!]
-
+    
     // begin slice observations
     createObservations(&_observations, object: slice!)
     
@@ -85,6 +91,9 @@ final public class FlagViewController       : NSViewController {
   
   // ----------------------------------------------------------------------------
   // MARK: - Action methods
+  @IBAction func frequencyText(_ sender: NSTextField) {
+    sender.selectText(sender)
+  }
   
   /// One of the "tab" view buttons has been clicked
   ///
@@ -105,7 +114,7 @@ final public class FlagViewController       : NSViewController {
     // display / hide the selected view
     selectView(sender.identifier!.rawValue)
   }
-
+  
   // ----------------------------------------------------------------------------
   // MARK: - Internal methods
   
@@ -155,7 +164,7 @@ final public class FlagViewController       : NSViewController {
       _viewController = _storyBoard!.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier(rawValue: id)) as? NSViewController
       
       _viewController!.representedObject = slice! as Any
-
+      
       // open the display area with the appropriate height
       _containerViewHeight.constant = _viewController!.view.frame.size.height
       
@@ -188,7 +197,7 @@ final public class FlagViewController       : NSViewController {
       // get the selected tab
       _viewController = _storyBoard!.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier(rawValue: id)) as? NSViewController
       _viewController!.representedObject = slice! as Any
-
+      
       // open the display area with the appropriate height
       _containerViewHeight.constant = _viewController!.view.frame.size.height
       
@@ -201,40 +210,46 @@ final public class FlagViewController       : NSViewController {
     view.frame.origin.y = view.frame.origin.y + (flagAdjustMinus ? -tabHeight : tabHeight)
   }
 
+  
+  func repositionCenter(center: Int, frequency: Int, newFrequency: Int) {
+  
+    panadapter!.center = newFrequency - (frequency - center)
+  }
+  
   // ----------------------------------------------------------------------------
-  // MARK: - NEW Observation methods
+  // MARK: - Observation methods
   
   private var _observations    = [NSKeyValueObservation]()
   
   /// Add observers for Slice properties
   ///
   private func createObservations(_ observations: inout [NSKeyValueObservation], object: xLib6000.Slice ) {
-
+    
     observations = [
-//      object.observe(\.txEnabled, options: [.new], changeHandler: observer),
-//      object.observe(\.nbEnabled, options: [.initial, .new], changeHandler: observer),
-//      object.observe(\.nrEnabled, options: [.new], changeHandler: observer),
-//      object.observe(\.anfEnabled, options: [.new], changeHandler: observer),
-//      object.observe(\.qskEnabled, options: [.new], changeHandler: observer),
+      //      object.observe(\.txEnabled, options: [.new], changeHandler: observer),
+      //      object.observe(\.nbEnabled, options: [.initial, .new], changeHandler: observer),
+      //      object.observe(\.nrEnabled, options: [.new], changeHandler: observer),
+      //      object.observe(\.anfEnabled, options: [.new], changeHandler: observer),
+      //      object.observe(\.qskEnabled, options: [.new], changeHandler: observer),
       object.observe(\.filterHigh, options: [.new], changeHandler: observer),
       object.observe(\.filterLow, options: [.new], changeHandler: observer),
-//      object.observe(\.locked, options: [.new], changeHandler: observer)
+      //      object.observe(\.locked, options: [.new], changeHandler: observer)
     ]
   }
   private func observer(_ object: Any, _ change: Any) {
-
+    
     let width = Float(slice!.filterHigh - slice!.filterLow)/1000.0
-
+    
     DispatchQueue.main.async { [unowned self] in
-//      self._txButton.state = self.slice!.txEnabled ? NSControl.StateValue.on : NSControl.StateValue.off
-//      self._nbButton.state = self.slice!.nbEnabled ? NSControl.StateValue.on : NSControl.StateValue.off
-//      self._nrButton.state = self.slice!.nrEnabled ? NSControl.StateValue.on : NSControl.StateValue.off
-//      self._anfButton.state = self.slice!.anfEnabled ? NSControl.StateValue.on : NSControl.StateValue.off
-//      self._qskButton.state = self.slice!.qskEnabled ? NSControl.StateValue.on : NSControl.StateValue.off
-
+      //      self._txButton.state = self.slice!.txEnabled ? NSControl.StateValue.on : NSControl.StateValue.off
+      //      self._nbButton.state = self.slice!.nbEnabled ? NSControl.StateValue.on : NSControl.StateValue.off
+      //      self._nrButton.state = self.slice!.nrEnabled ? NSControl.StateValue.on : NSControl.StateValue.off
+      //      self._anfButton.state = self.slice!.anfEnabled ? NSControl.StateValue.on : NSControl.StateValue.off
+      //      self._qskButton.state = self.slice!.qskEnabled ? NSControl.StateValue.on : NSControl.StateValue.off
+      
       self._filter.stringValue = String(format: "%3.1fk", width)
-//
-//      self._lock.state = (self.slice!.locked ? NSControl.StateValue.on : NSControl.StateValue.off)
+      //
+      //      self._lock.state = (self.slice!.locked ? NSControl.StateValue.on : NSControl.StateValue.off)
     }
   }
   
@@ -245,7 +260,7 @@ final public class FlagViewController       : NSViewController {
   ///     (as of 10.11, subscriptions are automatically removed on deinit when using the Selector-based approach)
   ///
   private func addNotifications() {
-
+    
     NC.makeObserver(self, with: #selector(sliceMeterHasBeenAdded(_:)), of: .sliceMeterHasBeenAdded, object: nil)
   }
   private var _levelObservation    : NSKeyValueObservation?
@@ -255,7 +270,7 @@ final public class FlagViewController       : NSViewController {
   /// - Parameter note:       a Notification instance
   ///
   @objc private func sliceMeterHasBeenAdded(_ note: Notification) {
-
+    
     // does the Notification contain a Meter object for this Slice?
     if let meter = note.object as? Meter, meter.number == slice?.id {
       sMeter()
@@ -282,3 +297,73 @@ final public class FlagViewController       : NSViewController {
     }
   }
 }
+
+// --------------------------------------------------------------------------------
+// MARK: - Frequency Formatter class implementation
+// --------------------------------------------------------------------------------
+
+class FrequencyFormatter: NumberFormatter {
+  
+  override init() {
+    super.init()
+    groupingSeparator = "."
+  }
+  
+  required init?(coder aDecoder: NSCoder) {
+    super.init(coder: aDecoder)
+  }
+  
+  override func getObjectValue(_ obj: AutoreleasingUnsafeMutablePointer<AnyObject?>?, for string: String, range rangep: UnsafeMutablePointer<NSRange>?) throws {
+    var value: Int? = nil
+    
+    // is it empty?
+    if string.lengthOfBytes(using: .utf8) > 0 {
+      
+      // NO, remove the periods
+      let newString = string.replacingOccurrences(of: ".", with: "")
+      
+      // convert to an Int
+      value = Int(newString)
+    }
+    // set the field
+    if value != nil { obj?.pointee = NSNumber(value: value!) }
+  }
+  
+  override func string(for obj: Any?) -> String? {
+    
+    // is it a valid Int?
+    if let n = obj as? Int {
+      var string = ""
+      
+      // YES, how big?
+      if n < 100_000 {
+        // 5 digits or less
+        string = String(format: "%04d", n) + "000"
+      } else {
+        // more that 5 digits
+        string = String(format: "%d", n)
+      }
+      // find the end
+      let end = string.endIndex
+      
+      // add back in the periods
+      string.insert(".", at: string.index(end, offsetBy: -3))
+      if string.lengthOfBytes(using: .utf8) > 7 { string.insert(".", at: string.index(end, offsetBy: -6)) }
+      
+      return string
+    }
+    return nil
+  }
+}
+
+class FrequencyTextField: NSTextField {
+  
+  override func becomeFirstResponder() -> Bool {
+    let result = super.becomeFirstResponder()
+    if result {
+      perform(#selector(selectText), with: self, afterDelay: 0)
+    }
+    return result
+  }
+}
+

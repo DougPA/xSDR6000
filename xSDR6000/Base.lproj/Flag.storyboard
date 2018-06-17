@@ -185,15 +185,17 @@
                                     <binding destination="Lmw-yC-7qh" name="value" keyPath="slice.locked" id="59D-LC-pvD"/>
                                 </connections>
                             </button>
-                            <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Upu-MJ-yvx" userLabel="Frequency">
+                            <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Upu-MJ-yvx" userLabel="Frequency" customClass="FrequencyTextField" customModule="xSDR6000" customModuleProvider="target">
                                 <rect key="frame" x="54" y="191" width="188" height="31"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" alignment="right" placeholderString="7.235.000" id="MC8-rn-aip">
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" focusRingType="none" alignment="right" placeholderString="7.235.000" id="MC8-rn-aip">
+                                    <numberFormatter key="formatter" formatterBehavior="default10_4" usesGroupingSeparator="NO" groupingSize="0" minimumIntegerDigits="0" maximumIntegerDigits="42" id="VYf-73-lHZ" customClass="FrequencyFormatter" customModule="xSDR6000" customModuleProvider="target"/>
                                     <font key="font" metaFont="system" size="26"/>
                                     <color key="textColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                                 <connections>
-                                    <binding destination="Lmw-yC-7qh" name="value" keyPath="slice.frequency" id="G5J-cB-oie"/>
+                                    <action selector="frequencyText:" target="Lmw-yC-7qh" id="Pf3-UW-ZKn"/>
+                                    <binding destination="Lmw-yC-7qh" name="value" keyPath="frequency" id="RPZ-I9-rac"/>
                                 </connections>
                             </textField>
                             <levelIndicator verticalHuggingPriority="750" drawsTieredCapacityLevels="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zQl-hd-Hm1" userLabel="Meter">
