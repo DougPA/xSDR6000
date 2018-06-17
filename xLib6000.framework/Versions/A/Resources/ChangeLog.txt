@@ -1,5 +1,14 @@
 xLib6000 Change Log
 
+v1.1.10
+
+Radio.swift - reorganized parseProperties(_:) to mimic FlexLib
+Radio.swift - added Oscillator properties "ext_present", "gpsdo_present", "tcxo_present"
+RadioCommands.swift - changes needed due to parseProperties(_:) reorg
+Radio.swift - in parseVersionReply(_:) added property "pic-decpu"
+Radio.swift - in parseProperties(_:) added property "front_speaker_mute"
+RadioCommands.swift - added property "front_speaker_mute" (commented-out for now)
+
 v1.1.9
 
 Slice.swift - uppercased mode in parseProperties(_:)

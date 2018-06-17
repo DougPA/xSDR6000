@@ -591,8 +591,10 @@ SWIFT_CLASS("_TtC8xLib60005Radio")
 @property (nonatomic, readonly, copy) NSString * _Nonnull clientIp;
 @property (nonatomic, readonly) NSInteger daxIqAvailable;
 @property (nonatomic, readonly) NSInteger daxIqCapacity;
+@property (nonatomic, readonly) BOOL extPresent;
 @property (nonatomic, readonly, copy) NSString * _Nonnull fpgaMbVersion;
 @property (nonatomic, readonly, copy) NSString * _Nonnull gateway;
+@property (nonatomic, readonly) BOOL gpsdoPresent;
 @property (nonatomic, readonly, copy) NSString * _Nonnull ipAddress;
 @property (nonatomic, readonly, copy) NSString * _Nonnull location;
 @property (nonatomic, readonly, copy) NSString * _Nonnull macAddress;
@@ -600,6 +602,7 @@ SWIFT_CLASS("_TtC8xLib60005Radio")
 @property (nonatomic, readonly) NSInteger numberOfScus;
 @property (nonatomic, readonly) NSInteger numberOfSlices;
 @property (nonatomic, readonly) NSInteger numberOfTx;
+@property (nonatomic, readonly, copy) NSString * _Nonnull picDecpuVersion;
 @property (nonatomic, readonly, copy) NSString * _Nonnull psocMbPa100Version;
 @property (nonatomic, readonly, copy) NSString * _Nonnull psocMbtrxVersion;
 @property (nonatomic, readonly, copy) NSString * _Nonnull radioModel;
@@ -607,6 +610,7 @@ SWIFT_CLASS("_TtC8xLib60005Radio")
 @property (nonatomic, readonly, copy) NSString * _Nonnull region;
 @property (nonatomic, readonly, copy) NSString * _Nonnull smartSdrMB;
 @property (nonatomic, readonly, copy) NSString * _Nonnull softwareVersion;
+@property (nonatomic, readonly) BOOL tcxoPresent;
 @end
 
 @class GCDAsyncUdpSocket;
