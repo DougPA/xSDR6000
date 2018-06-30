@@ -13,20 +13,15 @@ import xLib6000
 // MARK: - Flag View Controller class implementation
 // --------------------------------------------------------------------------------
 
-final public class FlagViewController       : NSViewController {
+final public class FlagViewController       : NSViewController, NSTextFieldDelegate {
   
   static let kSliceLetters : [String]       = ["A", "B", "C", "D", "E", "F", "G", "H"]
-  
+
   // ----------------------------------------------------------------------------
   // MARK: - Internal properties
   
   @objc dynamic weak var slice              : xLib6000.Slice?
   @objc dynamic weak var panadapter         : Panadapter?
-
-  @objc dynamic var frequency               : Int {
-    get { return slice!.frequency}
-    set { repositionCenter(center: panadapter!.center, frequency: slice!.frequency, newFrequency: newValue) ; slice!.frequency = newValue }
-  }
 
   var onLeft                                = true
   var sliceObservations                     = [NSKeyValueObservation]()
@@ -34,10 +29,12 @@ final public class FlagViewController       : NSViewController {
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
   
+  @IBOutlet private weak var _frequencyField: NSTextField!
   @IBOutlet private weak var _alpha         : NSTextField!
   @IBOutlet private weak var _sMeter        : NSLevelIndicator!
   @IBOutlet private weak var _filter        : NSTextField!
   
+  @IBOutlet weak var _lockButton            : NSButton!
   @IBOutlet weak var _audButton             : NSButton!
   @IBOutlet weak var _dspButton             : NSButton!
   @IBOutlet weak var _modeButton            : NSButton!
@@ -54,7 +51,11 @@ final public class FlagViewController       : NSViewController {
   private var _viewController               : NSViewController?
   
   private var _position                     = NSPoint(x: 0.0, y: 0.0)
+  private var _doubleClick                  : NSClickGestureRecognizer!
+  private var _previousFrequency            = 0
+  private var _beginEditing                 = false
   
+  private let kLeftButton                   = 0x01                          // masks for Gesture Recognizers
   private let kFlagOffset                   : CGFloat = 15.0/2.0
   private let kTabViewOpen                  : CGFloat = 93.0
   private let kTabViewClosed                : CGFloat = 0.0
@@ -87,12 +88,52 @@ final public class FlagViewController       : NSViewController {
     
     // find the S-Meter feed (if any)
     sMeter()
+    
+    // setup Left Double Click recognizer
+    _doubleClick = NSClickGestureRecognizer(target: self, action: #selector(leftDoubleClick(_:)))
+    _doubleClick.buttonMask = kLeftButton
+    _doubleClick.numberOfClicksRequired = 2
+    _frequencyField.addGestureRecognizer(_doubleClick)
+    
+    _frequencyField.delegate = self
   }
   
+  public override func controlTextDidBeginEditing(_ note: Notification) {
+    
+    if let field = note.object as? NSTextField, field == _frequencyField {
+      
+      _previousFrequency = slice!.frequency
+    }
+    _beginEditing = true
+  }
+  
+  public override func controlTextDidEndEditing(_ note: Notification) {
+    
+    if let field = note.object as? NSTextField, field == _frequencyField, _beginEditing {
+
+      repositionPanadapter(center: panadapter!.center, frequency: _previousFrequency, newFrequency: slice!.frequency)
+      _beginEditing = false
+    }
+    
+//    let selectedRange = _frequencyField.currentEditor()?.selectedRange
+//    _frequencyField.currentEditor()?.selectedRange = NSMakeRange(selectedRange?.location ?? 0, 0)
+  }
+  /// Force the Frequency to be redrawn
+  ///
+  func redraw() {
+    
+    // interact with the UI
+    DispatchQueue.main.async { [unowned self] in
+      // force a redraw
+      self._frequencyField.needsDisplay = true
+    }
+  }
+
   // ----------------------------------------------------------------------------
   // MARK: - Action methods
   @IBAction func frequencyText(_ sender: NSTextField) {
-    sender.selectText(sender)
+
+//    Swift.print("Action")
   }
   
   /// One of the "tab" view buttons has been clicked
@@ -143,11 +184,22 @@ final public class FlagViewController       : NSViewController {
     
     // update the flag's position
     view.setFrameOrigin(_position)
+    
+    redraw()
   }
   
   // ----------------------------------------------------------------------------
   // MARK: - Private methods
   
+  /// Respond to Left Double Click gesture
+  ///
+  /// - Parameter gr: the GestureRecognizer
+  ///
+  @objc private func leftDoubleClick(_ gr: NSClickGestureRecognizer) {
+
+    _frequencyField.selectText(self)
+  }
+    
   /// Select a view to display
   ///
   /// - Parameter id:             the ID of the selected view
@@ -211,8 +263,17 @@ final public class FlagViewController       : NSViewController {
   }
 
   
-  func repositionCenter(center: Int, frequency: Int, newFrequency: Int) {
+  /// Change a Slice frequency while maintaining its position in the Panadapter display
+  ///
+  /// - Parameters:
+  ///   - center:                   the current Panadapter center frequency
+  ///   - frequency:                the current Slice frequency
+  ///   - newFrequency:             the new SLice frequency
+  ///
+  func repositionPanadapter(center: Int, frequency: Int, newFrequency: Int) {
   
+//    Swift.print("previousCenter = \(center), newCenter = \(newFrequency - (frequency - center))")
+    
     panadapter!.center = newFrequency - (frequency - center)
   }
   
@@ -226,14 +287,17 @@ final public class FlagViewController       : NSViewController {
   private func createObservations(_ observations: inout [NSKeyValueObservation], object: xLib6000.Slice ) {
     
     observations = [
+      object.observe(\.filterHigh, options: [.initial, .new], changeHandler: observer),
+      object.observe(\.filterLow, options: [.initial, .new], changeHandler: observer),
+//      object.observe(\.locked, options: [.initial, .new], changeHandler: observer),
+//      object.observe(\.frequency, options: [.initial, .new], changeHandler: observer)
+
       //      object.observe(\.txEnabled, options: [.new], changeHandler: observer),
       //      object.observe(\.nbEnabled, options: [.initial, .new], changeHandler: observer),
       //      object.observe(\.nrEnabled, options: [.new], changeHandler: observer),
       //      object.observe(\.anfEnabled, options: [.new], changeHandler: observer),
       //      object.observe(\.qskEnabled, options: [.new], changeHandler: observer),
-      object.observe(\.filterHigh, options: [.new], changeHandler: observer),
-      object.observe(\.filterLow, options: [.new], changeHandler: observer),
-      //      object.observe(\.locked, options: [.new], changeHandler: observer)
+      //      object.observe(\.frequency, options: [.initial, .new], changeHandler: observer),
     ]
   }
   private func observer(_ object: Any, _ change: Any) {
@@ -241,14 +305,15 @@ final public class FlagViewController       : NSViewController {
     let width = Float(slice!.filterHigh - slice!.filterLow)/1000.0
     
     DispatchQueue.main.async { [unowned self] in
+      self._filter.floatValue = width
+      self._lockButton.state = ( self.slice!.locked ? NSControl.StateValue.on: NSControl.StateValue.off )
+//      self._frequencyField.integerValue = self.slice!.frequency
+      
       //      self._txButton.state = self.slice!.txEnabled ? NSControl.StateValue.on : NSControl.StateValue.off
       //      self._nbButton.state = self.slice!.nbEnabled ? NSControl.StateValue.on : NSControl.StateValue.off
       //      self._nrButton.state = self.slice!.nrEnabled ? NSControl.StateValue.on : NSControl.StateValue.off
       //      self._anfButton.state = self.slice!.anfEnabled ? NSControl.StateValue.on : NSControl.StateValue.off
       //      self._qskButton.state = self.slice!.qskEnabled ? NSControl.StateValue.on : NSControl.StateValue.off
-      
-      self._filter.stringValue = String(format: "%3.1fk", width)
-      //
       //      self._lock.state = (self.slice!.locked ? NSControl.StateValue.on : NSControl.StateValue.off)
     }
   }
@@ -304,6 +369,9 @@ final public class FlagViewController       : NSViewController {
 
 class FrequencyFormatter: NumberFormatter {
   
+  private let _maxFrequency = 54_000_000
+  private let _minFrequency = 100_000
+  
   override init() {
     super.init()
     groupingSeparator = "."
@@ -314,56 +382,55 @@ class FrequencyFormatter: NumberFormatter {
   }
   
   override func getObjectValue(_ obj: AutoreleasingUnsafeMutablePointer<AnyObject?>?, for string: String, range rangep: UnsafeMutablePointer<NSRange>?) throws {
-    var value: Int? = nil
     
-    // is it empty?
-    if string.lengthOfBytes(using: .utf8) > 0 {
-      
-      // NO, remove the periods
-      let newString = string.replacingOccurrences(of: ".", with: "")
-      
+    // remove any non-numeric characters
+    let number = string.numbers
+    
+    if number.lengthOfBytes(using: .utf8) > 0 {
       // convert to an Int
-      value = Int(newString)
+      let intValue = Int(string.numbers)!
+      
+      // return the value as an NSNumber
+      obj?.pointee = NSNumber(value: intValue)
     }
-    // set the field
-    if value != nil { obj?.pointee = NSNumber(value: value!) }
   }
   
   override func string(for obj: Any?) -> String? {
+    // guard that it's an Int
+    guard let intValue = obj as? Int else { return nil }
     
-    // is it a valid Int?
-    if let n = obj as? Int {
-      var string = ""
+    // make a String version, get its length
+    var stringValue = String(intValue)
+    let stringLen = stringValue.lengthOfBytes(using: .utf8)
+    
+    switch stringLen {
       
-      // YES, how big?
-      if n < 100_000 {
-        // 5 digits or less
-        string = String(format: "%04d", n) + "000"
-      } else {
-        // more that 5 digits
-        string = String(format: "%d", n)
-      }
-      // find the end
-      let end = string.endIndex
+    case 9...:
+      stringValue = String(stringValue.dropLast(stringLen - 8))
+      fallthrough
       
-      // add back in the periods
-      string.insert(".", at: string.index(end, offsetBy: -3))
-      if string.lengthOfBytes(using: .utf8) > 7 { string.insert(".", at: string.index(end, offsetBy: -6)) }
+    case 7...8:
+      let endIndex = stringValue.endIndex
+      stringValue.insert(".", at: stringValue.index(endIndex, offsetBy: -3))
+      stringValue.insert(".", at: stringValue.index(endIndex, offsetBy: -6))
       
-      return string
+    case 6:
+      stringValue += "0"
+      let endIndex = stringValue.endIndex
+      stringValue.insert(".", at: stringValue.index(endIndex, offsetBy: -3))
+      stringValue.insert(".", at: stringValue.index(endIndex, offsetBy: -6))
+      
+    case 4...5:
+      stringValue += ".000"
+      let endIndex = stringValue.endIndex
+      stringValue.insert(".", at: stringValue.index(endIndex, offsetBy: -6))
+      
+    default:
+      return nil
     }
-    return nil
+    return stringValue
   }
 }
 
-class FrequencyTextField: NSTextField {
-  
-  override func becomeFirstResponder() -> Bool {
-    let result = super.becomeFirstResponder()
-    if result {
-      perform(#selector(selectText), with: self, afterDelay: 0)
-    }
-    return result
-  }
-}
+
 
