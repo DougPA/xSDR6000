@@ -16,8 +16,6 @@ typealias NC = NotificationCenter
 // ----------------------------------------------------------------------------
 // MARK: - EXTENSIONS
 
-import SwiftyUserDefaults
-
 // ----------------------------------------------------------------------------
 // MARK: - Definitions for SwiftyUserDefaults
 
@@ -453,6 +451,13 @@ extension NSColor {
     
     // return the UInt32 (in bgra format)
     return alpha + red + green + blue
+  }
+}
+
+extension String {
+  
+  var numbers: String {
+    return String(describing: filter { String($0).rangeOfCharacter(from: CharacterSet(charactersIn: "0123456789")) != nil })
   }
 }
 
