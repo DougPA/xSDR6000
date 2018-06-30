@@ -20,8 +20,8 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
   // ----------------------------------------------------------------------------
   // MARK: - Internal properties
   
-  var radio: Radio?                           = Api.sharedInstance.radio
-  weak var panadapter                         : Panadapter?
+  @objc dynamic var radio: Radio?             = Api.sharedInstance.radio
+  @objc dynamic weak var panadapter           : Panadapter?
   
   enum DragType {
     case dbm                                  // +/- Panadapter dbm upper/lower level
@@ -135,7 +135,14 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
   
   // ----------------------------------------------------------------------------
   // MARK: - Internal methods
-
+  
+  /// Configure needed parameters
+  ///
+  /// - Parameter panadapter:               a Panadapter reference
+  ///
+  func configure(panadapter: Panadapter?) {
+    self.panadapter = panadapter
+  }
   /// start observations & Notification
   ///
   private func setupObservations() {
@@ -393,7 +400,7 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
   }
 
   // ----------------------------------------------------------------------------
-  // MARK: - NEW Observation methods
+  // MARK: - Observation methods
 
   private var _baseObservations    = [NSKeyValueObservation]()
   private var _tnfObservations     = [NSKeyValueObservation]()
