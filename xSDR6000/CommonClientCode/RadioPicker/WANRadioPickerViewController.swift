@@ -55,7 +55,8 @@ final class WANRadioPickerViewController    : NSViewController, NSTableViewDeleg
   }
   private var _selectedRadio                : RadioParameters?              // Radio in selected row
   private var _wanServer                    : WanServer?
-  
+  private var _parentVc                     : NSViewController!
+
   // constants
   private let kApplicationJson              = "application/json"
   private let kAuth0Delegation              = "https://frtest.auth0.com/delegation"
@@ -100,7 +101,10 @@ final class WANRadioPickerViewController    : NSViewController, NSTableViewDeleg
     _loginButton.title = kLoginTitle
     _nameLabel.stringValue = ""
     _callLabel.stringValue = ""
-    
+
+    // get a reference to the Tab view controller (the "presented" vc)
+    _parentVc = parent!
+
     // TODO: put this on a background queue??
     // check if we have logged in into Auth0 and try to get a token using the refresh token from the Keychain
 
@@ -173,8 +177,8 @@ final class WANRadioPickerViewController    : NSViewController, NSTableViewDeleg
   ///
   @IBAction func terminate(_ sender: AnyObject) {
     
-    _delegate?.closeRadioPicker()
-    _delegate?.terminateApp()
+    dismissViewController(_parentVc)
+    NSApp.terminate(self)
   }
   /// Respond to the Close button
   ///
@@ -185,8 +189,7 @@ final class WANRadioPickerViewController    : NSViewController, NSTableViewDeleg
     // diconnect from WAN server
     _wanServer?.disconnect()
     
-    // close this view & controller
-    _delegate?.closeRadioPicker()
+    dismissViewController(_parentVc)
   }
   /// Respond to the Select button
   ///

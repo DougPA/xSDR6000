@@ -66,6 +66,7 @@ final class LANRadioPickerViewController    : NSViewController, NSTableViewDeleg
   
   private var _api                          = Api.sharedInstance
   private var _selectedRadio                : RadioParameters?            // Radio in selected row
+  private var _parentVc                     : NSViewController!
   
   private weak var _delegate                : RadioPickerDelegate? {
     return representedObject as? RadioPickerDelegate
@@ -94,6 +95,9 @@ final class LANRadioPickerViewController    : NSViewController, NSTableViewDeleg
     _selectButton.title = kConnectTitle
 
     addNotifications()
+    
+    // get a reference to the Tab view controller (the "presented" vc)
+    _parentVc = parent!
   }
   
   // ----------------------------------------------------------------------------
@@ -105,8 +109,8 @@ final class LANRadioPickerViewController    : NSViewController, NSTableViewDeleg
   ///
   @IBAction func terminate(_ sender: AnyObject) {
     
-    _delegate?.closeRadioPicker()
-    _delegate?.terminateApp()
+    dismissViewController(_parentVc)
+    NSApp.terminate(self)
   }
   /// Respond to the Default button
   ///
@@ -141,7 +145,7 @@ final class LANRadioPickerViewController    : NSViewController, NSTableViewDeleg
   @IBAction func closeButton(_ sender: AnyObject) {
 
     // close this view & controller
-    _delegate?.closeRadioPicker()
+    dismissViewController(_parentVc)
   }
   /// Respond to the Select button
   ///
@@ -177,6 +181,8 @@ final class LANRadioPickerViewController    : NSViewController, NSTableViewDeleg
       // tell the delegate to connect to the selected Radio
       let _ = _delegate?.openRadio(_selectedRadio, isWan: false, wanHandle: "")
 
+      dismissViewController(_parentVc)
+      
     } else {
       // RadioPicker sheet will remain open & Radio will be disconnected
       
