@@ -34,8 +34,9 @@ class WaterfallViewController               : NSViewController, NSGestureRecogni
   // ----------------------------------------------------------------------------
   // MARK: - Internal properties
   
+  @objc dynamic weak var panadapter         : Panadapter?
+
   var radio: Radio?                         = Api.sharedInstance.radio
-  weak var panadapter                       : Panadapter?
   
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
@@ -103,9 +104,16 @@ class WaterfallViewController               : NSViewController, NSGestureRecogni
   // ----------------------------------------------------------------------------
   // MARK: - Internal methods
   
+  /// Configure needed parameters
+  ///
+  /// - Parameter panadapter:               a Panadapter reference
+  ///
+  func configure(panadapter: Panadapter?) {
+    self.panadapter = panadapter
+  }
   /// Load the gradient at the specified index
   ///
-func loadGradient(index: Int) -> [UInt8] {
+  func loadGradient(index: Int) -> [UInt8] {
     var i = 0
     if (0..<WaterfallViewController.gradientNames.count).contains(index) { i = index }
     
