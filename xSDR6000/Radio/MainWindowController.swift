@@ -11,21 +11,10 @@ import xLib6000
 
 class MainWindowController                  : NSWindowController {
   
+  @objc dynamic var api                     = Api.sharedInstance
+  
   // ----------------------------------------------------------------------------
   // MARK: - Internal properties
-  
-  @IBOutlet weak var lineoutGain            : NSSlider!
-  @IBOutlet weak var lineoutMute            : NSButton!
-  
-  @IBOutlet weak var headphoneGain          : NSSlider!
-  @IBOutlet weak var headphoneMute          : NSButton!
-  
-  @IBOutlet weak var tnfEnabled             : NSButton!
-  @IBOutlet weak var sideEnabled            : NSButton!
-  @IBOutlet weak var remoteRxEnabled        : NSButton!
-  @IBOutlet weak var remoteTxEnabled        : NSButton!
-  @IBOutlet weak var cwxEnabled             : NSButton!
-  @IBOutlet weak var fdxEnabled             : NSButton!
   
   @IBOutlet weak var voltageTempMonitor     : ParameterMonitor?
   
