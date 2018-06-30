@@ -19,10 +19,6 @@ protocol RadioPickerDelegate: class {
   
   var token: Token? { get set }
   
-  /// Close this sheet
-  ///
-  func closeRadioPicker()
-  
   /// Open the specified Radio
   ///
   /// - Parameters:
@@ -40,10 +36,6 @@ protocol RadioPickerDelegate: class {
   /// Clear the reply table
   ///
   func clearTable()
-  
-  /// Close the application
-  ///
-  func terminateApp()
 }
 
 // --------------------------------------------------------------------------------
@@ -52,28 +44,28 @@ protocol RadioPickerDelegate: class {
 
 final class RadioViewController             : NSSplitViewController, RadioPickerDelegate {
 
+  @objc dynamic var radio                   = Api.sharedInstance.radio
+  
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
   
   private var _api                          = Api.sharedInstance
-  private var _sideViewController           : NSSplitViewController?
-  private var _panafallsViewController      : PanafallsViewController?
   private var _mainWindowController         : MainWindowController?
-  private var _notifications                = [NSObjectProtocol]()          // Notification observers
-  private var _radioPickerTabViewController : NSTabViewController?          // RadioPicker sheet controller
-  
+  private var _radioPickerStoryboard        : NSStoryboard?
+  private var _sideStoryboard               : NSStoryboard?
+  private var _voltageMeterAvailable        = false
+  private var _temperatureMeterAvailable    = false
+  private var _versions                     : (api: String, app: String)?
+//  private var _activity                     : NSObjectProtocol?
+
   private let _opusManager                  = OpusManager()
   
-  private let kGuiFirmwareSupport           = "2.2.8.x"                     // Radio firmware supported by this App
-  private let kxLib6000Identifier           = "net.k3tzr.xLib6000"          // Bundle identifier for xLib6000
+  private let kGuiFirmwareSupport           = "2.3.7.x"                     // Radio firmware supported by this App
   private let kVoltageTemperature           = "VoltageTemp"                 // Identifier of toolbar VoltageTemperature toolbarItem
 
-  private let kMainStoryboard               = "Main"                        // Storyboard identifier
-  private let kPanafallStoryboard           = "Panafall"
-  private let kRadioPickerStoryboard        = "RadioPicker"
-  private let kSideStoryboard               = "Side"
-
-  private let kRadioPickerIdentifier        = "RadioPicker"
+  private let kRadioPickerStoryboardName    = NSStoryboard.Name(rawValue: "RadioPicker")
+  private let kSideStoryboardName           = NSStoryboard.Name(rawValue: "Side")
+  private let kRadioPickerIdentifier        = NSStoryboard.SceneIdentifier(rawValue: "RadioPicker")
   private let kPcwIdentifier                = "PCW"
   private let kPhoneIdentifier              = "Phone"
   private let kRxIdentifier                 = "Rx"
@@ -84,19 +76,9 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   private let kVersionKey                   = "CFBundleShortVersionString"  // CF constants
   private let kBuildKey                     = "CFBundleVersion"
 
-  private let kLocalTab                       = 0
-  private let kRemoteTab                      = 1
-
-  private enum ToolbarButton                : String {                      // toolbar item identifiers
-    case Pan, Tnf, Markers, Remote, Speaker, Headset, VoltTemp, Side
-  }
+  private let kLocalTab                     = 0
+  private let kRemoteTab                    = 1
   
-  private var activity                        : NSObjectProtocol?
-  
-  private var _voltageMeterAvailable          = false
-  private var _temperatureMeterAvailable      = false
-  private var _versions                       : (api: String, app: String)?
-
   // ----------------------------------------------------------------------------
   // MARK: - Overriden methods
   
@@ -106,7 +88,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     super.viewDidLoad()
     
     // FIXME: Is this necessary???
-    activity = ProcessInfo().beginActivity(options: ProcessInfo.ActivityOptions.latencyCritical, reason: "Good Reason")
+//    _activity = ProcessInfo().beginActivity(options: ProcessInfo.ActivityOptions.latencyCritical, reason: "Good Reason")
     
     // give the Log object (in the API) access to our logger
     Log.sharedInstance.delegate = (NSApp.delegate as! LogHandler)
@@ -117,13 +99,12 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     // set the window title
     title()
 
+    // get the Storyboard containing the RadioPicker
+    _radioPickerStoryboard = NSStoryboard(name: kRadioPickerStoryboardName, bundle: nil)
+    _sideStoryboard = NSStoryboard(name: kSideStoryboardName, bundle: nil)
+
     // add notification subscriptions
     addNotifications()
-    
-    _panafallsViewController = (childViewControllers[0] as! PanafallsViewController)
-    //        _panafallsViewController!.representedObject = self
-    
-    _sideViewController = childViewControllers[1] as? NSSplitViewController
     
     // show/hide the Side view
     splitViewItems[1].isCollapsed = !Defaults[.sideOpen]
@@ -244,30 +225,27 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   ///
   @IBAction func openRadioPicker(_ sender: AnyObject) {
     
-    // get the Storyboard containing the RadioPicker
-    let sb = NSStoryboard(name: NSStoryboard.Name(rawValue: kRadioPickerStoryboard), bundle: nil)
-
     // get an instance of the RadioPicker
-    _radioPickerTabViewController = sb.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier(rawValue: "RadioPicker")) as? NSTabViewController
+    let radioPickerTabViewController = _radioPickerStoryboard!.instantiateController(withIdentifier: kRadioPickerIdentifier) as? NSTabViewController
     
     // make this View Controller the delegate of the RadioPickers
-    _radioPickerTabViewController!.tabViewItems[kLocalTab].viewController!.representedObject = self
-    _radioPickerTabViewController!.tabViewItems[kRemoteTab].viewController!.representedObject = self
+    radioPickerTabViewController!.tabViewItems[kLocalTab].viewController!.representedObject = self
+    radioPickerTabViewController!.tabViewItems[kRemoteTab].viewController!.representedObject = self
     
     // select the last-used tab
-    _radioPickerTabViewController!.selectedTabViewItemIndex = ( Defaults[.showRemoteTabView] == false ? kLocalTab : kRemoteTab )
+    radioPickerTabViewController!.selectedTabViewItemIndex = ( Defaults[.showRemoteTabView] == false ? kLocalTab : kRemoteTab )
     
     DispatchQueue.main.async {
       
       // show the RadioPicker sheet
-      self.presentViewControllerAsSheet(self._radioPickerTabViewController!)
+      self.presentViewControllerAsSheet(radioPickerTabViewController!)
     }
   }
   /// Respond to the xSDR6000 Quit menu
   ///
   /// - Parameter sender: the Menu item
   ///
-  @IBAction func quitXFlex(_ sender: AnyObject) {
+  @IBAction func terminate(_ sender: AnyObject) {
     
     NSApp.terminate(self)
   }
@@ -293,8 +271,8 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     // have the versions been captured?
     if _versions == nil {
       // NO, get the versions
-      _versions = versionInfo(framework: kxLib6000Identifier)
-      
+      _versions = versionInfo(framework: Api.kBundleIdentifier)
+
       // log them
       Log.sharedInstance.msg("\(kClientName) v\(_versions!.app), xLib6000 v\(_versions!.api)", level: .info, function: #function, file: #file, line: #line)
     }
@@ -343,31 +321,31 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   ///
   private func sideView(_ identifier: String, show: Bool) {
     
+    // get a reference to the Side view controller
+    let sideViewController = childViewControllers[1] as? NSSplitViewController
+    
     // show or hide?
     if show {
       
-      // SHOW, get the Storyboard
-      let sb = NSStoryboard(name: NSStoryboard.Name(rawValue: kSideStoryboard), bundle: nil)
-      
-      // create a view controller
+      // SHOW, create a view controller
       let sbIdentifier = NSStoryboard.SceneIdentifier( rawValue: identifier)
-      let vc = sb.instantiateController(withIdentifier: sbIdentifier ) as! NSViewController
+      let vc = _sideStoryboard!.instantiateController(withIdentifier: sbIdentifier ) as! NSViewController
       vc.identifier = NSUserInterfaceItemIdentifier(rawValue: identifier)
       
       // give it a reference to its Radio object
       vc.representedObject = _api.radio
       
       // add it to the Side View
-      _sideViewController!.insertChildViewController(vc, at: 1)
+      sideViewController!.insertChildViewController(vc, at: 1)
       
       // tell the SplitView to adjust
-      _sideViewController!.splitView.adjustSubviews()
+      sideViewController!.splitView.adjustSubviews()
       
     } else {
       
       // HIDE, remove it from the Side View
-      for (i, vc) in _sideViewController!.childViewControllers.enumerated() where vc.identifier!.rawValue == identifier {
-          _sideViewController!.removeChildViewController(at: i)
+      for (i, vc) in sideViewController!.childViewControllers.enumerated() where vc.identifier!.rawValue == identifier {
+          sideViewController!.removeChildViewController(at: i)
       }
     }
   }
@@ -375,22 +353,8 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   // ----------------------------------------------------------------------------
   // MARK: - Observation methods
 
-  private var _radioObservers   = [NSKeyValueObservation]()
   private var _opusObservers    = [NSKeyValueObservation]()
 
-  /// Add observers for Radio properties
-  ///
-  private func addRadioObservers(_ radio: Radio) {
-   
-    _radioObservers = [
-      radio.observe(\.lineoutGain, options: [.initial, .new], changeHandler: radioObserver),
-      radio.observe(\.lineoutMute, options: [.initial, .new], changeHandler: radioObserver),
-      radio.observe(\.headphoneGain, options: [.initial, .new], changeHandler: radioObserver),
-      radio.observe(\.headphoneMute, options: [.initial, .new], changeHandler: radioObserver),
-      radio.observe(\.tnfEnabled, options: [.initial, .new], changeHandler: radioObserver),
-      radio.observe(\.fullDuplexEnabled, options: [.initial, .new], changeHandler: radioObserver)
-    ]
-  }
   /// Add observers for Opus properties
   ///
   private func addOpusObservers(_ opus: Opus) {
@@ -409,30 +373,6 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
 
     for observer in observers {
       observer.invalidate()
-    }
-  }
-  /// Respond to Radio observations
-  ///
-  /// - Parameters:
-  ///   - object:                       the object holding the properties
-  ///   - change:                       the change
-  ///
-  private func radioObserver(_ radio: Radio, _ change: Any) {
-
-    // interact with the UI
-    DispatchQueue.main.async { [unowned self] in
-
-      self._mainWindowController?.lineoutGain.integerValue = radio.lineoutGain
-
-      self._mainWindowController?.lineoutMute.state = radio.lineoutMute ? NSControl.StateValue.on : NSControl.StateValue.off
-
-      self._mainWindowController?.headphoneGain.integerValue = radio.headphoneGain
-
-      self._mainWindowController?.headphoneMute.state = radio.headphoneMute ? NSControl.StateValue.on : NSControl.StateValue.off
-
-      self._mainWindowController?.tnfEnabled.state = radio.tnfEnabled ? NSControl.StateValue.on : NSControl.StateValue.off
-
-      self._mainWindowController?.fdxEnabled.state = radio.fullDuplexEnabled ? NSControl.StateValue.on : NSControl.StateValue.off
     }
   }
   /// Respond to Opus observations
@@ -478,9 +418,6 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     // get Radio model & firmware version
     Defaults[.radioFirmwareVersion] = _api.activeRadio!.firmwareVersion!
     Defaults[.radioModel] = _api.activeRadio!.model
-    
-    // observe changes to Radio properties
-    addRadioObservers(_api.radio!)
   }
   /// Process .meterHasBeenAdded Notification
   ///
@@ -489,22 +426,23 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   @objc private func meterHasBeenAdded(_ note: Notification) {
     
     if let meter = note.object as? Meter {
-      
+
       // is it one we need to watch?
       switch meter.name {
       case Api.MeterShortName.voltageAfterFuse.rawValue:
         _voltageMeterAvailable = true
-      
+
       case Api.MeterShortName.temperaturePa.rawValue:
         _temperatureMeterAvailable = true
-      
+
       default:
         break
       }
       if _voltageMeterAvailable && _temperatureMeterAvailable {
-        
+
         // start the Voltage/Temperature monitor
-        self._mainWindowController?.voltageTempMonitor?.activate(radio: _api.radio!, meterShortNames: [.voltageAfterFuse, .temperaturePa], units: ["v", "c"])
+        let mainWindowController = view.window?.windowController as? MainWindowController
+        mainWindowController?.voltageTempMonitor?.activate(radio: _api.radio!, meterShortNames: [.voltageAfterFuse, .temperaturePa], units: ["v", "c"])
       }
     }
   }
@@ -519,18 +457,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
       
       Log.sharedInstance.msg("\(radio.nickname)", level: .info, function: #function, file: #file, line: #line)
 
-      DispatchQueue.main.sync { [unowned self] in
-        
-        // Get a reference to the Window Controller containing the toolbar items
-        self._mainWindowController = self.view.window?.windowController as? MainWindowController
-
-        self._mainWindowController?.lineoutGain.integerValue = radio.lineoutGain
-        self._mainWindowController?.lineoutMute.state = radio.lineoutMute ? NSControl.StateValue.on : NSControl.StateValue.off
-        self._mainWindowController?.headphoneGain.integerValue = radio.headphoneGain
-        self._mainWindowController?.headphoneMute.state = radio.headphoneMute ? NSControl.StateValue.on : NSControl.StateValue.off
-        self._mainWindowController?.tnfEnabled.state = radio.tnfEnabled ? NSControl.StateValue.on : NSControl.StateValue.off        
-        self._mainWindowController?.fdxEnabled.state = radio.fullDuplexEnabled ? NSControl.StateValue.on : NSControl.StateValue.off
-      }
+      // update the title bar
       title()
     }
   }
@@ -547,6 +474,9 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
       
       // remove all objects on Radio
       _api.radio?.removeAll()
+      
+      // update the title bar
+      title()
     }
   }
   /// Process .radioHasBeenRemoved Notification
@@ -600,16 +530,6 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   
   var token: Token?
 
-  /// Stop the active Radio
-  ///
-  func closeRadio() {
-    
-    // remove observations of Radio properties
-//    observations(_api.radio!, paths: _radioKeyPaths, remove: true)
-    removeObservers(_radioObservers)
-    
-    _api.disconnect(reason: .normal)
-  }
   /// Connect the selected Radio
   ///
   /// - Parameters:
@@ -620,9 +540,6 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   ///
   func openRadio(_ radio: RadioParameters?, isWan: Bool = false, wanHandle: String = "") -> Bool {
     
-    // close the Radio Picker (if open)
-    closeRadioPicker()
-    
     // fail if no Radio selected
     guard let selectedRadio = radio else { return false }
     
@@ -632,26 +549,15 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     // attempt to connect to it
     return _api.connect(selectedRadio, clientName: kClientName, isGui: true)
   }
-  /// Close the RadioPicker sheet
+  /// Stop the active Radio
   ///
-  func closeRadioPicker() {
+  func closeRadio() {
     
-    // close the RadioPicker
-    if _radioPickerTabViewController != nil {
-      dismissViewController(_radioPickerTabViewController!)
-      _radioPickerTabViewController = nil }
+    _api.disconnect(reason: .normal)
   }
   /// Clear the reply table
   ///
   func clearTable() {
     // unused
   }
-  /// Close the application
-  ///
-  func terminateApp() {
-    
-    NSApp.terminate(self)
-  }
-  
-
 }
