@@ -204,6 +204,21 @@ SWIFT_CLASS("_TtC8xLib60009Amplifier")
 @property (nonatomic, copy) NSString * _Nonnull serialNumber;
 @end
 
+@class Radio;
+
+SWIFT_CLASS("_TtC8xLib60003Api")
+@interface Api : NSObject
+@property (nonatomic, strong) Radio * _Nullable radio;
+/// Provide access to the API singleton
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, strong) Api * _Nonnull sharedInstance;)
++ (Api * _Nonnull)sharedInstance SWIFT_WARN_UNUSED_RESULT;
++ (void)setSharedInstance:(Api * _Nonnull)value;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_DEPRECATED_MSG("-init is unavailable");
+@end
+
+
+
 
 SWIFT_CLASS("_TtC8xLib60003Atu")
 @interface Atu : NSObject
@@ -701,11 +716,13 @@ SWIFT_CLASS("_TtC8xLib60005Slice")
 @property (nonatomic) BOOL autoPan;
 @property (nonatomic) NSInteger daxClients;
 @property (nonatomic) BOOL daxTxEnabled;
+@property (nonatomic) BOOL detached;
 @property (nonatomic) BOOL diversityChild;
 @property (nonatomic) NSInteger diversityIndex;
 @property (nonatomic) BOOL diversityParent;
 @property (nonatomic, readonly) BOOL inUse;
 @property (nonatomic, copy) NSArray<NSString *> * _Nonnull modeList;
+@property (nonatomic) NSInteger nr2;
 @property (nonatomic) NSInteger owner;
 @property (nonatomic) uint32_t panadapterId;
 @property (nonatomic) BOOL postDemodBypassEnabled;
