@@ -16,12 +16,10 @@ class PanafallsViewController               : NSSplitViewController {
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
   
-  // constants
-  private let kPanafallStoryboard           = "Panafall"                    // Storyboard names
+  private var _sb                           : NSStoryboard?
   
-  private let kPanafallButtonIdentifier     = "Button"                      // Storyboard identifiers
-  private let kPanadapterIdentifier         = "Panadapter"
-  private let kWaterfallIdentifier          = "Waterfall"
+  private let kPanafallStoryboard           = NSStoryboard.Name(rawValue: "Panafall")
+  private let kPanafallButtonIdentifier     = NSStoryboard.SceneIdentifier(rawValue: "Button")
   
   // ----------------------------------------------------------------------------
   // MARK: - Overridden methods
@@ -31,6 +29,9 @@ class PanafallsViewController               : NSSplitViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    // get the Storyboard containing a Panafall Button View Controller
+    _sb = NSStoryboard(name: kPanafallStoryboard, bundle: nil)
+
     // add notification subscriptions
     addNotifications()
   }
@@ -84,13 +85,11 @@ class PanafallsViewController               : NSSplitViewController {
       
       let panadapter = Api.sharedInstance.radio!.panadapters[waterfall.panadapterId]
       
-      // get the Storyboard containing a Panafall Button View Controller
-      let sb = NSStoryboard(name: NSStoryboard.Name(rawValue: self.kPanafallStoryboard), bundle: nil)
-      
       // create a Panafall Button View Controller
-      let panafallButtonVc = sb.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier(rawValue: self.kPanafallButtonIdentifier)) as! PanafallButtonViewController
+      let panafallButtonVc = _sb!.instantiateController(withIdentifier: kPanafallButtonIdentifier) as! PanafallButtonViewController
       
-      panafallButtonVc.panadapter = panadapter
+      // pass needed parameters
+      panafallButtonVc.configure(panadapter: panadapter, waterfall: waterfall)
       
       // interact with the UI
       DispatchQueue.main.sync { [unowned self] in

@@ -18,8 +18,9 @@ final class PanafallViewController          : NSSplitViewController {
   // ----------------------------------------------------------------------------
   // MARK: - Internal properties
   
+  @objc dynamic weak var panadapter         : Panadapter?
+
   var radio: Radio?                         = Api.sharedInstance.radio
-  weak var panadapter                       : Panadapter?
   
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
@@ -114,10 +115,17 @@ final class PanafallViewController          : NSSplitViewController {
     }
   }
   
-//  deinit {
-//    Swift.print("PanafallViewController - deinit")
-//  }
+  // ----------------------------------------------------------------------------
+  // MARK: - Internal methods
   
+  /// Configure needed parameters
+  ///
+  /// - Parameter panadapter:               a Panadapter reference
+  ///
+  func configure(panadapter: Panadapter?) {
+    self.panadapter = panadapter
+  }
+
   // ----------------------------------------------------------------------------
   // MARK: - Private methods
   
