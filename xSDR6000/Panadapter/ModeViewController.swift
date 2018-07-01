@@ -127,15 +127,19 @@ final public class ModeViewController       : NSViewController {
     case .RTTY, .DFM, .AM, .SAM:
       slice.filterLow = -filterValue/2
       slice.filterHigh = +filterValue/2
+    
     case .CW, .USB, .DIGU:
       slice.filterLow = +100
       slice.filterHigh = +filterValue + 100
+    
     case .LSB, .DIGL:
       slice.filterLow = -filterValue - 100
       slice.filterHigh = -100
+    
     case .FM:
       slice.filterLow = -8_000
       slice.filterHigh = +8_000
+    
     case .NFM:
       slice.filterLow = -5_500
       slice.filterHigh = +5_500
@@ -150,14 +154,6 @@ final public class ModeViewController       : NSViewController {
 //      break
     }
   }
-    
-  // ----------------------------------------------------------------------------
-  // MARK: - Internal methods
-  
-  
-  // ----------------------------------------------------------------------------
-  // MARK: - Private methods
-  
 
   // ----------------------------------------------------------------------------
   // MARK: - Observation methods
