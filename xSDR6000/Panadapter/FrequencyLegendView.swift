@@ -40,7 +40,8 @@ public final class FrequencyLegendView      : NSView {
   
   private var _attributes                   = [NSAttributedStringKey:AnyObject]() // Font & Size for the Frequency Legend
   private var _path                         = NSBezierPath()
-  
+  private lazy var _segments                = Band.sharedInstance.segments
+
   private let kBandwidthParams: [BandwidthParamTuple] =                     // spacing & format vs Bandwidth
     [   //      Bandwidth               Legend
       //  high         low      spacing   format
@@ -60,10 +61,6 @@ public final class FrequencyLegendView      : NSView {
   ]
   private let _frequencyLineWidth           : CGFloat = 2.0
   private let _lineColor                    = NSColor(srgbRed: 1.0, green: 1.0, blue: 1.0, alpha: 0.2)
-  
-  // band & markers
-  private lazy var _segments                = Band.sharedInstance.segments
-
   private let kMultiplier                   : CGFloat = 0.001
   private let kFlagBorder                   : CGFloat = 20
 
