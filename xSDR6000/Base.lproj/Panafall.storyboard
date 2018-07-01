@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14109"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14113"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
         <capability name="stacking Non-gravity area distributions on NSStackView" minToolsVersion="7.0" minSystemVersion="10.11"/>
         <capability name="system font weights other than Regular or Bold" minToolsVersion="7.0"/>
@@ -312,8 +312,8 @@
                                     <menu key="menu" id="ya8-W1-HbH"/>
                                 </popUpButtonCell>
                                 <connections>
-                                    <binding destination="AJ9-ZE-hlS" name="content" keyPath="representedObject.panadapter.daxIqChoices" id="hg1-lz-wTp"/>
-                                    <binding destination="AJ9-ZE-hlS" name="selectedIndex" keyPath="representedObject.panadapter.daxIqChannel" previousBinding="hg1-lz-wTp" id="zNY-yA-iSS"/>
+                                    <binding destination="AJ9-ZE-hlS" name="content" keyPath="representedObject.daxIqChoices" id="2lf-ny-uKP"/>
+                                    <binding destination="AJ9-ZE-hlS" name="selectedIndex" keyPath="representedObject.daxIqChannel" previousBinding="2lf-ny-uKP" id="9Kr-U4-qW1"/>
                                 </connections>
                             </popUpButton>
                         </subviews>
@@ -357,7 +357,7 @@
                                 <sliderCell key="cell" state="on" alignment="left" minValue="-10" maxValue="30" tickMarkPosition="below" numberOfTickMarks="5" allowsTickMarkValuesOnly="YES" sliderType="linear" id="yFx-tM-rZE"/>
                                 <connections>
                                     <action selector="takeIntegerValueFrom:" target="lpg-bU-E5y" id="1jN-5e-cUV"/>
-                                    <binding destination="SQ9-rw-cg0" name="value" keyPath="representedObject.panadapter.rfGain" id="NMA-ue-keK"/>
+                                    <binding destination="SQ9-rw-cg0" name="value" keyPath="representedObject.rfGain" id="330-PM-8ui"/>
                                 </connections>
                             </slider>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="toL-ka-cmf">
@@ -367,7 +367,7 @@
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
                                 <connections>
-                                    <binding destination="SQ9-rw-cg0" name="value" keyPath="representedObject.panadapter.loopAEnabled" id="gOV-hx-owW"/>
+                                    <binding destination="SQ9-rw-cg0" name="value" keyPath="representedObject.loopAEnabled" id="bb4-ro-T7b"/>
                                 </connections>
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lpg-bU-E5y">
@@ -380,6 +380,9 @@
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
+                                <connections>
+                                    <binding destination="SQ9-rw-cg0" name="value" keyPath="representedObject.rfGain" id="r9v-eo-HRH"/>
+                                </connections>
                             </textField>
                             <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Km6-gm-ME1">
                                 <rect key="frame" x="86" y="85" width="101" height="26"/>
@@ -389,8 +392,8 @@
                                     <menu key="menu" id="VTq-ca-nWK"/>
                                 </popUpButtonCell>
                                 <connections>
-                                    <binding destination="SQ9-rw-cg0" name="content" keyPath="representedObject.panadapter.antList" id="WVz-nh-qGR"/>
-                                    <binding destination="SQ9-rw-cg0" name="selectedValue" keyPath="representedObject.panadapter.rxAnt" previousBinding="WVz-nh-qGR" id="OXh-xv-amw"/>
+                                    <binding destination="SQ9-rw-cg0" name="content" keyPath="representedObject.antList" id="g7q-4T-aPS"/>
+                                    <binding destination="SQ9-rw-cg0" name="selectedValue" keyPath="representedObject.rxAnt" previousBinding="g7q-4T-aPS" id="3iz-dc-GdA"/>
                                 </connections>
                             </popUpButton>
                         </subviews>
