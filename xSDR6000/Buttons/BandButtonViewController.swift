@@ -19,7 +19,7 @@ class BandButtonViewController              : NSViewController {
   
   @IBOutlet private weak var bandButtons    : NSMatrix!
   
-  private var _b                            = Band.sharedInstance
+  private var _bands                        = Band.sharedInstance
   
   private let kNumberOfColumns              = 3
   
@@ -30,7 +30,7 @@ class BandButtonViewController              : NSViewController {
     super.viewDidLoad()
     
     // there is 1 row of kNumberOfColumns buttons by default
-    let buttonsToAdd: Int = _b.sortedBands.count - kNumberOfColumns
+    let buttonsToAdd: Int = _bands.sortedBands.count - kNumberOfColumns
     var rowsToAdd: Int = buttonsToAdd / kNumberOfColumns
     let cellsToAdd: Int = buttonsToAdd % kNumberOfColumns
     rowsToAdd = (rowsToAdd + (cellsToAdd > 0 ? 1 : 0))
@@ -49,10 +49,10 @@ class BandButtonViewController              : NSViewController {
         
         let cell = bandButtons.cell(atRow: row, column: col)
         let index = (row * kNumberOfColumns + col)
-        if index < _b.sortedBands.count {
+        if index < _bands.sortedBands.count {
           
           // populate the button's Title
-          cell!.title = _b.sortedBands[index]
+          cell!.title = _bands.sortedBands[index]
           
         } else {
           
@@ -82,7 +82,7 @@ class BandButtonViewController              : NSViewController {
       break
     }
     // tell the Panadapter
-    (representedObject as! PanafallButtonViewController).panadapter!.band = band
+    (representedObject as! Panadapter).band = band
   }
   
 }
