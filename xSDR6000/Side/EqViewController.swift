@@ -50,8 +50,8 @@ final class EqViewController                : NSViewController {
     // enable the appropriate Equalizer
     rxButton.state = Defaults[.rxEqSelected] ? NSControl.StateValue.on : NSControl.StateValue.off
     txButton.state = Defaults[.rxEqSelected] ? NSControl.StateValue.off : NSControl.StateValue.on
-    
-    // set the state of thesliders & ON Button
+
+    // set the state of the sliders & ON Button
     populateEqualizer()
   }
   
