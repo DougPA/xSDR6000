@@ -15,7 +15,6 @@ public final class DbLegendView             : NSView {
   // ----------------------------------------------------------------------------
   // MARK: - Internal properties
   
-  var radio: Radio?                         = Api.sharedInstance.radio
   weak var panadapter                       : Panadapter?
   
   var width: CGFloat                        = 40
@@ -26,11 +25,8 @@ public final class DbLegendView             : NSView {
   
   private var _minDbm                       : CGFloat {return panadapter!.minDbm }
   private var _maxDbm                       : CGFloat {return panadapter!.maxDbm }
-  
   private var _spacings                     = Defaults[.dbLegendSpacings]
-  
-  private var _path                         = NSBezierPath()
-  
+  private var _path                         = NSBezierPath()  
   private var _attributes                   = [NSAttributedStringKey:AnyObject]() // Font & Size for the db Legend
   private var _fontHeight                   : CGFloat = 0                         // height of typical label
   
