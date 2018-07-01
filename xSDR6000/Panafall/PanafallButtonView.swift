@@ -22,7 +22,6 @@ final class PanafallButtonView                : NSView {
   
   private var _buttonTracking                 : NSTrackingArea?
   
-  // constants
   private let _trackingOptions                = NSTrackingArea.Options.mouseEnteredAndExited.union(.activeInActiveApp)
   private let kButtonViewWidth                : CGFloat = 75                // default button area width
   
@@ -46,13 +45,11 @@ final class PanafallButtonView                : NSView {
     
     // remove the Tracking area (if any)
     removeTrackingArea()
-    
-//    Swift.print("PanafallButtonView - deinit")
   }
   
   /// Mouse entered the Button area
   ///
-  /// - Parameter theEvent: mouse Event
+  /// - Parameter theEvent:           mouse Event
   ///
   override func mouseEntered(with theEvent: NSEvent) {
     
@@ -62,7 +59,7 @@ final class PanafallButtonView                : NSView {
   
   /// Mouse exited the Button area
   ///
-  /// - Parameter theEvent: mouse Event
+  /// - Parameter theEvent:           mouse Event
   ///
   override func mouseExited(with theEvent: NSEvent) {
     
