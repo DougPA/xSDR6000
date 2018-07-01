@@ -20,12 +20,10 @@ final class PanafallViewController          : NSSplitViewController {
   
   @objc dynamic weak var panadapter         : Panadapter?
 
-  var radio: Radio?                         = Api.sharedInstance.radio
-  
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
   
-  @IBOutlet weak var _panadapterSplitViewItem: NSSplitViewItem!
+  @IBOutlet private weak var _panadapterSplitViewItem: NSSplitViewItem!
   
   //    private var _params                 : Params { return representedObject as! Params }
   
@@ -37,15 +35,13 @@ final class PanafallViewController          : NSSplitViewController {
   
   private weak var _panadapterViewController     : PanadapterViewController? { return _panadapterSplitViewItem.viewController as? PanadapterViewController }
   
-  // gesture recognizer related
   private var _doubleClick                  : NSClickGestureRecognizer!
   private var _rightClick                   : NSClickGestureRecognizer!
-  
-  // constants
-  private let kButtonViewWidth              : CGFloat = 75                  // Width of ButtonView when open
-  private let kEdgeTolerance                : CGFloat = 0.1                 // percent of bandwidth
   private let kLeftButton                   = 0x01                          // masks for Gesture Recognizers
   private let kRightButton                  = 0x02
+
+  private let kButtonViewWidth              : CGFloat = 75                  // Width of ButtonView when open
+  private let kEdgeTolerance                : CGFloat = 0.1                 // percent of bandwidth
   
   private let kCreateSlice                  = "Create Slice"                // Menu titles
   private let kRemoveSlice                  = "Remove Slice"
