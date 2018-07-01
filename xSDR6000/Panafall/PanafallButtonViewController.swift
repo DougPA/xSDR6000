@@ -21,32 +21,25 @@ final class PanafallButtonViewController    : NSViewController {
   
   @objc dynamic weak var panadapter         : Panadapter?
   @objc dynamic weak var waterfall          : Waterfall?
-  
   @objc dynamic var fillLevel               : Int {
     get { return Defaults[.fillLevel] }
     set { Defaults[.fillLevel] = newValue } }
   @objc dynamic var gradientNames           : [String] {
     return WaterfallViewController.gradientNames }
-
-  var radio: Radio?                         = Api.sharedInstance.radio
-  
-  @IBOutlet weak var buttonView             : PanafallButtonView!
   
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
+
+  @IBOutlet private weak var buttonView             : PanafallButtonView!
   
-  private var _center                       : Int { return panadapter!.center }
   private var _bandwidth                    : Int { return panadapter!.bandwidth }
-  private var _minDbm                       : CGFloat { return panadapter!.minDbm }
-  private var _maxDbm                       : CGFloat { return panadapter!.maxDbm }
   
-  // constants
-  private let kPanafallEmbed                = "PanafallEmbed"               // Segue names
-  private let kBandPopover                  = "BandPopover"
-  private let kAntennaPopover               = "AntennaPopover"
-  private let kDisplayPopover               = "DisplayPopover"
-  private let kDaxPopover                   = "DaxPopover"
-  
+  private let kPanafallEmbedIdentifier      = NSStoryboardSegue.Identifier("PanafallEmbed")
+  private let kBandPopoverIdentifier        = NSStoryboardSegue.Identifier(rawValue: "BandPopover")
+  private let kAntennaPopoverIdentifier     = NSStoryboardSegue.Identifier(rawValue: "AntennaPopover")
+  private let kDisplayPopoverIdentifier     = NSStoryboardSegue.Identifier(rawValue: "DisplayPopover")
+  private let kDaxPopoverIdentifier         = NSStoryboardSegue.Identifier(rawValue: "DaxPopover")
+
   private let kPanadapterSplitViewItem      = 0
   private let kWaterfallSplitViewItem       = 1
   
@@ -61,9 +54,9 @@ final class PanafallButtonViewController    : NSViewController {
   ///
   override func prepare(for segue: NSStoryboardSegue, sender: Any?) {
     
-    switch segue.identifier!.rawValue {
+    switch segue.identifier! {
       
-    case kPanafallEmbed:                            // this will always occur first
+    case kPanafallEmbedIdentifier:                            // this will always occur first
       
       // pass a copy of the Params
       (segue.destinationController as! NSViewController).representedObject = representedObject
@@ -82,10 +75,15 @@ final class PanafallButtonViewController    : NSViewController {
       panadapterViewController!.configure(panadapter: panadapter)
       waterfallViewController!.configure(panadapter: panadapter)
       
-    case kAntennaPopover, kDisplayPopover, kDaxPopover, kBandPopover:
+    case kDisplayPopoverIdentifier:
       
       // pass the Popovers a reference to this controller
       (segue.destinationController as! NSViewController).representedObject = self
+      
+    case kAntennaPopoverIdentifier, kBandPopoverIdentifier, kDaxPopoverIdentifier:
+      
+      // pass the Popovers a reference to the panadapter
+      (segue.destinationController as! NSViewController).representedObject = panadapter
       
     default:
       break
