@@ -25,7 +25,7 @@ public final class PanadapterRenderer       : NSObject {
   static let kTextureAsset                  = "1x16"                        // name of the texture asset
   
   // ----------------------------------------------------------------------------
-  // MARK: - Internal properties
+  // MARK: - Shader structs
   
   private struct SpectrumValue {
     var i                                   : ushort                        // intensity
@@ -36,6 +36,7 @@ public final class PanadapterRenderer       : NSObject {
     var height                              : Float                         // height of view (yPixels)
     var maxNumberOfBins                     : UInt32                        // number of DataFrame bins
   }
+  
   private struct Color {
     var spectrumColor                       : float4                        // spectrum / fill color
   }
