@@ -183,21 +183,17 @@
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
                                 <connections>
-                                    <binding destination="Lmw-yC-7qh" name="value" keyPath="slice.locked" id="V9I-ro-LiO"/>
+                                    <binding destination="Lmw-yC-7qh" name="value" keyPath="slice.locked" id="wmV-ne-Tsy"/>
                                 </connections>
                             </button>
                             <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Upu-MJ-yvx" userLabel="Frequency">
                                 <rect key="frame" x="54" y="191" width="188" height="31"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" refusesFirstResponder="YES" state="on" focusRingType="none" alignment="right" placeholderString="7.235.000" id="MC8-rn-aip">
-                                    <numberFormatter key="formatter" formatterBehavior="default10_4" usesGroupingSeparator="NO" groupingSize="0" minimumIntegerDigits="0" maximumIntegerDigits="42" id="25F-Xm-obi" customClass="FrequencyFormatter" customModule="xSDR6000" customModuleProvider="target"/>
+                                    <numberFormatter key="formatter" formatterBehavior="default10_4" usesGroupingSeparator="NO" groupingSize="0" minimumIntegerDigits="0" maximumIntegerDigits="42" id="4Z7-Sv-teb" customClass="FrequencyFormatter" customModule="xSDR6000" customModuleProvider="target"/>
                                     <font key="font" metaFont="system" size="26"/>
                                     <color key="textColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
-                                <connections>
-                                    <action selector="frequencyText:" target="Lmw-yC-7qh" id="Pf3-UW-ZKn"/>
-                                    <binding destination="Lmw-yC-7qh" name="value" keyPath="slice.frequency" id="ZHz-Mm-3nk"/>
-                                </connections>
                             </textField>
                             <levelIndicator verticalHuggingPriority="750" drawsTieredCapacityLevels="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zQl-hd-Hm1" userLabel="Meter">
                                 <rect key="frame" x="0.0" y="169" width="240" height="23"/>
@@ -418,7 +414,7 @@
                         <outlet property="_daxButton" destination="k1s-c0-aSp" id="WvV-js-Mc8"/>
                         <outlet property="_dspButton" destination="Txi-xh-v4g" id="WEM-qJ-dYV"/>
                         <outlet property="_filter" destination="pDZ-kB-g8v" id="7gb-dg-Xho"/>
-                        <outlet property="_frequencyField" destination="Upu-MJ-yvx" id="Pm4-MM-Vsq"/>
+                        <outlet property="_frequencyField" destination="Upu-MJ-yvx" id="8bc-py-yLI"/>
                         <outlet property="_lockButton" destination="NRN-Dk-3yw" id="zyM-VW-rC8"/>
                         <outlet property="_modeButton" destination="Jwm-II-OG6" id="35t-e3-fp7"/>
                         <outlet property="_sMeter" destination="zQl-hd-Hm1" id="CjY-MM-Yy1"/>
@@ -426,6 +422,7 @@
                     </connections>
                 </viewController>
                 <customObject id="aAz-fc-KOY" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+                <userDefaultsController representsSharedInstance="YES" id="uMY-DX-Agw"/>
             </objects>
             <point key="canvasLocation" x="2396" y="138"/>
         </scene>
