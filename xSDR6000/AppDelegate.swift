@@ -95,6 +95,10 @@ final class AppDelegate                     : NSObject, NSApplicationDelegate, L
     return log
   }()
   
+  func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
+    return true
+  }
+  
   // ----------------------------------------------------------------------------
   // MARK: - LogHandlerDelegate methods
   
