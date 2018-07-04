@@ -440,9 +440,11 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
       }
       if _voltageMeterAvailable && _temperatureMeterAvailable {
 
-        // start the Voltage/Temperature monitor
-        let mainWindowController = view.window?.windowController as? MainWindowController
-        mainWindowController?.voltageTempMonitor?.activate(radio: _api.radio!, meterShortNames: [.voltageAfterFuse, .temperaturePa], units: ["v", "c"])
+        DispatchQueue.main.async { [unowned self] in
+          // start the Voltage/Temperature monitor
+          let mainWindowController = self.view.window?.windowController as? MainWindowController
+          mainWindowController?.voltageTempMonitor?.activate(radio: self._api.radio!, meterShortNames: [.voltageAfterFuse, .temperaturePa], units: ["v", "c"])
+        }
       }
     }
   }
