@@ -16,19 +16,13 @@ import xLib6000
 final class PanafallViewController          : NSSplitViewController {
   
   // ----------------------------------------------------------------------------
-  // MARK: - Internal properties
-  
-  @objc dynamic weak var panadapter         : Panadapter?
-
-  // ----------------------------------------------------------------------------
   // MARK: - Private properties
   
   @IBOutlet private weak var _panadapterSplitViewItem: NSSplitViewItem!
   
-  //    private var _params                 : Params { return representedObject as! Params }
-  
-  private var _center                       : Int {return panadapter!.center }
-  private var _bandwidth                    : Int { return panadapter!.bandwidth }
+  private weak var _panadapter              : Panadapter?
+  private var _center                       : Int {return _panadapter!.center }
+  private var _bandwidth                    : Int { return _panadapter!.bandwidth }
   private var _start                        : Int { return _center - (_bandwidth/2) }
   private var _end                          : Int { return _center + (_bandwidth/2) }
   private var _hzPerUnit                    : CGFloat { return CGFloat(_end - _start) / view.frame.width }
@@ -87,7 +81,7 @@ final class PanafallViewController          : NSSplitViewController {
     if theEvent.deltaY != 0 {
       
       // find the Active Slice
-      if let slice = Slice.findActive(with: panadapter!.id) {
+      if let slice = Slice.findActive(with: _panadapter!.id) {
         
         // use the Slice's step value, unless the Shift key is down
         var step = slice.step
@@ -119,7 +113,7 @@ final class PanafallViewController          : NSSplitViewController {
   /// - Parameter panadapter:               a Panadapter reference
   ///
   func configure(panadapter: Panadapter?) {
-    self.panadapter = panadapter
+    self._panadapter = panadapter
   }
 
   // ----------------------------------------------------------------------------
@@ -138,7 +132,7 @@ final class PanafallViewController          : NSSplitViewController {
     let mouseFrequency = Int(mouseLocation.x * _hzPerUnit) + _start
     
     // is there an active Slice
-    if let slice = Slice.findActive(with: panadapter!.id) {
+    if let slice = Slice.findActive(with: _panadapter!.id) {
       
       // YES, force it to the nearest step value
       let delta = (mouseFrequency % slice.step)
@@ -156,7 +150,7 @@ final class PanafallViewController          : NSSplitViewController {
     } else {
       
       // NO, create one at the mouse position
-      xLib6000.Slice.create(panadapter: panadapter!, frequency: mouseFrequency)
+      xLib6000.Slice.create(panadapter: _panadapter!, frequency: mouseFrequency)
     }
     // redraw the Slices
     _panadapterViewController?.redrawSlices()
@@ -178,7 +172,7 @@ final class PanafallViewController          : NSSplitViewController {
     let mouseFrequency = Int(mouseLocation.x * _hzPerUnit) + _start
     
     // is the Frequency inside a Slice?
-    let slice = xLib6000.Slice.find(with: panadapter!.id, byFrequency: mouseFrequency, minWidth: Int( CGFloat(_bandwidth) * kSliceFindWidth ))
+    let slice = xLib6000.Slice.find(with: _panadapter!.id, byFrequency: mouseFrequency, minWidth: Int( CGFloat(_bandwidth) * kSliceFindWidth ))
     if let slice = slice {
       
       // YES, mouse is in a Slice
@@ -246,7 +240,7 @@ final class PanafallViewController          : NSSplitViewController {
       
     case kCreateSlice:        // tell the Radio to create a new Slice
       let freq = (sender.representedObject! as! NSNumber).intValue
-      xLib6000.Slice.create(panadapter: panadapter!, frequency: freq)
+      xLib6000.Slice.create(panadapter: _panadapter!, frequency: freq)
       
     case kRemoveSlice:        // tell the Radio to remove the Slice
      (sender.representedObject as! xLib6000.Slice).remove()
@@ -302,7 +296,7 @@ final class PanafallViewController          : NSSplitViewController {
     if isTooClose  {
       
       // YES, adjust the panafall center frequency (scroll the Panafall)
-      panadapter!.center += incr
+      _panadapter!.center += incr
       
       _panadapterViewController?.redrawFrequencyLegend()
     }
