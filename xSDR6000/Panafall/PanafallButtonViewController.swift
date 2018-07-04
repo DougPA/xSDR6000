@@ -19,6 +19,7 @@ final class PanafallButtonViewController    : NSViewController {
   // ----------------------------------------------------------------------------
   // MARK: - Internal properties
   
+  // KVO-properties for popovers
   @objc dynamic weak var panadapter         : Panadapter?
   @objc dynamic weak var waterfall          : Waterfall?
   @objc dynamic var fillLevel               : Int {
