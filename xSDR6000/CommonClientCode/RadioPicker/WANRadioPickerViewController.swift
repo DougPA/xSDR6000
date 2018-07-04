@@ -224,6 +224,8 @@ final class WANRadioPickerViewController    : NSViewController, NSTableViewDeleg
       
       getAuthentificationForRadio(_selectedRadio)
 
+      dismissViewController(_parentVc)
+      
     } else {
       // RadioPicker sheet will remain open & Radio will be disconnected
       
