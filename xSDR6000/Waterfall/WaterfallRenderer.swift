@@ -543,7 +543,7 @@ extension WaterfallRenderer                 : StreamHandler {
   ///
   public func streamHandler<T>(_ streamFrame: T) {
     
-    guard let frame = streamFrame as? WaterfallFrame else { return }
+    guard let streamFrame = streamFrame as? WaterfallFrame else { return }
 
     // wait for an available Intensity Texture
     _frameBoundarySemaphore.wait()
@@ -555,11 +555,11 @@ extension WaterfallRenderer                 : StreamHandler {
     _textureIndex = (_textureIndex + 1) % WaterfallRenderer.kMaxTextures
     
     // recalc values initially or when center/bandwidth changes
-    if frame.binBandwidth != _binBandwidth || frame.firstBinFreq != _firstBinFreq {
+    if streamFrame.binBandwidth != _binBandwidth || streamFrame.firstBinFreq != _firstBinFreq {
       
       // calculate the starting & ending bin numbers
-      let startingBin = Float( (CGFloat(_start) - frame.firstBinFreq) / frame.binBandwidth )
-      let endingBin = Float( (CGFloat(_end) - frame.firstBinFreq) / frame.binBandwidth )
+      let startingBin = Float( (CGFloat(_start) - streamFrame.firstBinFreq) / streamFrame.binBandwidth )
+      let endingBin = Float( (CGFloat(_end) - streamFrame.firstBinFreq) / streamFrame.binBandwidth )
       
       // update all of the x vertices
       for i in 0..<WaterfallRenderer.kMaxTextures {
@@ -575,9 +575,9 @@ extension WaterfallRenderer                 : StreamHandler {
       }
     }
     // record the current values
-    _autoBlackLevel = UInt16(frame.autoBlackLevel)
-    _binBandwidth = frame.binBandwidth
-    _firstBinFreq = frame.firstBinFreq
+    _autoBlackLevel = UInt16(streamFrame.autoBlackLevel)
+    _binBandwidth = streamFrame.binBandwidth
+    _firstBinFreq = streamFrame.firstBinFreq
     
     // set y coordinates of the top of the texture (in clip space, i.e. 0.0 to 1.0)
     let topIndex = Float(_parameters[_textureIndex].topLine)            // index into texture
@@ -599,10 +599,9 @@ extension WaterfallRenderer                 : StreamHandler {
     updateLine(newTopLine)
     
     // copy the Intensities into the current texture
-    let binsPtr = UnsafeRawPointer(frame.bins).bindMemory(to: UInt8.self, capacity: frame.numberOfBins * MemoryLayout<UInt16>.size)
-    let region = MTLRegionMake1D(0, frame.numberOfBins)
+    let binsPtr = UnsafeRawPointer(streamFrame.bins).bindMemory(to: UInt8.self, capacity: streamFrame.totalBinsInFrame * MemoryLayout<UInt16>.size)
+    let region = MTLRegionMake1D(0, streamFrame.totalBinsInFrame)
     _parameters[_textureIndex].intensities.replace(region: region, mipmapLevel: 0, withBytes: binsPtr, bytesPerRow: WaterfallRenderer.kTextureWidth * MemoryLayout<UInt16>.size)
-    
     
 //    DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
       self._metalView.draw()
