@@ -345,11 +345,12 @@ extension PanadapterRenderer                : StreamHandler {
 
   //  DataFrame Layout: (see xLib6000 PanadapterFrame)
   //
-  //  public var startingBinIndex: Int                    // Index of first bin
-  //  public var numberOfBins: Int                        // Number of bins
-  //  public var binSize: Int                             // Bin size in bytes
-  //  public var frameIndex: Int                          // Frame index
-  //  public var bins: [UInt16]                           // Array of bin values
+  //  var startingBinIndex                    : UInt16
+  //  var numberOfBins                        : UInt16
+  //  var binSize                             : UInt16
+  //  var totalBinsInFrame                    : UInt16
+  //  var frameIndex                          : UInt32
+  //  var bins: [UInt16]
   //
   
   /// Process the UDP Stream Data for the Panadapter (arrives on the streamQ)
@@ -358,18 +359,18 @@ extension PanadapterRenderer                : StreamHandler {
   ///
   public func streamHandler<T>(_ streamFrame: T) {
     
-    guard let frame = streamFrame as? PanadapterFrame else { return }
+    guard let streamFrame = streamFrame as? PanadapterFrame else { return }
     
     _frameBoundarySemaphore.wait()
     
     // move to using the next spectrumBuffer
     _currentFrameIndex = (_currentFrameIndex + 1) % PanadapterRenderer.kNumberSpectrumBuffers
     
-    // dataFrame.numberOfBins is the number of horizontal pixels in the spectrum waveform
-    _numberOfBins = frame.numberOfBins
+    // totalBinsInFrame is the number of horizontal pixels in the spectrum waveform
+    _numberOfBins = streamFrame.totalBinsInFrame
     
     // put the Intensities into the current Spectrum Buffer
-    _spectrumBuffers[_currentFrameIndex].contents().copyMemory(from: frame.bins, byteCount: frame.numberOfBins * MemoryLayout<ushort>.stride)
+    _spectrumBuffers[_currentFrameIndex].contents().copyMemory(from: streamFrame.bins, byteCount: streamFrame.totalBinsInFrame * MemoryLayout<ushort>.stride)
     
 //    DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
       self._metalView.draw()
