@@ -3,6 +3,11 @@ xLib6000 Change Log
 v1.1.13
 
 Api.swift - added NSObject to API's inheritance
+Api.swift - added "@objc dynamic" to sharedInstance delaration
+Api.swift - added .setMtu to the Commands enum and to allSecondaryCommands for 2.3.7
+Panadapter.swift - refactored panadapterFrame class and vitaProcessor(_:) method for v2.3.7
+Waterfall.swift - refactored waterfallFrame class and vitaProcessor(_:) method for 2.3.7
+README.MD - added note regarding 2.3.7 requirement
 
 v1.1.12
 
