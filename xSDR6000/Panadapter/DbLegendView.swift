@@ -15,7 +15,7 @@ public final class DbLegendView             : NSView {
   // ----------------------------------------------------------------------------
   // MARK: - Internal properties
   
-  weak var panadapter                       : Panadapter?
+  private weak var _panadapter              : Panadapter?
   
   var width: CGFloat                        = 40
   var font                                  = NSFont(name: "Monaco", size: 12.0)
@@ -23,8 +23,8 @@ public final class DbLegendView             : NSView {
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
   
-  private var _minDbm                       : CGFloat {return panadapter!.minDbm }
-  private var _maxDbm                       : CGFloat {return panadapter!.maxDbm }
+  private var _minDbm                       : CGFloat {return _panadapter!.minDbm }
+  private var _maxDbm                       : CGFloat {return _panadapter!.maxDbm }
   private var _spacings                     = Defaults[.dbLegendSpacings]
   private var _path                         = NSBezierPath()  
   private var _attributes                   = [NSAttributedStringKey:AnyObject]() // Font & Size for the db Legend
@@ -33,7 +33,7 @@ public final class DbLegendView             : NSView {
   private let kFormat                       = " %4.0f"
   
   // ----------------------------------------------------------------------------
-  // MARK: - Internal methods
+  // MARK: - Overridden methods
   
   public override func draw(_ dirtyRect: NSRect) {
     super.draw(dirtyRect)
@@ -46,6 +46,17 @@ public final class DbLegendView             : NSView {
     // draw the Db legend and horizontal grid lines
     drawLegend(dirtyRect)
   }
+  
+  // ----------------------------------------------------------------------------
+  // MARK: - Internal methods
+  
+  /// Configure needed parameters
+  ///
+  /// - Parameter panadapter:               a Panadapter reference
+  ///
+  func configure(panadapter: Panadapter?) {
+    self._panadapter = panadapter
+  }
   /// Process a Dbm level drag
   ///
   /// - Parameter dr:         the draggable
@@ -56,12 +67,12 @@ public final class DbLegendView             : NSView {
     if dr.original.y > frame.height/2 {
       
       // YES, update the max value
-      panadapter!.maxDbm += (dr.previous.y - dr.current.y)
+      _panadapter!.maxDbm += (dr.previous.y - dr.current.y)
       
     } else {
       
       // NO, update the min value
-      panadapter!.minDbm += (dr.previous.y - dr.current.y)
+      _panadapter!.minDbm += (dr.previous.y - dr.current.y)
     }
     // redraw the db legend
     redraw()

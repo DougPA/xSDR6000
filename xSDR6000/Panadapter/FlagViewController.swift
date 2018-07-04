@@ -79,10 +79,10 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
     
     // set the Alpha ID
     _alpha.stringValue = FlagViewController.kSliceLetters[Int(slice!.id)!]
-    
+
     // begin slice observations
     createObservations(&_observations, object: slice!)
-    
+
     // start receiving Notifications
     addNotifications()
     
@@ -94,14 +94,14 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
     _doubleClick.buttonMask = kLeftButton
     _doubleClick.numberOfClicksRequired = 2
     _frequencyField.addGestureRecognizer(_doubleClick)
-    
+
     _frequencyField.delegate = self
   }
   
   public override func controlTextDidBeginEditing(_ note: Notification) {
-    
+
     if let field = note.object as? NSTextField, field == _frequencyField {
-      
+
       _previousFrequency = slice!.frequency
     }
     _beginEditing = true
@@ -111,61 +111,33 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
     
     if let field = note.object as? NSTextField, field == _frequencyField, _beginEditing {
 
-      repositionPanadapter(center: panadapter!.center, frequency: _previousFrequency, newFrequency: slice!.frequency)
+      repositionPanadapter(center: panadapter!.center, frequency: _previousFrequency, newFrequency: _frequencyField.integerValue)
       _beginEditing = false
     }
-    
-//    let selectedRange = _frequencyField.currentEditor()?.selectedRange
-//    _frequencyField.currentEditor()?.selectedRange = NSMakeRange(selectedRange?.location ?? 0, 0)
+  }
+
+  // ----------------------------------------------------------------------------
+  // MARK: - Internal methods
+
+  /// Configure needed parameters
+  ///
+  /// - Parameters:
+  ///   - panadapter:               a Panadapter reference
+  ///   - slice:                    a Slice reference
+  ///
+  func configure(panadapter: Panadapter?, slice: xLib6000.Slice?) {
+    self.panadapter = panadapter
+    self.slice = slice!
   }
   /// Force the Frequency to be redrawn
   ///
-  func redraw() {
-    
-    // interact with the UI
-    DispatchQueue.main.async { [unowned self] in
-      // force a redraw
-      self._frequencyField.needsDisplay = true
-    }
-  }
-
-  // ----------------------------------------------------------------------------
-  // MARK: - Action methods
-  @IBAction func frequencyText(_ sender: NSTextField) {
-
-//    Swift.print("Action")
-  }
-  
-  /// One of the "tab" view buttons has been clicked
-  ///
-  /// - Parameter sender:         the button
-  ///
-  @IBAction func buttons(_ sender: NSButton) {
-    
-    // is the button "on"?
-    if sender.state == NSControl.StateValue.on {
-      
-      // YES, turn off any other buttons
-      if sender != _audButton { _audButton.state = NSControl.StateValue.off}
-      if sender != _dspButton { _dspButton.state = NSControl.StateValue.off}
-      if sender != _modeButton { _modeButton.state = NSControl.StateValue.off}
-      if sender != _xritButton { _xritButton.state = NSControl.StateValue.off}
-      if sender != _daxButton { _daxButton.state = NSControl.StateValue.off}
-    }
-    // display / hide the selected view
-    selectView(sender.identifier!.rawValue)
-  }
-  
-  // ----------------------------------------------------------------------------
-  // MARK: - Internal methods
-  
   /// Move a Slice Flag to the specified position
   ///
   /// - Parameters:
   ///   - frequencyPosition: the desired position
   ///   - onLeft: Flag placement (Left / Right of frequency)
   ///
-  func moveTo(_ frequencyPosition: NSPoint, onLeft: Bool) {
+  func moveTo(_ frequencyPosition: NSPoint, frequency: Int, onLeft: Bool) {
     
     self.onLeft = onLeft
     
@@ -185,7 +157,32 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
     // update the flag's position
     view.setFrameOrigin(_position)
     
-    redraw()
+    _frequencyField.integerValue = frequency
+    
+    view.needsDisplay = true
+  }
+
+  // ----------------------------------------------------------------------------
+  // MARK: - Action methods
+  
+  /// One of the "tab" view buttons has been clicked
+  ///
+  /// - Parameter sender:         the button
+  ///
+  @IBAction func buttons(_ sender: NSButton) {
+    
+    // is the button "on"?
+    if sender.state == NSControl.StateValue.on {
+      
+      // YES, turn off any other buttons
+      if sender != _audButton { _audButton.state = NSControl.StateValue.off}
+      if sender != _dspButton { _dspButton.state = NSControl.StateValue.off}
+      if sender != _modeButton { _modeButton.state = NSControl.StateValue.off}
+      if sender != _xritButton { _xritButton.state = NSControl.StateValue.off}
+      if sender != _daxButton { _daxButton.state = NSControl.StateValue.off}
+    }
+    // display / hide the selected view
+    selectView(sender.identifier!.rawValue)
   }
   
   // ----------------------------------------------------------------------------
@@ -215,7 +212,7 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
       // get the selected tab
       _viewController = _storyBoard!.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier(rawValue: id)) as? NSViewController
       
-      _viewController!.representedObject = slice! as Any
+      _viewController!.representedObject = slice as Any
       
       // open the display area with the appropriate height
       _containerViewHeight.constant = _viewController!.view.frame.size.height
@@ -248,7 +245,7 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
       
       // get the selected tab
       _viewController = _storyBoard!.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier(rawValue: id)) as? NSViewController
-      _viewController!.representedObject = slice! as Any
+      _viewController!.representedObject = slice as Any
       
       // open the display area with the appropriate height
       _containerViewHeight.constant = _viewController!.view.frame.size.height
@@ -273,7 +270,7 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
   func repositionPanadapter(center: Int, frequency: Int, newFrequency: Int) {
   
 //    Swift.print("previousCenter = \(center), newCenter = \(newFrequency - (frequency - center))")
-    
+    slice!.frequency = newFrequency
     panadapter!.center = newFrequency - (frequency - center)
   }
   
@@ -288,16 +285,14 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
     
     observations = [
       object.observe(\.filterHigh, options: [.initial, .new], changeHandler: observer),
-      object.observe(\.filterLow, options: [.initial, .new], changeHandler: observer),
+      object.observe(\.filterLow, options: [.initial, .new], changeHandler: observer)
 //      object.observe(\.locked, options: [.initial, .new], changeHandler: observer),
+//      object.observe(\.txEnabled, options: [.new], changeHandler: observer),
+//      object.observe(\.nbEnabled, options: [.initial, .new], changeHandler: observer),
+//      object.observe(\.nrEnabled, options: [.new], changeHandler: observer),
+//      object.observe(\.anfEnabled, options: [.new], changeHandler: observer),
+//      object.observe(\.qskEnabled, options: [.new], changeHandler: observer),
 //      object.observe(\.frequency, options: [.initial, .new], changeHandler: observer)
-
-      //      object.observe(\.txEnabled, options: [.new], changeHandler: observer),
-      //      object.observe(\.nbEnabled, options: [.initial, .new], changeHandler: observer),
-      //      object.observe(\.nrEnabled, options: [.new], changeHandler: observer),
-      //      object.observe(\.anfEnabled, options: [.new], changeHandler: observer),
-      //      object.observe(\.qskEnabled, options: [.new], changeHandler: observer),
-      //      object.observe(\.frequency, options: [.initial, .new], changeHandler: observer),
     ]
   }
   private func observer(_ object: Any, _ change: Any) {
@@ -306,7 +301,10 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
     
     DispatchQueue.main.async { [unowned self] in
       self._filter.floatValue = width
-      self._lockButton.state = ( self.slice!.locked ? NSControl.StateValue.on: NSControl.StateValue.off )
+      
+//      self.view.needsDisplay = true
+      
+//      self._lockButton.state = ( self.slice!.locked ? NSControl.StateValue.on: NSControl.StateValue.off )
 //      self._frequencyField.integerValue = self.slice!.frequency
       
       //      self._txButton.state = self.slice!.txEnabled ? NSControl.StateValue.on : NSControl.StateValue.off
@@ -317,7 +315,6 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
       //      self._lock.state = (self.slice!.locked ? NSControl.StateValue.on : NSControl.StateValue.off)
     }
   }
-  
   // ----------------------------------------------------------------------------
   // MARK: - Notification Methods
   
@@ -337,7 +334,7 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
   @objc private func sliceMeterHasBeenAdded(_ note: Notification) {
     
     // does the Notification contain a Meter object for this Slice?
-    if let meter = note.object as? Meter, meter.number == slice?.id {
+    if let meter = note.object as? Meter, meter.number == slice!.id {
       sMeter()
     }
   }

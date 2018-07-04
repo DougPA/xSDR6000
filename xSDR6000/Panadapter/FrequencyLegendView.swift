@@ -18,7 +18,6 @@ public final class FrequencyLegendView      : NSView {
   // MARK: - Internal properties
   
   var radio: Radio?                         = Api.sharedInstance.radio
-  weak var panadapter                       : Panadapter?
   
   var flags                                 = [FlagViewController]()
   var legendHeight                          : CGFloat = 20                  // height of legend area
@@ -29,8 +28,9 @@ public final class FrequencyLegendView      : NSView {
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
 
-  private var _center                       : Int {return panadapter!.center }
-  private var _bandwidth                    : Int { return panadapter!.bandwidth }
+  private weak var _panadapter              : Panadapter?
+  private var _center                       : Int {return _panadapter!.center }
+  private var _bandwidth                    : Int { return _panadapter!.bandwidth }
   private var _start                        : Int { return _center - (_bandwidth/2) }
   private var _end                          : Int  { return _center + (_bandwidth/2) }
   private var _hzPerUnit                    : CGFloat { return CGFloat(_end - _start) / self.frame.width }
@@ -61,6 +61,7 @@ public final class FrequencyLegendView      : NSView {
   ]
   private let _frequencyLineWidth           : CGFloat = 2.0
   private let _lineColor                    = NSColor(srgbRed: 1.0, green: 1.0, blue: 1.0, alpha: 0.2)
+  
   private let kMultiplier                   : CGFloat = 0.001
   private let kFlagBorder                   : CGFloat = 20
 
@@ -70,16 +71,9 @@ public final class FrequencyLegendView      : NSView {
   public override func draw(_ dirtyRect: NSRect) {
     super.draw(dirtyRect)
     
-    // set the background color
-    layer?.backgroundColor = NSColor.clear.cgColor
-    
     drawSlices()
     
     positionFlags()
-    
-    for flagVc in flags {
-      flagVc.view.needsDisplay = true
-    }
 
     drawTnfs()
 
@@ -93,6 +87,13 @@ public final class FrequencyLegendView      : NSView {
   // ----------------------------------------------------------------------------
   // MARK: - Internal methods
   
+  /// Configure needed parameters
+  ///
+  /// - Parameter panadapter:               a Panadapter reference
+  ///
+  func configure(panadapter: Panadapter?) {
+    self._panadapter = panadapter
+  }
   /// Process a bandwidth drag
   ///
   /// - Parameter dr:         the draggable
@@ -121,8 +122,8 @@ public final class FrequencyLegendView      : NSView {
     let newCenter = (newStart + freqError) + (newEnd - newStart) / 2.0
     
     // adjust the center & bandwidth values (Hz)
-    panadapter!.center = Int(newCenter)
-    panadapter!.bandwidth = Int(newBandwidth)
+    _panadapter!.center = Int(newCenter)
+    _panadapter!.bandwidth = Int(newBandwidth)
     
     // redraw the frequency legend
     redraw()
@@ -134,7 +135,7 @@ public final class FrequencyLegendView      : NSView {
   func updateCenter(dragable dr: PanadapterViewController.Dragable) {
     
     // adjust the center
-    panadapter!.center = panadapter!.center - Int( (dr.current.x - dr.previous.x) * _hzPerUnit)
+    _panadapter!.center = _panadapter!.center - Int( (dr.current.x - dr.previous.x) * _hzPerUnit)
     
     // redraw the frequency legend
     redraw()
@@ -187,9 +188,19 @@ public final class FrequencyLegendView      : NSView {
         
       } else {
         
-        // resize
-        slice.filterLow -= Int(deltaY * CGFloat(_bandwidth) * kMultiplier)
-        slice.filterHigh += Int(deltaY * CGFloat(_bandwidth) * kMultiplier)
+        // resize the filter
+        switch slice.mode {
+        case "USB", "DIGU":               // upper-side only
+          slice.filterHigh += Int(deltaY * CGFloat(_bandwidth) * kMultiplier)
+       case "LSB", "DIGL":                // lower-side only
+          slice.filterLow -= Int(deltaY * CGFloat(_bandwidth) * kMultiplier)
+        case "AM", "SAM", "FM","NFM":     // both sides
+          slice.filterHigh += Int(deltaY * CGFloat(_bandwidth) * kMultiplier)
+          slice.filterLow -= Int(deltaY * CGFloat(_bandwidth) * kMultiplier)
+        default:                          // both sides
+          slice.filterHigh += Int(deltaY * CGFloat(_bandwidth) * kMultiplier)
+          slice.filterLow -= Int(deltaY * CGFloat(_bandwidth) * kMultiplier)
+        }
       }
     }
     // redraw the slices
@@ -357,7 +368,7 @@ public final class FrequencyLegendView      : NSView {
   
   func drawSlices() {
     
-    for (_, slice) in radio!.slices where slice.panadapterId == panadapter!.id {
+    for (_, slice) in radio!.slices where slice.panadapterId == _panadapter!.id {
         
         drawFilterOutline(slice)
         
@@ -411,7 +422,7 @@ public final class FrequencyLegendView      : NSView {
       frequencyPosition.y = frame.height - currentFlagVc.view.frame.height
       
       // position it
-      currentFlagVc.moveTo( frequencyPosition, onLeft: onLeft)
+      currentFlagVc.moveTo( frequencyPosition, frequency: currentFlagVc.slice!.frequency, onLeft: onLeft)
       
       // make the current one the previous one
       previousFlagVc = currentFlagVc
