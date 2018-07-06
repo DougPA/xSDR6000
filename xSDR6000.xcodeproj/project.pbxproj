@@ -255,10 +255,10 @@
 		913F7EF32066DC7900F35E9B /* Panafall */ = {
 			isa = PBXGroup;
 			children = (
-				913F7EF42066DC7900F35E9B /* PanafallButtonView.swift */,
-				913F7EF52066DC7900F35E9B /* PanafallViewController.swift */,
 				913F7EF62066DC7900F35E9B /* PanafallsViewController.swift */,
 				913F7EF72066DC7900F35E9B /* PanafallButtonViewController.swift */,
+				913F7EF42066DC7900F35E9B /* PanafallButtonView.swift */,
+				913F7EF52066DC7900F35E9B /* PanafallViewController.swift */,
 			);
 			path = Panafall;
 			sourceTree = "<group>";

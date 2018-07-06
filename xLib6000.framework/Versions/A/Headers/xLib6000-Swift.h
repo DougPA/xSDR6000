@@ -483,6 +483,7 @@ SWIFT_CLASS("_TtC8xLib600010Panadapter")
 @property (nonatomic) NSInteger average;
 @property (nonatomic, copy) NSString * _Nonnull band;
 @property (nonatomic) NSInteger bandwidth;
+@property (nonatomic) BOOL bandZoomEnabled;
 @property (nonatomic) NSInteger center;
 @property (nonatomic) NSInteger daxIqChannel;
 @property (nonatomic) NSInteger fps;
@@ -496,6 +497,7 @@ SWIFT_CLASS("_TtC8xLib600010Panadapter")
 @property (nonatomic) CGFloat minDbm;
 @property (nonatomic) NSInteger rfGain;
 @property (nonatomic, copy) NSString * _Nonnull rxAnt;
+@property (nonatomic) BOOL segmentZoomEnabled;
 @property (nonatomic) BOOL weightedAverageEnabled;
 @property (nonatomic) BOOL wnbEnabled;
 @property (nonatomic) NSInteger wnbLevel;

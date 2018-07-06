@@ -1,5 +1,24 @@
 xLib6000 Change Log
 
+v1.2.3
+
+Panadapter.swift - "switch" changed to "if" in accumulate(vita:)
+Waterfall.swift - "switch" changed to "if" in accumulate(vita:)
+Api.swift - in setupCommands(_:) suppressed MTU command for versions prior to 2.3.x
+
+v1.2.2
+
+PanadapterCommands.swift - added bandZoomEnabled & segmentZoomEnabled
+Api.swift - added radioVersionMajor & radioVersionMinor properties
+Panadapter.swift - changed PanadapterFrame accumulate(vita:) to check radio version
+Waterfall.swift - changed WaterfallFrame accumulate(vita:) to check radio version
+
+v1.2.1
+
+Changed version number due to major change in UDP handling
+
+============================================================
+
 v1.1.13
 
 Api.swift - added NSObject to API's inheritance
@@ -122,7 +141,6 @@ Api.swift - added testerModeEnabled property, used in class isStatusForThisClien
 FlexErrors.swift - refactored
 on each object, in the <object>Commands.swift file, simplified names of instance methods (removed the name of the object as part of the method name)
 on each object, in the <object>Commands.swift file, made "create" a class method and "remove" an instance method
-
 
 ============================================================
 
