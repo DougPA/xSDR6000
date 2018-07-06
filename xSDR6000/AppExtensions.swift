@@ -35,16 +35,13 @@ extension UserDefaults {
 extension DefaultsKeys {
   
   // Radio level info
-  static let apiFirmwareSupport           = DefaultsKey<String>("apiFirmwareSupport")
   static let apiVersion                   = DefaultsKey<String>("apiVersion")
   static let auth0Email                   = DefaultsKey<String>("auth0Email")
   static let defaultRadioParameters       = DefaultsKey<[String]>("defaultRadioParameters") // obsolete
   static let defaultsDictionary           = DefaultsKey<[String: Any]>("defaultsDictionary")
-  static let guiFirmwareSupport           = DefaultsKey<String>("guiFirmwareSupport")
   static let guiVersion                   = DefaultsKey<String>("guiVersion")
   static let logNumber                    = DefaultsKey<Int>("logNumber")
-  static let openGLVersion                = DefaultsKey<String>("openGLVersion")
-  static let radioFirmwareVersion         = DefaultsKey<String>("radioFirmwareVersion")
+  static let radioVersion                 = DefaultsKey<String>("radioVersion")
   static let radioModel                   = DefaultsKey<String>("radioModel")
   static let remoteRxEnabled              = DefaultsKey<Bool>("remoteRxEnabled")
   static let remoteTxEnabled              = DefaultsKey<Bool>("remoteTxEnabled")
@@ -481,14 +478,14 @@ func versionInfo(framework: String) -> (String, String) {
   let frameworkBundle = Bundle(identifier: framework)!
   var version = frameworkBundle.object(forInfoDictionaryKey: kVersionKey)!
   var build = frameworkBundle.object(forInfoDictionaryKey: kBuildKey)!
-  let frameworkVersion = "\(version).\(build)"
+  let apiVersion = "\(version).\(build)"
   
   // get the version of this app
   version = Bundle.main.object(forInfoDictionaryKey: kVersionKey)!
   build = Bundle.main.object(forInfoDictionaryKey: kBuildKey)!
   let appVersion = "\(version).\(build)"
   
-  return (frameworkVersion, appVersion)
+  return (apiVersion, appVersion)
 }
 
 /// Setup & Register User Defaults from a file

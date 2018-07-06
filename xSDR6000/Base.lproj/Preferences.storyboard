@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="jcl-33-LeA">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="jcl-33-LeA">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13771"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14113"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -39,7 +40,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <font key="font" metaFont="message"/>
-                        <tabViewItems/>
                         <connections>
                             <outlet property="delegate" destination="f5E-4P-cEO" id="I0K-Tw-Rut"/>
                         </connections>
@@ -699,8 +699,8 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yan-Ej-svz" userLabel="API Version label">
-                                <rect key="frame" x="18" y="269" width="135" height="17"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="xLib6000 API Version" id="Fx7-bw-GOz">
+                                <rect key="frame" x="18" y="269" width="111" height="17"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="xLib6000 Version" id="Fx7-bw-GOz">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -718,8 +718,8 @@
                                 </connections>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="D94-eN-xbF" userLabel="GUI Version label">
-                                <rect key="frame" x="18" y="323" width="145" height="17"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="xSDR6000 GUI Version" id="U5k-mc-487">
+                                <rect key="frame" x="18" y="323" width="118" height="17"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="xSDR6000 Version" id="U5k-mc-487">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -740,8 +740,8 @@
                                 </connections>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JdU-C4-xhT" userLabel="Radio Firmware Version label">
-                                <rect key="frame" x="18" y="215" width="146" height="17"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Radio Firmware Version" id="orX-Ib-w1T">
+                                <rect key="frame" x="18" y="215" width="87" height="17"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Radio Version" id="orX-Ib-w1T">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -777,99 +777,27 @@
                                     <binding destination="BlG-y8-jgO" name="value" keyPath="representedObject.radioModel" id="hAH-lI-xdL"/>
                                 </connections>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="a02-HR-vQD" userLabel="OpenGL Version label">
-                                <rect key="frame" x="18" y="163" width="103" height="17"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="OpenGL Version" id="xZo-kL-oJ9">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="p0X-df-tvj" userLabel="OpenGLVersion">
-                                <rect key="frame" x="240" y="160" width="133" height="22"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" placeholderString="0.0" id="cMP-ZG-LU5">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                                <connections>
-                                    <binding destination="BlG-y8-jgO" name="value" keyPath="representedObject.openGLVersion" id="zXQ-1n-eg4"/>
-                                </connections>
-                            </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TcN-xx-4Gq" userLabel="GUI Firmware Support label">
-                                <rect key="frame" x="18" y="296" width="207" height="17"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="xSDR6000 GUI Firmware Support" id="cRB-bX-UQS">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aur-Ay-MAR" userLabel="GUI Firmware Support">
-                                <rect key="frame" x="240" y="293" width="133" height="22"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" placeholderString="1.2.3" id="ut6-7Q-Cst">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                                <connections>
-                                    <binding destination="BlG-y8-jgO" name="value" keyPath="representedObject.guiFirmwareSupport" id="y82-Q0-HrH"/>
-                                </connections>
-                            </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ri5-kd-FRY" userLabel="API Firmware Support label">
-                                <rect key="frame" x="18" y="242" width="197" height="17"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="xLib6000 API Firmware Support" id="AOG-wB-Nz7">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cLy-r4-kDR" userLabel="API Firmware Support">
-                                <rect key="frame" x="240" y="239" width="133" height="22"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" placeholderString="1.2.3.4" id="jZB-1L-7ou">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                                <connections>
-                                    <binding destination="BlG-y8-jgO" name="value" keyPath="representedObject.apiFirmwareSupport" id="UDR-Ya-54N"/>
-                                </connections>
-                            </textField>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="p0X-df-tvj" firstAttribute="top" secondItem="Ntm-Cv-zvr" secondAttribute="bottom" constant="5" id="4K7-SH-v5o"/>
-                            <constraint firstItem="TcN-xx-4Gq" firstAttribute="leading" secondItem="yan-Ej-svz" secondAttribute="leading" id="6Wb-3U-2om"/>
-                            <constraint firstItem="XG0-Ut-XOs" firstAttribute="top" secondItem="cLy-r4-kDR" secondAttribute="bottom" constant="5" id="7De-ko-J2V"/>
+                            <constraint firstItem="yan-Ej-svz" firstAttribute="leading" secondItem="D94-eN-xbF" secondAttribute="leading" id="9cN-hu-bkb"/>
                             <constraint firstItem="yan-Ej-svz" firstAttribute="baseline" secondItem="YKg-wi-WTR" secondAttribute="baseline" id="DNR-o9-h9F"/>
-                            <constraint firstItem="c9B-zc-eiG" firstAttribute="leading" secondItem="a02-HR-vQD" secondAttribute="leading" id="ENK-bI-cz0"/>
-                            <constraint firstItem="cLy-r4-kDR" firstAttribute="top" secondItem="YKg-wi-WTR" secondAttribute="bottom" constant="5" id="EeR-Mk-woz"/>
+                            <constraint firstItem="yan-Ej-svz" firstAttribute="leading" secondItem="JdU-C4-xhT" secondAttribute="leading" id="Dth-GS-sCL"/>
                             <constraint firstItem="XG0-Ut-XOs" firstAttribute="leading" secondItem="Ntm-Cv-zvr" secondAttribute="leading" id="Epc-X1-Iut"/>
-                            <constraint firstItem="aur-Ay-MAR" firstAttribute="trailing" secondItem="YKg-wi-WTR" secondAttribute="trailing" id="Gmp-b8-ZRj"/>
+                            <constraint firstItem="JdU-C4-xhT" firstAttribute="top" secondItem="yan-Ej-svz" secondAttribute="bottom" constant="37" id="G3C-lt-iEY"/>
                             <constraint firstItem="JdU-C4-xhT" firstAttribute="baseline" secondItem="XG0-Ut-XOs" secondAttribute="baseline" id="Jbx-OG-TSd"/>
-                            <constraint firstItem="cLy-r4-kDR" firstAttribute="leading" secondItem="XG0-Ut-XOs" secondAttribute="leading" id="Lgu-p5-Ruu"/>
-                            <constraint firstItem="D94-eN-xbF" firstAttribute="leading" secondItem="TcN-xx-4Gq" secondAttribute="leading" id="MlZ-b1-dw7"/>
-                            <constraint firstItem="Ntm-Cv-zvr" firstAttribute="leading" secondItem="p0X-df-tvj" secondAttribute="leading" id="PwN-QX-Gcy"/>
-                            <constraint firstItem="2A3-Re-Kfm" firstAttribute="leading" secondItem="aur-Ay-MAR" secondAttribute="leading" id="S3n-JT-ghC"/>
-                            <constraint firstItem="YKg-wi-WTR" firstAttribute="top" secondItem="aur-Ay-MAR" secondAttribute="bottom" constant="5" id="VjT-zg-HjZ"/>
+                            <constraint firstItem="2A3-Re-Kfm" firstAttribute="leading" secondItem="XG0-Ut-XOs" secondAttribute="leading" id="LWR-Pc-6hO"/>
+                            <constraint firstItem="2A3-Re-Kfm" firstAttribute="leading" secondItem="YKg-wi-WTR" secondAttribute="leading" id="QYn-Ui-Rhg"/>
+                            <constraint firstItem="2A3-Re-Kfm" firstAttribute="leading" secondItem="MB7-kC-occ" secondAttribute="leading" constant="240" id="Ukv-db-qss"/>
                             <constraint firstItem="XG0-Ut-XOs" firstAttribute="trailing" secondItem="Ntm-Cv-zvr" secondAttribute="trailing" id="WPe-s1-vML"/>
-                            <constraint firstItem="aur-Ay-MAR" firstAttribute="leading" secondItem="TcN-xx-4Gq" secondAttribute="trailing" constant="17" id="ZWM-5v-uGu"/>
-                            <constraint firstItem="a02-HR-vQD" firstAttribute="baseline" secondItem="p0X-df-tvj" secondAttribute="baseline" id="a2E-5x-KWD"/>
-                            <constraint firstItem="ri5-kd-FRY" firstAttribute="baseline" secondItem="cLy-r4-kDR" secondAttribute="baseline" id="b2z-Ti-Inu"/>
+                            <constraint firstItem="2A3-Re-Kfm" firstAttribute="trailing" secondItem="XG0-Ut-XOs" secondAttribute="trailing" id="aBZ-NV-5uD"/>
+                            <constraint firstItem="2A3-Re-Kfm" firstAttribute="trailing" secondItem="YKg-wi-WTR" secondAttribute="trailing" id="aJq-dQ-Ij6"/>
                             <constraint firstItem="D94-eN-xbF" firstAttribute="baseline" secondItem="2A3-Re-Kfm" secondAttribute="baseline" id="b7Z-3s-yoS"/>
-                            <constraint firstItem="aur-Ay-MAR" firstAttribute="leading" secondItem="YKg-wi-WTR" secondAttribute="leading" id="bFW-2G-D0m"/>
                             <constraint firstItem="c9B-zc-eiG" firstAttribute="baseline" secondItem="Ntm-Cv-zvr" secondAttribute="baseline" id="d3C-yl-LTY"/>
-                            <constraint firstItem="aur-Ay-MAR" firstAttribute="top" secondItem="2A3-Re-Kfm" secondAttribute="bottom" constant="5" id="daw-lr-dcV"/>
-                            <constraint firstItem="2A3-Re-Kfm" firstAttribute="trailing" secondItem="aur-Ay-MAR" secondAttribute="trailing" id="eux-SI-qHP"/>
                             <constraint firstItem="JdU-C4-xhT" firstAttribute="leading" secondItem="c9B-zc-eiG" secondAttribute="leading" id="fla-8d-oC6"/>
                             <constraint firstItem="D94-eN-xbF" firstAttribute="top" secondItem="MB7-kC-occ" secondAttribute="top" constant="20" symbolic="YES" id="g65-Bs-iT7"/>
-                            <constraint firstItem="YKg-wi-WTR" firstAttribute="trailing" secondItem="cLy-r4-kDR" secondAttribute="trailing" id="ib4-QP-bU8"/>
-                            <constraint firstItem="cLy-r4-kDR" firstAttribute="trailing" secondItem="XG0-Ut-XOs" secondAttribute="trailing" id="kU2-oF-HTx"/>
-                            <constraint firstItem="TcN-xx-4Gq" firstAttribute="baseline" secondItem="aur-Ay-MAR" secondAttribute="baseline" id="kUU-3a-J1J"/>
-                            <constraint firstItem="ri5-kd-FRY" firstAttribute="leading" secondItem="JdU-C4-xhT" secondAttribute="leading" id="kcD-Cj-kvu"/>
                             <constraint firstItem="c9B-zc-eiG" firstAttribute="top" secondItem="JdU-C4-xhT" secondAttribute="bottom" constant="8" symbolic="YES" id="lRR-hY-Vlg"/>
+                            <constraint firstItem="YKg-wi-WTR" firstAttribute="top" secondItem="2A3-Re-Kfm" secondAttribute="bottom" constant="32" id="p2D-Gx-gNc"/>
                             <constraint firstItem="D94-eN-xbF" firstAttribute="leading" secondItem="MB7-kC-occ" secondAttribute="leading" constant="20" symbolic="YES" id="peF-5B-TuG"/>
-                            <constraint firstItem="YKg-wi-WTR" firstAttribute="leading" secondItem="cLy-r4-kDR" secondAttribute="leading" id="uin-vF-tyL"/>
-                            <constraint firstItem="yan-Ej-svz" firstAttribute="leading" secondItem="ri5-kd-FRY" secondAttribute="leading" id="vJP-a0-tDz"/>
-                            <constraint firstItem="Ntm-Cv-zvr" firstAttribute="trailing" secondItem="p0X-df-tvj" secondAttribute="trailing" id="woh-7y-73Q"/>
                         </constraints>
                     </view>
                 </viewController>

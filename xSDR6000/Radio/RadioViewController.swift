@@ -273,6 +273,9 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
       // NO, get the versions
       _versions = versionInfo(framework: Api.kBundleIdentifier)
 
+      Defaults[.apiVersion] = _versions!.api
+      Defaults[.guiVersion] = _versions!.app
+      
       // log them
       Log.sharedInstance.msg("\(kClientName) v\(_versions!.app), xLib6000 v\(_versions!.api)", level: .info, function: #function, file: #file, line: #line)
     }
@@ -416,8 +419,8 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     // a tcp connection has been established
     
     // get Radio model & firmware version
-    Defaults[.radioFirmwareVersion] = _api.activeRadio!.firmwareVersion!
-    Defaults[.radioModel] = _api.activeRadio!.model
+//    Defaults[.radioVersion] = _api.activeRadio!.firmwareVersion!
+//    Defaults[.radioModel] = _api.activeRadio!.model
   }
   /// Process .meterHasBeenAdded Notification
   ///
@@ -459,6 +462,8 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
       
       Log.sharedInstance.msg("\(radio.nickname)", level: .info, function: #function, file: #file, line: #line)
 
+      Defaults[.radioVersion] = radio.radioOptions
+      
       // update the title bar
       title()
     }
@@ -473,6 +478,8 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     if let radio = note.object as? RadioParameters {
       
       Log.sharedInstance.msg("\(radio.nickname ?? "")", level: .info, function: #function, file: #file, line: #line)
+      
+      Defaults[.radioVersion] = ""
       
       // remove all objects on Radio
       _api.radio?.removeAll()
