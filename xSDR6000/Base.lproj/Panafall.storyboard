@@ -147,12 +147,36 @@
                                             <action selector="zoomMinus:" target="euw-tc-dP2" id="N1k-aX-hrl"/>
                                         </connections>
                                     </button>
+                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="z3L-Qa-zLq">
+                                        <rect key="frame" x="10" y="53" width="19" height="28"/>
+                                        <buttonCell key="cell" type="smallSquare" title="S" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="7mj-XF-dkV">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="systemBlack" size="18"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="zoomSegment:" target="euw-tc-dP2" id="7wh-O8-l07"/>
+                                        </connections>
+                                    </button>
+                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="LO9-xw-60U">
+                                        <rect key="frame" x="51" y="53" width="19" height="28"/>
+                                        <buttonCell key="cell" type="smallSquare" title="B" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="8UL-Ya-1wr">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="systemBlack" size="18"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="zoomBand:" target="euw-tc-dP2" id="7sk-sr-44B"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <constraints>
+                                    <constraint firstItem="5gd-Hj-A35" firstAttribute="top" secondItem="LO9-xw-60U" secondAttribute="bottom" constant="8" id="Ar9-MP-6SE"/>
                                     <constraint firstItem="VxK-js-2Oq" firstAttribute="leading" secondItem="a59-Gz-pgR" secondAttribute="leading" id="EYu-LV-Bdr"/>
+                                    <constraint firstItem="z3L-Qa-zLq" firstAttribute="leading" secondItem="a59-Gz-pgR" secondAttribute="leading" constant="10" id="G2D-Gf-QY1"/>
                                     <constraint firstAttribute="trailing" secondItem="5gd-Hj-A35" secondAttribute="trailing" constant="7" id="N6L-1e-vDW"/>
                                     <constraint firstAttribute="bottom" secondItem="Nin-pl-kkY" secondAttribute="bottom" constant="20" id="ZMq-ew-ovw"/>
                                     <constraint firstAttribute="bottom" secondItem="5gd-Hj-A35" secondAttribute="bottom" constant="20" id="edp-az-C9Y"/>
+                                    <constraint firstItem="Nin-pl-kkY" firstAttribute="top" secondItem="z3L-Qa-zLq" secondAttribute="bottom" constant="8" id="fgq-rG-ClL"/>
+                                    <constraint firstAttribute="trailing" secondItem="LO9-xw-60U" secondAttribute="trailing" constant="5" id="jCd-dK-n0g"/>
                                     <constraint firstItem="VxK-js-2Oq" firstAttribute="top" secondItem="a59-Gz-pgR" secondAttribute="top" constant="10" id="ko8-rl-WAF"/>
                                     <constraint firstAttribute="trailing" secondItem="Nin-pl-kkY" secondAttribute="trailing" constant="46" id="uW3-Wx-qX4"/>
                                     <constraint firstItem="VxK-js-2Oq" firstAttribute="width" secondItem="a59-Gz-pgR" secondAttribute="width" id="w9o-nc-JYm"/>
@@ -312,8 +336,8 @@
                                     <menu key="menu" id="ya8-W1-HbH"/>
                                 </popUpButtonCell>
                                 <connections>
-                                    <binding destination="AJ9-ZE-hlS" name="content" keyPath="representedObject.daxIqChoices" id="2lf-ny-uKP"/>
                                     <binding destination="AJ9-ZE-hlS" name="selectedIndex" keyPath="representedObject.daxIqChannel" previousBinding="2lf-ny-uKP" id="9Kr-U4-qW1"/>
+                                    <binding destination="AJ9-ZE-hlS" name="content" keyPath="representedObject.daxIqChoices" id="2lf-ny-uKP"/>
                                 </connections>
                             </popUpButton>
                         </subviews>
@@ -767,6 +791,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="NSStopProgressFreestandingTemplate" width="11" height="11"/>
+        <image name="NSStopProgressFreestandingTemplate" width="14" height="14"/>
     </resources>
 </document>

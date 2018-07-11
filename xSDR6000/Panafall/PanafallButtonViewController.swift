@@ -108,7 +108,7 @@ final class PanafallButtonViewController    : NSViewController {
   
   /// Zoom + (decrease bandwidth)
   ///
-  /// - Parameter sender: the sender
+  /// - Parameter sender:           the sender
   ///
   @IBAction func zoomPlus(_ sender: NSButton) {
     
@@ -126,7 +126,7 @@ final class PanafallButtonViewController    : NSViewController {
   }
   /// Zoom - (increase the bandwidth)
   ///
-  /// - Parameter sender: the sender
+  /// - Parameter sender:           the sender
   ///
   @IBAction func zoomMinus(_ sender: NSButton) {
     // are we near the maximum?
@@ -141,9 +141,24 @@ final class PanafallButtonViewController    : NSViewController {
       panadapter!.bandwidth = _bandwidth * 2
     }
   }
+  /// Zoom to Segment
+  ///
+  /// - Parameter sender:           the sender
+  ///
+  @IBAction func zoomSegment(_ sender: NSButton) {
+    panadapter!.segmentZoomEnabled = !panadapter!.segmentZoomEnabled
+  }
+  /// Zoom to Band
+  ///
+  /// - Parameter sender:           the sender
+  ///
+  @IBAction func zoomBand(_ sender: NSButton) {
+    panadapter!.bandZoomEnabled = !panadapter!.bandZoomEnabled
+  }
+  
   /// Close this Panafall
   ///
-  /// - Parameter sender: the sender
+  /// - Parameter sender:           the sender
   ///
   @IBAction func close(_ sender: NSButton) {
     
@@ -154,7 +169,7 @@ final class PanafallButtonViewController    : NSViewController {
   }
   /// Create a new Slice (if possible)
   ///
-  /// - Parameter sender: the sender
+  /// - Parameter sender:           the sender
   ///
   @IBAction func rx(_ sender: NSButton) {
     
@@ -163,7 +178,7 @@ final class PanafallButtonViewController    : NSViewController {
   }
   /// Create a new Tnf
   ///
-  /// - Parameter sender: the sender
+  /// - Parameter sender:           the sender
   ///
   @IBAction func tnf(_ sender: NSButton) {
     
