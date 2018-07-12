@@ -461,13 +461,13 @@ SWIFT_CLASS("_TtC8xLib60004Opus")
 
 
 @interface Opus (SWIFT_EXTENSION(xLib6000))
-@property (nonatomic) BOOL remoteRxOn;
-@property (nonatomic) BOOL remoteTxOn;
+@property (nonatomic) BOOL rxEnabled;
+@property (nonatomic) BOOL txEnabled;
 @end
 
 
 @interface Opus (SWIFT_EXTENSION(xLib6000))
-@property (nonatomic) BOOL rxStreamStopped;
+@property (nonatomic) BOOL rxStopped;
 @end
 
 

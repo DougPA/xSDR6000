@@ -1,5 +1,18 @@
 xLib6000 Change Log
 
+
+v1.2.4
+
+Api.swift - removed udpStreamStatus(active:), it was unused
+Api.swift - removed addReplyHandler(_:replyTuple:), it was unused
+Api.swift - removed "replyTo" from send(_:diagnostic:replyTo:), it was not needed
+Api.swift - updated kApiFirmwareSupport to 2.3.9.x
+IqStream.swift - removed redundant guard from vitaProcessor(_:)
+Opus.swift - major refactor, properties renamed, code corrected
+OpusCommands.swift - corrected opusCmd(_:_:) to use " " instead of "="
+TcpManager.swift - removed addReplyHandler(_:replyTuple:) from TcpManagerDelegate protocol
+TcpManager.swift - removed "replyTo" from send(_:diagnostic:replyTo:)
+
 v1.2.3
 
 Panadapter.swift - "switch" changed to "if" in accumulate(vita:)
@@ -22,7 +35,7 @@ Changed version number due to major change in UDP handling
 v1.1.13
 
 Api.swift - added NSObject to API's inheritance
-Api.swift - added "@objc dynamic" to sharedInstance delaration
+Api.swift - added "@objc dynamic" to sharedInstance declaration
 Api.swift - added .setMtu to the Commands enum and to allSecondaryCommands for 2.3.7
 Panadapter.swift - refactored panadapterFrame class and vitaProcessor(_:) method for v2.3.7
 Waterfall.swift - refactored waterfallFrame class and vitaProcessor(_:) method for 2.3.7
