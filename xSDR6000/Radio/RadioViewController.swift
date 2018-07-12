@@ -58,7 +58,9 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   private var _versions                     : (api: String, app: String)?
 //  private var _activity                     : NSObjectProtocol?
 
+  private var _opus                         : Opus?
   private let _opusManager                  = OpusManager()
+  
   
   private let kGuiFirmwareSupport           = "2.3.7.x"                     // Radio firmware supported by this App
   private let kVoltageTemperature           = "VoltageTemp"                 // Identifier of toolbar VoltageTemperature toolbarItem
@@ -133,6 +135,15 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   
   // ----- TOOLBAR -----
   
+  /// Respond to the Opus RX Enable
+  ///
+  /// - Parameter sender: the Slider
+  ///
+  @IBAction func rxEnabled(_ sender: NSButton) {
+    
+    _opus?.rxEnabled = (sender.state == NSControl.StateValue.on ? true : false)
+    _opus?.delegate = _opusManager
+  }
   /// Respond to the Headphone Gain slider
   ///
   /// - Parameter sender: the Slider
@@ -173,17 +184,6 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     
     // dimensions are dummy values; when created, will be resized to fit its view
     Panadapter.create(CGSize(width: 50, height: 50))
-  }
-  /// Respond to the Remote Rx button
-  ///
-  /// - Parameter sender: the Button
-  ///
-  @IBAction func remoteRxButton(_ sender: NSButton) {
-    
-    // FIXME:
-    
-    // ask the Radio (hardware) to start/stop Rx Opus
-//    _opusManager.remoteRxAudioRequest(sender.state == NSControl.StateValue.on)
   }
   /// Respond to the Remote Tx button
   ///
@@ -363,9 +363,9 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   private func addOpusObservers(_ opus: Opus) {
     
     _opusObservers = [
-      opus.observe(\.remoteRxOn, options: [.initial, .new], changeHandler: opusObserver),
-      opus.observe(\.remoteTxOn, options: [.initial, .new], changeHandler: opusObserver),
-      opus.observe(\.rxStreamStopped, options: [.initial, .new], changeHandler: opusObserver),
+      opus.observe(\.rxEnabled, options: [.initial, .new], changeHandler: opusObserver),
+      opus.observe(\.txEnabled, options: [.initial, .new], changeHandler: opusObserver),
+      opus.observe(\.rxStopped, options: [.initial, .new], changeHandler: opusObserver),
     ]
   }
   /// Remove observers
@@ -387,6 +387,8 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   private func opusObserver(_ opus: Opus, _ change: Any) {
     
     // FIXME: need code
+    
+    Swift.print("Rx = \(opus.rxEnabled), Rx Stopped = \(opus.rxStopped), Tx = \(opus.txEnabled)")
   }
   
   // ----------------------------------------------------------------------------
@@ -396,7 +398,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   ///
   private func addNotifications() {
     
-    NC.makeObserver(self, with: #selector(tcpDidConnect(_:)), of: .tcpDidConnect, object: nil)
+//    NC.makeObserver(self, with: #selector(tcpDidConnect(_:)), of: .tcpDidConnect, object: nil)
     
     NC.makeObserver(self, with: #selector(meterHasBeenAdded(_:)), of: .meterHasBeenAdded, object: nil)
     
@@ -407,21 +409,21 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     NC.makeObserver(self, with: #selector(radioHasBeenRemoved(_:)), of: .radioHasBeenRemoved, object: nil)
     
     NC.makeObserver(self, with: #selector(opusHasBeenAdded(_:)), of: .opusHasBeenAdded, object: nil)
-    
-    NC.makeObserver(self, with: #selector(opusWillBeRemoved(_:)), of: .opusWillBeRemoved, object: nil)
+
+//    NC.makeObserver(self, with: #selector(opusWillBeRemoved(_:)), of: .opusWillBeRemoved, object: nil)
   }
   /// Process .tcpDidConnect Notification
   ///
   /// - Parameter note: a Notification instance
   ///
-  @objc private func tcpDidConnect(_ note: Notification) {
-    
-    // a tcp connection has been established
-    
-    // get Radio model & firmware version
+//  @objc private func tcpDidConnect(_ note: Notification) {
+//
+//    // a tcp connection has been established
+//
+//    // get Radio model & firmware version
 //    Defaults[.radioVersion] = _api.activeRadio!.firmwareVersion!
 //    Defaults[.radioModel] = _api.activeRadio!.model
-  }
+//  }
   /// Process .meterHasBeenAdded Notification
   ///
   /// - Parameter note: a Notification instance
@@ -506,33 +508,37 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   /// - Parameter note: a Notification instance
   ///
   @objc private func opusHasBeenAdded(_ note: Notification) {
-    
+
     // the Opus class has been initialized
-    if let opus = note.object as? Opus {
+    _opus = note.object as? Opus
 
-      DispatchQueue.main.sync { [unowned self] in
-
-        // add Opus property observations
-        self.addOpusObservers(opus)
-      }
-    }
+//      DispatchQueue.main.sync { [unowned self] in
+//
+//        // add Opus property observations
+//        self.addOpusObservers(opus)
+//
+//        _opus.delegate = OpusManager()
+//      }
+//    }
   }
   /// Process .opusWillBeRemoved Notification
   ///
   /// - Parameter note: a Notification instance
   ///
-  @objc private func opusWillBeRemoved(_ note: Notification) {
-    
-    // an Opus class will be removed
-    if let _ = note.object as? Opus {
-
-      DispatchQueue.main.sync { [unowned self] in
-
-        // remove Opus property observations
-        self.removeObservers(self._opusObservers)
-      }
-    }
-  }
+//  @objc private func opusWillBeRemoved(_ note: Notification) {
+//
+//    // an Opus class will be removed
+//    if let opus = note.object as? Opus {
+//
+//      DispatchQueue.main.sync { [unowned self] in
+//
+//        // remove Opus property observations
+//        self.removeObservers(self._opusObservers)
+//
+//        opus.delegate = nil
+//      }
+//    }
+//  }
   
   // ----------------------------------------------------------------------------
   // MARK: - RadioPicker delegate methods
