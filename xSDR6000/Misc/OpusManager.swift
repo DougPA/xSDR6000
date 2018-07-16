@@ -26,7 +26,7 @@ class OpusManager                           : NSObject, StreamHandler, AFSoundca
   private var _opus                         : Opus?                         // Opus instance
   private var _decoder                      : OpaquePointer!                // Opaque pointer to Opus Decoder
   private var _encoder                      : OpaquePointer!                // Opaque pointer to Opus Encoder
-  private let _audioManager                 = AFManager()                   // AudioLibrary manager
+  private let _audioManager                 : AFManager!                    // AudioLibrary manager
   
   private let _outputSoundcard              : AFSoundcard?                  // audio output device
   private var _rxInterleaved                : [Float]!                      // output of Opus decoder
@@ -60,7 +60,12 @@ class OpusManager                           : NSObject, StreamHandler, AFSoundca
     // RX STREAM setup (audio from the Radio to the Mac)
     
     // setup the sound output unit
+    _audioManager = AFManager()
     _outputSoundcard = _audioManager.newOutputSoundcard()
+    
+    
+    Swift.print("devices = \(_outputSoundcard!.devices())")
+    
     guard _outputSoundcard != nil else { fatalError("Unable to create output sound card") }
     _outputSoundcard!.setSamplingRate(OpusManager.kSampleRate)
     _outputSoundcard!.setResamplingRate(OpusManager.kSampleRate)
