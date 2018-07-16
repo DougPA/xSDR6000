@@ -349,6 +349,7 @@ SWIFT_CLASS("_TtC8xLib60009Interlock")
 @interface Interlock (SWIFT_EXTENSION(xLib6000))
 @property (nonatomic, readonly, copy) NSString * _Nonnull reason;
 @property (nonatomic, readonly, copy) NSString * _Nonnull source;
+@property (nonatomic, readonly, copy) NSString * _Nonnull amplifier;
 @property (nonatomic, readonly, copy) NSString * _Nonnull state;
 @property (nonatomic, readonly) BOOL txAllowed;
 @property (nonatomic, readonly) NSInteger txDelay;
@@ -467,6 +468,8 @@ SWIFT_CLASS("_TtC8xLib60004Opus")
 
 
 @interface Opus (SWIFT_EXTENSION(xLib6000))
+@property (nonatomic, copy) NSString * _Nonnull ip;
+@property (nonatomic) NSInteger port;
 @property (nonatomic) BOOL rxStopped;
 @end
 
@@ -579,6 +582,7 @@ SWIFT_CLASS("_TtC8xLib60005Radio")
 @property (nonatomic) NSInteger calFreq;
 @property (nonatomic) BOOL enforcePrivateIpEnabled;
 @property (nonatomic) NSInteger freqErrorPpb;
+@property (nonatomic) BOOL frontSpeakerMute;
 @property (nonatomic) BOOL fullDuplexEnabled;
 @property (nonatomic) BOOL remoteOnEnabled;
 @property (nonatomic) NSInteger rttyMark;
@@ -602,6 +606,7 @@ SWIFT_CLASS("_TtC8xLib60005Radio")
 
 
 @interface Radio (SWIFT_EXTENSION(xLib6000))
+@property (nonatomic, readonly) BOOL atuPresent;
 @property (nonatomic, readonly) NSInteger availablePanadapters;
 @property (nonatomic, readonly) NSInteger availableSlices;
 @property (nonatomic, readonly, copy) NSString * _Nonnull chassisSerial;
@@ -611,9 +616,11 @@ SWIFT_CLASS("_TtC8xLib60005Radio")
 @property (nonatomic, readonly) BOOL extPresent;
 @property (nonatomic, readonly, copy) NSString * _Nonnull fpgaMbVersion;
 @property (nonatomic, readonly, copy) NSString * _Nonnull gateway;
+@property (nonatomic, readonly) BOOL gpsPresent;
 @property (nonatomic, readonly) BOOL gpsdoPresent;
 @property (nonatomic, readonly, copy) NSString * _Nonnull ipAddress;
 @property (nonatomic, readonly, copy) NSString * _Nonnull location;
+@property (nonatomic, readonly) BOOL locked;
 @property (nonatomic, readonly, copy) NSString * _Nonnull macAddress;
 @property (nonatomic, readonly, copy) NSString * _Nonnull netmask;
 @property (nonatomic, readonly) NSInteger numberOfScus;
@@ -625,7 +632,9 @@ SWIFT_CLASS("_TtC8xLib60005Radio")
 @property (nonatomic, readonly, copy) NSString * _Nonnull radioModel;
 @property (nonatomic, readonly, copy) NSString * _Nonnull radioOptions;
 @property (nonatomic, readonly, copy) NSString * _Nonnull region;
+@property (nonatomic, readonly, copy) NSString * _Nonnull setting;
 @property (nonatomic, readonly, copy) NSString * _Nonnull smartSdrMB;
+@property (nonatomic, readonly, copy) NSString * _Nonnull state;
 @property (nonatomic, readonly, copy) NSString * _Nonnull softwareVersion;
 @property (nonatomic, readonly) BOOL tcxoPresent;
 @end

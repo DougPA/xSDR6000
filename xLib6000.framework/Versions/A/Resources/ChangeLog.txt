@@ -1,5 +1,11 @@
 xLib6000 Change Log
 
+v1.2.5
+
+ALL MODELS - replaced usage of update(_:property:value:key:) with this style
+    willChangeValue(for: \.carrierLevel)
+    _carrierLevel = property.value.iValue()
+    didChangeValue(for: \.carrierLevel)
 
 v1.2.4
 
