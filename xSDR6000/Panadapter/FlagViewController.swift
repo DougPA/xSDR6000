@@ -157,7 +157,7 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
     // update the flag's position
     view.setFrameOrigin(_position)
     
-    _frequencyField.integerValue = frequency
+//    _frequencyField.integerValue = frequency
     
     view.needsDisplay = true
   }
