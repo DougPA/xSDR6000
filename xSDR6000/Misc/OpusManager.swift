@@ -16,6 +16,9 @@ import AVFoundation
 
 class OpusManager                           : NSObject, StreamHandler, AFSoundcardDelegate {
 
+  // ----------------------------------------------------------------------------
+  // MARK: - Static properties
+  
   static let kSampleRate                   : Float = 24_000                 // Sample Rate (samples/second)
   static let kNumberOfChannels             = 2                              // Stereo, Right & Left channels
   static let kStereoChannelMask            : Int32 = 0x3
@@ -35,37 +38,23 @@ class OpusManager                           : NSObject, StreamHandler, AFSoundca
   private var _rxLeftBuffer                 : [Float]!                      // non-interleaved buffer, Left
   private var _rxRightBuffer                : [Float]!                      // non-interleaved buffer, Right
   
-  
-  var engine                                = AVAudioEngine()
-  var player                                = AVAudioPlayerNode()
-  var output                                : AVAudioOutputNode!
-  
-  var buffer1                               : AVAudioPCMBuffer?
-  var buffer2                               : AVAudioPCMBuffer?
-  var buffer3                               : AVAudioPCMBuffer?
-  var activeBuffer                          : AVAudioPCMBuffer?
-  
-  var currentBuffer                         = 0
-  var time                                  : Float = 0.0
-  var timeDelta                             : Float = 0.0
-  
-  var format                                : AVAudioFormat!
-//  var outputFormat                          : AVAudioFormat!
-  
-  private var _timer                        : DispatchSourceTimer!
-  private var _timerQ                       = DispatchQueue(label: "AVAudioPlayerTest" + ".timerQ")
-  
+  private var engine                        = AVAudioEngine()
+  private var player                        = AVAudioPlayerNode()
+  private var output                        : AVAudioOutputNode!
+  private var buffer1                       : AVAudioPCMBuffer?
+  private var buffer2                       : AVAudioPCMBuffer?
+  private var buffer3                       : AVAudioPCMBuffer?
+  private var activeBuffer                  : AVAudioPCMBuffer?
+  private var bufferIndex                   = 0
+  private var format                        : AVAudioFormat!
+  private var length                        = OpusManager.kSampleCount
+
   private let kNumberOfBuffers              = 3
 
-  var length                                = OpusManager.kSampleCount
-  
-  let twoPi                                 : Float = 2.0 * 3.14159
+//  private let twoPi                         : Float = 2.0 * 3.14159
+//  private var time                          : Float = 0.0
+//  private var timeDelta                     : Float = 0.0
 
-  
-  
-  // constants
-  
-  
   private enum OpusApplication              : Int32 {                       // Opus "application" values
     case voip                               = 2048
     case audio                              = 2049
@@ -120,12 +109,10 @@ class OpusManager                           : NSObject, StreamHandler, AFSoundca
   ///
   func rxAudio(_ start: Bool) {
     
-//    print("rxAudio - \(start ? "start" : "stop")")
-    
     if start {
-      currentBuffer = 0
-      time = 0.0
-      timeDelta = 440.0/OpusManager.kSampleRate
+      bufferIndex = 0
+//      time = 0.0
+//      timeDelta = 440.0/OpusManager.kSampleRate
 
       try! engine.start()
       
@@ -134,13 +121,14 @@ class OpusManager                           : NSObject, StreamHandler, AFSoundca
     } else {
 
       player.stop()
+      
+      engine.stop()
     }
   }
   
   func playerSetup() {
     
     format = AVAudioFormat(standardFormatWithSampleRate: Double(OpusManager.kSampleRate), channels: 2)
-//    outputFormat = AVAudioFormat(standardFormatWithSampleRate: Double(OpusManager.kSampleRate), channels: 2)
     
     output = engine.outputNode
     
@@ -155,8 +143,7 @@ class OpusManager                           : NSObject, StreamHandler, AFSoundca
     engine.attach(player)
     engine.connect(player, to: output, format: format)
     
-//    Swift.print("Input         = \(inputFormat)")
-//    Swift.print("Output        = \(outputFormat)")
+//    Swift.print("Format        = \(format)")
 //    Swift.print("Player output = \(player.outputFormat(forBus: 0))")
 //    Swift.print("Buffer length = \(length)")
   }
@@ -186,7 +173,7 @@ class OpusManager                           : NSObject, StreamHandler, AFSoundca
       vDSP_ctoz(rxComplexPtr, OpusManager.kNumberOfChannels, &_rxSplitComplex, 1, vDSP_Length(result))
     }
 
-    switch currentBuffer {
+    switch bufferIndex {
     case 0:
       activeBuffer = buffer1!
     case 1:
@@ -208,6 +195,6 @@ class OpusManager                           : NSObject, StreamHandler, AFSoundca
 //      if time > 1.0 { time -= 1.0 }
     }
     player.scheduleBuffer(activeBuffer!)
-    currentBuffer = (currentBuffer + 1) % kNumberOfBuffers
+    bufferIndex = (bufferIndex + 1) % kNumberOfBuffers
   }
 }
