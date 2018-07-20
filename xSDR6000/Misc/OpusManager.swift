@@ -19,135 +19,95 @@ class OpusManager                           : NSObject, StreamHandler, AFSoundca
   // ----------------------------------------------------------------------------
   // MARK: - Static properties
   
-  static let kSampleRate                   : Float = 24_000                 // Sample Rate (samples/second)
-  static let kNumberOfChannels             = 2                              // Stereo, Right & Left channels
-  static let kStereoChannelMask            : Int32 = 0x3
-  static let kSampleCount                  = 240                            // Number of input samples
-  static let kMaxEncodedBytes              : Int32 = 240                    // max size of encoded frame
+  static let kSampleRate                    : Float = 24_000                 // Sample Rate (samples/second)
+  static let kNumberOfChannels              = 2                              // Right & Left channels
+  static let kSampleCount                   = Int(kSampleRate / 100.0 )      // Number of input samples in 10 ms
 
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
   
-  private var _opus                         : Opus?                         // Opus instance
   private var _decoder                      : OpaquePointer!                // Opaque pointer to Opus Decoder
-  private var _encoder                      : OpaquePointer!                // Opaque pointer to Opus Encoder
-  private var _rxInterleaved                : [Float]!                      // output of Opus decoder
-  private let _rxInterleavedPtr             : UnsafeMutablePointer<Float>!
-  private var _rxBufferList                 : UnsafeMutablePointer<UnsafeMutablePointer<Float>?>!
-  private var _rxSplitComplex               : DSPSplitComplex
-  private var _rxLeftBuffer                 : [Float]!                      // non-interleaved buffer, Left
-  private var _rxRightBuffer                : [Float]!                      // non-interleaved buffer, Right
-  
-  private var engine                        = AVAudioEngine()
-  private var player                        = AVAudioPlayerNode()
-  private var output                        : AVAudioOutputNode!
-  private var buffer1                       : AVAudioPCMBuffer?
-  private var buffer2                       : AVAudioPCMBuffer?
-  private var buffer3                       : AVAudioPCMBuffer?
-  private var activeBuffer                  : AVAudioPCMBuffer?
-  private var bufferIndex                   = 0
-  private var format                        : AVAudioFormat!
-  private var length                        = OpusManager.kSampleCount
+  private var _engine                       = AVAudioEngine()
+  private var _player                       = AVAudioPlayerNode()
+  private var _buffers                      = [AVAudioPCMBuffer]()          // non-interleaved buffers (AVAudioPlayer input)
+  private var _bufferIndex                  = 0
+  private var _interleavedBufferPtr         : UnsafeMutablePointer<Float>
+  private var _rxInterleaved                =                               // interleaved buffer (Opus decoder output)
+    [Float](repeating: 0.0, count: OpusManager.kSampleCount * OpusManager.kNumberOfChannels)
 
   private let kNumberOfBuffers              = 3
-
-//  private let twoPi                         : Float = 2.0 * 3.14159
-//  private var time                          : Float = 0.0
-//  private var timeDelta                     : Float = 0.0
-
-  private enum OpusApplication              : Int32 {                       // Opus "application" values
-    case voip                               = 2048
-    case audio                              = 2049
-    case restrictedLowDelay                 = 2051
-  }
+  private let kChannelLeft                  = 0
+  private let kChannelRight                 = 1
+//  private enum OpusApplication              : Int32 {                       // Opus "application" values
+//    case voip                               = 2048
+//    case audio                              = 2049
+//    case restrictedLowDelay                 = 2051
+//  }
   
   // ----------------------------------------------------------------------------
   // MARK: - Initialization
   
   override init() {
-    // RX STREAM setup (audio from the Radio to the Mac)
-    
-    // allocate the interleaved Rx buffer
-    _rxInterleaved = [Float](repeating: 0.0, count: OpusManager.kSampleCount * OpusManager.kNumberOfChannels)
-    
-    // get a raw pointer to the Rx interleaved buffer
-    _rxInterleavedPtr = UnsafeMutablePointer<Float>(mutating: _rxInterleaved)!
-    
-    // allocate the non-interleaved Rx buffers
-    _rxLeftBuffer = [Float](repeating: 0.0, count: OpusManager.kSampleCount)
-    _rxRightBuffer = [Float](repeating: 0.0, count: OpusManager.kSampleCount)
-    
-    // allocate an Rx buffer list & initialize it
-    _rxBufferList = UnsafeMutablePointer<UnsafeMutablePointer<Float>?>.allocate(capacity: 2)
-    _rxBufferList[0] = UnsafeMutablePointer(mutating: _rxLeftBuffer)
-    _rxBufferList[1] = UnsafeMutablePointer(mutating: _rxRightBuffer)
+    // get a pointer to the Interleaved buffer
+    _interleavedBufferPtr = UnsafeMutablePointer<Float>(mutating: _rxInterleaved)
 
-    // view the non-interleaved Rx buffers as a DSPSplitComplex (for vDSP)
-    _rxSplitComplex = DSPSplitComplex(realp: _rxBufferList[0]!, imagp: _rxBufferList[1]!)
+    super.init()
 
+    // create a stereo format with the Opus sample rate
+    let format = AVAudioFormat(standardFormatWithSampleRate: Double(OpusManager.kSampleRate), channels: 2)!
+    createBuffers(with: format)
+    
     // create the Opus decoder
     var opusError: Int32 = 0
     _decoder = opus_decoder_create(Int32(OpusManager.kSampleRate), 2, &opusError)
     if opusError != 0 { fatalError("Unable to create OpusDecoder, error = \(opusError)") }
-
-    super.init()
-
-    // setup the sound output unit
-    playerSetup()
-  }
-  /// Perform any required cleanup
-  ///
-  deinit {
     
-    // de-allocate the Rx buffer list
-    _rxBufferList.deallocate()
-
+    // Connect AVAudioPlayer nodes & start the engine
+    _engine.attach(_player)
+    _engine.connect(_player, to: _engine.outputNode, format: format)
+    try! _engine.start()
   }
-  /// Start/Stop the Opus Rx stream processing
+  /// Start/Stop the AVAudioPlayer
   ///
-  /// - Parameter start:      true = start
+  /// - Parameter start:      start / stop
   ///
   func rxAudio(_ start: Bool) {
     
     if start {
-      bufferIndex = 0
-//      time = 0.0
-//      timeDelta = 440.0/OpusManager.kSampleRate
-
-      try! engine.start()
+      clearBuffers()
       
-      player.play()
+      _player.play()
 
     } else {
 
-      player.stop()
-      
-      engine.stop()
+      _player.stop()
     }
   }
-  
-  func playerSetup() {
+  /// Create one or more AVAudioPCMBuffers
+  ///
+  /// - Parameter format:           the desired format
+  ///
+  private func createBuffers(with format: AVAudioFormat) {
     
-    format = AVAudioFormat(standardFormatWithSampleRate: Double(OpusManager.kSampleRate), channels: 2)
-    
-    output = engine.outputNode
-    
-    buffer1 = AVAudioPCMBuffer(pcmFormat: format,frameCapacity:AVAudioFrameCount(length))
-    buffer1?.frameLength = AVAudioFrameCount(length)
-    buffer2 = AVAudioPCMBuffer(pcmFormat: format,frameCapacity:AVAudioFrameCount(length))
-    buffer2?.frameLength = AVAudioFrameCount(length)
-    buffer3 = AVAudioPCMBuffer(pcmFormat: format,frameCapacity:AVAudioFrameCount(length))
-    buffer3?.frameLength = AVAudioFrameCount(length)
-    
-    // Connect nodes
-    engine.attach(player)
-    engine.connect(player, to: output, format: format)
-    
-//    Swift.print("Format        = \(format)")
-//    Swift.print("Player output = \(player.outputFormat(forBus: 0))")
-//    Swift.print("Buffer length = \(length)")
-  }
+    // create kNumberOfBuffers AVAudioPCMBuffers with the Opus sample rate and frame size
+    for _ in 0..<kNumberOfBuffers {
+      let buffer = AVAudioPCMBuffer(pcmFormat: format, frameCapacity:AVAudioFrameCount(OpusManager.kSampleCount))!
+      buffer.frameLength = AVAudioFrameCount(OpusManager.kSampleCount)
 
+      _buffers.append(buffer)
+    }
+  }
+  /// Clear all buffers
+  ///
+  private func clearBuffers() {
+    _bufferIndex = 0
+    
+    // clear the buffers (fill with zeroes)
+    for buffer in _buffers {
+      memset(buffer.floatChannelData![kChannelLeft], 0, Int(buffer.frameLength) * MemoryLayout<Float>.size)
+      memset(buffer.floatChannelData![kChannelRight], 0, Int(buffer.frameLength) * MemoryLayout<Float>.size)
+    }
+  }
   // ----------------------------------------------------------------------------
   // MARK: - OpusStreamHandler protocol methods
   //      called by Opus, executes on the streamQ
@@ -155,46 +115,41 @@ class OpusManager                           : NSObject, StreamHandler, AFSoundca
   
   /// Process an Opus Rx stream
   ///
-  /// - Parameter frame: an Opus Rx Frame
+  /// - Parameter frame:            an Opus Rx Frame
   ///
   func streamHandler<T>(_ streamFrame: T) {
     
     guard let frame = streamFrame as? OpusFrame else { return }
-
+    
+    guard _player.isPlaying else { return }
+    
     // perform Opus decoding
-    let result = opus_decode_float(_decoder, frame.samples, Int32(frame.numberOfSamples), _rxInterleavedPtr, Int32(OpusManager.kSampleCount * MemoryLayout<Float>.size * OpusManager.kNumberOfChannels), Int32(0))
+    let result = opus_decode_float(_decoder, frame.samples,
+                                   Int32(frame.numberOfSamples),
+                                   _interleavedBufferPtr,
+                                   Int32(OpusManager.kSampleCount * MemoryLayout<Float>.size * OpusManager.kNumberOfChannels),
+                                   Int32(0))
     
     // check for decode errors
     if result < 0 { Log.sharedInstance.msg(String(cString: opus_strerror(result)), level: .error, function: #function, file: #file, line: #line) }
     
-    // convert the decoded audio from interleaved (DSPComplex) to non-interleaved (DSPSplitComplex)
-    
-    _rxInterleavedPtr.withMemoryRebound(to: DSPComplex.self, capacity: 1) { rxComplexPtr in
-      vDSP_ctoz(rxComplexPtr, OpusManager.kNumberOfChannels, &_rxSplitComplex, 1, vDSP_Length(result))
-    }
+    // view the current buffer as a DSPSplitComplex
+    var nonInterleavedBuffers = DSPSplitComplex(realp: _buffers[_bufferIndex].floatChannelData![kChannelLeft],
+                                       imagp: _buffers[_bufferIndex].floatChannelData![kChannelRight])
 
-    switch bufferIndex {
-    case 0:
-      activeBuffer = buffer1!
-    case 1:
-      activeBuffer = buffer2!
-    case 2:
-      activeBuffer = buffer3!
-    default:
-      fatalError()
+    // view the interleaved buffer as a DSPComplex
+    _interleavedBufferPtr.withMemoryRebound(to: DSPComplex.self, capacity: 1) { interleavedBuffers in
+      // convert from the interleaved buffer (DSPComplex) to the non-interleaved buffer (DSPSplitComplex)
+      vDSP_ctoz(interleavedBuffers,
+                OpusManager.kNumberOfChannels,
+                &nonInterleavedBuffers,
+                1,
+                vDSP_Length(result))
     }
+    // play the buffer
+    _player.scheduleBuffer(_buffers[_bufferIndex])
     
-    for i in 0..<length
-    {
-      activeBuffer!.floatChannelData?.pointee[i] = _rxBufferList[0]!.advanced(by: i).pointee
-      activeBuffer!.floatChannelData?.advanced(by: 1).pointee[i] = _rxBufferList[1]!.advanced(by: i).pointee
-//      let value = sin(time * twoPi)
-//      activeBuffer!.floatChannelData?.pointee[i] = value
-//      activeBuffer!.floatChannelData?.advanced(by: 1).pointee[i] = value
-//      time += timeDelta
-//      if time > 1.0 { time -= 1.0 }
-    }
-    player.scheduleBuffer(activeBuffer!)
-    bufferIndex = (bufferIndex + 1) % kNumberOfBuffers
+    // move to the next buffer
+    _bufferIndex = (_bufferIndex + 1) % kNumberOfBuffers
   }
 }

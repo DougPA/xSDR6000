@@ -141,8 +141,17 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   ///
   @IBAction func rxEnabled(_ sender: NSButton) {
     
-    _opus?.rxEnabled = (sender.state == NSControl.StateValue.on ? true : false)
-    _opus?.delegate = _opusManager
+    if sender.state == NSControl.StateValue.on {
+      _opusManager.rxAudio(true)
+      _opus?.rxEnabled = true
+      _opus?.delegate = _opusManager
+    
+    } else {
+
+      _opusManager.rxAudio(false)
+      _opus?.rxEnabled = false
+      _opus?.delegate = nil
+    }
   }
   /// Respond to the Headphone Gain slider
   ///
@@ -356,18 +365,6 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   // ----------------------------------------------------------------------------
   // MARK: - Observation methods
 
-  private var _opusObservers    = [NSKeyValueObservation]()
-
-  /// Add observers for Opus properties
-  ///
-  private func addOpusObservers(_ opus: Opus) {
-    
-    _opusObservers = [
-      opus.observe(\.rxEnabled, options: [.initial, .new], changeHandler: opusObserver),
-      opus.observe(\.txEnabled, options: [.initial, .new], changeHandler: opusObserver),
-      opus.observe(\.rxStopped, options: [.initial, .new], changeHandler: opusObserver),
-    ]
-  }
   /// Remove observers
   ///
   /// - Parameter observers:            an array of NSKeyValueObservation
@@ -377,18 +374,6 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     for observer in observers {
       observer.invalidate()
     }
-  }
-  /// Respond to Opus observations
-  ///
-  /// - Parameters:
-  ///   - object:                       the object holding the properties
-  ///   - change:                       the change
-  ///
-  private func opusObserver(_ opus: Opus, _ change: Any) {
-    
-    // FIXME: need code
-    
-    Swift.print("Rx = \(opus.rxEnabled), Rx Stopped = \(opus.rxStopped), Tx = \(opus.txEnabled)")
   }
   
   // ----------------------------------------------------------------------------
@@ -409,8 +394,6 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     NC.makeObserver(self, with: #selector(radioHasBeenRemoved(_:)), of: .radioHasBeenRemoved, object: nil)
     
     NC.makeObserver(self, with: #selector(opusHasBeenAdded(_:)), of: .opusHasBeenAdded, object: nil)
-
-//    NC.makeObserver(self, with: #selector(opusWillBeRemoved(_:)), of: .opusWillBeRemoved, object: nil)
   }
   /// Process .tcpDidConnect Notification
   ///
@@ -512,33 +495,8 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     // the Opus class has been initialized
     _opus = note.object as? Opus
 
-//      DispatchQueue.main.sync { [unowned self] in
-//
-//        // add Opus property observations
-//        self.addOpusObservers(opus)
-//
-//        _opus.delegate = OpusManager()
-//      }
-//    }
+    Log.sharedInstance.msg("\(_opus!.id.hex)", level: .info, function: #function, file: #file, line: #line)
   }
-  /// Process .opusWillBeRemoved Notification
-  ///
-  /// - Parameter note: a Notification instance
-  ///
-//  @objc private func opusWillBeRemoved(_ note: Notification) {
-//
-//    // an Opus class will be removed
-//    if let opus = note.object as? Opus {
-//
-//      DispatchQueue.main.sync { [unowned self] in
-//
-//        // remove Opus property observations
-//        self.removeObservers(self._opusObservers)
-//
-//        opus.delegate = nil
-//      }
-//    }
-//  }
   
   // ----------------------------------------------------------------------------
   // MARK: - RadioPicker delegate methods

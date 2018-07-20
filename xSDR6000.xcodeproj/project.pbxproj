@@ -726,7 +726,7 @@
 				);
 				INFOPLIST_FILE = xSDR6000/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				OTHER_SWIFT_FLAGS = "-D XSDR6000";
 				PRODUCT_BUNDLE_IDENTIFIER = net.k3tzr.xSDR6000;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -753,7 +753,7 @@
 				);
 				INFOPLIST_FILE = xSDR6000/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				OTHER_SWIFT_FLAGS = "-D XSDR6000";
 				PRODUCT_BUNDLE_IDENTIFIER = net.k3tzr.xSDR6000;
 				PRODUCT_NAME = "$(TARGET_NAME)";
