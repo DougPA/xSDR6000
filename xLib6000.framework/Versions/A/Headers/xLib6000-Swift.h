@@ -602,6 +602,7 @@ SWIFT_CLASS("_TtC8xLib60005Radio")
 @property (nonatomic, copy) NSString * _Nonnull staticGateway;
 @property (nonatomic, copy) NSString * _Nonnull staticIp;
 @property (nonatomic, copy) NSString * _Nonnull staticNetmask;
+@property (nonatomic) BOOL mox;
 @end
 
 
@@ -798,7 +799,6 @@ SWIFT_CLASS("_TtC8xLib60008Transmit")
 @property (nonatomic) NSInteger maxPowerLevel;
 @property (nonatomic) BOOL metInRxEnabled;
 @property (nonatomic) NSInteger micLevel;
-@property (nonatomic) BOOL moxEnabled;
 @property (nonatomic) NSInteger rfPower;
 @property (nonatomic) BOOL speechProcessorEnabled;
 @property (nonatomic) NSInteger speechProcessorLevel;

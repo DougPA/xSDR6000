@@ -1,5 +1,36 @@
 xLib6000 Change Log
 
+v1.2.11
+
+Interlock.swift - moved stateChange(_:) to Radio
+Radio.swift - added stateChange(_:) & made all accesses to "mox" use "_mox" with KVO signaling
+
+v1.2.10
+
+Intelock.swift - added PttSource and Reason enums (not currently used)
+Atu.swift - added Status enum (not currently used)
+Interlock.swift - corrected usage of stateChange(_:)
+
+v1.2.9
+
+Interlock.swift - added State enum
+Interlock.swift - added stateChange(_:)
+
+v1.2.8
+
+Transmit.swift, TransmitCommands.swift - moved "mox" property to Radio.swift, RadioCommands.swift
+
+v1.2.7
+
+Meter.swift - uncommented the Notification line in streamHandler(_:)
+Transmit.swift - changed moxEnabled to mox
+TransmitCommands.swift - made mox property send the "xmit 1/0" command
+
+v1.2.6
+
+Atu.swift - corrected "status"
+Radio.swift - corrected parseInfoReply(_:)
+
 v1.2.5
 
 ALL MODELS - replaced usage of update(_:property:value:key:) with this style
