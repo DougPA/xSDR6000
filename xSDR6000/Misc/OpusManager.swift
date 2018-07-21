@@ -116,16 +116,6 @@ class OpusManager                           : NSObject, StreamHandler, AFSoundca
     
     guard _player.isPlaying else { return }
     
-    
-//    for i in 0..<frame.numberOfSamples {
-//
-//      if frame.samples[i] < -1.0 || frame.samples[i] > 1.0 {
-//        Swift.print("sample \(i) = \(frame.samples[i])")
-//      }
-//    }
-
-//    Swift.print("\(frame.samples[frame.numberOfSamples/2])")
-    
     // perform Opus decoding
     let result = opus_decode_float(_decoder, frame.samples,
                                    Int32(frame.numberOfSamples),
