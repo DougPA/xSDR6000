@@ -19,7 +19,7 @@ class OpusManager                           : NSObject, StreamHandler, AFSoundca
   // ----------------------------------------------------------------------------
   // MARK: - Static properties
   
-  static let kSampleRate                    : Float = 24_000                 // Sample Rate (samples/second)
+  static let kSampleRate                    : Float = 48_000                 // Sample Rate (samples/second)
   static let kNumberOfChannels              = 2                              // Right & Left channels
   static let kSampleCount                   = Int(kSampleRate / 100.0 )      // Number of input samples in 10 ms
 
@@ -66,22 +66,15 @@ class OpusManager                           : NSObject, StreamHandler, AFSoundca
     _engine.attach(_player)
     _engine.connect(_player, to: _engine.outputNode, format: format)
     try! _engine.start()
-  }
-  /// Start/Stop the AVAudioPlayer
-  ///
-  /// - Parameter start:      start / stop
-  ///
-  func rxAudio(_ start: Bool) {
+
+    clearBuffers()
     
-    if start {
-      clearBuffers()
-      
-      _player.play()
-
-    } else {
-
-      _player.stop()
-    }
+    _player.play()
+  }
+  
+  deinit {
+    
+    _player.stop()
   }
   /// Create one or more AVAudioPCMBuffers
   ///
@@ -122,6 +115,16 @@ class OpusManager                           : NSObject, StreamHandler, AFSoundca
     guard let frame = streamFrame as? OpusFrame else { return }
     
     guard _player.isPlaying else { return }
+    
+    
+//    for i in 0..<frame.numberOfSamples {
+//
+//      if frame.samples[i] < -1.0 || frame.samples[i] > 1.0 {
+//        Swift.print("sample \(i) = \(frame.samples[i])")
+//      }
+//    }
+
+//    Swift.print("\(frame.samples[frame.numberOfSamples/2])")
     
     // perform Opus decoding
     let result = opus_decode_float(_decoder, frame.samples,

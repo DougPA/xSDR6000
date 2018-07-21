@@ -141,17 +141,8 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   ///
   @IBAction func rxEnabled(_ sender: NSButton) {
     
-    if sender.state == NSControl.StateValue.on {
-      _opusManager.rxAudio(true)
-      _opus?.rxEnabled = true
-      _opus?.delegate = _opusManager
-    
-    } else {
-
-      _opusManager.rxAudio(false)
-      _opus?.rxEnabled = false
-      _opus?.delegate = nil
-    }
+    // enable / disable Remote Audio
+    _opus?.rxEnabled = (sender.state == NSControl.StateValue.on)
   }
   /// Respond to the Headphone Gain slider
   ///
@@ -493,9 +484,13 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   @objc private func opusHasBeenAdded(_ note: Notification) {
 
     // the Opus class has been initialized
-    _opus = note.object as? Opus
-
-    Log.sharedInstance.msg("\(_opus!.id.hex)", level: .info, function: #function, file: #file, line: #line)
+    if let opus = note.object as? Opus {
+      _opus = opus
+      
+      Log.sharedInstance.msg("\(opus.id.hex)", level: .info, function: #function, file: #file, line: #line)
+      
+      opus.delegate = _opusManager
+    }
   }
   
   // ----------------------------------------------------------------------------

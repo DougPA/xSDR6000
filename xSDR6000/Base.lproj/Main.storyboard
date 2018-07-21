@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
-        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14113"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
         <capability name="stacking Non-gravity area distributions on NSStackView" minToolsVersion="7.0" minSystemVersion="10.11"/>
@@ -835,7 +834,7 @@
                                     <button key="view" verticalHuggingPriority="750" tag="8" id="Jch-IC-yYb">
                                         <rect key="frame" x="0.0" y="14" width="80" height="28"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="roundTextured" title="Rx Remote" bezelStyle="texturedRounded" alignment="center" lineBreakMode="truncatingTail" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="MyA-4v-4Q1">
+                                        <buttonCell key="cell" type="roundTextured" title="Mac Audio" bezelStyle="texturedRounded" alignment="center" lineBreakMode="truncatingTail" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="MyA-4v-4Q1">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                             <string key="keyEquivalent">s</string>
@@ -974,11 +973,8 @@
                             <defaultToolbarItems>
                                 <toolbarItem reference="SRQ-Qz-auw"/>
                                 <toolbarItem reference="HTE-sv-0bk"/>
-                                <toolbarItem reference="fPm-lX-g4y"/>
-                                <toolbarItem reference="bSr-nw-2sZ"/>
-                                <toolbarItem reference="pIg-kU-VxD"/>
-                                <toolbarItem reference="z4t-r2-UAf"/>
                                 <toolbarItem reference="qnV-ol-DRw"/>
+                                <toolbarItem reference="z4t-r2-UAf"/>
                                 <toolbarItem reference="pp9-nf-Tmj"/>
                                 <toolbarItem reference="SL3-P9-twB"/>
                                 <toolbarItem reference="MD2-zq-j4r"/>
