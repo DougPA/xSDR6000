@@ -9,12 +9,11 @@
 import Foundation
 import xLib6000
 import OpusOSX
-import AudioLibrary
 import Accelerate
 import AVFoundation
 
 
-class OpusManager                           : NSObject, StreamHandler, AFSoundcardDelegate {
+class OpusManager                           : NSObject, StreamHandler {
 
   // ----------------------------------------------------------------------------
   // MARK: - Static properties
