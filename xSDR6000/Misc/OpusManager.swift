@@ -73,8 +73,8 @@ class OpusManager                           : NSObject, StreamHandler, AFSoundca
   }
   
   deinit {
-    
     _player.stop()
+    _engine.stop()
   }
   /// Create one or more AVAudioPCMBuffers
   ///
