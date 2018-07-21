@@ -18,7 +18,7 @@ class OpusManager                           : NSObject, StreamHandler {
   // ----------------------------------------------------------------------------
   // MARK: - Static properties
   
-  static let kSampleRate                    : Float = 48_000                 // Sample Rate (samples/second)
+  static let kSampleRate                    : Float = 24_000                 // Sample Rate (samples/second)
   static let kNumberOfChannels              = 2                              // Right & Left channels
   static let kSampleCount                   = Int(kSampleRate / 100.0 )      // Number of input samples in 10 ms
 
