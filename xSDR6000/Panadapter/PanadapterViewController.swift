@@ -556,7 +556,7 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
       panadapter.delegate = nil
       
       // YES, log the event
-      Log.sharedInstance.msg("ID = \(panadapter.id.hex)", level: .debug, function: #function, file: #file, line: #line)
+      Log.sharedInstance.msg("ID = \(panadapter.id.hex)", level: .info, function: #function, file: #file, line: #line)
       
 //      for flag in _frequencyLegendView.flags {
 //
@@ -581,7 +581,7 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
       if let panadapter = _panadapter, slice.panadapterId == panadapter.id {
         
         // YES, log the event
-        Log.sharedInstance.msg("ID = \(slice.id), pan = \(panadapter.id.hex)", level: .debug, function: #function, file: #file, line: #line)
+        Log.sharedInstance.msg("ID = \(slice.id), pan = \(panadapter.id.hex)", level: .info, function: #function, file: #file, line: #line)
         
         // observe removal of this Slice
         NC.makeObserver(self, with: #selector(sliceWillBeRemoved(_:)), of: .sliceWillBeRemoved, object: slice)
@@ -607,7 +607,7 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
       if let panadapter = _panadapter, slice.panadapterId == panadapter.id  {
         
         // YES, log the event
-        Log.sharedInstance.msg("ID = \(slice.id), pan = \(panadapter.id.hex)", level: .debug, function: #function, file: #file, line: #line)
+        Log.sharedInstance.msg("ID = \(slice.id), pan = \(panadapter.id.hex)", level: .info, function: #function, file: #file, line: #line)
         
         // remove the Flag & Observations of this Slice
         removeFlag(for: slice)
@@ -627,7 +627,7 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
     if let tnf = note.object as? Tnf {
 
       // YES, log the event
-      Log.sharedInstance.msg("ID = \(tnf.id)", level: .debug, function: #function, file: #file, line: #line)
+      Log.sharedInstance.msg("ID = \(tnf.id)", level: .info, function: #function, file: #file, line: #line)
 
       // add observations for this Tnf
       addTnfObservations(&_tnfObservations, object: tnf)
@@ -646,7 +646,7 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
     if let tnfToRemove = note.object as? Tnf {
 
       // YES, log the event
-      Log.sharedInstance.msg("ID = \(tnfToRemove.id)", level: .debug, function: #function, file: #file, line: #line)
+      Log.sharedInstance.msg("ID = \(tnfToRemove.id)", level: .info, function: #function, file: #file, line: #line)
 
       // invalidate & remove all of the Tnf observations
       invalidateObservations(&_tnfObservations)
@@ -666,8 +666,6 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
   ///
   private func addFlag(for slice: xLib6000.Slice) {
 
-    Log.sharedInstance.msg("Slice \(slice.id)", level: .debug, function: #function, file: #file, line: #line)
-    
     // get the Storyboard containing a Flag View Controller
     let sb = NSStoryboard(name: NSStoryboard.Name(rawValue: "Flag"), bundle: nil)
 
@@ -702,8 +700,6 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
 
     for (i, flagVc) in _frequencyLegendView.flags.enumerated() where flagVc.slice == slice {
 
-      Log.sharedInstance.msg("Slice \(flagVc.slice!.id)", level: .debug, function: #function, file: #file, line: #line)
-      
       // remove the Slice observers
       invalidateObservations(&flagVc.sliceObservations)
       

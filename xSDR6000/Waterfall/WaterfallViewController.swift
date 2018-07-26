@@ -305,7 +305,7 @@ class WaterfallViewController               : NSViewController, NSGestureRecogni
     if let waterfall = note.object as? Waterfall {
 
       // YES, log the event
-      Log.sharedInstance.msg("ID = \(waterfall.id.hex)", level: .debug, function: #function, file: #file, line: #line)
+      Log.sharedInstance.msg("ID = \(waterfall.id.hex)", level: .info, function: #function, file: #file, line: #line)
 
       // stop processing waterfall data
       waterfall.delegate = nil

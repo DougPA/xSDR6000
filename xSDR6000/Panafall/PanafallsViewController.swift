@@ -67,7 +67,7 @@ class PanafallsViewController               : NSSplitViewController {
     if let panadapter = note.object as? Panadapter {
 
       // YES, log the event
-      Log.sharedInstance.msg("ID = \(panadapter.id.hex)", level: .debug, function: #function, file: #file, line: #line)
+      Log.sharedInstance.msg("ID = \(panadapter.id.hex)", level: .info, function: #function, file: #file, line: #line)
     }
   }
   /// Process .waterfallHasBeenAdded Notification
@@ -81,7 +81,7 @@ class PanafallsViewController               : NSSplitViewController {
     if let waterfall = note.object as? Waterfall {
       
       // YES, log the event
-      Log.sharedInstance.msg("ID = \(waterfall.id.hex)", level: .debug, function: #function, file: #file, line: #line)
+      Log.sharedInstance.msg("ID = \(waterfall.id.hex)", level: .info, function: #function, file: #file, line: #line)
       
       let panadapter = Api.sharedInstance.radio!.panadapters[waterfall.panadapterId]
       
