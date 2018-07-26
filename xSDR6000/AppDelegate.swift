@@ -32,11 +32,11 @@ final class AppDelegate                     : NSObject, NSApplicationDelegate, L
       let systemDestination = AppleSystemLogDestination(identifier: "advancedLogger.systemDestination")
       
       // Optionally set some configuration options
-      systemDestination.outputLevel = .verbose
+      systemDestination.outputLevel = .info
       systemDestination.showLogIdentifier = false
       systemDestination.showFunctionName = true
       systemDestination.showThreadName = false
-      systemDestination.showLevel = false
+      systemDestination.showLevel = true
       systemDestination.showLineNumber = false
       systemDestination.showDate = false                              // AppleSystemLogDestination always adds a datetime
       
@@ -67,7 +67,7 @@ final class AppDelegate                     : NSObject, NSApplicationDelegate, L
     // Optionally set some configuration options
     fileDestination.targetMaxFileSize       = 1_048_576                     // 2^20
     fileDestination.targetMaxLogFiles       = 5
-    fileDestination.outputLevel             = .verbose
+    fileDestination.outputLevel             = .info
     fileDestination.showLogIdentifier       = false
     fileDestination.showFunctionName        = true
     fileDestination.showThreadName          = true
