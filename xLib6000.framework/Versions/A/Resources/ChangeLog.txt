@@ -1,5 +1,11 @@
 xLib6000 Change Log
 
+v1.2.12 OPEN FOR CHANGES
+
+Opus.swift - removed "didSet..." from _delegate
+ALL log messages - re-evaluated the messageLevel of messages
+
+
 v1.2.11
 
 Interlock.swift - moved stateChange(_:) to Radio

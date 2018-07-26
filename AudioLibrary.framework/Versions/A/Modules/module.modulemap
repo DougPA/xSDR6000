@@ -1,6 +1,0 @@
-framework module AudioLibrary {
-  umbrella header "AudioLibrary.h"
-
-  export *
-  module * { export * }
-}
