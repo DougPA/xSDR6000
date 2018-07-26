@@ -59,7 +59,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
 //  private var _activity                     : NSObjectProtocol?
 
   private var _opus                         : Opus?
-  private let _opusManager                  = OpusManager()
+  private var _opusDecode                   : OpusDecode?
   
   
   private let kGuiFirmwareSupport           = "2.3.7.x"                     // Radio firmware supported by this App
@@ -94,6 +94,8 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     
     // give the Log object (in the API) access to our logger
     Log.sharedInstance.delegate = (NSApp.delegate as! LogHandler)
+    
+    _opusDecode = OpusDecode()
     
     // setup & register Defaults
     defaults(from: "Defaults.plist")
@@ -489,7 +491,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
       
       Log.sharedInstance.msg("\(opus.id.hex)", level: .info, function: #function, file: #file, line: #line)
       
-      opus.delegate = _opusManager
+      opus.delegate = _opusDecode
     }
   }
   
