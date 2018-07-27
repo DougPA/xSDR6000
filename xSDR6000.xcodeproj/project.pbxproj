@@ -144,14 +144,12 @@
 		913F7F282066DC7A00F35E9B /* WaterfallViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaterfallViewController.swift; sourceTree = "<group>"; };
 		913F7F292066DC7A00F35E9B /* WaterfallShaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = WaterfallShaders.metal; sourceTree = "<group>"; };
 		913F7F6B2066DD5A00F35E9B /* ObjcExceptionBridging.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ObjcExceptionBridging.framework; sourceTree = "<group>"; };
-		913F7F6C2066DD5A00F35E9B /* AudioLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AudioLibrary.framework; sourceTree = "<group>"; };
 		913F7F6D2066DD5A00F35E9B /* OpusOSX.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OpusOSX.framework; sourceTree = "<group>"; };
 		913F7F6E2066DD5A00F35E9B /* SwiftyUserDefaults.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SwiftyUserDefaults.framework; sourceTree = "<group>"; };
 		913F7F6F2066DD5A00F35E9B /* xLib6000.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = xLib6000.framework; sourceTree = "<group>"; };
 		913F7F702066DD5A00F35E9B /* XCGLogger.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = XCGLogger.framework; sourceTree = "<group>"; };
 		913F7F772066E6F500F35E9B /* xLib6000.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = xLib6000.framework; sourceTree = "<group>"; };
 		913F7F782066E6F500F35E9B /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		913F7F792066E6F500F35E9B /* AudioLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AudioLibrary.framework; sourceTree = "<group>"; };
 		913F7F7A2066E6F500F35E9B /* XCGLogger.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = XCGLogger.framework; sourceTree = "<group>"; };
 		913F7F7B2066E6F600F35E9B /* SwiftyUserDefaults.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SwiftyUserDefaults.framework; sourceTree = "<group>"; };
 		913F7F7C2066E6F600F35E9B /* OpusOSX.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OpusOSX.framework; sourceTree = "<group>"; };
@@ -191,7 +189,6 @@
 			isa = PBXGroup;
 			children = (
 				913F7F782066E6F500F35E9B /* README.md */,
-				913F7F792066E6F500F35E9B /* AudioLibrary.framework */,
 				913F7F7D2066E6F600F35E9B /* ObjcExceptionBridging.framework */,
 				913F7F7C2066E6F600F35E9B /* OpusOSX.framework */,
 				913F7F7B2066E6F600F35E9B /* SwiftyUserDefaults.framework */,
@@ -351,7 +348,6 @@
 		913F7F6A2066DD5900F35E9B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				913F7F6C2066DD5A00F35E9B /* AudioLibrary.framework */,
 				913F7F6B2066DD5A00F35E9B /* ObjcExceptionBridging.framework */,
 				913F7F6D2066DD5A00F35E9B /* OpusOSX.framework */,
 				913F7F6E2066DD5A00F35E9B /* SwiftyUserDefaults.framework */,
