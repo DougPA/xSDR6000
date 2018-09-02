@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
+        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14113"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
         <capability name="stacking Non-gravity area distributions on NSStackView" minToolsVersion="7.0" minSystemVersion="10.11"/>
@@ -841,7 +842,7 @@
                                             <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                                         </buttonCell>
                                         <connections>
-                                            <action selector="rxEnabled:" target="Oky-zY-oP4" id="Rr8-eo-7an"/>
+                                            <action selector="opusRxAudio:" target="Oky-zY-oP4" id="99e-s5-h1Q"/>
                                             <binding destination="MeG-fG-mdw" name="value" keyPath="values.remoteRxEnabled" id="5wy-qJ-QB9"/>
                                         </connections>
                                     </button>
@@ -1052,15 +1053,15 @@
         <scene sceneID="Kz4-nX-gwb">
             <objects>
                 <viewController identifier="SideButtonsVC" storyboardIdentifier="SideButtons" id="Ng6-KG-b9V" userLabel="Side Buttons" sceneMemberID="viewController">
-                    <view key="view" wantsLayer="YES" id="iRD-Cc-O72">
-                        <rect key="frame" x="0.0" y="0.0" width="374" height="61"/>
+                    <view key="view" id="iRD-Cc-O72">
+                        <rect key="frame" x="0.0" y="0.0" width="374" height="37"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <stackView distribution="fillEqually" orientation="horizontal" alignment="centerY" spacing="1" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" horizontalClippingResistancePriority="750" verticalClippingResistancePriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dnK-lm-Wdo">
-                                <rect key="frame" x="2" y="2" width="370" height="57"/>
+                            <stackView wantsLayer="YES" distribution="fillEqually" orientation="horizontal" alignment="centerY" spacing="1" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" horizontalClippingResistancePriority="750" verticalClippingResistancePriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dnK-lm-Wdo">
+                                <rect key="frame" x="2" y="2" width="370" height="33"/>
                                 <subviews>
                                     <button identifier="TX" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="r8z-hs-Frl">
-                                        <rect key="frame" x="-1" y="11" width="83" height="32"/>
+                                        <rect key="frame" x="-1" y="-1" width="83" height="32"/>
                                         <buttonCell key="cell" type="push" title="TX" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="jnR-Dq-Fgw">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                                             <font key="font" metaFont="system"/>
@@ -1070,7 +1071,7 @@
                                         </connections>
                                     </button>
                                     <button identifier="PCW" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="AYb-2A-FnE">
-                                        <rect key="frame" x="71" y="11" width="83" height="32"/>
+                                        <rect key="frame" x="71" y="-1" width="83" height="32"/>
                                         <buttonCell key="cell" type="push" title="P/CW" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="gvl-fH-D26">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                                             <font key="font" metaFont="system"/>
@@ -1080,7 +1081,7 @@
                                         </connections>
                                     </button>
                                     <button identifier="PHONE" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Yxo-C4-hxr">
-                                        <rect key="frame" x="143" y="11" width="85" height="32"/>
+                                        <rect key="frame" x="143" y="-1" width="85" height="32"/>
                                         <buttonCell key="cell" type="push" title="PHONE" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="f7p-LP-nti">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                                             <font key="font" metaFont="system"/>
@@ -1090,7 +1091,7 @@
                                         </connections>
                                     </button>
                                     <button identifier="RX" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Tl0-hE-qcP">
-                                        <rect key="frame" x="217" y="11" width="82" height="32"/>
+                                        <rect key="frame" x="217" y="-1" width="82" height="32"/>
                                         <buttonCell key="cell" type="push" title="RX" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Ff1-Ai-752">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                                             <font key="font" metaFont="system"/>
@@ -1100,7 +1101,7 @@
                                         </connections>
                                     </button>
                                     <button identifier="EQ" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wNE-9n-tsI">
-                                        <rect key="frame" x="288" y="11" width="83" height="32"/>
+                                        <rect key="frame" x="288" y="-1" width="83" height="32"/>
                                         <buttonCell key="cell" type="push" title="EQ" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="tj2-6o-RHR">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                                             <font key="font" metaFont="system"/>
@@ -1110,9 +1111,8 @@
                                         </connections>
                                     </button>
                                 </subviews>
-                                <edgeInsets key="edgeInsets" left="5" right="5" top="5" bottom="5"/>
+                                <edgeInsets key="edgeInsets" left="5" right="5" top="0.0" bottom="0.0"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="57" id="UM6-wm-fbw"/>
                                     <constraint firstAttribute="width" constant="370" id="gIy-sY-ZFU"/>
                                 </constraints>
                                 <visibilityPriorities>
@@ -1141,7 +1141,7 @@
                 </viewController>
                 <customObject id="B8G-bD-9Yv" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1612" y="593.5"/>
+            <point key="canvasLocation" x="1612" y="581.5"/>
         </scene>
         <!--Side Bottom-->
         <scene sceneID="KGa-wX-jt1">

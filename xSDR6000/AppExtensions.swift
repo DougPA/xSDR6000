@@ -17,7 +17,7 @@ typealias NC = NotificationCenter
 // MARK: - EXTENSIONS
 
 // ----------------------------------------------------------------------------
-// MARK: - Definitions for SwiftyUserDefaults
+// MARK: - SwiftyUserDefaults
 
 extension UserDefaults {
   
@@ -170,6 +170,9 @@ extension  UserDefaults {
   
 }
 
+// ----------------------------------------------------------------------------
+// MARK: - FileManager
+
 extension FileManager {
   
   /// Get / create the Application Support folder
@@ -192,6 +195,9 @@ extension FileManager {
     return appFolderUrl
   }
 }
+
+// ----------------------------------------------------------------------------
+// MARK: - NSBezierPath
 
 extension NSBezierPath {
   
@@ -330,6 +336,9 @@ extension NSBezierPath {
   }
 }
 
+// ----------------------------------------------------------------------------
+// MARK: - NSGradient
+
 extension NSGradient {
   
   // return a "basic" Gradient
@@ -428,6 +437,9 @@ extension NSGradient {
   }
 }
 
+// ----------------------------------------------------------------------------
+// MARK: - NSColor
+
 extension NSColor {
   
   // return a float4 version of an rgba NSColor
@@ -458,10 +470,24 @@ extension NSColor {
   }
 }
 
+// ----------------------------------------------------------------------------
+// MARK: - String
+
 extension String {
   
   var numbers: String {
     return String(describing: filter { String($0).rangeOfCharacter(from: CharacterSet(charactersIn: "0123456789")) != nil })
+  }
+}
+
+// ----------------------------------------------------------------------------
+// MARK: - Float
+
+extension Float {
+  
+  // return the Power value of a Dbm (1 watt) value
+  var powerFromDbm: Float {
+    return Float( pow( Double(10.0),Double( (self - 30.0)/10.0) ) )
   }
 }
 

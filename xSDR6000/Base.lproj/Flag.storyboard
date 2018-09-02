@@ -7,6 +7,69 @@
         <capability name="stacking Non-gravity area distributions on NSStackView" minToolsVersion="7.0" minSystemVersion="10.11"/>
     </dependencies>
     <scenes>
+        <!--Alt Flag View Controller-->
+        <scene sceneID="Yr0-4q-FSF">
+            <objects>
+                <viewController id="m96-dz-SfZ" customClass="AltFlagViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="0ef-E2-J5u">
+                        <rect key="frame" x="0.0" y="0.0" width="175" height="62"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <button toolTip="Xmit" translatesAutoresizingMaskIntoConstraints="NO" id="cHS-oO-Oyj">
+                                <rect key="frame" x="142" y="12" width="33" height="22"/>
+                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="TX-off" imagePosition="overlaps" alignment="center" alternateImage="TX-on" imageScaling="proportionallyUpOrDown" inset="2" id="cDH-T5-D3f">
+                                    <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <binding destination="m96-dz-SfZ" name="value" keyPath="slice.txEnabled" id="Y9p-fu-eBt"/>
+                                </connections>
+                            </button>
+                            <textField toolTip="Slice" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QyG-jn-6db">
+                                <rect key="frame" x="148" y="35" width="22" height="24"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="22" id="Xaw-CS-SUV"/>
+                                </constraints>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="A" drawsBackground="YES" id="tni-5C-on9">
+                                    <font key="font" metaFont="systemBold" size="20"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1gw-1E-CLv" userLabel="Frequency">
+                                <rect key="frame" x="-2" y="19" width="144" height="31"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" refusesFirstResponder="YES" state="on" focusRingType="none" alignment="right" placeholderString="7.235.000" id="1yi-hU-aKV">
+                                    <numberFormatter key="formatter" formatterBehavior="default10_4" usesGroupingSeparator="NO" groupingSize="0" minimumIntegerDigits="0" maximumIntegerDigits="42" id="OXb-7f-Rag" customClass="FrequencyFormatter" customModule="xSDR6000" customModuleProvider="target"/>
+                                    <font key="font" metaFont="system" size="26"/>
+                                    <color key="textColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                                <connections>
+                                    <binding destination="Lmw-yC-7qh" name="value" keyPath="slice.frequency" id="NmZ-nz-Ul9"/>
+                                </connections>
+                            </textField>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="1gw-1E-CLv" firstAttribute="top" secondItem="0ef-E2-J5u" secondAttribute="top" constant="12" id="1cC-W9-MsC"/>
+                            <constraint firstAttribute="trailing" secondItem="cHS-oO-Oyj" secondAttribute="trailing" id="7rF-Si-dIH"/>
+                            <constraint firstAttribute="bottom" secondItem="cHS-oO-Oyj" secondAttribute="bottom" constant="12" id="7tL-d0-YQu"/>
+                            <constraint firstItem="QyG-jn-6db" firstAttribute="leading" secondItem="1gw-1E-CLv" secondAttribute="trailing" constant="8" symbolic="YES" id="E0g-oJ-yQH"/>
+                            <constraint firstItem="cHS-oO-Oyj" firstAttribute="top" secondItem="QyG-jn-6db" secondAttribute="bottom" constant="1" id="Kkn-Uk-hS7"/>
+                            <constraint firstItem="QyG-jn-6db" firstAttribute="top" secondItem="0ef-E2-J5u" secondAttribute="top" constant="3" id="Pfh-4K-OR2"/>
+                            <constraint firstItem="QyG-jn-6db" firstAttribute="centerX" secondItem="cHS-oO-Oyj" secondAttribute="centerX" id="YSj-fO-YJ9"/>
+                            <constraint firstItem="cHS-oO-Oyj" firstAttribute="leading" secondItem="1gw-1E-CLv" secondAttribute="trailing" constant="2" id="ocH-m8-xo9"/>
+                            <constraint firstItem="1gw-1E-CLv" firstAttribute="leading" secondItem="0ef-E2-J5u" secondAttribute="leading" id="pRO-em-ubp"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="_alpha" destination="QyG-jn-6db" id="axa-9G-ZgU"/>
+                        <outlet property="_frequencyField" destination="1gw-1E-CLv" id="8y3-c3-M9c"/>
+                    </connections>
+                </viewController>
+                <customObject id="gyE-gp-ALA" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2096" y="34"/>
+        </scene>
         <!--Flag View Controller-->
         <scene sceneID="rSb-95-jkI">
             <objects>
@@ -73,6 +136,9 @@
                                             <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
+                                        <connections>
+                                            <binding destination="Lmw-yC-7qh" name="value" keyPath="slice.txEnabled" id="6Lq-wm-5wB"/>
+                                        </connections>
                                     </button>
                                     <textField toolTip="Slice" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mTg-CM-4KQ">
                                         <rect key="frame" x="150" y="0.0" width="22" height="24"/>

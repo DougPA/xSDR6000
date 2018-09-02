@@ -14,15 +14,14 @@ import AVFoundation
 
 //  DATA FLOW
 //
-//  ---- Stream Handler ----        ->     Player input    ->      engine.outputNode output    ->    Output device
+//  Stream Handler  ->  Opus Decoder   ->  Conversion   ->  Player output   ->  Output device
 //
-//  [UInt8]      ->    [Float]      ->     [Float]         ->      [Float]
+//                  [UInt8]            [Float]          [Float]             [Float]
 //
-//  opus               pcmFloat32          pcmFloat32              pcmFloat32
-//  24_000             24_000              24_000                  set by hardware
-//  interleaved        interleaved         non-interleaved         non-interleaved
-//  2 channels         2 channels          2 channels              2 channels
-//
+//                  opus               pcmFloat32       pcmFloat32          pcmFloat32
+//                  24_000             24_000           24_000              set by hardware
+//                  interleaved        interleaved      non-interleaved     non-interleaved
+//                  2 channels         2 channels       2 channels          2 channels
 
 // --------------------------------------------------------------------------------
 // MARK: - Opus Decode class implementation
@@ -33,15 +32,15 @@ public final class OpusDecode               : NSObject, StreamHandler {
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
   
-  private var _decoder                      : OpaquePointer!                // Opaque pointer to Opus Decoder
+  private var _decoder                      : OpaquePointer!
   private var _engine                       = AVAudioEngine()
   private var _player                       = AVAudioPlayerNode()
-  private var _nonInterleavedBuffers        = [AVAudioPCMBuffer]()          // non-interleaved buffers (AVAudioPlayer input)
-  private var _bufferIndex                  = 0
-  private var _interleavedBuffer            =                               // interleaved buffer (Opus decoder output)
-    [Float](repeating: 0.0, count: Opus.frameLength * Opus.channels)
+  private var _playerInputBuffers           = [AVAudioPCMBuffer]()          // non-interleaved buffers
+  private var _index                        = 0
+  private var _decoderOutput                =                               // interleaved buffer
+    [Float](repeating: 0.0, count: Opus.frameCount * Opus.channelCount)
 
-  private let kNumberOfBuffers              = 3
+  private let kNumberOfPlayerInputBuffers   = 3
   private let kChannelLeft                  = 0
   private let kChannelRight                 = 1
   
@@ -52,37 +51,28 @@ public final class OpusDecode               : NSObject, StreamHandler {
 
     super.init()
 
-    // create a stereo format with the Opus sample rate & non-interleaved
-    let opusFormat = AVAudioFormat(standardFormatWithSampleRate: Double(Opus.rate), channels: AVAudioChannelCount(Opus.channels))!
+    // create a non-interleaved stereo format with the Opus sample rate
+    let opusFormat = AVAudioFormat(standardFormatWithSampleRate: Double(Opus.sampleRate),
+                                   channels: AVAudioChannelCount(Opus.channelCount))!
 
-    // create multiple output buffers with the Opus format
+    // create Player input buffers
     createBuffers(with: opusFormat)
 
     // create the Opus decoder
-    var opusError: Int32 = 0
-    _decoder = opus_decoder_create(Int32(Opus.rate), Int32(Opus.channels), &opusError)
-    if opusError != 0 { fatalError("Unable to create OpusDecoder, error = \(opusError)") }
+    createDecoder()
     
-    // attach the node
-    _engine.attach(_player)
-    
-    // connect the nodes
-    _engine.connect(_player, to: _engine.outputNode, format: opusFormat)
-
-//    Log.sharedInstance.msg("Output = \(_engine.outputNode.outputFormat(forBus: 0))", level: .info, function: #function, file: #file, line: #line)
-
-    // start the engine
-    try! _engine.start()
-
-    clearBuffers()
-    
-    _player.play()
+    // Create & start the player
+    createPlayer(with: opusFormat)
   }
   
   deinit {
     _player.stop()
     _engine.stop()
   }
+  
+  // ----------------------------------------------------------------------------
+  // MARK: - Private methods
+  
   /// Create one or more AVAudioPCMBuffers
   ///
   /// - Parameter format:           the desired format
@@ -90,26 +80,62 @@ public final class OpusDecode               : NSObject, StreamHandler {
   private func createBuffers(with format: AVAudioFormat) {
     
     // create the AVAudioPCMBuffers
-    for _ in 0..<kNumberOfBuffers {
+    for _ in 0..<kNumberOfPlayerInputBuffers {
       
-      // buffer with the Opus sample rate and frame size
-      let buffer = AVAudioPCMBuffer(pcmFormat: format, frameCapacity: AVAudioFrameCount(Opus.frameLength))!
+      // buffer with the Opus sample rate and frame count
+      let buffer = AVAudioPCMBuffer(pcmFormat: format,
+                                    frameCapacity: AVAudioFrameCount(Opus.frameCount))!
       buffer.frameLength = buffer.frameCapacity
 
-      // sdd it to the collection of buffers
-      _nonInterleavedBuffers.append(buffer)
+      // add it to the collection of buffers
+      _playerInputBuffers.append(buffer)
     }
+  }
+  /// Create an Opus decoder
+  ///
+  private func createDecoder() {
+    
+    // create the Opus decoder
+    var opusError : Int32 = 0
+    _decoder = opus_decoder_create(Int32(Opus.sampleRate),
+                                   Int32(Opus.channelCount),
+                                   &opusError)
+    if opusError != 0 { fatalError("Unable to create OpusDecoder, error = \(opusError)") }
+  }
+  /// Create an AVAudioPlayer
+  ///
+  /// - Parameter opusFormat:         the desired format
+  ///
+  private func createPlayer(with opusFormat: AVAudioFormat) {
+    
+    // attach the node
+    _engine.attach(_player)
+    
+    // connect the nodes
+    _engine.connect(_player, to: _engine.outputNode, format: opusFormat)
+    
+    // start the engine
+    try! _engine.start()
+    
+    clearBuffers()
+    
+    _player.play()
   }
   /// Clear all buffers
   ///
   private func clearBuffers() {
-    _bufferIndex = 0
+    _index = 0
     
-    for buffer in _nonInterleavedBuffers {
+    for buffer in _playerInputBuffers {
       
       // clear the non-interleaved buffer (fill with zeroes)
-      memset(buffer.floatChannelData![kChannelLeft], 0, Int(buffer.frameLength) * MemoryLayout<Float>.size)
-      memset(buffer.floatChannelData![kChannelRight], 0, Int(buffer.frameLength) * MemoryLayout<Float>.size)
+      memset(buffer.floatChannelData![kChannelLeft],
+             0,
+             Int(buffer.frameLength) * MemoryLayout<Float>.size)
+      
+      memset(buffer.floatChannelData![kChannelRight],
+             0,
+             Int(buffer.frameLength) * MemoryLayout<Float>.size)
     }
   }
   // ----------------------------------------------------------------------------
@@ -127,35 +153,42 @@ public final class OpusDecode               : NSObject, StreamHandler {
     
     guard _player.isPlaying else { return }
     
+    // ----- Opus Decoding -----
+    
     // perform Opus decoding
-    let numberOfFramesDecoded = opus_decode_float(_decoder,
-                                                 frame.samples,
-                                                 Int32(frame.numberOfSamples),
-                                                 UnsafeMutablePointer<Float>(mutating: _interleavedBuffer),
-                                                 Int32(Opus.frameLength * MemoryLayout<Float>.size * Opus.channels),
-                                                 Int32(0))
-    
+    let destination = UnsafeMutablePointer<Float>(mutating: _decoderOutput)
+    let framesDecoded = opus_decode_float(_decoder,                       // a decoder
+                                          frame.samples,                  // source (Opus-encoded bytes)
+                                          Int32(frame.numberOfSamples),   // source, number of bytes
+                                          destination,                    // destination (interleaved .pcmFloat32)
+                                          Int32(Opus.frameCount),         // destination, frames per channel
+                                          Int32(0))                       // FEC (none)
     // check for decode errors
-    if numberOfFramesDecoded < 0 { Log.sharedInstance.msg(String(cString: opus_strerror(numberOfFramesDecoded)), level: .error, function: #function, file: #file, line: #line) }
+    if framesDecoded < 0 { Log.sharedInstance.msg(String(cString: opus_strerror(framesDecoded)), level: .error, function: #function, file: #file, line: #line) }
     
-    // view the current buffer as a DSPSplitComplex
-    var dspSplitComplexBuffer = DSPSplitComplex(realp: _nonInterleavedBuffers[_bufferIndex].floatChannelData![kChannelLeft],
-                                                imagp: _nonInterleavedBuffers[_bufferIndex].floatChannelData![kChannelRight])
+    // ----- Interleave Conversion -----
     
-    // view the interleaved buffer as a DSPComplex
-    UnsafePointer<Float>(_interleavedBuffer).withMemoryRebound(to: DSPComplex.self, capacity: 1) { dspComplexBuffer in
+    // view the current Player input buffer (non-interleaved) as a DSPSplitComplex
+    var currentPlayerInputBuffer = DSPSplitComplex(realp: _playerInputBuffers[_index].floatChannelData![kChannelLeft],
+                                                   imagp: _playerInputBuffers[_index].floatChannelData![kChannelRight])
+    
+    // view the decoder output buffer (interleaved) as a DSPComplex
+    UnsafePointer<Float>(_decoderOutput).withMemoryRebound(to: DSPComplex.self, capacity: 1) { decoderOutput in
       
       // convert from the interleaved buffer (DSPComplex) to the non-interleaved buffer (DSPSplitComplex)
-      vDSP_ctoz(dspComplexBuffer,
-                Opus.channels,
-                &dspSplitComplexBuffer,
-                1,
-                vDSP_Length(numberOfFramesDecoded))
+      vDSP_ctoz(decoderOutput,                // source       (interleaved)
+                Opus.channelCount,            // source stride
+                &currentPlayerInputBuffer,    // destination  (non-interleaved)
+                1,                            // destination stride
+                vDSP_Length(framesDecoded))   // # of frames
     }
-    // play the buffer
-    _player.scheduleBuffer(_nonInterleavedBuffers[_bufferIndex])
+
+    // ----- Output -----
+    
+    // play the (non-interleaved) buffer
+    _player.scheduleBuffer(_playerInputBuffers[_index])
     
     // move to the next buffer
-    _bufferIndex = (_bufferIndex + 1) % kNumberOfBuffers
+    _index = (_index + 1) % kNumberOfPlayerInputBuffers
   }
 }

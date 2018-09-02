@@ -56,9 +56,9 @@ final class EqViewController                : NSViewController {
   }
   
   override func viewWillAppear() {
+    super.viewWillAppear()
     
     view.layer?.backgroundColor = NSColor.lightGray.cgColor
-    
   }
   
   // ----------------------------------------------------------------------------

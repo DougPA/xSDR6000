@@ -15,4 +15,10 @@ class RxViewController                      : NSViewController {
     // Do view setup here.
   }
   
+  
+  override func viewWillAppear() {
+    super.viewWillAppear()
+    
+    view.layer?.backgroundColor = NSColor.lightGray.cgColor    
+  }
 }

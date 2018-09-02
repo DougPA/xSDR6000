@@ -196,7 +196,6 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
 
     _frequencyField.selectText(self)
   }
-    
   /// Select a view to display
   ///
   /// - Parameter id:             the ID of the selected view
@@ -258,8 +257,6 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
     let tabHeight = _viewController!.view.frame.size.height
     view.frame.origin.y = view.frame.origin.y + (flagAdjustMinus ? -tabHeight : tabHeight)
   }
-
-  
   /// Change a Slice frequency while maintaining its position in the Panadapter display
   ///
   /// - Parameters:
@@ -269,7 +266,6 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
   ///
   func repositionPanadapter(center: Int, frequency: Int, newFrequency: Int) {
   
-//    Swift.print("previousCenter = \(center), newCenter = \(newFrequency - (frequency - center))")
     slice!.frequency = newFrequency
     panadapter!.center = newFrequency - (frequency - center)
   }
@@ -286,13 +282,6 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
     observations = [
       object.observe(\.filterHigh, options: [.initial, .new], changeHandler: observer),
       object.observe(\.filterLow, options: [.initial, .new], changeHandler: observer)
-//      object.observe(\.locked, options: [.initial, .new], changeHandler: observer),
-//      object.observe(\.txEnabled, options: [.new], changeHandler: observer),
-//      object.observe(\.nbEnabled, options: [.initial, .new], changeHandler: observer),
-//      object.observe(\.nrEnabled, options: [.new], changeHandler: observer),
-//      object.observe(\.anfEnabled, options: [.new], changeHandler: observer),
-//      object.observe(\.qskEnabled, options: [.new], changeHandler: observer),
-//      object.observe(\.frequency, options: [.initial, .new], changeHandler: observer)
     ]
   }
   private func observer(_ object: Any, _ change: Any) {
@@ -301,18 +290,6 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
     
     DispatchQueue.main.async { [unowned self] in
       self._filter.floatValue = width
-      
-//      self.view.needsDisplay = true
-      
-//      self._lockButton.state = ( self.slice!.locked ? NSControl.StateValue.on: NSControl.StateValue.off )
-//      self._frequencyField.integerValue = self.slice!.frequency
-      
-      //      self._txButton.state = self.slice!.txEnabled ? NSControl.StateValue.on : NSControl.StateValue.off
-      //      self._nbButton.state = self.slice!.nbEnabled ? NSControl.StateValue.on : NSControl.StateValue.off
-      //      self._nrButton.state = self.slice!.nrEnabled ? NSControl.StateValue.on : NSControl.StateValue.off
-      //      self._anfButton.state = self.slice!.anfEnabled ? NSControl.StateValue.on : NSControl.StateValue.off
-      //      self._qskButton.state = self.slice!.qskEnabled ? NSControl.StateValue.on : NSControl.StateValue.off
-      //      self._lock.state = (self.slice!.locked ? NSControl.StateValue.on : NSControl.StateValue.off)
     }
   }
   // ----------------------------------------------------------------------------

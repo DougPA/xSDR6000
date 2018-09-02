@@ -60,7 +60,8 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
 
   private var _opus                         : Opus?
   private var _opusDecode                   : OpusDecode?
-  
+  private var _opusEncode                   : OpusEncode?
+
   
   private let kGuiFirmwareSupport           = "2.3.7.x"                     // Radio firmware supported by this App
   private let kVoltageTemperature           = "VoltageTemp"                 // Identifier of toolbar VoltageTemperature toolbarItem
@@ -94,8 +95,6 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     
     // give the Log object (in the API) access to our logger
     Log.sharedInstance.delegate = (NSApp.delegate as! LogHandler)
-    
-    _opusDecode = OpusDecode()
     
     // setup & register Defaults
     defaults(from: "Defaults.plist")
@@ -141,10 +140,11 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   ///
   /// - Parameter sender: the Slider
   ///
-  @IBAction func rxEnabled(_ sender: NSButton) {
+  @IBAction func opusRxAudio(_ sender: NSButton) {
     
     // enable / disable Remote Audio
     _opus?.rxEnabled = (sender.state == NSControl.StateValue.on)
+    Log.sharedInstance.msg("\(sender.state == NSControl.StateValue.on ? "Started" : "Stopped")", level: .info, function: #function, file: #file, line: #line)
   }
   /// Respond to the Headphone Gain slider
   ///
@@ -386,7 +386,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
 
     NC.makeObserver(self, with: #selector(radioHasBeenRemoved(_:)), of: .radioHasBeenRemoved, object: nil)
     
-    NC.makeObserver(self, with: #selector(opusHasBeenAdded(_:)), of: .opusHasBeenAdded, object: nil)
+    NC.makeObserver(self, with: #selector(opusRxHasBeenAdded(_:)), of: .opusRxHasBeenAdded, object: nil)
   }
   /// Process .tcpDidConnect Notification
   ///
@@ -483,14 +483,16 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   ///
   /// - Parameter note: a Notification instance
   ///
-  @objc private func opusHasBeenAdded(_ note: Notification) {
+  @objc private func opusRxHasBeenAdded(_ note: Notification) {
 
     // the Opus class has been initialized
     if let opus = note.object as? Opus {
       _opus = opus
       
-      Log.sharedInstance.msg("\(opus.id.hex)", level: .info, function: #function, file: #file, line: #line)
+      Log.sharedInstance.msg("ID = \(opus.id.hex)", level: .info, function: #function, file: #file, line: #line)
       
+      _opusDecode = OpusDecode()
+      _opusEncode = OpusEncode(opus)
       opus.delegate = _opusDecode
     }
   }

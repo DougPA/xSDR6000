@@ -15,13 +15,12 @@ import AVFoundation
 //
 //  Input device  ->  InputNode Tap     ->     AudioConverter    ->    OpusEncoder      ->    Opus.sendTxAudio()
 //
-//  various           [Float]           ->     [Float]                 [UInt8]
+//                various               [Float]                  [Float]                 [UInt8]
 //
-//  various           pcmFloat32               pcmFloat32              opus
-//  various           48_000                   24_000                  24_000
-//  various           non-interleaved          interleaved             interleaved
-//  various           2 channels               2 channels              2 channels
-//
+//                various               pcmFloat32               pcmFloat32              opus
+//                various               various                  24_000                  24_000
+//                various               various                  interleaved             interleaved
+//                various               various                  2 channels              2 channels
 
 // --------------------------------------------------------------------------------
 // MARK: - Opus Encode class implementation
@@ -33,20 +32,39 @@ public final class OpusEncode               : NSObject {
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
   
+  private var _engine                       : AVAudioEngine?
+  private var _mixer                        : AVAudioMixerNode?
   private var _opus                         : Opus!
   private var _encoder                      : OpaquePointer!
+  
+  private var _audioConverter               : AVAudioConverter!
+  
+  private var _tapInputBlock                : AVAudioNodeTapBlock!
   private var _tapBufferSize                : AVAudioFrameCount = 0
-  private var _interleavedBuffers           = [AVAudioPCMBuffer]()
-  private var _bufferIndex                  = 0
-  private var _encodedBuffer                =
-    [UInt8](repeating: 0, count: Opus.frameLength)
-  private var _engine                       : AVAudioEngine?
-  private let _outputFormat                 = AVAudioFormat(commonFormat: .pcmFormatFloat32,
-                                                            sampleRate: Double(Opus.rate),
-                                                            channels: AVAudioChannelCount(Opus.channels),
+  private var _encoderOutput                = [UInt8](repeating: 0, count: Opus.frameCount)
+  
+  private var _ringBuffer                   = RingBuffer()
+  private var _bufferInput                  : AVAudioPCMBuffer!
+  private var _bufferOutput                 : AVAudioPCMBuffer!
+  private var _bufferSemaphore              : DispatchSemaphore!
+  
+  private var _outputQ                      = DispatchQueue(label: "Output", qos: .userInteractive, attributes: [.concurrent])
+  private var _q                            = DispatchQueue(label: "Object", qos: .userInteractive, attributes: [.concurrent])
+  private var _producerIndex                : Int64 = 0
+  
+  private var __outputActive                = false
+  private var _outputActive                 : Bool {
+    get { return _q.sync { __outputActive } }
+    set { _q.sync(flags: .barrier) { __outputActive = newValue } } }
+
+
+  private let kConverterOutputFormat        = AVAudioFormat(commonFormat: .pcmFormatFloat32,
+                                                            sampleRate: Opus.sampleRate,
+                                                            channels: AVAudioChannelCount(Opus.channelCount),
                                                             interleaved: Opus.isInterleaved)!
+  private let kConverterOutputFrameCount    = Int(Opus.sampleRate / 10)
+  private let kRingBufferSlots              = 3
   private let kTapBus                       = 0
-  private let kNumberOfBuffers              = 3
 
   // ----------------------------------------------------------------------------
   // MARK: - Initialization
@@ -56,85 +74,117 @@ public final class OpusEncode               : NSObject {
     
     super.init()
     
-    // create output buffers
-    for _ in 0..<kNumberOfBuffers {
-      _interleavedBuffers.append( AVAudioPCMBuffer(pcmFormat: _outputFormat, frameCapacity: AVAudioFrameCount(_outputFormat.sampleRate/10))!)
-    }
-    // create the Opus encoder
-    var opusError : Int32 = 0
-    _encoder = opus_encoder_create(Int32(Opus.rate),
-                                   Int32(Opus.channels),
-                                   Int32(Opus.application),
-                                   &opusError)
-    if opusError != OPUS_OK { fatalError("Unable to create OpusEncoder, error = \(opusError)") }
+    // create the Ring buffer and buffers for Input and Output from the Ring buffer
+    createBuffers()
+    
+    // create the Tap block
+    createTapInputBlock()
+    
+    // cerate an Opus encoder
+    createOpusEncoder()
+
+    // observe Opus parameters
+    createObservations(&_observations)
+  }
+  
+  deinit {
+    _ringBuffer?.deallocate()
   }
 
   // ----------------------------------------------------------------------------
   // MARK: - Public methods
   
-  /// Capture data from the default input device & convert it to the format specified in the opus struct
+
+  // ----------------------------------------------------------------------------
+  // MARK: - Private methods
+  
+  /// Capture data, convert it and place it in the ring buffer
   ///
-  public func capture(_ device: AHAudioDevice) {
+  private func startInput(_ device: AHAudioDevice) {
     
     // get the input device's ASBD & derive the AVAudioFormat from it
     var asbd = device.asbd!
     let inputFormat = AVAudioFormat(streamDescription: &asbd)!
     
-    // create a format for the Tap's output
+    // the Tap format is whatever the input node's output produces
     let tapFormat = _engine!.inputNode.outputFormat(forBus: kTapBus)
     
-    // calculate a buffer size for 10 milliseconds of audio
-    _tapBufferSize = AVAudioFrameCount(tapFormat.sampleRate/100)
+    // calculate a buffer size for 100 milliseconds of audio at the Tap
+    //    NOTE: installTap header file says "Supported range is [100, 400] ms."
+    _tapBufferSize = AVAudioFrameCount(tapFormat.sampleRate/10)
     
-    Swift.print("Input  device  = \(device.name!), ID = \(device.id)")
-    Swift.print("Input  format  = \(inputFormat)")
-    Swift.print("Tap    format  = \(tapFormat)")
-    Swift.print("Output format  = \(_outputFormat)")
+    Swift.print("Input            device  = \(device.name!), ID = \(device.id)")
+    Swift.print("Input            format  = \(inputFormat)")
+    Swift.print("Converter input  format  = \(tapFormat)")
+    Swift.print("Converter output format  = \(kConverterOutputFormat)")
     
-    // exit if the conversion would be invalid
-    guard let audioConverter = AVAudioConverter(from: tapFormat, to: _outputFormat) else { return }
+    // setupt the converter to go from the Tap format to Opus format
+    _audioConverter = AVAudioConverter(from: tapFormat, to: kConverterOutputFormat)
     
     // clear the buffers
     clearBuffers()
     
-    // setup the Tap callback
-    _engine!.inputNode.installTap(onBus: kTapBus, bufferSize: _tapBufferSize, format: tapFormat) { [unowned self] (inputBuffer, time) in
-      
-      // setup the Converter callback (assumes no errors)
-      var error: NSError?
-      audioConverter.convert(to: self._interleavedBuffers[self._bufferIndex], error: &error, withInputFrom: { (inNumPackets, outStatus) -> AVAudioBuffer? in
-        
-        // signal we have the needed amount of data
-        outStatus.pointee = AVAudioConverterInputStatus.haveData
-        
-        // return the data to be converted
-        return inputBuffer
-      } )
-      
-      // perform Opus encoding
-      let numberOfFramesEncoded = opus_encode_float(self._encoder,
-                                                    self._interleavedBuffers[self._bufferIndex].floatChannelData!.pointee,
-                                                    Int32(Opus.frameLength),
-                                                    &self._encodedBuffer,
-                                                    Int32(Opus.frameLength))
-      // check for encode errors
-      if numberOfFramesEncoded < 0 { Log.sharedInstance.msg(String(cString: opus_strerror(numberOfFramesEncoded)), level: .error, function: #function, file: #file, line: #line) }
-
-      // send buffer to Radio
-      self._opus.sendTxAudio(buffer: self._encodedBuffer)
-      
-      // bump the buffer index
-      self._bufferIndex = (self._bufferIndex + 1)  % self.kNumberOfBuffers
-    }
+    // start a thread to empty the ring buffer
+    _bufferSemaphore = DispatchSemaphore(value: 0)
+    _outputActive = true
+    startOutput()
     
+    _producerIndex = 0
+    
+    // setup the Tap callback to populate the ring buffer
+    _engine!.inputNode.installTap(onBus: kTapBus, bufferSize: _tapBufferSize, format: tapFormat, block: _tapInputBlock)
+
     // prepare & start the engine
     _engine!.prepare()
     try! _engine!.start()
   }
-
-  // ----------------------------------------------------------------------------
-  // MARK: - Private methods
-  
+  /// Start a thread to empty the ring buffer
+  ///
+  private func startOutput() {
+    
+    _outputQ.async { [unowned self] in
+      
+      // start at the beginning of the ring buffer
+      var frameNumber : Int64 = 0
+      
+      while self._outputActive {
+        
+        // wait for the data
+        self._bufferSemaphore.wait()
+        
+        // process 240 frames per iteration
+        for _ in 0..<10 {
+          
+          let fetchError = self._ringBuffer!.fetch(self._bufferOutput.mutableAudioBufferList,
+                                                   nFrame: UInt32(Opus.frameCount),
+                                                   frameNumnber: frameNumber)
+          if fetchError != 0 { Swift.print("Fetch error = \(String(describing: fetchError))") }
+          
+          
+//          Swift.print("\(self._bufferOutput.floatChannelData![0][120])")
+          
+          
+          
+          // ------------------ ENCODE ------------------
+          
+          // perform Opus encoding
+          let encodedFrames = opus_encode_float(self._encoder,                            // an encoder
+                                                self._bufferOutput.floatChannelData![0],  // source (interleaved .pcmFloat32)
+                                                Int32(Opus.frameCount),                   // source, frames per channel
+                                                &self._encoderOutput,                     // destination (Opus-encoded bytes)
+                                                Int32(Opus.frameCount))                   // destination, max size (bytes)
+          // check for encode errors
+          if encodedFrames < 0 { Swift.print("Encoder error - " + String(cString: opus_strerror(encodedFrames))) }
+          
+          // send the encoded audio to the Radio
+          self._opus!.sendTxAudio(buffer: self._encoderOutput, samples: Int(encodedFrames))
+          
+          // bump the frame number
+          frameNumber += Int64( Opus.frameCount )
+        }
+      }
+    }
+  }
   /// Set the input device for the engine
   ///
   /// - Parameter id:             an AudioDeviceID
@@ -156,15 +206,134 @@ public final class OpusEncode               : NSObject {
     // success if no errors
     return error == noErr
   }
+  /// Create all of the buffers
+  ///
+  private func createBuffers() {
+    
+    // create the Ring buffer
+    _ringBuffer!.allocate(UInt32(Opus.channelCount),
+                          bytesPerFrame: UInt32(MemoryLayout<Float>.size * Int(kConverterOutputFormat.channelCount)),
+                          capacityFrames: UInt32(kConverterOutputFrameCount * kRingBufferSlots))
+    
+    // create a buffer for output from the AudioConverter (input to the ring buffer)
+    _bufferInput = AVAudioPCMBuffer(pcmFormat: kConverterOutputFormat,
+                                    frameCapacity: AVAudioFrameCount(kConverterOutputFrameCount))!
+    _bufferInput.frameLength = _bufferInput.frameCapacity
+    
+    // create a buffer for output from the ring buffer
+    _bufferOutput = AVAudioPCMBuffer(pcmFormat: kConverterOutputFormat,
+                                     frameCapacity: AVAudioFrameCount(Opus.frameCount))!
+    _bufferOutput.frameLength = _bufferOutput.frameCapacity
+    
+  }
+  /// Create an Opus encoder
+  ///
+  private func createOpusEncoder() {
+    
+    // create the Opus encoder
+    var opusError : Int32 = 0
+    _encoder = opus_encoder_create(Int32(Opus.sampleRate),
+                                   Int32(Opus.channelCount),
+                                   Int32(Opus.application),
+                                   &opusError)
+    if opusError != OPUS_OK { fatalError("Unable to create OpusEncoder, error = \(opusError)") }
+    
+  }
+  /// Create a block to process the Tap data
+  ///
+  private func createTapInputBlock() {
+    
+    _tapInputBlock = { [unowned self] (inputBuffer, time) in
+      
+      // setup the Converter callback (assumes no errors)
+      var error: NSError?
+      self._audioConverter.convert(to: self._bufferInput, error: &error, withInputFrom: { (inNumPackets, outStatus) -> AVAudioBuffer? in
+        
+        // signal we have the needed amount of data
+        outStatus.pointee = AVAudioConverterInputStatus.haveData
+        
+        // return the data to be converted
+        return inputBuffer
+      } )
+      
+      // push the converted audio into the Ring buffer
+      let storeError = self._ringBuffer!.store(self._bufferInput.mutableAudioBufferList, nFrames: UInt32(self.kConverterOutputFrameCount), frameNumber: self._producerIndex )
+      if storeError != 0 { Swift.print("Store error = \(String(describing: storeError))") }
+      
+      // bump the Ring buffer location
+      self._producerIndex += Int64(self.kConverterOutputFrameCount)
+      
+      // signal the availability of data for the Output thread
+      self._bufferSemaphore.signal()
+    }
+  }
   /// Clear all buffers
   ///
   private func clearBuffers() {
-    _bufferIndex = 0
     
-    for buffer in _interleavedBuffers {
+    // clear the buffers
+    memset(_bufferInput.floatChannelData![0], 0, Int(_bufferInput.frameLength) * MemoryLayout<Float>.size * Opus.channelCount)
+    memset(_bufferOutput.floatChannelData![0], 0, Int(_bufferOutput.frameLength) * MemoryLayout<Float>.size * Opus.channelCount)
+    
+    // FIXME: Clear the ring buffer?
+    
+  }
+
+  // ----------------------------------------------------------------------------
+  // MARK: - Observation methods
+  
+  private var _observations        = [NSKeyValueObservation]()
+  
+  /// Add observations of various properties
+  ///
+  private func createObservations(_ observations: inout [NSKeyValueObservation]) {
+    
+    observations = [
+      _opus.observe(\.txEnabled, options: [.initial, .new], changeHandler: opusTxAudio )
       
-      // clear the interleaved buffer (fill with zeroes)
-      memset(buffer.floatChannelData![0], 0, Int(buffer.frameLength) * MemoryLayout<Float>.size * Int(_outputFormat.channelCount))
+    ]
+  }
+  /// Respond to changes in Opus txEnabled
+  ///
+  /// - Parameters:
+  ///   - object:                       the object holding the properties
+  ///   - change:                       the change
+  ///
+  private func opusTxAudio(_ object: Any, _ change: Any) {
+    
+    if _opus.txEnabled && _engine == nil {
+      
+      // get the default input device
+      let device = AudioHelper.inputDevices.filter { $0.isDefault }.first!
+
+      // start Opus Tx Audio
+      _engine = AVAudioEngine()
+      clearBuffers()
+
+      // try to set it as the input device for the engine
+      if setInputDevice(device.id) {
+        
+        Log.sharedInstance.msg("ID = \(Opus.txStreamId.hex), Device = \(device.name!)", level: .info, function: #function, file: #file, line: #line)
+        
+        // start capture using this input device
+        startInput(device)
+
+      } else {
+        
+        Log.sharedInstance.msg("Failed, Device = \(device.name!)", level: .info, function: #function, file: #file, line: #line)
+
+        _engine?.stop()
+        _engine = nil
+      }
+      
+    } else if !_opus.txEnabled && _engine != nil {
+      
+      Log.sharedInstance.msg("Stopped", level: .info, function: #function, file: #file, line: #line)
+
+      // stop Opus Tx Audio
+      _engine?.inputNode.removeTap(onBus: kTapBus)
+      _engine?.stop()
+      _engine = nil
     }
   }
 }
