@@ -229,12 +229,12 @@ SWIFT_CLASS("_TtC8xLib60003Atu")
 
 @interface Atu (SWIFT_EXTENSION(xLib6000))
 @property (nonatomic) BOOL memoriesEnabled;
-@property (nonatomic) BOOL enabled;
+@property (nonatomic, readonly) BOOL enabled;
 @end
 
 
 @interface Atu (SWIFT_EXTENSION(xLib6000))
-@property (nonatomic, readonly) BOOL status;
+@property (nonatomic, readonly, copy) NSString * _Nonnull status;
 @property (nonatomic, readonly) BOOL usingMemories;
 @end
 

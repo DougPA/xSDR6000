@@ -1,10 +1,39 @@
 xLib6000 Change Log
 
-v1.2.12 OPEN FOR CHANGES
+v1.2.13 ---- OPEN FOR CHANGES ----
+
+Meter.swift - added new units to Unit enum, adjusted usage of units
+
+
+
+v1.2.12
 
 Opus.swift - removed "didSet..." from _delegate
-ALL log messages - re-evaluated the messageLevel of messages
+Opus.swift - in sendTxAudio(buffer:samples:) corrected format of Vita packet
+Opus.swift - added static params to top of file
+Api.swift - in setConnectionState(_:) commented out "Client connection established" message
+Vita.swift - corrected comments in init(packetType:classCode:streamId:tsi:tsf:)
+Vita.swift - added convenience init(type:streamId:)
+Vita.swift - commented out class discovery(payload:) - unused
+Opus.swift - used Vita's init(type:streamId:)
+Opus.swift - renamed static rate to sampleRate (changed from Int to Double)
+Opus.swift - renamed static frameLength to frameCount
+Opus.swift - renamed static channels to channelCount
+Opus.swift - added static rxStreamId
+TxAudioStream.swift - used Vita's init(type:streamId:)
+Notifications.swift - rename "opusHasBeenAdded" to "opusRxHasBeenAdded"
+Notifications.swift - rename "opusWillBeRemoved" to "opusRxWillBeRemoved"
+Notifications.swift - added "opusTxHasBeenAdded" and "opusTxWillBeRemoved"
+Radio.swift & Opus.swift - updated usage to match renamed notifications
+Radio.swift - in parseReply(_:) corrected seqNum in call to defaultReplyHandler(...)
+Radio.swift - in defaultReplyHandler(_:seqNum:responseValue:reply:) added printing of flexErrorString
+Panadapter.swift - in replyHandler(_:seqNum:responseValue:reply:) added printing of flexErrorString
+Atu.swift - changed __status, _status & status properties from Bool to String
+Atu.swift - added code to status property getter
+AtuCommands.swift - changed kSetCmd to kCmd, changed value to "atu "
+AtuCommands.swift - changed atuCmd(_:_:) to use new kCmd
 
+ALL log messages - re-evaluated the messageLevel of messages
 
 v1.2.11
 
