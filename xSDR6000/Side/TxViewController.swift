@@ -27,6 +27,7 @@ class TxViewController                      : NSViewController {
   @IBOutlet private weak var _atuStatus     : NSTextField!
   @IBOutlet private weak var _rfPower       : NSLevelIndicator!
   @IBOutlet private weak var _swr           : NSLevelIndicator!
+  @IBOutlet private weak var _moxButton     : NSButton!
   
   private let kPowerForward                 = Api.MeterShortName.powerForward.rawValue
   private let kSwr                          = Api.MeterShortName.swr.rawValue
@@ -68,6 +69,9 @@ class TxViewController                      : NSViewController {
     // Atu
     _observations.append( (radio.atu).observe(\.status, options: [.initial, .new], changeHandler: atuStatus) )
     
+    // MOX
+    _observations.append( radio.observe(\.mox, options: [.initial, .new], changeHandler: moxStatus) )
+
     // Meters
     for (_, meter) in radio.meters {
       
@@ -90,6 +94,18 @@ class TxViewController                      : NSViewController {
     DispatchQueue.main.async { [unowned self] in
       self._atuButton.state = (atu.enabled ? NSControl.StateValue.on : NSControl.StateValue.off)
       self._atuStatus.stringValue = atu.status
+    }
+  }
+  /// Respond to changes in MOX status
+  ///
+  /// - Parameters:
+  ///   - object:                       the Radio
+  ///   - change:                       the change
+  ///
+  private func moxStatus(_ radio: Radio, _ change: Any) {
+    
+    DispatchQueue.main.async { [unowned self] in
+      self._moxButton.state = (radio.mox ? NSControl.StateValue.on : NSControl.StateValue.off)
     }
   }
   /// Respond to changes in a Meter
