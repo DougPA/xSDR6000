@@ -25,8 +25,8 @@ class TxViewController                      : NSViewController {
   
   @IBOutlet private weak var _atuButton     : NSButton!
   @IBOutlet private weak var _atuStatus     : NSTextField!
-  @IBOutlet private weak var _rfPower       : NSLevelIndicator!
-  @IBOutlet private weak var _swr           : NSLevelIndicator!
+  @IBOutlet private weak var _rfPower       : LevelIndicator!
+  @IBOutlet private weak var _swr           : LevelIndicator!
   @IBOutlet private weak var _moxButton     : NSButton!
   
   private let kPowerForward                 = Api.MeterShortName.powerForward.rawValue
@@ -40,6 +40,22 @@ class TxViewController                      : NSViewController {
     
     // setup needed observations
     addObservations()
+
+    _rfPower.legends = [            // to skip a legend pass "" as the format
+      (0, "0", 0),
+      (4, "40", -0.5),
+      (8, "80", -0.5),
+      (10, "100", -0.5),
+      (12, "120", -1),
+      (nil, "RF Pwr", 0)
+    ]
+    _swr.legends = [
+      (0, "0", 0),
+      (2, "1.5", -0.5),
+      (6, "2.5", -0.5),
+      (8, "3", -1),
+      (nil, "SWR", 0)
+    ]
   }
   
   override func viewWillAppear() {
@@ -122,12 +138,12 @@ class TxViewController                      : NSViewController {
       
       DispatchQueue.main.async {
         // kPowerForward is in Dbm
-        self._rfPower.floatValue = meter.value.powerFromDbm
+        self._rfPower.level = CGFloat(meter.value.powerFromDbm)
       }
     case kSwr:
       DispatchQueue.main.async {
         // kSwr is actual SWR value
-        self._swr.floatValue = meter.value
+        self._swr.level = CGFloat(meter.value)
       }
 
     default:

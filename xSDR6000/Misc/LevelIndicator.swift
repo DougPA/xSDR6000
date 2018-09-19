@@ -8,7 +8,7 @@
 
 import Cocoa
 
-public typealias LegendTuple = (tick: Int?, format: String, value: Int, fudge: CGFloat)
+public typealias LegendTuple = (tick: Int?, label: String, fudge: CGFloat)
 
 class LevelIndicator: NSView {
   
@@ -17,7 +17,7 @@ class LevelIndicator: NSView {
   public var peak                           : CGFloat = 0.0 {
     didSet { needsDisplay = true } }        // force a redraw
   public var font                           = NSFont(name: "Monaco", size: 14.0)  
-  public var legends: [LegendTuple] = [ (nil, "Level", 0, 0) ]
+  public var legends: [LegendTuple] = [ (nil, "Level", 0) ]
   
 
   private var _path                         = NSBezierPath()
@@ -318,17 +318,15 @@ class LevelIndicator: NSView {
         let xPosition = CGFloat(tick) * segmentWidth
         
         // format & draw the legend
-        let lineLabel = String(format: legend.format, legend.value )
-        let width = lineLabel.size(withAttributes: _attributes).width
-        lineLabel.draw(at: NSMakePoint(xPosition + (width * legend.fudge), _fontY), withAttributes: _attributes)
+        let width = legend.label.size(withAttributes: _attributes).width
+        legend.label.draw(at: NSMakePoint(xPosition + (width * legend.fudge), _fontY), withAttributes: _attributes)
         
       } else {
         
         // NO, draw a centered legend
-        let lineLabel = legend.format
-        let width = lineLabel.size(withAttributes: _attributes).width
+        let width = legend.label.size(withAttributes: _attributes).width
         let xPosition = (frame.width / 2.0) - (width / 2.0) + (width * legend.fudge)
-        lineLabel.draw(at: NSMakePoint(xPosition, _fontY), withAttributes: _attributes)
+        legend.label.draw(at: NSMakePoint(xPosition, _fontY), withAttributes: _attributes)
       }
     }
   }

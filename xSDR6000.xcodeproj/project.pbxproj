@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		91396424214702D5002C9D8B /* xLib6000.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 913F7F772066E6F500F35E9B /* xLib6000.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		913964252147031C002C9D8B /* xLib6000.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 913F7F6F2066DD5A00F35E9B /* xLib6000.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		913F7F2A2066DC7A00F35E9B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 913F7ED52066DC7900F35E9B /* Assets.xcassets */; };
 		913F7F2B2066DC7A00F35E9B /* Preferences.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 913F7ED72066DC7900F35E9B /* Preferences.storyboard */; };
 		913F7F2C2066DC7A00F35E9B /* Panafall.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 913F7ED92066DC7900F35E9B /* Panafall.storyboard */; };
@@ -51,15 +53,13 @@
 		913F7F672066DC7A00F35E9B /* Tritanopia.tex in Resources */ = {isa = PBXBuildFile; fileRef = 913F7F272066DC7A00F35E9B /* Tritanopia.tex */; };
 		913F7F682066DC7A00F35E9B /* WaterfallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7F282066DC7A00F35E9B /* WaterfallViewController.swift */; };
 		913F7F692066DC7A00F35E9B /* WaterfallShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 913F7F292066DC7A00F35E9B /* WaterfallShaders.metal */; };
-		913F7F7E2066E6F600F35E9B /* xLib6000.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 913F7F772066E6F500F35E9B /* xLib6000.framework */; };
-		913F7F7F2066E6F600F35E9B /* xLib6000.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 913F7F772066E6F500F35E9B /* xLib6000.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		913F7F822066E6F600F35E9B /* XCGLogger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 913F7F7A2066E6F500F35E9B /* XCGLogger.framework */; };
+		913F7F822066E6F600F35E9B /* XCGLogger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 913F7F7A2066E6F500F35E9B /* XCGLogger.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		913F7F832066E6F600F35E9B /* XCGLogger.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 913F7F7A2066E6F500F35E9B /* XCGLogger.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		913F7F842066E6F600F35E9B /* SwiftyUserDefaults.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 913F7F7B2066E6F600F35E9B /* SwiftyUserDefaults.framework */; };
+		913F7F842066E6F600F35E9B /* SwiftyUserDefaults.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 913F7F7B2066E6F600F35E9B /* SwiftyUserDefaults.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		913F7F852066E6F600F35E9B /* SwiftyUserDefaults.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 913F7F7B2066E6F600F35E9B /* SwiftyUserDefaults.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		913F7F862066E6F600F35E9B /* OpusOSX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 913F7F7C2066E6F600F35E9B /* OpusOSX.framework */; };
+		913F7F862066E6F600F35E9B /* OpusOSX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 913F7F7C2066E6F600F35E9B /* OpusOSX.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		913F7F872066E6F600F35E9B /* OpusOSX.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 913F7F7C2066E6F600F35E9B /* OpusOSX.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		913F7F882066E6F600F35E9B /* ObjcExceptionBridging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 913F7F7D2066E6F600F35E9B /* ObjcExceptionBridging.framework */; };
+		913F7F882066E6F600F35E9B /* ObjcExceptionBridging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 913F7F7D2066E6F600F35E9B /* ObjcExceptionBridging.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		913F7F892066E6F600F35E9B /* ObjcExceptionBridging.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 913F7F7D2066E6F600F35E9B /* ObjcExceptionBridging.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		91475E5020A28E4600ACE77D /* Flag.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 91475E4E20A28E4600ACE77D /* Flag.storyboard */; };
 		91475E5220A34C2D00ACE77D /* ModeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91475E5120A34C2D00ACE77D /* ModeViewController.swift */; };
@@ -80,6 +80,7 @@
 		9185B0DC208683C7004D4C40 /* Auth0ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9185B0D1208683C7004D4C40 /* Auth0ViewController.swift */; };
 		9185B0DD208683C7004D4C40 /* WANRadioPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9185B0D2208683C7004D4C40 /* WANRadioPickerViewController.swift */; };
 		9185B0DE208683C7004D4C40 /* LANRadioPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9185B0D3208683C7004D4C40 /* LANRadioPickerViewController.swift */; };
+		91D60771215149A300123D77 /* LevelIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D60770215149A300123D77 /* LevelIndicator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -89,11 +90,11 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				913F7F7F2066E6F600F35E9B /* xLib6000.framework in Embed Frameworks */,
 				913F7F872066E6F600F35E9B /* OpusOSX.framework in Embed Frameworks */,
 				913F7F892066E6F600F35E9B /* ObjcExceptionBridging.framework in Embed Frameworks */,
 				913F7F852066E6F600F35E9B /* SwiftyUserDefaults.framework in Embed Frameworks */,
 				913F7F832066E6F600F35E9B /* XCGLogger.framework in Embed Frameworks */,
+				91396424214702D5002C9D8B /* xLib6000.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -184,6 +185,7 @@
 		9185B0D1208683C7004D4C40 /* Auth0ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Auth0ViewController.swift; sourceTree = "<group>"; };
 		9185B0D2208683C7004D4C40 /* WANRadioPickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WANRadioPickerViewController.swift; sourceTree = "<group>"; };
 		9185B0D3208683C7004D4C40 /* LANRadioPickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LANRadioPickerViewController.swift; sourceTree = "<group>"; };
+		91D60770215149A300123D77 /* LevelIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelIndicator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -191,7 +193,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				913F7F7E2066E6F600F35E9B /* xLib6000.framework in Frameworks */,
+				913964252147031C002C9D8B /* xLib6000.framework in Frameworks */,
 				913F7F862066E6F600F35E9B /* OpusOSX.framework in Frameworks */,
 				913F7F882066E6F600F35E9B /* ObjcExceptionBridging.framework in Frameworks */,
 				913F7F842066E6F600F35E9B /* SwiftyUserDefaults.framework in Frameworks */,
@@ -276,6 +278,7 @@
 		913F7EFA2066DC7900F35E9B /* Misc */ = {
 			isa = PBXGroup;
 			children = (
+				91D60770215149A300123D77 /* LevelIndicator.swift */,
 				9179497B212EFB0E00D9750A /* RingBuffer */,
 				916909C72113E40C00164044 /* AudioHelper.swift */,
 				913F7EFB2066DC7900F35E9B /* Band.swift */,
@@ -550,6 +553,7 @@
 				913F7F622066DC7A00F35E9B /* TimeLayer.swift in Sources */,
 				9179498C213A1E5F00D9750A /* AltFlagViewController.swift in Sources */,
 				9185B0DB208683C7004D4C40 /* URLSessionExtensions.swift in Sources */,
+				91D60771215149A300123D77 /* LevelIndicator.swift in Sources */,
 				913F7F542066DC7A00F35E9B /* PanadapterRenderer.swift in Sources */,
 				916909C62113E2FC00164044 /* OpusEncode.swift in Sources */,
 				913F7F492066DC7A00F35E9B /* PreferencesTabViewController.swift in Sources */,

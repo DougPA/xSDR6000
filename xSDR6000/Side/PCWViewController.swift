@@ -44,19 +44,19 @@ class PCWViewController                         : NSViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    micLevelIndicator.legends = [            // to skip a legend pass "" as the format
-      (0, "%1d", -40, 0),
-      (1, "%2d", -30, -0.5),
-      (3, "%2d", -10, -0.5),
-      (4, "%1d", 0, -0.5),
-      (nil, "Level", 0, -0.5)
+    micLevelIndicator.legends = [            
+      (0, "-40", 0),
+      (1, "-30", -0.5),
+      (3, "-10", -0.5),
+      (4, "0", -0.5),
+      (nil, "Level", -0.5)
     ]
     compressionIndicator.legends = [
-      (0, "%2d", -25, 0),
-      (1, "%2d", -20, -0.5),
-      (4, "%2d", -5, -0.5),
-      (5, "%3d", 0, -1),
-      (nil, "Compression", 0, 0)
+      (0, "-25", 0),
+      (1, "-20", -0.5),
+      (4, "-5", -0.5),
+      (5, "0", -1),
+      (nil, "Compression", 0)
     ]
 
     // setup meter observations
