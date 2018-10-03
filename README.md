@@ -2,9 +2,21 @@
 ## Mac Client for the FlexRadio (TM) 6000 series software defined radios.
 
 ### Built on:
+
+v2.x.x:
+*  macOS 10.14 (Deployment Target of macOS 10.12)
+*  Xcode 10
+*  Swift 4.2
+
+Requires a v2 build of xLib6000
+
+
+v1.x.x:
 *  macOS 10.13.5 (Deployment Target of macOS 10.11)
 *  Xcode 9.4
 *  Swift 4.1
+
+Requires a v1 build of xLib6000
 
 
 **This version supports SmartLink (TM).**  
@@ -49,11 +61,11 @@ douglas.adams@me.com
 
 ## Credits
 
-AudioLibrary: 
+AudioLibrary:     Use in early v1.x.x only
 
 * http://www.w7ay.net/site/Software/Audio%20Library/index.html
 
-XCGLogger & ObjcExceptionBridging:
+XCGLogger & ObjcExceptionBridging:      Used in v1.x.x only
 
 * https://github.com/DaveWoodCom/XCGLogger
 
@@ -74,7 +86,6 @@ xLib6000:
 
 * Although the side area will open/close, many / all of the side panels are not yet implemented
 * CWX is not implemented
-* Tx Remote / Rx Remote (i.e. Opus) has issues
 * Memories are not fully implemented
 
 Please reports any bugs you observe to douglas.adams@me.com
