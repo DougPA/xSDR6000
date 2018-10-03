@@ -6,6 +6,7 @@
 //
 
 import Cocoa
+import os
 import xLib6000
 
 // ----------------------------------------------------------------------------
@@ -63,6 +64,7 @@ final public class Band {
   // MARK: - Private Properties
   
   //    private var _previousBandDict: [NSObject:AnyObject]?
+  private let _log                        = OSLog(subsystem: "net.k3tzr.xSDR6000", category: "Band")
   
   // constants
   private let kSoundLeavingBand           = "Basso"
@@ -291,7 +293,9 @@ final public class Band {
         try fileManager.createDirectory( at: appFolder, withIntermediateDirectories: false, attributes: nil)
       
       } catch let error as NSError {
-        Log.sharedInstance.msg("Error creating App Support folder: \(error.localizedDescription)", level: .warning, function: #function, file: #file, line: #line)
+//        Log.sharedInstance.msg("Error creating App Support folder: \(error.localizedDescription)", level: .warning, function: #function, file: #file, line: #line)
+
+        os_log("Error creating App Support folder: %{public}@", log: _log, type: .default, error.localizedDescription)
       }
     }
     return appFolder

@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import os
 import MetalKit
 import SwiftyUserDefaults
 import xLib6000
@@ -47,6 +48,7 @@ class WaterfallViewController               : NSViewController, NSGestureRecogni
   private var _waterfallRenderer            : WaterfallRenderer!
 
   private weak var _waterfall               : Waterfall? { return radio!.waterfalls[panadapter!.waterfallId] }
+  private let _log                          = OSLog(subsystem: "net.k3tzr.xSDR6000", category: "WaterfallVC")
   private var _center                       : Int { return panadapter!.center }
   private var _bandwidth                    : Int { return panadapter!.bandwidth }
   private var _start                        : Int { return _center - (_bandwidth/2) }
@@ -305,8 +307,10 @@ class WaterfallViewController               : NSViewController, NSGestureRecogni
     if let waterfall = note.object as? Waterfall {
 
       // YES, log the event
-      Log.sharedInstance.msg("ID = \(waterfall.id.hex)", level: .info, function: #function, file: #file, line: #line)
+//      Log.sharedInstance.msg("ID = \(waterfall.id.hex)", level: .info, function: #function, file: #file, line: #line)
 
+      os_log("Waterfall will be removed, ID = %{public}@", log: _log, type: .info, waterfall.id.hex)
+      
       // stop processing waterfall data
       waterfall.delegate = nil
 

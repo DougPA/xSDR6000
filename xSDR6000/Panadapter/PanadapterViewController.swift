@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import os
 import MetalKit
 import SwiftyUserDefaults
 import xLib6000
@@ -50,6 +51,7 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
   private var _radio: Radio?                  = Api.sharedInstance.radio
   private weak var _panadapter                : Panadapter?
   private var _panadapterRenderer             : PanadapterRenderer!
+  private let _log                            = OSLog(subsystem: "net.k3tzr.xSDR6000", category: "PanadapterVC")
 
   private var _center                         : Int {return _panadapter!.center }
   private var _bandwidth                      : Int { return _panadapter!.bandwidth }
@@ -556,7 +558,9 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
       panadapter.delegate = nil
       
       // YES, log the event
-      Log.sharedInstance.msg("ID = \(panadapter.id.hex)", level: .info, function: #function, file: #file, line: #line)
+//      Log.sharedInstance.msg("ID = \(panadapter.id.hex)", level: .info, function: #function, file: #file, line: #line)
+      
+      os_log("Panadapter will be removed, ID = %{public}@", log: _log, type: .info, panadapter.id.hex)
       
 //      for flag in _frequencyLegendView.flags {
 //
@@ -581,7 +585,9 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
       if let panadapter = _panadapter, slice.panadapterId == panadapter.id {
         
         // YES, log the event
-        Log.sharedInstance.msg("ID = \(slice.id), pan = \(panadapter.id.hex)", level: .info, function: #function, file: #file, line: #line)
+//        Log.sharedInstance.msg("ID = \(slice.id), pan = \(panadapter.id.hex)", level: .info, function: #function, file: #file, line: #line)
+
+        os_log("Slice added, ID = %{public}@, pan =  %{public}@", log: _log, type: .info, slice.id, panadapter.id.hex)
         
         // observe removal of this Slice
         NC.makeObserver(self, with: #selector(sliceWillBeRemoved(_:)), of: .sliceWillBeRemoved, object: slice)
@@ -607,7 +613,9 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
       if let panadapter = _panadapter, slice.panadapterId == panadapter.id  {
         
         // YES, log the event
-        Log.sharedInstance.msg("ID = \(slice.id), pan = \(panadapter.id.hex)", level: .info, function: #function, file: #file, line: #line)
+//        Log.sharedInstance.msg("ID = \(slice.id), pan = \(panadapter.id.hex)", level: .info, function: #function, file: #file, line: #line)
+
+        os_log("Slice will be removed, ID = %{public}@, pan =  %{public}@", log: _log, type: .info, slice.id, panadapter.id.hex)
         
         // remove the Flag & Observations of this Slice
         removeFlag(for: slice)
@@ -627,8 +635,10 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
     if let tnf = note.object as? Tnf {
 
       // YES, log the event
-      Log.sharedInstance.msg("ID = \(tnf.id)", level: .info, function: #function, file: #file, line: #line)
+//      Log.sharedInstance.msg("ID = \(tnf.id)", level: .info, function: #function, file: #file, line: #line)
 
+      os_log("Tnf added, ID = %{public}@", log: _log, type: .info, tnf.id)
+      
       // add observations for this Tnf
       addTnfObservations(&_tnfObservations, object: tnf)
       
@@ -646,8 +656,10 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
     if let tnfToRemove = note.object as? Tnf {
 
       // YES, log the event
-      Log.sharedInstance.msg("ID = \(tnfToRemove.id)", level: .info, function: #function, file: #file, line: #line)
+//      Log.sharedInstance.msg("ID = \(tnfToRemove.id)", level: .info, function: #function, file: #file, line: #line)
 
+      os_log("Tnf will be removed, ID = %{public}@", log: _log, type: .info, tnfToRemove.id)
+      
       // invalidate & remove all of the Tnf observations
       invalidateObservations(&_tnfObservations)
       

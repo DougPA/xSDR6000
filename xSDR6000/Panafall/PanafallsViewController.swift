@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import os
 import xLib6000
 
 //public typealias Params = (radio: Radio, panadapter: Panadapter?, waterfall: Waterfall?)     // Radio & Panadapter references
@@ -16,6 +17,7 @@ class PanafallsViewController               : NSSplitViewController {
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
   
+  private let _log                          = OSLog(subsystem: "net.k3tzr.xSDR6000", category: "PanafallsVC")
   private var _sb                           : NSStoryboard?
   
   private let kPanafallStoryboard           = NSStoryboard.Name(rawValue: "Panafall")
@@ -67,7 +69,9 @@ class PanafallsViewController               : NSSplitViewController {
     if let panadapter = note.object as? Panadapter {
 
       // YES, log the event
-      Log.sharedInstance.msg("ID = \(panadapter.id.hex)", level: .info, function: #function, file: #file, line: #line)
+//      Log.sharedInstance.msg("ID = \(panadapter.id.hex)", level: .info, function: #function, file: #file, line: #line)
+
+      os_log("Panadapter added, ID = %{public}@", log: _log, type: .info, panadapter.id.hex)
     }
   }
   /// Process .waterfallHasBeenAdded Notification
@@ -81,8 +85,10 @@ class PanafallsViewController               : NSSplitViewController {
     if let waterfall = note.object as? Waterfall {
       
       // YES, log the event
-      Log.sharedInstance.msg("ID = \(waterfall.id.hex)", level: .info, function: #function, file: #file, line: #line)
-      
+//      Log.sharedInstance.msg("ID = \(waterfall.id.hex)", level: .info, function: #function, file: #file, line: #line)
+
+      os_log("Waterfall added, ID = %{public}@", log: _log, type: .info, waterfall.id.hex)
+
       let panadapter = Api.sharedInstance.radio!.panadapters[waterfall.panadapterId]
       
       // create a Panafall Button View Controller

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import os.log
 import xLib6000
 import OpusOSX
 import Accelerate
@@ -32,6 +33,7 @@ public final class OpusDecode               : NSObject, StreamHandler {
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
   
+  private let _log                          = OSLog(subsystem: "net.k3tzr.xSDR6000", category: "OpusDecode")
   private var _decoder                      : OpaquePointer!
   private var _engine                       = AVAudioEngine()
   private var _player                       = AVAudioPlayerNode()
@@ -164,7 +166,11 @@ public final class OpusDecode               : NSObject, StreamHandler {
                                           Int32(Opus.frameCount),         // destination, frames per channel
                                           Int32(0))                       // FEC (none)
     // check for decode errors
-    if framesDecoded < 0 { Log.sharedInstance.msg(String(cString: opus_strerror(framesDecoded)), level: .error, function: #function, file: #file, line: #line) }
+    if framesDecoded < 0 {
+//      Log.sharedInstance.msg(String(cString: opus_strerror(framesDecoded)), level: .error, function: #function, file: #file, line: #line)
+      
+      os_log("%{public}@", log: _log, type: .error, opus_strerror(framesDecoded))
+    }
     
     // ----- Interleave Conversion -----
     

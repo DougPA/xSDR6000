@@ -7,9 +7,10 @@
 //
 
 import Cocoa
+import os
 import xLib6000
 import SwiftyUserDefaults
-import XCGLogger
+//import XCGLogger
 
 // --------------------------------------------------------------------------------
 // MARK: - RadioPicker Delegate definition
@@ -49,6 +50,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
   
+  private let _log                          = OSLog(subsystem: "net.k3tzr.xSDR6000", category: "RadioVC")
   private var _api                          = Api.sharedInstance
   private var _mainWindowController         : MainWindowController?
   private var _radioPickerStoryboard        : NSStoryboard?
@@ -94,7 +96,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
 //    _activity = ProcessInfo().beginActivity(options: ProcessInfo.ActivityOptions.latencyCritical, reason: "Good Reason")
     
     // give the Log object (in the API) access to our logger
-    Log.sharedInstance.delegate = (NSApp.delegate as! LogHandler)
+//    Log.sharedInstance.delegate = (NSApp.delegate as! LogHandler)
     
     // setup & register Defaults
     defaults(from: "Defaults.plist")
@@ -118,8 +120,10 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
       
       // YES, open the default radio
       if !openRadio(defaultRadio) {
-        Log.sharedInstance.msg("Error opening default radio, \(defaultRadio.name ?? "")", level: .warning, function: #function, file: #file, line: #line)
+//        Log.sharedInstance.msg("Error opening default radio, \(defaultRadio.name ?? "")", level: .warning, function: #function, file: #file, line: #line)
 
+        os_log("Error opening default radio, %{public}@", log: _log, type: .default, defaultRadio.name ?? "")
+        
         // open the Radio Picker
         openRadioPicker( self)
       }
@@ -144,7 +148,10 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     
     // enable / disable Remote Audio
     _opus?.rxEnabled = (sender.state == NSControl.StateValue.on)
-    Log.sharedInstance.msg("\(sender.state == NSControl.StateValue.on ? "Started" : "Stopped")", level: .info, function: #function, file: #file, line: #line)
+//    Log.sharedInstance.msg("\(sender.state == NSControl.StateValue.on ? "Started" : "Stopped")", level: .info, function: #function, file: #file, line: #line)
+
+    let opusRxStatus = sender.state == NSControl.StateValue.on ? "Started" : "Stopped"
+    os_log("Opus Rx - %{public}@", log: _log, type: .default, opusRxStatus)
   }
   /// Respond to the Headphone Gain slider
   ///
@@ -279,7 +286,9 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
       Defaults[.guiVersion] = _versions!.app
       
       // log them
-      Log.sharedInstance.msg("\(kClientName) v\(_versions!.app), xLib6000 v\(_versions!.api)", level: .info, function: #function, file: #file, line: #line)
+//      Log.sharedInstance.msg("\(kClientName) v\(_versions!.app), xLib6000 v\(_versions!.api)", level: .info, function: #function, file: #file, line: #line)
+
+      os_log("%{public}@, v%{public}@, xLib6000 v%{public}@", log: _log, type: .info, kClientName, _versions!.app, _versions!.api)
     }
     
     // format and set the window title
@@ -311,7 +320,9 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
         //        // select it in the TableView
         //        self._radioTableView.selectRowIndexes(IndexSet(integer: i), byExtendingSelection: true)
         
-        Log.sharedInstance.msg("\(foundRadio.nickname ?? "") @ \(foundRadio.ipAddress)", level: .info, function: #function, file: #file, line: #line)
+//        Log.sharedInstance.msg("\(foundRadio.nickname ?? "") @ \(foundRadio.ipAddress)", level: .info, function: #function, file: #file, line: #line)
+
+        os_log("Default radio found, %{public}@ @ %{public}@", log: _log, type: .info, foundRadio.nickname ?? "", foundRadio.ipAddress)
         
         defaultRadioParameters = foundRadio
       }
@@ -438,7 +449,9 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     // the Radio class has been initialized
     if let radio = note.object as? Radio {
       
-      Log.sharedInstance.msg("\(radio.nickname)", level: .info, function: #function, file: #file, line: #line)
+//      Log.sharedInstance.msg("\(radio.nickname)", level: .info, function: #function, file: #file, line: #line)
+      
+      os_log("Radio initialized - %{public}@", log: _log, type: .info, radio.nickname)
 
       Defaults[.radioVersion] = radio.radioOptions
       
@@ -455,7 +468,9 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     // the Radio class is being removed
     if let radio = note.object as? RadioParameters {
       
-      Log.sharedInstance.msg("\(radio.nickname ?? "")", level: .info, function: #function, file: #file, line: #line)
+//      Log.sharedInstance.msg("\(radio.nickname ?? "")", level: .info, function: #function, file: #file, line: #line)
+      
+      os_log("Radio will be removed - %{public}@", log: _log, type: .info, radio.nickname ?? "")
       
       Defaults[.radioVersion] = ""
       
@@ -474,7 +489,9 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     
     // the Radio class has been removed
     
-    Log.sharedInstance.msg("", level: .info, function: #function, file: #file, line: #line)
+//    Log.sharedInstance.msg("", level: .info, function: #function, file: #file, line: #line)
+    
+    os_log("Radio has been removed - %{public}@", log: _log, type: .info, radio?.nickname ?? "")
     
     // update the window title
     title()
@@ -489,8 +506,11 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     if let opus = note.object as? Opus {
       _opus = opus
       
-      Log.sharedInstance.msg("ID = \(opus.id.hex)", level: .info, function: #function, file: #file, line: #line)
+//      Log.sharedInstance.msg("ID = \(opus.id.hex)", level: .info, function: #function, file: #file, line: #line)
+
+      os_log("Opus Rx added, ID = %{public}@", log: _log, type: .info, opus.id.hex)
       
+
       _opusDecode = OpusDecode()
       _opusEncode = OpusEncode(opus)
       opus.delegate = _opusDecode
