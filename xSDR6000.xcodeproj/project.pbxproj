@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		91396424214702D5002C9D8B /* xLib6000.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 913F7F772066E6F500F35E9B /* xLib6000.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		91396424214702D5002C9D8B /* xLib6000.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 913F7F772066E6F500F35E9B /* xLib6000.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		913964252147031C002C9D8B /* xLib6000.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 913F7F6F2066DD5A00F35E9B /* xLib6000.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		913F7F2A2066DC7A00F35E9B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 913F7ED52066DC7900F35E9B /* Assets.xcassets */; };
 		913F7F2B2066DC7A00F35E9B /* Preferences.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 913F7ED72066DC7900F35E9B /* Preferences.storyboard */; };
@@ -53,14 +53,10 @@
 		913F7F672066DC7A00F35E9B /* Tritanopia.tex in Resources */ = {isa = PBXBuildFile; fileRef = 913F7F272066DC7A00F35E9B /* Tritanopia.tex */; };
 		913F7F682066DC7A00F35E9B /* WaterfallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7F282066DC7A00F35E9B /* WaterfallViewController.swift */; };
 		913F7F692066DC7A00F35E9B /* WaterfallShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 913F7F292066DC7A00F35E9B /* WaterfallShaders.metal */; };
-		913F7F822066E6F600F35E9B /* XCGLogger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 913F7F7A2066E6F500F35E9B /* XCGLogger.framework */; settings = {ATTRIBUTES = (Required, ); }; };
-		913F7F832066E6F600F35E9B /* XCGLogger.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 913F7F7A2066E6F500F35E9B /* XCGLogger.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		913F7F842066E6F600F35E9B /* SwiftyUserDefaults.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 913F7F7B2066E6F600F35E9B /* SwiftyUserDefaults.framework */; settings = {ATTRIBUTES = (Required, ); }; };
-		913F7F852066E6F600F35E9B /* SwiftyUserDefaults.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 913F7F7B2066E6F600F35E9B /* SwiftyUserDefaults.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		913F7F852066E6F600F35E9B /* SwiftyUserDefaults.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 913F7F7B2066E6F600F35E9B /* SwiftyUserDefaults.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		913F7F862066E6F600F35E9B /* OpusOSX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 913F7F7C2066E6F600F35E9B /* OpusOSX.framework */; settings = {ATTRIBUTES = (Required, ); }; };
-		913F7F872066E6F600F35E9B /* OpusOSX.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 913F7F7C2066E6F600F35E9B /* OpusOSX.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		913F7F882066E6F600F35E9B /* ObjcExceptionBridging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 913F7F7D2066E6F600F35E9B /* ObjcExceptionBridging.framework */; settings = {ATTRIBUTES = (Required, ); }; };
-		913F7F892066E6F600F35E9B /* ObjcExceptionBridging.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 913F7F7D2066E6F600F35E9B /* ObjcExceptionBridging.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		913F7F872066E6F600F35E9B /* OpusOSX.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 913F7F7C2066E6F600F35E9B /* OpusOSX.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		91475E5020A28E4600ACE77D /* Flag.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 91475E4E20A28E4600ACE77D /* Flag.storyboard */; };
 		91475E5220A34C2D00ACE77D /* ModeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91475E5120A34C2D00ACE77D /* ModeViewController.swift */; };
 		916909C62113E2FC00164044 /* OpusEncode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916909C52113E2FB00164044 /* OpusEncode.swift */; };
@@ -91,9 +87,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				913F7F872066E6F600F35E9B /* OpusOSX.framework in Embed Frameworks */,
-				913F7F892066E6F600F35E9B /* ObjcExceptionBridging.framework in Embed Frameworks */,
 				913F7F852066E6F600F35E9B /* SwiftyUserDefaults.framework in Embed Frameworks */,
-				913F7F832066E6F600F35E9B /* XCGLogger.framework in Embed Frameworks */,
 				91396424214702D5002C9D8B /* xLib6000.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -150,17 +144,13 @@
 		913F7F272066DC7A00F35E9B /* Tritanopia.tex */ = {isa = PBXFileReference; lastKnownFileType = file; path = Tritanopia.tex; sourceTree = "<group>"; };
 		913F7F282066DC7A00F35E9B /* WaterfallViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaterfallViewController.swift; sourceTree = "<group>"; };
 		913F7F292066DC7A00F35E9B /* WaterfallShaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = WaterfallShaders.metal; sourceTree = "<group>"; };
-		913F7F6B2066DD5A00F35E9B /* ObjcExceptionBridging.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ObjcExceptionBridging.framework; sourceTree = "<group>"; };
 		913F7F6D2066DD5A00F35E9B /* OpusOSX.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OpusOSX.framework; sourceTree = "<group>"; };
 		913F7F6E2066DD5A00F35E9B /* SwiftyUserDefaults.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SwiftyUserDefaults.framework; sourceTree = "<group>"; };
 		913F7F6F2066DD5A00F35E9B /* xLib6000.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = xLib6000.framework; sourceTree = "<group>"; };
-		913F7F702066DD5A00F35E9B /* XCGLogger.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = XCGLogger.framework; sourceTree = "<group>"; };
 		913F7F772066E6F500F35E9B /* xLib6000.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = xLib6000.framework; sourceTree = "<group>"; };
 		913F7F782066E6F500F35E9B /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		913F7F7A2066E6F500F35E9B /* XCGLogger.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = XCGLogger.framework; sourceTree = "<group>"; };
 		913F7F7B2066E6F600F35E9B /* SwiftyUserDefaults.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SwiftyUserDefaults.framework; sourceTree = "<group>"; };
 		913F7F7C2066E6F600F35E9B /* OpusOSX.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OpusOSX.framework; sourceTree = "<group>"; };
-		913F7F7D2066E6F600F35E9B /* ObjcExceptionBridging.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ObjcExceptionBridging.framework; sourceTree = "<group>"; };
 		91475E4F20A28E4600ACE77D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Flag.storyboard; sourceTree = "<group>"; };
 		91475E5120A34C2D00ACE77D /* ModeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModeViewController.swift; sourceTree = "<group>"; };
 		916909C52113E2FB00164044 /* OpusEncode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpusEncode.swift; sourceTree = "<group>"; };
@@ -195,9 +185,7 @@
 			files = (
 				913964252147031C002C9D8B /* xLib6000.framework in Frameworks */,
 				913F7F862066E6F600F35E9B /* OpusOSX.framework in Frameworks */,
-				913F7F882066E6F600F35E9B /* ObjcExceptionBridging.framework in Frameworks */,
 				913F7F842066E6F600F35E9B /* SwiftyUserDefaults.framework in Frameworks */,
-				913F7F822066E6F600F35E9B /* XCGLogger.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -208,10 +196,8 @@
 			isa = PBXGroup;
 			children = (
 				913F7F782066E6F500F35E9B /* README.md */,
-				913F7F7D2066E6F600F35E9B /* ObjcExceptionBridging.framework */,
 				913F7F7C2066E6F600F35E9B /* OpusOSX.framework */,
 				913F7F7B2066E6F600F35E9B /* SwiftyUserDefaults.framework */,
-				913F7F7A2066E6F500F35E9B /* XCGLogger.framework */,
 				913F7F772066E6F500F35E9B /* xLib6000.framework */,
 				913F7EC32066DBBE00F35E9B /* xSDR6000 */,
 				913F7EC22066DBBE00F35E9B /* Products */,
@@ -373,10 +359,8 @@
 		913F7F6A2066DD5900F35E9B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				913F7F6B2066DD5A00F35E9B /* ObjcExceptionBridging.framework */,
 				913F7F6D2066DD5A00F35E9B /* OpusOSX.framework */,
 				913F7F6E2066DD5A00F35E9B /* SwiftyUserDefaults.framework */,
-				913F7F702066DD5A00F35E9B /* XCGLogger.framework */,
 				913F7F6F2066DD5A00F35E9B /* xLib6000.framework */,
 			);
 			name = Frameworks;
@@ -474,7 +458,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0920;
-				LastUpgradeCheck = 0930;
+				LastUpgradeCheck = 1000;
 				ORGANIZATIONNAME = "Douglas Adams";
 				TargetAttributes = {
 					913F7EC02066DBBE00F35E9B = {
@@ -688,7 +672,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -741,7 +725,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
