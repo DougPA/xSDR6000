@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14113"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14313.18"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
-        <capability name="stacking Non-gravity area distributions on NSStackView" minToolsVersion="7.0" minSystemVersion="10.11"/>
     </dependencies>
     <scenes>
         <!--Main Menu-->
@@ -715,7 +714,7 @@
         <scene sceneID="R2V-B0-nI4">
             <objects>
                 <windowController storyboardIdentifier="MainWindow" id="B8D-0N-5wS" userLabel="Main Window" customClass="MainWindowController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
-                    <window key="window" title="xSDR6000" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="IQv-IB-iLA">
+                    <window key="window" title="xSDR6000" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="IQv-IB-iLA">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="30" y="240" width="945" height="300"/>
@@ -752,12 +751,9 @@
                                             <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                                         </buttonCell>
                                         <connections>
-                                            <binding destination="B8D-0N-5wS" name="value" keyPath="api.radio.tnfEnabled" id="GPA-nJ-jsd"/>
+                                            <action selector="tnfButton:" target="Oky-zY-oP4" id="Ahw-9e-kv0"/>
                                         </connections>
                                     </button>
-                                    <connections>
-                                        <action selector="tnfButton:" target="Oky-zY-oP4" id="Vif-Rb-qdv"/>
-                                    </connections>
                                 </toolbarItem>
                                 <toolbarItem implicitItemIdentifier="111CF6C6-C149-4BA3-B5E8-F31B191875E4" explicitItemIdentifier="Markers" label="Markers On/Off" paletteLabel="Markers On/Off" toolTip="Markers On/Off" tag="2" id="JhY-lZ-UVg">
                                     <size key="minSize" width="47" height="25"/>
@@ -772,7 +768,7 @@
                                             <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                                         </buttonCell>
                                         <connections>
-                                            <binding destination="MeG-fG-mdw" name="value" keyPath="values.showMarkers" id="abx-6p-Qtm"/>
+                                            <action selector="markersButton:" target="Oky-zY-oP4" id="pLY-cF-f8A"/>
                                         </connections>
                                     </button>
                                 </toolbarItem>
@@ -783,9 +779,6 @@
                                         <rect key="frame" x="0.0" y="14" width="96" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <sliderCell key="cell" continuous="YES" state="on" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" sliderType="linear" id="xYg-2C-oMt"/>
-                                        <connections>
-                                            <binding destination="B8D-0N-5wS" name="value" keyPath="api.radio.lineoutGain" id="c6V-VF-A4R"/>
-                                        </connections>
                                     </slider>
                                     <connections>
                                         <action selector="lineoutGain:" target="Oky-zY-oP4" id="G4G-c9-UUh"/>
@@ -798,9 +791,6 @@
                                         <rect key="frame" x="0.0" y="14" width="96" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <sliderCell key="cell" continuous="YES" state="on" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" sliderType="linear" id="ZiO-iG-BDi"/>
-                                        <connections>
-                                            <binding destination="B8D-0N-5wS" name="value" keyPath="api.radio.headphoneGain" id="GEK-C5-hph"/>
-                                        </connections>
                                     </slider>
                                     <connections>
                                         <action selector="headphoneGain:" target="Oky-zY-oP4" id="Fhf-al-6Br"/>
@@ -891,9 +881,6 @@
                                             <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
-                                        <connections>
-                                            <binding destination="B8D-0N-5wS" name="value" keyPath="api.radio.lineoutMute" id="2Wn-G4-Aa6"/>
-                                        </connections>
                                     </button>
                                     <connections>
                                         <action selector="muteLineout:" target="Oky-zY-oP4" id="ugt-wg-vkV"/>
@@ -910,9 +897,6 @@
                                             <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
-                                        <connections>
-                                            <binding destination="B8D-0N-5wS" name="value" keyPath="api.radio.headphoneMute" id="Qk5-bM-h3m"/>
-                                        </connections>
                                     </button>
                                     <connections>
                                         <action selector="muteHeadphone:" target="Oky-zY-oP4" id="CTh-SG-457"/>
@@ -931,7 +915,7 @@
                                             <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                                         </buttonCell>
                                         <connections>
-                                            <binding destination="B8D-0N-5wS" name="value" keyPath="api.radio.fullDuplexEnabled" id="rnf-Ns-Bgy"/>
+                                            <action selector="fullDuplexButton:" target="Oky-zY-oP4" id="SbG-Pa-s21"/>
                                         </connections>
                                     </button>
                                 </toolbarItem>
@@ -947,27 +931,6 @@
                                             <string key="keyEquivalent">m</string>
                                             <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                                         </buttonCell>
-                                        <connections>
-                                            <binding destination="MeG-fG-mdw" name="value" keyPath="values.cwxOpen" id="4pS-Hb-rnL"/>
-                                        </connections>
-                                    </button>
-                                </toolbarItem>
-                                <toolbarItem implicitItemIdentifier="25027296-26BF-446E-B43A-8A5584361E2E" explicitItemIdentifier="txEnabled" label="Tx On/Off" paletteLabel="Tx On/Off" tag="8" id="pIg-kU-VxD">
-                                    <nil key="toolTip"/>
-                                    <size key="minSize" width="47" height="25"/>
-                                    <size key="maxSize" width="80" height="32"/>
-                                    <button key="view" verticalHuggingPriority="750" tag="8" id="nmP-Ap-Gb4">
-                                        <rect key="frame" x="0.0" y="14" width="80" height="28"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="roundTextured" title="Tx Remote" bezelStyle="texturedRounded" alignment="center" lineBreakMode="truncatingTail" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="8ze-eR-vL9">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
-                                            <font key="font" metaFont="system"/>
-                                            <string key="keyEquivalent">s</string>
-                                            <modifierMask key="keyEquivalentModifierMask" command="YES"/>
-                                        </buttonCell>
-                                        <connections>
-                                            <binding destination="MeG-fG-mdw" name="value" keyPath="values.remoteTxEnabled" id="0WP-mW-5kQ"/>
-                                        </connections>
                                     </button>
                                 </toolbarItem>
                             </allowedToolbarItems>
@@ -990,6 +953,16 @@
                         </connections>
                     </window>
                     <connections>
+                        <outlet property="cwxEnabled" destination="Yu1-bq-afA" id="dau-Em-8aa"/>
+                        <outlet property="fullDuplexEnabled" destination="lSI-pj-GOM" id="wuZ-YL-ZWa"/>
+                        <outlet property="headphoneGain" destination="l0h-rt-Rcg" id="ocN-Za-71n"/>
+                        <outlet property="headphoneMute" destination="UGS-Cq-w2K" id="jI5-Bd-GBh"/>
+                        <outlet property="lineoutGain" destination="hjS-Bh-5By" id="Vah-bU-NfO"/>
+                        <outlet property="lineoutMute" destination="Bvj-ys-C6i" id="PQ3-qG-eFB"/>
+                        <outlet property="macAudioEnabled" destination="Jch-IC-yYb" id="Er2-SL-Qji"/>
+                        <outlet property="markersEnabled" destination="svQ-GW-lJt" id="kH0-kN-jga"/>
+                        <outlet property="sideViewOpen" destination="q5v-Kd-Um5" id="jm4-sw-37i"/>
+                        <outlet property="tnfsEnabled" destination="588-fP-5FQ" id="Fnt-f0-l6y"/>
                         <outlet property="voltageTempMonitor" destination="xxh-2I-BDg" id="QhS-zI-FkL"/>
                         <segue destination="2ro-LE-ZBU" kind="relationship" relationship="window.shadowedContentViewController" id="94i-bM-0aG"/>
                     </connections>

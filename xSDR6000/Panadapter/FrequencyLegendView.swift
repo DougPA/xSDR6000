@@ -81,7 +81,7 @@ public final class FrequencyLegendView      : NSView {
     drawLegend(dirtyRect)
 
     // draw band markers (if shown)
-    if Defaults[.showMarkers] { drawBandMarkers() }    
+    if Defaults[.markersEnabled] { drawBandMarkers() }    
   }
   
   // ----------------------------------------------------------------------------
@@ -270,10 +270,10 @@ public final class FrequencyLegendView      : NSView {
     //        let legendHeight = "123.456".size(withAttributes: _attributes).height
     
     // set Line Width, Color & Dash
-    _path.lineWidth = CGFloat(Defaults[.gridLineWidth])
-    dash = Defaults[.gridLinesDashed] ? [2.0, 1.0] : [2.0, 0.0]
+    _path.lineWidth = 0.4
+    dash = [2.0, 0.0]
     _path.setLineDash( dash, count: 2, phase: 0 )
-    Defaults[.gridLines].set()
+    Defaults[.gridLine].set()
     
     // draw vertical grid lines
     for i in 0...numberOfMarks {
@@ -302,7 +302,7 @@ public final class FrequencyLegendView      : NSView {
         $0.enabled && $0.useMarkers}                                    // segment is enabled & uses Markers
     
     // ***** Band edges *****
-    Defaults[.bandEdge].set()  // set the color
+    Defaults[.markerEdge].set()  // set the color
     _path.lineWidth = 1         // set the width
     
     // filter for segments that contain a band edge
@@ -328,7 +328,7 @@ public final class FrequencyLegendView      : NSView {
     _path.strokeRemove()
     
     // ***** Inside segments *****
-    Defaults[.segmentEdge].set()        // set the color
+    Defaults[.markerSegment].set()        // set the color
     _path.lineWidth = 1         // set the width
     var previousEnd = 0
     
@@ -352,7 +352,7 @@ public final class FrequencyLegendView      : NSView {
     _path.strokeRemove()
     
     // ***** Band Shading *****
-    Defaults[.bandMarker].set()
+    Defaults[.marker].set()
     for s in overlappingSegments {
       
       // calculate start & end of shading
@@ -486,7 +486,7 @@ public final class FrequencyLegendView      : NSView {
         // draw the rectangle
         let rect = NSRect(x: tnfPosition, y: 0, width: tnfWidth, height: frame.height)
         
-        _path.fillRect( rect, withColor: radio!.tnfEnabled ? Defaults[.tnfActive] : Defaults[.tnfInactive])
+        _path.fillRect( rect, withColor: radio!.tnfsEnabled ? Defaults[.tnfActive] : Defaults[.tnfInactive])
         
         // crosshatch it based on depth
         _path.crosshatch(rect, color: _lineColor, depth: tnf.depth, twoWay: true)

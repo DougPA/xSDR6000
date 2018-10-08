@@ -121,10 +121,10 @@ final class WANRadioPickerViewController    : NSViewController, NSTableViewDeleg
     // if yes --> try to get id token --> if it fails --> Auth0 login window
     
     // if step 1 failed, is there a saved email?
-    if !loggedIn, Defaults[.auth0Email] != "" {
+    if !loggedIn, Defaults[.smartLinkAuth0Email] != "" {
 
       // YES, try to get a Refresh Token from the Keychain
-      if let refreshToken = Keychain.get(kService, account: Defaults[.auth0Email]) {
+      if let refreshToken = Keychain.get(kService, account: Defaults[.smartLinkAuth0Email]) {
         
         // can we get an Id Token from the Refresh Token?
         if let refreshedIdToken = getIdTokenFromRefreshToken(refreshToken) {
@@ -136,8 +136,8 @@ final class WANRadioPickerViewController    : NSViewController, NSTableViewDeleg
         } else {
           
           // NO, delete the refresh token and email (no longer valid)
-          Defaults[.auth0Email] = ""
-          Keychain.delete(kService, account: Defaults[.auth0Email])
+          Defaults[.smartLinkAuth0Email] = ""
+          Keychain.delete(kService, account: Defaults[.smartLinkAuth0Email])
         }
       }
     }
@@ -202,7 +202,7 @@ final class WANRadioPickerViewController    : NSViewController, NSTableViewDeleg
   ///
   @IBAction func selectButton( _: AnyObject ) {
     
-    openClose(lowBW: Defaults[.useLowBw])
+    openClose(lowBW: Defaults[.lowBandwidthEnabled])
   }
   /// Respond to the Login button
   ///
@@ -283,10 +283,10 @@ final class WANRadioPickerViewController    : NSViewController, NSTableViewDeleg
       // logout from the actual auth0 account
       // remove refresh token from keychain and email from defaults
       
-      if Defaults[.auth0Email] != "" {
+      if Defaults[.smartLinkAuth0Email] != "" {
         
-        Keychain.delete(kService, account: Defaults[.auth0Email])
-        Defaults[.auth0Email] = ""
+        Keychain.delete(kService, account: Defaults[.smartLinkAuth0Email])
+        Defaults[.smartLinkAuth0Email] = ""
       }
       
       // clear tableview
@@ -610,7 +610,7 @@ final class WANRadioPickerViewController    : NSViewController, NSTableViewDeleg
       if let email = claim.string {
         
         // YES, save in user defaults
-        Defaults[.auth0Email] = email
+        Defaults[.smartLinkAuth0Email] = email
         
         // save refresh token in keychain
         Keychain.set(kService, account: email, data: refreshToken)

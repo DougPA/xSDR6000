@@ -16,7 +16,17 @@ class MainWindowController                  : NSWindowController {
   // ----------------------------------------------------------------------------
   // MARK: - Internal properties
   
+  @IBOutlet weak var tnfsEnabled            : NSButton!
+  @IBOutlet weak var markersEnabled         : NSButton!
+  @IBOutlet weak var lineoutGain            : NSSlider!
+  @IBOutlet weak var headphoneGain          : NSSlider!
+  @IBOutlet weak var sideViewOpen           : NSButton!
+  @IBOutlet weak var macAudioEnabled        : NSButton!
   @IBOutlet weak var voltageTempMonitor     : ParameterMonitor?
+  @IBOutlet weak var lineoutMute            : NSButton!
+  @IBOutlet weak var headphoneMute          : NSButton!
+  @IBOutlet weak var fullDuplexEnabled      : NSButton!
+  @IBOutlet weak var cwxEnabled             : NSButton!
   
   // ----------------------------------------------------------------------------
   // MARK: - Overridden methods

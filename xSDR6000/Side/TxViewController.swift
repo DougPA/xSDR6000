@@ -108,7 +108,7 @@ class TxViewController                      : NSViewController {
   private func atuStatus(_ atu: Atu, _ change: Any) {
     
     DispatchQueue.main.async { [unowned self] in
-      self._atuButton.state = (atu.enabled ? NSControl.StateValue.on : NSControl.StateValue.off)
+      self._atuButton.boolState = atu.enabled
       self._atuStatus.stringValue = atu.status
     }
   }
@@ -121,7 +121,7 @@ class TxViewController                      : NSViewController {
   private func moxStatus(_ radio: Radio, _ change: Any) {
     
     DispatchQueue.main.async { [unowned self] in
-      self._moxButton.state = (radio.mox ? NSControl.StateValue.on : NSControl.StateValue.off)
+      self._moxButton.boolState = radio.mox
     }
   }
   /// Respond to changes in a Meter

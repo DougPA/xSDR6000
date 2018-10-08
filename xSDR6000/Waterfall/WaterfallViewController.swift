@@ -7,7 +7,7 @@
 //
 
 import Cocoa
-import os
+import os.log
 import MetalKit
 import SwiftyUserDefaults
 import xLib6000

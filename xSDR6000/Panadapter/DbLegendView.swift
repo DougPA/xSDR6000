@@ -153,10 +153,10 @@ public final class DbLegendView             : NSView {
     _path.strokeRemove()
     
     // set Line Width, Color & Dash
-    _path.lineWidth = CGFloat(Defaults[.gridLineWidth])
-    let dash: [CGFloat] = Defaults[.gridLinesDashed] ? [2.0, 1.0] : [2.0, 0.0]
+    _path.lineWidth = 0.4
+    let dash: [CGFloat] = [2.0, 0.0]
     _path.setLineDash( dash, count: 2, phase: 0 )
-    Defaults[.gridLines].set()
+    Defaults[.gridLine].set()
     
     // draw the horizontal grid lines
     for i in 0...numberOfLegends {

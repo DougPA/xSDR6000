@@ -124,11 +124,11 @@ final class LANRadioPickerViewController    : NSViewController, NSTableViewDeleg
     // Clear / Set the Default
     if sender.title == kClearDefault {
       
-      Defaults[.defaultsDictionary] = RadioParameters().dictFromParams()
+      Defaults[.defaultRadio] = RadioParameters().dictFromParams()
       
     } else {
       
-      Defaults[.defaultsDictionary] = _api.availableRadios[selectedRow].dictFromParams()
+      Defaults[.defaultRadio] = _api.availableRadios[selectedRow].dictFromParams()
     }
     
     // to display the Default status
@@ -248,7 +248,7 @@ final class LANRadioPickerViewController    : NSViewController, NSTableViewDeleg
     if tableColumn!.identifier.rawValue == kColumnIdentifierDefaultRadio {
       
       // is this row the default?
-      let defaultRadio = RadioParameters( Defaults[.defaultsDictionary] )
+      let defaultRadio = RadioParameters( Defaults[.defaultRadio] )
       view.textField!.stringValue = (defaultRadio == _api.availableRadios[row] ? kDefaultFlag : "")
       
     } else {
@@ -274,7 +274,7 @@ final class LANRadioPickerViewController    : NSViewController, NSTableViewDeleg
       _selectedRadio = _api.availableRadios[_radioTableView.selectedRow]
       
       // set "default button" title appropriately
-      let defaultRadio = RadioParameters( Defaults[.defaultsDictionary] )
+      let defaultRadio = RadioParameters( Defaults[.defaultRadio] )
       _defaultButton.title = (defaultRadio == _api.availableRadios[_radioTableView.selectedRow] ? kClearDefault : kSetAsDefault)
       
       // set the "select button" title appropriately

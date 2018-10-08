@@ -7,7 +7,7 @@
 //
 
 import Cocoa
-import os
+import os.log
 import xLib6000
 import SwiftyUserDefaults
 //import XCGLogger
@@ -112,7 +112,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     addNotifications()
     
     // show/hide the Side view
-    splitViewItems[1].isCollapsed = !Defaults[.sideOpen]
+    splitViewItems[1].isCollapsed = !Defaults[.sideViewOpen]
     splitView.needsLayout = true
     
     // is the default Radio available?
@@ -147,10 +147,11 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   @IBAction func opusRxAudio(_ sender: NSButton) {
     
     // enable / disable Remote Audio
-    _opus?.rxEnabled = (sender.state == NSControl.StateValue.on)
+    _opus?.rxEnabled = sender.boolState
 //    Log.sharedInstance.msg("\(sender.state == NSControl.StateValue.on ? "Started" : "Stopped")", level: .info, function: #function, file: #file, line: #line)
 
-    let opusRxStatus = sender.state == NSControl.StateValue.on ? "Started" : "Stopped"
+    let opusRxStatus = sender.boolState ? "Started" : "Stopped"
+    
     os_log("Opus Rx - %{public}@", log: _log, type: .default, opusRxStatus)
   }
   /// Respond to the Headphone Gain slider
@@ -175,7 +176,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   ///
   @IBAction func muteHeadphone(_ sender: NSButton) {
     
-    _api.radio?.headphoneMute = ( sender.state == NSControl.StateValue.on ? true : false )
+    _api.radio?.headphoneMute = sender.boolState
   }
   /// Respond to the Lineout Mute button
   ///
@@ -183,7 +184,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   ///
   @IBAction func muteLineout(_ sender: NSButton) {
     
-    _api.radio?.lineoutMute = ( sender.state == NSControl.StateValue.on ? true : false )
+    _api.radio?.lineoutMute = sender.boolState
   }
   /// Respond to the Pan button
   ///
@@ -194,19 +195,19 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     // dimensions are dummy values; when created, will be resized to fit its view
     Panadapter.create(CGSize(width: 50, height: 50))
   }
-  /// Respond to the Remote Tx button
-  ///
-  /// - Parameter sender: the Button
-  ///
-  @IBAction func remoteTxButton(_ sender: NSButton) {
-        
-    // FIXME:
-    
-    // ask the Radio (hardware) to start/stop Tx Opus
-    _api.radio?.transmit.micSelection = (sender.state == NSControl.StateValue.on ? "PC" : "MIC")
-    
-    // FIXME: This is just for testing
-  }
+//  /// Respond to the Remote Tx button
+//  ///
+//  /// - Parameter sender: the Button
+//  ///
+//  @IBAction func remoteTxButton(_ sender: NSButton) {
+//
+//    // FIXME:
+//
+//    // ask the Radio (hardware) to start/stop Tx Opus
+//    _api.radio?.transmit.micSelection = (sender.boolState ? "PC" : "MIC")
+//
+//    // FIXME: This is just for testing
+//  }
   /// Respond to the Side button
   ///
   /// - Parameter sender: the Button
@@ -214,7 +215,29 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   @IBAction func sideButton(_ sender: NSButton) {
     
     // open / collapse the Side view
-    splitViewItems[1].isCollapsed = (sender.state != NSControl.StateValue.on)
+    splitViewItems[1].isCollapsed = !sender.boolState
+    Defaults[.sideViewOpen] = sender.boolState
+  }
+  /// Respond to the Cwx button
+  ///
+  /// - Parameter sender: the Button
+  ///
+  @IBAction func cwxButton(_ sender: NSButton) {
+    
+    // open / collapse the Cwx view
+    
+    // FIXME: Implement the Cwx view
+    
+    Defaults[.cwxViewOpen] = sender.boolState
+  }
+  /// Respond to the Markers button
+  ///
+  /// - Parameter sender: the Button
+  ///
+  @IBAction func markersButton(_ sender: NSButton) {
+    
+    // enable / disable Markers
+    Defaults[.markersEnabled] = sender.boolState
   }
   /// Respond to the Tnf button
   ///
@@ -223,9 +246,20 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   @IBAction func tnfButton(_ sender: NSButton) {
     
     // enable / disable Tnf's
-    _api.radio?.tnfEnabled = (sender.state == NSControl.StateValue.on)
+    _api.radio?.tnfsEnabled = sender.boolState
+    Defaults[.tnfsEnabled] = sender.boolState
   }
-  
+  /// Respond to the Full Duplex button
+  ///
+  /// - Parameter sender: the Button
+  ///
+  @IBAction func fullDuplexButton(_ sender: NSButton) {
+    
+    // enable / disable Full Duplex
+    _api.radio?.fullDuplexEnabled = sender.boolState
+    Defaults[.fullDuplexEnabled] = sender.boolState
+  }
+
   // ----- MENU -----
   
   /// Respond to the Radio Selection menu, show the RadioPicker as a sheet
@@ -242,7 +276,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     radioPickerTabViewController!.tabViewItems[kRemoteTab].viewController!.representedObject = self
     
     // select the last-used tab
-    radioPickerTabViewController!.selectedTabViewItemIndex = ( Defaults[.showRemoteTabView] == false ? kLocalTab : kRemoteTab )
+    radioPickerTabViewController!.selectedTabViewItemIndex = ( Defaults[.remoteViewOpen] == false ? kLocalTab : kRemoteTab )
     
     DispatchQueue.main.async {
       
@@ -267,7 +301,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   ///
   @IBAction func sideButtons(_ sender: NSButton) {
     
-    sideView( sender.identifier!.rawValue, show: (sender.state == NSControl.StateValue.on) )
+    sideView( sender.identifier!.rawValue, show: sender.boolState )
   }
   
   // ----------------------------------------------------------------------------
@@ -282,8 +316,8 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
       // NO, get the versions
       _versions = versionInfo(framework: Api.kBundleIdentifier)
 
-      Defaults[.apiVersion] = _versions!.api
-      Defaults[.guiVersion] = _versions!.app
+      Defaults[.versionApi] = _versions!.api
+      Defaults[.versionGui] = _versions!.app
       
       // log them
 //      Log.sharedInstance.msg("\(kClientName) v\(_versions!.app), xLib6000 v\(_versions!.api)", level: .info, function: #function, file: #file, line: #line)
@@ -297,6 +331,24 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
       self.view.window?.title = "\(kClientName) v\(self._versions!.app), xLib6000 v\(self._versions!.api) \(title)"
     }
   }
+  /// Set the toolbar controls
+  ///
+  func toolbar() {
+    
+    DispatchQueue.main.async {
+      let mainWindowController = self.view.window?.windowController as? MainWindowController
+      mainWindowController!.lineoutGain.integerValue = self._api.radio!.lineoutGain
+      mainWindowController!.lineoutMute.state = self._api.radio!.lineoutMute.state
+      mainWindowController!.headphoneGain.integerValue = self._api.radio!.headphoneGain
+      mainWindowController!.headphoneMute.state = self._api.radio!.headphoneMute.state
+      mainWindowController!.sideViewOpen.state = Defaults[.sideViewOpen].state
+      mainWindowController!.tnfsEnabled.state = Defaults[.tnfsEnabled].state
+      mainWindowController!.fullDuplexEnabled.state = Defaults[.fullDuplexEnabled].state
+      mainWindowController!.markersEnabled.state = Defaults[.markersEnabled].state
+
+      // FIXME: add other toolbar controls
+    }
+  }
   /// Check if there is a Default Radio
   ///
   /// - Returns:        a RadioParameters struct or nil
@@ -305,7 +357,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     var defaultRadioParameters: RadioParameters?
     
     // see if there is a valid default Radio
-    let defaultRadio = RadioParameters( Defaults[.defaultsDictionary] )
+    let defaultRadio = RadioParameters( Defaults[.defaultRadio] )
     if defaultRadio.ipAddress != "" && defaultRadio.port != 0 {
       
       // allow time to hear the UDP broadcasts
@@ -315,7 +367,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
       for (_, foundRadio) in _api.availableRadios.enumerated() where foundRadio == defaultRadio {
         
         // YES, Save it in case something changed
-        Defaults[.defaultsDictionary] = foundRadio.dictFromParams()
+        Defaults[.defaultRadio] = foundRadio.dictFromParams()
         
         //        // select it in the TableView
         //        self._radioTableView.selectRowIndexes(IndexSet(integer: i), byExtendingSelection: true)
@@ -453,10 +505,13 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
       
       os_log("Radio initialized - %{public}@", log: _log, type: .info, radio.nickname)
 
-      Defaults[.radioVersion] = radio.radioOptions
+      Defaults[.versionRadio] = radio.radioOptions
       
       // update the title bar
       title()
+      
+      // update the toolbar controls
+      toolbar()
     }
   }
   /// Process .radioWillBeRemoved Notification
@@ -472,7 +527,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
       
       os_log("Radio will be removed - %{public}@", log: _log, type: .info, radio.nickname ?? "")
       
-      Defaults[.radioVersion] = ""
+      Defaults[.versionRadio] = ""
       
       // remove all objects on Radio
       _api.radio?.removeAll()

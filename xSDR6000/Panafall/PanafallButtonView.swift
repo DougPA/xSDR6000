@@ -30,10 +30,6 @@ final class PanafallButtonView                : NSView {
   
   override func awakeFromNib() {
     
-    // make the button area colored & non-opaque
-    layer?.backgroundColor = Defaults[.buttonsBackground].cgColor
-    layer?.opacity = 0.7
-    
     // hide the Button area
     buttonViewWidth.constant = 0
     

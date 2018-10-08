@@ -23,8 +23,8 @@ final class PanafallButtonViewController    : NSViewController {
   @objc dynamic weak var panadapter         : Panadapter?
   @objc dynamic weak var waterfall          : Waterfall?
   @objc dynamic var fillLevel               : Int {
-    get { return Defaults[.fillLevel] }
-    set { Defaults[.fillLevel] = newValue } }
+    get { return Defaults[.spectrumFillLevel] }
+    set { Defaults[.spectrumFillLevel] = newValue } }
   @objc dynamic var gradientNames           : [String] {
     return WaterfallViewController.gradientNames }
   

@@ -61,11 +61,11 @@ douglas.adams@me.com
 
 ## Credits
 
-AudioLibrary:     Use in early v1.x.x only
+AudioLibrary: (Used in early v1.x.x only)
 
 * http://www.w7ay.net/site/Software/Audio%20Library/index.html
 
-XCGLogger & ObjcExceptionBridging:      Used in v1.x.x only
+XCGLogger & ObjcExceptionBridging: (Used in v1.x.x only)
 
 * https://github.com/DaveWoodCom/XCGLogger
 

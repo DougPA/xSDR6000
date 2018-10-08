@@ -48,8 +48,8 @@ final class EqViewController                : NSViewController {
     _equalizerTx = _radio.equalizers[.txsc]
     
     // enable the appropriate Equalizer
-    rxButton.state = Defaults[.rxEqSelected] ? NSControl.StateValue.on : NSControl.StateValue.off
-    txButton.state = Defaults[.rxEqSelected] ? NSControl.StateValue.off : NSControl.StateValue.on
+    rxButton.boolState = Defaults[.eqRxSelected]
+    txButton.boolState = Defaults[.eqRxSelected]
 
     // set the state of the sliders & ON Button
     populateEqualizer()
@@ -70,10 +70,10 @@ final class EqViewController                : NSViewController {
   @IBAction func on(_ sender: NSButton) {
     
     // get a reference to the selected Equalizer
-    let eq = (txButton.state == NSControl.StateValue.on ? _equalizerTx : _equalizerRx)
+    let eq = (txButton.boolState ? _equalizerTx : _equalizerRx)
     
     // set its state
-    eq!.eqEnabled = (onButton.state == NSControl.StateValue.on)
+    eq!.eqEnabled = onButton.boolState
   }
   //
   // respond to the RX button
@@ -81,10 +81,10 @@ final class EqViewController                : NSViewController {
   @IBAction func rx(_ sender: NSButton) {
     
     // force the other equalizer off
-    txButton.state = (sender.state == NSControl.StateValue.on ? NSControl.StateValue.off : NSControl.StateValue.on)
+    txButton.boolState = !sender.boolState
     
     // save the state
-    Defaults[.rxEqSelected] = (sender.state == NSControl.StateValue.on ? true : false)
+    Defaults[.eqRxSelected] = sender.boolState
     
     // populate the slider values and the ON button state
     populateEqualizer()
@@ -95,10 +95,10 @@ final class EqViewController                : NSViewController {
   @IBAction func tx(_ sender: NSButton) {
     
     // force the other equalizer off
-    rxButton.state = (sender.state == NSControl.StateValue.on ? NSControl.StateValue.off : NSControl.StateValue.on)
+    rxButton.boolState = !sender.boolState
     
     // save the state
-    Defaults[.rxEqSelected] = (sender.state == NSControl.StateValue.on ? false : true)
+    Defaults[.eqRxSelected] = sender.boolState
     
     // populate the slider values and the ON button state
     populateEqualizer()
@@ -109,7 +109,7 @@ final class EqViewController                : NSViewController {
   @IBAction func slider(_ sender: NSSlider) {
     
     // get a reference to the selected Equalizer
-    let eq = (txButton.state == NSControl.StateValue.on ? _equalizerTx : _equalizerRx)!
+    let eq = (txButton.boolState ? _equalizerTx : _equalizerRx)!
     
     // set the slider value
     switch sender.tag {
@@ -140,7 +140,7 @@ final class EqViewController                : NSViewController {
   private func populateEqualizer() {
     
     // get a reference to the selected Equalizer
-    let eq = (txButton.state == NSControl.StateValue.on ? _equalizerTx : _equalizerRx)!
+    let eq = (txButton.boolState ? _equalizerTx : _equalizerRx)!
     
     // set the slider values
     slider0.integerValue = eq.level63Hz
@@ -153,7 +153,7 @@ final class EqViewController                : NSViewController {
     slider7.integerValue = eq.level8000Hz
     
     // set the ON button state
-    onButton.state = (eq.eqEnabled ? NSControl.StateValue.on : NSControl.StateValue.off)
+    onButton.boolState = eq.eqEnabled
   }
   
 }

@@ -172,14 +172,14 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
   @IBAction func buttons(_ sender: NSButton) {
     
     // is the button "on"?
-    if sender.state == NSControl.StateValue.on {
+    if sender.boolState {
       
       // YES, turn off any other buttons
-      if sender != _audButton { _audButton.state = NSControl.StateValue.off}
-      if sender != _dspButton { _dspButton.state = NSControl.StateValue.off}
-      if sender != _modeButton { _modeButton.state = NSControl.StateValue.off}
-      if sender != _xritButton { _xritButton.state = NSControl.StateValue.off}
-      if sender != _daxButton { _daxButton.state = NSControl.StateValue.off}
+      if sender != _audButton { _audButton.boolState = false}
+      if sender != _dspButton { _dspButton.boolState = false}
+      if sender != _modeButton { _modeButton.boolState = false}
+      if sender != _xritButton { _xritButton.boolState = false}
+      if sender != _daxButton { _daxButton.boolState = false}
     }
     // display / hide the selected view
     selectView(sender.identifier!.rawValue)

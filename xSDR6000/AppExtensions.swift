@@ -26,76 +26,58 @@ extension UserDefaults {
     set { archive(key, newValue) }
   }
   
-  public subscript(key: DefaultsKey<CGFloat>) -> CGFloat {
-    get { return CGFloat(numberForKey(key._key)?.doubleValue ?? 0.0) }
-    set { set(key, Double(newValue)) }
-  }
+//  public subscript(key: DefaultsKey<CGFloat>) -> CGFloat {
+//    get { return CGFloat(numberForKey(key._key)?.doubleValue ?? 0.0) }
+//    set { set(key, Double(newValue)) }
+//  }
 }
 
 extension DefaultsKeys {
   
   // Radio level info
-  static let apiVersion                   = DefaultsKey<String>("apiVersion")
-  static let auth0Email                   = DefaultsKey<String>("auth0Email")
-  static let defaultRadioParameters       = DefaultsKey<[String]>("defaultRadioParameters") // obsolete
-  static let defaultsDictionary           = DefaultsKey<[String: Any]>("defaultsDictionary")
-  static let guiVersion                   = DefaultsKey<String>("guiVersion")
-  static let logNumber                    = DefaultsKey<Int>("logNumber")
-  static let radioVersion                 = DefaultsKey<String>("radioVersion")
-  static let radioModel                   = DefaultsKey<String>("radioModel")
-  static let remoteRxEnabled              = DefaultsKey<Bool>("remoteRxEnabled")
-  static let remoteTxEnabled              = DefaultsKey<Bool>("remoteTxEnabled")
-  static let rxEqSelected                 = DefaultsKey<Bool>("rxEqSelected")
-  static let saveLogOnExit                = DefaultsKey<Bool>("saveLogOnExit")
-  static let showMarkers                  = DefaultsKey<Bool>("showMarkers")
-  static let showRemoteTabView            = DefaultsKey<Bool>("showRemoteTabView")
-  static let sideOpen                     = DefaultsKey<Bool>("sideOpen")
-  static let smartLinkToken               = DefaultsKey<String?>("smartLinkToken")
-  static let smartLinkTokenExpiry         = DefaultsKey<Date?>("smartLinkTokenExpiry")
-  static let spectrumIsFilled             = DefaultsKey<Bool>("spectrumIsFilled")
-  static let spectrumStyle                = DefaultsKey<Int>("spectrumStyle")
-  static let toolbar                      = DefaultsKey<NSColor>("toolbar")
-  static let useLowBw                     = DefaultsKey<Bool>("useLowBw")
+  static let cwxViewOpen                  = DefaultsKey<Bool>("cwxViewOpen")
+  static let defaultRadio                 = DefaultsKey<[String: Any]>("defaultRadio")
+  static let eqRxSelected                 = DefaultsKey<Bool>("eqRxSelected")
+  static let fullDuplexEnabled            = DefaultsKey<Bool>("fullDuplexEnabled")
+  static let lowBandwidthEnabled          = DefaultsKey<Bool>("lowBandwidthEnabled")
+  static let macAudioEnabled              = DefaultsKey<Bool>("macAudioEnabled")
+  static let markersEnabled               = DefaultsKey<Bool>("markersEnabled")
   static let quickMode0                   = DefaultsKey<String>("quickMode0")
   static let quickMode1                   = DefaultsKey<String>("quickMode1")
   static let quickMode2                   = DefaultsKey<String>("quickMode2")
   static let quickMode3                   = DefaultsKey<String>("quickMode3")
-  
+  static let radioModel                   = DefaultsKey<String>("radioModel")
+  static let remoteViewOpen               = DefaultsKey<Bool>("remoteViewOpen")
+  static let sideViewOpen                 = DefaultsKey<Bool>("sideViewOpen")
+  static let smartLinkAuth0Email          = DefaultsKey<String>("smartLinkAuth0Email")
+  static let smartLinkToken               = DefaultsKey<String?>("smartLinkToken")
+  static let smartLinkTokenExpiry         = DefaultsKey<Date?>("smartLinkTokenExpiry")
+  static let tnfsEnabled                  = DefaultsKey<Bool>("tnfsEnabled")
+  static let spectrumFillLevel            = DefaultsKey<Int>("spectrumFillLevel")
+  static let spectrumIsFilled             = DefaultsKey<Bool>("spectrumIsFilled")
+  static let versionApi                   = DefaultsKey<String>("versionAPI")
+  static let versionGui                   = DefaultsKey<String>("versionGui")
+  static let versionRadio                 = DefaultsKey<String>("versionRadio")
+
   // Colors common to all Panafalls
-  static let bandEdge                     = DefaultsKey<NSColor>("bandEdge")
-  static let bandMarker                   = DefaultsKey<NSColor>("bandMarker")
-  static let buttonsBackground            = DefaultsKey<NSColor>("buttonsBackground")
-  static let cwxOpen                      = DefaultsKey<Bool>("cwxOpen")
   static let dbLegend                     = DefaultsKey<NSColor>("dbLegend")
-  static let dbLegendBackground           = DefaultsKey<NSColor>("dbLegendBackground")
-  static let fillLevel                    = DefaultsKey<Int>("fillLevel")
-  static let filterLegend                 = DefaultsKey<NSColor>("filterLegend")
-  static let filterLegendBackground       = DefaultsKey<NSColor>("filterLegendBackground")
   static let frequencyLegend              = DefaultsKey<NSColor>("frequencyLegend")
-  static let frequencyLegendBackground    = DefaultsKey<NSColor>("frequencyLegendBackground")
-  static let gridLines                    = DefaultsKey<NSColor>("gridLines")
-  static let segmentEdge                  = DefaultsKey<NSColor>("segmentEdge")
+  static let gridLine                     = DefaultsKey<NSColor>("gridLine")
+  static let marker                       = DefaultsKey<NSColor>("marker")
+  static let markerEdge                   = DefaultsKey<NSColor>("markerEdge")
+  static let markerSegment                = DefaultsKey<NSColor>("markerSegment")
   static let sliceActive                  = DefaultsKey<NSColor>("sliceActive")
   static let sliceFilter                  = DefaultsKey<NSColor>("sliceFilter")
   static let sliceInactive                = DefaultsKey<NSColor>("sliceInactive")
   static let spectrum                     = DefaultsKey<NSColor>("spectrum")
   static let spectrumBackground           = DefaultsKey<NSColor>("spectrumBackground")
   static let spectrumFill                 = DefaultsKey<NSColor>("spectrumFill")
-  static let text                         = DefaultsKey<NSColor>("text")
   static let tnfActive                    = DefaultsKey<NSColor>("tnfActive")
   static let tnfInactive                  = DefaultsKey<NSColor>("tnfInactive")
-  static let tnfNormal                    = DefaultsKey<NSColor>("tnfNormal")
-  static let tnfDeep                      = DefaultsKey<NSColor>("tnfDeep")
-  static let tnfVeryDeep                  = DefaultsKey<NSColor>("tnfVeryDeep")
   
   // Settings common to all Panafalls
-  static let bandMarkerOpacity            = DefaultsKey<CGFloat>("bandMarkerOpacity")
   static let dbLegendSpacing              = DefaultsKey<String>("dbLegendSpacing")
   static let dbLegendSpacings             = DefaultsKey<[String]>("dbLegendSpacings")
-  static let gridLinesDashed              = DefaultsKey<Bool>("gridLinesDashed")
-  static let gridLineWidth                = DefaultsKey<String>("gridLineWidth")
-  static let gridLinesWidths              = DefaultsKey<[String]>("gridLinesWidths")
-  static let sliceFilterOpacity           = DefaultsKey<CGFloat>("sliceFilterOpacity")
   static let timeLegendSpacing            = DefaultsKey<String>("timeLegendSpacing")
   static let timeLegendSpacings           = DefaultsKey<[String]>("timeLegendSpacings")
 }
@@ -103,10 +85,6 @@ extension DefaultsKeys {
 extension  UserDefaults {
   
   // alternate access to allow KVO observation
-  
-  @objc dynamic var bandMarker : NSColor {
-    get { return Defaults[.bandMarker] }
-    set { Defaults[.bandMarker] = newValue } }
   
   @objc dynamic var dbLegend : NSColor {
     get { return Defaults[.dbLegend] }
@@ -116,33 +94,41 @@ extension  UserDefaults {
     get { return Defaults[.dbLegendSpacing] }
     set { Defaults[.dbLegendSpacing] = newValue } }
   
-  @objc dynamic var fillLevel : Int {
-    get { return Defaults[.fillLevel] }
-    set { Defaults[.fillLevel] = newValue } }
+  @objc dynamic var cwxViewOpen : Bool {
+    get { return Defaults[.cwxViewOpen] }
+    set { Defaults[.cwxViewOpen] = newValue } }
   
   @objc dynamic var frequencyLegend : NSColor {
     get { return Defaults[.frequencyLegend] }
     set { Defaults[.frequencyLegend] = newValue } }
   
-  @objc dynamic var gridLines : NSColor {
-    get { return Defaults[.gridLines] }
-    set { Defaults[.gridLines] = newValue } }
+  @objc dynamic var fullDuplexEnabled : Bool {
+    get { return Defaults[.fullDuplexEnabled] }
+    set { Defaults[.fullDuplexEnabled] = newValue } }
   
-  @objc dynamic var gridLinesDashed : Bool {
-    get { return Defaults[.gridLinesDashed] }
-    set { Defaults[.gridLinesDashed] = newValue } }
+  @objc dynamic var gridLine : NSColor {
+    get { return Defaults[.gridLine] }
+    set { Defaults[.gridLine] = newValue } }
   
-  @objc dynamic var gridLineWidth : String {
-    get { return Defaults[.gridLineWidth] }
-    set { Defaults[.gridLineWidth] = newValue } }
+  @objc dynamic var marker : NSColor {
+    get { return Defaults[.marker] }
+    set { Defaults[.marker] = newValue } }
+  
+  @objc dynamic var markerSegment : NSColor {
+    get { return Defaults[.markerSegment] }
+    set { Defaults[.markerSegment] = newValue } }
+  
+  @objc dynamic var markerEdge : NSColor {
+    get { return Defaults[.markerEdge] }
+    set { Defaults[.markerEdge] = newValue } }
+  
+  @objc dynamic var markersEnabled : Bool {
+    get { return Defaults[.markersEnabled] }
+    set { Defaults[.markersEnabled] = newValue } }
   
   @objc dynamic var sliceActive : NSColor {
     get { return Defaults[.sliceActive] }
     set { Defaults[.sliceActive] = newValue } }
-  
-  @objc dynamic var showMarkers : Bool {
-    get { return Defaults[.showMarkers] }
-    set { Defaults[.showMarkers] = newValue } }
   
   @objc dynamic var sliceFilter : NSColor {
     get { return Defaults[.sliceFilter] }
@@ -160,6 +146,10 @@ extension  UserDefaults {
     get { return Defaults[.spectrumBackground] }
     set { Defaults[.spectrumBackground] = newValue } }
   
+  @objc dynamic var spectrumFillLevel : Int {
+    get { return Defaults[.spectrumFillLevel] }
+    set { Defaults[.spectrumFillLevel] = newValue } }
+  
   @objc dynamic var tnfActive : NSColor {
     get { return Defaults[.tnfActive] }
     set { Defaults[.tnfActive] = newValue } }
@@ -167,7 +157,42 @@ extension  UserDefaults {
   @objc dynamic var tnfInactive : NSColor {
     get { return Defaults[.tnfInactive] }
     set { Defaults[.tnfInactive] = newValue } }
+
+  @objc dynamic var tnfsEnabled : Bool {
+    get { return Defaults[.tnfsEnabled] }
+    set { Defaults[.tnfsEnabled] = newValue } }
   
+  @objc dynamic var versionApi : String {
+    get { return Defaults[.versionApi] }
+    set { Defaults[.versionApi] = newValue } }
+  
+  @objc dynamic var versionGui : String {
+    get { return Defaults[.versionGui] }
+    set { Defaults[.versionGui] = newValue } }
+
+  @objc dynamic var versionRadio : String {
+    get { return Defaults[.versionRadio] }
+    set { Defaults[.versionRadio] = newValue } }
+}
+
+// ----------------------------------------------------------------------------
+// MARK: - Bool
+
+extension Bool {
+
+  var state : NSControl.StateValue {
+    return self == true ? NSControl.StateValue.on : NSControl.StateValue.off
+  }
+}
+
+// ----------------------------------------------------------------------------
+// MARK: - NSButton
+
+extension NSButton {
+  var boolState : Bool {
+    get { return self.state == NSControl.StateValue.on ? true : false }
+    set { self.state = (newValue == true ? NSControl.StateValue.on : NSControl.StateValue.off) }
+  }
 }
 
 // ----------------------------------------------------------------------------

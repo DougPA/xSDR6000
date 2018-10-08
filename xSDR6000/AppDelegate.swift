@@ -7,8 +7,8 @@
 //
 
 import Cocoa
-import xLib6000
-import SwiftyUserDefaults
+//import xLib6000
+//import SwiftyUserDefaults
 //import XCGLogger
 
 let kClientName = "xSDR6000"

@@ -7,7 +7,7 @@
 //
 
 import Cocoa
-import os
+import os.log
 import MetalKit
 import SwiftyUserDefaults
 import xLib6000
@@ -410,25 +410,25 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
   private func createBaseObservations(_ observations: inout [NSKeyValueObservation]) {
 
     observations = [
-      Defaults.observe(\.bandMarker, options: [.initial, .new], changeHandler: redrawFrequencyLegend),
-      Defaults.observe(\.dbLegend, options: [.initial, .new], changeHandler: redrawFrequencyLegend),
+      Defaults.observe(\.marker, options: [.initial, .new], changeHandler: redrawFrequencyLegend),
+      Defaults.observe(\.dbLegend, options: [.initial, .new], changeHandler: redrawDbLegend),
       Defaults.observe(\.dbLegendSpacing, options: [.initial, .new], changeHandler: redrawFrequencyLegend),
       Defaults.observe(\.frequencyLegend, options: [.initial, .new], changeHandler: redrawFrequencyLegend),
       Defaults.observe(\.sliceActive, options: [.initial, .new], changeHandler: redrawFrequencyLegend),
-      Defaults.observe(\.showMarkers, options: [.initial, .new], changeHandler: redrawFrequencyLegend),
+      Defaults.observe(\.markersEnabled, options: [.initial, .new], changeHandler: redrawFrequencyLegend),
+      Defaults.observe(\.markerSegment, options: [.initial, .new], changeHandler: redrawFrequencyLegend),
+      Defaults.observe(\.markerEdge, options: [.initial, .new], changeHandler: redrawFrequencyLegend),
       Defaults.observe(\.sliceFilter, options: [.initial, .new], changeHandler: redrawFrequencyLegend),
       Defaults.observe(\.sliceInactive, options: [.initial, .new], changeHandler: redrawFrequencyLegend),
       Defaults.observe(\.tnfActive, options: [.initial, .new], changeHandler: redrawFrequencyLegend),
       Defaults.observe(\.tnfInactive, options: [.initial, .new], changeHandler: redrawFrequencyLegend),
       _panadapter!.observe(\.bandwidth, options: [.initial, .new], changeHandler: redrawFrequencyLegend),
       _panadapter!.observe(\.center, options: [.initial, .new], changeHandler: redrawFrequencyLegend),
-      _radio!.observe(\.tnfEnabled, options: [.initial, .new], changeHandler: redrawFrequencyLegend),
+      _radio!.observe(\.tnfsEnabled, options: [.initial, .new], changeHandler: redrawFrequencyLegend),
 
-      Defaults.observe(\.gridLines, options: [.initial, .new], changeHandler: redrawFrequencyAndDbLegend),
-      Defaults.observe(\.gridLinesDashed, options: [.initial, .new], changeHandler: redrawFrequencyAndDbLegend),
-      Defaults.observe(\.gridLineWidth, options: [.initial, .new], changeHandler: redrawFrequencyAndDbLegend),
+      Defaults.observe(\.gridLine, options: [.initial, .new], changeHandler: redrawFrequencyAndDbLegend),
 
-      Defaults.observe(\.fillLevel, options: [.initial, .new], changeHandler: defaultsObserver),
+      Defaults.observe(\.spectrumFillLevel, options: [.initial, .new], changeHandler: defaultsObserver),
       Defaults.observe(\.spectrum, options: [.initial, .new], changeHandler: defaultsObserver),
       Defaults.observe(\.spectrumBackground, options: [.initial, .new], changeHandler: defaultsObserver),
 
@@ -477,7 +477,7 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
   ///
   private func defaultsObserver(_ object: UserDefaults, _ change: Any) {
 
-    _panadapterRenderer.updateColor(spectrumColor: Defaults[.spectrum], fillLevel: Defaults[.fillLevel], fillColor: Defaults[.spectrum])
+    _panadapterRenderer.updateColor(spectrumColor: Defaults[.spectrum], fillLevel: Defaults[.spectrumFillLevel], fillColor: Defaults[.spectrum])
 
     // Panadapter background color
     _panadapterView.clearColor = Defaults[.spectrumBackground].metalClearColor
@@ -502,6 +502,16 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
   private func redrawFrequencyLegend(_ object: Any, _ change: Any) {
     
     _frequencyLegendView.redraw()
+  }
+  /// Respond to observations requiring a redraw
+  ///
+  /// - Parameters:
+  ///   - object:                       the object holding the properties
+  ///   - change:                       the change
+  ///
+  private func redrawDbLegend(_ object: Any, _ change: Any) {
+    
+    _dbLegendView.redraw()
   }
   /// Respond to observations requiring a redraw
   ///
@@ -692,15 +702,12 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
 
     _frequencyLegendView.flags.append(flagVc)
 
-    addChildViewController(flagVc)
-
     DispatchQueue.main.sync { [unowned self] in
-      
+
+      addChildViewController(flagVc)
+
       // add its view
       self.view.addSubview(flagVc.view)
-      
-      // force a redraw
-      self._frequencyLegendView.redraw()
     }
   }
   /// Remove the Flag on the specified Slice

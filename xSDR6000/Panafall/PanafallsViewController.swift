@@ -7,7 +7,7 @@
 //
 
 import Cocoa
-import os
+import os.log
 import xLib6000
 
 //public typealias Params = (radio: Radio, panadapter: Panadapter?, waterfall: Waterfall?)     // Radio & Panadapter references
