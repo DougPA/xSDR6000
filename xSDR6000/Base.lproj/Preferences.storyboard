@@ -448,6 +448,9 @@
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
+                                <connections>
+                                    <binding destination="BlG-y8-jgO" name="value" keyPath="representedObject.versionApi" id="uYf-DP-cit"/>
+                                </connections>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="D94-eN-xbF" userLabel="GUI Version label">
                                 <rect key="frame" x="18" y="323" width="118" height="17"/>
@@ -467,6 +470,9 @@
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
+                                <connections>
+                                    <binding destination="BlG-y8-jgO" name="value" keyPath="representedObject.versionGui" id="FrK-9e-eJO"/>
+                                </connections>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JdU-C4-xhT" userLabel="Radio Firmware Version label">
                                 <rect key="frame" x="18" y="215" width="87" height="17"/>
@@ -483,6 +489,9 @@
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
+                                <connections>
+                                    <binding destination="BlG-y8-jgO" name="value" keyPath="representedObject.versionRadio" id="Hom-Qx-zmP"/>
+                                </connections>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c9B-zc-eiG" userLabel="Radio Model label">
                                 <rect key="frame" x="18" y="190" width="80" height="17"/>
@@ -499,6 +508,9 @@
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
+                                <connections>
+                                    <binding destination="BlG-y8-jgO" name="value" keyPath="representedObject.radioModel" id="Geh-6s-X9C"/>
+                                </connections>
                             </textField>
                         </subviews>
                         <constraints>

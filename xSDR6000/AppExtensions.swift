@@ -55,7 +55,7 @@ extension DefaultsKeys {
   static let tnfsEnabled                  = DefaultsKey<Bool>("tnfsEnabled")
   static let spectrumFillLevel            = DefaultsKey<Int>("spectrumFillLevel")
   static let spectrumIsFilled             = DefaultsKey<Bool>("spectrumIsFilled")
-  static let versionApi                   = DefaultsKey<String>("versionAPI")
+  static let versionApi                   = DefaultsKey<String>("versionApi")
   static let versionGui                   = DefaultsKey<String>("versionGui")
   static let versionRadio                 = DefaultsKey<String>("versionRadio")
 

@@ -331,6 +331,8 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
         // process observations of the S-Meter
         DispatchQueue.main.async { [unowned self] in
           self._sMeter.floatValue = meter.value
+          
+          Swift.print(meter.value, meter.units)
         }
       }
     }

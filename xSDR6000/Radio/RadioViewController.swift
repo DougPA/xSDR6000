@@ -505,8 +505,9 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
       
       os_log("Radio initialized - %{public}@", log: _log, type: .info, radio.nickname)
 
-      Defaults[.versionRadio] = radio.radioOptions
-      
+      Defaults[.versionRadio] = radio.radioVersion
+      Defaults[.radioModel] = _api.activeRadio!.model
+
       // update the title bar
       title()
       
