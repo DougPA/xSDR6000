@@ -37,6 +37,7 @@ class LevelIndicator: NSView {
   @IBInspectable var _normalColor           : NSColor = NSColor.systemGreen
   @IBInspectable var _warningColor          : NSColor = NSColor.systemYellow
   @IBInspectable var _criticalColor         : NSColor = NSColor.systemRed
+  @IBInspectable var _legendColor           : NSColor = NSColor.white
 
   // internal
   private var _range                        : CGFloat = 0.0
@@ -83,7 +84,7 @@ class LevelIndicator: NSView {
     _attributes[NSAttributedStringKey.font] = font
     
     // setup the Legend color
-    _attributes[NSAttributedStringKey.foregroundColor] = NSColor.systemYellow
+    _attributes[NSAttributedStringKey.foregroundColor] = _legendColor
     
     // calculate a typical font height
     _heightFont = "-000".size(withAttributes: _attributes).height
