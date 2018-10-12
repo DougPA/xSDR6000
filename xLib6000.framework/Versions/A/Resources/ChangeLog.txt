@@ -1,10 +1,28 @@
 xLib6000 Change Log
 
-v1.2.13 ---- OPEN FOR CHANGES ----
+v2.0.0
+
+Opus.swift - added client_handle token (2.4.9.x addition)
+Radio.swift - added mute_local_audio_when_remote token (2.4.9.x addition)
+Api.swift - changed kApiFirmwareSupport to 2.4.9.x
+Radio.swift & RadioCommands.swift - renamed tnfEnabled to tnfsEnabled
+
+Converted to Unified Logging
+Api.swift - eliminated tcpError(_ msg: String) in TcpManager Delegate methods
+Api.swift - eliminated udpMessage(_ msg: String, level: OSLogType) in UdpManager Delegate methods
+TcpManager.swift - eliminated tcpError(_ msg: String) in TcpManager Delegate protocol
+UdpManager.swift - eliminated udpMessage(_ msg: String, level: OSLogType) in UdpManager Delegate protocol
+
+
+
+
+Changed major version number from 1 to 2 due to conversion to Unified Logging in place of Log Delegate
+
+============================================================
+
+v1.2.13
 
 Meter.swift - added new units to Unit enum, adjusted usage of units
-
-
 
 v1.2.12
 
