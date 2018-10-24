@@ -1,5 +1,9 @@
 xLib6000 Change Log
 
+v2.0.1
+
+AppExtensions.swift - in class makeObserver(_:with:of:object:) gave object default of nil
+
 v2.0.0
 
 Opus.swift - added client_handle token (2.4.9.x addition)
