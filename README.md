@@ -47,10 +47,10 @@ If you require a Mac version of DAX and/or CAT, please see.
 
 ## Builds
 
-A compiled RELEASE build executable (with  embedded frameworks) is contained in the GitHub  
+A compiled DEBUG build executable (with  embedded frameworks) is contained in the GitHub  
 Release if you would rather not build from sources.  
 
-If you require a DEBUG build you will have to build from sources. The required frameworks are   
+If you require a RELEASE build you will have to build from sources. The required frameworks are   
 contained in this repo.
 
 
