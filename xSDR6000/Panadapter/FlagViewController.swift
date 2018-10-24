@@ -80,14 +80,14 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
     // set the Alpha ID
     _alpha.stringValue = FlagViewController.kSliceLetters[Int(slice!.id)!]
 
+    // find the S-Meter feed (if any, it may alreaady exist or it may come later as a sliceMeterAdded Notification)
+    findSMeter()
+    
     // begin slice observations
     createObservations(&_observations, object: slice!)
 
     // start receiving Notifications
     addNotifications()
-    
-    // find the S-Meter feed (if any)
-    sMeter()
     
     // setup Left Double Click recognizer
     _doubleClick = NSClickGestureRecognizer(target: self, action: #selector(leftDoubleClick(_:)))
@@ -187,6 +187,15 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
   
   // ----------------------------------------------------------------------------
   // MARK: - Private methods
+  
+  /// Find the S-Meter for this Slice (if any)
+  ///
+  private func findSMeter() {
+    
+    if let item = slice!.meters.first(where: { $0.value.name == Api.MeterShortName.signalPassband.rawValue} ) {
+      observerSMeter( item.value)
+    }
+  }
   
   /// Respond to Left Double Click gesture
   ///
@@ -300,7 +309,7 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
   ///
   private func addNotifications() {
     
-    NC.makeObserver(self, with: #selector(sliceMeterHasBeenAdded(_:)), of: .sliceMeterHasBeenAdded, object: nil)
+    NC.makeObserver(self, with: #selector(sliceMeterHasBeenAdded(_:)), of: .sliceMeterHasBeenAdded)
   }
   private var _levelObservation    : NSKeyValueObservation?
   
@@ -312,31 +321,36 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
     
     // does the Notification contain a Meter object for this Slice?
     if let meter = note.object as? Meter, meter.number == slice!.id {
-      sMeter()
+
+    // which meter?
+      switch meter.name {
+      
+      // S-Meter
+      case Api.MeterShortName.signalPassband.rawValue:
+        observerSMeter( meter )
+      
+      default:
+        break
+      }
     }
   }
-  /// Find the S-Meter feed
+  /// Observe the S-Meter feed
   ///
   ///     Note: meters may not be available at Slice creation.
   ///     If not, the .sliceMeterHasBeenAdded notification will identify the S-Meter
   ///
-  func sMeter() {
+  func observerSMeter(_ meter: Meter) {
     
-    // get the S-Meter for this slice
-    for (_, meter) in slice!.meters where meter.name == Api.MeterShortName.signalPassband.rawValue {
+    // create the observation
+    _levelObservation = meter.observe(\.value, options: [.initial, .new]) { (meter, change) in
       
-      // S-Meter
-      _levelObservation = meter.observe(\.value, options: [.initial, .new]) { (meter, change) in
-        
-        // process observations of the S-Meter
-        DispatchQueue.main.async { [unowned self] in
-          self._sMeter.floatValue = meter.value
-        }
+      // process observations of the S-Meter
+      DispatchQueue.main.async { [unowned self] in
+        self._sMeter.floatValue = meter.value
       }
     }
   }
 }
-
 // --------------------------------------------------------------------------------
 // MARK: - Frequency Formatter class implementation
 // --------------------------------------------------------------------------------

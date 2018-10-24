@@ -313,7 +313,7 @@ class LevelIndicator: NSView {
     
     // draw the legends
     for legend in legends {
-      // is it a nrmal legend?
+      // is it a normal legend?
       if let tick = legend.tick {
         // YES, calculate the x coordinate of the legend
         let xPosition = CGFloat(tick) * segmentWidth

@@ -336,7 +336,7 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
   ///
   private func hitTestSlice(at freq: CGFloat, thisPanOnly: Bool = true) -> xLib6000.Slice? {
     var slice: xLib6000.Slice?
-    
+
     for (_, s) in _radio!.slices {
       
       // only Slices on this Panadapter?
@@ -362,20 +362,16 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
   private func activateSlice(at freq: CGFloat) -> Bool {
     
     // is there a Slice at the indicated freq?
-    let slice = hitTestSlice(at: freq, thisPanOnly: false)
-    if let slice = slice {
-      
-      // YES, make the active Slice inactive
-      for (_, s) in _radio!.slices where s.active {
-        
-        s.active = false
-      }
-      // make the "hit" slice active
-      slice.active = true
-      
-    }
+    guard let slice = hitTestSlice(at: freq, thisPanOnly: false) else { return false }
+
+    // YES, make the active Slice (if any) inactive
+    _radio!.slices.first(where: { $0.value.active} )?.value.active = false
+
+    // make the "hit" Slice active
+    slice.active = true
+
     // return true if slice was found
-    return slice != nil
+    return true
   }
   /// Find the Tnf at or near a frequency (if any)
   ///
@@ -383,19 +379,17 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
   /// - Returns:              a tnf or nil
   ///
   private func hitTestTnf(at freq: CGFloat) -> Tnf? {
-    var tnf: Tnf?
+    var tnf: Tnf? = nil
     
     // calculate a minimum width for hit testing
     let effectiveWidth = Int( CGFloat(_bandwidth) * 0.01)
     
-    for (_, t) in _radio!.tnfs {
-      
-      let halfWidth = max(effectiveWidth, t.width/2)
-      if t.frequency - halfWidth <= Int(freq) && t.frequency + halfWidth >= Int(freq) {
-        tnf = t
-        break
+    _radio!.tnfs.forEach( {
+      let halfWidth = max(effectiveWidth, $0.value.width/2)
+      if $0.value.frequency - halfWidth <= Int(freq) && $0.value.frequency + halfWidth >= Int(freq) {
+        tnf = $0.value
       }
-    }
+    } )
     return tnf
   }
 
@@ -410,8 +404,9 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
   private func createBaseObservations(_ observations: inout [NSKeyValueObservation]) {
 
     observations = [
-      Defaults.observe(\.marker, options: [.initial, .new], changeHandler: redrawFrequencyLegend),
       Defaults.observe(\.dbLegend, options: [.initial, .new], changeHandler: redrawDbLegend),
+      
+      Defaults.observe(\.marker, options: [.initial, .new], changeHandler: redrawFrequencyLegend),
       Defaults.observe(\.dbLegendSpacing, options: [.initial, .new], changeHandler: redrawFrequencyLegend),
       Defaults.observe(\.frequencyLegend, options: [.initial, .new], changeHandler: redrawFrequencyLegend),
       Defaults.observe(\.sliceActive, options: [.initial, .new], changeHandler: redrawFrequencyLegend),
@@ -422,8 +417,10 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
       Defaults.observe(\.sliceInactive, options: [.initial, .new], changeHandler: redrawFrequencyLegend),
       Defaults.observe(\.tnfActive, options: [.initial, .new], changeHandler: redrawFrequencyLegend),
       Defaults.observe(\.tnfInactive, options: [.initial, .new], changeHandler: redrawFrequencyLegend),
+      
       _panadapter!.observe(\.bandwidth, options: [.initial, .new], changeHandler: redrawFrequencyLegend),
       _panadapter!.observe(\.center, options: [.initial, .new], changeHandler: redrawFrequencyLegend),
+      
       _radio!.observe(\.tnfsEnabled, options: [.initial, .new], changeHandler: redrawFrequencyLegend),
 
       Defaults.observe(\.gridLine, options: [.initial, .new], changeHandler: redrawFrequencyAndDbLegend),
@@ -442,7 +439,6 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
         object.observe(\xLib6000.Slice.active, options: [.initial, .new], changeHandler: redrawFrequencyLegend),
         object.observe(\xLib6000.Slice.filterHigh, options: [.initial, .new], changeHandler: redrawFrequencyLegend),
         object.observe(\xLib6000.Slice.filterLow, options: [.initial, .new], changeHandler: redrawFrequencyLegend)
-//        object.observe(\xLib6000.Slice.frequency, options: [.initial, .new], changeHandler: frequencyObserver)
       ]
   }
   /// Add observers for Tnf properties
@@ -463,9 +459,8 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
   func invalidateObservations(_ observations: inout [NSKeyValueObservation], remove: Bool = true) {
 
     // invalidate each observation
-    for observation in observations {
-      observation.invalidate()
-    }
+    observations.forEach( { $0.invalidate() } )
+
     // if specified, remove the tokens
     if remove { observations.removeAll() }
   }
@@ -536,11 +531,11 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
 
     NC.makeObserver(self, with: #selector(panadapterWillBeRemoved(_:)), of: .panadapterWillBeRemoved, object: _panadapter!)
     
-    NC.makeObserver(self, with: #selector(tnfHasBeenAdded(_:)), of: .tnfHasBeenAdded, object: nil)
+    NC.makeObserver(self, with: #selector(tnfHasBeenAdded(_:)), of: .tnfHasBeenAdded)
     
-    NC.makeObserver(self, with: #selector(tnfWillBeRemoved(_:)), of: .tnfWillBeRemoved, object: nil)
+    NC.makeObserver(self, with: #selector(tnfWillBeRemoved(_:)), of: .tnfWillBeRemoved)
 
-    NC.makeObserver(self, with: #selector(sliceHasBeenAdded(_:)), of: .sliceHasBeenAdded, object: nil)
+    NC.makeObserver(self, with: #selector(sliceHasBeenAdded(_:)), of: .sliceHasBeenAdded)
   }
   /// Process frameDidChange Notification
   ///
@@ -562,25 +557,16 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
   @objc private func panadapterWillBeRemoved(_ note: Notification) {
     
     // does the Notification contain a Panadapter object?
-    if let panadapter = note.object as? Panadapter {
-      
-      // stop processing Panadapter streams
-      panadapter.delegate = nil
-      
-      // YES, log the event
-//      Log.sharedInstance.msg("ID = \(panadapter.id.hex)", level: .info, function: #function, file: #file, line: #line)
-      
-      os_log("Panadapter will be removed, ID = %{public}@", log: _log, type: .info, panadapter.id.hex)
-      
-//      for flag in _frequencyLegendView.flags {
-//
-//        // remove the Slice Flag & property observations
-//        removeFlag(for: flag.slice!)
-//      }
-
-      // invalidate Base property observations
-      invalidateObservations(&_baseObservations)
-    }
+    let panadapter = note.object as! Panadapter
+    
+    // stop processing Panadapter streams
+    panadapter.delegate = nil
+    
+    // YES, log the event
+    os_log("Panadapter will be removed, ID = %{public}@", log: _log, type: .info, panadapter.id.hex)
+    
+    // invalidate Base property observations
+    invalidateObservations(&_baseObservations)
   }
   /// Process .sliceHasBeenAdded Notification
   ///
@@ -589,25 +575,22 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
   @objc private func sliceHasBeenAdded(_ note: Notification) {
 
     // does the Notification contain a Slice object?
-    if let slice = note.object as? xLib6000.Slice {
+    let slice = note.object as! xLib6000.Slice
+    
+    // YES, is the slice on this Panadapter?
+    if let panadapter = _panadapter, slice.panadapterId == panadapter.id {
       
-      // YES, is the slice on this Panadapter?
-      if let panadapter = _panadapter, slice.panadapterId == panadapter.id {
-        
-        // YES, log the event
-//        Log.sharedInstance.msg("ID = \(slice.id), pan = \(panadapter.id.hex)", level: .info, function: #function, file: #file, line: #line)
-
-        os_log("Slice added, ID = %{public}@, pan =  %{public}@", log: _log, type: .info, slice.id, panadapter.id.hex)
-        
-        // observe removal of this Slice
-        NC.makeObserver(self, with: #selector(sliceWillBeRemoved(_:)), of: .sliceWillBeRemoved, object: slice)
-        
-        // add a Flag & Observations of this Slice
-        addFlag(for: slice)
-        
-        // force a redraw
-        _frequencyLegendView.redraw()
-      }
+      // YES, log the event
+      os_log("Slice added, ID = %{public}@, pan =  %{public}@", log: _log, type: .info, slice.id, panadapter.id.hex)
+      
+      // observe removal of this Slice
+      NC.makeObserver(self, with: #selector(sliceWillBeRemoved(_:)), of: .sliceWillBeRemoved, object: slice)
+      
+      // add a Flag & Observations of this Slice
+      addFlag(for: slice)
+      
+      // force a redraw
+      _frequencyLegendView.redraw()
     }
   }
   /// Process .sliceWillBeRemoved Notification
@@ -617,22 +600,19 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
   @objc private func sliceWillBeRemoved(_ note: Notification) {
     
     // does the Notification contain a Slice object?
-    if let slice = note.object as? xLib6000.Slice {
+    let slice = note.object as! xLib6000.Slice
+    
+    // YES, is the slice on this Panadapter?
+    if let panadapter = _panadapter, slice.panadapterId == panadapter.id  {
       
-      // YES, is the slice on this Panadapter?
-      if let panadapter = _panadapter, slice.panadapterId == panadapter.id  {
-        
-        // YES, log the event
-//        Log.sharedInstance.msg("ID = \(slice.id), pan = \(panadapter.id.hex)", level: .info, function: #function, file: #file, line: #line)
-
-        os_log("Slice will be removed, ID = %{public}@, pan =  %{public}@", log: _log, type: .info, slice.id, panadapter.id.hex)
-        
-        // remove the Flag & Observations of this Slice
-        removeFlag(for: slice)
-        
-        // force a redraw
-        _frequencyLegendView.redraw()
-      }
+      // YES, log the event
+      os_log("Slice will be removed, ID = %{public}@, pan =  %{public}@", log: _log, type: .info, slice.id, panadapter.id.hex)
+      
+      // remove the Flag & Observations of this Slice
+      removeFlag(for: slice)
+      
+      // force a redraw
+      _frequencyLegendView.redraw()
     }
   }
   /// Process .tnfHasBeenAdded Notification
@@ -642,19 +622,16 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
   @objc private func tnfHasBeenAdded(_ note: Notification) {
 
     // does the Notification contain a Tnf object?
-    if let tnf = note.object as? Tnf {
-
-      // YES, log the event
-//      Log.sharedInstance.msg("ID = \(tnf.id)", level: .info, function: #function, file: #file, line: #line)
-
-      os_log("Tnf added, ID = %{public}@", log: _log, type: .info, tnf.id)
-      
-      // add observations for this Tnf
-      addTnfObservations(&_tnfObservations, object: tnf)
-      
-      // force a redraw
-      _frequencyLegendView.redraw()
-    }
+    let tnf = note.object as! Tnf
+    
+    // YES, log the event
+    os_log("Tnf added, ID = %{public}@", log: _log, type: .info, tnf.id)
+    
+    // add observations for this Tnf
+    addTnfObservations(&_tnfObservations, object: tnf)
+    
+    // force a redraw
+    _frequencyLegendView.redraw()
   }
   /// Process .tnfWillBeRemoved Notification
   ///
@@ -663,24 +640,19 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
   @objc private func tnfWillBeRemoved(_ note: Notification) {
 
     // does the Notification contain a Tnf object?
-    if let tnfToRemove = note.object as? Tnf {
-
-      // YES, log the event
-//      Log.sharedInstance.msg("ID = \(tnfToRemove.id)", level: .info, function: #function, file: #file, line: #line)
-
-      os_log("Tnf will be removed, ID = %{public}@", log: _log, type: .info, tnfToRemove.id)
-      
-      // invalidate & remove all of the Tnf observations
-      invalidateObservations(&_tnfObservations)
-      
-      // put back all except the one being removed
-      for (_, tnf) in _radio!.tnfs {
-        if tnf != tnfToRemove { addTnfObservations(&_tnfObservations, object: tnf) }
-      }
-
-      // force a redraw
-      _frequencyLegendView.redraw()
-    }
+    let tnfToRemove = note.object as! Tnf
+    
+    // YES, log the event
+    os_log("Tnf will be removed, ID = %{public}@", log: _log, type: .info, tnfToRemove.id)
+    
+    // invalidate & remove all of the Tnf observations
+    invalidateObservations(&_tnfObservations)
+    
+    // put back all except the one being removed
+    _radio!.tnfs.forEach( { if $0.value != tnfToRemove { addTnfObservations(&_tnfObservations, object: $0.value) } } )
+    
+    // force a redraw
+    _frequencyLegendView.redraw()
   }
   /// Create a Flag for the specified Slice
   ///

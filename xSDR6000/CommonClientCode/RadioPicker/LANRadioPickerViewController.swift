@@ -200,7 +200,7 @@ final class LANRadioPickerViewController    : NSViewController, NSTableViewDeleg
   private func addNotifications() {
     
     // Available Radios changed
-    NC.makeObserver(self, with: #selector(radiosAvailable(_:)), of: .radiosAvailable, object: nil)
+    NC.makeObserver(self, with: #selector(radiosAvailable(_:)), of: .radiosAvailable)
   }
   /// Process .radiosAvailable Notification
   ///

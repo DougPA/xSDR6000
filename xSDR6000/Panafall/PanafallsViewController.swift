@@ -47,10 +47,10 @@ class PanafallsViewController               : NSSplitViewController {
   private func addNotifications() {
     
     // Panadapter initialized
-    NC.makeObserver(self, with: #selector(panadapterHasBeenAdded(_:)), of: .panadapterHasBeenAdded, object: nil)
+    NC.makeObserver(self, with: #selector(panadapterHasBeenAdded(_:)), of: .panadapterHasBeenAdded)
     
     // Waterfall initialized
-    NC.makeObserver(self, with: #selector(waterfallHasBeenAdded(_:)), of: .waterfallHasBeenAdded, object: nil)
+    NC.makeObserver(self, with: #selector(waterfallHasBeenAdded(_:)), of: .waterfallHasBeenAdded)
   }
   //
   //  Panafall creation:
@@ -66,13 +66,10 @@ class PanafallsViewController               : NSSplitViewController {
     // a Panadapter model has been added to the Panadapters collection and Initialized
 
     // does the Notification contain a Panadapter?
-    if let panadapter = note.object as? Panadapter {
-
-      // YES, log the event
-//      Log.sharedInstance.msg("ID = \(panadapter.id.hex)", level: .info, function: #function, file: #file, line: #line)
-
-      os_log("Panadapter added, ID = %{public}@", log: _log, type: .info, panadapter.id.hex)
-    }
+    let panadapter = note.object as! Panadapter
+    
+    // YES, log the event
+    os_log("Panadapter added, ID = %{public}@", log: _log, type: .info, panadapter.id.hex)
   }
   /// Process .waterfallHasBeenAdded Notification
   ///
@@ -82,26 +79,23 @@ class PanafallsViewController               : NSSplitViewController {
     // a Waterfall model has been added to the Waterfalls collection and Initialized
     
     // does the Notification contain a Panadapter?
-    if let waterfall = note.object as? Waterfall {
+    let waterfall = note.object as! Waterfall
+    
+    // YES, log the event
+    os_log("Waterfall added, ID = %{public}@", log: _log, type: .info, waterfall.id.hex)
+    
+    let panadapter = Api.sharedInstance.radio!.panadapters[waterfall.panadapterId]
+    
+    // create a Panafall Button View Controller
+    let panafallButtonVc = _sb!.instantiateController(withIdentifier: kPanafallButtonIdentifier) as! PanafallButtonViewController
+    
+    // pass needed parameters
+    panafallButtonVc.configure(panadapter: panadapter, waterfall: waterfall)
+    
+    // interact with the UI
+    DispatchQueue.main.sync { [unowned self] in
       
-      // YES, log the event
-//      Log.sharedInstance.msg("ID = \(waterfall.id.hex)", level: .info, function: #function, file: #file, line: #line)
-
-      os_log("Waterfall added, ID = %{public}@", log: _log, type: .info, waterfall.id.hex)
-
-      let panadapter = Api.sharedInstance.radio!.panadapters[waterfall.panadapterId]
-      
-      // create a Panafall Button View Controller
-      let panafallButtonVc = _sb!.instantiateController(withIdentifier: kPanafallButtonIdentifier) as! PanafallButtonViewController
-      
-      // pass needed parameters
-      panafallButtonVc.configure(panadapter: panadapter, waterfall: waterfall)
-      
-      // interact with the UI
-      DispatchQueue.main.sync { [unowned self] in
-        
-        self.addSplitViewItem(NSSplitViewItem(viewController: panafallButtonVc))
-      }
+      self.addSplitViewItem(NSSplitViewItem(viewController: panafallButtonVc))
     }
   }
 }

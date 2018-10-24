@@ -42,7 +42,7 @@ final class EqViewController                : NSViewController {
     super.viewDidLoad()
     
     // get references to the Radio & the Equalizers
-    _radio = representedObject as! Radio
+    _radio = representedObject as? Radio
     
     _equalizerRx = _radio.equalizers[.rxsc]
     _equalizerTx = _radio.equalizers[.txsc]

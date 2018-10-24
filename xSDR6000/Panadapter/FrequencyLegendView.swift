@@ -296,35 +296,34 @@ public final class FrequencyLegendView      : NSView {
     _path.setLineDash( [2.0, 0.0], count: 2, phase: 0 )
     
     // filter for segments that overlap the panadapter frequency range
-    let overlappingSegments = _segments.filter {
+    let segments = _segments.filter {
       (($0.start >= _start || $0.end <= _end) ||    // start or end in panadapter
-        $0.start < _start && $0.end > _end) &&    // start -> end spans panadapter
-        $0.enabled && $0.useMarkers}                                    // segment is enabled & uses Markers
+        $0.start < _start && $0.end > _end) &&      // start -> end spans panadapter
+        $0.enabled && $0.useMarkers}                // segment is enabled & uses Markers
     
     // ***** Band edges *****
     Defaults[.markerEdge].set()  // set the color
     _path.lineWidth = 1         // set the width
     
     // filter for segments that contain a band edge
-    let edgeSegments = overlappingSegments.filter {$0.startIsEdge || $0.endIsEdge}
-    for s in edgeSegments {
+    segments.filter {$0.startIsEdge || $0.endIsEdge}.forEach( {
       
       // is the start of the segment a band edge?
-      if s.startIsEdge {
+      if $0.startIsEdge {
         
         // YES, draw a vertical line for the starting band edge
-        _path.vLine(at: CGFloat(s.start - _start) / _hzPerUnit, fromY: frame.height * markerHeight, toY: 0)
-        _path.drawX(at: NSPoint(x: CGFloat(s.start - _start) / _hzPerUnit, y: frame.height * markerHeight), halfWidth: 6)
+        _path.vLine(at: CGFloat($0.start - _start) / _hzPerUnit, fromY: frame.height * markerHeight, toY: 0)
+        _path.drawX(at: NSPoint(x: CGFloat($0.start - _start) / _hzPerUnit, y: frame.height * markerHeight), halfWidth: 6)
       }
       
       // is the end of the segment a band edge?
-      if s.endIsEdge {
+      if $0.endIsEdge {
         
         // YES, draw a vertical line for the ending band edge
-        _path.vLine(at: CGFloat(s.end - _start) / _hzPerUnit, fromY: frame.height * markerHeight, toY: 0)
-        _path.drawX(at: NSPoint(x: CGFloat(s.end - _start) / _hzPerUnit, y: frame.height * markerHeight), halfWidth: 6)
+        _path.vLine(at: CGFloat($0.end - _start) / _hzPerUnit, fromY: frame.height * markerHeight, toY: 0)
+        _path.drawX(at: NSPoint(x: CGFloat($0.end - _start) / _hzPerUnit, y: frame.height * markerHeight), halfWidth: 6)
       }
-    }
+    } )
     _path.strokeRemove()
     
     // ***** Inside segments *****
@@ -333,47 +332,47 @@ public final class FrequencyLegendView      : NSView {
     var previousEnd = 0
     
     // filter for segments that contain an inside segment
-    let insideSegments = overlappingSegments.filter {!$0.startIsEdge && !$0.endIsEdge}
-    for s in insideSegments {
-      
+    segments.filter {!$0.startIsEdge && !$0.endIsEdge}.forEach( {
       // does this segment overlap the previous segment?
-      if s.start != previousEnd {
+      if $0.start != previousEnd {
         
         // NO, draw a vertical line for the inside segment start
-        _path.vLine(at: CGFloat(s.start - _start) / _hzPerUnit, fromY: frame.height * markerHeight - 6/2 - 1, toY: 0)
-        _path.drawCircle(at: NSPoint(x: CGFloat(s.start - _start) / _hzPerUnit, y: frame.height * markerHeight), radius: 6)
+        _path.vLine(at: CGFloat($0.start - _start) / _hzPerUnit, fromY: frame.height * markerHeight - 6/2 - 1, toY: 0)
+        _path.drawCircle(at: NSPoint(x: CGFloat($0.start - _start) / _hzPerUnit, y: frame.height * markerHeight), radius: 6)
       }
       
       // draw a vertical line for the inside segment end
-      _path.vLine(at: CGFloat(s.end - _start) / _hzPerUnit, fromY: frame.height * markerHeight - 6/2 - 1, toY: 0)
-      _path.drawCircle(at: NSPoint(x: CGFloat(s.end - _start) / _hzPerUnit, y: frame.height * markerHeight), radius: 6)
-      previousEnd = s.end
-    }
+      _path.vLine(at: CGFloat($0.end - _start) / _hzPerUnit, fromY: frame.height * markerHeight - 6/2 - 1, toY: 0)
+      _path.drawCircle(at: NSPoint(x: CGFloat($0.end - _start) / _hzPerUnit, y: frame.height * markerHeight), radius: 6)
+      previousEnd = $0.end
+
+    } )
     _path.strokeRemove()
     
     // ***** Band Shading *****
     Defaults[.marker].set()
-    for s in overlappingSegments {
-      
+    segments.forEach( {
+
       // calculate start & end of shading
-      let start = (s.start >= _start) ? s.start : _start
-      let end = (_end >= s.end) ? s.end : _end
+      let start = ($0.start >= _start) ? $0.start : _start
+      let end = (_end >= $0.end) ? $0.end : _end
       
       // draw a shaded rectangle for the Segment
       let rect = NSRect(x: CGFloat(start - _start) / _hzPerUnit, y: shadingPosition, width: CGFloat(end - start) / _hzPerUnit, height: 20)
       NSBezierPath.fill(rect)
-    }
+    } )
     _path.strokeRemove()
   }
   
   func drawSlices() {
     
-    for (_, slice) in radio!.slices where slice.panadapterId == _panadapter!.id {
-        
-        drawFilterOutline(slice)
-        
-        drawFrequencyLine(slice)
-    }
+    // for Slices on this Panadapter
+    radio!.slices.filter { $0.value.panadapterId == _panadapter!.id }.forEach( {
+      
+      drawFilterOutline($0.value)
+      
+      drawFrequencyLine($0.value)
+    } )
   }
   /// Position Slice flags
   ///
@@ -382,12 +381,11 @@ public final class FrequencyLegendView      : NSView {
     var onLeft = true
     var spacing : CGFloat = 0.0
     
-    // sort the Flags from left to right
-    let sortedFlags = flags.sorted {$0.slice!.frequency < $1.slice!.frequency}
-    
     var previousFlagVc : FlagViewController?
-    for currentFlagVc in sortedFlags {
-      
+    
+    // sort the Flags from left to right
+    flags.sorted {$0.slice!.frequency < $1.slice!.frequency}.forEach( {
+
       // is this the first Flag?
       if previousFlagVc == nil {
         
@@ -395,12 +393,12 @@ public final class FrequencyLegendView      : NSView {
         onLeft = true
         
         // calculate the minimum spacing between flags
-        spacing = currentFlagVc.view.frame.width + kFlagBorder
+        spacing = $0.view.frame.width + kFlagBorder
         
       } else {
         
         let previousFrequencyPosition = CGFloat(previousFlagVc!.slice!.frequency - _start) / _hzPerUnit
-        let currentFrequencyPosition = CGFloat(currentFlagVc.slice!.frequency - _start) / _hzPerUnit
+        let currentFrequencyPosition = CGFloat($0.slice!.frequency - _start) / _hzPerUnit
         
         // determine the needed spacing between flags
         let currentSpacing = previousFlagVc!.onLeft ? spacing : 2 * spacing
@@ -418,15 +416,59 @@ public final class FrequencyLegendView      : NSView {
         }
       }
       // calculate the X & Y positions of the flags
-      frequencyPosition.x = CGFloat(currentFlagVc.slice!.frequency - _start) / _hzPerUnit
-      frequencyPosition.y = frame.height - currentFlagVc.view.frame.height
+      frequencyPosition.x = CGFloat($0.slice!.frequency - _start) / _hzPerUnit
+      frequencyPosition.y = frame.height - $0.view.frame.height
       
       // position it
-      currentFlagVc.moveTo( frequencyPosition, frequency: currentFlagVc.slice!.frequency, onLeft: onLeft)
+      $0.moveTo( frequencyPosition, frequency: $0.slice!.frequency, onLeft: onLeft)
       
       // make the current one the previous one
-      previousFlagVc = currentFlagVc
-    }
+      previousFlagVc = $0
+    } )
+
+
+
+//    for currentFlagVc in sortedFlags {
+//
+//      // is this the first Flag?
+//      if previousFlagVc == nil {
+//
+//        // YES, it's the first one (always on the left)
+//        onLeft = true
+//
+//        // calculate the minimum spacing between flags
+//        spacing = currentFlagVc.view.frame.width + kFlagBorder
+//
+//      } else {
+//
+//        let previousFrequencyPosition = CGFloat(previousFlagVc!.slice!.frequency - _start) / _hzPerUnit
+//        let currentFrequencyPosition = CGFloat(currentFlagVc.slice!.frequency - _start) / _hzPerUnit
+//
+//        // determine the needed spacing between flags
+//        let currentSpacing = previousFlagVc!.onLeft ? spacing : 2 * spacing
+//
+//        // is this Flag too close to the previous one?
+//        if currentFrequencyPosition - previousFrequencyPosition < currentSpacing {
+//
+//          // YES, put it on the right
+//          onLeft = false
+//
+//        } else {
+//
+//          // NO, put it on the left
+//          onLeft = true
+//        }
+//      }
+//      // calculate the X & Y positions of the flags
+//      frequencyPosition.x = CGFloat(currentFlagVc.slice!.frequency - _start) / _hzPerUnit
+//      frequencyPosition.y = frame.height - currentFlagVc.view.frame.height
+//
+//      // position it
+//      currentFlagVc.moveTo( frequencyPosition, frequency: currentFlagVc.slice!.frequency, onLeft: onLeft)
+//
+//      // make the current one the previous one
+//      previousFlagVc = currentFlagVc
+//    }
   }
   /// Draw the Filter Outline
   ///

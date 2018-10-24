@@ -293,8 +293,6 @@ final public class Band {
         try fileManager.createDirectory( at: appFolder, withIntermediateDirectories: false, attributes: nil)
       
       } catch let error as NSError {
-//        Log.sharedInstance.msg("Error creating App Support folder: \(error.localizedDescription)", level: .warning, function: #function, file: #file, line: #line)
-
         os_log("Error creating App Support folder: %{public}@", log: _log, type: .default, error.localizedDescription)
       }
     }

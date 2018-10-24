@@ -315,8 +315,6 @@ public final class OpusEncode               : NSObject {
       // try to set it as the input device for the engine
       if setInputDevice(device.id) {
         
-//        Log.sharedInstance.msg("ID = \(Opus.txStreamId.hex), Device = \(device.name!)", level: .info, function: #function, file: #file, line: #line)
-
         os_log("Opus Tx, Started: ID = %{public}@, Device = %{public}@", log: _log, type: .info, Opus.txStreamId.hex, device.name!)
 
         // start capture using this input device
@@ -324,8 +322,6 @@ public final class OpusEncode               : NSObject {
 
       } else {
         
-//        Log.sharedInstance.msg("Failed, Device = \(device.name!)", level: .info, function: #function, file: #file, line: #line)
-
         os_log("Opus Tx, FAILED: Device = %{public}@", log: _log, type: .default, device.name!)
         
         _engine?.stop()
@@ -334,8 +330,6 @@ public final class OpusEncode               : NSObject {
       
     } else if !_opus.txEnabled && _engine != nil {
       
-//      Log.sharedInstance.msg("Stopped", level: .info, function: #function, file: #file, line: #line)
-
       os_log("Opus Tx, Stopped", log: _log, type: .info)
       
       // stop Opus Tx Audio

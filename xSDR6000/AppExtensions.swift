@@ -12,6 +12,7 @@ import SwiftyUserDefaults
 import simd
 
 typealias NC = NotificationCenter
+typealias UD = UserDefaults
 
 // ----------------------------------------------------------------------------
 // MARK: - EXTENSIONS

@@ -89,15 +89,18 @@ class TxViewController                      : NSViewController {
     _observations.append( radio.observe(\.mox, options: [.initial, .new], changeHandler: moxStatus) )
 
     // Meters
-    for (_, meter) in radio.meters {
-      
-      // is it one we need to watch?
-      if meter.name == kPowerForward || meter.name == kSwr {
-        
-        // YES, observer it
-        _observations.append( meter.observe(\.value, options: [.initial, .new], changeHandler: meterValue) )
-      }
-    }
+//    for (_, meter) in radio.meters {
+//      
+//      // is it one we need to watch?
+//      if meter.name == kPowerForward || meter.name == kSwr {
+//        
+//        // YES, observer it
+//        _observations.append( meter.observe(\.value, options: [.initial, .new], changeHandler: meterValue) )
+//      }
+//    }
+    // is it one we need to watch?
+    let meters = radio.meters.filter {$0.value.name == kPowerForward || $0.value.name == kSwr}
+    meters.forEach( { _observations.append( $0.value.observe(\.value, options: [.initial, .new], changeHandler: meterValue) )} )    
   }
   /// Respond to changes in Atu status
   ///

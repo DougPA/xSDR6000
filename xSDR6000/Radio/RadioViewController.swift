@@ -120,8 +120,6 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
       
       // YES, open the default radio
       if !openRadio(defaultRadio) {
-//        Log.sharedInstance.msg("Error opening default radio, \(defaultRadio.name ?? "")", level: .warning, function: #function, file: #file, line: #line)
-
         os_log("Error opening default radio, %{public}@", log: _log, type: .default, defaultRadio.name ?? "")
         
         // open the Radio Picker
@@ -148,7 +146,6 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     
     // enable / disable Remote Audio
     _opus?.rxEnabled = sender.boolState
-//    Log.sharedInstance.msg("\(sender.state == NSControl.StateValue.on ? "Started" : "Stopped")", level: .info, function: #function, file: #file, line: #line)
 
     let opusRxStatus = sender.boolState ? "Started" : "Stopped"
     
@@ -320,8 +317,6 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
       Defaults[.versionGui] = _versions!.app
       
       // log them
-//      Log.sharedInstance.msg("\(kClientName) v\(_versions!.app), xLib6000 v\(_versions!.api)", level: .info, function: #function, file: #file, line: #line)
-
       os_log("%{public}@, v%{public}@, xLib6000 v%{public}@", log: _log, type: .info, kClientName, _versions!.app, _versions!.api)
     }
     
@@ -364,19 +359,14 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
       usleep(1_500_000)
       
       // has the default Radio been found?
-      for (_, foundRadio) in _api.availableRadios.enumerated() where foundRadio == defaultRadio {
+      if let radio = _api.availableRadios.first(where: { $0 == defaultRadio} ) {
         
         // YES, Save it in case something changed
-        Defaults[.defaultRadio] = foundRadio.dictFromParams()
-        
-        //        // select it in the TableView
-        //        self._radioTableView.selectRowIndexes(IndexSet(integer: i), byExtendingSelection: true)
-        
-//        Log.sharedInstance.msg("\(foundRadio.nickname ?? "") @ \(foundRadio.ipAddress)", level: .info, function: #function, file: #file, line: #line)
+        Defaults[.defaultRadio] = radio.dictFromParams()
 
-        os_log("Default radio found, %{public}@ @ %{public}@", log: _log, type: .info, foundRadio.nickname ?? "", foundRadio.ipAddress)
-        
-        defaultRadioParameters = foundRadio
+        os_log("Default radio found, %{public}@ @ %{public}@", log: _log, type: .info, radio.nickname ?? "", radio.ipAddress)
+
+        defaultRadioParameters = radio
       }
     }
     return defaultRadioParameters
@@ -412,23 +402,9 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     } else {
       
       // HIDE, remove it from the Side View
-      for (i, vc) in sideViewController!.childViewControllers.enumerated() where vc.identifier!.rawValue == identifier {
-          sideViewController!.removeChildViewController(at: i)
+      if let vc = sideViewController!.childViewControllers.first(where: {$0.identifier!.rawValue == identifier} ) {
+        vc.removeFromParentViewController()
       }
-    }
-  }
-
-  // ----------------------------------------------------------------------------
-  // MARK: - Observation methods
-
-  /// Remove observers
-  ///
-  /// - Parameter observers:            an array of NSKeyValueObservation
-  ///
-  func removeObservers(_ observers: [NSKeyValueObservation]) {
-
-    for observer in observers {
-      observer.invalidate()
     }
   }
   
@@ -439,58 +415,43 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   ///
   private func addNotifications() {
     
-//    NC.makeObserver(self, with: #selector(tcpDidConnect(_:)), of: .tcpDidConnect, object: nil)
+    NC.makeObserver(self, with: #selector(meterHasBeenAdded(_:)), of: .meterHasBeenAdded)
     
-    NC.makeObserver(self, with: #selector(meterHasBeenAdded(_:)), of: .meterHasBeenAdded, object: nil)
-    
-    NC.makeObserver(self, with: #selector(radioHasBeenAdded(_:)), of: .radioHasBeenAdded, object: nil)
+    NC.makeObserver(self, with: #selector(radioHasBeenAdded(_:)), of: .radioHasBeenAdded)
 
-    NC.makeObserver(self, with: #selector(radioWillBeRemoved(_:)), of: .radioWillBeRemoved, object: nil)
+    NC.makeObserver(self, with: #selector(radioWillBeRemoved(_:)), of: .radioWillBeRemoved)
 
-    NC.makeObserver(self, with: #selector(radioHasBeenRemoved(_:)), of: .radioHasBeenRemoved, object: nil)
+    NC.makeObserver(self, with: #selector(radioHasBeenRemoved(_:)), of: .radioHasBeenRemoved)
     
-    NC.makeObserver(self, with: #selector(opusRxHasBeenAdded(_:)), of: .opusRxHasBeenAdded, object: nil)
+    NC.makeObserver(self, with: #selector(opusRxHasBeenAdded(_:)), of: .opusRxHasBeenAdded)
   }
-  /// Process .tcpDidConnect Notification
-  ///
-  /// - Parameter note: a Notification instance
-  ///
-//  @objc private func tcpDidConnect(_ note: Notification) {
-//
-//    // a tcp connection has been established
-//
-//    // get Radio model & firmware version
-//    Defaults[.radioVersion] = _api.activeRadio!.firmwareVersion!
-//    Defaults[.radioModel] = _api.activeRadio!.model
-//  }
   /// Process .meterHasBeenAdded Notification
   ///
   /// - Parameter note: a Notification instance
   ///
   @objc private func meterHasBeenAdded(_ note: Notification) {
     
-    if let meter = note.object as? Meter {
-
-      // is it one we need to watch?
-      switch meter.name {
-      case Api.MeterShortName.voltageAfterFuse.rawValue:
-        _voltageMeterAvailable = true
-
-      case Api.MeterShortName.temperaturePa.rawValue:
-        _temperatureMeterAvailable = true
-
-      default:
-        break
-      }
-      if _voltageMeterAvailable && _temperatureMeterAvailable {
-
-        DispatchQueue.main.async { [unowned self] in
-          // start the Voltage/Temperature monitor
-          let mainWindowController = self.view.window?.windowController as? MainWindowController
-          mainWindowController?.voltageTempMonitor?.activate(radio: self._api.radio!, meterShortNames: [.voltageAfterFuse, .temperaturePa], units: ["v", "c"])
-        }
-      }
+    let meter = note.object as! Meter
+    
+    // is it one we need to watch?
+    switch meter.name {
+    case Api.MeterShortName.voltageAfterFuse.rawValue:
+      _voltageMeterAvailable = true
+      
+    case Api.MeterShortName.temperaturePa.rawValue:
+      _temperatureMeterAvailable = true
+      
+    default:
+      break
     }
+    guard _voltageMeterAvailable == true, _temperatureMeterAvailable == true else { return }
+    
+    DispatchQueue.main.async { [unowned self] in
+      // start the Voltage/Temperature monitor
+      let mainWindowController = self.view.window?.windowController as? MainWindowController
+      mainWindowController?.voltageTempMonitor?.activate(radio: self._api.radio!, meterShortNames: [.voltageAfterFuse, .temperaturePa], units: ["v", "c"])
+    }
+    
   }
   /// Process .radioHasBeenAdded Notification
   ///
@@ -499,21 +460,18 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   @objc private func radioHasBeenAdded(_ note: Notification) {
     
     // the Radio class has been initialized
-    if let radio = note.object as? Radio {
-      
-//      Log.sharedInstance.msg("\(radio.nickname)", level: .info, function: #function, file: #file, line: #line)
-      
-      os_log("Radio initialized - %{public}@", log: _log, type: .info, radio.nickname)
-
-      Defaults[.versionRadio] = radio.radioVersion
-      Defaults[.radioModel] = _api.activeRadio!.model
-
-      // update the title bar
-      title()
-      
-      // update the toolbar controls
-      toolbar()
-    }
+    let radio = note.object as! Radio
+    
+    os_log("Radio initialized - %{public}@", log: _log, type: .info, radio.nickname)
+    
+    Defaults[.versionRadio] = radio.radioVersion
+    Defaults[.radioModel] = _api.activeRadio!.model
+    
+    // update the title bar
+    title()
+    
+    // update the toolbar controls
+    toolbar()
   }
   /// Process .radioWillBeRemoved Notification
   ///
@@ -522,20 +480,17 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   @objc private func radioWillBeRemoved(_ note: Notification) {
     
     // the Radio class is being removed
-    if let radio = note.object as? RadioParameters {
-      
-//      Log.sharedInstance.msg("\(radio.nickname ?? "")", level: .info, function: #function, file: #file, line: #line)
-      
-      os_log("Radio will be removed - %{public}@", log: _log, type: .info, radio.nickname ?? "")
-      
-      Defaults[.versionRadio] = ""
-      
-      // remove all objects on Radio
-      _api.radio?.removeAll()
-      
-      // update the title bar
-      title()
-    }
+    let radio = note.object as! RadioParameters
+    
+    os_log("Radio will be removed - %{public}@", log: _log, type: .info, radio.nickname ?? "")
+    
+    Defaults[.versionRadio] = ""
+    
+    // remove all objects on Radio
+    _api.radio?.removeAll()
+    
+    // update the title bar
+    title()
   }
   /// Process .radioHasBeenRemoved Notification
   ///
@@ -544,8 +499,6 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   @objc private func radioHasBeenRemoved(_ note: Notification) {
     
     // the Radio class has been removed
-    
-//    Log.sharedInstance.msg("", level: .info, function: #function, file: #file, line: #line)
     
     os_log("Radio has been removed - %{public}@", log: _log, type: .info, radio?.nickname ?? "")
     
@@ -559,18 +512,15 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   @objc private func opusRxHasBeenAdded(_ note: Notification) {
 
     // the Opus class has been initialized
-    if let opus = note.object as? Opus {
-      _opus = opus
-      
-//      Log.sharedInstance.msg("ID = \(opus.id.hex)", level: .info, function: #function, file: #file, line: #line)
-
-      os_log("Opus Rx added, ID = %{public}@", log: _log, type: .info, opus.id.hex)
-      
-
-      _opusDecode = OpusDecode()
-      _opusEncode = OpusEncode(opus)
-      opus.delegate = _opusDecode
-    }
+    let opus = note.object as! Opus
+    _opus = opus
+    
+    os_log("Opus Rx added, ID = %{public}@", log: _log, type: .info, opus.id.hex)
+    
+    
+    _opusDecode = OpusDecode()
+    _opusEncode = OpusEncode(opus)
+    opus.delegate = _opusDecode
   }
   
   // ----------------------------------------------------------------------------

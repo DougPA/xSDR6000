@@ -220,9 +220,8 @@ class WaterfallViewController               : NSViewController, NSGestureRecogni
   func invalidateObservations(_ observations: inout [NSKeyValueObservation], remove: Bool = true) {
     
     // invalidate each observation
-    for observation in observations {
-      observation.invalidate()
-    }
+    observations.forEach( {$0.invalidate()} )
+
     // if specified, remove the tokens
     if remove { observations.removeAll() }
   }
@@ -304,26 +303,23 @@ class WaterfallViewController               : NSViewController, NSGestureRecogni
   @objc private func waterfallWillBeRemoved(_ note: Notification) {
 
     // does the Notification contain a Panadapter object?
-    if let waterfall = note.object as? Waterfall {
-
-      // YES, log the event
-//      Log.sharedInstance.msg("ID = \(waterfall.id.hex)", level: .info, function: #function, file: #file, line: #line)
-
-      os_log("Waterfall will be removed, ID = %{public}@", log: _log, type: .info, waterfall.id.hex)
+    let waterfall = note.object as! Waterfall
+    
+    // YES, log the event
+    os_log("Waterfall will be removed, ID = %{public}@", log: _log, type: .info, waterfall.id.hex)
+    
+    // stop processing waterfall data
+    waterfall.delegate = nil
+    
+    // invalidate all property observers
+    invalidateObservations(&_baseObservations)
+    
+    // remove the UI components of the Panafall
+    DispatchQueue.main.sync { [unowned self] in
       
-      // stop processing waterfall data
-      waterfall.delegate = nil
-
-      // invalidate all property observers
-      invalidateObservations(&_baseObservations)
-      
-      // remove the UI components of the Panafall
-      DispatchQueue.main.sync { [unowned self] in
-        
-        // remove the entire PanafallButtonViewController hierarchy
-        let panafallButtonVc = self.parent!.parent!
-        panafallButtonVc.removeFromParentViewController()
-      }
+      // remove the entire PanafallButtonViewController hierarchy
+      let panafallButtonVc = self.parent!.parent!
+      panafallButtonVc.removeFromParentViewController()
     }
   }
 }

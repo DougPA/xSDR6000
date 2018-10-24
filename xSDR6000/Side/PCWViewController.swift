@@ -78,18 +78,22 @@ class PCWViewController                         : NSViewController {
   ///
   private func addObservations() {
 
-    for (_, meter) in radio.meters {
-      
-      // is it one we need to watch?
-      switch meter.name {
-      case kMicrophoneAverage, kMicrophonePeak, kCompression:
-        
-        _observations.append( meter.observe(\.value, options: [.initial, .new], changeHandler: meterValue) )
-        
-      default:
-        break
-      }
-    }
+//    for (_, meter) in radio.meters {
+//
+//      // is it one we need to watch?
+//      switch meter.name {
+//      case kMicrophoneAverage, kMicrophonePeak, kCompression:
+//
+//        _observations.append( meter.observe(\.value, options: [.initial, .new], changeHandler: meterValue) )
+//
+//      default:
+//        break
+//      }
+//    }
+
+    // is it one we need to watch?
+    let meters = radio.meters.filter {$0.value.name == kMicrophoneAverage || $0.value.name == kMicrophonePeak || $0.value.name == kCompression }
+    meters.forEach( { _observations.append( $0.value.observe(\.value, options: [.initial, .new], changeHandler: meterValue) )} )
   }
   /// Respond to changes in a Meter
   ///

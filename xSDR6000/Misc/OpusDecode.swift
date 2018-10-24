@@ -167,8 +167,6 @@ public final class OpusDecode               : NSObject, StreamHandler {
                                           Int32(0))                       // FEC (none)
     // check for decode errors
     if framesDecoded < 0 {
-//      Log.sharedInstance.msg(String(cString: opus_strerror(framesDecoded)), level: .error, function: #function, file: #file, line: #line)
-      
       os_log("%{public}@", log: _log, type: .error, opus_strerror(framesDecoded))
     }
     
