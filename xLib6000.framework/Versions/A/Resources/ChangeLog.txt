@@ -3,6 +3,7 @@ xLib6000 Change Log
 v2.0.1
 
 AppExtensions.swift - in class makeObserver(_:with:of:object:) gave object default of nil
+Radio.swift - in defaultReplyHandler(_:seqNum:responseValue:reply:) added NSAlert for failures
 
 v2.0.0
 
