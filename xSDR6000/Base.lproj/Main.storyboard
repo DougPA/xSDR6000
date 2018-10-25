@@ -1124,19 +1124,36 @@
                         <rect key="frame" x="0.0" y="0.0" width="374" height="260"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="6HS-ei-rfq">
+                            <scrollView horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RCw-jG-yLK">
                                 <rect key="frame" x="0.0" y="0.0" width="374" height="260"/>
+                                <clipView key="contentView" id="0Gu-YL-oAf">
+                                    <rect key="frame" x="1" y="1" width="372" height="258"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <view fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gtw-D0-4cW">
+                                            <rect key="frame" x="0.0" y="0.0" width="357" height="243"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        </view>
+                                    </subviews>
+                                </clipView>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="374" id="9Ul-bd-Mwn"/>
+                                    <constraint firstAttribute="width" constant="374" id="eHv-BJ-GZQ"/>
                                 </constraints>
-                            </customView>
+                                <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="vdn-0v-svu">
+                                    <rect key="frame" x="1" y="243" width="372" height="16"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                                <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="cdD-8V-naG">
+                                    <rect key="frame" x="357" y="1" width="16" height="258"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                            </scrollView>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="6HS-ei-rfq" firstAttribute="top" secondItem="chP-Va-SvO" secondAttribute="top" id="At0-R0-bhi"/>
-                            <constraint firstItem="6HS-ei-rfq" firstAttribute="leading" secondItem="chP-Va-SvO" secondAttribute="leading" id="JG2-kc-9qF"/>
-                            <constraint firstAttribute="bottom" secondItem="6HS-ei-rfq" secondAttribute="bottom" id="MPJ-1T-IAO"/>
-                            <constraint firstAttribute="trailing" secondItem="6HS-ei-rfq" secondAttribute="trailing" id="Zsk-Uz-FeQ"/>
-                            <constraint firstItem="6HS-ei-rfq" firstAttribute="leading" secondItem="chP-Va-SvO" secondAttribute="leading" id="iaT-5j-MOy"/>
+                            <constraint firstAttribute="trailing" secondItem="RCw-jG-yLK" secondAttribute="trailing" id="OAc-dW-6DU"/>
+                            <constraint firstAttribute="bottom" secondItem="RCw-jG-yLK" secondAttribute="bottom" id="agL-uA-bWf"/>
+                            <constraint firstItem="RCw-jG-yLK" firstAttribute="top" secondItem="chP-Va-SvO" secondAttribute="top" id="gCe-9V-40o"/>
+                            <constraint firstItem="RCw-jG-yLK" firstAttribute="leading" secondItem="chP-Va-SvO" secondAttribute="leading" id="pq7-6T-Jo1"/>
                         </constraints>
                     </view>
                 </viewController>

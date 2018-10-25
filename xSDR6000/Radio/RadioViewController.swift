@@ -394,7 +394,31 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
       vc.representedObject = _api.radio
       
       // add it to the Side View
-      sideViewController!.insertChildViewController(vc, at: 1)
+      var index = 0
+      switch identifier {
+      case "RX":
+        index = 1
+      case "TX":
+        index = 2
+      case "PCW":
+        index = 3
+      case "PHONE":
+        index = 4
+      case "EQ":
+        index = 5
+      default:
+        fatalError()
+      }
+      let numberOfViews = sideViewController!.childViewControllers.count
+      if index >= numberOfViews {
+        Swift.print("index >= numberOfViews, numberOfViews = \(numberOfViews), index = \(index)")
+        
+        sideViewController!.insertChildViewController(vc, at: numberOfViews)
+      } else {
+
+        Swift.print("index < numberOfViews, numberOfViews = \(numberOfViews), index = \(index)")
+        sideViewController!.insertChildViewController(vc, at: index)
+      }
       
       // tell the SplitView to adjust
       sideViewController!.splitView.adjustSubviews()
