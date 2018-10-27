@@ -1,5 +1,13 @@
 xLib6000 Change Log
 
+v2.0.2
+
+RadioParameters.swift - added wanConnected property
+Vita.swift - added parsing of wanConnected to class parseDiscovery(_:)
+Radio.swift - in defaultReplyHandler(_:seqNum:responseValue:reply:) changed NSAlert to Application modal
+Api.swift - added clientDisconnect to Command enum
+RadioParameters.swift - added description() function
+
 v2.0.1
 
 AppExtensions.swift - in class makeObserver(_:with:of:object:) gave object default of nil
