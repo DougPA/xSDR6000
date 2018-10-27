@@ -120,7 +120,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
       
       // YES, open the default radio
       if !openRadio(defaultRadio) {
-        os_log("Error opening default radio, %{public}@", log: _log, type: .default, defaultRadio.name ?? "")
+        os_log("Error opening default radio, %{public}@", log: _log, type: .default, defaultRadio.name)
         
         // open the Radio Picker
         openRadioPicker( self)
@@ -321,7 +321,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     }
     
     // format and set the window title
-    let title = (_api.activeRadio == nil ? "" : "- Connected to \(_api.activeRadio!.nickname ?? "") @ \(_api.activeRadio!.ipAddress)")
+    let title = (_api.activeRadio == nil ? "" : "- Connected to \(_api.activeRadio!.nickname) @ \(_api.activeRadio!.ipAddress)")
     DispatchQueue.main.async {
       self.view.window?.title = "\(kClientName) v\(self._versions!.app), xLib6000 v\(self._versions!.api) \(title)"
     }
@@ -362,9 +362,9 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
       if let radio = _api.availableRadios.first(where: { $0 == defaultRadio} ) {
         
         // YES, Save it in case something changed
-        Defaults[.defaultRadio] = radio.dictFromParams()
+        Defaults[.defaultRadio] = radio.dict
 
-        os_log("Default radio found, %{public}@ @ %{public}@", log: _log, type: .info, radio.nickname ?? "", radio.ipAddress)
+        os_log("Default radio found, %{public}@ @ %{public}@", log: _log, type: .info, radio.nickname, radio.ipAddress)
 
         defaultRadioParameters = radio
       }
@@ -506,7 +506,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     // the Radio class is being removed
     let radio = note.object as! RadioParameters
     
-    os_log("Radio will be removed - %{public}@", log: _log, type: .info, radio.nickname ?? "")
+    os_log("Radio will be removed - %{public}@", log: _log, type: .info, radio.nickname)
     
     Defaults[.versionRadio] = ""
     
@@ -567,6 +567,12 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     
     _api.isWan = isWan
     _api.wanConnectionHandle = wanHandle
+    
+    // if an "M" model, ensure that the front panel GUI is disconnected
+    
+    // FIXME: remove the "!"
+    
+//    if !selectedRadio.model.contains("M") { _api.mModelDetected(selectedRadio) }
     
     // attempt to connect to it
     return _api.connect(selectedRadio, clientName: kClientName, isGui: true)

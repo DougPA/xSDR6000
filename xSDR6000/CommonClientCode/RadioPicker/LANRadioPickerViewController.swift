@@ -124,11 +124,11 @@ final class LANRadioPickerViewController    : NSViewController, NSTableViewDeleg
     // Clear / Set the Default
     if sender.title == kClearDefault {
       
-      Defaults[.defaultRadio] = RadioParameters().dictFromParams()
+      Defaults[.defaultRadio] = RadioParameters().dict
       
     } else {
       
-      Defaults[.defaultRadio] = _api.availableRadios[selectedRow].dictFromParams()
+      Defaults[.defaultRadio] = _api.availableRadios[selectedRow].dict
     }
     
     // to display the Default status

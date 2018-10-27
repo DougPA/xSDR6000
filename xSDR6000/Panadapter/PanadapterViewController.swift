@@ -384,12 +384,12 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
     // calculate a minimum width for hit testing
     let effectiveWidth = Int( CGFloat(_bandwidth) * 0.01)
     
-    _radio!.tnfs.forEach( {
+    _radio!.tnfs.forEach {
       let halfWidth = max(effectiveWidth, $0.value.width/2)
       if $0.value.frequency - halfWidth <= Int(freq) && $0.value.frequency + halfWidth >= Int(freq) {
         tnf = $0.value
       }
-    } )
+    }
     return tnf
   }
 
@@ -459,7 +459,7 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
   func invalidateObservations(_ observations: inout [NSKeyValueObservation], remove: Bool = true) {
 
     // invalidate each observation
-    observations.forEach( { $0.invalidate() } )
+    observations.forEach { $0.invalidate() }
 
     // if specified, remove the tokens
     if remove { observations.removeAll() }
@@ -649,7 +649,7 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
     invalidateObservations(&_tnfObservations)
     
     // put back all except the one being removed
-    _radio!.tnfs.forEach( { if $0.value != tnfToRemove { addTnfObservations(&_tnfObservations, object: $0.value) } } )
+    _radio!.tnfs.forEach { if $0.value != tnfToRemove { addTnfObservations(&_tnfObservations, object: $0.value) } }
     
     // force a redraw
     _frequencyLegendView.redraw()

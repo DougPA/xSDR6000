@@ -306,7 +306,7 @@ public final class FrequencyLegendView      : NSView {
     _path.lineWidth = 1         // set the width
     
     // filter for segments that contain a band edge
-    segments.filter {$0.startIsEdge || $0.endIsEdge}.forEach( {
+    segments.filter {$0.startIsEdge || $0.endIsEdge}.forEach {
       
       // is the start of the segment a band edge?
       if $0.startIsEdge {
@@ -323,7 +323,7 @@ public final class FrequencyLegendView      : NSView {
         _path.vLine(at: CGFloat($0.end - _start) / _hzPerUnit, fromY: frame.height * markerHeight, toY: 0)
         _path.drawX(at: NSPoint(x: CGFloat($0.end - _start) / _hzPerUnit, y: frame.height * markerHeight), halfWidth: 6)
       }
-    } )
+    }
     _path.strokeRemove()
     
     // ***** Inside segments *****
@@ -332,7 +332,7 @@ public final class FrequencyLegendView      : NSView {
     var previousEnd = 0
     
     // filter for segments that contain an inside segment
-    segments.filter {!$0.startIsEdge && !$0.endIsEdge}.forEach( {
+    segments.filter {!$0.startIsEdge && !$0.endIsEdge}.forEach {
       // does this segment overlap the previous segment?
       if $0.start != previousEnd {
         
@@ -346,12 +346,12 @@ public final class FrequencyLegendView      : NSView {
       _path.drawCircle(at: NSPoint(x: CGFloat($0.end - _start) / _hzPerUnit, y: frame.height * markerHeight), radius: 6)
       previousEnd = $0.end
 
-    } )
+    }
     _path.strokeRemove()
     
     // ***** Band Shading *****
     Defaults[.marker].set()
-    segments.forEach( {
+    segments.forEach {
 
       // calculate start & end of shading
       let start = ($0.start >= _start) ? $0.start : _start
@@ -360,19 +360,19 @@ public final class FrequencyLegendView      : NSView {
       // draw a shaded rectangle for the Segment
       let rect = NSRect(x: CGFloat(start - _start) / _hzPerUnit, y: shadingPosition, width: CGFloat(end - start) / _hzPerUnit, height: 20)
       NSBezierPath.fill(rect)
-    } )
+    }
     _path.strokeRemove()
   }
   
   func drawSlices() {
     
     // for Slices on this Panadapter
-    radio!.slices.filter { $0.value.panadapterId == _panadapter!.id }.forEach( {
+    radio!.slices.filter { $0.value.panadapterId == _panadapter!.id }.forEach {
       
       drawFilterOutline($0.value)
       
       drawFrequencyLine($0.value)
-    } )
+    }
   }
   /// Position Slice flags
   ///
@@ -384,7 +384,7 @@ public final class FrequencyLegendView      : NSView {
     var previousFlagVc : FlagViewController?
     
     // sort the Flags from left to right
-    flags.sorted {$0.slice!.frequency < $1.slice!.frequency}.forEach( {
+    flags.sorted {$0.slice!.frequency < $1.slice!.frequency}.forEach {
 
       // is this the first Flag?
       if previousFlagVc == nil {
@@ -424,7 +424,7 @@ public final class FrequencyLegendView      : NSView {
       
       // make the current one the previous one
       previousFlagVc = $0
-    } )
+    }
 
 
 

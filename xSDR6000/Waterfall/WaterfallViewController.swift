@@ -220,7 +220,7 @@ class WaterfallViewController               : NSViewController, NSGestureRecogni
   func invalidateObservations(_ observations: inout [NSKeyValueObservation], remove: Bool = true) {
     
     // invalidate each observation
-    observations.forEach( {$0.invalidate()} )
+    observations.forEach {$0.invalidate()} 
 
     // if specified, remove the tokens
     if remove { observations.removeAll() }

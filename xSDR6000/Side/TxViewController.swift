@@ -100,7 +100,7 @@ class TxViewController                      : NSViewController {
 //    }
     // is it one we need to watch?
     let meters = radio.meters.filter {$0.value.name == kPowerForward || $0.value.name == kSwr}
-    meters.forEach( { _observations.append( $0.value.observe(\.value, options: [.initial, .new], changeHandler: meterValue) )} )    
+    meters.forEach { _observations.append( $0.value.observe(\.value, options: [.initial, .new], changeHandler: meterValue)) }    
   }
   /// Respond to changes in Atu status
   ///
