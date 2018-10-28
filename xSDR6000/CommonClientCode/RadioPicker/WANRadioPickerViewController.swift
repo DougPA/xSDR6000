@@ -528,7 +528,7 @@ final class WANRadioPickerViewController    : NSViewController, NSTableViewDeleg
         if !(self._delegate?.openRadio(self._selectedRadio, isWan: true, wanHandle: handle) ?? false ) {
 
           // log the event
-          os_log("Open remote radio FAILED: %{public}@", log: self._log, type: .error, self._selectedRadio?.name ?? "")
+          os_log("Open remote radio FAILED: %{public}@", log: self._log, type: .error, self._selectedRadio?.nickname ?? "")
         }
         
       } else {
@@ -661,6 +661,7 @@ final class WANRadioPickerViewController    : NSViewController, NSTableViewDeleg
       // NO, all other fields, set the stringValue of the cell's text field to the appropriate field
       view.textField!.stringValue = _availableRemoteRadios[row].valueForName(tableColumn!.identifier.rawValue) ?? ""
     }
+    view.toolTip = _api.availableRadios[row].description
     return view
   }
   /// Tableview selection change delegate method

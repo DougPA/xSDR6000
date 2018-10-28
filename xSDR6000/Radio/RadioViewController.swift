@@ -95,9 +95,6 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     // FIXME: Is this necessary???
 //    _activity = ProcessInfo().beginActivity(options: ProcessInfo.ActivityOptions.latencyCritical, reason: "Good Reason")
     
-    // give the Log object (in the API) access to our logger
-//    Log.sharedInstance.delegate = (NSApp.delegate as! LogHandler)
-    
     // setup & register Defaults
     defaults(from: "Defaults.plist")
     
@@ -120,7 +117,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
       
       // YES, open the default radio
       if !openRadio(defaultRadio) {
-        os_log("Error opening default radio, %{public}@", log: _log, type: .default, defaultRadio.name)
+        os_log("Error opening default radio, %{public}@", log: _log, type: .default, defaultRadio.nickname)
         
         // open the Radio Picker
         openRadioPicker( self)
@@ -321,7 +318,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     }
     
     // format and set the window title
-    let title = (_api.activeRadio == nil ? "" : "- Connected to \(_api.activeRadio!.nickname) @ \(_api.activeRadio!.ipAddress)")
+    let title = (_api.activeRadio == nil ? "" : "- Connected to \(_api.activeRadio!.nickname) @ \(_api.activeRadio!.publicIp)")
     DispatchQueue.main.async {
       self.view.window?.title = "\(kClientName) v\(self._versions!.app), xLib6000 v\(self._versions!.api) \(title)"
     }
@@ -353,7 +350,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     
     // see if there is a valid default Radio
     let defaultRadio = RadioParameters( Defaults[.defaultRadio] )
-    if defaultRadio.ipAddress != "" && defaultRadio.port != 0 {
+    if defaultRadio.publicIp != "" && defaultRadio.port != 0 {
       
       // allow time to hear the UDP broadcasts
       usleep(1_500_000)
@@ -364,7 +361,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
         // YES, Save it in case something changed
         Defaults[.defaultRadio] = radio.dict
 
-        os_log("Default radio found, %{public}@ @ %{public}@", log: _log, type: .info, radio.nickname, radio.ipAddress)
+        os_log("Default radio found, %{public}@ @ %{public}@", log: _log, type: .info, radio.nickname, radio.publicIp)
 
         defaultRadioParameters = radio
       }
@@ -448,6 +445,8 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     NC.makeObserver(self, with: #selector(radioHasBeenRemoved(_:)), of: .radioHasBeenRemoved)
     
     NC.makeObserver(self, with: #selector(opusRxHasBeenAdded(_:)), of: .opusRxHasBeenAdded)
+
+    NC.makeObserver(self, with: #selector(tcpDidDisconnect(_:)), of: .tcpDidDisconnect)
   }
   /// Process .meterHasBeenAdded Notification
   ///
@@ -504,7 +503,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   @objc private func radioWillBeRemoved(_ note: Notification) {
     
     // the Radio class is being removed
-    let radio = note.object as! RadioParameters
+    let radio = note.object as! Radio
     
     os_log("Radio will be removed - %{public}@", log: _log, type: .info, radio.nickname)
     
@@ -524,7 +523,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     
     // the Radio class has been removed
     
-    os_log("Radio has been removed - %{public}@", log: _log, type: .info, radio?.nickname ?? "")
+    os_log("Radio has been removed", log: _log, type: .info)
     
     // update the window title
     title()
@@ -546,7 +545,35 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     _opusEncode = OpusEncode(opus)
     opus.delegate = _opusDecode
   }
+  /// Process .tcpDidDisconnect Notification
+  ///
+  /// - Parameter note: a Notification instance
+  ///
+  @objc private func tcpDidDisconnect(_ note: Notification) {
   
+    let reason = note.object as! xLib6000.Api.DisconnectReason
+    
+    // TCP connection disconnected
+    var explanation: String = ""
+    switch reason {
+    
+    case .normal:
+      return
+      
+    case .error(let errorMessage):
+      explanation = errorMessage
+    }
+    
+    DispatchQueue.main.sync {
+      let alert = NSAlert()
+      alert.alertStyle = .informational
+      alert.messageText = "xSDR6000 has been disconnected.\n" + explanation
+      alert.addButton(withTitle: "Ok")   // 1000
+      alert.runModal()
+      
+      closeRadio()
+    }
+  }
   // ----------------------------------------------------------------------------
   // MARK: - RadioPicker delegate methods
   
@@ -567,12 +594,6 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     
     _api.isWan = isWan
     _api.wanConnectionHandle = wanHandle
-    
-    // if an "M" model, ensure that the front panel GUI is disconnected
-    
-    // FIXME: remove the "!"
-    
-//    if !selectedRadio.model.contains("M") { _api.mModelDetected(selectedRadio) }
     
     // attempt to connect to it
     return _api.connect(selectedRadio, clientName: kClientName, isGui: true)

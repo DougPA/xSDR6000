@@ -587,7 +587,7 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
       NC.makeObserver(self, with: #selector(sliceWillBeRemoved(_:)), of: .sliceWillBeRemoved, object: slice)
       
       // add a Flag & Observations of this Slice
-      addFlag(for: slice)
+//      addFlag(for: slice)
       
       // force a redraw
       _frequencyLegendView.redraw()

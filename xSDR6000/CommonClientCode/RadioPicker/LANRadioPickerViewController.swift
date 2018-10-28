@@ -174,6 +174,22 @@ final class LANRadioPickerViewController    : NSViewController, NSTableViewDeleg
   private func openClose() {
     
     if _selectButton.title == kConnectTitle {
+      
+      // if the selected radio in use?
+      if _selectedRadio!.status == "In_Use" && _api.activeRadio == nil {
+        
+        // YES, ask the user to confirm closing it
+        let alert = NSAlert()
+        alert.alertStyle = .warning
+        alert.messageText = "Disconnect Radio?"
+        alert.informativeText = "Are you sure you want to disconnect the current radio session?"
+        alert.addButton(withTitle: "Yes")   // 1000
+        alert.addButton(withTitle: "No")    // 1001
+        
+        // ignore if not confirmed by the user
+        if alert.runModal() == NSApplication.ModalResponse(1001) { return }
+      }
+
       // RadioPicker sheet will close & Radio will be opened
       
       _delegate?.clearTable()
@@ -242,21 +258,34 @@ final class LANRadioPickerViewController    : NSViewController, NSTableViewDeleg
   func tableView( _ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
     
     // get a view for the cell
-    let view = tableView.makeView(withIdentifier: tableColumn!.identifier, owner:self) as! NSTableCellView
+    let cellView = tableView.makeView(withIdentifier: tableColumn!.identifier, owner:self) as! NSTableCellView
     
-    // what field?
+    // is this the default row?
+    let isDefaultRow = RadioParameters( Defaults[.defaultRadio] ) == _api.availableRadios[row]
+    
+    // default field?
     if tableColumn!.identifier.rawValue == kColumnIdentifierDefaultRadio {
       
-      // is this row the default?
-      let defaultRadio = RadioParameters( Defaults[.defaultRadio] )
-      view.textField!.stringValue = (defaultRadio == _api.availableRadios[row] ? kDefaultFlag : "")
+      // YES
+      cellView.textField!.stringValue = (isDefaultRow ? kDefaultFlag : "")
       
     } else {
       
-      // all other fields, set the stringValue of the cell's text field to the appropriate field
-      view.textField!.stringValue = _api.availableRadios[row].valueForName(tableColumn!.identifier.rawValue) ?? ""
+      // NO, all other fields, set the stringValue of the cell's text field to the appropriate field
+      cellView.textField!.stringValue = _api.availableRadios[row].valueForName(tableColumn!.identifier.rawValue) ?? ""
     }
-    return view
+    
+    cellView.wantsLayer = true
+    // color the default row
+    if isDefaultRow {
+      cellView.layer!.backgroundColor = NSColor(red: 0.0, green: 0.5, blue: 0.0, alpha: 0.4).cgColor
+    } else {
+      cellView.layer!.backgroundColor = NSColor.clear.cgColor
+    }
+    
+    // make the discovery fields a tooltip
+    cellView.toolTip = _api.availableRadios[row].description
+    return cellView
   }
   /// Tableview selection change delegate method
   ///
