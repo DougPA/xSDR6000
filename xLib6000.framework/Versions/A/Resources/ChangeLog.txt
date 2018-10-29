@@ -1,5 +1,13 @@
 xLib6000 Change Log
 
+v2.0.3
+
+Api.swift - reworked connect(_:clientName:isGui:primaryCmdTypes:secondaryCmdTypes:subscriptionCmdTypes:)
+Api.swift - Eliminated "pausing" of RadioFactory
+Api.swift - added sending of "client disconnect" command in setConnectionState(_:)
+RadioFactory.swift - chaged udpSocket(_:didReceive:fromAddress:withFilterContext:) to update availableRadios when status changes
+TcpManager, UdpManager, Vita, RadioParameters.swift - reworked Discovery token naming & usage
+
 v2.0.2
 
 RadioParameters.swift - added wanConnected property
