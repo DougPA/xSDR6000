@@ -36,7 +36,7 @@
         <scene sceneID="NTk-ED-tM9">
             <objects>
                 <viewController title="Local" storyboardIdentifier="LANRadioPicker" id="M44-l9-uCb" userLabel="Radio Picker" customClass="LANRadioPickerViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" misplaced="YES" id="H15-Im-LRd">
+                    <view key="view" id="H15-Im-LRd">
                         <rect key="frame" x="0.0" y="0.0" width="496" height="346"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
