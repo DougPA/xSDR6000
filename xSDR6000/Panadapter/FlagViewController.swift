@@ -72,7 +72,7 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
     _storyBoard = NSStoryboard(name: NSStoryboard.Name(rawValue: "Flag"), bundle: nil)
     
     // close the display area
-    _containerViewHeight.constant = 0 
+    _containerViewHeight.constant = 0
     
     // set the background color of the Flag
     view.layer?.backgroundColor = NSColor.lightGray.cgColor
@@ -158,8 +158,8 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
     view.setFrameOrigin(_position)
     
 //    _frequencyField.integerValue = frequency
-    
-    view.needsDisplay = true
+
+//    view.needsDisplay = true
   }
 
   // ----------------------------------------------------------------------------
