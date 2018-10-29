@@ -436,9 +436,9 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
     private func createSliceObservations(_ observations: inout [NSKeyValueObservation], object: xLib6000.Slice ) {
 
       observations = [
-        object.observe(\xLib6000.Slice.active, options: [.initial, .new], changeHandler: redrawFrequencyLegend),
-        object.observe(\xLib6000.Slice.filterHigh, options: [.initial, .new], changeHandler: redrawFrequencyLegend),
-        object.observe(\xLib6000.Slice.filterLow, options: [.initial, .new], changeHandler: redrawFrequencyLegend)
+        object.observe(\.active, options: [.initial, .new], changeHandler: redrawFrequencyLegend),
+        object.observe(\.filterHigh, options: [.initial, .new], changeHandler: redrawFrequencyLegend),
+        object.observe(\.filterLow, options: [.initial, .new], changeHandler: redrawFrequencyLegend)
       ]
   }
   /// Add observers for Tnf properties
