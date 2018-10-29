@@ -80,10 +80,14 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <stackView distribution="fill" orientation="horizontal" alignment="top" spacing="1" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vZZ-zR-rG5" userLabel="TX Stack View">
-                                <rect key="frame" x="68" y="246" width="172" height="24"/>
+                                <rect key="frame" x="30" y="246" width="210" height="24"/>
                                 <subviews>
                                     <popUpButton toolTip="Rcv Ant" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3Zu-Va-8Xw">
-                                        <rect key="frame" x="-2" y="0.0" width="46" height="25"/>
+                                        <rect key="frame" x="-2" y="0.0" width="65" height="25"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="60" id="LEi-ab-A69"/>
+                                            <constraint firstAttribute="height" constant="21" id="S30-lv-z7D"/>
+                                        </constraints>
                                         <popUpButtonCell key="cell" type="push" title="Ant" bezelStyle="rounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" arrowPosition="noArrow" selectedItem="wDo-5w-Z5e" id="cnI-ox-T0I">
                                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="menu"/>
@@ -96,12 +100,15 @@
                                             </menu>
                                         </popUpButtonCell>
                                         <connections>
-                                            <binding destination="Lmw-yC-7qh" name="selectedValue" keyPath="slice.rxAnt" previousBinding="H8f-t9-MH2" id="fdb-OI-Rg3"/>
-                                            <binding destination="Lmw-yC-7qh" name="content" keyPath="slice.rxAntList" id="H8f-t9-MH2"/>
+                                            <binding destination="Lmw-yC-7qh" name="content" keyPath="slice.rxAntList" id="3z3-Q7-CYd"/>
+                                            <binding destination="Lmw-yC-7qh" name="selectedValue" keyPath="slice.rxAnt" previousBinding="3z3-Q7-CYd" id="W4U-nr-uAR"/>
                                         </connections>
                                     </popUpButton>
                                     <popUpButton toolTip="Xmit Ant" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="LXP-zZ-lLo">
-                                        <rect key="frame" x="40" y="0.0" width="46" height="25"/>
+                                        <rect key="frame" x="59" y="0.0" width="65" height="25"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="60" id="cwL-qI-3Vs"/>
+                                        </constraints>
                                         <popUpButtonCell key="cell" type="push" title="Ant" bezelStyle="rounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" arrowPosition="noArrow" selectedItem="rfY-H5-1Rz" id="Gds-Xy-oDL">
                                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="menu"/>
@@ -114,12 +121,12 @@
                                             </menu>
                                         </popUpButtonCell>
                                         <connections>
-                                            <binding destination="Lmw-yC-7qh" name="selectedValue" keyPath="slice.txAnt" previousBinding="QOQ-01-2zG" id="fli-t5-yuL"/>
-                                            <binding destination="Lmw-yC-7qh" name="content" keyPath="slice.txAntList" id="QOQ-01-2zG"/>
+                                            <binding destination="Lmw-yC-7qh" name="content" keyPath="slice.txAntList" id="9lk-6H-zpS"/>
+                                            <binding destination="Lmw-yC-7qh" name="selectedValue" keyPath="slice.txAnt" previousBinding="9lk-6H-zpS" id="YmK-sU-jYq"/>
                                         </connections>
                                     </popUpButton>
                                     <textField toolTip="Filter width" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pDZ-kB-g8v">
-                                        <rect key="frame" x="82" y="7" width="35" height="17"/>
+                                        <rect key="frame" x="120" y="7" width="35" height="17"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" placeholderString="8.0k" id="7Ah-Rf-kS0">
                                             <numberFormatter key="formatter" formatterBehavior="custom10_4" positiveFormat="##.#k" usesGroupingSeparator="NO" groupingSize="0" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="1" id="GMW-xV-EJ4"/>
                                             <font key="font" metaFont="system"/>
@@ -128,7 +135,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <button toolTip="Xmit" translatesAutoresizingMaskIntoConstraints="NO" id="NJS-lu-NIG">
-                                        <rect key="frame" x="116" y="2" width="33" height="22"/>
+                                        <rect key="frame" x="154" y="2" width="33" height="22"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="33" id="CSY-th-vJS"/>
                                             <constraint firstAttribute="height" constant="22" id="ni2-CL-fsD"/>
@@ -142,7 +149,7 @@
                                         </connections>
                                     </button>
                                     <textField toolTip="Slice" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mTg-CM-4KQ">
-                                        <rect key="frame" x="150" y="0.0" width="22" height="24"/>
+                                        <rect key="frame" x="188" y="0.0" width="22" height="24"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="24" id="Ae7-Te-x9s"/>
                                             <constraint firstAttribute="width" constant="22" id="Gle-aU-5Sg"/>
