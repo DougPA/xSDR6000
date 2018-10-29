@@ -383,92 +383,59 @@ public final class FrequencyLegendView      : NSView {
     
     var previousFlagVc : FlagViewController?
     
-    // sort the Flags from left to right
-    flags.sorted {$0.slice!.frequency < $1.slice!.frequency}.forEach {
-
-      // is this the first Flag?
-      if previousFlagVc == nil {
+    if flags.count >= 2 {
+    
+      // sort the Flags from left to right
+      flags.sorted {$0.slice!.frequency < $1.slice!.frequency}.forEach {
         
-        // YES, it's the first one (always on the left)
-        onLeft = true
-        
-        // calculate the minimum spacing between flags
-        spacing = $0.view.frame.width + kFlagBorder
-        
-      } else {
-        
-        let previousFrequencyPosition = CGFloat(previousFlagVc!.slice!.frequency - _start) / _hzPerUnit
-        let currentFrequencyPosition = CGFloat($0.slice!.frequency - _start) / _hzPerUnit
-        
-        // determine the needed spacing between flags
-        let currentSpacing = previousFlagVc!.onLeft ? spacing : 2 * spacing
-        
-        // is this Flag too close to the previous one?
-        if currentFrequencyPosition - previousFrequencyPosition < currentSpacing {
+        // is this the first Flag?
+        if previousFlagVc == nil {
           
-          // YES, put it on the right
-          onLeft = false
+          // YES, it's the first one (always on the left)
+          onLeft = true
+          
+          // calculate the minimum spacing between flags
+          spacing = $0.view.frame.width + kFlagBorder
           
         } else {
           
-          // NO, put it on the left
-          onLeft = true
+          let previousFrequencyPosition = CGFloat(previousFlagVc!.slice!.frequency - _start) / _hzPerUnit
+          let currentFrequencyPosition = CGFloat($0.slice!.frequency - _start) / _hzPerUnit
+          
+          // determine the needed spacing between flags
+          let currentSpacing = previousFlagVc!.onLeft ? spacing : 2 * spacing
+          
+          // is this Flag too close to the previous one?
+          if currentFrequencyPosition - previousFrequencyPosition < currentSpacing {
+            
+            // YES, put it on the right
+            onLeft = false
+            
+          } else {
+            
+            // NO, put it on the left
+            onLeft = true
+          }
         }
+        // calculate the X & Y positions of the flag
+        frequencyPosition.x = CGFloat($0.slice!.frequency - _start) / _hzPerUnit
+        frequencyPosition.y = frame.height - $0.view.frame.height
+        
+        // position it
+        $0.moveTo( frequencyPosition, frequency: $0.slice!.frequency, onLeft: onLeft)
+        
+        // make the current one the previous one
+        previousFlagVc = $0
       }
-      // calculate the X & Y positions of the flags
-      frequencyPosition.x = CGFloat($0.slice!.frequency - _start) / _hzPerUnit
-      frequencyPosition.y = frame.height - $0.view.frame.height
-      
+    } else if flags.count == 1 {
+
+      // calculate the X & Y positions of the flag
+      frequencyPosition.x = CGFloat(flags[0].slice!.frequency - _start) / _hzPerUnit
+      frequencyPosition.y = frame.height - flags[0].view.frame.height
+
       // position it
-      $0.moveTo( frequencyPosition, frequency: $0.slice!.frequency, onLeft: onLeft)
-      
-      // make the current one the previous one
-      previousFlagVc = $0
+      flags[0].moveTo( frequencyPosition, frequency: flags[0].slice!.frequency, onLeft: true)
     }
-
-
-
-//    for currentFlagVc in sortedFlags {
-//
-//      // is this the first Flag?
-//      if previousFlagVc == nil {
-//
-//        // YES, it's the first one (always on the left)
-//        onLeft = true
-//
-//        // calculate the minimum spacing between flags
-//        spacing = currentFlagVc.view.frame.width + kFlagBorder
-//
-//      } else {
-//
-//        let previousFrequencyPosition = CGFloat(previousFlagVc!.slice!.frequency - _start) / _hzPerUnit
-//        let currentFrequencyPosition = CGFloat(currentFlagVc.slice!.frequency - _start) / _hzPerUnit
-//
-//        // determine the needed spacing between flags
-//        let currentSpacing = previousFlagVc!.onLeft ? spacing : 2 * spacing
-//
-//        // is this Flag too close to the previous one?
-//        if currentFrequencyPosition - previousFrequencyPosition < currentSpacing {
-//
-//          // YES, put it on the right
-//          onLeft = false
-//
-//        } else {
-//
-//          // NO, put it on the left
-//          onLeft = true
-//        }
-//      }
-//      // calculate the X & Y positions of the flags
-//      frequencyPosition.x = CGFloat(currentFlagVc.slice!.frequency - _start) / _hzPerUnit
-//      frequencyPosition.y = frame.height - currentFlagVc.view.frame.height
-//
-//      // position it
-//      currentFlagVc.moveTo( frequencyPosition, frequency: currentFlagVc.slice!.frequency, onLeft: onLeft)
-//
-//      // make the current one the previous one
-//      previousFlagVc = currentFlagVc
-//    }
   }
   /// Draw the Filter Outline
   ///
