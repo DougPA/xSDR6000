@@ -38,7 +38,7 @@
             <objects>
                 <viewController title="Local" storyboardIdentifier="LANRadioPicker" id="M44-l9-uCb" userLabel="Radio Picker" customClass="LANRadioPickerViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="H15-Im-LRd">
-                        <rect key="frame" x="0.0" y="0.0" width="496" height="353"/>
+                        <rect key="frame" x="0.0" y="0.0" width="496" height="281"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cI8-ON-aHR">
@@ -267,7 +267,7 @@ Gw
                             <constraint firstItem="H1q-CL-xPF" firstAttribute="leading" secondItem="2YB-Ct-25Z" secondAttribute="leading" id="Imh-NA-JuU"/>
                             <constraint firstItem="H1q-CL-xPF" firstAttribute="leading" secondItem="H15-Im-LRd" secondAttribute="leading" constant="20" symbolic="YES" id="S9A-M7-qT6"/>
                             <constraint firstItem="2YB-Ct-25Z" firstAttribute="baseline" secondItem="9Ma-Wg-NXK" secondAttribute="baseline" id="TSl-cC-eTu"/>
-                            <constraint firstItem="H1q-CL-xPF" firstAttribute="top" secondItem="H15-Im-LRd" secondAttribute="top" constant="92" id="aXY-7T-XGN"/>
+                            <constraint firstItem="H1q-CL-xPF" firstAttribute="top" secondItem="H15-Im-LRd" secondAttribute="top" constant="20" id="aXY-7T-XGN"/>
                             <constraint firstItem="2YB-Ct-25Z" firstAttribute="top" secondItem="H1q-CL-xPF" secondAttribute="bottom" constant="20" symbolic="YES" id="lB1-Ag-2Wy"/>
                             <constraint firstAttribute="bottom" secondItem="2YB-Ct-25Z" secondAttribute="bottom" constant="20" symbolic="YES" id="lJS-BE-eI2"/>
                             <constraint firstItem="9Ma-Wg-NXK" firstAttribute="baseline" secondItem="cI8-ON-aHR" secondAttribute="baseline" id="mzI-Jr-a5e"/>
@@ -286,7 +286,7 @@ Gw
                 </viewController>
                 <customObject id="Ahb-ak-bN9" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-151" y="-784.5"/>
+            <point key="canvasLocation" x="-152" y="-821"/>
         </scene>
         <!--SmartLink-->
         <scene sceneID="kMQ-SF-GTk">
