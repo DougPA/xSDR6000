@@ -661,7 +661,7 @@ final class WANRadioPickerViewController    : NSViewController, NSTableViewDeleg
       // NO, all other fields, set the stringValue of the cell's text field to the appropriate field
       view.textField!.stringValue = _availableRemoteRadios[row].valueForName(tableColumn!.identifier.rawValue)
     }
-    view.toolTip = _api.availableRadios[row].description
+    view.toolTip = _availableRemoteRadios[row].description
     return view
   }
   /// Tableview selection change delegate method
