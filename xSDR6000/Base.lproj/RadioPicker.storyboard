@@ -126,7 +126,7 @@ Gw
                                                     </prototypeCellViews>
                                                 </tableColumn>
                                                 <tableColumn identifier="nickname" width="126.17578125" minWidth="40" maxWidth="1000" id="TJf-dZ-AcX">
-                                                    <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="center" title="Nickname">
+                                                    <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="center" title="Name">
                                                         <font key="font" metaFont="smallSystem"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
