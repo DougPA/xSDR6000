@@ -563,12 +563,13 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     case .error(let errorMessage):
       explanation = errorMessage
     }
-    
+    // alert if other than normal
     DispatchQueue.main.sync {
       let alert = NSAlert()
       alert.alertStyle = .informational
-      alert.messageText = "xSDR6000 has been disconnected.\n" + explanation
-      alert.addButton(withTitle: "Ok")   // 1000
+      alert.messageText = "xSDR6000 has been disconnected."
+      alert.informativeText = explanation
+      alert.addButton(withTitle: "Ok")
       alert.runModal()
       
       closeRadio()
