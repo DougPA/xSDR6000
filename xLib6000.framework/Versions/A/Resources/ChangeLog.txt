@@ -1,9 +1,16 @@
 xLib6000 Change Log
 
+v2.0.5
+
+Radio.swift - corrections to defaultReplyHandler(_:seqNum:responseValue:reply:)
+FlexErrors.swift - corrected text for .SL_I_CWX_NOTHING_TO_ERASE
+Api.swift - in setConnectionState(_:) made disconnect dependent on _isGui
+
 v2.0.4
 
 RadioParameters.swift - refactored (simplification)
 WanServer.swift - added a "FIXME:" in socketDidDisconnect(_:withError:)
+Vita.swift - corrected an error in class parseDiscovery(_:) (payloadSize)
 
 
 v2.0.3
