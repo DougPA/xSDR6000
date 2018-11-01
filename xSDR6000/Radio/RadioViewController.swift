@@ -91,7 +91,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   ///
   override func viewDidLoad() {
     super.viewDidLoad()
-    
+        
     // FIXME: Is this necessary???
 //    _activity = ProcessInfo().beginActivity(options: ProcessInfo.ActivityOptions.latencyCritical, reason: "Good Reason")
     
@@ -264,7 +264,8 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     
     // get an instance of the RadioPicker
     let radioPickerTabViewController = _radioPickerStoryboard!.instantiateController(withIdentifier: kRadioPickerIdentifier) as? NSTabViewController
-    
+//    radioPickerTabViewController!.view.translatesAutoresizingMaskIntoConstraints = false
+
     // make this View Controller the delegate of the RadioPickers
     radioPickerTabViewController!.tabViewItems[kLocalTab].viewController!.representedObject = self
     radioPickerTabViewController!.tabViewItems[kRemoteTab].viewController!.representedObject = self
@@ -318,7 +319,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     }
     
     // format and set the window title
-    let title = (_api.activeRadio == nil ? "" : "- Connected to \(_api.activeRadio!.nickname) @ \(_api.activeRadio!.publicIp)")
+    let title = (_api.activeRadio == nil ? "" : "- \(_api.activeRadio!.nickname) @ \(_api.activeRadio!.publicIp) (\(_api.isWan ? "SmartLink" : "Local"))")
     DispatchQueue.main.async {
       self.view.window?.title = "\(kClientName) v\(self._versions!.app), xLib6000 v\(self._versions!.api) \(title)"
     }
@@ -385,6 +386,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
       // SHOW, create a view controller
       let sbIdentifier = NSStoryboard.SceneIdentifier( rawValue: identifier)
       let vc = _sideStoryboard!.instantiateController(withIdentifier: sbIdentifier ) as! NSViewController
+//      vc.view.translatesAutoresizingMaskIntoConstraints = false
       vc.identifier = NSUserInterfaceItemIdentifier(rawValue: identifier)
       
       // give it a reference to its Radio object

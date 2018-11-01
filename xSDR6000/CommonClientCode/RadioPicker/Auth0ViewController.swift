@@ -89,7 +89,7 @@ final class Auth0ViewController             : NSViewController, WKNavigationDele
     // configure a web view
     let configuration = WKWebViewConfiguration()
     myWebView = WKWebView(frame: .zero, configuration: configuration)
-    myWebView.translatesAutoresizingMaskIntoConstraints = false
+//    myWebView.translatesAutoresizingMaskIntoConstraints = false
     myWebView.navigationDelegate = self
     
     // add it to the view hierarchy

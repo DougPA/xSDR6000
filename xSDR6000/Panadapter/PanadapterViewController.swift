@@ -88,6 +88,8 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    view.translatesAutoresizingMaskIntoConstraints = false
+    
     // determine how the various views are blended on screen
     _panadapterView.compositingFilter = _filter
     _dbLegendView.compositingFilter = _filter
@@ -665,9 +667,11 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
 
     // create a Flag View Controller
     let flagVc = sb.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier(rawValue: "Flag")) as! FlagViewController
+//    flagVc.view.translatesAutoresizingMaskIntoConstraints = false
 
     // pass needed parameters
     flagVc.configure(panadapter: _panadapter, slice: slice)
+    
     
     // create the Slice observations
     createSliceObservations( &flagVc.sliceObservations, object: slice)

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14313.18"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -42,7 +42,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cI8-ON-aHR">
-                                <rect key="frame" x="403" y="13" width="80" height="32"/>
+                                <rect key="frame" x="403" y="13" width="79" height="32"/>
                                 <buttonCell key="cell" type="push" title="Select" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="wAu-op-l2f">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -272,10 +272,10 @@ Gw
                             <constraint firstAttribute="bottom" secondItem="2YB-Ct-25Z" secondAttribute="bottom" constant="20" symbolic="YES" id="lJS-BE-eI2"/>
                             <constraint firstItem="9Ma-Wg-NXK" firstAttribute="baseline" secondItem="cI8-ON-aHR" secondAttribute="baseline" id="mzI-Jr-a5e"/>
                             <constraint firstItem="H1q-CL-xPF" firstAttribute="centerX" secondItem="9Ma-Wg-NXK" secondAttribute="centerX" id="oNS-8h-RYz"/>
-                            <constraint firstItem="cI8-ON-aHR" firstAttribute="leading" secondItem="H15-Im-LRd" secondAttribute="leading" constant="409" id="uj7-0w-DPZ"/>
+                            <constraint firstItem="cI8-ON-aHR" firstAttribute="leading" relation="lessThanOrEqual" secondItem="H15-Im-LRd" secondAttribute="leading" constant="409" id="uj7-0w-DPZ"/>
                             <constraint firstAttribute="bottom" secondItem="9Ma-Wg-NXK" secondAttribute="bottom" constant="20" id="utP-9Q-2bA"/>
-                            <constraint firstItem="H1q-CL-xPF" firstAttribute="trailing" secondItem="cI8-ON-aHR" secondAttribute="trailing" constant="-1" id="yHN-Ts-Q8V"/>
-                            <constraint firstItem="9Ma-Wg-NXK" firstAttribute="leading" secondItem="2YB-Ct-25Z" secondAttribute="trailing" constant="84" id="zgU-Db-xDj"/>
+                            <constraint firstItem="H1q-CL-xPF" firstAttribute="trailing" secondItem="cI8-ON-aHR" secondAttribute="trailing" id="yHN-Ts-Q8V"/>
+                            <constraint firstItem="9Ma-Wg-NXK" firstAttribute="leading" relation="lessThanOrEqual" secondItem="2YB-Ct-25Z" secondAttribute="trailing" constant="84" id="zgU-Db-xDj"/>
                         </constraints>
                     </view>
                     <connections>

@@ -57,6 +57,8 @@ final class PanafallViewController          : NSSplitViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    view.translatesAutoresizingMaskIntoConstraints = false
+    
     splitView.delegate = self
     
     // setup Left Double Click recognizer

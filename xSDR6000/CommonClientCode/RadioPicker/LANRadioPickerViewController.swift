@@ -177,7 +177,7 @@ final class LANRadioPickerViewController    : NSViewController, NSTableViewDeleg
       
       // if the selected radio in use?
       if _selectedRadio!.status == "In_Use" && _api.activeRadio == nil {
-        
+
         // YES, ask the user to confirm closing it
         let alert = NSAlert()
         alert.alertStyle = .warning
@@ -185,9 +185,9 @@ final class LANRadioPickerViewController    : NSViewController, NSTableViewDeleg
         alert.informativeText = "Are you sure you want to disconnect the current radio session?"
         alert.addButton(withTitle: "Yes")   // 1000
         alert.addButton(withTitle: "No")    // 1001
-        
+
         // ignore if not confirmed by the user
-        if alert.runModal() == NSApplication.ModalResponse(1001) { return }
+        if alert.runModal() == NSApplication.ModalResponse.alertSecondButtonReturn { return }
       }
 
       // RadioPicker sheet will close & Radio will be opened
@@ -304,13 +304,13 @@ final class LANRadioPickerViewController    : NSViewController, NSTableViewDeleg
       
       // set "default button" title appropriately
       let defaultRadio = RadioParameters( Defaults[.defaultRadio] )
-      _defaultButton.title = (defaultRadio == _api.availableRadios[_radioTableView.selectedRow] ? kClearDefault : kSetAsDefault)
       
       // set the "select button" title appropriately
       var isActive = false
       if let activeRadio = _api.activeRadio {
         isActive = ( activeRadio == _api.availableRadios[_radioTableView.selectedRow] )
       }
+      _defaultButton.title = (defaultRadio == _api.availableRadios[_radioTableView.selectedRow] ? kClearDefault : kSetAsDefault)
       _selectButton.title = (isActive ? kDisconnectTitle : kConnectTitle)
       
     } else {

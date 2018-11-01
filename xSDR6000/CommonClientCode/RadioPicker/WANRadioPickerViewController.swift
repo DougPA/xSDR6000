@@ -222,6 +222,20 @@ final class WANRadioPickerViewController    : NSViewController, NSTableViewDeleg
     if _selectButton.title == kConnectTitle {
       // RadioPicker sheet will close & Radio will be opened
       
+      // is the selected radio in use, but not by this app?
+      if _selectedRadio!.status == "In_Use" && _api.activeRadio == nil {
+        
+        // YES, ask the user to confirm closing it
+        let alert = NSAlert()
+        alert.alertStyle = .warning
+        alert.messageText = "Disconnect Radio?"
+        alert.informativeText = "Are you sure you want to disconnect the current radio session?"
+        alert.addButton(withTitle: "Yes")
+        alert.addButton(withTitle: "No")
+        
+        // ignore if not confirmed by the user
+        if alert.runModal() == NSApplication.ModalResponse.alertSecondButtonReturn { return }
+      }
       _selectedRadio?.lowBandwidthConnect = lowBW
       
       getAuthentificationForRadio(_selectedRadio)
@@ -269,7 +283,8 @@ final class WANRadioPickerViewController    : NSViewController, NSTableViewDeleg
       // Login to auth0
       // get an instance of Auth0 controller
       _auth0ViewController = storyboard!.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier(rawValue: "Auth0Login")) as? Auth0ViewController
-      
+//      _auth0ViewController!.view.translatesAutoresizingMaskIntoConstraints = false
+
       // make this View Controller the delegate of the Auth0 controller
       _auth0ViewController!.representedObject = self
       
@@ -306,7 +321,6 @@ final class WANRadioPickerViewController    : NSViewController, NSTableViewDeleg
       self._radioTableView.reloadData()
     }
   }
-  
   /// Connect to the Wan Server
   ///
   /// - Parameter token:                token

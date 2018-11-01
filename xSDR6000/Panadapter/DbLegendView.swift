@@ -32,6 +32,12 @@ public final class DbLegendView             : NSView {
   
   private let kFormat                       = " %4.0f"
   
+  public override func awakeFromNib() {
+    super.awakeFromNib()
+    
+    translatesAutoresizingMaskIntoConstraints = false
+  }
+  
   // ----------------------------------------------------------------------------
   // MARK: - Overridden methods
   

@@ -29,6 +29,9 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
   
+  @IBOutlet private weak var _rxAntPopUp    : NSPopUpButton!
+  @IBOutlet private weak var _txAntPopUp    : NSPopUpButton!
+  
   @IBOutlet private weak var _frequencyField: NSTextField!
   @IBOutlet private weak var _alpha         : NSTextField!
   @IBOutlet private weak var _sMeter        : NSLevelIndicator!
@@ -96,6 +99,11 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
     _frequencyField.addGestureRecognizer(_doubleClick)
 
     _frequencyField.delegate = self
+    
+    slice!.rxAntList.forEach( { _rxAntPopUp.addItem(withTitle: $0) } )
+    _rxAntPopUp.selectItem(withTitle: slice!.rxAnt)
+    slice!.txAntList.forEach( { _txAntPopUp.addItem(withTitle: $0) } )
+    _txAntPopUp.selectItem(withTitle: slice!.txAnt)
   }
   
   public override func controlTextDidBeginEditing(_ note: Notification) {
@@ -219,11 +227,13 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
       
       // get the selected tab
       _viewController = _storyBoard!.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier(rawValue: id)) as? NSViewController
-      
+//      _viewController!.view.translatesAutoresizingMaskIntoConstraints = false
+
       _viewController!.representedObject = slice as Any
       
       // open the display area with the appropriate height
       _containerViewHeight.constant = _viewController!.view.frame.size.height
+      
       
       // add the view
       _containerView.addSubview(_viewController!.view)
@@ -253,6 +263,7 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
       
       // get the selected tab
       _viewController = _storyBoard!.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier(rawValue: id)) as? NSViewController
+//      _viewController!.view.translatesAutoresizingMaskIntoConstraints = false
       _viewController!.representedObject = slice as Any
       
       // open the display area with the appropriate height
@@ -289,17 +300,17 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
   private func createObservations(_ observations: inout [NSKeyValueObservation], object: xLib6000.Slice ) {
     
     observations = [
-      object.observe(\.filterHigh, options: [.initial, .new], changeHandler: observer),
-      object.observe(\.filterLow, options: [.initial, .new], changeHandler: observer)
+//      object.observe(\.filterHigh, options: [.initial, .new], changeHandler: observer),
+//      object.observe(\.filterLow, options: [.initial, .new], changeHandler: observer)
     ]
   }
   private func observer(_ object: Any, _ change: Any) {
     
-    let width = Float(slice!.filterHigh - slice!.filterLow)/1000.0
-    
-    DispatchQueue.main.async { [unowned self] in
-      self._filter.floatValue = width
-    }
+//    let width = Float(slice!.filterHigh - slice!.filterLow)/1000.0
+//    
+//    DispatchQueue.main.async { [unowned self] in
+//      self._filter.floatValue = width
+//    }
   }
   // ----------------------------------------------------------------------------
   // MARK: - Notification Methods

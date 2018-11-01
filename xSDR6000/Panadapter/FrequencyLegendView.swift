@@ -68,6 +68,12 @@ public final class FrequencyLegendView      : NSView {
   // ----------------------------------------------------------------------------
   // MARK: - Overridden methods
   
+  public override func awakeFromNib() {
+    super.awakeFromNib()
+    
+    translatesAutoresizingMaskIntoConstraints = false
+  }
+
   public override func draw(_ dirtyRect: NSRect) {
     super.draw(dirtyRect)
     
