@@ -51,7 +51,7 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
   private var _radio: Radio?                  = Api.sharedInstance.radio
   private weak var _panadapter                : Panadapter?
   private var _panadapterRenderer             : PanadapterRenderer!
-  private let _log                            = OSLog(subsystem: "net.k3tzr.xSDR6000", category: "PanadapterVC")
+  private let _log                            = OSLog(subsystem: Api.kDomainId + "." + kClientName, category: "PanadapterVC")
 
   private var _center                         : Int {return _panadapter!.center }
   private var _bandwidth                      : Int { return _panadapter!.bandwidth }

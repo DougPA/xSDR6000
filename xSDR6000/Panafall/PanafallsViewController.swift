@@ -17,7 +17,7 @@ class PanafallsViewController               : NSSplitViewController {
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
   
-  private let _log                          = OSLog(subsystem: "net.k3tzr.xSDR6000", category: "PanafallsVC")
+  private let _log                          = OSLog(subsystem: Api.kDomainId + "." + kClientName, category: "PanafallsVC")
   private var _sb                           : NSStoryboard?
   
   private let kPanafallStoryboard           = NSStoryboard.Name(rawValue: "Panafall")

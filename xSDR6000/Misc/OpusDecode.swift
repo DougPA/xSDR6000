@@ -33,7 +33,7 @@ public final class OpusDecode               : NSObject, StreamHandler {
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
   
-  private let _log                          = OSLog(subsystem: "net.k3tzr.xSDR6000", category: "OpusDecode")
+  private let _log                          = OSLog(subsystem: Api.kDomainId + "." + kClientName, category: "OpusDecode")
   private var _decoder                      : OpaquePointer!
   private var _engine                       = AVAudioEngine()
   private var _player                       = AVAudioPlayerNode()

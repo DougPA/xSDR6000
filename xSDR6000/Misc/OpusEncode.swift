@@ -33,7 +33,7 @@ public final class OpusEncode               : NSObject {
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
   
-  private let _log                          = OSLog(subsystem: "net.k3tzr.xSDR6000", category: "OpusEncode")
+  private let _log                          = OSLog(subsystem: Api.kDomainId + "." + kClientName, category: "OpusEncode")
   private var _engine                       : AVAudioEngine?
   private var _mixer                        : AVAudioMixerNode?
   private var _opus                         : Opus!

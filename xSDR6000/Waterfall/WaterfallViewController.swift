@@ -48,7 +48,7 @@ class WaterfallViewController               : NSViewController, NSGestureRecogni
   private var _waterfallRenderer            : WaterfallRenderer!
 
   private weak var _waterfall               : Waterfall? { return radio!.waterfalls[panadapter!.waterfallId] }
-  private let _log                          = OSLog(subsystem: "net.k3tzr.xSDR6000", category: "WaterfallVC")
+  private let _log                          = OSLog(subsystem: Api.kDomainId + "." + kClientName, category: "WaterfallVC")
   private var _center                       : Int { return panadapter!.center }
   private var _bandwidth                    : Int { return panadapter!.bandwidth }
   private var _start                        : Int { return _center - (_bandwidth/2) }

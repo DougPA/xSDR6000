@@ -10,7 +10,6 @@ import Cocoa
 import os.log
 import xLib6000
 import SwiftyUserDefaults
-//import XCGLogger
 
 // --------------------------------------------------------------------------------
 // MARK: - RadioPicker Delegate definition
@@ -50,7 +49,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
   
-  private let _log                          = OSLog(subsystem: "net.k3tzr.xSDR6000", category: "RadioVC")
+  private let _log                          = OSLog(subsystem: Api.kDomainId + "." + kClientName, category: "RadioVC")
   private var _api                          = Api.sharedInstance
   private var _mainWindowController         : MainWindowController?
   private var _radioPickerStoryboard        : NSStoryboard?
@@ -553,13 +552,15 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   ///
   @objc private func tcpDidDisconnect(_ note: Notification) {
   
+    // get the reason
     let reason = note.object as! xLib6000.Api.DisconnectReason
     
     // TCP connection disconnected
     var explanation: String = ""
     switch reason {
-    
+      
     case .normal:
+//      closeRadio()
       return
       
     case .error(let errorMessage):
@@ -574,7 +575,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
       alert.addButton(withTitle: "Ok")
       alert.runModal()
       
-      closeRadio()
+//      closeRadio()
     }
   }
   // ----------------------------------------------------------------------------

@@ -64,7 +64,7 @@ final public class Band {
   // MARK: - Private Properties
   
   //    private var _previousBandDict: [NSObject:AnyObject]?
-  private let _log                        = OSLog(subsystem: "net.k3tzr.xSDR6000", category: "Band")
+  private let _log                        = OSLog(subsystem: Api.kDomainId + "." + kClientName, category: "Band")
   
   // constants
   private let kSoundLeavingBand           = "Basso"
