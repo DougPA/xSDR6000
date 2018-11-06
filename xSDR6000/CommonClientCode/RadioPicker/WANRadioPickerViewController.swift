@@ -167,14 +167,22 @@ final class WANRadioPickerViewController    : NSViewController, NSTableViewDeleg
   // ----------------------------------------------------------------------------
   // MARK: - Action methods
   
-  /// Respond to the Close menu item
+  /// Respond to the Quit menu item
   ///
-  /// - Parameter sender:         the button
+  /// - Parameter sender:     the button
   ///
-  @IBAction func terminate(_ sender: AnyObject) {
+  @IBAction func quitRadio(_ sender: AnyObject) {
     
     _parentVc.dismiss(sender)
-    NSApp.terminate(self)
+    
+    // perform an orderly shutdown of all the components
+    _api.disconnect(reason: .normal)
+    
+    DispatchQueue.main.async {
+      os_log("Application closed by user", log: self._log, type: .info)
+      
+      NSApp.terminate(self)
+    }
   }
   /// Respond to the Close button
   ///

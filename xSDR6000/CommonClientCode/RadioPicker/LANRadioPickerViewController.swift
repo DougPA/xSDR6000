@@ -10,6 +10,7 @@
 import Cocoa
 import xLib6000
 import SwiftyUserDefaults
+import os.log
 
 //#if XSDR6000
 //  import xLib6000
@@ -65,6 +66,7 @@ final class LANRadioPickerViewController    : NSViewController, NSTableViewDeleg
   @IBOutlet private var _defaultButton      : NSButton!                   // Set as default
   
   private var _api                          = Api.sharedInstance
+  private let _log                          = OSLog(subsystem: Api.kDomainId + "." + kClientName, category: "LANRadioPickerVC")
   private var _selectedRadio                : RadioParameters?            // Radio in selected row
   private var _parentVc                     : NSViewController!
   
@@ -103,14 +105,22 @@ final class LANRadioPickerViewController    : NSViewController, NSTableViewDeleg
   // ----------------------------------------------------------------------------
   // MARK: - Action methods
   
-  /// Respond to the Close menu item
+  /// Respond to the Quit menu item
   ///
   /// - Parameter sender:     the button
   ///
-  @IBAction func terminate(_ sender: AnyObject) {
+  @IBAction func quitRadio(_ sender: AnyObject) {
     
     _parentVc.dismiss(sender)
-    NSApp.terminate(self)
+    
+    // perform an orderly shutdown of all the components
+    _api.disconnect(reason: .normal)
+    
+    DispatchQueue.main.async {
+      os_log("Application closed by user", log: self._log, type: .info)
+
+      NSApp.terminate(self)
+    }
   }
   /// Respond to the Default button
   ///

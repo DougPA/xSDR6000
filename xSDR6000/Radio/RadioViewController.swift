@@ -128,6 +128,19 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   // ----------------------------------------------------------------------------
   // MARK: - Action methods
   
+  @IBAction func quitRadio(_ sender: Any) {
+    
+    // perform an orderly shutdown of all the components
+    _api.disconnect(reason: .normal)
+    
+    DispatchQueue.main.async {
+      os_log("Application closed by user", log: self._log, type: .info)
+
+      // close the app
+      NSApp.terminate(sender)
+    }
+  }
+
   // ----- TOOLBAR -----
   
   /// Respond to the Opus RX Enable
@@ -184,19 +197,6 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     // dimensions are dummy values; when created, will be resized to fit its view
     Panadapter.create(CGSize(width: 50, height: 50))
   }
-//  /// Respond to the Remote Tx button
-//  ///
-//  /// - Parameter sender: the Button
-//  ///
-//  @IBAction func remoteTxButton(_ sender: NSButton) {
-//
-//    // FIXME:
-//
-//    // ask the Radio (hardware) to start/stop Tx Opus
-//    _api.radio?.transmit.micSelection = (sender.boolState ? "PC" : "MIC")
-//
-//    // FIXME: This is just for testing
-//  }
   /// Respond to the Side button
   ///
   /// - Parameter sender: the Button
@@ -602,6 +602,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   ///
   func closeRadio() {
     
+    // perform an orderly shutdown of all the components
     _api.disconnect(reason: .normal)
   }
 }
