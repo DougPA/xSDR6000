@@ -319,7 +319,7 @@ class WaterfallViewController               : NSViewController, NSGestureRecogni
     
       // remove the entire PanafallButtonViewController hierarchy
       let panafallButtonVc = self.parent!.parent!
-      panafallButtonVc.removeFromParentViewController()
+      panafallButtonVc.removeFromParent()
 //    }
   }
 }

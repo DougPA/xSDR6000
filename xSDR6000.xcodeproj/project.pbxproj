@@ -58,7 +58,7 @@
 		91475E5020A28E4600ACE77D /* Flag.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 91475E4E20A28E4600ACE77D /* Flag.storyboard */; };
 		91475E5220A34C2D00ACE77D /* ModeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91475E5120A34C2D00ACE77D /* ModeViewController.swift */; };
 		9168DB46218A2F2A0025F3D6 /* SwiftyUserDefaults.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9168DB45218A2F2A0025F3D6 /* SwiftyUserDefaults.framework */; };
-		9168DB47218A2F2A0025F3D6 /* SwiftyUserDefaults.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9168DB45218A2F2A0025F3D6 /* SwiftyUserDefaults.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9168DB47218A2F2A0025F3D6 /* SwiftyUserDefaults.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9168DB45218A2F2A0025F3D6 /* SwiftyUserDefaults.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		916909C62113E2FC00164044 /* OpusEncode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916909C52113E2FB00164044 /* OpusEncode.swift */; };
 		916909C82113E40C00164044 /* AudioHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916909C72113E40C00164044 /* AudioHelper.swift */; };
 		91794983212EFB0F00D9750A /* RingBuffer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9179497F212EFB0E00D9750A /* RingBuffer.mm */; };
@@ -196,8 +196,8 @@
 		913F7EB82066DBBE00F35E9B = {
 			isa = PBXGroup;
 			children = (
-				9168DB45218A2F2A0025F3D6 /* SwiftyUserDefaults.framework */,
 				913F7F782066E6F500F35E9B /* README.md */,
+				9168DB45218A2F2A0025F3D6 /* SwiftyUserDefaults.framework */,
 				913F7F7C2066E6F600F35E9B /* OpusOSX.framework */,
 				913F7F7B2066E6F600F35E9B /* SwiftyUserDefaults.framework */,
 				913F7F772066E6F500F35E9B /* xLib6000.framework */,
@@ -460,12 +460,12 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0920;
-				LastUpgradeCheck = 1000;
+				LastUpgradeCheck = 1010;
 				ORGANIZATIONNAME = "Douglas Adams";
 				TargetAttributes = {
 					913F7EC02066DBBE00F35E9B = {
 						CreatedOnToolsVersion = 9.2;
-						LastSwiftMigration = 0920;
+						LastSwiftMigration = 1010;
 						ProvisioningStyle = Manual;
 					};
 				};
@@ -757,7 +757,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "xSDR6000/xSDR6000-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -783,7 +783,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "xSDR6000/xSDR6000-Bridging-Header.h";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};

@@ -32,6 +32,6 @@ class MainWindowController                  : NSWindowController {
   // MARK: - Overridden methods
   
   override func awakeFromNib() {
-    windowFrameAutosaveName = NSWindow.FrameAutosaveName(rawValue: "MainWindow")
+    windowFrameAutosaveName = "MainWindow"
   }
 }

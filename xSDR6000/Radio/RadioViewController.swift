@@ -31,11 +31,7 @@ protocol RadioPickerDelegate: class {
   
   /// Close the active Radio
   ///
-  func closeRadio()
-  
-  /// Clear the reply table
-  ///
-  func clearTable()
+  func closeRadio()  
 }
 
 // --------------------------------------------------------------------------------
@@ -67,9 +63,9 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   private let kGuiFirmwareSupport           = "2.3.7.x"                     // Radio firmware supported by this App
   private let kVoltageTemperature           = "VoltageTemp"                 // Identifier of toolbar VoltageTemperature toolbarItem
 
-  private let kRadioPickerStoryboardName    = NSStoryboard.Name(rawValue: "RadioPicker")
-  private let kSideStoryboardName           = NSStoryboard.Name(rawValue: "Side")
-  private let kRadioPickerIdentifier        = NSStoryboard.SceneIdentifier(rawValue: "RadioPicker")
+  private let kRadioPickerStoryboardName    = "RadioPicker"
+  private let kSideStoryboardName           = "Side"
+  private let kRadioPickerIdentifier        = "RadioPicker"
   private let kPcwIdentifier                = "PCW"
   private let kPhoneIdentifier              = "Phone"
   private let kRxIdentifier                 = "Rx"
@@ -275,7 +271,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     DispatchQueue.main.async {
       
       // show the RadioPicker sheet
-      self.presentViewControllerAsSheet(radioPickerTabViewController!)
+      self.presentAsSheet(radioPickerTabViewController!)
     }
   }
   /// Respond to the xSDR6000 Quit menu
@@ -377,13 +373,13 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   private func sideView(_ identifier: String, show: Bool) {
     
     // get a reference to the Side view controller
-    let sideViewController = childViewControllers[1] as? NSSplitViewController
+    let sideViewController = children[1] as? NSSplitViewController
     
     // show or hide?
     if show {
       
       // SHOW, create a view controller
-      let sbIdentifier = NSStoryboard.SceneIdentifier( rawValue: identifier)
+      let sbIdentifier = identifier
       let vc = _sideStoryboard!.instantiateController(withIdentifier: sbIdentifier ) as! NSViewController
 //      vc.view.translatesAutoresizingMaskIntoConstraints = false
       vc.identifier = NSUserInterfaceItemIdentifier(rawValue: identifier)
@@ -407,15 +403,15 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
       default:
         fatalError()
       }
-      let numberOfViews = sideViewController!.childViewControllers.count
+      let numberOfViews = sideViewController!.children.count
       if index >= numberOfViews {
         Swift.print("index >= numberOfViews, numberOfViews = \(numberOfViews), index = \(index)")
         
-        sideViewController!.insertChildViewController(vc, at: numberOfViews)
+        sideViewController!.insertChild(vc, at: numberOfViews)
       } else {
 
         Swift.print("index < numberOfViews, numberOfViews = \(numberOfViews), index = \(index)")
-        sideViewController!.insertChildViewController(vc, at: index)
+        sideViewController!.insertChild(vc, at: index)
       }
       
       // tell the SplitView to adjust
@@ -424,8 +420,8 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     } else {
       
       // HIDE, remove it from the Side View
-      if let vc = sideViewController!.childViewControllers.first(where: {$0.identifier!.rawValue == identifier} ) {
-        vc.removeFromParentViewController()
+      if let vc = sideViewController!.children.first(where: {$0.identifier!.rawValue == identifier} ) {
+        vc.removeFromParent()
       }
     }
   }
@@ -607,10 +603,5 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   func closeRadio() {
     
     _api.disconnect(reason: .normal)
-  }
-  /// Clear the reply table
-  ///
-  func clearTable() {
-    // unused
   }
 }

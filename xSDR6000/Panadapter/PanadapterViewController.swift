@@ -663,10 +663,10 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
   private func addFlag(for slice: xLib6000.Slice) {
 
     // get the Storyboard containing a Flag View Controller
-    let sb = NSStoryboard(name: NSStoryboard.Name(rawValue: "Flag"), bundle: nil)
+    let sb = NSStoryboard(name: "Flag", bundle: nil)
 
     // create a Flag View Controller
-    let flagVc = sb.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier(rawValue: "Flag")) as! FlagViewController
+    let flagVc = sb.instantiateController(withIdentifier: "Flag") as! FlagViewController
 //    flagVc.view.translatesAutoresizingMaskIntoConstraints = false
 
     // pass needed parameters
@@ -680,7 +680,7 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
 
     DispatchQueue.main.sync { [unowned self] in
 
-      addChildViewController(flagVc)
+      addChild(flagVc)
 
       // add its view
       self.view.addSubview(flagVc.view)
@@ -706,7 +706,7 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
         flagVc.view.removeFromSuperview()
 
         // remove the view controller
-        flagVc.removeFromParentViewController()
+        flagVc.removeFromParent()
       }
     }
     // remove the Flags entry if the Slice was found

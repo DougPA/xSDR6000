@@ -35,11 +35,11 @@ final class PanafallButtonViewController    : NSViewController {
   
   private var _bandwidth                    : Int { return panadapter!.bandwidth }
   
-  private let kPanafallEmbedIdentifier      = NSStoryboardSegue.Identifier("PanafallEmbed")
-  private let kBandPopoverIdentifier        = NSStoryboardSegue.Identifier(rawValue: "BandPopover")
-  private let kAntennaPopoverIdentifier     = NSStoryboardSegue.Identifier(rawValue: "AntennaPopover")
-  private let kDisplayPopoverIdentifier     = NSStoryboardSegue.Identifier(rawValue: "DisplayPopover")
-  private let kDaxPopoverIdentifier         = NSStoryboardSegue.Identifier(rawValue: "DaxPopover")
+  private let kPanafallEmbedIdentifier      = "PanafallEmbed"
+  private let kBandPopoverIdentifier        = "BandPopover"
+  private let kAntennaPopoverIdentifier     = "AntennaPopover"
+  private let kDisplayPopoverIdentifier     = "DisplayPopover"
+  private let kDaxPopoverIdentifier         = "DaxPopover"
 
   private let kPanadapterSplitViewItem      = 0
   private let kWaterfallSplitViewItem       = 1

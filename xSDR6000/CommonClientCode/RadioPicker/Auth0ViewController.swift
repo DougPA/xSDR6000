@@ -61,7 +61,7 @@ final class Auth0ViewController             : NSViewController, WKNavigationDele
   private let _log                          = OSLog(subsystem: Api.kDomainId + "." + kClientName, category: "Auth0VC")
   private var myWebView                     : WKWebView!
   private let myURL                         = URL(string: smartLinkURL)!
-  private let kAutosaveName                 = NSWindow.FrameAutosaveName("AuthViewWindow")
+  private let kAutosaveName                 = "AuthViewWindow"
   private var _delegate                     : Auth0ControllerDelegate {
     return representedObject as! Auth0ControllerDelegate }
 
@@ -89,21 +89,30 @@ final class Auth0ViewController             : NSViewController, WKNavigationDele
     // configure a web view
     let configuration = WKWebViewConfiguration()
     myWebView = WKWebView(frame: .zero, configuration: configuration)
-//    myWebView.translatesAutoresizingMaskIntoConstraints = false
+    myWebView.translatesAutoresizingMaskIntoConstraints = false
     myWebView.navigationDelegate = self
     
     // add it to the view hierarchy
     _customView.addSubview(myWebView)
     
     // anchor its position
-    [myWebView.topAnchor.constraint(equalTo: _customView.topAnchor),
-     myWebView.bottomAnchor.constraint(equalTo: _customView.bottomAnchor),
-     myWebView.leftAnchor.constraint(equalTo: _customView.leftAnchor),
-     myWebView.rightAnchor.constraint(equalTo: _customView.rightAnchor)].forEach  {
-      anchor in
-      anchor.isActive = true
-    }
+    if #available(OSX 10.11, *) {
+      // 10.11+
+      [myWebView.topAnchor.constraint(equalTo: _customView.topAnchor),
+       myWebView.bottomAnchor.constraint(equalTo: _customView.bottomAnchor),
+       myWebView.leftAnchor.constraint(equalTo: _customView.leftAnchor),
+       myWebView.rightAnchor.constraint(equalTo: _customView.rightAnchor)].forEach  {
+        anchor in
+        anchor.isActive = true
+      }
     
+    } else {
+      // before 10.11
+      NSLayoutConstraint(item: myWebView, attribute: .leading, relatedBy: .equal, toItem: _customView, attribute: .leading, multiplier: 1.0, constant: 0.0).isActive = true
+      NSLayoutConstraint(item: myWebView, attribute: .trailing, relatedBy: .equal, toItem: _customView, attribute: .trailing, multiplier: 1.0, constant: 0.0).isActive = true
+      NSLayoutConstraint(item: myWebView, attribute: .top, relatedBy: .equal, toItem: _customView, attribute:.top, multiplier: 1.0, constant:0.0).isActive = true
+      NSLayoutConstraint(item: myWebView, attribute: .bottom, relatedBy: .equal, toItem: _customView, attribute:.bottom, multiplier: 1.0, constant:0.0).isActive = true
+    }
     // load it
     if myWebView.load(request) == nil {
       

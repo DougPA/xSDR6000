@@ -227,7 +227,7 @@ public final class PanadapterRenderer       : NSObject {
     let textureLoader = MTKTextureLoader(device: device)
     
     // identify the asset containing the image
-    let asset = NSDataAsset.init(name: NSDataAsset.Name(rawValue: name))
+    let asset = NSDataAsset.init(name: name)
     
     if let data = asset?.data {
       

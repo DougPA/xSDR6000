@@ -625,19 +625,15 @@ Gw
                             </button>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="wXP-ZW-aMn">
                                 <rect key="frame" x="0.0" y="61" width="496" height="292"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="292" id="2Fc-Xq-gK8"/>
-                                    <constraint firstAttribute="width" constant="496" id="cRW-E7-lsu"/>
-                                </constraints>
                             </customView>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="wXP-ZW-aMn" firstAttribute="leading" secondItem="u3n-qg-9gk" secondAttribute="leading" id="BzP-u5-RFj"/>
-                            <constraint firstItem="k7q-9y-ZJa" firstAttribute="top" secondItem="wXP-ZW-aMn" secondAttribute="bottom" constant="20" id="CFh-KF-VlM"/>
-                            <constraint firstAttribute="bottom" secondItem="k7q-9y-ZJa" secondAttribute="bottom" constant="20" id="JAl-Wq-Xzr"/>
-                            <constraint firstAttribute="trailing" secondItem="wXP-ZW-aMn" secondAttribute="trailing" id="b9Z-qF-e7A"/>
-                            <constraint firstItem="k7q-9y-ZJa" firstAttribute="centerX" secondItem="u3n-qg-9gk" secondAttribute="centerX" id="eL0-tQ-W6e"/>
-                            <constraint firstItem="wXP-ZW-aMn" firstAttribute="top" secondItem="u3n-qg-9gk" secondAttribute="top" id="s2H-8H-AXy"/>
+                            <constraint firstItem="k7q-9y-ZJa" firstAttribute="top" secondItem="wXP-ZW-aMn" secondAttribute="bottom" constant="20" symbolic="YES" id="AgH-Ai-7Rg"/>
+                            <constraint firstAttribute="bottom" secondItem="k7q-9y-ZJa" secondAttribute="bottom" constant="20" symbolic="YES" id="BcX-qe-EEJ"/>
+                            <constraint firstItem="wXP-ZW-aMn" firstAttribute="top" secondItem="u3n-qg-9gk" secondAttribute="top" id="DwB-hJ-lS7"/>
+                            <constraint firstItem="wXP-ZW-aMn" firstAttribute="centerX" secondItem="k7q-9y-ZJa" secondAttribute="centerX" id="Ep2-i8-OVV"/>
+                            <constraint firstItem="wXP-ZW-aMn" firstAttribute="leading" secondItem="u3n-qg-9gk" secondAttribute="leading" id="Olx-w2-0yx"/>
+                            <constraint firstAttribute="trailing" secondItem="wXP-ZW-aMn" secondAttribute="trailing" id="cD3-jq-dmB"/>
                         </constraints>
                     </view>
                     <connections>

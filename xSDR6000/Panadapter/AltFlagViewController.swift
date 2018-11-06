@@ -49,7 +49,7 @@ class AltFlagViewController: NSViewController, NSTextFieldDelegate {
     view.translatesAutoresizingMaskIntoConstraints = false
     
     // get the storyboard
-    _storyBoard = NSStoryboard(name: NSStoryboard.Name(rawValue: "Flag"), bundle: nil)
+    _storyBoard = NSStoryboard(name: "Flag", bundle: nil)
     
     // set the Alpha ID
     _alpha.stringValue = FlagViewController.kSliceLetters[Int(slice!.id)!]
@@ -63,7 +63,7 @@ class AltFlagViewController: NSViewController, NSTextFieldDelegate {
     _frequencyField.delegate = self
   }
   
-  public override func controlTextDidBeginEditing(_ note: Notification) {
+  public func controlTextDidBeginEditing(_ note: Notification) {
     
     if let field = note.object as? NSTextField, field == _frequencyField {
       
@@ -72,7 +72,7 @@ class AltFlagViewController: NSViewController, NSTextFieldDelegate {
     _beginEditing = true
   }
   
-  public override func controlTextDidEndEditing(_ note: Notification) {
+  public func controlTextDidEndEditing(_ note: Notification) {
     
     if let field = note.object as? NSTextField, field == _frequencyField, _beginEditing {
       

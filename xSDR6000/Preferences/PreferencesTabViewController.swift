@@ -17,7 +17,7 @@ final class PreferencesTabViewController    : NSTabViewController {
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
   
-  private let _autosaveName                 = NSWindow.FrameAutosaveName("PreferencesWindow")
+  private let _autosaveName                 = "PreferencesWindow"
   
   // ----------------------------------------------------------------------------
   // MARK: - Overridden methods

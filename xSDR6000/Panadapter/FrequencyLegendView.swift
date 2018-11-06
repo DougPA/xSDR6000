@@ -38,7 +38,7 @@ public final class FrequencyLegendView      : NSView {
   private var _bandwidthParam               : BandwidthParamTuple {  // given Bandwidth, return a Spacing & a Format
     get { return kBandwidthParams.filter { $0.high > _bandwidth && $0.low <= _bandwidth }.first ?? kBandwidthParams[0] } }
   
-  private var _attributes                   = [NSAttributedStringKey:AnyObject]() // Font & Size for the Frequency Legend
+  private var _attributes                   = [NSAttributedString.Key:AnyObject]() // Font & Size for the Frequency Legend
   private var _path                         = NSBezierPath()
   private lazy var _segments                = Band.sharedInstance.segments
 
@@ -229,8 +229,8 @@ public final class FrequencyLegendView      : NSView {
   private func drawLegend(_ dirtyRect: NSRect) {
     
     // setup the Frequency Legend font & size
-    _attributes[NSAttributedStringKey.foregroundColor] = Defaults[.frequencyLegend]
-    _attributes[NSAttributedStringKey.font] = font
+    _attributes[NSAttributedString.Key.foregroundColor] = Defaults[.frequencyLegend]
+    _attributes[NSAttributedString.Key.font] = font
 
     let bandwidthParams = kBandwidthParams.filter { $0.high > _bandwidth && $0.low <= _bandwidth }.first ?? kBandwidthParams[0]
     let xIncrPerLegend = CGFloat(bandwidthParams.spacing) / _hzPerUnit

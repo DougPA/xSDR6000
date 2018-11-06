@@ -48,7 +48,7 @@ class LevelIndicator: NSView {
   private var _transform                    : AffineTransform!
 
   // font related
-  private var _attributes                   = [NSAttributedStringKey:AnyObject]()
+  private var _attributes                   = [NSAttributedString.Key:AnyObject]()
   
   // calculated sizes
   private var _heightGraph                  : CGFloat = 0
@@ -81,10 +81,10 @@ class LevelIndicator: NSView {
   override func viewWillDraw() {
     
     // setup the Legend font & size
-    _attributes[NSAttributedStringKey.font] = font
+    _attributes[NSAttributedString.Key.font] = font
     
     // setup the Legend color
-    _attributes[NSAttributedStringKey.foregroundColor] = _legendColor
+    _attributes[NSAttributedString.Key.foregroundColor] = _legendColor
     
     // calculate a typical font height
     _heightFont = "-000".size(withAttributes: _attributes).height

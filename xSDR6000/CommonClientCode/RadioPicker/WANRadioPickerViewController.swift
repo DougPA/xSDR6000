@@ -11,10 +11,6 @@ import os.log
 import xLib6000
 import SwiftyUserDefaults
 
-//#if XSDR6000
-//  import xLib6000
-//#endif
-
 public struct Token {
 
   var value         : String
@@ -112,7 +108,7 @@ final class WANRadioPickerViewController    : NSViewController, NSTableViewDeleg
 
     // is there a saved Auth0 token which has not expired?
     if let previousIdToken = _delegate?.token, previousIdToken.isValidAtDate( Date()) {
-      
+
       // YES, we are already logged into SmartLink, use the saved token
       loggedIn = true
       idToken = previousIdToken.value
@@ -177,7 +173,7 @@ final class WANRadioPickerViewController    : NSViewController, NSTableViewDeleg
   ///
   @IBAction func terminate(_ sender: AnyObject) {
     
-    dismissViewController(_parentVc)
+    _parentVc.dismiss(sender)
     NSApp.terminate(self)
   }
   /// Respond to the Close button
@@ -189,7 +185,7 @@ final class WANRadioPickerViewController    : NSViewController, NSTableViewDeleg
     // diconnect from WAN server
     _wanServer?.disconnect()
     
-    dismissViewController(_parentVc)
+    _parentVc.dismiss(sender)
   }
   /// Respond to the Select button
   ///
@@ -242,8 +238,8 @@ final class WANRadioPickerViewController    : NSViewController, NSTableViewDeleg
       
       getAuthentificationForRadio(_selectedRadio)
 
-      dismissViewController(_parentVc)
-      
+      _parentVc.dismiss(self)
+
     } else {
       
       // DISCONNECT, RadioPicker sheet will remain open & Radio will be disconnected
@@ -287,14 +283,14 @@ final class WANRadioPickerViewController    : NSViewController, NSTableViewDeleg
       
       // Login to auth0
       // get an instance of Auth0 controller
-      _auth0ViewController = storyboard!.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier(rawValue: "Auth0Login")) as? Auth0ViewController
+      _auth0ViewController = storyboard!.instantiateController(withIdentifier: "Auth0Login") as? Auth0ViewController
 //      _auth0ViewController!.view.translatesAutoresizingMaskIntoConstraints = false
 
       // make this View Controller the delegate of the Auth0 controller
       _auth0ViewController!.representedObject = self
       
       // show the Auth0 sheet
-      presentViewControllerAsSheet(_auth0ViewController!)
+      presentAsSheet(_auth0ViewController!)
 
     } else {
       // logout from the actual auth0 account
@@ -335,8 +331,8 @@ final class WANRadioPickerViewController    : NSViewController, NSTableViewDeleg
     // instantiate a WanServer instance
     _wanServer = WanServer(delegate: self)
     
-    // clear the reply table
-    _delegate?.clearTable()
+//    // clear the reply table
+//    _delegate?.clearTable()
 
     // connect with pinger to avoid the SmartLink server to disconnect if we take too long (>30s)
     // to select and connect to a radio
@@ -566,7 +562,7 @@ final class WANRadioPickerViewController    : NSViewController, NSTableViewDeleg
   ///
   func closeAuth0Sheet() {
     
-    if _auth0ViewController != nil { dismissViewController(_auth0ViewController!) }
+    if _auth0ViewController != nil { dismiss(_auth0ViewController!) }
     _auth0ViewController = nil
   }
   /// Set the id and refresh token

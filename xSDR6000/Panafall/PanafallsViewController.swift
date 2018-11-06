@@ -20,8 +20,8 @@ class PanafallsViewController               : NSSplitViewController {
   private let _log                          = OSLog(subsystem: Api.kDomainId + "." + kClientName, category: "PanafallsVC")
   private var _sb                           : NSStoryboard?
   
-  private let kPanafallStoryboard           = NSStoryboard.Name(rawValue: "Panafall")
-  private let kPanafallButtonIdentifier     = NSStoryboard.SceneIdentifier(rawValue: "Button")
+  private let kPanafallStoryboard           = "Panafall"
+  private let kPanafallButtonIdentifier     = "Button"
   
   // ----------------------------------------------------------------------------
   // MARK: - Overridden methods

@@ -27,7 +27,7 @@ public final class DbLegendView             : NSView {
   private var _maxDbm                       : CGFloat {return _panadapter!.maxDbm }
   private var _spacings                     = Defaults[.dbLegendSpacings]
   private var _path                         = NSBezierPath()  
-  private var _attributes                   = [NSAttributedStringKey:AnyObject]() // Font & Size for the db Legend
+  private var _attributes                   = [NSAttributedString.Key:AnyObject]() // Font & Size for the db Legend
   private var _fontHeight                   : CGFloat = 0                         // height of typical label
   
   private let kFormat                       = " %4.0f"
@@ -125,14 +125,14 @@ public final class DbLegendView             : NSView {
   private func drawLegend(_ dirtyRect: NSRect) {
     
     // setup the Legend font & size
-    _attributes[NSAttributedStringKey.foregroundColor] = Defaults[.dbLegend]
-    _attributes[NSAttributedStringKey.font] = font
+    _attributes[NSAttributedString.Key.foregroundColor] = Defaults[.dbLegend]
+    _attributes[NSAttributedString.Key.font] = font
     
     // calculate a typical font height
     _fontHeight = "-000".size(withAttributes: _attributes).height
     
     // setup the Legend color
-    _attributes[NSAttributedStringKey.foregroundColor] = Defaults[.dbLegend]
+    _attributes[NSAttributedString.Key.foregroundColor] = Defaults[.dbLegend]
     
     // get the spacing between legends
     let dbSpacing = CGFloat(Defaults[.dbLegendSpacing])

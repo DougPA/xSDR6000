@@ -72,7 +72,7 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
     view.translatesAutoresizingMaskIntoConstraints = false
     
     // get the storyboard
-    _storyBoard = NSStoryboard(name: NSStoryboard.Name(rawValue: "Flag"), bundle: nil)
+    _storyBoard = NSStoryboard(name: "Flag", bundle: nil)
     
     // close the display area
     _containerViewHeight.constant = 0
@@ -106,7 +106,7 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
     _txAntPopUp.selectItem(withTitle: slice!.txAnt)
   }
   
-  public override func controlTextDidBeginEditing(_ note: Notification) {
+  public func controlTextDidBeginEditing(_ note: Notification) {
 
     if let field = note.object as? NSTextField, field == _frequencyField {
 
@@ -115,7 +115,7 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
     _beginEditing = true
   }
   
-  public override func controlTextDidEndEditing(_ note: Notification) {
+  public func controlTextDidEndEditing(_ note: Notification) {
     
     if let field = note.object as? NSTextField, field == _frequencyField, _beginEditing {
 
@@ -226,7 +226,7 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
     case (nil, _):                                          // NO PREVIOUS TAB
       
       // get the selected tab
-      _viewController = _storyBoard!.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier(rawValue: id)) as? NSViewController
+      _viewController = _storyBoard!.instantiateController(withIdentifier: id) as? NSViewController
 //      _viewController!.view.translatesAutoresizingMaskIntoConstraints = false
 
       _viewController!.representedObject = slice as Any
@@ -262,7 +262,7 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
       if _containerViewHeight.constant != kTabViewClosed { view.frame.origin.y = view.frame.origin.y + _viewController!.view.frame.size.height }
       
       // get the selected tab
-      _viewController = _storyBoard!.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier(rawValue: id)) as? NSViewController
+      _viewController = _storyBoard!.instantiateController(withIdentifier: id) as? NSViewController
 //      _viewController!.view.translatesAutoresizingMaskIntoConstraints = false
       _viewController!.representedObject = slice as Any
       
