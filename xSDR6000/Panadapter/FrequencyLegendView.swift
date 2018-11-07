@@ -77,17 +77,20 @@ public final class FrequencyLegendView      : NSView {
   public override func draw(_ dirtyRect: NSRect) {
     super.draw(dirtyRect)
     
-    drawSlices()
-    
-    positionFlags()
-
-    drawTnfs()
-
-    // draw the Frequency legend and vertical grid lines
-    drawLegend(dirtyRect)
-
-    // draw band markers (if shown)
-    if Defaults[.markersEnabled] { drawBandMarkers() }    
+    if let panadapter = _panadapter {
+      
+      drawSlices(panadapter)
+      
+      positionFlags()
+      
+      drawTnfs()
+      
+      // draw the Frequency legend and vertical grid lines
+      drawLegend(dirtyRect)
+      
+      // draw band markers (if shown)
+      if Defaults[.markersEnabled] { drawBandMarkers() }
+    }
   }
   
   // ----------------------------------------------------------------------------
@@ -370,10 +373,10 @@ public final class FrequencyLegendView      : NSView {
     _path.strokeRemove()
   }
   
-  func drawSlices() {
+  func drawSlices(_ pan: Panadapter) {
     
     // for Slices on this Panadapter
-    radio!.slices.filter { $0.value.panadapterId == _panadapter!.id }.forEach {
+    radio!.slices.filter { $0.value.panadapterId == pan.id }.forEach {
       
       drawFilterOutline($0.value)
       

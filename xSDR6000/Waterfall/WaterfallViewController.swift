@@ -315,12 +315,12 @@ class WaterfallViewController               : NSViewController, NSGestureRecogni
     invalidateObservations(&_baseObservations)
     
     // remove the UI components of the Panafall
-//    DispatchQueue.main.sync { [unowned self] in
+    DispatchQueue.main.async { [unowned self] in
     
       // remove the entire PanafallButtonViewController hierarchy
       let panafallButtonVc = self.parent!.parent!
       panafallButtonVc.removeFromParent()
-//    }
+    }
   }
 }
 

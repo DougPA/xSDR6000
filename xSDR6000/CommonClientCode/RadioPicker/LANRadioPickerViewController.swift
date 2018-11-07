@@ -114,7 +114,7 @@ final class LANRadioPickerViewController    : NSViewController, NSTableViewDeleg
     _parentVc.dismiss(sender)
     
     // perform an orderly shutdown of all the components
-    _api.disconnect(reason: .normal)
+    _api.shutdown(reason: .normal)
     
     DispatchQueue.main.async {
       os_log("Application closed by user", log: self._log, type: .info)
@@ -288,7 +288,7 @@ final class LANRadioPickerViewController    : NSViewController, NSTableViewDeleg
     cellView.wantsLayer = true
     // color the default row
     if isDefaultRow {
-      cellView.layer!.backgroundColor = NSColor(red: 0.0, green: 0.5, blue: 0.0, alpha: 0.4).cgColor
+      cellView.layer!.backgroundColor = NSColor(red: 0.0, green: 1.0, blue: 0.0, alpha: 0.2).cgColor
     } else {
       cellView.layer!.backgroundColor = NSColor.clear.cgColor
     }

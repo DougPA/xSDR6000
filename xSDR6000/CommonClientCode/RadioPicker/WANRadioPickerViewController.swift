@@ -176,7 +176,7 @@ final class WANRadioPickerViewController    : NSViewController, NSTableViewDeleg
     _parentVc.dismiss(sender)
     
     // perform an orderly shutdown of all the components
-    _api.disconnect(reason: .normal)
+    _api.shutdown(reason: .normal)
     
     DispatchQueue.main.async {
       os_log("Application closed by user", log: self._log, type: .info)
@@ -190,8 +190,8 @@ final class WANRadioPickerViewController    : NSViewController, NSTableViewDeleg
   ///
   @IBAction func closeButton(_ sender: AnyObject) {
     
-    // diconnect from WAN server
-    _wanServer?.disconnect()
+//    // diconnect from WAN server
+//    _wanServer?.disconnect()
     
     _parentVc.dismiss(sender)
   }
@@ -210,7 +210,7 @@ final class WANRadioPickerViewController    : NSViewController, NSTableViewDeleg
   ///
   @IBAction func loginButton(_ sender: NSButton) {
     
-    // Log IN / Out of SmartLink
+    // Log In / Out of SmartLink
     logInOut()
   }
   
@@ -246,7 +246,9 @@ final class WANRadioPickerViewController    : NSViewController, NSTableViewDeleg
       
       getAuthentificationForRadio(_selectedRadio)
 
-      _parentVc.dismiss(self)
+      DispatchQueue.main.async { [unowned self] in
+        self.closeButton(self)
+      }
 
     } else {
       

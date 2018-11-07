@@ -565,7 +565,7 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
     panadapter.delegate = nil
     
     // YES, log the event
-    os_log("Panadapter will be removed, ID = %{public}@", log: _log, type: .info, panadapter.id.hex)
+    os_log("Panadapter will be removed: ID = %{public}@", log: _log, type: .info, panadapter.id.hex)
     
     // invalidate Base property observations
     invalidateObservations(&_baseObservations)
@@ -583,7 +583,7 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
     if let panadapter = _panadapter, slice.panadapterId == panadapter.id {
       
       // YES, log the event
-      os_log("Slice added, ID = %{public}@, pan =  %{public}@", log: _log, type: .info, slice.id, panadapter.id.hex)
+      os_log("Slice added: ID = %{public}@, pan = %{public}@", log: _log, type: .info, slice.id, panadapter.id.hex)
       
       // observe removal of this Slice
       NC.makeObserver(self, with: #selector(sliceWillBeRemoved(_:)), of: .sliceWillBeRemoved, object: slice)
@@ -608,7 +608,7 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
     if let panadapter = _panadapter, slice.panadapterId == panadapter.id  {
       
       // YES, log the event
-      os_log("Slice will be removed, ID = %{public}@, pan =  %{public}@", log: _log, type: .info, slice.id, panadapter.id.hex)
+      os_log("Slice will be removed: ID = %{public}@, pan =  %{public}@", log: _log, type: .info, slice.id, panadapter.id.hex)
       
       // remove the Flag & Observations of this Slice
       removeFlag(for: slice)
@@ -627,7 +627,7 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
     let tnf = note.object as! Tnf
     
     // YES, log the event
-    os_log("Tnf added, ID = %{public}@", log: _log, type: .info, tnf.id)
+    os_log("Tnf added: ID = %{public}@", log: _log, type: .info, tnf.id)
     
     // add observations for this Tnf
     addTnfObservations(&_tnfObservations, object: tnf)
@@ -645,7 +645,7 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
     let tnfToRemove = note.object as! Tnf
     
     // YES, log the event
-    os_log("Tnf will be removed, ID = %{public}@", log: _log, type: .info, tnfToRemove.id)
+    os_log("Tnf will be removed: ID = %{public}@", log: _log, type: .info, tnfToRemove.id)
     
     // invalidate & remove all of the Tnf observations
     invalidateObservations(&_tnfObservations)

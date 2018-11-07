@@ -69,7 +69,7 @@ class PanafallsViewController               : NSSplitViewController {
     let panadapter = note.object as! Panadapter
     
     // YES, log the event
-    os_log("Panadapter added, ID = %{public}@", log: _log, type: .info, panadapter.id.hex)
+    os_log("Panadapter added: ID = %{public}@", log: _log, type: .info, panadapter.id.hex)
   }
   /// Process .waterfallHasBeenAdded Notification
   ///
@@ -82,7 +82,7 @@ class PanafallsViewController               : NSSplitViewController {
     let waterfall = note.object as! Waterfall
     
     // YES, log the event
-    os_log("Waterfall added, ID = %{public}@", log: _log, type: .info, waterfall.id.hex)
+    os_log("Waterfall added: ID = %{public}@", log: _log, type: .info, waterfall.id.hex)
     
     let panadapter = Api.sharedInstance.radio!.panadapters[waterfall.panadapterId]
     

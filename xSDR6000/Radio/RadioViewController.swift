@@ -131,7 +131,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   @IBAction func quitRadio(_ sender: Any) {
     
     // perform an orderly shutdown of all the components
-    _api.disconnect(reason: .normal)
+    _api.shutdown(reason: .normal)
     
     DispatchQueue.main.async {
       os_log("Application closed by user", log: self._log, type: .info)
@@ -482,7 +482,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     // the Radio class has been initialized
     let radio = note.object as! Radio
     
-    os_log("Radio initialized - %{public}@", log: _log, type: .info, radio.nickname)
+    os_log("Radio initialized: %{public}@", log: _log, type: .info, radio.nickname)
     
     Defaults[.versionRadio] = radio.radioVersion
     Defaults[.radioModel] = _api.activeRadio!.model
@@ -502,12 +502,12 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     // the Radio class is being removed
     let radio = note.object as! Radio
     
-    os_log("Radio will be removed - %{public}@", log: _log, type: .info, radio.nickname)
+    os_log("Radio will be removed: %{public}@", log: _log, type: .info, radio.nickname)
     
     Defaults[.versionRadio] = ""
     
     // remove all objects on Radio
-    _api.radio?.removeAll()
+    radio.removeAll()
     
     // update the title bar
     title()
@@ -535,7 +535,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     let opus = note.object as! Opus
     _opus = opus
     
-    os_log("Opus Rx added, ID = %{public}@", log: _log, type: .info, opus.id.hex)
+    os_log("Opus Rx added: ID = %{public}@", log: _log, type: .info, opus.id.hex)
     
     
     _opusDecode = OpusDecode()
@@ -571,7 +571,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
       alert.addButton(withTitle: "Ok")
       alert.runModal()
       
-//      closeRadio()
+      closeRadio()
     }
   }
   // ----------------------------------------------------------------------------
@@ -603,6 +603,6 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   func closeRadio() {
     
     // perform an orderly shutdown of all the components
-    _api.disconnect(reason: .normal)
+    _api.shutdown(reason: .normal)
   }
 }
