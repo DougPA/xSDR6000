@@ -9,6 +9,11 @@ Waterfall.swift - renamed streamActive to isStreaming
 Opus.swift - added public var isStreaming
 Panadapter.swift - added detection of out-of-sequence packets
 Waterfall.swift - added detection of out-of-sequence packets
+Meter.swift - in parseProperties(_:) added '&& number != "" && units != ""' to if !_initialized
+TcpManager.swift - correction to connect(radioParameters:isWan:)
+Api.swift - in tcpState(connected:host:port:error:) added guard for udp.bind success
+Api.swift - corrections to shutdown / disconnect processing
+UdpManager.swift - in bind(radioParameters:isWan:clientHandle:) added Bool return value
 
 v2.0.6
 
@@ -31,7 +36,6 @@ v2.0.4
 RadioParameters.swift - refactored (simplification)
 WanServer.swift - added a "FIXME:" in socketDidDisconnect(_:withError:)
 Vita.swift - corrected an error in class parseDiscovery(_:) (payloadSize)
-
 
 v2.0.3
 
