@@ -983,6 +983,9 @@
                     <splitView key="splitView" misplaced="YES" dividerStyle="thin" vertical="YES" id="oU9-Vu-xiy">
                         <rect key="frame" x="0.0" y="0.0" width="958" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="translatesAutoresizingMaskIntoConstraints" value="NO"/>
+                        </userDefinedRuntimeAttributes>
                         <connections>
                             <outlet property="delegate" destination="2ro-LE-ZBU" id="Irk-62-UBB"/>
                         </connections>
@@ -1008,6 +1011,9 @@
                     <splitView key="splitView" dividerStyle="thin" id="Ctb-uG-jWF">
                         <rect key="frame" x="0.0" y="0.0" width="387" height="256"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="translatesAutoresizingMaskIntoConstraints" value="NO"/>
+                        </userDefinedRuntimeAttributes>
                         <connections>
                             <outlet property="delegate" destination="Jdb-W6-QFS" id="9iC-VR-LgG"/>
                         </connections>
@@ -1110,6 +1116,9 @@
                             <constraint firstItem="dnK-lm-Wdo" firstAttribute="leading" secondItem="iRD-Cc-O72" secondAttribute="leading" constant="2" id="c26-2T-07d"/>
                             <constraint firstItem="dnK-lm-Wdo" firstAttribute="top" secondItem="iRD-Cc-O72" secondAttribute="top" constant="2" id="meU-vl-TmK"/>
                         </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="translatesAutoresizingMaskIntoConstraints" value="NO"/>
+                        </userDefinedRuntimeAttributes>
                     </view>
                 </viewController>
                 <customObject id="B8G-bD-9Yv" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
@@ -1155,6 +1164,9 @@
                             <constraint firstItem="RCw-jG-yLK" firstAttribute="top" secondItem="chP-Va-SvO" secondAttribute="top" id="gCe-9V-40o"/>
                             <constraint firstItem="RCw-jG-yLK" firstAttribute="leading" secondItem="chP-Va-SvO" secondAttribute="leading" id="pq7-6T-Jo1"/>
                         </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="translatesAutoresizingMaskIntoConstraints" value="NO"/>
+                        </userDefinedRuntimeAttributes>
                     </view>
                 </viewController>
                 <customObject id="Vsh-Ao-8Yw" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
@@ -1176,6 +1188,9 @@
                     <splitView key="splitView" autosaveName="Panafalls" dividerStyle="thin" id="Mfh-In-tH1">
                         <rect key="frame" x="0.0" y="0.0" width="945" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="translatesAutoresizingMaskIntoConstraints" value="NO"/>
+                        </userDefinedRuntimeAttributes>
                         <connections>
                             <outlet property="delegate" destination="uMM-BY-Dcg" id="xfg-ZZ-BWN"/>
                         </connections>
