@@ -19,7 +19,6 @@ public final class FrequencyLegendView      : NSView {
   
   var radio: Radio?                         = Api.sharedInstance.radio
   
-  var flags                                 = [FlagViewController]()
   var legendHeight                          : CGFloat = 20                  // height of legend area
   var font                                  = NSFont(name: "Monaco", size: 12.0)
   var markerHeight                          : CGFloat = 0.6                 // height % for band markers
@@ -63,7 +62,6 @@ public final class FrequencyLegendView      : NSView {
   private let _lineColor                    = NSColor(srgbRed: 1.0, green: 1.0, blue: 1.0, alpha: 0.2)
   
   private let kMultiplier                   : CGFloat = 0.001
-  private let kFlagBorder                   : CGFloat = 20
 
   // ----------------------------------------------------------------------------
   // MARK: - Overridden methods
@@ -71,7 +69,6 @@ public final class FrequencyLegendView      : NSView {
   public override func awakeFromNib() {
     super.awakeFromNib()
     
-    translatesAutoresizingMaskIntoConstraints = false
   }
 
   public override func draw(_ dirtyRect: NSRect) {
@@ -80,8 +77,6 @@ public final class FrequencyLegendView      : NSView {
     if let panadapter = _panadapter {
       
       drawSlices(panadapter)
-      
-      positionFlags()
       
       drawTnfs()
       
@@ -381,69 +376,6 @@ public final class FrequencyLegendView      : NSView {
       drawFilterOutline($0.value)
       
       drawFrequencyLine($0.value)
-    }
-  }
-  /// Position Slice flags
-  ///
-  private func positionFlags() {
-    var frequencyPosition = NSPoint(x: 0.0, y: 0.0)
-    var onLeft = true
-    var spacing : CGFloat = 0.0
-    
-    var previousFlagVc : FlagViewController?
-    
-    if flags.count >= 2 {
-    
-      // sort the Flags from left to right
-      flags.sorted {$0.slice!.frequency < $1.slice!.frequency}.forEach {
-        
-        // is this the first Flag?
-        if previousFlagVc == nil {
-          
-          // YES, it's the first one (always on the left)
-          onLeft = true
-          
-          // calculate the minimum spacing between flags
-          spacing = $0.view.frame.width + kFlagBorder
-          
-        } else {
-          
-          let previousFrequencyPosition = CGFloat(previousFlagVc!.slice!.frequency - _start) / _hzPerUnit
-          let currentFrequencyPosition = CGFloat($0.slice!.frequency - _start) / _hzPerUnit
-          
-          // determine the needed spacing between flags
-          let currentSpacing = previousFlagVc!.onLeft ? spacing : 2 * spacing
-          
-          // is this Flag too close to the previous one?
-          if currentFrequencyPosition - previousFrequencyPosition < currentSpacing {
-            
-            // YES, put it on the right
-            onLeft = false
-            
-          } else {
-            
-            // NO, put it on the left
-            onLeft = true
-          }
-        }
-        // calculate the X & Y positions of the flag
-        frequencyPosition.x = CGFloat($0.slice!.frequency - _start) / _hzPerUnit
-        frequencyPosition.y = frame.height - $0.view.frame.height
-        
-        // position it
-        $0.moveTo( frequencyPosition, frequency: $0.slice!.frequency, onLeft: onLeft)
-        
-        // make the current one the previous one
-        previousFlagVc = $0
-      }
-    } else if flags.count == 1 {
-
-      // calculate the X & Y positions of the flag
-      frequencyPosition.x = CGFloat(flags[0].slice!.frequency - _start) / _hzPerUnit
-      frequencyPosition.y = frame.height - flags[0].view.frame.height
-
-      // position it
-      flags[0].moveTo( frequencyPosition, frequency: flags[0].slice!.frequency, onLeft: true)
     }
   }
   /// Draw the Filter Outline
