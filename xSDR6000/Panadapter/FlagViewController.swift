@@ -6,6 +6,40 @@
 //  Copyright © 2017 Douglas Adams. All rights reserved.
 //
 
+// --------------------------------------------------------------------------------
+//  Created by PanadapterViewController - .sliceHasBeenAdded
+//  Removed by PanadapterViewController - .sliceWillBeRemoved
+//
+//  **** Notifications received ****
+//      .sliceMeterHasBeenAdded
+//
+//  **** Observations ****
+//      Slice:
+//          frequency
+//      Panadapter:
+//          center
+//          bandwidth
+//      Meters:
+//          .signalPassband
+//
+//  **** View Bindings ****
+//      Slice:
+//          anfEnabled
+//          frequency
+//          locked
+//          nbEnabled
+//          nrEnabled
+//          qskEnabled
+//          rcvAnt
+//          rcvAntList
+//          txAnt
+//          txAntList
+//          txEnabled
+//
+//      FlagViewController:
+//          filterWidth
+//          letterId
+// --------------------------------------------------------------------------------
 import Cocoa
 import xLib6000
 
@@ -16,52 +50,41 @@ import xLib6000
 final public class FlagViewController       : NSViewController, NSTextFieldDelegate {
   
   static let kSliceLetters : [String]       = ["A", "B", "C", "D", "E", "F", "G", "H"]
-
+  static let kFlagOffset                    : CGFloat = 15.0/2.0
+  static let kFlagWidth                     : CGFloat = 240
+  static let kFlagHeight                    : CGFloat = 145
+  static let kFlagBorder                    : CGFloat = 20
+  
   // ----------------------------------------------------------------------------
   // MARK: - Internal properties
   
   @objc dynamic weak var slice              : xLib6000.Slice?
-  @objc dynamic weak var panadapter         : Panadapter?
+  @objc dynamic var letterId                : String { return FlagViewController.kSliceLetters[Int(slice!.id)!] }
+  @objc dynamic var filterWidth             : Float { return Float(slice!.filterHigh - slice!.filterLow)/1_000.0 }
+
+  private weak var _panadapter              : Panadapter?
+  private var _center                       : Int {return _panadapter!.center }
+  private var _bandwidth                    : Int { return _panadapter!.bandwidth }
+  private var _start                        : Int { return _center - (_bandwidth/2) }
+  private var _end                          : Int  { return _center + (_bandwidth/2) }
+  private var _hzPerUnit                    : CGFloat { return CGFloat(_end - _start) / _panadapter!.xPixels }
 
   var onLeft                                = true
-  var sliceObservations                     = [NSKeyValueObservation]()
+  var observations                          = [NSKeyValueObservation]()
+  var flagXPositionConstraint               : NSLayoutConstraint?
   
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
   
-  @IBOutlet private weak var _rxAntPopUp    : NSPopUpButton!
-  @IBOutlet private weak var _txAntPopUp    : NSPopUpButton!
-  
   @IBOutlet private weak var _frequencyField: NSTextField!
-  @IBOutlet private weak var _alpha         : NSTextField!
   @IBOutlet private weak var _sMeter        : NSLevelIndicator!
-  @IBOutlet private weak var _filter        : NSTextField!
   
-  @IBOutlet weak var _lockButton            : NSButton!
-  @IBOutlet weak var _audButton             : NSButton!
-  @IBOutlet weak var _dspButton             : NSButton!
-  @IBOutlet weak var _modeButton            : NSButton!
-  @IBOutlet weak var _xritButton            : NSButton!
-  @IBOutlet weak var _daxButton             : NSButton!
-  
-  @IBOutlet weak var _containerView         : NSView!
-  @IBOutlet weak var _containerViewHeight   : NSLayoutConstraint!
-  
-  private var _tabViewController            : NSTabViewController?
-  private var _previousTabIndex             : Int?
-  
-  private var _storyBoard                   : NSStoryboard?
-  private var _viewController               : NSViewController?
-  
-  private var _position                     = NSPoint(x: 0.0, y: 0.0)
   private var _doubleClick                  : NSClickGestureRecognizer!
   private var _previousFrequency            = 0
   private var _beginEditing                 = false
   
   private let kLeftButton                   = 0x01                          // masks for Gesture Recognizers
-  private let kFlagOffset                   : CGFloat = 15.0/2.0
-  private let kTabViewOpen                  : CGFloat = 93.0
-  private let kTabViewClosed                : CGFloat = 0.0
+  private let kFlagPixelOffset              : CGFloat = 15.0/2.0
   
   // ----------------------------------------------------------------------------
   // MARK: - Overridden methods
@@ -69,25 +92,14 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
   public override func viewDidLoad() {
     super.viewDidLoad()
     
-    view.translatesAutoresizingMaskIntoConstraints = false
-    
-    // get the storyboard
-    _storyBoard = NSStoryboard(name: "Flag", bundle: nil)
-    
-    // close the display area
-    _containerViewHeight.constant = 0
-    
     // set the background color of the Flag
     view.layer?.backgroundColor = NSColor.lightGray.cgColor
-    
-    // set the Alpha ID
-    _alpha.stringValue = FlagViewController.kSliceLetters[Int(slice!.id)!]
 
     // find the S-Meter feed (if any, it may alreaady exist or it may come later as a sliceMeterAdded Notification)
     findSMeter()
     
-    // begin slice observations
-    createObservations(&_observations, object: slice!)
+    // create observations of Slice & Panadapter properties
+    createObservations(slice: slice!, panadapter: _panadapter!)
 
     // start receiving Notifications
     addNotifications()
@@ -100,11 +112,9 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
 
     _frequencyField.delegate = self
     
-    slice!.rxAntList.forEach( { _rxAntPopUp.addItem(withTitle: $0) } )
-    _rxAntPopUp.selectItem(withTitle: slice!.rxAnt)
-    slice!.txAntList.forEach( { _txAntPopUp.addItem(withTitle: $0) } )
-    _txAntPopUp.selectItem(withTitle: slice!.txAnt)
+    view.identifier = NSUserInterfaceItemIdentifier(rawValue: "Slice Flag")
   }
+
   
   public func controlTextDidBeginEditing(_ note: Notification) {
 
@@ -119,7 +129,7 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
     
     if let field = note.object as? NSTextField, field == _frequencyField, _beginEditing {
 
-      repositionPanadapter(center: panadapter!.center, frequency: _previousFrequency, newFrequency: _frequencyField.integerValue)
+      repositionPanadapter(center: _center, frequency: _previousFrequency, newFrequency: _frequencyField.integerValue)
       _beginEditing = false
     }
   }
@@ -134,40 +144,23 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
   ///   - slice:                    a Slice reference
   ///
   func configure(panadapter: Panadapter?, slice: xLib6000.Slice?) {
-    self.panadapter = panadapter
+    self._panadapter = panadapter
     self.slice = slice!
+
   }
-  /// Force the Frequency to be redrawn
-  ///
-  /// Move a Slice Flag to the specified position
+  /// Invalidate observations (optionally remove)
   ///
   /// - Parameters:
-  ///   - frequencyPosition: the desired position
-  ///   - onLeft: Flag placement (Left / Right of frequency)
+  ///   - observations:                 an array of NSKeyValueObservation
+  ///   - remove:                       remove all enabled
   ///
-  func moveTo(_ frequencyPosition: NSPoint, frequency: Int, onLeft: Bool) {
+  func invalidateObservations(remove: Bool = true) {
     
-    self.onLeft = onLeft
+    // invalidate each observation
+    _observations.forEach { $0.invalidate() }
     
-    // What side should the Flag be on?
-    if onLeft {
-      
-      // LEFT
-      _position.x = frequencyPosition.x - view.frame.width - kFlagOffset
-      
-    } else {
-      
-      // RIGHT
-      _position.x = frequencyPosition.x + kFlagOffset
-    }
-    _position.y = frequencyPosition.y
-    
-    // update the flag's position
-    view.setFrameOrigin(_position)
-    
-//    _frequencyField.integerValue = frequency
-
-//    view.needsDisplay = true
+    // if specified, remove the tokens
+    if remove { _observations.removeAll() }
   }
 
   // ----------------------------------------------------------------------------
@@ -179,18 +172,18 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
   ///
   @IBAction func buttons(_ sender: NSButton) {
     
-    // is the button "on"?
-    if sender.boolState {
-      
-      // YES, turn off any other buttons
-      if sender != _audButton { _audButton.boolState = false}
-      if sender != _dspButton { _dspButton.boolState = false}
-      if sender != _modeButton { _modeButton.boolState = false}
-      if sender != _xritButton { _xritButton.boolState = false}
-      if sender != _daxButton { _daxButton.boolState = false}
-    }
-    // display / hide the selected view
-    selectView(sender.identifier!.rawValue)
+//    // is the button "on"?
+//    if sender.boolState {
+//
+//      // YES, turn off any other buttons
+//      if sender != _audButton { _audButton.boolState = false}
+//      if sender != _dspButton { _dspButton.boolState = false}
+//      if sender != _modeButton { _modeButton.boolState = false}
+//      if sender != _xritButton { _xritButton.boolState = false}
+//      if sender != _daxButton { _daxButton.boolState = false}
+//    }
+//    // display / hide the selected view
+//    selectView(sender.identifier!.rawValue)
   }
   
   // ----------------------------------------------------------------------------
@@ -213,70 +206,6 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
 
     _frequencyField.selectText(self)
   }
-  /// Select a view to display
-  ///
-  /// - Parameter id:             the ID of the selected view
-  ///
-  private func selectView(_ id: String) {
-    var flagAdjustMinus = true
-    
-    // _viewController is the last one displayed, id is AUD, DSP, MODE, XRIT or DAX
-    switch (_viewController, id + "vc") {
-      
-    case (nil, _):                                          // NO PREVIOUS TAB
-      
-      // get the selected tab
-      _viewController = _storyBoard!.instantiateController(withIdentifier: id) as? NSViewController
-//      _viewController!.view.translatesAutoresizingMaskIntoConstraints = false
-
-      _viewController!.representedObject = slice as Any
-      
-      // open the display area with the appropriate height
-      _containerViewHeight.constant = _viewController!.view.frame.size.height
-      
-      
-      // add the view
-      _containerView.addSubview(_viewController!.view)
-      
-    case (_, _viewController!.identifier!.rawValue):        // SAME TAB AS PREVIOUS
-      
-      if _containerViewHeight.constant == kTabViewClosed {
-        
-        // is closed, open the display area with the appropriate height
-        _containerViewHeight.constant = _viewController!.view.frame.size.height
-        
-      } else {
-        
-        // is open, close the display area
-        _containerViewHeight.constant = kTabViewClosed
-        
-        flagAdjustMinus = false
-      }
-      
-    default:                                                // DIFFERENT TAB FROM PREVIOUS
-      
-      // remove the current tab
-      _viewController!.view.removeFromSuperview()
-      
-      // if open, adjust the flag position
-      if _containerViewHeight.constant != kTabViewClosed { view.frame.origin.y = view.frame.origin.y + _viewController!.view.frame.size.height }
-      
-      // get the selected tab
-      _viewController = _storyBoard!.instantiateController(withIdentifier: id) as? NSViewController
-//      _viewController!.view.translatesAutoresizingMaskIntoConstraints = false
-      _viewController!.representedObject = slice as Any
-      
-      // open the display area with the appropriate height
-      _containerViewHeight.constant = _viewController!.view.frame.size.height
-      
-      // add the tab
-      _containerView.addSubview(_viewController!.view)
-    }
-    
-    // adjust the flag position
-    let tabHeight = _viewController!.view.frame.size.height
-    view.frame.origin.y = view.frame.origin.y + (flagAdjustMinus ? -tabHeight : tabHeight)
-  }
   /// Change a Slice frequency while maintaining its position in the Panadapter display
   ///
   /// - Parameters:
@@ -284,34 +213,39 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
   ///   - frequency:                the current Slice frequency
   ///   - newFrequency:             the new SLice frequency
   ///
-  func repositionPanadapter(center: Int, frequency: Int, newFrequency: Int) {
+  private func repositionPanadapter(center: Int, frequency: Int, newFrequency: Int) {
   
     slice!.frequency = newFrequency
-    panadapter!.center = newFrequency - (frequency - center)
+    _panadapter!.center = newFrequency - (frequency - center)
   }
-  
+ 
   // ----------------------------------------------------------------------------
   // MARK: - Observation methods
   
   private var _observations    = [NSKeyValueObservation]()
   
-  /// Add observers for Slice properties
+  /// Add observers for properties used by the Flag
   ///
-  private func createObservations(_ observations: inout [NSKeyValueObservation], object: xLib6000.Slice ) {
+  private func createObservations(slice: xLib6000.Slice, panadapter: Panadapter ) {
     
-    observations = [
-//      object.observe(\.filterHigh, options: [.initial, .new], changeHandler: observer),
-//      object.observe(\.filterLow, options: [.initial, .new], changeHandler: observer)
+    _observations = [
+      slice.observe(\.frequency, options: [.initial, .new], changeHandler: positionFlags(_:_:)),
+      panadapter.observe(\.center, options: [.initial, .new], changeHandler: positionFlags(_:_:)),
+      panadapter.observe(\.bandwidth, options: [.initial, .new], changeHandler: positionFlags(_:_:))
     ]
   }
-  private func observer(_ object: Any, _ change: Any) {
+  /// Respond to a change in Panadapter or Slice properties
+  ///
+  /// - Parameters:
+  ///   - object:               the object rhat changed
+  ///   - change:               the change
+  ///
+  private func positionFlags(_ object: Any, _ change: Any) {
     
-//    let width = Float(slice!.filterHigh - slice!.filterLow)/1000.0
-//    
-//    DispatchQueue.main.async { [unowned self] in
-//      self._filter.floatValue = width
-//    }
+    // move the Flag(s)
+    (parent as! PanadapterViewController).positionFlags()
   }
+  
   // ----------------------------------------------------------------------------
   // MARK: - Notification Methods
   
