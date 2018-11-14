@@ -69,6 +69,7 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
   private var _end                          : Int  { return _center + (_bandwidth/2) }
   private var _hzPerUnit                    : CGFloat { return CGFloat(_end - _start) / _panadapter!.xPixels }
 
+  private weak var _controlsVc              : ControlsViewController?
   var onLeft                                = true
   var observations                          = [NSKeyValueObservation]()
   var flagXPositionConstraint               : NSLayoutConstraint?
@@ -78,6 +79,11 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
   
   @IBOutlet private weak var _frequencyField: NSTextField!
   @IBOutlet private weak var _sMeter        : NSLevelIndicator!
+  @IBOutlet private weak var _audButton     : NSButton!
+  @IBOutlet private weak var _dspButton     : NSButton!
+  @IBOutlet private weak var _modeButton    : NSButton!
+  @IBOutlet private weak var _xritButton    : NSButton!
+  @IBOutlet private weak var _daxButton     : NSButton!
   
   private var _doubleClick                  : NSClickGestureRecognizer!
   private var _previousFrequency            = 0
@@ -143,9 +149,10 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
   ///   - panadapter:               a Panadapter reference
   ///   - slice:                    a Slice reference
   ///
-  func configure(panadapter: Panadapter?, slice: xLib6000.Slice?) {
+  func configure(panadapter: Panadapter?, slice: xLib6000.Slice?, controlsVc: ControlsViewController) {
     self._panadapter = panadapter
     self.slice = slice!
+    self._controlsVc = controlsVc
 
   }
   /// Invalidate observations (optionally remove)
@@ -172,18 +179,32 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
   ///
   @IBAction func buttons(_ sender: NSButton) {
     
-//    // is the button "on"?
-//    if sender.boolState {
-//
-//      // YES, turn off any other buttons
-//      if sender != _audButton { _audButton.boolState = false}
-//      if sender != _dspButton { _dspButton.boolState = false}
-//      if sender != _modeButton { _modeButton.boolState = false}
-//      if sender != _xritButton { _xritButton.boolState = false}
-//      if sender != _daxButton { _daxButton.boolState = false}
-//    }
-//    // display / hide the selected view
-//    selectView(sender.identifier!.rawValue)
+    // is the button "on"?
+    if sender.boolState {
+
+      // YES, turn off any other buttons
+      if sender != _audButton { _audButton.boolState = false}
+      if sender != _dspButton { _dspButton.boolState = false}
+      if sender != _modeButton { _modeButton.boolState = false}
+      if sender != _xritButton { _xritButton.boolState = false}
+      if sender != _daxButton { _daxButton.boolState = false}
+    
+      // select the desired tab
+      _controlsVc?.selectedTabViewItemIndex = sender.tag
+      
+      // unhide the controls
+      _controlsVc!.view.isHidden = false
+
+    } else {
+      
+      // hide the controls
+      _controlsVc!.view.isHidden = true
+    }
+    
+    
+    
+    
+    
   }
   
   // ----------------------------------------------------------------------------
@@ -243,7 +264,7 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
   private func positionFlags(_ object: Any, _ change: Any) {
     
     // move the Flag(s)
-    (parent as! PanadapterViewController).positionFlags()
+    (parent as? PanadapterViewController)?.positionFlags()
   }
   
   // ----------------------------------------------------------------------------

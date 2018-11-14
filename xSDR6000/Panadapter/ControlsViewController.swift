@@ -11,20 +11,17 @@ import xLib6000
 
 class ControlsViewController: NSTabViewController {
 
+  static let kControlsHeight                : CGFloat = 100
+
   @objc dynamic weak var slice              : xLib6000.Slice?
   @objc dynamic weak var panadapter         : Panadapter?
   
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-      
-      
-      // set the background color of the Flag
-//      view.layer?.backgroundColor = NSColor.lightGray.cgColor
-      
-      tabViewItems[0].view?.layer?.backgroundColor = NSColor.lightGray.cgColor
-    }
+  override func viewDidLoad() {
+    super.viewDidLoad()
     
+    // set the background color of the Controls
+//    tabViewItems[0].view?.layer?.backgroundColor = NSColor.lightGray.cgColor
+  }
 
   // ----------------------------------------------------------------------------
   // MARK: - Internal methods
@@ -39,6 +36,13 @@ class ControlsViewController: NSTabViewController {
     self.panadapter = panadapter
     self.slice = slice!
 
-    tabViewItems[selectedTabViewItemIndex].viewController?.representedObject = slice
+//    tabViewItems[selectedTabViewItemIndex].viewController?.representedObject = slice
+  }
+  
+  override func tabView(_ tabView: NSTabView, willSelect tabViewItem: NSTabViewItem?) {
+    
+    tabViewItem?.viewController?.representedObject = slice
+    tabViewItem?.view?.layer?.backgroundColor = NSColor.lightGray.cgColor
+
   }
 }

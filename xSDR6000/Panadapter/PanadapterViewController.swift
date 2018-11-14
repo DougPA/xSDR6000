@@ -701,25 +701,40 @@ final class PanadapterViewController        : NSViewController, NSGestureRecogni
     // get the Storyboard containing a Flag View Controller
     let sb = NSStoryboard(name: "Flag", bundle: nil)
 
-    // create a Flag View Controller
+    // create a Flag View Controller & pass it needed parameters
     let flagVc = sb.instantiateController(withIdentifier: "Flag") as! FlagViewController
 
-    // pass needed parameters
-    flagVc.configure(panadapter: pan, slice: slice)
+    // create a Controls View Controller & pass it needed parameters
+    let controlsVc = sb.instantiateController(withIdentifier: "Controls") as! ControlsViewController
+    controlsVc.configure(panadapter: pan, slice: slice)
+    controlsVc.view.translatesAutoresizingMaskIntoConstraints = false
+    controlsVc.view.isHidden = true
+
+    // pass the FlagVc needed parameters
+    flagVc.configure(panadapter: pan, slice: slice, controlsVc: controlsVc)
+    flagVc.view.translatesAutoresizingMaskIntoConstraints = false
 
     _flags[slice.id] = flagVc
 
     DispatchQueue.main.sync { [unowned self] in
 
       addChild(flagVc)
-      
+      addChild(controlsVc)
+
       // add its view
       self.view.addSubview(flagVc.view)
-      
-      // constraints: height, width & top of the Flag (constants)
+      self.view.addSubview(controlsVc.view)
+
+      // Flag View constraints: height, width & top of the Flag (constants)
       flagVc.view.heightAnchor.constraint(equalToConstant: FlagViewController.kFlagHeight).isActive = true
       flagVc.view.widthAnchor.constraint(greaterThanOrEqualToConstant: FlagViewController.kFlagWidth).isActive = true
       flagVc.view.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
+
+      // Controls View constraints: height, leading, trailing & top of the Controls (constants)
+      controlsVc.view.heightAnchor.constraint(equalToConstant: ControlsViewController.kControlsHeight).isActive = true
+      controlsVc.view.leadingAnchor.constraint(equalTo: flagVc.view.leadingAnchor).isActive = true
+      controlsVc.view.trailingAnchor.constraint(equalTo: flagVc.view.trailingAnchor).isActive = true
+      controlsVc.view.topAnchor.constraint(equalTo: flagVc.view.bottomAnchor).isActive = true
     }
   }
   /// Remove the Flag on the specified Slice
