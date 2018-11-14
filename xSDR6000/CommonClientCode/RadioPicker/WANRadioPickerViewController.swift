@@ -294,7 +294,6 @@ final class WANRadioPickerViewController    : NSViewController, NSTableViewDeleg
       // Login to auth0
       // get an instance of Auth0 controller
       _auth0ViewController = storyboard!.instantiateController(withIdentifier: "Auth0Login") as? Auth0ViewController
-//      _auth0ViewController!.view.translatesAutoresizingMaskIntoConstraints = false
 
       // make this View Controller the delegate of the Auth0 controller
       _auth0ViewController!.representedObject = self
