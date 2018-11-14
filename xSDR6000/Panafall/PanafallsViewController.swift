@@ -88,11 +88,9 @@ class PanafallsViewController               : NSSplitViewController {
     
     // create a Panafall Button View Controller
     let panafallButtonVc = _sb!.instantiateController(withIdentifier: kPanafallButtonIdentifier) as! PanafallButtonViewController
-
+    
     // interact with the UI
     DispatchQueue.main.sync { [unowned self] in
-      
-//      panafallButtonVc.view.translatesAutoresizingMaskIntoConstraints = false
       
       // pass needed parameters
       panafallButtonVc.configure(panadapter: panadapter, waterfall: waterfall)
