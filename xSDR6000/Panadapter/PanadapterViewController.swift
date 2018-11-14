@@ -16,69 +16,69 @@ import xLib6000
 // MARK: - Panadapter View Controller class implementation
 // --------------------------------------------------------------------------------
 
-final class PanadapterViewController          : NSViewController, NSGestureRecognizerDelegate {
+final class PanadapterViewController        : NSViewController, NSGestureRecognizerDelegate {
   
   // ----------------------------------------------------------------------------
   // MARK: - Internal properties
   
-  
   enum DragType {
-    case dbm                                  // +/- Panadapter dbm upper/lower level
-    case frequency                            // +/- Panadapter bandwidth
-    case slice                                // +/- Slice frequency/width
-    case spectrum                             // +/- Panadapter center frequency
-    case tnf                                  // +/- Tnf frequency/width
+    case dbm                                // +/- Panadapter dbm upper/lower level
+    case frequency                          // +/- Panadapter bandwidth
+    case slice                              // +/- Slice frequency/width
+    case spectrum                           // +/- Panadapter center frequency
+    case tnf                                // +/- Tnf frequency/width
   }
   
   struct Dragable {
-    var type                                  = DragType.spectrum
-    var original                              = NSPoint(x: 0.0, y: 0.0)
-    var previous                              = NSPoint(x: 0.0, y: 0.0)
-    var current                               = NSPoint(x: 0.0, y: 0.0)
-    var percent                               : CGFloat = 0.0
-    var frequency                             : CGFloat = 0.0
-    var cursor                                : NSCursor!
-    var object                                : Any?
+    var type                                = DragType.spectrum
+    var original                            = NSPoint(x: 0.0, y: 0.0)
+    var previous                            = NSPoint(x: 0.0, y: 0.0)
+    var current                             = NSPoint(x: 0.0, y: 0.0)
+    var percent                             : CGFloat = 0.0
+    var frequency                           : CGFloat = 0.0
+    var cursor                              : NSCursor!
+    var object                              : Any?
   }
   
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
   
   @IBOutlet private weak var _frequencyLegendView  : FrequencyLegendView!
-  @IBOutlet private weak var _dbLegendView    : DbLegendView!
+  @IBOutlet private weak var _dbLegendView  : DbLegendView!
   @IBOutlet private weak var _panadapterView  : MTKView!
 
-  private var _radio: Radio?                  = Api.sharedInstance.radio
-  private weak var _panadapter                : Panadapter?
-  private var _panadapterRenderer             : PanadapterRenderer!
-  private let _log                            = OSLog(subsystem: Api.kDomainId + "." + kClientName, category: "PanadapterVC")
+  private var _radio: Radio?                = Api.sharedInstance.radio
+  private weak var _panadapter              : Panadapter?
+  private var _flags                        = [SliceId:FlagViewController]()
+  private var _panadapterRenderer           : PanadapterRenderer!
+  private let _log                          = OSLog(subsystem: Api.kDomainId + "." + kClientName, category: "PanadapterVC")
 
-  private var _center                         : Int {return _panadapter!.center }
-  private var _bandwidth                      : Int { return _panadapter!.bandwidth }
-  private var _start                          : Int { return _center - (_bandwidth/2) }
-  private var _end                            : Int  { return _center + (_bandwidth/2) }
-  private var _hzPerUnit                      : CGFloat { return CGFloat(_end - _start) / view.frame.width }
+  private var _center                       : Int {return _panadapter!.center }
+  private var _bandwidth                    : Int { return _panadapter!.bandwidth }
+  private var _start                        : Int { return _center - (_bandwidth/2) }
+  private var _end                          : Int  { return _center + (_bandwidth/2) }
+  private var _hzPerUnit                    : CGFloat { return CGFloat(_end - _start) / _panadapter!.xPixels }
   
   // gesture recognizer related
-  private var _clickLeft                      : NSClickGestureRecognizer!
-  private var _clickRight                     : NSClickGestureRecognizer!
-  private var _panCenter                      : NSPanGestureRecognizer!
-  private var _panBandwidth                   : NSPanGestureRecognizer!
-  private var _panRightButton                 : NSPanGestureRecognizer!
-  private var _panStart                       : NSPoint?
-  private var _panSlice                       : xLib6000.Slice?
-  private var _panTnf                         : xLib6000.Tnf?
-  private var _dbmTop                         = false
-  private var _newCursor                      : NSCursor?
-  private var _dbLegendSpacings               = [String]()                  // Db spacing choices
-  private var _dr                             = Dragable()
+  private var _clickLeft                    : NSClickGestureRecognizer!
+  private var _clickRight                   : NSClickGestureRecognizer!
+  private var _panCenter                    : NSPanGestureRecognizer!
+  private var _panBandwidth                 : NSPanGestureRecognizer!
+  private var _panRightButton               : NSPanGestureRecognizer!
+  private var _panStart                     : NSPoint?
+  private var _panSlice                     : xLib6000.Slice?
+  private var _panTnf                       : xLib6000.Tnf?
+  private var _dbmTop                       = false
+  private var _newCursor                    : NSCursor?
+  private var _dbLegendSpacings             = [String]()                  // Db spacing choices
+  private var _dr                           = Dragable()
 
-  private let kLeftButton                     = 0x01                        // button masks
-  private let kRightButton                    = 0x02
-  private let kEdgeTolerance                  = 10                          // percent of bandwidth
-  private let _dbLegendWidth                  : CGFloat = 40                // width of Db legend
-  private let _frequencyLegendHeight          : CGFloat = 20                // height of the Frequency legend
-  private let _filter                         = CIFilter(name: "CIDifferenceBlendMode")
+  private let kLeftButton                   = 0x01                        // button masks
+  private let kRightButton                  = 0x02
+  private let kEdgeTolerance                = 10                          // percent of bandwidth
+  private let _dbLegendWidth                : CGFloat = 40                // width of Db legend
+  private let _frequencyLegendHeight        : CGFloat = 20                // height of the Frequency legend
+  private let _filter                       = CIFilter(name: "CIDifferenceBlendMode")
 
   // ----------------------------------------------------------------------------
   // MARK: - Overridden methods
@@ -88,8 +88,6 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    view.translatesAutoresizingMaskIntoConstraints = false
-    
     // determine how the various views are blended on screen
     _panadapterView.compositingFilter = _filter
     _dbLegendView.compositingFilter = _filter
@@ -97,6 +95,13 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
 
     // create the Renderer
     _panadapterRenderer = PanadapterRenderer(view: _panadapterView, clearColor: Defaults[.spectrumBackground])
+
+    // tell the Panadapter to tell the Radio the current dimensions
+    _panadapter?.xPixels = view.frame.width
+    _panadapter?.yPixels = view.frame.height
+    
+    // update the Constant values with the new size
+    _panadapterRenderer.updateConstants(size: view.frame.size)
 
     // get the list of possible Db level spacings
     _dbLegendSpacings = Defaults[.dbLegendSpacings]
@@ -133,6 +138,8 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
     
     // make the Renderer the Stream Handler
     _panadapter?.delegate = _panadapterRenderer
+    
+    
   }
   
   // ----------------------------------------------------------------------------
@@ -327,7 +334,45 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
       redrawSlices()
     }
   }
-  
+  // Position Slice flags
+  //
+  func positionFlags() {
+    var current  : (isOnLeft: Bool, freqPosition: CGFloat) = (true, 0.0)
+    var previous : (isOnLeft: Bool, freqPosition: CGFloat) = (true, 0.0)
+
+    // sort the Flags from left to right
+    for flagVc in _flags.values.sorted(by: {$0.slice!.frequency < $1.slice!.frequency}) {
+      
+      // calculate the frequency's position
+      current.freqPosition = CGFloat(flagVc.slice!.frequency - _start) / _hzPerUnit
+      
+      // is there room for the Flag on the left?
+     if previous.isOnLeft {
+        current.isOnLeft = current.freqPosition - previous.freqPosition > FlagViewController.kFlagWidth + FlagViewController.kFlagOffset
+     } else {
+        current.isOnLeft = current.freqPosition - previous.freqPosition > 2 * (FlagViewController.kFlagWidth + FlagViewController.kFlagOffset) + 10.0
+      }
+      
+      // Flag position based on room for it
+      let flagPosition = (current.isOnLeft ? current.freqPosition - FlagViewController.kFlagWidth - FlagViewController.kFlagOffset : current.freqPosition + FlagViewController.kFlagOffset)
+      
+      DispatchQueue.main.async { [unowned self] in
+
+        if flagVc.flagXPositionConstraint == nil {
+          // constraints: leading edge of the Flag (will be changed as Flag moves)
+          flagVc.flagXPositionConstraint = flagVc.view.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: flagPosition)
+          flagVc.flagXPositionConstraint!.identifier = "FlagPosition"
+          flagVc.flagXPositionConstraint!.isActive = true
+
+        } else {
+          flagVc.flagXPositionConstraint?.constant = flagPosition
+        }
+      }
+      // make the current State the previous one
+      previous = current
+    }
+  }
+
   // ----------------------------------------------------------------------------
   // MARK: - Private methods
   
@@ -394,14 +439,14 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
     }
     return tnf
   }
-
+  
   // ----------------------------------------------------------------------------
   // MARK: - Observation methods
 
   private var _baseObservations    = [NSKeyValueObservation]()
   private var _tnfObservations     = [NSKeyValueObservation]()
 
-  /// Add observations of various properties
+  /// Add observations of various properties used by the Panadapter
   ///
   private func createBaseObservations(_ observations: inout [NSKeyValueObservation]) {
 
@@ -433,24 +478,14 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
 
     ]
   }
-  /// Add observers for Slice properties
+  /// Add observations of Tnf's used by the Panadapter
   ///
-    private func createSliceObservations(_ observations: inout [NSKeyValueObservation], object: xLib6000.Slice ) {
+  private func addTnfObservations(_ observations: inout [NSKeyValueObservation], tnf: Tnf ) {
 
-      observations = [
-        object.observe(\.active, options: [.initial, .new], changeHandler: redrawFrequencyLegend),
-        object.observe(\.filterHigh, options: [.initial, .new], changeHandler: redrawFrequencyLegend),
-        object.observe(\.filterLow, options: [.initial, .new], changeHandler: redrawFrequencyLegend)
-      ]
-  }
-  /// Add observers for Tnf properties
-  ///
-  private func addTnfObservations(_ observations: inout [NSKeyValueObservation], object: Tnf ) {
-
-    observations.append( object.observe(\.frequency, options: [.initial, .new], changeHandler: redrawFrequencyLegend) )
-    observations.append( object.observe(\.depth, options: [.initial, .new], changeHandler: redrawFrequencyLegend) )
-    observations.append( object.observe(\.width, options: [.initial, .new], changeHandler: redrawFrequencyLegend) )
-    observations.append( object.observe(\.permanent, options: [.initial, .new], changeHandler: redrawFrequencyLegend) )
+    observations.append( tnf.observe(\.frequency, options: [.initial, .new], changeHandler: redrawFrequencyLegend) )
+    observations.append( tnf.observe(\.depth, options: [.initial, .new], changeHandler: redrawFrequencyLegend) )
+    observations.append( tnf.observe(\.width, options: [.initial, .new], changeHandler: redrawFrequencyLegend) )
+    observations.append( tnf.observe(\.permanent, options: [.initial, .new], changeHandler: redrawFrequencyLegend) )
   }
   /// Invalidate observations (optionally remove)
   ///
@@ -479,7 +514,7 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
     // Panadapter background color
     _panadapterView.clearColor = Defaults[.spectrumBackground].metalClearColor
   }
-  /// Respond to observations requiring a redraw
+  /// Respond to observations requiring a redraw of the entire Panadapter
   ///
   /// - Parameters:
   ///   - object:                       the object holding the properties
@@ -490,7 +525,7 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
     _frequencyLegendView.redraw()
     _dbLegendView.redraw()
   }
-  /// Respond to observations requiring a redraw
+  /// Respond to observations requiring a redraw of the FrequencyLegend view
   ///
   /// - Parameters:
   ///   - object:                       the object holding the properties
@@ -500,7 +535,7 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
     
     _frequencyLegendView.redraw()
   }
-  /// Respond to observations requiring a redraw
+  /// Respond to observations requiring a redraw of the dbLegend view
   ///
   /// - Parameters:
   ///   - object:                       the object holding the properties
@@ -510,16 +545,17 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
     
     _dbLegendView.redraw()
   }
-  /// Respond to observations requiring a redraw
-  ///
-  /// - Parameters:
-  ///   - object:                       the object holding the properties
-  ///   - change:                       the change
-  ///
-  private func frequencyObserver(_ object: Any, _ change: Any) {
-    
-    Swift.print("slice \((object as! xLib6000.Slice).id), freq = \((object as! xLib6000.Slice).frequency)")
-  }
+//  /// Respond to observations requiring Flags to be moved
+//  ///
+//  /// - Parameters:
+//  ///   - object:                       the object holding the properties
+//  ///   - change:                       the change
+//  ///
+//  private func repositionFlags(_ object: Any, _ change: Any) {
+//
+//    // call repositionFlag on each FlagVc
+//    _flags.forEach( { $0.value.repositionFlag(for: $0.value.slice!)} )
+//  }
 
   // ----------------------------------------------------------------------------
   // MARK: - Notification Methods
@@ -545,10 +581,11 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
   ///
   @objc private func frameDidChange(_ note: Notification) {
     
+
     // tell the Panadapter to tell the Radio the current dimensions
     _panadapter?.xPixels = view.frame.width
     _panadapter?.yPixels = view.frame.height
-    
+
     // update the Constant values with the new size
     _panadapterRenderer.updateConstants(size: view.frame.size)
   }
@@ -589,9 +626,8 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
       NC.makeObserver(self, with: #selector(sliceWillBeRemoved(_:)), of: .sliceWillBeRemoved, object: slice)
       
       // add a Flag & Observations of this Slice
-      addFlag(for: slice)
+      addFlag(for: slice, on: panadapter)
       
-      // force a redraw
       _frequencyLegendView.redraw()
     }
   }
@@ -608,7 +644,7 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
     if let panadapter = _panadapter, slice.panadapterId == panadapter.id  {
       
       // YES, log the event
-      os_log("Slice will be removed: ID = %{public}@, pan =  %{public}@", log: _log, type: .info, slice.id, panadapter.id.hex)
+      os_log("Slice will be removed: ID = %{public}@, pan =  %{public}@, freq = %{public}d", log: _log, type: .info, slice.id, panadapter.id.hex, slice.frequency)
       
       // remove the Flag & Observations of this Slice
       removeFlag(for: slice)
@@ -630,7 +666,7 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
     os_log("Tnf added: ID = %{public}@", log: _log, type: .info, tnf.id)
     
     // add observations for this Tnf
-    addTnfObservations(&_tnfObservations, object: tnf)
+    addTnfObservations(&_tnfObservations, tnf: tnf)
     
     // force a redraw
     _frequencyLegendView.redraw()
@@ -651,7 +687,7 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
     invalidateObservations(&_tnfObservations)
     
     // put back all except the one being removed
-    _radio!.tnfs.forEach { if $0.value != tnfToRemove { addTnfObservations(&_tnfObservations, object: $0.value) } }
+    _radio!.tnfs.forEach { if $0.value != tnfToRemove { addTnfObservations(&_tnfObservations, tnf: $0.value) } }
     
     // force a redraw
     _frequencyLegendView.redraw()
@@ -660,30 +696,30 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
   ///
   /// - Parameter for:            a Slice
   ///
-  private func addFlag(for slice: xLib6000.Slice) {
+  private func addFlag(for slice: xLib6000.Slice, on pan: Panadapter) {
 
     // get the Storyboard containing a Flag View Controller
     let sb = NSStoryboard(name: "Flag", bundle: nil)
 
     // create a Flag View Controller
     let flagVc = sb.instantiateController(withIdentifier: "Flag") as! FlagViewController
-//    flagVc.view.translatesAutoresizingMaskIntoConstraints = false
 
     // pass needed parameters
-    flagVc.configure(panadapter: _panadapter, slice: slice)
-    
-    
-    // create the Slice observations
-    createSliceObservations( &flagVc.sliceObservations, object: slice)
+    flagVc.configure(panadapter: pan, slice: slice)
 
-    _frequencyLegendView.flags.append(flagVc)
+    _flags[slice.id] = flagVc
 
     DispatchQueue.main.sync { [unowned self] in
 
       addChild(flagVc)
-
+      
       // add its view
       self.view.addSubview(flagVc.view)
+      
+      // constraints: height, width & top of the Flag (constants)
+      flagVc.view.heightAnchor.constraint(equalToConstant: FlagViewController.kFlagHeight).isActive = true
+      flagVc.view.widthAnchor.constraint(greaterThanOrEqualToConstant: FlagViewController.kFlagWidth).isActive = true
+      flagVc.view.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
     }
   }
   /// Remove the Flag on the specified Slice
@@ -691,25 +727,20 @@ final class PanadapterViewController          : NSViewController, NSGestureRecog
   /// - Parameter id:             a Slice Id
   ///
   private func removeFlag(for slice: xLib6000.Slice) {
-    var indexToRemove : Int?
+    
+    let flagVc = _flags[slice.id]
+    flagVc?.invalidateObservations()
 
-    for (i, flagVc) in _frequencyLegendView.flags.enumerated() where flagVc.slice == slice {
-
-      // remove the Slice observers
-      invalidateObservations(&flagVc.sliceObservations)
+    _flags[slice.id] = nil
+    
+    DispatchQueue.main.async {
       
-      indexToRemove = i
+      // remove its view
+      flagVc?.view.removeFromSuperview()
+      
+      // remove the view controller
+      flagVc?.removeFromParent()
 
-      DispatchQueue.main.async {
-
-        // remove its view
-        flagVc.view.removeFromSuperview()
-
-        // remove the view controller
-        flagVc.removeFromParent()
-      }
     }
-    // remove the Flags entry if the Slice was found
-    if let indexToRemove = indexToRemove { _frequencyLegendView.flags.remove(at: indexToRemove) }
   }
 }
