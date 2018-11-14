@@ -259,7 +259,6 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     
     // get an instance of the RadioPicker
     let radioPickerTabViewController = _radioPickerStoryboard!.instantiateController(withIdentifier: kRadioPickerIdentifier) as? NSTabViewController
-//    radioPickerTabViewController!.view.translatesAutoresizingMaskIntoConstraints = false
 
     // make this View Controller the delegate of the RadioPickers
     radioPickerTabViewController!.tabViewItems[kLocalTab].viewController!.representedObject = self
@@ -381,7 +380,6 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
       // SHOW, create a view controller
       let sbIdentifier = identifier
       let vc = _sideStoryboard!.instantiateController(withIdentifier: sbIdentifier ) as! NSViewController
-//      vc.view.translatesAutoresizingMaskIntoConstraints = false
       vc.identifier = NSUserInterfaceItemIdentifier(rawValue: identifier)
       
       // give it a reference to its Radio object
