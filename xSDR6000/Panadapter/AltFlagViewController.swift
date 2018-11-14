@@ -46,8 +46,6 @@ class AltFlagViewController: NSViewController, NSTextFieldDelegate {
   public override func viewDidLoad() {
     super.viewDidLoad()
     
-    view.translatesAutoresizingMaskIntoConstraints = false
-    
     // get the storyboard
     _storyBoard = NSStoryboard(name: "Flag", bundle: nil)
     
@@ -93,38 +91,6 @@ class AltFlagViewController: NSViewController, NSTextFieldDelegate {
   func configure(panadapter: Panadapter?, slice: xLib6000.Slice?) {
     self.panadapter = panadapter
     self.slice = slice!
-  }
-  /// Force the Frequency to be redrawn
-  ///
-  /// Move a Slice Flag to the specified position
-  ///
-  /// - Parameters:
-  ///   - frequencyPosition: the desired position
-  ///   - onLeft: Flag placement (Left / Right of frequency)
-  ///
-  func moveTo(_ frequencyPosition: NSPoint, frequency: Int, onLeft: Bool) {
-    
-    self.onLeft = onLeft
-    
-    // What side should the Flag be on?
-    if onLeft {
-      
-      // LEFT
-      _position.x = frequencyPosition.x - view.frame.width - kFlagOffset
-      
-    } else {
-      
-      // RIGHT
-      _position.x = frequencyPosition.x + kFlagOffset
-    }
-    _position.y = frequencyPosition.y
-    
-    // update the flag's position
-    view.setFrameOrigin(_position)
-    
-    //    _frequencyField.integerValue = frequency
-    
-    view.needsDisplay = true
   }
   
   // ----------------------------------------------------------------------------
