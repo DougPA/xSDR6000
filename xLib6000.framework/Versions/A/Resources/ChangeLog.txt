@@ -1,5 +1,9 @@
 xLib6000 Change Log
 
+v2.1.1
+
+Slice.swift - in parseProperties(_:) added code to ignore the first frequency sent by the Radio
+
 v2.1.0
 
 refactored the Api state machine, eliminated setConnectionState()
