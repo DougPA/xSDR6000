@@ -38,7 +38,7 @@
 	<key>quickMode2</key>
 	<string>CW</string>
 	<key>quickMode3</key>
-	<string>AM</string>
+	<string>RTTY</string>
 	<key>sideViewOpen</key>
 	<false/>
 	<key>sliceActive</key>

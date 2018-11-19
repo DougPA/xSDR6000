@@ -40,6 +40,7 @@
 //          filterWidth
 //          letterId
 // --------------------------------------------------------------------------------
+
 import Cocoa
 import xLib6000
 
@@ -51,39 +52,44 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
   
   static let kSliceLetters : [String]       = ["A", "B", "C", "D", "E", "F", "G", "H"]
   static let kFlagOffset                    : CGFloat = 15.0/2.0
-  static let kFlagWidth                     : CGFloat = 240
-  static let kFlagHeight                    : CGFloat = 145
+  static let kFlagWidth                     : CGFloat = 300 
+  static let kFlagHeight                    : CGFloat = 110
   static let kFlagBorder                    : CGFloat = 20
   
   // ----------------------------------------------------------------------------
   // MARK: - Internal properties
-  
+
+  var flagXPositionConstraint               : NSLayoutConstraint?
+  var controlsHeightConstraint              : NSLayoutConstraint?
+
   @objc dynamic weak var slice              : xLib6000.Slice?
   @objc dynamic var letterId                : String { return FlagViewController.kSliceLetters[Int(slice!.id)!] }
-  @objc dynamic var filterWidth             : Float { return Float(slice!.filterHigh - slice!.filterLow)/1_000.0 }
+  @objc dynamic var tx                      : String { return slice!.txEnabled ? "TX" : "" }
 
+  // ----------------------------------------------------------------------------
+  // MARK: - Private properties
+  
+  @IBOutlet private var _filterWidth        : NSTextField!
+  @IBOutlet private var _frequencyField     : NSTextField!
+  @IBOutlet private var _sMeter             : NSLevelIndicator!
+  @IBOutlet private var _sLevel             : NSTextField!
+ 
+  @IBOutlet private var _audButton          : NSButton!
+  @IBOutlet private var _dspButton          : NSButton!
+  @IBOutlet private var _modeButton         : NSButton!
+  @IBOutlet private var _xritButton         : NSButton!
+  @IBOutlet private var _daxButton          : NSButton!
+  
   private weak var _panadapter              : Panadapter?
+  private weak var _controlsVc              : ControlsViewController?
+  
   private var _center                       : Int {return _panadapter!.center }
   private var _bandwidth                    : Int { return _panadapter!.bandwidth }
   private var _start                        : Int { return _center - (_bandwidth/2) }
   private var _end                          : Int  { return _center + (_bandwidth/2) }
   private var _hzPerUnit                    : CGFloat { return CGFloat(_end - _start) / _panadapter!.xPixels }
-
-  private weak var _controlsVc              : ControlsViewController?
-  var onLeft                                = true
-  var observations                          = [NSKeyValueObservation]()
-  var flagXPositionConstraint               : NSLayoutConstraint?
   
-  // ----------------------------------------------------------------------------
-  // MARK: - Private properties
-  
-  @IBOutlet private weak var _frequencyField: NSTextField!
-  @IBOutlet private weak var _sMeter        : NSLevelIndicator!
-  @IBOutlet private weak var _audButton     : NSButton!
-  @IBOutlet private weak var _dspButton     : NSButton!
-  @IBOutlet private weak var _modeButton    : NSButton!
-  @IBOutlet private weak var _xritButton    : NSButton!
-  @IBOutlet private weak var _daxButton     : NSButton!
+  private var _observations                 = [NSKeyValueObservation]()
   
   private var _doubleClick                  : NSClickGestureRecognizer!
   private var _previousFrequency            = 0
@@ -91,15 +97,28 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
   
   private let kLeftButton                   = 0x01                          // masks for Gesture Recognizers
   private let kFlagPixelOffset              : CGFloat = 15.0/2.0
-  
+  private let kAudHeight                    : CGFloat = 98.0
+  private let kDspHeight                    : CGFloat = 100.0
+  private let kModeHeight                   : CGFloat = 84.0
+  private let kXRitHeight                   : CGFloat = 69.0
+  private let kDaxHeight                    : CGFloat = 43.0
+
+  private let kAud                          = NSUserInterfaceItemIdentifier(rawValue: "AUD")
+  private let kDsp                          = NSUserInterfaceItemIdentifier(rawValue: "DSP")
+  private let kMode                         = NSUserInterfaceItemIdentifier(rawValue: "MODE")
+  private let kXRit                         = NSUserInterfaceItemIdentifier(rawValue: "XRIT")
+  private let kDax                          = NSUserInterfaceItemIdentifier(rawValue: "DAX")
+
   // ----------------------------------------------------------------------------
   // MARK: - Overridden methods
   
   public override func viewDidLoad() {
     super.viewDidLoad()
     
+    view.translatesAutoresizingMaskIntoConstraints = false
+
     // set the background color of the Flag
-    view.layer?.backgroundColor = NSColor.lightGray.cgColor
+    view.layer?.backgroundColor = NSColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.5).cgColor
 
     // find the S-Meter feed (if any, it may alreaady exist or it may come later as a sliceMeterAdded Notification)
     findSMeter()
@@ -149,7 +168,7 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
   ///   - panadapter:               a Panadapter reference
   ///   - slice:                    a Slice reference
   ///
-  func configure(panadapter: Panadapter?, slice: xLib6000.Slice?, controlsVc: ControlsViewController) {
+  func configure(panadapter: Panadapter?, slice: xLib6000.Slice?, controlsVc: ControlsViewController?) {
     self._panadapter = panadapter
     self.slice = slice!
     self._controlsVc = controlsVc
@@ -173,25 +192,65 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
   // ----------------------------------------------------------------------------
   // MARK: - Action methods
   
+  @IBAction func splitButton(_ sender: NSButton) {
+    
+    let offColor = NSColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.3)
+    
+    let string = "SPLIT"
+    let onAttributes = [NSAttributedString.Key.foregroundColor : NSColor.systemYellow]
+    let offAttributes = [NSAttributedString.Key.foregroundColor : offColor]
+    
+    let attr = (sender.boolState ? onAttributes : offAttributes)
+    let attributedString = NSAttributedString(string: string, attributes: attr)
+
+    sender.attributedTitle = attributedString
+  }
+  /// Respond to the cClose button
+  ///
+  /// - Parameter sender:         the button
+  ///
+  @IBAction func closeButton(_ sender: NSButton) {
+    slice!.remove()
+  }
   /// One of the "tab" view buttons has been clicked
   ///
   /// - Parameter sender:         the button
   ///
   @IBAction func buttons(_ sender: NSButton) {
+    var height : CGFloat = 0.0
     
     // is the button "on"?
     if sender.boolState {
 
       // YES, turn off any other buttons
-      if sender != _audButton { _audButton.boolState = false}
-      if sender != _dspButton { _dspButton.boolState = false}
-      if sender != _modeButton { _modeButton.boolState = false}
-      if sender != _xritButton { _xritButton.boolState = false}
-      if sender != _daxButton { _daxButton.boolState = false}
+      if sender.identifier != kAud { _audButton.boolState = false}
+      if sender.identifier != kDsp { _dspButton.boolState = false}
+      if sender.identifier != kMode { _modeButton.boolState = false}
+      if sender.identifier != kXRit { _xritButton.boolState = false}
+      if sender.identifier != kDax { _daxButton.boolState = false}
     
       // select the desired tab
       _controlsVc?.selectedTabViewItemIndex = sender.tag
       
+      // set the height of the Controls View
+      switch sender.identifier {
+      case kAud:
+        height = kAudHeight
+      case kDsp:
+        height = kDspHeight
+      case kMode:
+        height = kModeHeight
+      case kXRit:
+        height = kXRitHeight
+      case kDax:
+        height = kDaxHeight
+      default:
+        height = 100.0
+      }
+      controlsHeightConstraint!.isActive = false
+      controlsHeightConstraint!.constant = height
+      controlsHeightConstraint!.isActive = true
+
       // unhide the controls
       _controlsVc!.view.isHidden = false
 
@@ -200,11 +259,6 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
       // hide the controls
       _controlsVc!.view.isHidden = true
     }
-    
-    
-    
-    
-    
   }
   
   // ----------------------------------------------------------------------------
@@ -243,17 +297,42 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
   // ----------------------------------------------------------------------------
   // MARK: - Observation methods
   
-  private var _observations    = [NSKeyValueObservation]()
-  
   /// Add observers for properties used by the Flag
   ///
   private func createObservations(slice: xLib6000.Slice, panadapter: Panadapter ) {
     
     _observations = [
+      slice.observe(\.filterHigh, options: [.initial, .new], changeHandler: filterRefresh(_:_:)),
+      slice.observe(\.filterLow, options: [.initial, .new], changeHandler: filterRefresh(_:_:)),
       slice.observe(\.frequency, options: [.initial, .new], changeHandler: positionFlags(_:_:)),
       panadapter.observe(\.center, options: [.initial, .new], changeHandler: positionFlags(_:_:)),
       panadapter.observe(\.bandwidth, options: [.initial, .new], changeHandler: positionFlags(_:_:))
     ]
+  }
+  /// Respond to a change in Slice Filter width
+  ///
+  /// - Parameters:
+  ///   - object:               the object rhat changed
+  ///   - change:               the change
+  ///
+  private func filterRefresh(_ object: Any, _ change: Any) {
+    var formattedWidth = ""
+    
+    let width = slice!.filterHigh - slice!.filterLow
+    switch width {
+    case 1_000...:
+      formattedWidth = String(format: "%2.1fk", Float(width)/1000.0)
+    case 0..<1_000:
+      formattedWidth = String(format: "%3d", width)
+    default:
+      formattedWidth = "0"
+    }
+    DispatchQueue.main.async {
+      self._filterWidth.stringValue = formattedWidth
+    }
+
+    // update the filter outline
+    (parent as? PanadapterViewController)?.redrawFrequencyLegend()
   }
   /// Respond to a change in Panadapter or Slice properties
   ///
@@ -262,6 +341,8 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
   ///   - change:               the change
   ///
   private func positionFlags(_ object: Any, _ change: Any) {
+    
+//    Swift.print("FlagViewController: positionFlags, object = \(object), change = \(change), parent = \(parent)")
     
     // move the Flag(s)
     (parent as? PanadapterViewController)?.positionFlags()
@@ -277,7 +358,7 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
     
     NC.makeObserver(self, with: #selector(sliceMeterHasBeenAdded(_:)), of: .sliceMeterHasBeenAdded)
   }
-  private var _levelObservation    : NSKeyValueObservation?
+  private var _meterObservations    = [NSKeyValueObservation]()
   
   /// Process sliceMeterHasBeenAdded Notification
   ///
@@ -308,11 +389,52 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
   func observerSMeter(_ meter: Meter) {
     
     // create the observation
-    _levelObservation = meter.observe(\.value, options: [.initial, .new]) { (meter, change) in
-      
-      // process observations of the S-Meter
-      DispatchQueue.main.async { [unowned self] in
-        self._sMeter.floatValue = meter.value
+    _meterObservations.append( meter.observe(\.value, options: [.initial, .new], changeHandler: meterUpdate(_:_:)) )
+  }
+  /// Respond to a change in the S-Meter
+  ///
+  /// - Parameters:
+  ///   - object:                 the Meter
+  ///   - change:                 the Change
+  ///
+  private func meterUpdate(_ object: Any, _ change: Any) {
+    
+    DispatchQueue.main.async { [unowned self] in
+
+      let meter = object as! Meter
+
+      self._sMeter.floatValue = meter.value
+      switch meter.value {
+      case ..<(-121):
+        self._sLevel.stringValue = "S0"
+      case (-121)..<(-115):
+        self._sLevel.stringValue = "S1"
+      case (-115)..<(-109):
+        self._sLevel.stringValue = "S2"
+      case (-109)..<(-103):
+        self._sLevel.stringValue = "S3"
+      case (-103)..<(-97):
+        self._sLevel.stringValue = "S4"
+      case (-103)..<(-97):
+        self._sLevel.stringValue = "S5"
+      case (-97)..<(-91):
+        self._sLevel.stringValue = "S6"
+      case (-91)..<(-85):
+        self._sLevel.stringValue = "S7"
+      case (-85)..<(-79):
+        self._sLevel.stringValue = "S8"
+      case (-79)..<(-73):
+        self._sLevel.stringValue = "S9"
+      case (-73)..<(-63):
+        self._sLevel.stringValue = "+10"
+      case (-63)..<(-53):
+        self._sLevel.stringValue = "+20"
+      case (-53)..<(-43):
+        self._sLevel.stringValue = "+30"
+      case (-43)...:
+        self._sLevel.stringValue = "+40"
+      default:
+        break
       }
     }
   }

@@ -66,6 +66,10 @@
 		91794984212EFB0F00D9750A /* CARingBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91794981212EFB0E00D9750A /* CARingBuffer.cpp */; };
 		9179498A2139CC0000D9750A /* TxViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917949892139CC0000D9750A /* TxViewController.swift */; };
 		9179498C213A1E5F00D9750A /* AltFlagViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9179498B213A1E5F00D9750A /* AltFlagViewController.swift */; };
+		917AE6E021A241260073A5F7 /* AudioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917AE6DF21A241260073A5F7 /* AudioViewController.swift */; };
+		917AE6E221A246010073A5F7 /* DspViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917AE6E121A246010073A5F7 /* DspViewController.swift */; };
+		917AE6E521A2F84B0073A5F7 /* XRitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917AE6E421A2F84B0073A5F7 /* XRitViewController.swift */; };
+		917AE6E721A2F86E0073A5F7 /* DaxViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917AE6E621A2F86E0073A5F7 /* DaxViewController.swift */; };
 		9185B0D4208683C7004D4C40 /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9185B0C6208683C7004D4C40 /* Keychain.swift */; };
 		9185B0D5208683C7004D4C40 /* JWTDecode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9185B0C8208683C7004D4C40 /* JWTDecode.swift */; };
 		9185B0D6208683C7004D4C40 /* JWT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9185B0C9208683C7004D4C40 /* JWT.swift */; };
@@ -166,6 +170,10 @@
 		91794982212EFB0E00D9750A /* RingBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RingBuffer.h; sourceTree = "<group>"; };
 		917949892139CC0000D9750A /* TxViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TxViewController.swift; sourceTree = "<group>"; };
 		9179498B213A1E5F00D9750A /* AltFlagViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AltFlagViewController.swift; sourceTree = "<group>"; };
+		917AE6DF21A241260073A5F7 /* AudioViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioViewController.swift; sourceTree = "<group>"; };
+		917AE6E121A246010073A5F7 /* DspViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DspViewController.swift; sourceTree = "<group>"; };
+		917AE6E421A2F84B0073A5F7 /* XRitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XRitViewController.swift; sourceTree = "<group>"; };
+		917AE6E621A2F86E0073A5F7 /* DaxViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaxViewController.swift; sourceTree = "<group>"; };
 		9181A4582197869000B646C6 /* xSDR6000.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = xSDR6000.entitlements; sourceTree = "<group>"; };
 		9185B0C6208683C7004D4C40 /* Keychain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
 		9185B0C8208683C7004D4C40 /* JWTDecode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JWTDecode.swift; sourceTree = "<group>"; };
@@ -312,14 +320,11 @@
 			isa = PBXGroup;
 			children = (
 				913F7F0D2066DC7A00F35E9B /* DbLegendView.swift */,
-				9124B3FF2194BC150036FF2E /* ControlsViewController.swift */,
-				913F7F0C2066DC7A00F35E9B /* FlagViewController.swift */,
-				9179498B213A1E5F00D9750A /* AltFlagViewController.swift */,
 				913F7F102066DC7A00F35E9B /* FrequencyLegendView.swift */,
-				91475E5120A34C2D00ACE77D /* ModeViewController.swift */,
 				913F7F112066DC7A00F35E9B /* PanadapterRenderer.swift */,
 				913F7F142066DC7A00F35E9B /* PanadapterShaders.metal */,
 				913F7F0F2066DC7A00F35E9B /* PanadapterViewController.swift */,
+				917AE6E321A2F6A90073A5F7 /* Flag */,
 			);
 			path = Panadapter;
 			sourceTree = "<group>";
@@ -383,6 +388,21 @@
 				91794982212EFB0E00D9750A /* RingBuffer.h */,
 			);
 			path = RingBuffer;
+			sourceTree = "<group>";
+		};
+		917AE6E321A2F6A90073A5F7 /* Flag */ = {
+			isa = PBXGroup;
+			children = (
+				9179498B213A1E5F00D9750A /* AltFlagViewController.swift */,
+				917AE6DF21A241260073A5F7 /* AudioViewController.swift */,
+				9124B3FF2194BC150036FF2E /* ControlsViewController.swift */,
+				917AE6E121A246010073A5F7 /* DspViewController.swift */,
+				913F7F0C2066DC7A00F35E9B /* FlagViewController.swift */,
+				91475E5120A34C2D00ACE77D /* ModeViewController.swift */,
+				917AE6E421A2F84B0073A5F7 /* XRitViewController.swift */,
+				917AE6E621A2F86E0073A5F7 /* DaxViewController.swift */,
+			);
+			path = Flag;
 			sourceTree = "<group>";
 		};
 		9185B0C4208683C7004D4C40 /* CommonClientCode */ = {
@@ -536,6 +556,7 @@
 				913F7F4A2066DC7A00F35E9B /* BandButtonViewController.swift in Sources */,
 				9185B0D7208683C7004D4C40 /* Errors.swift in Sources */,
 				9185B0DD208683C7004D4C40 /* WANRadioPickerViewController.swift in Sources */,
+				917AE6E521A2F84B0073A5F7 /* XRitViewController.swift in Sources */,
 				913F7F662066DC7A00F35E9B /* WaterfallRenderer.swift in Sources */,
 				913F7F692066DC7A00F35E9B /* WaterfallShaders.metal in Sources */,
 				913F7F572066DC7A00F35E9B /* PanadapterShaders.metal in Sources */,
@@ -556,7 +577,10 @@
 				9179498A2139CC0000D9750A /* TxViewController.swift in Sources */,
 				9185B0D9208683C7004D4C40 /* DataExtensions.swift in Sources */,
 				913F7F422066DC7A00F35E9B /* Band.swift in Sources */,
+				917AE6E021A241260073A5F7 /* AudioViewController.swift in Sources */,
 				913F7F592066DC7A00F35E9B /* RxViewController.swift in Sources */,
+				917AE6E721A2F86E0073A5F7 /* DaxViewController.swift in Sources */,
+				917AE6E221A246010073A5F7 /* DspViewController.swift in Sources */,
 				91794984212EFB0F00D9750A /* CARingBuffer.cpp in Sources */,
 				913F7F4C2066DC7A00F35E9B /* MainWindowController.swift in Sources */,
 				9185B0D5208683C7004D4C40 /* JWTDecode.swift in Sources */,

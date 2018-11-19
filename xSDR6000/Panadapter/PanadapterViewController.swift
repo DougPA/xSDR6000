@@ -340,33 +340,41 @@ final class PanadapterViewController        : NSViewController, NSGestureRecogni
     var current  : (isOnLeft: Bool, freqPosition: CGFloat) = (true, 0.0)
     var previous : (isOnLeft: Bool, freqPosition: CGFloat) = (true, 0.0)
 
+//    Swift.print("_flags = \(_flags)")
+    
     // sort the Flags from left to right
     for flagVc in _flags.values.sorted(by: {$0.slice!.frequency < $1.slice!.frequency}) {
+      
+//      Swift.print("flagVc = \(flagVc)")
       
       // calculate the frequency's position
       current.freqPosition = CGFloat(flagVc.slice!.frequency - _start) / _hzPerUnit
       
       // is there room for the Flag on the left?
-     if previous.isOnLeft {
+      if previous.isOnLeft {
         current.isOnLeft = current.freqPosition - previous.freqPosition > FlagViewController.kFlagWidth + FlagViewController.kFlagOffset
-     } else {
+      } else {
         current.isOnLeft = current.freqPosition - previous.freqPosition > 2 * (FlagViewController.kFlagWidth + FlagViewController.kFlagOffset) + 10.0
       }
       
       // Flag position based on room for it
       let flagPosition = (current.isOnLeft ? current.freqPosition - FlagViewController.kFlagWidth - FlagViewController.kFlagOffset : current.freqPosition + FlagViewController.kFlagOffset)
+//      Swift.print("flagPosition = \(flagPosition)")
       
       DispatchQueue.main.async { [unowned self] in
-
+        
         if flagVc.flagXPositionConstraint == nil {
           // constraints: leading edge of the Flag (will be changed as Flag moves)
           flagVc.flagXPositionConstraint = flagVc.view.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: flagPosition)
           flagVc.flagXPositionConstraint!.identifier = "FlagPosition"
           flagVc.flagXPositionConstraint!.isActive = true
-
+          
         } else {
           flagVc.flagXPositionConstraint?.constant = flagPosition
         }
+        
+//        Swift.print("flagPosition = \(flagPosition)")
+//        flagVc.view.needsLayout = true
       }
       // make the current State the previous one
       previous = current
@@ -698,28 +706,25 @@ final class PanadapterViewController        : NSViewController, NSGestureRecogni
   ///
   private func addFlag(for slice: xLib6000.Slice, on pan: Panadapter) {
 
-    // get the Storyboard containing a Flag View Controller
-    let sb = NSStoryboard(name: "Flag", bundle: nil)
+    DispatchQueue.main.async { [unowned self] in
+      
+      // get the Storyboard containing a Flag View Controller
+      let sb = NSStoryboard(name: "Flag", bundle: nil)
+      
+      // create a Flag View Controller & pass it needed parameters
+      let flagVc = sb.instantiateController(withIdentifier: "Flag") as! FlagViewController
+      
+      // create a Controls View Controller & pass it needed parameters
+      let controlsVc = sb.instantiateController(withIdentifier: "Controls") as! ControlsViewController
+      controlsVc.configure(panadapter: pan, slice: slice)
+      
+      // pass the FlagVc needed parameters
+      flagVc.configure(panadapter: pan, slice: slice, controlsVc: controlsVc)
+      
+      self._flags[slice.id] = flagVc
 
-    // create a Flag View Controller & pass it needed parameters
-    let flagVc = sb.instantiateController(withIdentifier: "Flag") as! FlagViewController
-
-    // create a Controls View Controller & pass it needed parameters
-    let controlsVc = sb.instantiateController(withIdentifier: "Controls") as! ControlsViewController
-    controlsVc.configure(panadapter: pan, slice: slice)
-    controlsVc.view.translatesAutoresizingMaskIntoConstraints = false
-    controlsVc.view.isHidden = true
-
-    // pass the FlagVc needed parameters
-    flagVc.configure(panadapter: pan, slice: slice, controlsVc: controlsVc)
-    flagVc.view.translatesAutoresizingMaskIntoConstraints = false
-
-    _flags[slice.id] = flagVc
-
-    DispatchQueue.main.sync { [unowned self] in
-
-      addChild(flagVc)
-      addChild(controlsVc)
+      self.addChild(flagVc)
+      self.addChild(controlsVc)
 
       // add its view
       self.view.addSubview(flagVc.view)
@@ -731,7 +736,8 @@ final class PanadapterViewController        : NSViewController, NSGestureRecogni
       flagVc.view.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
 
       // Controls View constraints: height, leading, trailing & top of the Controls (constants)
-      controlsVc.view.heightAnchor.constraint(equalToConstant: ControlsViewController.kControlsHeight).isActive = true
+      flagVc.controlsHeightConstraint = controlsVc.view.heightAnchor.constraint(equalToConstant: ControlsViewController.kControlsHeight)
+      flagVc.controlsHeightConstraint!.isActive = true
       controlsVc.view.leadingAnchor.constraint(equalTo: flagVc.view.leadingAnchor).isActive = true
       controlsVc.view.trailingAnchor.constraint(equalTo: flagVc.view.trailingAnchor).isActive = true
       controlsVc.view.topAnchor.constraint(equalTo: flagVc.view.bottomAnchor).isActive = true

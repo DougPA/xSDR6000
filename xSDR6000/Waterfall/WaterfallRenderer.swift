@@ -256,7 +256,7 @@ public final class WaterfallRenderer: NSObject {
   ///
   func bandChange() {
 
-    _parameters[_textureIndex].topLine = 0
+//    _parameters[_textureIndex].topLine = 0
     _binBandwidth = 0
     _firstBinFreq = 0
   }
