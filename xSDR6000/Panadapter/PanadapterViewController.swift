@@ -13,6 +13,56 @@ import SwiftyUserDefaults
 import xLib6000
 
 // --------------------------------------------------------------------------------
+//  Created by PanafallsViewController
+//  Removed by WaterfallViewController
+//
+//  **** Notifications received ****
+//      frameDidChange -> update xPixels & yPixels
+//      .panadapterWillBeRemoved -> stop observations, stop stream processing
+//      .sliceHasBeenAdd -> add Flag & Slice observations
+//      .sliceWillBeRemoved -> remove Flag & slice observations
+//      .tnfHasBeenAdded -> add Tnf observations
+//      .tnfWillBeRemoved -> remove Tnf observations
+//
+//  **** Action Methods ****
+//      Left Doubleclick -> move active Slice
+//      Right Singleclick -> context menu (create/remove Slice/Tnf)
+//      ScrollWheel -> Slice frequency +/-
+//
+//  **** Observations ****
+//      Colors:
+//        Defaults.dbLegend
+//        Defaults.marker
+//        Defaults.dbLegendSpacing
+//        Defaults.frequencyLegend
+//        Defaults.sliceActive
+//        Defaults.markerSegment
+//        Defaults.markerEdge
+//        Defaults.sliceFilter,
+//        Defaults.sliceInactive
+//        Defaults.tnfActive
+//        Defaults.tnfInactive
+//        Defaults.gridLine
+//        Defaults.spectrum
+//        Defaults.spectrumBackground
+//
+//      Other values:
+//        Defaults.spectrumFillLevel
+//        Defaults.markersEnabled
+//        Panadapter.bandwidth
+//        Panadapter.center
+//        Radio.tnfsEnabled
+//        Tnf.frequency
+//        Tnf.depth
+//        Tnf.width
+//        Tnf.permanent
+//
+//  **** Constraints manipulated ***
+//      None
+//
+// --------------------------------------------------------------------------------
+
+// --------------------------------------------------------------------------------
 // MARK: - Panadapter View Controller class implementation
 // --------------------------------------------------------------------------------
 
@@ -43,9 +93,9 @@ final class PanadapterViewController        : NSViewController, NSGestureRecogni
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
   
-  @IBOutlet private weak var _frequencyLegendView  : FrequencyLegendView!
-  @IBOutlet private weak var _dbLegendView  : DbLegendView!
-  @IBOutlet private weak var _panadapterView  : MTKView!
+  @IBOutlet private weak var _frequencyLegendView : FrequencyLegendView!
+  @IBOutlet private weak var _dbLegendView        : DbLegendView!
+  @IBOutlet private weak var _panadapterView      : MTKView!
 
   private var _radio: Radio?                = Api.sharedInstance.radio
   private weak var _panadapter              : Panadapter?
@@ -75,10 +125,9 @@ final class PanadapterViewController        : NSViewController, NSGestureRecogni
 
   private let kLeftButton                   = 0x01                        // button masks
   private let kRightButton                  = 0x02
-  private let kEdgeTolerance                = 10                          // percent of bandwidth
-  private let _dbLegendWidth                : CGFloat = 40                // width of Db legend
-  private let _frequencyLegendHeight        : CGFloat = 20                // height of the Frequency legend
-  private let _filter                       = CIFilter(name: "CIDifferenceBlendMode")
+  private let kDbLegendWidth                : CGFloat = 40                // width of Db legend
+  private let kFrequencyLegendHeight        : CGFloat = 20                // height of the Frequency legend
+  private let kFilter                       = CIFilter(name: "CIDifferenceBlendMode")
 
   // ----------------------------------------------------------------------------
   // MARK: - Overridden methods
@@ -89,9 +138,9 @@ final class PanadapterViewController        : NSViewController, NSGestureRecogni
     super.viewDidLoad()
     
     // determine how the various views are blended on screen
-    _panadapterView.compositingFilter = _filter
-    _dbLegendView.compositingFilter = _filter
-    _frequencyLegendView.compositingFilter = _filter
+    _panadapterView.compositingFilter = kFilter
+    _dbLegendView.compositingFilter = kFilter
+    _frequencyLegendView.compositingFilter = kFilter
 
     // create the Renderer
     _panadapterRenderer = PanadapterRenderer(view: _panadapterView, clearColor: Defaults[.spectrumBackground])
@@ -221,13 +270,13 @@ final class PanadapterViewController        : NSViewController, NSGestureRecogni
       _dr.object = nil
 
       // what type of drag?
-      if _dr.original.y < _frequencyLegendHeight {
+      if _dr.original.y < kFrequencyLegendHeight {
 
         // in frequency legend, bandwidth drag
         _dr.type = .frequency
         _dr.cursor = NSCursor.resizeLeftRight
 
-      } else if _dr.original.x < view.frame.width - _dbLegendWidth {
+      } else if _dr.original.x < view.frame.width - kDbLegendWidth {
 
         // in spectrum, check for presence of Slice or Tnf
         let dragSlice = hitTestSlice(at: _dr.frequency)
@@ -297,7 +346,7 @@ final class PanadapterViewController        : NSViewController, NSGestureRecogni
     if gr.action == #selector(PanadapterViewController.clickRight(_:)) {
 
       // YES, if not over the legend, push it up the responder chain
-      return view.convert(event.locationInWindow, from: nil).x >= view.frame.width - _dbLegendWidth
+      return view.convert(event.locationInWindow, from: nil).x >= view.frame.width - kDbLegendWidth
 
     } else {
 
@@ -472,13 +521,12 @@ final class PanadapterViewController        : NSViewController, NSGestureRecogni
       Defaults.observe(\.sliceInactive, options: [.initial, .new], changeHandler: redrawFrequencyLegend),
       Defaults.observe(\.tnfActive, options: [.initial, .new], changeHandler: redrawFrequencyLegend),
       Defaults.observe(\.tnfInactive, options: [.initial, .new], changeHandler: redrawFrequencyLegend),
-      
+      Defaults.observe(\.gridLine, options: [.initial, .new], changeHandler: redrawFrequencyAndDbLegend),
+
       _panadapter!.observe(\.bandwidth, options: [.initial, .new], changeHandler: redrawFrequencyLegend),
       _panadapter!.observe(\.center, options: [.initial, .new], changeHandler: redrawFrequencyLegend),
       
       _radio!.observe(\.tnfsEnabled, options: [.initial, .new], changeHandler: redrawFrequencyLegend),
-
-      Defaults.observe(\.gridLine, options: [.initial, .new], changeHandler: redrawFrequencyAndDbLegend),
 
       Defaults.observe(\.spectrumFillLevel, options: [.initial, .new], changeHandler: defaultsObserver),
       Defaults.observe(\.spectrum, options: [.initial, .new], changeHandler: defaultsObserver),

@@ -9,6 +9,25 @@
 import Cocoa
 import xLib6000
 
+// --------------------------------------------------------------------------------
+//  Created by Application load
+//  Removed by Application termination
+//
+//  **** Notifications received ****
+//      None
+//
+//  **** Observations ****
+//      None
+//
+//  **** View Bindings ****
+//      None
+//
+// --------------------------------------------------------------------------------
+
+// --------------------------------------------------------------------------------
+// MARK: - Main Window Controller class implementation
+// --------------------------------------------------------------------------------
+
 class MainWindowController                  : NSWindowController {
   
   @objc dynamic var api                     = Api.sharedInstance

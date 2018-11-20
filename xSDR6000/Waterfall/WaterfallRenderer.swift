@@ -120,7 +120,15 @@ public final class WaterfallRenderer: NSObject {
   private var _metalView                    : MTKView!
   private var _device                       : MTLDevice!
   
-  private var _constants                    = Constants(blackLevel: 0, colorGain: 0.0, lineNumber: 0 )
+  private var _constants                    : Constants!
+  
+  private let _q                            = DispatchQueue(label: Api.kId + ".waterfallRenderQ", qos: .userInteractive)
+
+  private var _constantsX                   : Constants {
+    get { return _q.sync { _constants } }
+    set { _q.sync(flags: .barrier) { _constants = newValue } }
+  }
+  
   private var _constantsBuffer              : MTLBuffer!
   
   private var _waterfallPipelineState       : MTLRenderPipelineState!       // render pipeline state
@@ -203,6 +211,8 @@ public final class WaterfallRenderer: NSObject {
     
     super.init()
     
+    _constantsX = Constants(blackLevel: 0, colorGain: 0.0, lineNumber: 0 )
+
     // set the Metal view Clear color
     clearColor(color)
     
@@ -221,8 +231,8 @@ public final class WaterfallRenderer: NSObject {
     
     let blackLevel = ( autoBlack ? _autoBlackLevel : UInt16( Float(blackLevel)/100.0 * Float(UInt16.max) ))
     
-    _constants.blackLevel = blackLevel
-    _constants.colorGain = Float(colorGain)/100.0
+    _constantsX.blackLevel = blackLevel
+    _constantsX.colorGain = Float(colorGain)/100.0
     
     // Mapping of the Constants struct
     //  <------ 16 ------>                      blackLevel
@@ -233,7 +243,7 @@ public final class WaterfallRenderer: NSObject {
     //      NOTE: simple copy, only possible due to the arrangement of the struct with no padding
     ///
     let bufferPtr = _constantsBuffer!.contents()
-    memcpy(bufferPtr, &_constants, MemoryLayout.stride(ofValue: _constants))
+    memcpy(bufferPtr, &_constants, MemoryLayout.stride(ofValue: _constantsX))
   }  
   /// Copy constants to the Constants Buffer
   ///
@@ -250,7 +260,7 @@ public final class WaterfallRenderer: NSObject {
     //      NOTE: simple copy, only possible due to the arrangement of the struct with no padding
     ///
     let bufferPtr = _constantsBuffer!.contents()
-    memcpy(bufferPtr, &_constants, MemoryLayout.stride(ofValue: _constants))
+    memcpy(bufferPtr, &_constants, MemoryLayout.stride(ofValue: _constantsX))
   }
   /// Change bands & adjust the Waterfall
   ///
@@ -357,7 +367,7 @@ public final class WaterfallRenderer: NSObject {
     }
     
     // create the Uniforms buffer
-    _constantsBuffer = _device.makeBuffer(length: MemoryLayout.stride(ofValue: _constants))
+    _constantsBuffer = _device.makeBuffer(length: MemoryLayout.stride(ofValue: _constantsX))
     
     // create and save a Command Queue object
     _commandQueue = _device.makeCommandQueue()

@@ -10,7 +10,24 @@ import Cocoa
 import os.log
 import xLib6000
 
-//public typealias Params = (radio: Radio, panadapter: Panadapter?, waterfall: Waterfall?)     // Radio & Panadapter references
+// --------------------------------------------------------------------------------
+//  Created by RadioViewController
+//  Removed by Application termination
+//
+//  **** Notifications received ****
+//      .panadapterHasBeenAdded -> log only
+//      .waterfallHasBeenAdded -> create Panafall view hierarchy
+//
+//  **** Action Methods ****
+//      None
+//
+//  **** Observations ****
+//      None
+//
+//  **** View Bindings ****
+//      None
+//
+// --------------------------------------------------------------------------------
 
 class PanafallsViewController               : NSSplitViewController {
   

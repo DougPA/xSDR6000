@@ -276,16 +276,16 @@
 		913F7EFA2066DC7900F35E9B /* Misc */ = {
 			isa = PBXGroup;
 			children = (
-				91D60770215149A300123D77 /* LevelIndicator.swift */,
-				9179497B212EFB0E00D9750A /* RingBuffer */,
 				916909C72113E40C00164044 /* AudioHelper.swift */,
 				913F7EFB2066DC7900F35E9B /* Band.swift */,
 				913F7EFD2066DC7900F35E9B /* BandSegments.plist */,
 				913F7EFC2066DC7900F35E9B /* Defaults.plist */,
 				913F7EFE2066DC7900F35E9B /* Filters.plist */,
+				91D60770215149A300123D77 /* LevelIndicator.swift */,
 				913F7EFF2066DC7900F35E9B /* OpusDecode.swift */,
 				916909C52113E2FB00164044 /* OpusEncode.swift */,
 				913F7F002066DC7900F35E9B /* ParameterMonitor.swift */,
+				9179497B212EFB0E00D9750A /* RingBuffer */,
 			);
 			path = Misc;
 			sourceTree = "<group>";
@@ -352,16 +352,10 @@
 		913F7F1D2066DC7A00F35E9B /* Waterfall */ = {
 			isa = PBXGroup;
 			children = (
-				913F7F1F2066DC7A00F35E9B /* Grayscale.tex */,
-				913F7F202066DC7A00F35E9B /* Dark.tex */,
-				913F7F212066DC7A00F35E9B /* Deuteranopia.tex */,
-				913F7F222066DC7A00F35E9B /* TimeLayer.swift */,
-				913F7F242066DC7A00F35E9B /* Basic.tex */,
-				913F7F252066DC7A00F35E9B /* Purple.tex */,
+				91FBA99F21A35E95006A1934 /* Gradients */,
 				913F7F262066DC7A00F35E9B /* WaterfallRenderer.swift */,
-				913F7F272066DC7A00F35E9B /* Tritanopia.tex */,
-				913F7F282066DC7A00F35E9B /* WaterfallViewController.swift */,
 				913F7F292066DC7A00F35E9B /* WaterfallShaders.metal */,
+				913F7F282066DC7A00F35E9B /* WaterfallViewController.swift */,
 			);
 			path = Waterfall;
 			sourceTree = "<group>";
@@ -453,6 +447,20 @@
 				9185B0D3208683C7004D4C40 /* LANRadioPickerViewController.swift */,
 			);
 			path = RadioPicker;
+			sourceTree = "<group>";
+		};
+		91FBA99F21A35E95006A1934 /* Gradients */ = {
+			isa = PBXGroup;
+			children = (
+				913F7F1F2066DC7A00F35E9B /* Grayscale.tex */,
+				913F7F202066DC7A00F35E9B /* Dark.tex */,
+				913F7F212066DC7A00F35E9B /* Deuteranopia.tex */,
+				913F7F222066DC7A00F35E9B /* TimeLayer.swift */,
+				913F7F242066DC7A00F35E9B /* Basic.tex */,
+				913F7F252066DC7A00F35E9B /* Purple.tex */,
+				913F7F272066DC7A00F35E9B /* Tritanopia.tex */,
+			);
+			path = Gradients;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

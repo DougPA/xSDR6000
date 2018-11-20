@@ -6,19 +6,6 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
-        <scene sceneID="DMs-of-Zeb">
-            <objects>
-                <viewController id="rld-YJ-QA6" sceneMemberID="viewController">
-                    <view key="view" id="1Ni-zp-f7C">
-                        <rect key="frame" x="0.0" y="0.0" width="240" height="100"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </view>
-                </viewController>
-                <customObject id="ieo-mv-dXq" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1702" y="108"/>
-        </scene>
         <!--Alt Flag View Controller-->
         <scene sceneID="Yr0-4q-FSF">
             <objects>
@@ -27,19 +14,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="179" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <textField toolTip="Slice" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QyG-jn-6db">
-                                <rect key="frame" x="147" y="25" width="32" height="24"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="23" id="0aK-Y8-xLv"/>
-                                </constraints>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="A" drawsBackground="YES" id="tni-5C-on9">
-                                    <font key="font" metaFont="systemBold" size="20"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
                             <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1gw-1E-CLv" userLabel="Frequency">
-                                <rect key="frame" x="-2" y="6" width="148" height="31"/>
+                                <rect key="frame" x="-2" y="6" width="157" height="31"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" refusesFirstResponder="YES" state="on" focusRingType="none" alignment="right" placeholderString="7.235.000" id="1yi-hU-aKV">
                                     <numberFormatter key="formatter" formatterBehavior="default10_4" usesGroupingSeparator="NO" groupingSize="0" minimumIntegerDigits="0" maximumIntegerDigits="42" id="OXb-7f-Rag" customClass="FrequencyFormatter" customModule="xSDR6000" customModuleProvider="target"/>
                                     <font key="font" metaFont="system" size="26"/>
@@ -47,30 +23,46 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <button toolTip="Xmit" translatesAutoresizingMaskIntoConstraints="NO" id="cHS-oO-Oyj">
-                                <rect key="frame" x="147" y="0.0" width="32" height="23"/>
+                            <button translatesAutoresizingMaskIntoConstraints="NO" id="GuV-iV-Esj" userLabel="TX button">
+                                <rect key="frame" x="153" y="29" width="25" height="20"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="23" id="KnH-oT-OOY"/>
+                                    <constraint firstAttribute="height" constant="20" id="FjO-BB-N3J"/>
                                 </constraints>
-                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="TX-off" imagePosition="overlaps" alignment="center" alternateImage="TX-on" imageScaling="proportionallyUpOrDown" inset="2" id="cDH-T5-D3f">
+                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="TX-off" imagePosition="only" alignment="center" alternateImage="TX-on" imageScaling="proportionallyUpOrDown" inset="2" id="zjs-qs-g8D">
                                     <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <binding destination="Lmw-yC-7qh" name="value" keyPath="slice.txEnabled" id="mrv-uw-h0y"/>
+                                </connections>
                             </button>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mIU-bg-EHs" userLabel="LetterID label">
+                                <rect key="frame" x="156" y="3" width="23" height="24"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="19" id="c9L-nm-aT3"/>
+                                </constraints>
+                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="A" id="FTr-Ws-WdX">
+                                    <font key="font" metaFont="systemBold" size="20"/>
+                                    <color key="textColor" name="systemYellowColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                                <connections>
+                                    <binding destination="Lmw-yC-7qh" name="value" keyPath="letterId" id="os9-xu-IXB"/>
+                                </connections>
+                            </textField>
                         </subviews>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="cHS-oO-Oyj" secondAttribute="bottom" id="26S-5I-Ulx"/>
-                            <constraint firstItem="1gw-1E-CLv" firstAttribute="leading" secondItem="0ef-E2-J5u" secondAttribute="leading" id="5P6-kS-Zpz"/>
-                            <constraint firstItem="1gw-1E-CLv" firstAttribute="top" secondItem="0ef-E2-J5u" secondAttribute="top" constant="12" id="EbP-9U-Sw6"/>
-                            <constraint firstItem="QyG-jn-6db" firstAttribute="top" secondItem="0ef-E2-J5u" secondAttribute="top" id="PG5-VW-hv0"/>
-                            <constraint firstItem="QyG-jn-6db" firstAttribute="leading" secondItem="1gw-1E-CLv" secondAttribute="trailing" constant="3" id="WMo-4W-YCG"/>
-                            <constraint firstAttribute="trailing" secondItem="QyG-jn-6db" secondAttribute="trailing" id="bbx-OB-J4U"/>
-                            <constraint firstItem="QyG-jn-6db" firstAttribute="trailing" secondItem="cHS-oO-Oyj" secondAttribute="trailing" id="e5R-9R-qZk"/>
-                            <constraint firstItem="QyG-jn-6db" firstAttribute="leading" secondItem="cHS-oO-Oyj" secondAttribute="leading" id="vhS-32-jKI"/>
+                            <constraint firstItem="1gw-1E-CLv" firstAttribute="leading" secondItem="0ef-E2-J5u" secondAttribute="leading" id="Lpv-K5-Vk1"/>
+                            <constraint firstItem="GuV-iV-Esj" firstAttribute="leading" secondItem="1gw-1E-CLv" secondAttribute="trailing" id="O9p-29-sZK"/>
+                            <constraint firstAttribute="trailing" secondItem="mIU-bg-EHs" secondAttribute="trailing" constant="2" id="QS8-DW-Fp3"/>
+                            <constraint firstItem="mIU-bg-EHs" firstAttribute="leading" secondItem="1gw-1E-CLv" secondAttribute="trailing" constant="5" id="SNk-Wd-Ssd"/>
+                            <constraint firstAttribute="trailing" secondItem="GuV-iV-Esj" secondAttribute="trailing" constant="1" id="UI6-V3-BS0"/>
+                            <constraint firstItem="GuV-iV-Esj" firstAttribute="top" secondItem="0ef-E2-J5u" secondAttribute="top" id="w5P-so-ere"/>
+                            <constraint firstItem="1gw-1E-CLv" firstAttribute="top" secondItem="0ef-E2-J5u" secondAttribute="top" constant="12" id="yhg-9p-Jqj"/>
+                            <constraint firstItem="mIU-bg-EHs" firstAttribute="top" secondItem="GuV-iV-Esj" secondAttribute="bottom" constant="2" id="zWE-ea-MFs"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="_alpha" destination="QyG-jn-6db" id="axa-9G-ZgU"/>
                         <outlet property="_frequencyField" destination="1gw-1E-CLv" id="8y3-c3-M9c"/>
                     </connections>
                 </viewController>
@@ -309,10 +301,10 @@
                                     <binding destination="Lmw-yC-7qh" name="value" keyPath="slice.frequency" id="nya-Do-mep"/>
                                 </connections>
                             </textField>
-                            <stackView distribution="fill" orientation="horizontal" alignment="top" spacing="4" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2vQ-SX-snN" userLabel="S-Meter stack view">
-                                <rect key="frame" x="31" y="29" width="263" height="17"/>
+                            <stackView distribution="fill" orientation="horizontal" alignment="top" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2vQ-SX-snN" userLabel="S-Meter stack view">
+                                <rect key="frame" x="31" y="29" width="267" height="17"/>
                                 <subviews>
-                                    <levelIndicator verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yVj-2f-S2t">
+                                    <levelIndicator verticalHuggingPriority="750" drawsTieredCapacityLevels="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yVj-2f-S2t">
                                         <rect key="frame" x="0.0" y="-1" width="242" height="18"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="242" id="jyA-o0-hfD"/>
@@ -320,8 +312,11 @@
                                         <levelIndicatorCell key="cell" alignment="left" doubleValue="-150" minValue="-150" warningValue="-109" criticalValue="-73" levelIndicatorStyle="continuousCapacity" id="qMZ-4K-pyo"/>
                                     </levelIndicator>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="FXy-WX-GDY" userLabel="S-Level label">
-                                        <rect key="frame" x="244" y="0.0" width="21" height="17"/>
-                                        <textFieldCell key="cell" lineBreakMode="clipping" placeholderString="S9" id="PZJ-AE-Q6S">
+                                        <rect key="frame" x="240" y="0.0" width="29" height="17"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="25" id="ucg-5i-K0y"/>
+                                        </constraints>
+                                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" placeholderString="S9" id="PZJ-AE-Q6S">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="systemYellowColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>

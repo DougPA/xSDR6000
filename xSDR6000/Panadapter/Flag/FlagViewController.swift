@@ -406,25 +406,25 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
       self._sMeter.floatValue = meter.value
       switch meter.value {
       case ..<(-121):
-        self._sLevel.stringValue = "S0"
+        self._sLevel.stringValue = " S0"
       case (-121)..<(-115):
-        self._sLevel.stringValue = "S1"
+        self._sLevel.stringValue = " S1"
       case (-115)..<(-109):
-        self._sLevel.stringValue = "S2"
+        self._sLevel.stringValue = " S2"
       case (-109)..<(-103):
-        self._sLevel.stringValue = "S3"
+        self._sLevel.stringValue = " S3"
       case (-103)..<(-97):
-        self._sLevel.stringValue = "S4"
+        self._sLevel.stringValue = " S4"
       case (-103)..<(-97):
-        self._sLevel.stringValue = "S5"
+        self._sLevel.stringValue = " S5"
       case (-97)..<(-91):
-        self._sLevel.stringValue = "S6"
+        self._sLevel.stringValue = " S6"
       case (-91)..<(-85):
-        self._sLevel.stringValue = "S7"
+        self._sLevel.stringValue = " S7"
       case (-85)..<(-79):
-        self._sLevel.stringValue = "S8"
+        self._sLevel.stringValue = " S8"
       case (-79)..<(-73):
-        self._sLevel.stringValue = "S9"
+        self._sLevel.stringValue = " S9"
       case (-73)..<(-63):
         self._sLevel.stringValue = "+10"
       case (-63)..<(-53):

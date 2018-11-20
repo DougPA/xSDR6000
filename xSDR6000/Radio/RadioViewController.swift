@@ -12,6 +12,43 @@ import xLib6000
 import SwiftyUserDefaults
 
 // --------------------------------------------------------------------------------
+//  Created by Application load
+//  Removed by Application termination
+//
+//  **** Notifications received ****
+//      .radioHasBeenAdded -> set Radio version, title & toolbar
+//      .radioWillBeRemoved -> clear Radio version & toolbar
+//      .radioHasBeenRemoved -> log, clear title
+//      .meterHasBeenAdded -> capture meters for ParameterMonitors
+//      .opusRxHasBeenAdded -> create Opus components & set stream delegate
+//      .tcpDidDisconnect -> alert if caused by error or other user
+//
+//  **** Menu Actions ****
+//      Quit
+//      Open RadioPicker sheet
+//
+//  **** Action Methods ****
+//      Quit
+//      Mac Audio
+//      LineoutAudio gain
+//      LineOutAudio mute
+//      HeadphoneAudio gain
+//      HeadphoneAudio mute
+//      Panadapter create
+//      SidePanel open/close
+//      CWX open/close
+//      Markers enable
+//      Tnfs enable
+//
+//  **** Observations ****
+//      None
+//
+//  **** View Bindings ****
+//      None
+//
+// --------------------------------------------------------------------------------
+
+// --------------------------------------------------------------------------------
 // MARK: - RadioPicker Delegate definition
 // --------------------------------------------------------------------------------
 
@@ -143,9 +180,9 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
 
   // ----- TOOLBAR -----
   
-  /// Respond to the Opus RX Enable
+  /// Respond to the Mac Audio button
   ///
-  /// - Parameter sender: the Slider
+  /// - Parameter sender:         the Slider
   ///
   @IBAction func opusRxAudio(_ sender: NSButton) {
     
@@ -158,7 +195,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   }
   /// Respond to the Headphone Gain slider
   ///
-  /// - Parameter sender: the Slider
+  /// - Parameter sender:         the Slider
   ///
   @IBAction func headphoneGain(_ sender: NSSlider) {
     
@@ -166,7 +203,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   }
   /// Respond to the Lineout Gain slider
   ///
-  /// - Parameter sender: the Slider
+  /// - Parameter sender:         the Slider
   ///
   @IBAction func lineoutGain(_ sender: NSSlider) {
     
@@ -174,7 +211,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   }
   /// Respond to the Headphone Mute button
   ///
-  /// - Parameter sender: the Button
+  /// - Parameter sender:         the Button
   ///
   @IBAction func muteHeadphone(_ sender: NSButton) {
     
@@ -182,7 +219,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   }
   /// Respond to the Lineout Mute button
   ///
-  /// - Parameter sender: the Button
+  /// - Parameter sender:         the Button
   ///
   @IBAction func muteLineout(_ sender: NSButton) {
     
@@ -190,7 +227,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   }
   /// Respond to the Pan button
   ///
-  /// - Parameter sender: the Button
+  /// - Parameter sender:         the Button
   ///
   @IBAction func panButton(_ sender: AnyObject) {
     
@@ -199,7 +236,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   }
   /// Respond to the Side button
   ///
-  /// - Parameter sender: the Button
+  /// - Parameter sender:         the Button
   ///
   @IBAction func sideButton(_ sender: NSButton) {
     
@@ -209,7 +246,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   }
   /// Respond to the Cwx button
   ///
-  /// - Parameter sender: the Button
+  /// - Parameter sender:         the Button
   ///
   @IBAction func cwxButton(_ sender: NSButton) {
     
@@ -221,7 +258,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   }
   /// Respond to the Markers button
   ///
-  /// - Parameter sender: the Button
+  /// - Parameter sender:         the Button
   ///
   @IBAction func markersButton(_ sender: NSButton) {
     
@@ -230,7 +267,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   }
   /// Respond to the Tnf button
   ///
-  /// - Parameter sender: the Button
+  /// - Parameter sender:         the Button
   ///
   @IBAction func tnfButton(_ sender: NSButton) {
     
@@ -240,7 +277,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   }
   /// Respond to the Full Duplex button
   ///
-  /// - Parameter sender: the Button
+  /// - Parameter sender:         the Button
   ///
   @IBAction func fullDuplexButton(_ sender: NSButton) {
     
@@ -253,7 +290,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   
   /// Respond to the Radio Selection menu, show the RadioPicker as a sheet
   ///
-  /// - Parameter sender: the MenuItem
+  /// - Parameter sender:         the MenuItem
   ///
   @IBAction func openRadioPicker(_ sender: AnyObject) {
     
@@ -275,11 +312,11 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   }
   /// Respond to the xSDR6000 Quit menu
   ///
-  /// - Parameter sender: the Menu item
+  /// - Parameter sender:         the Menu item
   ///
   @IBAction func terminate(_ sender: AnyObject) {
     
-    NSApp.terminate(self)
+    quitRadio(self)
   }
   
   // ----- SIDE BUTTONS -----
@@ -507,8 +544,8 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     // remove all objects on Radio
     radio.removeAll()
     
-    // update the title bar
-    title()
+//    // update the title bar
+//    title()
   }
   /// Process .radioHasBeenRemoved Notification
   ///
@@ -534,7 +571,6 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     _opus = opus
     
     os_log("Opus Rx added: ID = %{public}@", log: _log, type: .info, opus.id.hex)
-    
     
     _opusDecode = OpusDecode()
     _opusEncode = OpusEncode(opus)

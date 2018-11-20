@@ -10,11 +10,36 @@ import Cocoa
 import xLib6000
 
 // --------------------------------------------------------------------------------
+//  Created by PanafallsViewController
+//  Removed by WaterfallViewController
+//
+//  **** Notifications received ****
+//      None
+//
+//  **** Action Methods ****
+//      Left Doubleclick -> move active Slice
+//      Right Singleclick -> context menu (create/remove Slice/Tnf)
+//      ScrollWheel -> Slice frequency +/-
+//
+//  **** Observations ****
+//      None
+//
+//  **** Tracking Areas ****
+//      None
+//
+//  **** Constraints manipulated ***
+//      None
+//
+// --------------------------------------------------------------------------------
+
+// --------------------------------------------------------------------------------
 // MARK: - Panafall View Controller class implementation
 // --------------------------------------------------------------------------------
 
 final class PanafallViewController          : NSSplitViewController {
-  
+ 
+  static let kEdgeTolerance                 : CGFloat = 0.1                 // percent of bandwidth
+
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
   
@@ -35,7 +60,6 @@ final class PanafallViewController          : NSSplitViewController {
   private let kRightButton                  = 0x02
 
   private let kButtonViewWidth              : CGFloat = 75                  // Width of ButtonView when open
-  private let kEdgeTolerance                : CGFloat = 0.1                 // percent of bandwidth
   
   private let kCreateSlice                  = "Create Slice"                // Menu titles
   private let kRemoveSlice                  = "Remove Slice"
@@ -71,6 +95,10 @@ final class PanafallViewController          : NSSplitViewController {
     _rightClick.numberOfClicksRequired = 1
     splitView.addGestureRecognizer(_rightClick)
   }
+  
+  // ----------------------------------------------------------------------------
+  // MARK: - Action methods
+  
   /// Process scroll wheel events to change the Active Slice frequency
   ///
   /// - Parameter theEvent: a Scroll Wheel event
@@ -277,27 +305,27 @@ final class PanafallViewController          : NSSplitViewController {
   ///
   private func adjustSliceFrequency(_ slice: xLib6000.Slice, incr: Int) {
     var isTooClose = false
-    
+
     // adjust the slice frequency
     slice.frequency += incr
-    
+
     let center = ((slice.frequency + slice.filterHigh) + (slice.frequency + slice.filterLow))/2
     // moving which way?
     if incr > 0 {
       // UP, too close to the high end?
-      isTooClose = center > _end - Int(kEdgeTolerance * CGFloat(_bandwidth))
-      
+      isTooClose = center > _end - Int(PanafallViewController.kEdgeTolerance * CGFloat(_bandwidth))
+
     } else {
       // DOWN, too close to the low end?
-      isTooClose = center + incr < _start + Int(kEdgeTolerance * CGFloat(_bandwidth))
+      isTooClose = center + incr < _start + Int(PanafallViewController.kEdgeTolerance * CGFloat(_bandwidth))
     }
-    
+
     // is the new freq too close to an edge?
     if isTooClose  {
-      
+
       // YES, adjust the panafall center frequency (scroll the Panafall)
       _panadapter!.center += incr
-      
+
       _panadapterViewController?.redrawFrequencyLegend()
     }
     // redraw all the slices

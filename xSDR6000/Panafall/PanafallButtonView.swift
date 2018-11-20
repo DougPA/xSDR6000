@@ -10,6 +10,27 @@ import Cocoa
 import SwiftyUserDefaults
 
 // --------------------------------------------------------------------------------
+//  Created by PanafallsViewController
+//  Removed by WaterfallViewController
+//
+//  **** Notifications received ****
+//      None
+//
+//  **** Action Methods ****
+//      None
+//
+//  **** Observations ****
+//      None
+//
+//  **** Tracking Areas ****
+//      Left side of Panafall
+//
+//  **** Constraints manipulated ***
+//      buttonViewWidth
+//
+// --------------------------------------------------------------------------------
+
+// --------------------------------------------------------------------------------
 // MARK: - Panafall Button View class implementation
 // --------------------------------------------------------------------------------
 

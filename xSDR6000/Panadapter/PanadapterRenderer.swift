@@ -10,6 +10,27 @@ import Foundation
 import MetalKit
 import xLib6000
 
+// --------------------------------------------------------------------------------
+//  Created by PanadapterViewController
+//  Removed by PanadapterViewController deinit
+//
+//  **** Stream handler ****
+//      Panadapter
+//
+//  **** Notifications received ****
+//      None
+//
+//  **** Action Methods ****
+//      None
+//
+//  **** Observations ****
+//      None
+//
+//  **** Constraints manipulated ***
+//      None
+//
+// --------------------------------------------------------------------------------
+
 public final class PanadapterRenderer       : NSObject {
   
   //  As input, the renderer expects an array of UInt16 intensity values. The intensity values are

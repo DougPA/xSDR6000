@@ -10,6 +10,24 @@ import Cocoa
 import xLib6000
 import SwiftyUserDefaults
 
+// --------------------------------------------------------------------------------
+//  Created by PanafallsViewController
+//  Removed by WaterfallViewController
+//
+//  **** Notifications received ****
+//      None
+//
+//  **** Action Methods ****
+//      None
+//
+//  **** Observations ****
+//      None
+//
+//  **** Constraints manipulated ***
+//      None
+//
+// --------------------------------------------------------------------------------
+
 public final class DbLegendView             : NSView {
   
   // ----------------------------------------------------------------------------
