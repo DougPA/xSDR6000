@@ -10,6 +10,24 @@ import Cocoa
 import xLib6000
 import SwiftyUserDefaults
 
+// --------------------------------------------------------------------------------
+//  Created by PanafallsViewController
+//  Removed by WaterfallViewController
+//
+//  **** Notifications received ****
+//      None
+//
+//  **** Action Methods ****
+//      None
+//
+//  **** Observations ****
+//      None
+//
+//  **** Constraints manipulated ***
+//      None
+//
+// --------------------------------------------------------------------------------
+
 public final class FrequencyLegendView      : NSView {
   
   typealias BandwidthParamTuple = (high: Int, low: Int, spacing: Int, format: String)
@@ -66,11 +84,6 @@ public final class FrequencyLegendView      : NSView {
   // ----------------------------------------------------------------------------
   // MARK: - Overridden methods
   
-  public override func awakeFromNib() {
-    super.awakeFromNib()
-    
-  }
-
   public override func draw(_ dirtyRect: NSRect) {
     super.draw(dirtyRect)
     
@@ -188,7 +201,9 @@ public final class FrequencyLegendView      : NSView {
       if abs(deltaX) > abs(deltaY) {
         
         // drag
-        slice.frequency += Int(deltaX * _hzPerUnit)
+//        slice.frequency += Int(deltaX * _hzPerUnit)
+        
+        adjustSliceFrequency(slice, incr: Int(deltaX * _hzPerUnit))
         
       } else {
         
@@ -220,6 +235,53 @@ public final class FrequencyLegendView      : NSView {
       self.needsDisplay = true      
     }
   }
+  
+  
+  
+  
+  
+  /// Incr/decr the Slice frequency (scroll panafall at edges)
+  ///
+  /// - Parameters:
+  ///   - slice: the Slice
+  ///   - incr: frequency step
+  ///
+  func adjustSliceFrequency(_ slice: xLib6000.Slice, incr: Int) {
+    var isTooClose = false
+    
+    // adjust the slice frequency
+    slice.frequency += incr
+    
+    let center = ((slice.frequency + slice.filterHigh) + (slice.frequency + slice.filterLow))/2
+    // moving which way?
+    if incr > 0 {
+      // UP, too close to the high end?
+      isTooClose = center > _end - Int(PanafallViewController.kEdgeTolerance * CGFloat(_bandwidth))
+      
+    } else {
+      // DOWN, too close to the low end?
+      isTooClose = center + incr < _start + Int(PanafallViewController.kEdgeTolerance * CGFloat(_bandwidth))
+    }
+    
+    // is the new freq too close to an edge?
+    if isTooClose  {
+      
+      // YES, adjust the panafall center frequency (scroll the Panafall)
+      _panadapter!.center += incr
+      
+      redraw()
+    }
+    // redraw all the slices
+    redraw()
+  }
+
+  
+  
+  
+  
+  
+  
+  
   
   // ----------------------------------------------------------------------------
   // MARK: - Private methods
