@@ -51,8 +51,8 @@ import xLib6000
 final public class FlagViewController       : NSViewController, NSTextFieldDelegate {
   
   static let kSliceLetters : [String]       = ["A", "B", "C", "D", "E", "F", "G", "H"]
-  static let kFlagOffset                    : CGFloat = 15.0/2.0
-  static let kFlagWidth                     : CGFloat = 300 
+  static let kFlagOffset                    : CGFloat = 7.5
+  static let kFlagWidth                     : CGFloat = 311
   static let kFlagHeight                    : CGFloat = 110
   static let kFlagBorder                    : CGFloat = 20
   
@@ -71,7 +71,7 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
   
   @IBOutlet private var _filterWidth        : NSTextField!
   @IBOutlet private var _frequencyField     : NSTextField!
-  @IBOutlet private var _sMeter             : NSLevelIndicator!
+  @IBOutlet private var _sMeter             : LevelIndicator!
   @IBOutlet private var _sLevel             : NSTextField!
  
   @IBOutlet private var _audButton          : NSButton!
@@ -136,6 +136,17 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
     _frequencyField.addGestureRecognizer(_doubleClick)
 
     _frequencyField.delegate = self
+    
+    _sMeter.legends = [            // to skip a legend pass "" as the format
+        (1, "1", -0.5),
+        (2, "3", -0.5),
+        (3, "5", -0.5),
+        (4, "7", -0.5),
+        (5, "9", -0.5),
+        (6, "+20", -0.5),
+        (7, "+40", -0.5)
+    ]
+    _sMeter.font = NSFont(name: "Monaco", size: 10.0)
     
     view.identifier = NSUserInterfaceItemIdentifier(rawValue: "Slice Flag")
   }
@@ -403,7 +414,7 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
 
       let meter = object as! Meter
 
-      self._sMeter.floatValue = meter.value
+      self._sMeter.level = CGFloat(meter.value)
       switch meter.value {
       case ..<(-121):
         self._sLevel.stringValue = " S0"
