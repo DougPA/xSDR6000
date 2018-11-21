@@ -394,8 +394,6 @@ final class PanadapterViewController        : NSViewController, NSGestureRecogni
     // sort the Flags from left to right
     for flagVc in _flags.values.sorted(by: {$0.slice!.frequency < $1.slice!.frequency}) {
       
-//      Swift.print("flagVc = \(flagVc)")
-      
       // calculate the frequency's position
       current.freqPosition = CGFloat(flagVc.slice!.frequency - _start) / _hzPerUnit
       
@@ -408,7 +406,6 @@ final class PanadapterViewController        : NSViewController, NSGestureRecogni
       
       // Flag position based on room for it
       let flagPosition = (current.isOnLeft ? current.freqPosition - FlagViewController.kFlagWidth - FlagViewController.kFlagOffset : current.freqPosition + FlagViewController.kFlagOffset)
-//      Swift.print("flagPosition = \(flagPosition)")
       
       DispatchQueue.main.async { [unowned self] in
         
@@ -421,9 +418,6 @@ final class PanadapterViewController        : NSViewController, NSGestureRecogni
         } else {
           flagVc.flagXPositionConstraint?.constant = flagPosition
         }
-        
-//        Swift.print("flagPosition = \(flagPosition)")
-//        flagVc.view.needsLayout = true
       }
       // make the current State the previous one
       previous = current
