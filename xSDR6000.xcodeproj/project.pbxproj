@@ -252,9 +252,9 @@
 		913F7ED62066DC7900F35E9B /* Base.lproj */ = {
 			isa = PBXGroup;
 			children = (
-				91475E4E20A28E4600ACE77D /* Flag.storyboard */,
 				913F7EDF2066DC7900F35E9B /* Main.storyboard */,
 				913F7ED92066DC7900F35E9B /* Panafall.storyboard */,
+				91475E4E20A28E4600ACE77D /* Flag.storyboard */,
 				913F7ED72066DC7900F35E9B /* Preferences.storyboard */,
 				913F7EDD2066DC7900F35E9B /* RadioPicker.storyboard */,
 				913F7EDB2066DC7900F35E9B /* Side.storyboard */,
