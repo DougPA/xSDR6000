@@ -11,14 +11,18 @@ import Cocoa
 public typealias LegendTuple = (tick: Int?, label: String, fudge: CGFloat)
 
 class LevelIndicator: NSView {
+
+  enum IndicatorStyle {
+    case standard
+    case sMeter
+  }
   
-  public var level                          : CGFloat = 0.0 {
-    didSet { needsDisplay = true } }        // force a redraw
-  public var peak                           : CGFloat = 0.0 {
-    didSet { needsDisplay = true } }        // force a redraw
+
+  public var level                          : CGFloat = 0.0 { didSet { needsDisplay = true } }        // force a redraw
+  public var peak                           : CGFloat = 0.0 { didSet { needsDisplay = true } }        // force a redraw
   public var font                           = NSFont(name: "Monaco", size: 14.0)  
-  public var legends: [LegendTuple] = [ (nil, "Level", 0) ]
-  
+  public var legends                        : [LegendTuple] = [ (nil, "Level", 0) ]
+  public var style                          : IndicatorStyle = .sMeter
 
   private var _path                         = NSBezierPath()
   private var _framePath                    = NSBezierPath()
@@ -37,7 +41,9 @@ class LevelIndicator: NSView {
   @IBInspectable var _normalColor           : NSColor = NSColor.systemGreen
   @IBInspectable var _warningColor          : NSColor = NSColor.systemYellow
   @IBInspectable var _criticalColor         : NSColor = NSColor.systemRed
-  @IBInspectable var _legendColor           : NSColor = NSColor.white
+  
+  private var _gradient                     : NSGradient!
+
 
   // internal
   private var _range                        : CGFloat = 0.0
@@ -52,10 +58,8 @@ class LevelIndicator: NSView {
   
   // calculated sizes
   private var _heightGraph                  : CGFloat = 0
-  private var _heightTopSpace               : CGFloat = 0
   private var _heightFont                   : CGFloat = 0
-  private var _heightLine                   : CGFloat = 3.0
-  private var _heightInset                  : CGFloat = 0
+  private var _heightLine                   : CGFloat = 2.0
   private var _heightBar                    : CGFloat = 0
   private var _topLineY                     : CGFloat = 0
   private var _bottomLineY                  : CGFloat = 0
@@ -66,15 +70,16 @@ class LevelIndicator: NSView {
   // constants
   private let kPeakWidth                    : CGFloat = 5
   
-//  private let kStandard                     : Int = 0
-//  private let kSMeter                       : Int = 1
-  
   // ----------------------------------------------------------------------------
   // MARK: - Initialization
   
   required init?(coder decoder: NSCoder) {
     super.init(coder: decoder)
 
+    _gradient = NSGradient(colors: [_normalColor, _warningColor, _criticalColor], atLocations: [0.0, _warningLevel/_rightValue, _criticalLevel/_rightValue], colorSpace: NSColorSpace.sRGB)
+    
+    translatesAutoresizingMaskIntoConstraints = false
+    
     assert(frame.height >= 15.0, "Frame height \(frame.height) < 15.0")
   }
   
@@ -84,30 +89,46 @@ class LevelIndicator: NSView {
     _attributes[NSAttributedString.Key.font] = font
     
     // setup the Legend color
-    _attributes[NSAttributedString.Key.foregroundColor] = _legendColor
+    _attributes[NSAttributedString.Key.foregroundColor] = NSColor.systemYellow
     
     // calculate a typical font height
     _heightFont = "-000".size(withAttributes: _attributes).height
 
     // calculate sizes
-    _heightTopSpace = frame.height * 0.1
-    _heightGraph = frame.height - _heightFont - _heightTopSpace
-    _heightLine = _heightGraph * 0.1
-    _heightInset = _heightLine
-    _heightBar = _heightGraph - _heightLine - _heightInset - (2 * _heightLine)
-    _barBottomY = _heightInset + _heightLine
-    _barTopY = _barBottomY + _heightBar
+    switch style {
+    case .standard:
+      _heightLine = 2.0
+      _heightGraph = frame.height - _heightFont - _heightLine
+      _heightBar = _heightGraph - _heightLine - (2 * _heightLine)
+      _barBottomY =  _heightLine + _heightLine
+      _barTopY = _barBottomY + _heightBar
+      
+      _fontY = frame.height - _heightLine - _heightFont
+      _topLineY = frame.height - _heightFont - _heightLine
+      _bottomLineY = _heightLine
     
-    _fontY = frame.height - _heightFont - _heightTopSpace
-    _topLineY = frame.height - _heightFont - _heightTopSpace
-    _bottomLineY = 0
-    
-    // create a transform (if flipped)
-    if _isFlipped {
-      _transform = AffineTransform(translationByX: frame.width, byY: frame.height - _heightFont - _heightTopSpace)
-      _transform.rotate(byDegrees: 180)
-    }
+      // create a transform (if flipped)
+      if _isFlipped {
+        _transform = AffineTransform(translationByX: frame.width, byY: frame.height - _heightFont - _heightLine)
+        _transform.rotate(byDegrees: 180)
+      }
+      
+    case .sMeter:
+      _heightLine = 1.0
+      _heightBar = 7.0
+      _heightGraph = _heightBar + (2 * _heightLine)
+      _barBottomY = _heightFont + (2 * _heightLine)
+      _barTopY = _barBottomY + _heightBar
+      
+      _fontY = 0
 
+      // create a transform (if flipped)
+      if _isFlipped {
+        _transform = AffineTransform(translationByX: frame.width, byY: frame.height - _heightBar - _heightLine)
+        _transform.rotate(byDegrees: 180)
+      }
+    }
+    
     // calculate percents & positions
     _range = _rightValue - _leftValue
     _warningPercent = ((_warningLevel - _leftValue) / _range)
@@ -129,7 +150,7 @@ class LevelIndicator: NSView {
   override func draw(_ dirtyRect: NSRect) {
     super.draw(dirtyRect)
 
-    drawFrame(dirtyRect)
+    if style == .standard { drawFrame(dirtyRect) }
 
     setupBar(dirtyRect)
 
@@ -211,33 +232,48 @@ class LevelIndicator: NSView {
     
     _backgroundColor.set()
     
-    // create the bar
-    var remainingPercent = levelPercent
-    switch remainingPercent {
+    switch style {
+    case  .standard:
       
-    case _criticalPercent...:
-      
-      // append the critical section
-      let width = ((remainingPercent - _criticalPercent) * dirtyRect.width)
-      appendSection(at: _criticalPosition, width: width, color: _criticalColor)
-      
-      remainingPercent = _criticalPercent
-      fallthrough
-      
-    case _warningPercent..._criticalPercent:
-      
-      // append the warning section
-      let width = (remainingPercent - _warningPercent) * dirtyRect.width
-      appendSection(at: _warningPosition, width: width, color: _warningColor)
-      
-      remainingPercent = _warningPercent
-      fallthrough
-      
-    default:
-      
-      // append the normal section
-      let width = remainingPercent * dirtyRect.width
-      appendSection(at: 0, width: width, color: _normalColor)
+      // create the bar
+      var remainingPercent = levelPercent
+      switch remainingPercent {
+        
+      case _criticalPercent...:
+        
+        // append the critical section
+        let width = ((remainingPercent - _criticalPercent) * dirtyRect.width)
+        appendSection(at: _criticalPosition, width: width, color: _criticalColor)
+        
+        remainingPercent = _criticalPercent
+        fallthrough
+        
+      case _warningPercent..._criticalPercent:
+        
+        // append the warning section
+        let width = (remainingPercent - _warningPercent) * dirtyRect.width
+        appendSection(at: _warningPosition, width: width, color: _warningColor)
+        
+        remainingPercent = _warningPercent
+        fallthrough
+        
+      default:
+        
+        // append the normal section
+        let width = remainingPercent * dirtyRect.width
+        appendSection(at: 0, width: width, color: _normalColor)
+      }
+    
+    case .sMeter:
+      let width = levelPercent * dirtyRect.width
+      let upperColor = _gradient.interpolatedColor(atLocation: levelPercent)
+      let gradient = NSGradient(starting: _normalColor, ending: upperColor)!
+      // construct its rect
+      let rect = NSRect(origin: CGPoint(x: 0, y: _barBottomY),
+                        size: CGSize(width: width, height: _heightBar))
+      // create & append the section
+      _path.append( createGradientBar(at: rect, gradient: gradient) )
+
     }
   }
   /// Setup Peak
@@ -303,33 +339,76 @@ class LevelIndicator: NSView {
     
     return path
   }
+  /// Create a filled rect area
+  ///
+  /// - Parameters:
+  ///   - rect:                   the area
+  ///   - color:                  an NSGradient
+  /// - Returns:                  the filled NSBezierPath
+  ///
+  private func createGradientBar(at rect: NSRect, gradient: NSGradient) -> NSBezierPath {
+    
+    // create a path with the specified rect
+    let path = NSBezierPath(rect: rect)
+    
+    // Flip if required
+    if _isFlipped {
+      path.transform(using: _transform)
+    }
+    // fill it with color
+    gradient.draw(in: rect, angle: 0.0)
+    
+    return path
+  }
   /// Draw a legend at specified vertical bar(s)
   ///
   /// - Parameter legends:        an array of LegendTuple
   ///
   private func drawLegends(_ legends: [LegendTuple]) {
-
+    
     let segmentWidth = frame.width / CGFloat(_numberOfSegments)
     
-    // draw the legends
-    for legend in legends {
-      // is it a normal legend?
-      if let tick = legend.tick {
-        // YES, calculate the x coordinate of the legend
-        let xPosition = CGFloat(tick) * segmentWidth
-        
-        // format & draw the legend
-        let width = legend.label.size(withAttributes: _attributes).width
-        legend.label.draw(at: NSMakePoint(xPosition + (width * legend.fudge), _fontY), withAttributes: _attributes)
-        
-      } else {
-        
-        // NO, draw a centered legend
-        let width = legend.label.size(withAttributes: _attributes).width
-        let xPosition = (frame.width / 2.0) - (width / 2.0) + (width * legend.fudge)
-        legend.label.draw(at: NSMakePoint(xPosition, _fontY), withAttributes: _attributes)
+    switch style {
+    case .standard:
+      // draw the legends
+      for legend in legends {
+        // is it a normal legend?
+        if let tick = legend.tick {
+          // YES, calculate the x coordinate of the legend
+          let xPosition = CGFloat(tick) * segmentWidth
+          
+          // format & draw the legend
+          let width = legend.label.size(withAttributes: _attributes).width
+          legend.label.draw(at: NSMakePoint(xPosition + (width * legend.fudge), _fontY), withAttributes: _attributes)
+          
+        } else {
+          
+          // NO, draw a centered legend
+          let width = legend.label.size(withAttributes: _attributes).width
+          let xPosition = (frame.width / 2.0) - (width / 2.0) + (width * legend.fudge)
+          legend.label.draw(at: NSMakePoint(xPosition, _fontY), withAttributes: _attributes)
+        }
+      }
+    case .sMeter:
+      // draw the legends
+      for legend in legends {
+        // is it a normal legend?
+        if let tick = legend.tick {
+          // YES, calculate the x coordinate of the legend
+          let xPosition = CGFloat(tick) * segmentWidth
+          
+          // format & draw the legend
+          let width = legend.label.size(withAttributes: _attributes).width
+          legend.label.draw(at: NSMakePoint(xPosition + (width * legend.fudge), _bottomLineY), withAttributes: _attributes)
+          
+        } else {
+          
+          // NO, draw a centered legend
+          let width = legend.label.size(withAttributes: _attributes).width
+          let xPosition = (frame.width / 2.0) - (width / 2.0) + (width * legend.fudge)
+          legend.label.draw(at: NSMakePoint(xPosition, _bottomLineY), withAttributes: _attributes)
+        }
       }
     }
   }
 }
-
