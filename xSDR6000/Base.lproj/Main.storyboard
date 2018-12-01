@@ -710,11 +710,11 @@
             </objects>
             <point key="canvasLocation" x="63.5" y="-299"/>
         </scene>
-        <!--Main Window-->
+        <!--Radio Main window controller-->
         <scene sceneID="R2V-B0-nI4">
             <objects>
-                <windowController storyboardIdentifier="MainWindow" id="B8D-0N-5wS" userLabel="Main Window" customClass="MainWindowController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
-                    <window key="window" title="xSDR6000" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="IQv-IB-iLA">
+                <windowController storyboardIdentifier="MainWindow" id="B8D-0N-5wS" userLabel="Radio Main window controller" customClass="MainWindowController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
+                    <window key="window" title="xSDR6000" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="IQv-IB-iLA" userLabel="Main window">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="30" y="240" width="945" height="300"/>
@@ -972,15 +972,15 @@
             </objects>
             <point key="canvasLocation" x="141.5" y="250"/>
         </scene>
-        <!--Radio View Controller-->
+        <!--Radio view controller-->
         <scene sceneID="hg3-hZ-gZY">
             <objects>
-                <splitViewController id="2ro-LE-ZBU" customClass="RadioViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
+                <splitViewController id="2ro-LE-ZBU" userLabel="Radio view controller" customClass="RadioViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
                     <splitViewItems>
-                        <splitViewItem id="0W5-iK-sGW"/>
-                        <splitViewItem holdingPriority="249" id="usv-4b-Zp0"/>
+                        <splitViewItem id="0W5-iK-sGW" userLabel="Panafalls split item"/>
+                        <splitViewItem holdingPriority="249" id="usv-4b-Zp0" userLabel="Side split item"/>
                     </splitViewItems>
-                    <splitView key="splitView" misplaced="YES" dividerStyle="thin" vertical="YES" id="oU9-Vu-xiy">
+                    <splitView key="splitView" misplaced="YES" dividerStyle="thin" vertical="YES" id="oU9-Vu-xiy" userLabel="Radio split view">
                         <rect key="frame" x="0.0" y="0.0" width="958" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <userDefinedRuntimeAttributes>
@@ -1000,15 +1000,11 @@
             </objects>
             <point key="canvasLocation" x="141" y="750"/>
         </scene>
-        <!--Side-->
+        <!--Side split view controller-->
         <scene sceneID="8KY-DW-0am">
             <objects>
-                <splitViewController storyboardIdentifier="Side" id="Jdb-W6-QFS" userLabel="Side" sceneMemberID="viewController">
-                    <splitViewItems>
-                        <splitViewItem id="dW4-Ui-ZbW"/>
-                        <splitViewItem holdingPriority="249" id="KeZ-aN-E7V"/>
-                    </splitViewItems>
-                    <splitView key="splitView" dividerStyle="thin" id="Ctb-uG-jWF">
+                <splitViewController storyboardIdentifier="Side" id="Jdb-W6-QFS" userLabel="Side split view controller" customClass="SideViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
+                    <splitView key="splitView" dividerStyle="thin" id="Ctb-uG-jWF" userLabel="Side split view">
                         <rect key="frame" x="0.0" y="0.0" width="387" height="256"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <userDefinedRuntimeAttributes>
@@ -1020,79 +1016,114 @@
                     </splitView>
                     <connections>
                         <outlet property="splitView" destination="Ctb-uG-jWF" id="L3l-su-gNC"/>
-                        <segue destination="Ng6-KG-b9V" kind="relationship" relationship="splitItems" id="Y6O-hV-Nop"/>
-                        <segue destination="eTd-vG-cpu" kind="relationship" relationship="splitItems" id="1Sz-zd-u7q"/>
                     </connections>
                 </splitViewController>
                 <customObject id="dUK-QA-UHt" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1093.5" y="750"/>
         </scene>
-        <!--Side Buttons-->
-        <scene sceneID="Kz4-nX-gwb">
+        <!--Preferences connector-->
+        <scene sceneID="3q7-KT-4ql">
             <objects>
-                <viewController identifier="SideButtonsVC" storyboardIdentifier="SideButtons" id="Ng6-KG-b9V" userLabel="Side Buttons" sceneMemberID="viewController">
-                    <view key="view" id="iRD-Cc-O72">
-                        <rect key="frame" x="0.0" y="0.0" width="374" height="37"/>
+                <controllerPlaceholder storyboardName="Preferences" id="YVz-fo-rYJ" userLabel="Preferences connector" sceneMemberID="viewController"/>
+                <customObject id="3ca-nx-KSE" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="63" y="-105"/>
+        </scene>
+        <!--Panafalls view controller-->
+        <scene sceneID="2B4-2I-NKY">
+            <objects>
+                <splitViewController storyboardIdentifier="Panafalls" showSeguePresentationStyle="single" id="uMM-BY-Dcg" userLabel="Panafalls view controller" customClass="PanafallsViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
+                    <splitView key="splitView" autosaveName="Panafalls" dividerStyle="thin" id="Mfh-In-tH1" userLabel="Panafalls split view">
+                        <rect key="frame" x="0.0" y="0.0" width="945" height="300"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="translatesAutoresizingMaskIntoConstraints" value="NO"/>
+                        </userDefinedRuntimeAttributes>
+                        <connections>
+                            <outlet property="delegate" destination="uMM-BY-Dcg" id="xfg-ZZ-BWN"/>
+                        </connections>
+                    </splitView>
+                    <connections>
+                        <outlet property="splitView" destination="Mfh-In-tH1" id="VUV-qw-XYq"/>
+                    </connections>
+                </splitViewController>
+                <customObject id="LJk-F1-rPo" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1373" y="236"/>
+        </scene>
+        <!--Side Buttons-->
+        <scene sceneID="YNu-wZ-sBf">
+            <objects>
+                <viewController storyboardIdentifier="BUTTONS" id="6q7-Z6-SxZ" userLabel="Side Buttons" sceneMemberID="viewController">
+                    <view key="view" wantsLayer="YES" id="LDd-eY-LFv">
+                        <rect key="frame" x="0.0" y="0.0" width="311" height="37"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <stackView wantsLayer="YES" distribution="fillEqually" orientation="horizontal" alignment="centerY" spacing="1" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" horizontalClippingResistancePriority="750" verticalClippingResistancePriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dnK-lm-Wdo">
-                                <rect key="frame" x="2" y="2" width="370" height="33"/>
+                            <stackView wantsLayer="YES" distribution="fillEqually" orientation="horizontal" alignment="centerY" spacing="4" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" horizontalClippingResistancePriority="750" verticalClippingResistancePriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kYJ-RU-9ZI" userLabel="Side Buttons stack view">
+                                <rect key="frame" x="5" y="0.0" width="301" height="37"/>
                                 <subviews>
-                                    <button identifier="TX" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="r8z-hs-Frl">
-                                        <rect key="frame" x="-1" y="-1" width="83" height="32"/>
-                                        <buttonCell key="cell" type="push" title="TX" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="jnR-Dq-Fgw">
+                                    <button identifier="RX" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fuT-Rs-bcs">
+                                        <rect key="frame" x="-1" y="1" width="67" height="32"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="55" id="ePr-95-Ma3"/>
+                                        </constraints>
+                                        <buttonCell key="cell" type="push" title="RX" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="4hT-e7-EkF">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
                                         <connections>
-                                            <action selector="sideButtons:" target="B8G-bD-9Yv" id="Iv1-u3-YOE"/>
+                                            <action selector="sideButtons:" target="I28-7R-uf2" id="0mh-Oc-NPj"/>
                                         </connections>
                                     </button>
-                                    <button identifier="PCW" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="AYb-2A-FnE">
-                                        <rect key="frame" x="71" y="-1" width="83" height="32"/>
-                                        <buttonCell key="cell" type="push" title="P/CW" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="gvl-fH-D26">
+                                    <button identifier="TX" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3Bb-do-FUc">
+                                        <rect key="frame" x="58" y="1" width="67" height="32"/>
+                                        <buttonCell key="cell" type="push" title="TX" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="jFK-Xu-A5S">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
                                         <connections>
-                                            <action selector="sideButtons:" target="B8G-bD-9Yv" id="XeD-R1-Wig"/>
+                                            <action selector="sideButtons:" target="I28-7R-uf2" id="iu6-MQ-KIG"/>
                                         </connections>
                                     </button>
-                                    <button identifier="PHONE" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Yxo-C4-hxr">
-                                        <rect key="frame" x="143" y="-1" width="85" height="32"/>
-                                        <buttonCell key="cell" type="push" title="PHONE" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="f7p-LP-nti">
+                                    <button identifier="PCW" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="k1l-7g-ezh">
+                                        <rect key="frame" x="117" y="1" width="67" height="32"/>
+                                        <buttonCell key="cell" type="push" title="P/CW" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Hsb-Gu-iEU">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
                                         <connections>
-                                            <action selector="sideButtons:" target="B8G-bD-9Yv" id="gGb-xb-K0s"/>
+                                            <action selector="sideButtons:" target="I28-7R-uf2" id="zxR-Te-gFy"/>
                                         </connections>
                                     </button>
-                                    <button identifier="RX" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Tl0-hE-qcP">
-                                        <rect key="frame" x="217" y="-1" width="82" height="32"/>
-                                        <buttonCell key="cell" type="push" title="RX" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Ff1-Ai-752">
+                                    <button identifier="PHNE" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9zZ-uj-qlE">
+                                        <rect key="frame" x="176" y="1" width="67" height="32"/>
+                                        <buttonCell key="cell" type="push" title="PHNE" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="xKW-1K-fg8">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
                                         <connections>
-                                            <action selector="sideButtons:" target="B8G-bD-9Yv" id="KLD-WF-WjY"/>
+                                            <action selector="sideButtons:" target="I28-7R-uf2" id="FSX-Os-vlU"/>
                                         </connections>
                                     </button>
-                                    <button identifier="EQ" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wNE-9n-tsI">
-                                        <rect key="frame" x="288" y="-1" width="83" height="32"/>
-                                        <buttonCell key="cell" type="push" title="EQ" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="tj2-6o-RHR">
+                                    <button identifier="EQ" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="r4h-m8-XN8">
+                                        <rect key="frame" x="235" y="1" width="67" height="32"/>
+                                        <buttonCell key="cell" type="push" title="EQ" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="AxL-Q4-Ehd">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
                                         <connections>
-                                            <action selector="sideButtons:" target="B8G-bD-9Yv" id="qoY-mn-liG"/>
+                                            <action selector="sideButtons:" target="I28-7R-uf2" id="WWW-LC-aSy"/>
                                         </connections>
                                     </button>
                                 </subviews>
                                 <edgeInsets key="edgeInsets" left="5" right="5" top="0.0" bottom="0.0"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="370" id="gIy-sY-ZFU"/>
+                                    <constraint firstItem="r4h-m8-XN8" firstAttribute="width" secondItem="fuT-Rs-bcs" secondAttribute="width" id="7kk-Ak-4hf"/>
+                                    <constraint firstItem="9zZ-uj-qlE" firstAttribute="width" secondItem="fuT-Rs-bcs" secondAttribute="width" id="BhL-Wj-ise"/>
+                                    <constraint firstItem="3Bb-do-FUc" firstAttribute="width" secondItem="fuT-Rs-bcs" secondAttribute="width" id="MCF-dD-tiH"/>
+                                    <constraint firstAttribute="height" constant="37" id="g7d-B5-Zro"/>
+                                    <constraint firstItem="k1l-7g-ezh" firstAttribute="width" secondItem="fuT-Rs-bcs" secondAttribute="width" id="gRu-xZ-Xt2"/>
                                 </constraints>
                                 <visibilityPriorities>
                                     <integer value="1000"/>
@@ -1111,97 +1142,19 @@
                             </stackView>
                         </subviews>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="dnK-lm-Wdo" secondAttribute="bottom" constant="2" id="FBe-KL-xAE"/>
-                            <constraint firstAttribute="trailing" secondItem="dnK-lm-Wdo" secondAttribute="trailing" constant="2" id="Yiy-Ey-gEo"/>
-                            <constraint firstItem="dnK-lm-Wdo" firstAttribute="leading" secondItem="iRD-Cc-O72" secondAttribute="leading" constant="2" id="c26-2T-07d"/>
-                            <constraint firstItem="dnK-lm-Wdo" firstAttribute="top" secondItem="iRD-Cc-O72" secondAttribute="top" constant="2" id="meU-vl-TmK"/>
+                            <constraint firstAttribute="trailing" secondItem="kYJ-RU-9ZI" secondAttribute="trailing" constant="5" id="F8c-wN-rFp"/>
+                            <constraint firstAttribute="bottom" secondItem="kYJ-RU-9ZI" secondAttribute="bottom" id="VfT-Re-tQW"/>
+                            <constraint firstItem="kYJ-RU-9ZI" firstAttribute="top" secondItem="LDd-eY-LFv" secondAttribute="top" id="Zmh-ln-aAp"/>
+                            <constraint firstItem="kYJ-RU-9ZI" firstAttribute="leading" secondItem="LDd-eY-LFv" secondAttribute="leading" constant="5" id="iaX-bT-2Se"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="boolean" keyPath="translatesAutoresizingMaskIntoConstraints" value="NO"/>
                         </userDefinedRuntimeAttributes>
                     </view>
                 </viewController>
-                <customObject id="B8G-bD-9Yv" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+                <customObject id="I28-7R-uf2" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1612" y="581.5"/>
-        </scene>
-        <!--Side Bottom-->
-        <scene sceneID="KGa-wX-jt1">
-            <objects>
-                <viewController storyboardIdentifier="SideBottom" id="eTd-vG-cpu" userLabel="Side Bottom" sceneMemberID="viewController">
-                    <view key="view" id="chP-Va-SvO">
-                        <rect key="frame" x="0.0" y="0.0" width="374" height="260"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <subviews>
-                            <scrollView horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RCw-jG-yLK">
-                                <rect key="frame" x="0.0" y="0.0" width="374" height="260"/>
-                                <clipView key="contentView" id="0Gu-YL-oAf">
-                                    <rect key="frame" x="1" y="1" width="372" height="258"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                    <subviews>
-                                        <view fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gtw-D0-4cW">
-                                            <rect key="frame" x="0.0" y="0.0" width="357" height="243"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                        </view>
-                                    </subviews>
-                                </clipView>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="374" id="eHv-BJ-GZQ"/>
-                                </constraints>
-                                <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="vdn-0v-svu">
-                                    <rect key="frame" x="1" y="243" width="372" height="16"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </scroller>
-                                <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="cdD-8V-naG">
-                                    <rect key="frame" x="357" y="1" width="16" height="258"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </scroller>
-                            </scrollView>
-                        </subviews>
-                        <constraints>
-                            <constraint firstAttribute="trailing" secondItem="RCw-jG-yLK" secondAttribute="trailing" id="OAc-dW-6DU"/>
-                            <constraint firstAttribute="bottom" secondItem="RCw-jG-yLK" secondAttribute="bottom" id="agL-uA-bWf"/>
-                            <constraint firstItem="RCw-jG-yLK" firstAttribute="top" secondItem="chP-Va-SvO" secondAttribute="top" id="gCe-9V-40o"/>
-                            <constraint firstItem="RCw-jG-yLK" firstAttribute="leading" secondItem="chP-Va-SvO" secondAttribute="leading" id="pq7-6T-Jo1"/>
-                        </constraints>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="boolean" keyPath="translatesAutoresizingMaskIntoConstraints" value="NO"/>
-                        </userDefinedRuntimeAttributes>
-                    </view>
-                </viewController>
-                <customObject id="Vsh-Ao-8Yw" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1612" y="881"/>
-        </scene>
-        <!--Preferences connector-->
-        <scene sceneID="3q7-KT-4ql">
-            <objects>
-                <controllerPlaceholder storyboardName="Preferences" id="YVz-fo-rYJ" userLabel="Preferences connector" sceneMemberID="viewController"/>
-                <customObject id="3ca-nx-KSE" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="63" y="-105"/>
-        </scene>
-        <!--Panafalls-->
-        <scene sceneID="2B4-2I-NKY">
-            <objects>
-                <splitViewController storyboardIdentifier="Panafalls" showSeguePresentationStyle="single" id="uMM-BY-Dcg" userLabel="Panafalls" customClass="PanafallsViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
-                    <splitView key="splitView" autosaveName="Panafalls" dividerStyle="thin" id="Mfh-In-tH1">
-                        <rect key="frame" x="0.0" y="0.0" width="945" height="300"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="boolean" keyPath="translatesAutoresizingMaskIntoConstraints" value="NO"/>
-                        </userDefinedRuntimeAttributes>
-                        <connections>
-                            <outlet property="delegate" destination="uMM-BY-Dcg" id="xfg-ZZ-BWN"/>
-                        </connections>
-                    </splitView>
-                    <connections>
-                        <outlet property="splitView" destination="Mfh-In-tH1" id="VUV-qw-XYq"/>
-                    </connections>
-                </splitViewController>
-                <customObject id="LJk-F1-rPo" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1373" y="236"/>
+            <point key="canvasLocation" x="1568" y="641"/>
         </scene>
     </scenes>
     <resources>

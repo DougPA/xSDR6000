@@ -79,6 +79,7 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
   @IBOutlet private var _modeButton         : NSButton!
   @IBOutlet private var _xritButton         : NSButton!
   @IBOutlet private var _daxButton          : NSButton!
+  @IBOutlet private weak var _txButton      : NSButton!
   
   private weak var _panadapter              : Panadapter?
   private weak var _controlsVc              : ControlsViewController?
@@ -103,6 +104,14 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
   private let kXRitHeight                   : CGFloat = 69.0
   private let kDaxHeight                    : CGFloat = 43.0
 
+  private let kSplitCaption                 = "SPLIT"
+  private let kSplitOnAttr                  = [NSAttributedString.Key.foregroundColor : NSColor.systemYellow]
+  private let kSplitOffAttr                 = [NSAttributedString.Key.foregroundColor : NSColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.3)]
+
+  private let kTxCaption                    = "TX"
+  private let kTxOnAttr                     = [NSAttributedString.Key.foregroundColor : NSColor.systemRed]
+  private let kTxOffAttr                    = [NSAttributedString.Key.foregroundColor : NSColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.3)]
+  
   private let kAud                          = NSUserInterfaceItemIdentifier(rawValue: "AUD")
   private let kDsp                          = NSUserInterfaceItemIdentifier(rawValue: "DSP")
   private let kMode                         = NSUserInterfaceItemIdentifier(rawValue: "MODE")
@@ -203,18 +212,13 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
   // ----------------------------------------------------------------------------
   // MARK: - Action methods
   
-  @IBAction func splitButton(_ sender: NSButton) {
-    
-    let offColor = NSColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.3)
-    
-    let string = "SPLIT"
-    let onAttributes = [NSAttributedString.Key.foregroundColor : NSColor.systemYellow]
-    let offAttributes = [NSAttributedString.Key.foregroundColor : offColor]
-    
-    let attr = (sender.boolState ? onAttributes : offAttributes)
-    let attributedString = NSAttributedString(string: string, attributes: attr)
+  @IBAction func txButton(_ sender: NSButton) {
 
-    sender.attributedTitle = attributedString
+    slice?.txEnabled = !sender.boolState
+  }
+  
+  @IBAction func splitButton(_ sender: NSButton) {
+    sender.attributedTitle = NSAttributedString(string: kSplitCaption, attributes: sender.boolState ? kSplitOnAttr : kSplitOffAttr)
   }
   /// Respond to the cClose button
   ///
@@ -313,6 +317,7 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
   private func createObservations(slice: xLib6000.Slice, panadapter: Panadapter ) {
     
     _observations = [
+      slice.observe(\.txEnabled, options: [.initial, .new], changeHandler: txRefresh(_:_:)),
       slice.observe(\.filterHigh, options: [.initial, .new], changeHandler: filterRefresh(_:_:)),
       slice.observe(\.filterLow, options: [.initial, .new], changeHandler: filterRefresh(_:_:)),
       slice.observe(\.frequency, options: [.initial, .new], changeHandler: positionFlags(_:_:)),
@@ -320,16 +325,28 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
       panadapter.observe(\.bandwidth, options: [.initial, .new], changeHandler: positionFlags(_:_:))
     ]
   }
+  /// Respond to a change in Slice Tx state
+  ///
+  /// - Parameters:
+  ///   - object:               the object that changed
+  ///   - change:               the change
+  ///
+  private func txRefresh(_ slice: xLib6000.Slice, _ change: Any) {
+
+    DispatchQueue.main.async {
+      self._txButton.attributedTitle = NSAttributedString(string: self.kTxCaption, attributes: (slice.txEnabled ? self.kTxOnAttr : self.kTxOffAttr))
+    }
+  }
   /// Respond to a change in Slice Filter width
   ///
   /// - Parameters:
-  ///   - object:               the object rhat changed
+  ///   - object:               the object that changed
   ///   - change:               the change
   ///
-  private func filterRefresh(_ object: Any, _ change: Any) {
+  private func filterRefresh(_ slice: xLib6000.Slice, _ change: Any) {
     var formattedWidth = ""
     
-    let width = slice!.filterHigh - slice!.filterLow
+    let width = slice.filterHigh - slice.filterLow
     switch width {
     case 1_000...:
       formattedWidth = String(format: "%2.1fk", Float(width)/1000.0)

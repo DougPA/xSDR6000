@@ -79,10 +79,10 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <stackView distribution="fill" orientation="horizontal" alignment="centerY" spacing="5" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ldc-rG-ght" userLabel="Ant stack view">
-                                <rect key="frame" x="4" y="82" width="299" height="24"/>
+                                <rect key="frame" x="4" y="80" width="306" height="26"/>
                                 <subviews>
                                     <button horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ce0-Xg-TdH">
-                                        <rect key="frame" x="0.0" y="2" width="20" height="20"/>
+                                        <rect key="frame" x="0.0" y="3" width="20" height="20"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="20" id="d21-nD-KhW"/>
                                             <constraint firstAttribute="width" constant="20" id="hU5-sz-C7y"/>
@@ -97,7 +97,7 @@
                                         </connections>
                                     </button>
                                     <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Zp6-Oe-dIV" userLabel="RxAnt popup">
-                                        <rect key="frame" x="23" y="-1" width="68" height="25"/>
+                                        <rect key="frame" x="23" y="0.0" width="68" height="25"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="63" id="UOJ-Xs-Kge"/>
                                         </constraints>
@@ -118,7 +118,7 @@
                                         </connections>
                                     </popUpButton>
                                     <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9Hl-BA-XFJ" userLabel="TxAnt popup">
-                                        <rect key="frame" x="91" y="-1" width="68" height="25"/>
+                                        <rect key="frame" x="91" y="0.0" width="68" height="25"/>
                                         <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" arrowPosition="noArrow" selectedItem="eZj-YI-tx3" id="8lD-MP-8Gu">
                                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="menu"/>
@@ -136,7 +136,7 @@
                                         </connections>
                                     </popUpButton>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wFR-Fm-HU4" userLabel="Filter label">
-                                        <rect key="frame" x="159" y="3" width="36" height="19"/>
+                                        <rect key="frame" x="159" y="4" width="36" height="19"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="32" id="0Px-nr-OAo"/>
                                         </constraints>
@@ -147,36 +147,36 @@
                                         </textFieldCell>
                                     </textField>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="WX7-HX-umE" userLabel="Split button">
-                                        <rect key="frame" x="198" y="1" width="52" height="22"/>
+                                        <rect key="frame" x="198" y="2" width="52" height="22"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="52" id="Wg9-dK-f0x"/>
                                         </constraints>
-                                        <buttonCell key="cell" type="square" title="SPLIT" bezelStyle="shadowlessSquare" imagePosition="above" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="vby-fU-avI">
+                                        <buttonCell key="cell" type="square" title="SPLIT" bezelStyle="shadowlessSquare" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="vby-fU-avI">
                                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
-                                            <font key="font" metaFont="system" size="18"/>
+                                            <font key="font" metaFont="systemBold" size="18"/>
                                         </buttonCell>
-                                        <color key="contentTintColor" red="1" green="1" blue="1" alpha="0.29818600171232879" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="contentTintColor" red="1" green="1" blue="1" alpha="0.29725146051571311" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
                                             <action selector="splitButton:" target="Lmw-yC-7qh" id="H5m-pI-8o9"/>
                                         </connections>
                                     </button>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="f1H-1i-UGn" userLabel="TX button">
-                                        <rect key="frame" x="255" y="2" width="20" height="20"/>
+                                        <rect key="frame" x="255" y="0.0" width="27" height="26"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="20" id="Mn9-Qa-55X"/>
-                                            <constraint firstAttribute="height" constant="20" id="Mv4-K3-3k5"/>
-                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="20" id="cHE-h5-FOY"/>
+                                            <constraint firstAttribute="width" constant="27" id="Mn9-Qa-55X"/>
+                                            <constraint firstAttribute="height" constant="26" id="Mv4-K3-3k5"/>
                                         </constraints>
-                                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="TX-off" imagePosition="only" alignment="center" alternateImage="TX-on" imageScaling="proportionallyUpOrDown" inset="2" id="GAq-Sj-SzU">
-                                            <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
-                                            <font key="font" metaFont="system"/>
+                                        <buttonCell key="cell" type="square" title="TX" bezelStyle="shadowlessSquare" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="GAq-Sj-SzU">
+                                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
+                                            <font key="font" metaFont="systemBold" size="18"/>
                                         </buttonCell>
+                                        <color key="contentTintColor" red="1" green="1" blue="1" alpha="0.29981995366639808" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
-                                            <binding destination="Lmw-yC-7qh" name="value" keyPath="slice.txEnabled" id="qzT-Zh-J2p"/>
+                                            <action selector="txButton:" target="Lmw-yC-7qh" id="FqY-6O-Ybs"/>
                                         </connections>
                                     </button>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="L2i-aR-dmf" userLabel="LetterID label">
-                                        <rect key="frame" x="278" y="0.0" width="23" height="24"/>
+                                        <rect key="frame" x="285" y="1" width="23" height="24"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="19" id="kAz-z8-4HQ"/>
                                         </constraints>
@@ -213,7 +213,7 @@
                                 </customSpacing>
                             </stackView>
                             <stackView distribution="fill" orientation="horizontal" alignment="top" spacing="3" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jie-8p-irq" userLabel="Lock stack view">
-                                <rect key="frame" x="2" y="49" width="302" height="29"/>
+                                <rect key="frame" x="2" y="47" width="302" height="29"/>
                                 <subviews>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="WIZ-v0-8bz" userLabel="Lock button">
                                         <rect key="frame" x="0.0" y="4" width="25" height="25"/>
@@ -311,7 +311,7 @@
                                 </customSpacing>
                             </stackView>
                             <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uKl-h1-c2L" userLabel="S-Meter stack view">
-                                <rect key="frame" x="35" y="29" width="248" height="20"/>
+                                <rect key="frame" x="35" y="27" width="248" height="20"/>
                                 <subviews>
                                     <customView translatesAutoresizingMaskIntoConstraints="NO" id="Kkb-rb-ggc" customClass="LevelIndicator" customModule="xSDR6000" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="220" height="20"/>
@@ -358,7 +358,7 @@
                                 </customSpacing>
                             </stackView>
                             <stackView distribution="equalSpacing" orientation="horizontal" alignment="top" spacing="3" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="V5N-wl-2dY" userLabel="Buttons stack view">
-                                <rect key="frame" x="10" y="3" width="294" height="21"/>
+                                <rect key="frame" x="10" y="1" width="294" height="21"/>
                                 <subviews>
                                     <button identifier="AUD" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="19n-Cu-jeD">
                                         <rect key="frame" x="-6" y="-7" width="67" height="32"/>
@@ -442,9 +442,9 @@
                             <constraint firstItem="Ldc-rG-ght" firstAttribute="leading" secondItem="gnm-lQ-RMP" secondAttribute="leading" constant="4" id="4do-Y1-cb6"/>
                             <constraint firstItem="jie-8p-irq" firstAttribute="top" secondItem="Ldc-rG-ght" secondAttribute="bottom" constant="4" id="4hb-DL-CKk"/>
                             <constraint firstItem="jie-8p-irq" firstAttribute="leading" secondItem="gnm-lQ-RMP" secondAttribute="leading" constant="2" id="FHY-Fb-lPU"/>
-                            <constraint firstAttribute="trailing" secondItem="Ldc-rG-ght" secondAttribute="trailing" constant="8" id="TLf-7I-f4G"/>
                             <constraint firstAttribute="trailing" secondItem="V5N-wl-2dY" secondAttribute="trailing" constant="7" id="Tmm-OH-cVx"/>
                             <constraint firstItem="uKl-h1-c2L" firstAttribute="leading" secondItem="gnm-lQ-RMP" secondAttribute="leading" constant="35" id="YJq-Mq-g3t"/>
+                            <constraint firstAttribute="trailing" secondItem="Ldc-rG-ght" secondAttribute="trailing" constant="1" id="f21-cg-77o"/>
                             <constraint firstAttribute="trailing" secondItem="jie-8p-irq" secondAttribute="trailing" constant="7" id="fDb-yP-XPV"/>
                             <constraint firstItem="V5N-wl-2dY" firstAttribute="leading" secondItem="gnm-lQ-RMP" secondAttribute="leading" constant="10" id="fba-wi-4dK"/>
                             <constraint firstAttribute="trailing" secondItem="uKl-h1-c2L" secondAttribute="trailing" constant="28" id="gb4-Ab-yR7"/>
@@ -461,6 +461,7 @@
                         <outlet property="_modeButton" destination="JhF-eX-EH0" id="stx-FA-sVI"/>
                         <outlet property="_sLevel" destination="FXy-WX-GDY" id="h46-eM-OCU"/>
                         <outlet property="_sMeter" destination="Kkb-rb-ggc" id="zgp-Ca-fgU"/>
+                        <outlet property="_txButton" destination="f1H-1i-UGn" id="wuL-PN-lGd"/>
                         <outlet property="_xritButton" destination="6Ea-s9-S9F" id="Fo5-jc-9N5"/>
                     </connections>
                 </viewController>
