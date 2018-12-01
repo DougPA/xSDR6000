@@ -135,7 +135,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     defaults(from: "Defaults.plist")
     
     // set the window title
-    title()
+    updateWindowTitle()
 
     // get the Storyboard containing the RadioPicker
     _radioPickerStoryboard = NSStoryboard(name: kRadioPickerStoryboardName, bundle: nil)
@@ -160,8 +160,8 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
 //    widthConstraint.identifier = "Side width constraint"
 //    widthConstraint.isActive = true
 
-    // show/hide the Side view
-    splitViewItems[1].isCollapsed = !Defaults[.sideViewOpen]
+//    // show/hide the Side view
+//    splitViewItems[1].isCollapsed = !Defaults[.sideViewOpen]
     
 //    splitView.needsLayout = true
     
@@ -356,9 +356,9 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   // ----------------------------------------------------------------------------
   // MARK: - Private methods
     
-  /// Set the Window's title
+  /// Set the Window's title. toolbar & side view
   ///
-  func title() {
+  func updateWindowTitle() {
     
     // have the versions been captured?
     if _versions == nil {
@@ -375,12 +375,30 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     // format and set the window title
     let title = (_api.activeRadio == nil ? "" : "- \(_api.activeRadio!.nickname) @ \(_api.activeRadio!.publicIp) (\(_api.isWan ? "SmartLink" : "Local"))")
     DispatchQueue.main.async {
+      
+      // Title
       self.view.window?.title = "\(kClientName) v\(self._versions!.app), xLib6000 v\(self._versions!.api) \(title)"
+
+//      // Toolbar
+//      let mainWindowController = self.view.window?.windowController as? MainWindowController
+//      mainWindowController!.lineoutGain.integerValue = self._api.radio!.lineoutGain
+//      mainWindowController!.lineoutMute.state = self._api.radio!.lineoutMute.state
+//      mainWindowController!.headphoneGain.integerValue = self._api.radio!.headphoneGain
+//      mainWindowController!.headphoneMute.state = self._api.radio!.headphoneMute.state
+//      mainWindowController!.sideViewOpen.state = Defaults[.sideViewOpen].state
+//      mainWindowController!.tnfsEnabled.state = Defaults[.tnfsEnabled].state
+//      mainWindowController!.fullDuplexEnabled.state = Defaults[.fullDuplexEnabled].state
+//      mainWindowController!.markersEnabled.state = Defaults[.markersEnabled].state
+//
+//      // FIXME: add other toolbar controls
+//
+//      // show/hide the Side view
+//      self.splitViewItems[1].isCollapsed = !Defaults[.sideViewOpen]
     }
   }
   /// Set the toolbar controls
   ///
-  func toolbar() {
+  func updateToolbar() {
     
     DispatchQueue.main.async {
       let mainWindowController = self.view.window?.windowController as? MainWindowController
@@ -640,10 +658,15 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     Defaults[.radioModel] = _api.activeRadio!.model
     
     // update the title bar
-    title()
+    updateWindowTitle()
     
-    // update the toolbar controls
-    toolbar()
+    // update the toolbar items
+    updateToolbar()
+    
+    // show/hide the Side view
+    DispatchQueue.main.async { [unowned self] in
+      self.splitViewItems[1].isCollapsed = !Defaults[.sideViewOpen]
+    }
   }
   /// Process .radioWillBeRemoved Notification
   ///
@@ -661,8 +684,14 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     // remove all objects on Radio
     radio.removeAll()
     
-//    // update the title bar
-//    title()
+    if Defaults[.sideViewOpen] {
+      DispatchQueue.main.async { [unowned self] in
+        self.splitViewItems[1].isCollapsed = true
+      }
+    }
+    
+    // update the title bar
+    updateWindowTitle()
   }
   /// Process .radioHasBeenRemoved Notification
   ///
@@ -675,7 +704,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     os_log("Radio has been removed", log: _log, type: .info)
     
     // update the window title
-    title()
+    updateWindowTitle()
   }
   /// Process .opusHasBeenAdded Notification
   ///

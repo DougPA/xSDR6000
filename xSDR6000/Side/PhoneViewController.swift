@@ -11,8 +11,8 @@ import xLib6000
 
 class PhoneViewController                   : NSViewController {
   
-  @objc dynamic public var transmit         : Transmit {
-    return (representedObject as! Radio).transmit
+  @objc dynamic public var radio            : Radio? {
+    return Api.sharedInstance.radio
   }
   
   // ----------------------------------------------------------------------------
@@ -23,4 +23,6 @@ class PhoneViewController                   : NSViewController {
     
     view.layer?.backgroundColor = NSColor.lightGray.cgColor
   }
+  
+  
 }

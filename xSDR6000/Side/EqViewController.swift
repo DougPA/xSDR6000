@@ -31,7 +31,9 @@ final class EqViewController                : NSViewController {
   @IBOutlet private weak var slider6        : NSSlider!
   @IBOutlet private weak var slider7        : NSSlider!
   
-  private var _radio                        : Radio!                        // radio class
+  private var _radio                        = Api.sharedInstance.radio {    // radio class
+    didSet { setupEq() }
+  }
   private var _equalizerRx                  : Equalizer!                    // Rx Equalizer
   private var _equalizerTx                  : Equalizer!                    // Tx Equalizer
   
@@ -41,25 +43,28 @@ final class EqViewController                : NSViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    // get references to the Radio & the Equalizers
-    _radio = representedObject as? Radio
-    
-    _equalizerRx = _radio.equalizers[.rxsc]
-    _equalizerTx = _radio.equalizers[.txsc]
-    
-    // enable the appropriate Equalizer
-    rxButton.boolState = Defaults[.eqRxSelected]
-    txButton.boolState = Defaults[.eqRxSelected]
+    view.translatesAutoresizingMaskIntoConstraints = false
 
-    // set the state of the sliders & ON Button
-    populateEqualizer()
+    view.layer?.backgroundColor = NSColor.lightGray.cgColor
+
+////    // get references to the Radio & the Equalizers
+////    _radio = representedObject as? Radio
+//
+//    _equalizerRx = _radio!.equalizers[.rxsc]
+//    _equalizerTx = _radio!.equalizers[.txsc]
+//
+//    // enable the appropriate Equalizer
+//    rxButton.boolState = Defaults[.eqRxSelected]
+//    txButton.boolState = Defaults[.eqRxSelected]
+//
+//    // set the state of the sliders & ON Button
+//    populateEqualizer()
   }
   
-  override func viewWillAppear() {
-    super.viewWillAppear()
-    
-    view.layer?.backgroundColor = NSColor.lightGray.cgColor
-  }
+//  override func viewWillAppear() {
+//    super.viewWillAppear()
+//    
+//  }
   
   // ----------------------------------------------------------------------------
   // MARK: - Action methods
@@ -136,6 +141,18 @@ final class EqViewController                : NSViewController {
   
   // ----------------------------------------------------------------------------
   // MARK: - Private methods
+
+  private func setupEq() {
+    
+    _equalizerRx = _radio!.equalizers[.rxsc]
+    _equalizerTx = _radio!.equalizers[.txsc]
+    
+    // enable the appropriate Equalizer
+    rxButton.boolState = Defaults[.eqRxSelected]
+    txButton.boolState = Defaults[.eqRxSelected]
+    
+    populateEqualizer()
+  }
   
   private func populateEqualizer() {
     
