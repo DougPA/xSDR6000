@@ -50,6 +50,13 @@ extension DefaultsKeys {
   static let radioModel                   = DefaultsKey<String>("radioModel")
   static let remoteViewOpen               = DefaultsKey<Bool>("remoteViewOpen")
   static let sideViewOpen                 = DefaultsKey<Bool>("sideViewOpen")
+  static let sideRxOpen                   = DefaultsKey<Bool>("sideRxOpen")
+  static let sideTxOpen                   = DefaultsKey<Bool>("sideTxOpen")
+  static let sidePcwOpen                  = DefaultsKey<Bool>("sidePcwOpen")
+  static let sidePhneOpen                 = DefaultsKey<Bool>("sidePhneOpen")
+  static let sideEqOpen                   = DefaultsKey<Bool>("sideEqOpen")
+
+  
   static let smartLinkAuth0Email          = DefaultsKey<String>("smartLinkAuth0Email")
   static let smartLinkToken               = DefaultsKey<String?>("smartLinkToken")
   static let smartLinkTokenExpiry         = DefaultsKey<Date?>("smartLinkTokenExpiry")

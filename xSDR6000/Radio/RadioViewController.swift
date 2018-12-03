@@ -96,8 +96,6 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   private var _opusDecode                   : OpusDecode?
   private var _opusEncode                   : OpusEncode?
 
-//  private var _topConstraints               = [NSLayoutConstraint]()
-  
   private let kGuiFirmwareSupport           = "2.3.7.x"                     // Radio firmware supported by this App
   private let kVoltageTemperature           = "VoltageTemp"                 // Identifier of toolbar VoltageTemperature toolbarItem
 
@@ -141,17 +139,11 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     _radioPickerStoryboard = NSStoryboard(name: kRadioPickerStoryboardName, bundle: nil)
     _sideStoryboard = NSStoryboard(name: kSideStoryboardName, bundle: nil)
 
+    splitViewItems[1].isCollapsed = true
+    
     // add notification subscriptions
     addNotifications()
     
-    // constrain the Bottom
-//    let panView = (splitViewItems[0].viewController as! NSSplitViewController).splitView
-//    let sideView = (splitViewItems[1].viewController as! NSViewController).view
-//    
-//    let bottomConstraint = sideView.bottomAnchor.constraint(equalTo: panView.bottomAnchor)
-//    bottomConstraint.identifier = "Side bottom constraint"
-//    bottomConstraint.isActive = true
-//    
    // is the default Radio available?
     if let defaultRadio = defaultRadioFound() {
       
@@ -363,22 +355,6 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
       
       // Title
       self.view.window?.title = "\(kClientName) v\(self._versions!.app), xLib6000 v\(self._versions!.api) \(title)"
-
-//      // Toolbar
-//      let mainWindowController = self.view.window?.windowController as? MainWindowController
-//      mainWindowController!.lineoutGain.integerValue = self._api.radio!.lineoutGain
-//      mainWindowController!.lineoutMute.state = self._api.radio!.lineoutMute.state
-//      mainWindowController!.headphoneGain.integerValue = self._api.radio!.headphoneGain
-//      mainWindowController!.headphoneMute.state = self._api.radio!.headphoneMute.state
-//      mainWindowController!.sideViewOpen.state = Defaults[.sideViewOpen].state
-//      mainWindowController!.tnfsEnabled.state = Defaults[.tnfsEnabled].state
-//      mainWindowController!.fullDuplexEnabled.state = Defaults[.fullDuplexEnabled].state
-//      mainWindowController!.markersEnabled.state = Defaults[.markersEnabled].state
-//
-//      // FIXME: add other toolbar controls
-//
-//      // show/hide the Side view
-//      self.splitViewItems[1].isCollapsed = !Defaults[.sideViewOpen]
     }
   }
   /// Set the toolbar controls
@@ -426,160 +402,6 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     }
     return defaultRadioParameters
   }
-//  /// Display / Hide a side view
-//  ///
-//  /// - Parameters:
-//  ///   - identifier:     a Storyboard identifier
-//  ///   - show:           show?
-//  ///
-//  private func sideView(_ identifier: String, show: Bool) {
-//    
-//    // get a reference to the Side view controller
-//    let sideVC = children[1] as? NSSplitViewController
-//    
-//    // show or hide?
-//    if show {
-//      
-//      // SHOW, create a view controller
-////      let sbIdentifier = identifier
-////      let vc = _sideStoryboard!.instantiateController(withIdentifier: sbIdentifier ) as! NSViewController
-//      
-//      var height : CGFloat = 0
-//      switch identifier {
-////      case "BUTTONS":
-////        height = 37
-//      case "RX":
-//        height = 108
-//      case "TX":
-//        height = 207
-//      case "PCW":
-//        height = 240
-//      case "PHNE":
-//        height = 192
-//      case "EQ":
-//        height = 170
-//      default:
-//        fatalError()
-//      }
-//      
-//      
-//      let vc = createAndPosition(on: sideVC!, identifier: identifier, height: height)
-//      
-//      
-//      // add it to the Side View
-//      var index = 0
-//      switch identifier {
-////      case "BUTTONS":
-////        index = 0
-//      case "RX":
-//        index = 1
-//      case "TX":
-//        index = 2
-//      case "PCW":
-//        index = 3
-//      case "PHNE":
-//        index = 4
-//      case "EQ":
-//        index = 5
-//      default:
-//        fatalError()
-//      }
-//      let numberOfViews = sideVC!.children.count
-//      if index >= numberOfViews {
-//        sideVC!.insertChild(vc, at: numberOfViews)
-//        
-//      } else {
-//
-//        sideVC!.insertChild(vc, at: index)
-//      }
-//      // constrain its Height & Width
-////      vc.view.heightAnchor.constraint(equalToConstant: 400).isActive = true
-////      vc.view.widthAnchor.constraint(greaterThanOrEqualToConstant: 311).isActive = true
-//
-//      // position it in the splitView
-//      adjustConstraints(for: sideVC!)
-//
-//    } else {
-//      
-//      // HIDE, remove it from the Side View
-//      if let vc = sideVC!.children.first(where: {$0.identifier!.rawValue == identifier} ) {
-//        vc.removeFromParent()
-//
-//        // position it in the splitView
-//        adjustConstraints(for: sideVC!)
-//      }
-//    }
-//  }
-//  
-//  // ----------------------------------------------------------------------------
-//  // MARK: - Private Methods
-//  
-//  /// Create a new View & Position it
-//  ///
-//  /// - Parameters:
-//  ///   - identifier:             a Storyboard Identifier
-//  ///   - height:                 the height
-//  ///
-//  private func createAndPosition( on sideVC: NSSplitViewController, identifier: NSStoryboard.SceneIdentifier, height: CGFloat ) -> NSViewController {
-//
-//    // get the Storyboard containing a View1 Controller
-//    let sb = NSStoryboard(name: "Side", bundle: nil)
-//
-//    // create the View Controller for the identifier
-//    let vc = sb.instantiateController(withIdentifier: identifier) as? NSViewController
-////    vc!.identifier = NSUserInterfaceItemIdentifier(rawValue: identifier)
-//    
-//    // give it a reference to its Radio object
-//    vc!.representedObject = _api.radio
-//
-//    // constrain its Height & Width
-//    vc!.view.heightAnchor.constraint(equalToConstant: height).isActive = true
-//    vc!.view.widthAnchor.constraint(greaterThanOrEqualToConstant: 311).isActive = true
-//    
-//    sideVC.addSplitViewItem(NSSplitViewItem(viewController: vc!))
-//
-//    // position it in the Side view
-//    adjustConstraints(for: sideVC)
-//
-//    return vc!
-//  }
-//  /// Constrain each view to the one above it
-//  ///
-//  private func adjustConstraints( for sideVC: NSSplitViewController) {
-//    
-//    // for each Side Item
-//    for (i, item) in sideVC.splitViewItems.enumerated() {
-//      
-//      switch (i, _topConstraints.count) {
-//      case (0, i):
-//        // topmost view, constraint not yet created
-//        _topConstraints.append( item.viewController.view.topAnchor.constraint(equalTo: sideVC.view.topAnchor) )
-//        
-//        Swift.print("_topConstraints = \(_topConstraints)")
-//        
-//      case (0, _):
-//        // topmost view, constraint exists for this index
-//        _topConstraints[i].isActive = false
-//        _topConstraints[i] = item.viewController.view.topAnchor.constraint(equalTo: sideVC.view.topAnchor)
-//        
-//      case (_, i):
-//        // not topmost view, constraint not yet created
-//        _topConstraints.append( item.viewController.view.topAnchor.constraint(equalTo: sideVC.splitViewItems[i - 1].viewController.view.bottomAnchor) )
-//        
-//      case (_, _):
-//        // not topmost view, constraint exists for this index
-//        _topConstraints[i].isActive = false
-//        _topConstraints[i] = item.viewController.view.topAnchor.constraint(equalTo: sideVC.splitViewItems[i - 1].viewController.view.bottomAnchor)
-//      }
-//      // make the constraint active
-//      _topConstraints[i].isActive = true
-//    }
-//  }
-
-  
-  
-  
-  
   
   // ----------------------------------------------------------------------------
   // MARK: - Notification Methods

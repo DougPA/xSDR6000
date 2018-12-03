@@ -1687,23 +1687,23 @@
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <view identifier="Inside view" translatesAutoresizingMaskIntoConstraints="NO" id="WdK-Jx-DB2" userLabel="Inside View">
-                                            <rect key="frame" x="-1" y="-1580" width="311" height="2000"/>
+                                            <rect key="frame" x="-1" y="-1" width="311" height="421"/>
                                             <subviews>
-                                                <containerView translatesAutoresizingMaskIntoConstraints="NO" id="eED-TT-H8j" userLabel="Container 1 View">
-                                                    <rect key="frame" x="0.0" y="1790" width="311" height="210"/>
+                                                <containerView translatesAutoresizingMaskIntoConstraints="NO" id="eED-TT-H8j" userLabel="Phne View container">
+                                                    <rect key="frame" x="0.0" y="211" width="311" height="210"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="311" id="8K8-VF-6nT" userLabel="Container 1 width"/>
-                                                        <constraint firstAttribute="height" constant="210" id="R4m-3J-D0Z"/>
+                                                        <constraint firstAttribute="width" constant="311" id="8K8-VF-6nT" userLabel="PHNE View container width"/>
+                                                        <constraint firstAttribute="height" constant="210" id="R4m-3J-D0Z" userLabel="PHNE View container height"/>
                                                     </constraints>
                                                     <connections>
                                                         <segue destination="4Er-qS-ODr" kind="embed" id="721-Qh-CXe"/>
                                                     </connections>
                                                 </containerView>
-                                                <containerView identifier="Container view" translatesAutoresizingMaskIntoConstraints="NO" id="eBz-RL-KvA" userLabel="Container 2 View">
-                                                    <rect key="frame" x="0.0" y="1580" width="311" height="210"/>
+                                                <containerView identifier="Container view" translatesAutoresizingMaskIntoConstraints="NO" id="eBz-RL-KvA" userLabel="EQ View container">
+                                                    <rect key="frame" x="0.0" y="1" width="311" height="210"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="311" id="OgD-LQ-BLy" userLabel="Container 2 width"/>
-                                                        <constraint firstAttribute="height" constant="210" id="eC3-D0-WPI"/>
+                                                        <constraint firstAttribute="width" constant="311" id="OgD-LQ-BLy" userLabel="EQ View container width"/>
+                                                        <constraint firstAttribute="height" constant="210" id="eC3-D0-WPI" userLabel="EQ View container height"/>
                                                     </constraints>
                                                     <connections>
                                                         <segue destination="yhz-wz-Qrr" kind="embed" id="sX5-fL-1SX"/>
@@ -1732,7 +1732,7 @@
                                     <rect key="frame" x="-100" y="-100" width="325" height="16"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
-                                <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="0.0012650221378873727" horizontal="NO" id="2L3-qT-kuv">
+                                <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="0.5" horizontal="NO" id="2L3-qT-kuv">
                                     <rect key="frame" x="294" y="1" width="16" height="419"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
@@ -1743,7 +1743,7 @@
                             <constraint firstAttribute="trailing" secondItem="cXN-5r-vYF" secondAttribute="trailing" id="8Ue-zV-uI9" userLabel="Scroll View trailing"/>
                             <constraint firstItem="ViS-6c-7jW" firstAttribute="top" secondItem="JWf-Xw-QVy" secondAttribute="top" id="UvD-SH-gVb" userLabel="Buttons top"/>
                             <constraint firstItem="ViS-6c-7jW" firstAttribute="centerX" secondItem="JWf-Xw-QVy" secondAttribute="centerX" id="VGL-d6-IZV" userLabel="Buttons centerX"/>
-                            <constraint firstAttribute="bottom" secondItem="WdK-Jx-DB2" secondAttribute="bottom" constant="-1579" id="gG3-x6-zlT"/>
+                            <constraint firstAttribute="bottom" secondItem="WdK-Jx-DB2" secondAttribute="bottom" id="gG3-x6-zlT"/>
                             <constraint firstAttribute="bottom" secondItem="cXN-5r-vYF" secondAttribute="bottom" id="hi1-qb-nrT" userLabel="Scroll View bottom"/>
                             <constraint firstItem="cXN-5r-vYF" firstAttribute="leading" secondItem="JWf-Xw-QVy" secondAttribute="leading" id="oH4-Qc-72d" userLabel="Scroll View leading"/>
                         </constraints>
@@ -1754,10 +1754,15 @@
                         </userDefinedRuntimeAttributes>
                     </view>
                     <connections>
-                        <outlet property="_container1HeightConstraint" destination="R4m-3J-D0Z" id="OD2-UH-8h1"/>
-                        <outlet property="_container2HeightConstraint" destination="eC3-D0-WPI" id="7ul-kC-hCS"/>
+                        <outlet property="_eqButton" destination="O0T-VG-TMC" id="nZd-ig-uh2"/>
+                        <outlet property="_eqContainerHeight" destination="eC3-D0-WPI" id="teH-BB-h7E"/>
                         <outlet property="_insideView" destination="WdK-Jx-DB2" id="dw7-XA-Wxg"/>
+                        <outlet property="_pcwButton" destination="es1-qK-pkJ" id="PMA-Jq-MIa"/>
+                        <outlet property="_phneButton" destination="dMZ-kg-9r7" id="jEp-aC-r32"/>
+                        <outlet property="_phneContainerHeight" destination="R4m-3J-D0Z" id="DIu-Tw-bpQ"/>
+                        <outlet property="_rxButton" destination="TtR-2c-epm" id="uQd-Ge-1wh"/>
                         <outlet property="_scrollView" destination="cXN-5r-vYF" id="ACj-Va-oUw"/>
+                        <outlet property="_txButton" destination="Su3-c5-GFZ" id="2tb-jq-1vv"/>
                     </connections>
                 </viewController>
                 <customObject id="lAe-0q-oUl" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
