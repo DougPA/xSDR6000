@@ -144,27 +144,14 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     // add notification subscriptions
     addNotifications()
     
+    // constrain the Bottom
 //    let panView = (splitViewItems[0].viewController as! NSSplitViewController).splitView
-//    let sideView = (splitViewItems[1].viewController as! NSSplitViewController).splitView
-    
-    // constrain the Height
-//    let topConstraint = sideView.topAnchor.constraint(equalTo: view.topAnchor)
-//    topConstraint.identifier = "Side top constraint"
-//    topConstraint.isActive = true
-    
-//    let heightConstraint = sideView.heightAnchor.constraint(equalTo: panView.heightAnchor)
-//    heightConstraint.identifier = "Side height constraint"
-//    heightConstraint.isActive = true
-    
-//    let widthConstraint = sideView.widthAnchor.constraint(equalToConstant: 311)
-//    widthConstraint.identifier = "Side width constraint"
-//    widthConstraint.isActive = true
-
-//    // show/hide the Side view
-//    splitViewItems[1].isCollapsed = !Defaults[.sideViewOpen]
-    
-//    splitView.needsLayout = true
-    
+//    let sideView = (splitViewItems[1].viewController as! NSViewController).view
+//    
+//    let bottomConstraint = sideView.bottomAnchor.constraint(equalTo: panView.bottomAnchor)
+//    bottomConstraint.identifier = "Side bottom constraint"
+//    bottomConstraint.isActive = true
+//    
    // is the default Radio available?
     if let defaultRadio = defaultRadioFound() {
       
@@ -181,8 +168,6 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
       // NO, open the Radio Picker
       openRadioPicker( self)
     }
-    
-//    Swift.print("Constraints = \(view.constraints)")
   }
   
   // ----------------------------------------------------------------------------
