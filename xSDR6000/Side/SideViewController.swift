@@ -21,6 +21,7 @@ final class SideViewController              : NSViewController {
   
   @IBOutlet private weak var _scrollView    : NSScrollView!
   @IBOutlet private weak var _insideView    : NSView!
+  @IBOutlet private weak var _clipView      : NSClipView!
   
   @IBOutlet private weak var _rxButton      : NSButton!
   @IBOutlet private weak var _txButton      : NSButton!
@@ -28,6 +29,11 @@ final class SideViewController              : NSViewController {
   @IBOutlet private weak var _phneButton    : NSButton!
   @IBOutlet private weak var _eqButton      : NSButton!
   
+  
+  @IBOutlet private weak var _insideViewHeight      : NSLayoutConstraint!
+  @IBOutlet private weak var _rxContainerHeight     : NSLayoutConstraint!
+  @IBOutlet private weak var _txContainerHeight     : NSLayoutConstraint!
+  @IBOutlet private weak var _pcwContainerHeight    : NSLayoutConstraint!
   @IBOutlet private weak var _phneContainerHeight   : NSLayoutConstraint!
   @IBOutlet private weak var _eqContainerHeight     : NSLayoutConstraint!
   
@@ -63,24 +69,29 @@ final class SideViewController              : NSViewController {
     _pcwButton.state = Defaults[.sidePcwOpen].state
     _phneButton.state = Defaults[.sidePhneOpen].state
     _eqButton.state = Defaults[.sideEqOpen].state
-
     
     // unhide the selected views
+    _rxContainerHeight.constant = ( Defaults[.sideRxOpen] ? kHeightOpen : kHeightClosed )
+    _txContainerHeight.constant = ( Defaults[.sideTxOpen] ? kHeightOpen : kHeightClosed )
+    _pcwContainerHeight.constant = ( Defaults[.sidePcwOpen] ? kHeightOpen : kHeightClosed )
     _phneContainerHeight.constant = ( Defaults[.sidePhneOpen] ? kHeightOpen : kHeightClosed )
     _eqContainerHeight.constant = ( Defaults[.sideEqOpen] ? kHeightOpen : kHeightClosed )
+
+    _scrollView.needsLayout = true
+//    positionAtTop(_scrollView)
   }
 
 //  override func viewDidAppear() {
 //
 //    // position the scroll view at the top
-//    positionAtTop(_scrollView)
+//    positionAtTop(_clipView)
 //  }
   
-//  override func viewDidLayout() {
-//
-//    // position the scroll view at the top
-//    positionAtTop(_scrollView)
-//  }
+  override func viewDidLayout() {
+
+    // position the scroll view at the top
+    positionAtTop(_scrollView)
+  }
   
   // ----------------------------------------------------------------------------
   // MARK: - Action methods
@@ -94,10 +105,13 @@ final class SideViewController              : NSViewController {
     switch sender.identifier?.rawValue ?? "" {
     case "RX":
       Defaults[.sideRxOpen] = sender.boolState
+      _rxContainerHeight.constant = (sender.boolState ? 210 : 0)
     case "TX":
       Defaults[.sideTxOpen] = sender.boolState
+      _txContainerHeight.constant = (sender.boolState ? 210 : 0)
     case "PCW":
       Defaults[.sidePcwOpen] = sender.boolState
+      _pcwContainerHeight.constant = (sender.boolState ? 210 : 0)
     case "PHNE":
       Defaults[.sidePhneOpen] = sender.boolState
       _phneContainerHeight.constant = (sender.boolState ? 210 : 0)
@@ -107,8 +121,10 @@ final class SideViewController              : NSViewController {
     default:
       fatalError()
     }
-    // position the scroll view at the top
-    positionAtTop(_scrollView)
+    _scrollView.needsLayout = true
+    
+//    // position the scroll view at the top
+//    positionAtTop(_scrollView)
   }
   
   // ----------------------------------------------------------------------------
@@ -116,11 +132,13 @@ final class SideViewController              : NSViewController {
   
   private func positionAtTop(_ scrollView: NSScrollView) {
     
-    Swift.print("scrollView = \(scrollView), docView = \(scrollView.documentView), docViewHeight = \(scrollView.documentView!.bounds.size.height)")
+    Swift.print("scrollViewHeight = \(scrollView.frame.height), docViewHeight = \(scrollView.documentView!.frame.height)")
     
+//    _insideViewHeight.constant = max(1050, view.frame.height)
+
     // position the scroll view at the top
     if let docView = scrollView.documentView {
-      docView.scroll(NSPoint(x: 0, y: docView.bounds.size.height))
+      docView.scroll(NSPoint(x: 0, y: view.frame.height))
     }
   }
 
@@ -141,6 +159,7 @@ final class SideViewController              : NSViewController {
   @objc private func frameDidChange(_ note: Notification) {
     
     // position the scroll view at the top
-    positionAtTop(_scrollView)
+//    positionAtTop(_scrollView)
+    _scrollView.needsLayout = true
   }
 }

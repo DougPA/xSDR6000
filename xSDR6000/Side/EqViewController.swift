@@ -46,25 +46,7 @@ final class EqViewController                : NSViewController {
     view.translatesAutoresizingMaskIntoConstraints = false
 
     view.layer?.backgroundColor = NSColor.lightGray.cgColor
-
-////    // get references to the Radio & the Equalizers
-////    _radio = representedObject as? Radio
-//
-//    _equalizerRx = _radio!.equalizers[.rxsc]
-//    _equalizerTx = _radio!.equalizers[.txsc]
-//
-//    // enable the appropriate Equalizer
-//    rxButton.boolState = Defaults[.eqRxSelected]
-//    txButton.boolState = Defaults[.eqRxSelected]
-//
-//    // set the state of the sliders & ON Button
-//    populateEqualizer()
   }
-  
-//  override func viewWillAppear() {
-//    super.viewWillAppear()
-//    
-//  }
   
   // ----------------------------------------------------------------------------
   // MARK: - Action methods

@@ -319,17 +319,6 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     quitRadio(self)
   }
   
-  // ----- SIDE BUTTONS -----
-  
-//  /// Respond to one of the Side buttons
-//  ///
-//  /// - Parameter sender: the Button
-//  ///
-//  @IBAction func sideButtons(_ sender: NSButton) {
-//    
-//    sideView( sender.identifier!.rawValue, show: sender.boolState )
-//  }
-//  
   // ----------------------------------------------------------------------------
   // MARK: - Private methods
     
@@ -351,7 +340,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     
     // format and set the window title
     let title = (_api.activeRadio == nil ? "" : "- \(_api.activeRadio!.nickname) @ \(_api.activeRadio!.publicIp) (\(_api.isWan ? "SmartLink" : "Local"))")
-    DispatchQueue.main.async {
+    DispatchQueue.main.async { [unowned self] in
       
       // Title
       self.view.window?.title = "\(kClientName) v\(self._versions!.app), xLib6000 v\(self._versions!.api) \(title)"
@@ -361,7 +350,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   ///
   func updateToolbar() {
     
-    DispatchQueue.main.async {
+    DispatchQueue.main.async { [unowned self] in
       let mainWindowController = self.view.window?.windowController as? MainWindowController
       mainWindowController!.lineoutGain.integerValue = self._api.radio!.lineoutGain
       mainWindowController!.lineoutMute.state = self._api.radio!.lineoutMute.state
@@ -372,6 +361,8 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
       mainWindowController!.fullDuplexEnabled.state = Defaults[.fullDuplexEnabled].state
       mainWindowController!.markersEnabled.state = Defaults[.markersEnabled].state
 
+      self.splitViewItems[1].isCollapsed = !Defaults[.sideViewOpen]
+      
       // FIXME: add other toolbar controls
     }
   }

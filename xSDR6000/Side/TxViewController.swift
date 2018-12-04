@@ -14,9 +14,6 @@ class TxViewController                      : NSViewController {
   // ----------------------------------------------------------------------------
   // MARK: - Public properties
   
-  @objc dynamic public var radio            : Radio {
-    return representedObject as! Radio }
-
   @objc dynamic public var powerForward     : Float = 0
   @objc dynamic public var swr              : Float = 0
 
@@ -29,6 +26,10 @@ class TxViewController                      : NSViewController {
   @IBOutlet private weak var _swr           : LevelIndicator!
   @IBOutlet private weak var _moxButton     : NSButton!
   
+  private var _radio                        = Api.sharedInstance.radio {
+    didSet { addObservations() }
+  }
+
   private let kPowerForward                 = Api.MeterShortName.powerForward.rawValue
   private let kSwr                          = Api.MeterShortName.swr.rawValue
 
@@ -38,8 +39,9 @@ class TxViewController                      : NSViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    // setup needed observations
-    addObservations()
+    view.translatesAutoresizingMaskIntoConstraints = false
+    
+    view.layer?.backgroundColor = NSColor.lightGray.cgColor
 
     _rfPower.legends = [            // to skip a legend pass "" as the format
       (0, "0", 0),
@@ -58,11 +60,10 @@ class TxViewController                      : NSViewController {
     ]
   }
   
-  override func viewWillAppear() {
-    super.viewWillAppear()
-    
-    view.layer?.backgroundColor = NSColor.lightGray.cgColor
-  }
+//  override func viewWillAppear() {
+//    super.viewWillAppear()
+//
+//  }
   
   // ----------------------------------------------------------------------------
   // MARK: - Action methods
@@ -70,7 +71,7 @@ class TxViewController                      : NSViewController {
   @IBAction func atuButton(_ sender: Any) {
     
     // initiate a tuning cycle
-    radio.atu.atuStart()
+    _radio?.atu.atuStart()
   }
 
   // ----------------------------------------------------------------------------
@@ -82,25 +83,17 @@ class TxViewController                      : NSViewController {
   ///
   private func addObservations() {
     
-    // Atu
-    _observations.append( (radio.atu).observe(\.status, options: [.initial, .new], changeHandler: atuStatus) )
-    
-    // MOX
-    _observations.append( radio.observe(\.mox, options: [.initial, .new], changeHandler: moxStatus) )
-
-    // Meters
-//    for (_, meter) in radio.meters {
-//      
-//      // is it one we need to watch?
-//      if meter.name == kPowerForward || meter.name == kSwr {
-//        
-//        // YES, observer it
-//        _observations.append( meter.observe(\.value, options: [.initial, .new], changeHandler: meterValue) )
-//      }
-//    }
-    // is it one we need to watch?
-    let meters = radio.meters.filter {$0.value.name == kPowerForward || $0.value.name == kSwr}
-    meters.forEach { _observations.append( $0.value.observe(\.value, options: [.initial, .new], changeHandler: meterValue)) }    
+    if let radio = _radio {
+      // Atu
+      _observations.append( (radio.atu).observe(\.status, options: [.initial, .new], changeHandler: atuStatus) )
+      
+      // MOX
+      _observations.append( radio.observe(\.mox, options: [.initial, .new], changeHandler: moxStatus) )
+      
+     // is it one we need to watch?
+      let meters = radio.meters.filter {$0.value.name == kPowerForward || $0.value.name == kSwr}
+      meters.forEach { _observations.append( $0.value.observe(\.value, options: [.initial, .new], changeHandler: meterValue)) }
+    }
   }
   /// Respond to changes in Atu status
   ///

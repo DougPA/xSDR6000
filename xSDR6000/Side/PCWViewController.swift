@@ -14,23 +14,27 @@ class PCWViewController                         : NSViewController {
   // ----------------------------------------------------------------------------
   // MARK: - Public properties
   
-  @objc dynamic public var radio                : Radio {
-    return representedObject as! Radio }
-
-  @objc dynamic public var micList              : [String] {
-    return radio.micList.map {  return $0 == "PC" ? "MAC" : $0 }
-  }
-
-  @objc dynamic public var micSelection         : String {
-    get { return (radio.transmit.micSelection  == "PC" ? "MAC" : radio.transmit.micSelection) }
-    set { if newValue == "MAC" { radio.transmit.micSelection = "PC" } else { radio.transmit.micSelection = newValue }  }
-  }
+//  @objc dynamic public var radio                : Radio {
+//    return representedObject as! Radio }
+//
+//  @objc dynamic public var micList              : [String] {
+//    return radio.micList.map {  return $0 == "PC" ? "MAC" : $0 }
+//  }
+//
+//  @objc dynamic public var micSelection         : String {
+//    get { return (radio.transmit.micSelection  == "PC" ? "MAC" : radio.transmit.micSelection) }
+//    set { if newValue == "MAC" { radio.transmit.micSelection = "PC" } else { radio.transmit.micSelection = newValue }  }
+//  }
 
   @IBOutlet private weak var compressionIndicator   : LevelIndicator!
   @IBOutlet private weak var micLevelIndicator      : LevelIndicator!
 
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
+  
+  private var _radio                        = Api.sharedInstance.radio {
+    didSet { addObservations() }
+  }
   
   private let kCodecOutput                  = Api.MeterShortName.codecOutput.rawValue
   private let kMicrophoneAverage            = Api.MeterShortName.microphoneAverage.rawValue
@@ -44,7 +48,11 @@ class PCWViewController                         : NSViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    micLevelIndicator.legends = [            
+    view.translatesAutoresizingMaskIntoConstraints = false
+    
+    view.layer?.backgroundColor = NSColor.lightGray.cgColor
+    
+    micLevelIndicator.legends = [
       (0, "-40", 0),
       (1, "-30", -0.5),
       (3, "-10", -0.5),
@@ -58,9 +66,6 @@ class PCWViewController                         : NSViewController {
       (5, "0", -1),
       (nil, "Compression", 0)
     ]
-
-    // setup meter observations
-    addObservations()
   }
   
   override func viewWillAppear() {
@@ -78,22 +83,11 @@ class PCWViewController                         : NSViewController {
   ///
   private func addObservations() {
 
-//    for (_, meter) in radio.meters {
-//
-//      // is it one we need to watch?
-//      switch meter.name {
-//      case kMicrophoneAverage, kMicrophonePeak, kCompression:
-//
-//        _observations.append( meter.observe(\.value, options: [.initial, .new], changeHandler: meterValue) )
-//
-//      default:
-//        break
-//      }
-//    }
-
-    // is it one we need to watch?
-    let meters = radio.meters.filter {$0.value.name == kMicrophoneAverage || $0.value.name == kMicrophonePeak || $0.value.name == kCompression }
-    meters.forEach { _observations.append( $0.value.observe(\.value, options: [.initial, .new], changeHandler: meterValue) ) } 
+    if let radio = _radio {
+      // is it one we need to watch?
+      let meters = radio.meters.filter {$0.value.name == kMicrophoneAverage || $0.value.name == kMicrophonePeak || $0.value.name == kCompression }
+      meters.forEach { _observations.append( $0.value.observe(\.value, options: [.initial, .new], changeHandler: meterValue) ) }
+    }
   }
   /// Respond to changes in a Meter
   ///
