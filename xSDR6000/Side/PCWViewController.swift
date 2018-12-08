@@ -16,7 +16,6 @@ class PCWViewController                               : NSViewController {
   
   @IBOutlet private weak var _compressionIndicator    : LevelIndicator!
   @IBOutlet private weak var _micLevelIndicator       : LevelIndicator!
-
   @IBOutlet private weak var _micProfile              : NSPopUpButton!
   @IBOutlet private weak var _micSelection            : NSPopUpButton!
   @IBOutlet private weak var _micLevel                : NSSlider!
@@ -36,7 +35,6 @@ class PCWViewController                               : NSViewController {
   private let kMicrophoneOutput             = Api.MeterShortName.microphoneOutput.rawValue
   private let kMicrophonePeak               = Api.MeterShortName.microphonePeak.rawValue
   private let kCompression                  = Api.MeterShortName.postClipper.rawValue
-
   private let kProc                         = NSUserInterfaceItemIdentifier(rawValue: "Proc")
   private let kMon                          = NSUserInterfaceItemIdentifier(rawValue: "Mon")
   private let kAcc                          = NSUserInterfaceItemIdentifier(rawValue: "Acc")
@@ -56,23 +54,9 @@ class PCWViewController                               : NSViewController {
     view.translatesAutoresizingMaskIntoConstraints = false
     view.layer?.backgroundColor = NSColor.lightGray.cgColor
     
-    _compressionIndicator.style = .standard
-    _micLevelIndicator.style = .standard
+    // setup the MicLevel & Compression graphs
+    setupBarGraphs()
     
-    _micLevelIndicator.legends = [
-      (0, "-40", 0),
-      (1, "-30", -0.5),
-      (3, "-10", -0.5),
-      (4, "0", -0.5),
-      (nil, "Level", -0.5)
-    ]
-    _compressionIndicator.legends = [
-      (0, "-25", 0),
-      (1, "-20", -0.5),
-      (4, "-5", -0.5),
-      (5, "0", -1),
-      (nil, "Compression", 0)
-    ]
     // disable all controls
     setControlState(false)
     
@@ -134,6 +118,32 @@ class PCWViewController                               : NSViewController {
   // ----------------------------------------------------------------------------
   // MARK: - Private methods
   
+  /// Setup graph styles, legends and resting levels
+  ///
+  private func setupBarGraphs() {
+    _compressionIndicator.style = .standard
+    _micLevelIndicator.style = .standard
+    
+    _micLevelIndicator.legends = [
+      (0, "-40", 0),
+      (1, "-30", -0.5),
+      (3, "-10", -0.5),
+      (4, "0", -0.5),
+      (nil, "Level", -0.5)
+    ]
+    _compressionIndicator.legends = [
+      (0, "-25", 0),
+      (1, "-20", -0.5),
+      (4, "-5", -0.5),
+      (5, "0", -1),
+      (nil, "Compression", 0)
+    ]
+    // move the bar graphs off scale
+    _micLevelIndicator.level = -250
+    _micLevelIndicator.peak = -250
+    _compressionIndicator.level = 20
+    _compressionIndicator.peak = 20
+  }
   /// Enable / Disable all controls
   ///
   /// - Parameter state:              true = enable
@@ -262,9 +272,15 @@ class PCWViewController                               : NSViewController {
     switch meter.name {
 
     case kMicrophoneAverage:
+      
+      Swift.print("Mic average = \(CGFloat(meter.value))")
+      
       DispatchQueue.main.async { self._micLevelIndicator.level = CGFloat(meter.value) }
 
     case kMicrophonePeak:
+
+      Swift.print("Mic peak = \(CGFloat(meter.value))")
+
       DispatchQueue.main.async { self._micLevelIndicator.peak = CGFloat(meter.value) }
 
     case kCompression:

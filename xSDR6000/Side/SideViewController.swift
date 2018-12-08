@@ -25,7 +25,6 @@ final class SideViewController              : NSViewController {
   @IBOutlet private weak var _pcwButton     : NSButton!
   @IBOutlet private weak var _phneButton    : NSButton!
   @IBOutlet private weak var _eqButton      : NSButton!
-  
   @IBOutlet private weak var _insideViewHeight      : NSLayoutConstraint!
   @IBOutlet private weak var _rxContainerHeight     : NSLayoutConstraint!
   @IBOutlet private weak var _txContainerHeight     : NSLayoutConstraint!
@@ -38,7 +37,6 @@ final class SideViewController              : NSViewController {
   private let kPcw                          = NSUserInterfaceItemIdentifier(rawValue: "PCW")
   private let kPhne                         = NSUserInterfaceItemIdentifier(rawValue: "PHNE")
   private let kEq                           = NSUserInterfaceItemIdentifier(rawValue: "EQ")
-
   private let kStateOn                      = NSControl.StateValue.on
   private let kStateOff                     = NSControl.StateValue.off
   private let kSideViewWidth                : CGFloat = 311
@@ -56,7 +54,6 @@ final class SideViewController              : NSViewController {
     super.viewDidLoad()
 
     view.translatesAutoresizingMaskIntoConstraints = false
-
     view.layer?.backgroundColor = NSColor.lightGray.cgColor
     
     addNotifications()
@@ -117,7 +114,6 @@ final class SideViewController              : NSViewController {
     default:
       fatalError()
     }
-//    _scrollView.needsLayout = true
   }
   
   // ----------------------------------------------------------------------------

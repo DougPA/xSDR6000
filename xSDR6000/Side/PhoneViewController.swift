@@ -17,16 +17,11 @@ class PhoneViewController                         : NSViewController {
   @IBOutlet private weak var _carrierLevel        : NSSlider!
   @IBOutlet private weak var _voxLevel            : NSSlider!
   @IBOutlet private weak var _voxDelay            : NSSlider!
-  @IBOutlet private weak var _companderLevel      : NSSlider!
-  
+  @IBOutlet private weak var _companderLevel      : NSSlider!  
   @IBOutlet private weak var _voxEnabled          : NSButton!
   @IBOutlet private weak var _companderEnabled    : NSButton!
-  
   @IBOutlet private weak var _txFilterLow         : NSTextField!
-  @IBOutlet private weak var _txFilterLowStepper  : NSStepper!
-  
   @IBOutlet private weak var _txFilterHigh        : NSTextField!
-  @IBOutlet private weak var _txFilterHighStepper : NSStepper!
   
   private var _transmit                           : Transmit?
   

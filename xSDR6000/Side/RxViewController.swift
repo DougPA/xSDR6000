@@ -12,13 +12,8 @@ class RxViewController                      : NSViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    // Do view setup here.
-  }
-  
-  
-  override func viewWillAppear() {
-    super.viewWillAppear()
-    
-    view.layer?.backgroundColor = NSColor.lightGray.cgColor    
+
+    view.translatesAutoresizingMaskIntoConstraints = false
+    view.layer?.backgroundColor = NSColor.lightGray.cgColor
   }
 }

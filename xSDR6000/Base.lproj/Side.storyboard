@@ -622,10 +622,10 @@
                         <outlet property="_atuStatus" destination="UAY-kB-MMh" id="hmP-Y4-gdv"/>
                         <outlet property="_memButton" destination="tht-Hx-sP2" id="PCe-hB-87b"/>
                         <outlet property="_moxButton" destination="HBk-2W-AWx" id="pAG-5X-3E7"/>
-                        <outlet property="_rfPower" destination="Uq4-RB-RW5" id="Vuj-n2-ZcI"/>
+                        <outlet property="_rfPowerIndicator" destination="Uq4-RB-RW5" id="Vuj-n2-ZcI"/>
                         <outlet property="_rfPowerLevel" destination="TvF-1K-W3W" id="UnO-qw-7kN"/>
                         <outlet property="_rfPowerSlider" destination="oh8-ho-und" id="jTX-76-Wkx"/>
-                        <outlet property="_swr" destination="12d-PX-xT9" id="ZOU-7m-b9Z"/>
+                        <outlet property="_swrIndicator" destination="12d-PX-xT9" id="ZOU-7m-b9Z"/>
                         <outlet property="_tuneButton" destination="m0f-XZ-nen" id="abI-Yn-XHN"/>
                         <outlet property="_tunePowerLevel" destination="rrM-wC-oEF" id="eew-XH-yIL"/>
                         <outlet property="_tunePowerSlider" destination="NoF-qq-kTl" id="1dD-Hc-2E0"/>
