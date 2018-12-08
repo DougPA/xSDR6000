@@ -97,7 +97,7 @@ class LevelIndicator: NSView {
     // calculate sizes
     switch style {
     case .standard:
-      _heightLine = 2.0
+      _heightLine = 1.0
       _heightGraph = frame.height - _heightFont - _heightLine
       _heightBar = _heightGraph - _heightLine - (2 * _heightLine)
       _barBottomY =  _heightLine + _heightLine

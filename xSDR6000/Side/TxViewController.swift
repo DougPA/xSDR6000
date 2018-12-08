@@ -20,18 +20,35 @@ class TxViewController                      : NSViewController {
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
   
+  @IBOutlet private weak var _tuneButton    : NSButton!
+  @IBOutlet private weak var _moxButton     : NSButton!
   @IBOutlet private weak var _atuButton     : NSButton!
+  @IBOutlet private weak var _memButton     : NSButton!
+
+  @IBOutlet private weak var _txProfile     : NSPopUpButton!
   @IBOutlet private weak var _atuStatus     : NSTextField!
+
+  @IBOutlet private weak var _tunePowerSlider : NSSlider!
+  @IBOutlet private weak var _tunePowerLevel  : NSTextField!
+  @IBOutlet private weak var _rfPowerSlider   : NSSlider!
+  @IBOutlet private weak var _rfPowerLevel    : NSTextField!
+  
   @IBOutlet private weak var _rfPower       : LevelIndicator!
   @IBOutlet private weak var _swr           : LevelIndicator!
-  @IBOutlet private weak var _moxButton     : NSButton!
   
-  private var _radio                        = Api.sharedInstance.radio {
-    didSet { addObservations() }
-  }
+  
+  
+  private var _radio                        : Radio?
 
   private let kPowerForward                 = Api.MeterShortName.powerForward.rawValue
   private let kSwr                          = Api.MeterShortName.swr.rawValue
+
+  private let kTune                         = NSUserInterfaceItemIdentifier(rawValue: "Tune")
+  private let kMox                          = NSUserInterfaceItemIdentifier(rawValue: "Mox")
+  private let kAtu                          = NSUserInterfaceItemIdentifier(rawValue: "Atu")
+  private let kMem                          = NSUserInterfaceItemIdentifier(rawValue: "Mem")
+  private let kTunePower                    = NSUserInterfaceItemIdentifier(rawValue: "TunePower")
+  private let kRfPower                      = NSUserInterfaceItemIdentifier(rawValue: "RfPower")
 
   // ----------------------------------------------------------------------------
   // MARK: - Overriden methods
@@ -42,6 +59,9 @@ class TxViewController                      : NSViewController {
     view.translatesAutoresizingMaskIntoConstraints = false
     
     view.layer?.backgroundColor = NSColor.lightGray.cgColor
+    
+    _rfPower.style = .standard
+    _swr.style = .standard
 
     _rfPower.legends = [            // to skip a legend pass "" as the format
       (0, "0", 0),
@@ -58,22 +78,87 @@ class TxViewController                      : NSViewController {
       (8, "3", -1),
       (nil, "SWR", 0)
     ]
+    // disable all controls
+    setControlState(false)
+    
+    // begin receiving notifications
+    addNotifications()
   }
-  
-//  override func viewWillAppear() {
-//    super.viewWillAppear()
-//
-//  }
   
   // ----------------------------------------------------------------------------
   // MARK: - Action methods
   
-  @IBAction func atuButton(_ sender: Any) {
+  @IBAction func buttons(_ sender: NSButton) {
     
-    // initiate a tuning cycle
-    _radio?.atu.atuStart()
+    switch sender.identifier {
+      case kTune:
+        _radio?.transmit.tune = sender.boolState
+      case kMox:
+        _radio?.mox = sender.boolState
+      case kAtu:
+        // initiate a tuning cycle
+        _radio?.atu.atuStart()
+      case kMem:
+        _radio?.atu.memoriesEnabled = sender.boolState
+      default:
+      fatalError()
+    }
   }
+  @IBAction func sliders(_ sender: NSSlider) {
+    switch sender.identifier {
 
+    case kTunePower:
+      _radio?.transmit.tunePower = sender.integerValue
+    case kRfPower:
+      _radio?.transmit.rfPower = sender.integerValue
+    default:
+      fatalError()
+    }
+  }
+  
+  // ----------------------------------------------------------------------------
+  // MARK: - Private methods
+  
+  /// Enable / Disable all controls
+  ///
+  /// - Parameter state:              true = enable
+  ///
+  private func setControlState(_ state: Bool) {
+    
+    DispatchQueue.main.async { [unowned self] in
+      self._tuneButton.isEnabled = state
+      self._moxButton.isEnabled = state
+      self._atuButton.isEnabled = state
+      self._memButton.isEnabled = state
+      self._txProfile.isEnabled = state
+      self._tunePowerSlider.isEnabled = state
+      self._rfPowerSlider.isEnabled = state
+    }
+  }
+  /// Update all control values
+  ///
+  /// - Parameter eq:               the Radio
+  ///
+  private func populateControls(_ radio: Radio) {
+    
+    DispatchQueue.main.async { [unowned self] in
+      self._tuneButton.boolState = radio.transmit.tune
+      self._moxButton.boolState = radio.mox
+      self._atuButton.boolState = radio.atu.enabled
+      self._memButton.boolState = radio.atu.memoriesEnabled
+      
+      self._txProfile.selectItem(withTitle: radio.profile.txProfileSelection)
+      self._atuStatus.stringValue = radio.atu.status
+      
+      self._tunePowerSlider.integerValue = radio.transmit.tunePower
+      self._tunePowerLevel.integerValue = radio.transmit.tunePower
+      self._rfPowerSlider.integerValue = radio.transmit.rfPower
+      self._rfPowerLevel.integerValue = radio.transmit.rfPower
+      
+      self._txProfile.addItems(withTitles: self._radio!.profile.txProfileList)
+      self._txProfile.selectItem(withTitle: self._radio!.profile.txProfileSelection)
+    }
+  }
   // ----------------------------------------------------------------------------
   // MARK: - Observation methods
   
@@ -81,32 +166,37 @@ class TxViewController                      : NSViewController {
   
   /// Add observations
   ///
-  private func addObservations() {
+  private func addObservations(_ radio: Radio) {
     
-    if let radio = _radio {
-      // Atu
-      _observations.append( (radio.atu).observe(\.status, options: [.initial, .new], changeHandler: atuStatus) )
-      
-      // MOX
-      _observations.append( radio.observe(\.mox, options: [.initial, .new], changeHandler: moxStatus) )
-      
-     // is it one we need to watch?
-      let meters = radio.meters.filter {$0.value.name == kPowerForward || $0.value.name == kSwr}
-      meters.forEach { _observations.append( $0.value.observe(\.value, options: [.initial, .new], changeHandler: meterValue)) }
-    }
+    // Radio observations
+    _observations.append( radio.transmit.observe(\.tune, options: [.initial, .new], changeHandler: radioChange) )
+    _observations.append( radio.observe(\.mox, options: [.initial, .new], changeHandler: radioChange) )
+    _observations.append( radio.atu.observe(\.enabled, options: [.initial, .new], changeHandler: radioChange) )
+    _observations.append( radio.atu.observe(\.memoriesEnabled, options: [.initial, .new], changeHandler: radioChange) )
+    
+    _observations.append( radio.profile.observe(\.txProfileSelection, options: [.initial, .new], changeHandler: radioChange) )
+    _observations.append( radio.atu.observe(\.status, options: [.initial, .new], changeHandler: radioChange) )
+    
+    _observations.append( radio.transmit.observe(\.tunePower, options: [.initial, .new], changeHandler: radioChange) )
+    _observations.append( radio.transmit.observe(\.rfPower, options: [.initial, .new], changeHandler: radioChange) )
+    
+    // Meter observations
+    let meters = radio.meters.filter {$0.value.name == kPowerForward || $0.value.name == kSwr}
+    meters.forEach { _observations.append( $0.value.observe(\.value, options: [.initial, .new], changeHandler: meterChange)) }
   }
-  /// Respond to changes in Atu status
+  /// Invalidate observations (optionally remove)
   ///
   /// - Parameters:
-  ///   - object:                       a Meter
-  ///   - change:                       the change
+  ///   - observations:                 an array of NSKeyValueObservation
+  ///   - remove:                       remove all enabled
   ///
-  private func atuStatus(_ atu: Atu, _ change: Any) {
+  func invalidateObservations(remove: Bool = true) {
     
-    DispatchQueue.main.async { [unowned self] in
-      self._atuButton.boolState = atu.enabled
-      self._atuStatus.stringValue = atu.status
-    }
+    // invalidate each observation
+    _observations.forEach { $0.invalidate() }
+    
+    // if specified, remove the tokens
+    if remove { _observations.removeAll() }
   }
   /// Respond to changes in MOX status
   ///
@@ -114,11 +204,9 @@ class TxViewController                      : NSViewController {
   ///   - object:                       the Radio
   ///   - change:                       the change
   ///
-  private func moxStatus(_ radio: Radio, _ change: Any) {
+  private func radioChange(_ object: Any, _ change: Any) {
     
-    DispatchQueue.main.async { [unowned self] in
-      self._moxButton.boolState = radio.mox
-    }
+    populateControls(_radio!)
   }
   /// Respond to changes in a Meter
   ///
@@ -126,7 +214,7 @@ class TxViewController                      : NSViewController {
   ///   - object:                       a Meter
   ///   - change:                       the change
   ///
-  private func meterValue(_ meter: Meter, _ change: Any) {
+  private func meterChange(_ meter: Meter, _ change: Any) {
     
     // is it one we need to watch?
     switch meter.name {
@@ -145,5 +233,48 @@ class TxViewController                      : NSViewController {
     default:
       break
     }
+  }
+  
+  // ----------------------------------------------------------------------------
+  // MARK: - Notification Methods
+  
+  /// Add subscriptions to Notifications
+  ///
+  private func addNotifications() {
+    
+    NC.makeObserver(self, with: #selector(radioHasBeenAdded(_:)), of: .radioHasBeenAdded)
+    
+    NC.makeObserver(self, with: #selector(radioWillBeRemoved(_:)), of: .radioWillBeRemoved)
+  }
+  /// Process .radioHasBeenAdded Notification
+  ///
+  /// - Parameter note: a Notification instance
+  ///
+  @objc private func radioHasBeenAdded(_ note: Notification) {
+    
+    if let radio = note.object as? Radio {
+      
+      _radio = radio
+      
+      // begin observing parameters
+      addObservations(radio)
+      
+      // enable all controls
+      setControlState(true)
+    }
+  }
+  /// Process .radioWillBeRemoved Notification
+  ///
+  /// - Parameter note: a Notification instance
+  ///
+  @objc private func radioWillBeRemoved(_ note: Notification) {
+    
+    // disable all controls
+    setControlState(false)
+    
+    // invalidate & remove observations
+    invalidateObservations()
+    
+    _radio = nil
   }
 }

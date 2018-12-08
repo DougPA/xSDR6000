@@ -595,17 +595,6 @@ final class PanadapterViewController        : NSViewController, NSGestureRecogni
     
     _dbLegendView.redraw()
   }
-//  /// Respond to observations requiring Flags to be moved
-//  ///
-//  /// - Parameters:
-//  ///   - object:                       the object holding the properties
-//  ///   - change:                       the change
-//  ///
-//  private func repositionFlags(_ object: Any, _ change: Any) {
-//
-//    // call repositionFlag on each FlagVc
-//    _flags.forEach( { $0.value.repositionFlag(for: $0.value.slice!)} )
-//  }
 
   // ----------------------------------------------------------------------------
   // MARK: - Notification Methods
