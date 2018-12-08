@@ -2,7 +2,12 @@ xLib6000 Change Log
 
 v2.1.1
 
-Slice.swift - in parseProperties(_:) added code to ignore the first frequency sent by the Radio
+Panadapter.swift - commented out xPixel & yPixel code in parseProperties(_:)
+Meter.swift - corrected log message in streamHandler(_:)
+SliceCommands.swift - corrected error in "@objc dynamic public var audioPan: Int"
+Radio.swift - refactored vitaParser(_:) to eliminate unwrapped optional error on shutdown
+transmit.swift - removed txFilterHighLimits(txFilterLow, newValue) from _txFilterHigh
+transmit.swift - removed txFilterLowLimits(newValue, txFilterHigh) from _txFilterLow
 
 v2.1.0
 
