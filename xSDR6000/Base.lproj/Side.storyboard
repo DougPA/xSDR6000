@@ -715,10 +715,7 @@
                                 <color key="fillColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             </box>
                             <popUpButton identifier="MicProfile" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vQd-Ns-GSa" userLabel="Mic Profile">
-                                <rect key="frame" x="6" y="123" width="305" height="25"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="300" id="THg-gR-zQp"/>
-                                </constraints>
+                                <rect key="frame" x="6" y="123" width="233" height="25"/>
                                 <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="P9h-JN-YvE">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="menu"/>
@@ -906,15 +903,28 @@
                                     <real value="3.4028234663852886e+38"/>
                                 </customSpacing>
                             </stackView>
+                            <button identifier="Save" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fUH-dH-UyU">
+                                <rect key="frame" x="261" y="127" width="44" height="17"/>
+                                <buttonCell key="cell" type="inline" title="Save" bezelStyle="inline" alignment="center" enabled="NO" borderStyle="border" inset="2" id="mrl-MJ-F5B">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="smallSystemBold"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="buttons:" target="CNy-BK-6hp" id="aWz-q9-Q5d"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <constraints>
                             <constraint firstItem="Ksl-im-UoL" firstAttribute="top" secondItem="vQd-Ns-GSa" secondAttribute="bottom" constant="10" id="Eat-EH-fnV"/>
+                            <constraint firstAttribute="trailing" secondItem="fUH-dH-UyU" secondAttribute="trailing" constant="6" id="L59-GC-Mzw"/>
+                            <constraint firstItem="fUH-dH-UyU" firstAttribute="top" secondItem="x2Q-jw-WsX" secondAttribute="bottom" constant="11" id="Pcb-HE-Cuh"/>
                             <constraint firstItem="S2c-H8-KHQ" firstAttribute="top" secondItem="Ksl-im-UoL" secondAttribute="bottom" constant="5" id="QJk-fZ-CYC"/>
                             <constraint firstItem="Ksl-im-UoL" firstAttribute="leading" secondItem="FmC-Ag-2ZD" secondAttribute="leading" id="RMf-kT-cP3"/>
-                            <constraint firstAttribute="trailing" secondItem="vQd-Ns-GSa" secondAttribute="trailing" constant="3" id="TSp-rU-ava"/>
+                            <constraint firstAttribute="trailing" secondItem="vQd-Ns-GSa" secondAttribute="trailing" constant="75" id="TSp-rU-ava"/>
                             <constraint firstItem="Ksl-im-UoL" firstAttribute="leading" secondItem="vQd-Ns-GSa" secondAttribute="leading" id="WeR-It-fEQ"/>
                             <constraint firstItem="vQd-Ns-GSa" firstAttribute="top" secondItem="x2Q-jw-WsX" secondAttribute="bottom" constant="8" id="Ynr-cC-DQR"/>
                             <constraint firstItem="Wcz-HS-Wtl" firstAttribute="top" secondItem="S2c-H8-KHQ" secondAttribute="bottom" constant="5" id="Zqo-7N-nRX"/>
+                            <constraint firstItem="fUH-dH-UyU" firstAttribute="leading" secondItem="vQd-Ns-GSa" secondAttribute="trailing" constant="25" id="ag7-mK-E01"/>
                             <constraint firstItem="S2c-H8-KHQ" firstAttribute="leading" secondItem="lRw-Dq-Co8" secondAttribute="leading" constant="88" id="bzg-Ff-wc1"/>
                             <constraint firstItem="FmC-Ag-2ZD" firstAttribute="top" secondItem="Wcz-HS-Wtl" secondAttribute="bottom" constant="10" id="dBc-t4-r8e"/>
                             <constraint firstItem="vQd-Ns-GSa" firstAttribute="leading" secondItem="lRw-Dq-Co8" secondAttribute="leading" constant="8" id="i2J-YJ-bPL"/>
@@ -935,6 +945,7 @@
                         <outlet property="_monButton" destination="055-NT-Nba" id="6HA-za-qwu"/>
                         <outlet property="_monLevel" destination="acI-WQ-nEv" id="Av3-Yo-eV2"/>
                         <outlet property="_procButton" destination="hS4-yD-3DZ" id="BXO-Rj-hj5"/>
+                        <outlet property="_saveButton" destination="fUH-dH-UyU" id="LGS-jt-fUl"/>
                     </connections>
                 </viewController>
                 <customObject id="RUU-RX-z1g" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
