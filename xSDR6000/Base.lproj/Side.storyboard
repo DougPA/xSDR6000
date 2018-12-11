@@ -445,6 +445,9 @@
                                             <constraint firstAttribute="width" constant="185" id="N6a-oo-im9"/>
                                         </constraints>
                                         <sliderCell key="cell" continuous="YES" state="on" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" sliderType="linear" id="5Yj-Lf-NGQ"/>
+                                        <connections>
+                                            <action selector="sliders:" target="jqe-kd-5d6" id="YbY-dg-i0W"/>
+                                        </connections>
                                     </slider>
                                 </subviews>
                                 <visibilityPriorities>
@@ -490,6 +493,9 @@
                                             <constraint firstAttribute="width" constant="185" id="opl-rD-JAv"/>
                                         </constraints>
                                         <sliderCell key="cell" continuous="YES" state="on" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" sliderType="linear" id="kln-Hs-Gte"/>
+                                        <connections>
+                                            <action selector="sliders:" target="jqe-kd-5d6" id="KGr-da-AQA"/>
+                                        </connections>
                                     </slider>
                                 </subviews>
                                 <visibilityPriorities>
@@ -1176,7 +1182,9 @@
                         <outlet property="_companderEnabled" destination="sww-sx-AZO" id="njb-KS-BmZ"/>
                         <outlet property="_companderLevel" destination="kMb-sH-99b" id="6md-d7-tJO"/>
                         <outlet property="_txFilterHigh" destination="ydo-0C-AiX" id="jkr-Nn-cKm"/>
+                        <outlet property="_txFilterHighStepper" destination="57r-Nf-jWZ" id="jlU-3R-Yaj"/>
                         <outlet property="_txFilterLow" destination="LtU-di-y6V" id="Te2-Mi-m6m"/>
+                        <outlet property="_txFilterLowStepper" destination="RJR-QA-4Fr" id="WdC-n4-usd"/>
                         <outlet property="_voxDelay" destination="e4x-Sf-lLa" id="FLb-39-RyC"/>
                         <outlet property="_voxEnabled" destination="BdR-sS-Qks" id="gCW-EM-jYW"/>
                         <outlet property="_voxLevel" destination="krQ-0m-Wex" id="Prz-lK-met"/>

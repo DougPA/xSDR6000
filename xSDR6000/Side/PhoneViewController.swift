@@ -9,7 +9,7 @@
 import Cocoa
 import xLib6000
 
-class PhoneViewController                         : NSViewController {
+class PhoneViewController                   : NSViewController {
   
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
@@ -21,15 +21,18 @@ class PhoneViewController                         : NSViewController {
   @IBOutlet private weak var _voxEnabled          : NSButton!
   @IBOutlet private weak var _companderEnabled    : NSButton!
   @IBOutlet private weak var _txFilterLow         : NSTextField!
+  @IBOutlet private weak var _txFilterLowStepper  : NSStepper!
+  
   @IBOutlet private weak var _txFilterHigh        : NSTextField!
+  @IBOutlet private weak var _txFilterHighStepper : NSStepper!
   
-  private var _transmit                           : Transmit?
+  private var _transmit                     : Transmit?
   
-  private let kVox                                = NSUserInterfaceItemIdentifier(rawValue: "Vox")
-  private let kDexp                               = NSUserInterfaceItemIdentifier(rawValue: "Dexp")
-  private let kTxLowStepper                       = NSUserInterfaceItemIdentifier(rawValue: "TxLowStepper")
-  private let kTxHighStepper                      = NSUserInterfaceItemIdentifier(rawValue: "TxHighStepper")
-  private let kFilterStep                         = 10
+  private let kVox                          = NSUserInterfaceItemIdentifier(rawValue: "Vox")
+  private let kDexp                         = NSUserInterfaceItemIdentifier(rawValue: "Dexp")
+  private let kTxLowStepper                 = NSUserInterfaceItemIdentifier(rawValue: "TxLowStepper")
+  private let kTxHighStepper                = NSUserInterfaceItemIdentifier(rawValue: "TxHighStepper")
+  private let kFilterStep                   = 10
   
   // ----------------------------------------------------------------------------
   // MARK: - Overriden methods
@@ -91,14 +94,20 @@ class PhoneViewController                         : NSViewController {
   private func setControlState(_ state: Bool) {
     
     DispatchQueue.main.async { [unowned self] in
-      self._carrierLevel.isEnabled = state
+      // Buttons
       self._voxEnabled.isEnabled = state
+      self._companderEnabled.isEnabled = state
+      // Sliders
+      self._carrierLevel.isEnabled = state
       self._voxLevel.isEnabled = state
       self._voxDelay.isEnabled = state
-      self._companderEnabled.isEnabled = state
       self._companderLevel.isEnabled = state
+      // TextFields
       self._txFilterLow.isEnabled = state
       self._txFilterHigh.isEnabled = state
+      // Steppers
+      self._txFilterLowStepper.isEnabled = state
+      self._txFilterHighStepper.isEnabled = state
     }
   }
   /// Update all control values
@@ -108,12 +117,15 @@ class PhoneViewController                         : NSViewController {
   private func populateControls(_ transmit: Transmit) {
     
     DispatchQueue.main.async { [unowned self] in
-      self._carrierLevel.integerValue = transmit.carrierLevel
+      // Buttons
       self._voxEnabled.state = transmit.voxEnabled.state
+      self._companderEnabled.state = transmit.companderEnabled.state
+      // SLiders
+      self._carrierLevel.integerValue = transmit.carrierLevel
       self._voxLevel.integerValue = transmit.voxLevel
       self._voxDelay.integerValue = transmit.voxDelay
-      self._companderEnabled.state = transmit.companderEnabled.state
       self._companderLevel.integerValue = transmit.companderLevel
+      // Textfields
       self._txFilterLow.integerValue = transmit.txFilterLow
       self._txFilterHigh.integerValue = transmit.txFilterHigh
     }

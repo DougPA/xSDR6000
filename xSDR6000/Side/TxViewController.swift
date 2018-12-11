@@ -9,7 +9,7 @@
 import Cocoa
 import xLib6000
 
-class TxViewController                          : NSViewController {
+class TxViewController                      : NSViewController {
   
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
@@ -73,7 +73,7 @@ class TxViewController                          : NSViewController {
       case kMem:
         _radio?.atu.memoriesEnabled = sender.boolState
       default:
-      fatalError()
+        fatalError()
     }
   }
   @IBAction func sliders(_ sender: NSSlider) {

@@ -133,12 +133,11 @@ final class EqViewController                : NSViewController {
   private func setControlState(_ state: Bool) {
     
     DispatchQueue.main.async { [unowned self] in
-      
+      // Buttons
       self.rxButton.isEnabled = state
       self.txButton.isEnabled = state
-      
       self.onButton.isEnabled = state
-      
+      // Sliders
       self.slider0.isEnabled = state
       self.slider1.isEnabled = state
       self.slider2.isEnabled = state

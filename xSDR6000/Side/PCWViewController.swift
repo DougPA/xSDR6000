@@ -9,7 +9,7 @@
 import Cocoa
 import xLib6000
 
-class PCWViewController                               : NSViewController {
+class PCWViewController                     : NSViewController {
 
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
@@ -27,7 +27,7 @@ class PCWViewController                               : NSViewController {
   @IBOutlet private weak var _monLevel                : NSSlider!
   @IBOutlet private weak var _saveButton              : NSButton!
   
-  private var _radio                                  : Radio?
+  private var _radio                        : Radio?
 
   private let kCodecOutput                  = Api.MeterShortName.codecOutput.rawValue
   private let kMicrophoneAverage            = Api.MeterShortName.microphoneAverage.rawValue
@@ -313,30 +313,21 @@ class PCWViewController                               : NSViewController {
   ///
   private func meterChange(_ meter: Meter, _ change: Any) {
 
-    // is it one we need to watch?
+    // which meter?
     switch meter.name {
 
     case kMicrophoneAverage:
-      
-//      Swift.print("Mic average = \(CGFloat(meter.value))")
-      
       DispatchQueue.main.async { self._micLevelIndicator.level = CGFloat(meter.value) }
 
     case kMicrophonePeak:
-
-//      Swift.print("Mic peak = \(CGFloat(meter.value))")
-
       DispatchQueue.main.async { self._micLevelIndicator.peak = CGFloat(meter.value) }
 
     case kCompression:
-
-//      Swift.print("Compression = \(CGFloat(meter.value))")
-      
       let value = meter.value == -250 ? 0 : meter.value
       DispatchQueue.main.async { self._compressionIndicator.level = CGFloat(value) }
       
     default:
-      break
+      fatalError()
     }
   }
   
