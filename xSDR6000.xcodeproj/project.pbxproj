@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		9124B4002194BC150036FF2E /* ControlsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9124B3FF2194BC150036FF2E /* ControlsViewController.swift */; };
+		913615B421C0B178005EA591 /* PCWPrefsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913615B321C0B178005EA591 /* PCWPrefsViewController.swift */; };
+		913615B621C18465005EA591 /* TXPrefsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913615B521C18465005EA591 /* TXPrefsViewController.swift */; };
 		91396424214702D5002C9D8B /* xLib6000.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 913F7F772066E6F500F35E9B /* xLib6000.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		913964252147031C002C9D8B /* xLib6000.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 913F7F6F2066DD5A00F35E9B /* xLib6000.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		913F7F2A2066DC7A00F35E9B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 913F7ED52066DC7900F35E9B /* Assets.xcassets */; };
@@ -56,6 +58,7 @@
 		913F7F692066DC7A00F35E9B /* WaterfallShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 913F7F292066DC7A00F35E9B /* WaterfallShaders.metal */; };
 		913F7F862066E6F600F35E9B /* OpusOSX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 913F7F7C2066E6F600F35E9B /* OpusOSX.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		913F7F872066E6F600F35E9B /* OpusOSX.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 913F7F7C2066E6F600F35E9B /* OpusOSX.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		913F8D7D21C2C2CA004EAE66 /* FiltersPrefsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F8D7C21C2C2CA004EAE66 /* FiltersPrefsViewController.swift */; };
 		91475E5020A28E4600ACE77D /* Flag.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 91475E4E20A28E4600ACE77D /* Flag.storyboard */; };
 		91475E5220A34C2D00ACE77D /* ModeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91475E5120A34C2D00ACE77D /* ModeViewController.swift */; };
 		9168DB46218A2F2A0025F3D6 /* SwiftyUserDefaults.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9168DB45218A2F2A0025F3D6 /* SwiftyUserDefaults.framework */; };
@@ -102,6 +105,8 @@
 
 /* Begin PBXFileReference section */
 		9124B3FF2194BC150036FF2E /* ControlsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlsViewController.swift; sourceTree = "<group>"; };
+		913615B321C0B178005EA591 /* PCWPrefsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PCWPrefsViewController.swift; sourceTree = "<group>"; };
+		913615B521C18465005EA591 /* TXPrefsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TXPrefsViewController.swift; sourceTree = "<group>"; };
 		913F7EC12066DBBE00F35E9B /* xSDR6000.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = xSDR6000.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		913F7ED42066DC7800F35E9B /* xSDR6000-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "xSDR6000-Bridging-Header.h"; sourceTree = "<group>"; };
 		913F7ED52066DC7900F35E9B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -156,6 +161,7 @@
 		913F7F782066E6F500F35E9B /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		913F7F7B2066E6F600F35E9B /* SwiftyUserDefaults.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SwiftyUserDefaults.framework; sourceTree = "<group>"; };
 		913F7F7C2066E6F600F35E9B /* OpusOSX.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OpusOSX.framework; sourceTree = "<group>"; };
+		913F8D7C21C2C2CA004EAE66 /* FiltersPrefsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiltersPrefsViewController.swift; sourceTree = "<group>"; };
 		91475E4F20A28E4600ACE77D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Flag.storyboard; sourceTree = "<group>"; };
 		91475E5120A34C2D00ACE77D /* ModeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModeViewController.swift; sourceTree = "<group>"; };
 		9168DB45218A2F2A0025F3D6 /* SwiftyUserDefaults.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SwiftyUserDefaults.framework; sourceTree = "<group>"; };
@@ -293,8 +299,11 @@
 		913F7F012066DC7900F35E9B /* Preferences */ = {
 			isa = PBXGroup;
 			children = (
-				913F7F022066DC7900F35E9B /* ColorsViewController.swift */,
 				913F7F032066DC7900F35E9B /* PreferencesTabViewController.swift */,
+				913F7F022066DC7900F35E9B /* ColorsViewController.swift */,
+				913615B321C0B178005EA591 /* PCWPrefsViewController.swift */,
+				913615B521C18465005EA591 /* TXPrefsViewController.swift */,
+				913F8D7C21C2C2CA004EAE66 /* FiltersPrefsViewController.swift */,
 			);
 			path = Preferences;
 			sourceTree = "<group>";
@@ -559,6 +568,7 @@
 				913F7F502066DC7A00F35E9B /* DbLegendView.swift in Sources */,
 				913F7F4F2066DC7A00F35E9B /* FlagViewController.swift in Sources */,
 				913F7F472066DC7A00F35E9B /* ParameterMonitor.swift in Sources */,
+				913615B421C0B178005EA591 /* PCWPrefsViewController.swift in Sources */,
 				913F7F462066DC7A00F35E9B /* OpusDecode.swift in Sources */,
 				913F7F5A2066DC7A00F35E9B /* EqViewController.swift in Sources */,
 				913F7F4A2066DC7A00F35E9B /* BandButtonViewController.swift in Sources */,
@@ -600,6 +610,7 @@
 				9124B4002194BC150036FF2E /* ControlsViewController.swift in Sources */,
 				913F7F582066DC7A00F35E9B /* SideViewController.swift in Sources */,
 				9185B0D6208683C7004D4C40 /* JWT.swift in Sources */,
+				913F8D7D21C2C2CA004EAE66 /* FiltersPrefsViewController.swift in Sources */,
 				9185B0D8208683C7004D4C40 /* DictionaryExtensions.swift in Sources */,
 				913F7F3E2066DC7A00F35E9B /* PanafallViewController.swift in Sources */,
 				913F7F482066DC7A00F35E9B /* ColorsViewController.swift in Sources */,
@@ -607,6 +618,7 @@
 				9185B0DE208683C7004D4C40 /* LANRadioPickerViewController.swift in Sources */,
 				913F7F682066DC7A00F35E9B /* WaterfallViewController.swift in Sources */,
 				913F7F4E2066DC7A00F35E9B /* RadioViewController.swift in Sources */,
+				913615B621C18465005EA591 /* TXPrefsViewController.swift in Sources */,
 				9185B0D4208683C7004D4C40 /* Keychain.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
