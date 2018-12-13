@@ -1,5 +1,13 @@
 xLib6000 Change Log
 
+v2.2.1
+
+Profile.swift - refactored profiles to be a dynamic model rather than a static one
+ProfileCommands.swift - changed delete(_:name:callback:) to a class func
+ProfileCommands.swift - changed save(_:name:callback:) to a class func
+Radio.swift - in parseStatus(_:), in .profile changed parseProperties to parseStatus
+Notifications.swift - removed all profile related notifications, add .profileHasBeenAdded & .profileWillBeRemoved
+
 v2.1.1
 
 Panadapter.swift - commented out xPixel & yPixel code in parseProperties(_:)
@@ -8,6 +16,7 @@ SliceCommands.swift - corrected error in "@objc dynamic public var audioPan: Int
 Radio.swift - refactored vitaParser(_:) to eliminate unwrapped optional error on shutdown
 transmit.swift - removed txFilterHighLimits(txFilterLow, newValue) from _txFilterHigh
 transmit.swift - removed txFilterLowLimits(newValue, txFilterHigh) from _txFilterLow
+ProfileCommands.swift - modified save & delete methods to allow String tokens
 
 v2.1.0
 

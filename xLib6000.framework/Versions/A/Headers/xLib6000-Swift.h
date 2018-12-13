@@ -534,16 +534,12 @@ SWIFT_CLASS("_TtC8xLib60007Profile")
 
 
 @interface Profile (SWIFT_EXTENSION(xLib6000))
-@property (nonatomic, copy) NSString * _Nonnull globalProfileSelection;
-@property (nonatomic, copy) NSString * _Nonnull micProfileSelection;
-@property (nonatomic, copy) NSString * _Nonnull txProfileSelection;
+@property (nonatomic, copy) NSString * _Nonnull selection;
 @end
 
 
 @interface Profile (SWIFT_EXTENSION(xLib6000))
-@property (nonatomic, copy) NSArray<NSString *> * _Nonnull globalProfileList;
-@property (nonatomic, copy) NSArray<NSString *> * _Nonnull micProfileList;
-@property (nonatomic, copy) NSArray<NSString *> * _Nonnull txProfileList;
+@property (nonatomic, copy) NSArray<NSString *> * _Nonnull list;
 @end
 
 @class Transmit;
