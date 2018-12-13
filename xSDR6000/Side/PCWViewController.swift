@@ -313,21 +313,23 @@ class PCWViewController                     : NSViewController {
   ///
   private func meterChange(_ meter: Meter, _ change: Any) {
 
-    // which meter?
-    switch meter.name {
-
-    case kMicrophoneAverage:
-      DispatchQueue.main.async { self._micLevelIndicator.level = CGFloat(meter.value) }
-
-    case kMicrophonePeak:
-      DispatchQueue.main.async { self._micLevelIndicator.peak = CGFloat(meter.value) }
-
-    case kCompression:
-      let value = meter.value == -250 ? 0 : meter.value
-      DispatchQueue.main.async { self._compressionIndicator.level = CGFloat(value) }
+    if _radio!.transmit.metInRxEnabled {
       
-    default:
-      fatalError()
+      // which meter?
+      switch meter.name {
+        
+      case kMicrophoneAverage:
+        DispatchQueue.main.async { self._micLevelIndicator.level = CGFloat(meter.value) }
+      case kMicrophonePeak:
+        DispatchQueue.main.async { self._micLevelIndicator.peak = CGFloat(meter.value) }
+        
+      case kCompression:
+        let value = meter.value == -250 ? 0 : meter.value
+        DispatchQueue.main.async { self._compressionIndicator.level = CGFloat(value) }
+        
+      default:
+        fatalError()
+      }
     }
   }
   

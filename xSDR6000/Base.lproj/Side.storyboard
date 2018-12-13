@@ -509,13 +509,13 @@
                                     <real value="3.4028234663852886e+38"/>
                                 </customSpacing>
                             </stackView>
-                            <stackView distribution="fill" orientation="horizontal" alignment="top" spacing="33" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BSv-uk-qcg" userLabel="Mic stack view">
-                                <rect key="frame" x="8" y="46" width="283" height="21"/>
+                            <stackView distribution="fill" orientation="horizontal" alignment="top" spacing="10" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BSv-uk-qcg" userLabel="Mic stack view">
+                                <rect key="frame" x="8" y="46" width="294" height="21"/>
                                 <subviews>
                                     <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QZL-jW-hLs" userLabel="Tx Profile">
-                                        <rect key="frame" x="-2" y="-3" width="130" height="25"/>
+                                        <rect key="frame" x="-2" y="-3" width="115" height="25"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="125" id="a9Y-RS-ZXv"/>
+                                            <constraint firstAttribute="width" constant="110" id="EQz-3K-bmN"/>
                                         </constraints>
                                         <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="5NK-W4-BPF">
                                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -523,10 +523,17 @@
                                             <menu key="menu" id="Qcf-cr-SJc"/>
                                         </popUpButtonCell>
                                     </popUpButton>
+                                    <button toolTip="Save / Delete TX profile" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yql-JB-chW">
+                                        <rect key="frame" x="120" y="2" width="39" height="17"/>
+                                        <buttonCell key="cell" type="inline" title="Save" bezelStyle="inline" alignment="center" enabled="NO" borderStyle="border" inset="2" id="zdo-t3-yse">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="smallSystemBold"/>
+                                        </buttonCell>
+                                    </button>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UAY-kB-MMh">
-                                        <rect key="frame" x="158" y="0.0" width="125" height="21"/>
+                                        <rect key="frame" x="169" y="0.0" width="125" height="21"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="125" id="3Fx-bQ-L9C"/>
+                                            <constraint firstAttribute="width" constant="125" id="4lJ-2D-bGw"/>
                                         </constraints>
                                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" borderStyle="border" alignment="left" placeholderString="ATU Status" id="lWR-CA-FFV">
                                             <font key="font" metaFont="system"/>
@@ -535,11 +542,16 @@
                                         </textFieldCell>
                                     </textField>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstItem="yql-JB-chW" firstAttribute="centerY" secondItem="BSv-uk-qcg" secondAttribute="centerY" id="C7f-iE-Yg8"/>
+                                </constraints>
                                 <visibilityPriorities>
+                                    <integer value="1000"/>
                                     <integer value="1000"/>
                                     <integer value="1000"/>
                                 </visibilityPriorities>
                                 <customSpacing>
+                                    <real value="3.4028234663852886e+38"/>
                                     <real value="3.4028234663852886e+38"/>
                                     <real value="3.4028234663852886e+38"/>
                                 </customSpacing>
@@ -909,7 +921,7 @@
                                     <real value="3.4028234663852886e+38"/>
                                 </customSpacing>
                             </stackView>
-                            <button identifier="Save" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fUH-dH-UyU">
+                            <button identifier="Save" toolTip="Save / Delete MIC profile" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fUH-dH-UyU">
                                 <rect key="frame" x="261" y="127" width="44" height="17"/>
                                 <buttonCell key="cell" type="inline" title="Save" bezelStyle="inline" alignment="center" enabled="NO" borderStyle="border" inset="2" id="mrl-MJ-F5B">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -977,11 +989,11 @@
                                 </constraints>
                                 <color key="fillColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             </box>
-                            <stackView distribution="fillEqually" orientation="vertical" alignment="centerX" spacing="15" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fGP-w5-RyK" userLabel="Buttons stack view">
-                                <rect key="frame" x="12" y="35" width="70" height="153"/>
+                            <stackView distribution="fillEqually" orientation="vertical" alignment="centerX" spacing="14" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fGP-w5-RyK" userLabel="Buttons stack view">
+                                <rect key="frame" x="12" y="5" width="70" height="183"/>
                                 <subviews>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dGs-g0-vIk">
-                                        <rect key="frame" x="-2" y="136" width="74" height="17"/>
+                                        <rect key="frame" x="-2" y="166" width="74" height="17"/>
                                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="AM Carrier" id="R7W-cs-FfS">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -989,7 +1001,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <button identifier="Vox" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="BdR-sS-Qks">
-                                        <rect key="frame" x="2" y="93" width="67" height="32"/>
+                                        <rect key="frame" x="2" y="124" width="67" height="32"/>
                                         <buttonCell key="cell" type="push" title="VOX" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="9bm-vP-MWr">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                                             <font key="font" metaFont="system"/>
@@ -999,7 +1011,7 @@
                                         </connections>
                                     </button>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9d2-GN-oeg">
-                                        <rect key="frame" x="14" y="68" width="42" height="17"/>
+                                        <rect key="frame" x="14" y="100" width="42" height="17"/>
                                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Delay" id="msR-Ay-Sbm">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -1007,7 +1019,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <button identifier="Dexp" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sww-sx-AZO">
-                                        <rect key="frame" x="-2" y="25" width="74" height="32"/>
+                                        <rect key="frame" x="-2" y="58" width="74" height="32"/>
                                         <buttonCell key="cell" type="push" title="DEXP" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="wE2-y8-IOk">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                                             <font key="font" metaFont="system"/>
@@ -1017,13 +1029,58 @@
                                         </connections>
                                     </button>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HTK-fS-xfx">
-                                        <rect key="frame" x="6" y="0.0" width="59" height="17"/>
+                                        <rect key="frame" x="6" y="34" width="59" height="17"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="TX Filter" id="qNF-LS-Op7">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
+                                    <stackView distribution="fill" orientation="horizontal" alignment="top" spacing="5" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AcS-V2-phJ">
+                                        <rect key="frame" x="0.0" y="0.0" width="70" height="20"/>
+                                        <subviews>
+                                            <button identifier="MicBias" toolTip="Mic Bias" horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GKh-gx-M5d" userLabel="Bias button">
+                                                <rect key="frame" x="-6" y="-7" width="32" height="31"/>
+                                                <buttonCell key="cell" type="round" title="B" bezelStyle="circular" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Vgn-0L-b1a">
+                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
+                                                    <font key="font" metaFont="system"/>
+                                                </buttonCell>
+                                                <connections>
+                                                    <action selector="buttons:" target="4Er-qS-ODr" id="LSC-wN-MVJ"/>
+                                                </connections>
+                                            </button>
+                                            <button identifier="MeterInRx" toolTip="Meter in Rx" horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="VZz-y4-pnW" userLabel="MeterInRx button">
+                                                <rect key="frame" x="19" y="-7" width="32" height="31"/>
+                                                <buttonCell key="cell" type="round" title="M" bezelStyle="circular" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="eul-HR-wlJ">
+                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
+                                                    <font key="font" metaFont="system"/>
+                                                </buttonCell>
+                                                <connections>
+                                                    <action selector="buttons:" target="4Er-qS-ODr" id="Hcu-rF-MiL"/>
+                                                </connections>
+                                            </button>
+                                            <button identifier="MicBoost" toolTip="Mic +20 dB" horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Jfm-t2-IIr" userLabel="+20 dB button">
+                                                <rect key="frame" x="44" y="-7" width="32" height="31"/>
+                                                <buttonCell key="cell" type="round" title="+" bezelStyle="circular" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="28q-gQ-9yE">
+                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
+                                                    <font key="font" metaFont="system"/>
+                                                </buttonCell>
+                                                <connections>
+                                                    <action selector="buttons:" target="4Er-qS-ODr" id="HA5-gj-8qM"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <visibilityPriorities>
+                                            <integer value="1000"/>
+                                            <integer value="1000"/>
+                                            <integer value="1000"/>
+                                        </visibilityPriorities>
+                                        <customSpacing>
+                                            <real value="3.4028234663852886e+38"/>
+                                            <real value="3.4028234663852886e+38"/>
+                                            <real value="3.4028234663852886e+38"/>
+                                        </customSpacing>
+                                    </stackView>
                                 </subviews>
                                 <visibilityPriorities>
                                     <integer value="1000"/>
@@ -1031,8 +1088,10 @@
                                     <integer value="1000"/>
                                     <integer value="1000"/>
                                     <integer value="1000"/>
+                                    <integer value="1000"/>
                                 </visibilityPriorities>
                                 <customSpacing>
+                                    <real value="3.4028234663852886e+38"/>
                                     <real value="3.4028234663852886e+38"/>
                                     <real value="3.4028234663852886e+38"/>
                                     <real value="3.4028234663852886e+38"/>
@@ -1178,16 +1237,19 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="_carrierLevel" destination="8gj-Tw-Ph1" id="x90-EG-UWs"/>
-                        <outlet property="_companderEnabled" destination="sww-sx-AZO" id="njb-KS-BmZ"/>
-                        <outlet property="_companderLevel" destination="kMb-sH-99b" id="6md-d7-tJO"/>
+                        <outlet property="_20dbButton" destination="Jfm-t2-IIr" id="3eU-N7-isW"/>
+                        <outlet property="_biasButton" destination="GKh-gx-M5d" id="kJI-P1-1sT"/>
+                        <outlet property="_carrierSlider" destination="8gj-Tw-Ph1" id="x90-EG-UWs"/>
+                        <outlet property="_dexpButton" destination="sww-sx-AZO" id="njb-KS-BmZ"/>
+                        <outlet property="_dexpSlider" destination="kMb-sH-99b" id="6md-d7-tJO"/>
+                        <outlet property="_metInRxButton" destination="VZz-y4-pnW" id="yuI-d1-6xZ"/>
                         <outlet property="_txFilterHigh" destination="ydo-0C-AiX" id="jkr-Nn-cKm"/>
                         <outlet property="_txFilterHighStepper" destination="57r-Nf-jWZ" id="jlU-3R-Yaj"/>
                         <outlet property="_txFilterLow" destination="LtU-di-y6V" id="Te2-Mi-m6m"/>
                         <outlet property="_txFilterLowStepper" destination="RJR-QA-4Fr" id="WdC-n4-usd"/>
-                        <outlet property="_voxDelay" destination="e4x-Sf-lLa" id="FLb-39-RyC"/>
-                        <outlet property="_voxEnabled" destination="BdR-sS-Qks" id="gCW-EM-jYW"/>
-                        <outlet property="_voxLevel" destination="krQ-0m-Wex" id="Prz-lK-met"/>
+                        <outlet property="_voxButton" destination="BdR-sS-Qks" id="gCW-EM-jYW"/>
+                        <outlet property="_voxDelaySlider" destination="e4x-Sf-lLa" id="FLb-39-RyC"/>
+                        <outlet property="_voxLevelSlider" destination="krQ-0m-Wex" id="Prz-lK-met"/>
                     </connections>
                 </viewController>
                 <customObject id="G8a-pZ-uWz" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>

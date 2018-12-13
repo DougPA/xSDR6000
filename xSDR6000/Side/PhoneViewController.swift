@@ -14,12 +14,16 @@ class PhoneViewController                   : NSViewController {
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
   
-  @IBOutlet private weak var _carrierLevel        : NSSlider!
-  @IBOutlet private weak var _voxLevel            : NSSlider!
-  @IBOutlet private weak var _voxDelay            : NSSlider!
-  @IBOutlet private weak var _companderLevel      : NSSlider!  
-  @IBOutlet private weak var _voxEnabled          : NSButton!
-  @IBOutlet private weak var _companderEnabled    : NSButton!
+  @IBOutlet private weak var _biasButton          : NSButton!
+  @IBOutlet private weak var _dexpButton          : NSButton!
+  @IBOutlet private weak var _voxButton           : NSButton!
+  @IBOutlet private weak var _metInRxButton       : NSButton!
+  @IBOutlet private weak var _20dbButton          : NSButton!
+
+  @IBOutlet private weak var _carrierSlider       : NSSlider!
+  @IBOutlet private weak var _voxLevelSlider      : NSSlider!
+  @IBOutlet private weak var _voxDelaySlider      : NSSlider!
+  @IBOutlet private weak var _dexpSlider          : NSSlider!
   @IBOutlet private weak var _txFilterLow         : NSTextField!
   @IBOutlet private weak var _txFilterLowStepper  : NSStepper!
   
@@ -32,6 +36,10 @@ class PhoneViewController                   : NSViewController {
   private let kDexp                         = NSUserInterfaceItemIdentifier(rawValue: "Dexp")
   private let kTxLowStepper                 = NSUserInterfaceItemIdentifier(rawValue: "TxLowStepper")
   private let kTxHighStepper                = NSUserInterfaceItemIdentifier(rawValue: "TxHighStepper")
+  private let kMicBias                      = NSUserInterfaceItemIdentifier(rawValue: "MicBias")
+  private let kMicBoost                     = NSUserInterfaceItemIdentifier(rawValue: "MicBoost")
+  private let kMeterInRx                    = NSUserInterfaceItemIdentifier(rawValue: "MeterInRx")
+  
   private let kFilterStep                   = 10
   
   // ----------------------------------------------------------------------------
@@ -64,6 +72,12 @@ class PhoneViewController                   : NSViewController {
       _transmit?.companderEnabled = sender.boolState
     case kVox:
       _transmit?.voxEnabled = sender.boolState
+    case kMicBias:
+      _transmit?.micBiasEnabled = sender.boolState
+    case kMicBoost:
+      _transmit?.micBoostEnabled = sender.boolState
+    case kMeterInRx:
+      _transmit?.metInRxEnabled = sender.boolState
     default:
       fatalError()
     }
@@ -95,39 +109,21 @@ class PhoneViewController                   : NSViewController {
     
     DispatchQueue.main.async { [unowned self] in
       // Buttons
-      self._voxEnabled.isEnabled = state
-      self._companderEnabled.isEnabled = state
+      self._voxButton.isEnabled = state
+      self._dexpButton.isEnabled = state
+      self._biasButton.isEnabled = state
+      self._20dbButton.isEnabled = state
       // Sliders
-      self._carrierLevel.isEnabled = state
-      self._voxLevel.isEnabled = state
-      self._voxDelay.isEnabled = state
-      self._companderLevel.isEnabled = state
+      self._carrierSlider.isEnabled = state
+      self._voxLevelSlider.isEnabled = state
+      self._voxDelaySlider.isEnabled = state
+      self._dexpSlider.isEnabled = state
       // TextFields
       self._txFilterLow.isEnabled = state
       self._txFilterHigh.isEnabled = state
       // Steppers
       self._txFilterLowStepper.isEnabled = state
       self._txFilterHighStepper.isEnabled = state
-    }
-  }
-  /// Update all control values
-  ///
-  /// - Parameter eq:               the Equalizer
-  ///
-  private func populateControls(_ transmit: Transmit) {
-    
-    DispatchQueue.main.async { [unowned self] in
-      // Buttons
-      self._voxEnabled.state = transmit.voxEnabled.state
-      self._companderEnabled.state = transmit.companderEnabled.state
-      // SLiders
-      self._carrierLevel.integerValue = transmit.carrierLevel
-      self._voxLevel.integerValue = transmit.voxLevel
-      self._voxDelay.integerValue = transmit.voxDelay
-      self._companderLevel.integerValue = transmit.companderLevel
-      // Textfields
-      self._txFilterLow.integerValue = transmit.txFilterLow
-      self._txFilterHigh.integerValue = transmit.txFilterHigh
     }
   }
 
@@ -143,14 +139,17 @@ class PhoneViewController                   : NSViewController {
     if let transmit = radio.transmit {
       _transmit = transmit
       
-      _observations.append( transmit.observe(\.carrierLevel, options: [.initial, .new], changeHandler: paramChange) )
-      _observations.append( transmit.observe(\.voxEnabled, options: [.initial, .new], changeHandler: paramChange) )
-      _observations.append( transmit.observe(\.voxLevel, options: [.initial, .new], changeHandler: paramChange) )
-      _observations.append( transmit.observe(\.voxDelay, options: [.initial, .new], changeHandler: paramChange) )
-      _observations.append( transmit.observe(\.companderEnabled, options: [.initial, .new], changeHandler: paramChange) )
-      _observations.append( transmit.observe(\.companderLevel, options: [.initial, .new], changeHandler: paramChange) )
-      _observations.append( transmit.observe(\.txFilterLow, options: [.initial, .new], changeHandler: paramChange) )
-      _observations.append( transmit.observe(\.txFilterHigh, options: [.initial, .new], changeHandler: paramChange) )
+      _observations.append( transmit.observe(\.carrierLevel, options: [.initial, .new], changeHandler: transmitChange) )
+      _observations.append( transmit.observe(\.companderEnabled, options: [.initial, .new], changeHandler: transmitChange) )
+      _observations.append( transmit.observe(\.companderLevel, options: [.initial, .new], changeHandler: transmitChange) )
+      _observations.append( transmit.observe(\.metInRxEnabled, options: [.initial, .new], changeHandler: transmitChange) )
+      _observations.append( transmit.observe(\.micBiasEnabled, options: [.initial, .new], changeHandler: transmitChange) )
+      _observations.append( transmit.observe(\.micBoostEnabled, options: [.initial, .new], changeHandler: transmitChange) )
+      _observations.append( transmit.observe(\.txFilterHigh, options: [.initial, .new], changeHandler: transmitChange) )
+      _observations.append( transmit.observe(\.txFilterLow, options: [.initial, .new], changeHandler: transmitChange) )
+      _observations.append( transmit.observe(\.voxDelay, options: [.initial, .new], changeHandler: transmitChange) )
+      _observations.append( transmit.observe(\.voxEnabled, options: [.initial, .new], changeHandler: transmitChange) )
+      _observations.append( transmit.observe(\.voxLevel, options: [.initial, .new], changeHandler: transmitChange) )
     }
   }
   /// Invalidate observations (optionally remove)
@@ -173,9 +172,29 @@ class PhoneViewController                   : NSViewController {
   ///   - object:                       a Transmit
   ///   - change:                       the change
   ///
-  private func paramChange(_ transmit: Transmit, _ change: Any) {
-    // update the control values
-    populateControls(transmit)
+  /// Update all control values
+  ///
+  /// - Parameter eq:               the Equalizer
+  ///
+  private func transmitChange(_ transmit: Transmit, change: Any) {
+    
+    DispatchQueue.main.async { [unowned self] in
+      // Buttons
+      self._biasButton.state = transmit.micBiasEnabled.state
+      self._dexpButton.state = transmit.companderEnabled.state
+      self._metInRxButton.state = transmit.metInRxEnabled.state
+      self._voxButton.state = transmit.voxEnabled.state
+      self._20dbButton.state = transmit.micBoostEnabled.state
+      
+      // Sliders
+      self._carrierSlider.integerValue = transmit.carrierLevel
+      self._dexpSlider.integerValue = transmit.companderLevel
+      self._voxDelaySlider.integerValue = transmit.voxDelay
+      self._voxLevelSlider.integerValue = transmit.voxLevel
+      // Textfields
+      self._txFilterHigh.integerValue = transmit.txFilterHigh
+      self._txFilterLow.integerValue = transmit.txFilterLow
+    }
   }
 
   // ----------------------------------------------------------------------------

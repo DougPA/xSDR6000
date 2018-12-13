@@ -92,7 +92,7 @@ final class EqViewController                : NSViewController {
       fatalError()
     }    
     // populate the controls of the selected Equalizer
-    populateControls( _eq)
+    eqChange( _eq, 0)
   }
   /// Respond to changes in a slider value
   ///
@@ -148,32 +148,6 @@ final class EqViewController                : NSViewController {
       self.slider7.isEnabled = state
     }
   }
-  /// Update all control values
-  ///
-  /// - Parameter eq:               the Equalizer
-  ///
-  private func populateControls(_ eq: Equalizer) {
-    
-    DispatchQueue.main.async { [unowned self] in
-      
-      // enable the appropriate Equalizer
-      self.rxButton.boolState = Defaults[.eqRxSelected]
-      self.txButton.boolState = !Defaults[.eqRxSelected]
-      
-      // set the ON button state
-      self.onButton.boolState = eq.eqEnabled
-      
-      // set the slider values
-      self.slider0.integerValue = eq.level63Hz
-      self.slider1.integerValue = eq.level125Hz
-      self.slider2.integerValue = eq.level250Hz
-      self.slider3.integerValue = eq.level500Hz
-      self.slider4.integerValue = eq.level1000Hz
-      self.slider5.integerValue = eq.level2000Hz
-      self.slider6.integerValue = eq.level4000Hz
-      self.slider7.integerValue = eq.level8000Hz
-    }
-  }
 
   // ----------------------------------------------------------------------------
   // MARK: - Observation methods
@@ -185,27 +159,27 @@ final class EqViewController                : NSViewController {
   private func addObservations() {
     
     if let rx = _equalizerRx {
-      _observations.append( rx.observe(\.level63Hz, options: [.initial, .new], changeHandler: paramChange) )
-      _observations.append( rx.observe(\.level125Hz, options: [.initial, .new], changeHandler: paramChange) )
-      _observations.append( rx.observe(\.level250Hz, options: [.initial, .new], changeHandler: paramChange) )
-      _observations.append( rx.observe(\.level500Hz, options: [.initial, .new], changeHandler: paramChange) )
-      _observations.append( rx.observe(\.level1000Hz, options: [.initial, .new], changeHandler: paramChange) )
-      _observations.append( rx.observe(\.level2000Hz, options: [.initial, .new], changeHandler: paramChange) )
-      _observations.append( rx.observe(\.level4000Hz, options: [.initial, .new], changeHandler: paramChange) )
-      _observations.append( rx.observe(\.level8000Hz, options: [.initial, .new], changeHandler: paramChange) )
-      _observations.append( rx.observe(\.eqEnabled, options: [.initial, .new], changeHandler: paramChange) )
+      _observations.append( rx.observe(\.level63Hz, options: [.initial, .new], changeHandler: eqChange) )
+      _observations.append( rx.observe(\.level125Hz, options: [.initial, .new], changeHandler: eqChange) )
+      _observations.append( rx.observe(\.level250Hz, options: [.initial, .new], changeHandler: eqChange) )
+      _observations.append( rx.observe(\.level500Hz, options: [.initial, .new], changeHandler: eqChange) )
+      _observations.append( rx.observe(\.level1000Hz, options: [.initial, .new], changeHandler: eqChange) )
+      _observations.append( rx.observe(\.level2000Hz, options: [.initial, .new], changeHandler: eqChange) )
+      _observations.append( rx.observe(\.level4000Hz, options: [.initial, .new], changeHandler: eqChange) )
+      _observations.append( rx.observe(\.level8000Hz, options: [.initial, .new], changeHandler: eqChange) )
+      _observations.append( rx.observe(\.eqEnabled, options: [.initial, .new], changeHandler: eqChange) )
     }
     
     if let tx = _equalizerTx {
-      _observations.append( tx.observe(\.level63Hz, options: [.initial, .new], changeHandler: paramChange) )
-      _observations.append( tx.observe(\.level125Hz, options: [.initial, .new], changeHandler: paramChange) )
-      _observations.append( tx.observe(\.level250Hz, options: [.initial, .new], changeHandler: paramChange) )
-      _observations.append( tx.observe(\.level500Hz, options: [.initial, .new], changeHandler: paramChange) )
-      _observations.append( tx.observe(\.level1000Hz, options: [.initial, .new], changeHandler: paramChange) )
-      _observations.append( tx.observe(\.level2000Hz, options: [.initial, .new], changeHandler: paramChange) )
-      _observations.append( tx.observe(\.level4000Hz, options: [.initial, .new], changeHandler: paramChange) )
-      _observations.append( tx.observe(\.level8000Hz, options: [.initial, .new], changeHandler: paramChange) )
-      _observations.append( tx.observe(\.eqEnabled, options: [.initial, .new], changeHandler: paramChange) )
+      _observations.append( tx.observe(\.level63Hz, options: [.initial, .new], changeHandler: eqChange) )
+      _observations.append( tx.observe(\.level125Hz, options: [.initial, .new], changeHandler: eqChange) )
+      _observations.append( tx.observe(\.level250Hz, options: [.initial, .new], changeHandler: eqChange) )
+      _observations.append( tx.observe(\.level500Hz, options: [.initial, .new], changeHandler: eqChange) )
+      _observations.append( tx.observe(\.level1000Hz, options: [.initial, .new], changeHandler: eqChange) )
+      _observations.append( tx.observe(\.level2000Hz, options: [.initial, .new], changeHandler: eqChange) )
+      _observations.append( tx.observe(\.level4000Hz, options: [.initial, .new], changeHandler: eqChange) )
+      _observations.append( tx.observe(\.level8000Hz, options: [.initial, .new], changeHandler: eqChange) )
+      _observations.append( tx.observe(\.eqEnabled, options: [.initial, .new], changeHandler: eqChange) )
     }
   }
   /// Invalidate observations (optionally remove)
@@ -228,11 +202,30 @@ final class EqViewController                : NSViewController {
   ///   - object:                       an Equalizer
   ///   - change:                       the change
   ///
-  private func paramChange(_ eq: Equalizer, _ change: Any) {
+  private func eqChange(_ eq: Equalizer, _ change: Any) {
     
     // update the Equalizer if currently displayed
     if eq == _eq {
-      populateControls(eq)
+      
+      DispatchQueue.main.async { [unowned self] in
+        
+        // enable the appropriate Equalizer
+        self.rxButton.boolState = Defaults[.eqRxSelected]
+        self.txButton.boolState = !Defaults[.eqRxSelected]
+        
+        // set the ON button state
+        self.onButton.boolState = eq.eqEnabled
+        
+        // set the slider values
+        self.slider0.integerValue = eq.level63Hz
+        self.slider1.integerValue = eq.level125Hz
+        self.slider2.integerValue = eq.level250Hz
+        self.slider3.integerValue = eq.level500Hz
+        self.slider4.integerValue = eq.level1000Hz
+        self.slider5.integerValue = eq.level2000Hz
+        self.slider6.integerValue = eq.level4000Hz
+        self.slider7.integerValue = eq.level8000Hz
+      }
     }
   }
   

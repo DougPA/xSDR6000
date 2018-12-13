@@ -37,6 +37,7 @@ class TxViewController                      : NSViewController {
   private let kMem                          = NSUserInterfaceItemIdentifier(rawValue: "Mem")
   private let kTunePower                    = NSUserInterfaceItemIdentifier(rawValue: "TunePower")
   private let kRfPower                      = NSUserInterfaceItemIdentifier(rawValue: "RfPower")
+  private let kSave                         = NSUserInterfaceItemIdentifier(rawValue: "Save")
 
   // ----------------------------------------------------------------------------
   // MARK: - Overriden methods
@@ -72,6 +73,8 @@ class TxViewController                      : NSViewController {
         _radio?.atu.atuStart()
       case kMem:
         _radio?.atu.memoriesEnabled = sender.boolState
+      case kSave:
+        showDialog(sender)
       default:
         fatalError()
     }
@@ -132,6 +135,46 @@ class TxViewController                      : NSViewController {
       self._txProfile.isEnabled = state
       self._tunePowerSlider.isEnabled = state
       self._rfPowerSlider.isEnabled = state
+    }
+  }
+  /// Show a Save / Delete profile dialog
+  ///
+  /// - Parameter sender:             a button
+  ///
+  private func showDialog(_ sender: NSButton) {
+    let alert = NSAlert()
+    let acc = NSTextField(frame: NSMakeRect(0, 0, 233, 25))
+    acc.stringValue = _radio!.profiles["mic"]!.selection
+    acc.isEditable = true
+    acc.drawsBackground = true
+    alert.accessoryView = acc
+    alert.addButton(withTitle: "Cancel")
+    
+    // ask the user to confirm
+    if sender.title == "Save" {
+      // Save a Profile
+      alert.messageText = "Save Tx Profile as:"
+      alert.addButton(withTitle: "Save")
+      
+      alert.beginSheetModal(for: NSApp.mainWindow!, completionHandler: { (response) in
+        if response == NSApplication.ModalResponse.alertFirstButtonReturn { return }
+        
+        // save profile
+        Profile.save(Profile.kTx + "_list", name: acc.stringValue)
+      } )
+      
+    } else {
+      // Delete a profile
+      alert.messageText = "Delete Tx Profile:"
+      alert.addButton(withTitle: "Delete")
+      
+      alert.beginSheetModal(for: NSApp.mainWindow!, completionHandler: { (response) in
+        if response == NSApplication.ModalResponse.alertFirstButtonReturn { return }
+        
+        // delete profile
+        Profile.delete(Profile.kTx + "_list", name: acc.stringValue)
+        self._txProfile.selectItem(at: 0)
+      } )
     }
   }
   // ----------------------------------------------------------------------------
@@ -293,7 +336,7 @@ class TxViewController                      : NSViewController {
   @objc private func profileHasBeenAdded(_ note: Notification) {
     
     let profile = note.object as! Profile
-    if profile.id == Profile.kMic {
+    if profile.id == Profile.kTx {
 
       // add Mic Profile observations
       _observations.append( _radio!.profiles[Profile.kTx]!.observe(\.list, options: [.initial, .new], changeHandler: profileChange) )

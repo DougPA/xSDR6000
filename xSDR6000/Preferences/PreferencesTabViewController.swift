@@ -7,6 +7,8 @@
 //
 
 import Cocoa
+import os.log
+import xLib6000
 import SwiftyUserDefaults
 
 // ----------------------------------------------------------------------------
@@ -18,7 +20,8 @@ final class PreferencesTabViewController    : NSTabViewController {
   // MARK: - Private properties
   
   private let _autosaveName                 = "PreferencesWindow"
-  
+  private let _log                          = OSLog(subsystem: Api.kDomainId + "." + kClientName, category: "Preferences")
+
   // ----------------------------------------------------------------------------
   // MARK: - Overridden methods
   
@@ -43,12 +46,59 @@ final class PreferencesTabViewController    : NSTabViewController {
     
     view.window!.saveFrame(usingName: _autosaveName)
   }
-  
+
   override func tabView(_ tabView: NSTabView, didSelect tabViewItem: NSTabViewItem?) {
     super.tabView(tabView, didSelect: tabViewItem)
     
-    // give the newly selected tab a reference to the User Defaults
-    tabViewItem?.viewController?.representedObject = Defaults
+    // give the newly selected tab a reference to an object
+    switch tabViewItem!.label{
+    case "Radio":
+      break
+    case "Network":
+      break
+    case "GPS":
+      break
+    case "TX":
+      break
+    case "Phone/CW":
+      tabViewItem?.viewController?.representedObject = Defaults
+    case "RX":
+      break
+    case "Filters":
+      tabViewItem?.viewController?.representedObject = Api.sharedInstance.radio
+    case "XVTR":
+      break
+    case "Colors":
+      tabViewItem?.viewController?.representedObject = Defaults
+    case "Info":
+      tabViewItem?.viewController?.representedObject = Defaults
+    default:
+      fatalError()
+    }
   }
+
+  // ----------------------------------------------------------------------------
+  // MARK: - Action methods
+  
+  /// Respond to the Quit menu item
+  ///
+  /// - Parameter sender:     the button
+  ///
+  @IBAction func quitRadio(_ sender: AnyObject) {
+    
+    dismiss(sender)
+    
+    // perform an orderly shutdown of all the components
+    Api.sharedInstance.shutdown(reason: .normal)
+    
+    DispatchQueue.main.async {
+      os_log("Application closed by user", log: self._log, type: .info)
+      
+      NSApp.terminate(self)
+    }
+  }
+  
+  
+  
   
 }
