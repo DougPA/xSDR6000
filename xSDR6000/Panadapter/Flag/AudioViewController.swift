@@ -21,7 +21,7 @@ class AudioViewController: NSViewController {
   @IBOutlet private weak var _audioGain     : NSSlider!
   @IBOutlet private weak var _audioPan      : NSSlider!
   @IBOutlet private weak var _agcThreshold  : NSSlider!
-  @IBOutlet private weak var _lockButton    : NSButton!
+  @IBOutlet private weak var _muteButton    : NSButton!
   @IBOutlet private weak var _agcPopUp      : NSPopUpButton!
   
   private var _slice                        : xLib6000.Slice {
@@ -49,8 +49,8 @@ class AudioViewController: NSViewController {
   
   // **** BUTTONS ****
   
-  @IBAction func locked(_ sender: NSButton) {
-    _slice.locked = sender.boolState
+  @IBAction func audioMute(_ sender: NSButton) {
+    _slice.audioMute = sender.boolState
   }
   
   // **** POPUPS ****
@@ -79,7 +79,7 @@ class AudioViewController: NSViewController {
   private func addObservations() {
     
     _observations = [
-      _slice.observe(\.locked, options: [.initial, .new], changeHandler: changeHandler(_:_:)),
+      _slice.observe(\.audioMute, options: [.initial, .new], changeHandler: changeHandler(_:_:)),
       _slice.observe(\.audioGain, options: [.initial, .new], changeHandler: changeHandler(_:_:)),
       _slice.observe(\.audioPan, options: [.initial, .new], changeHandler: changeHandler(_:_:)),
       _slice.observe(\.agcThreshold, options: [.initial, .new], changeHandler: changeHandler(_:_:)),
@@ -88,7 +88,7 @@ class AudioViewController: NSViewController {
   }
   private func changeHandler(_ object: Any, _ change: Any) {
     DispatchQueue.main.async {
-      self._lockButton.state = self._slice.locked.state
+      self._muteButton.state = self._slice.audioMute.state
       self._audioGain.integerValue = self._slice.audioGain
       self._audioPan.integerValue = self._slice.audioPan
       self._agcThreshold.integerValue = self._slice.agcThreshold

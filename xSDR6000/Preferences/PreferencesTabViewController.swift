@@ -25,16 +25,6 @@ final class PreferencesTabViewController    : NSTabViewController {
   // ----------------------------------------------------------------------------
   // MARK: - Overridden methods
   
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    
-    // make me the delegate of the Tab View
-    //        tabView.delegate = self
-    
-    // give the initially selected tab a reference to the User Defaults
-    tabView.selectedTabViewItem?.viewController?.representedObject = Defaults
-  }
-  
   override func viewWillAppear() {
     super.viewWillAppear()
     
@@ -45,15 +35,22 @@ final class PreferencesTabViewController    : NSTabViewController {
     super.viewWillDisappear()
     
     view.window!.saveFrame(usingName: _autosaveName)
+
+    // close the ColorPicker (if open)
+    if NSColorPanel.shared.isVisible {
+      NSColorPanel.shared.performClose(nil)
+    }
   }
 
   override func tabView(_ tabView: NSTabView, didSelect tabViewItem: NSTabViewItem?) {
     super.tabView(tabView, didSelect: tabViewItem)
+
+    Swift.print("tabViewItem!.label = \(tabViewItem!.label)")
     
     // give the newly selected tab a reference to an object
     switch tabViewItem!.label{
     case "Radio":
-      break
+      tabViewItem?.viewController?.representedObject = Api.sharedInstance.radio
     case "Network":
       break
     case "GPS":
@@ -63,7 +60,7 @@ final class PreferencesTabViewController    : NSTabViewController {
     case "Phone/CW":
       tabViewItem?.viewController?.representedObject = Defaults
     case "RX":
-      break
+      tabViewItem?.viewController?.representedObject = Api.sharedInstance.radio
     case "Filters":
       tabViewItem?.viewController?.representedObject = Api.sharedInstance.radio
     case "XVTR":
@@ -74,6 +71,10 @@ final class PreferencesTabViewController    : NSTabViewController {
       tabViewItem?.viewController?.representedObject = Defaults
     default:
       fatalError()
+    }
+    // close the ColorPicker (if open)
+    if NSColorPanel.shared.isVisible {
+      NSColorPanel.shared.performClose(nil)
     }
   }
 

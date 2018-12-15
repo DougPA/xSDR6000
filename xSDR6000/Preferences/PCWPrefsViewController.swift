@@ -51,8 +51,8 @@ class PCWPrefsViewController                : NSViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    view.translatesAutoresizingMaskIntoConstraints = false
-    view.layer?.backgroundColor = NSColor.lightGray.cgColor
+//    view.translatesAutoresizingMaskIntoConstraints = false
+//    view.layer?.backgroundColor = NSColor.lightGray.cgColor
     
     // enable/disable all controls
     setControlState( _radio != nil )
