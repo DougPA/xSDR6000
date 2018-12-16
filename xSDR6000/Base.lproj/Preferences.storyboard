@@ -658,7 +658,7 @@
         <!--Radio Tab-->
         <scene sceneID="V06-Uu-3xC">
             <objects>
-                <viewController title="Radio" id="UBL-vs-1PL" userLabel="Radio Tab" sceneMemberID="viewController">
+                <viewController title="Radio" id="UBL-vs-1PL" userLabel="Radio Tab" customClass="RadioPrefsViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="upT-IE-zqc" userLabel="Radio">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="400"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -693,6 +693,9 @@
                                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
+                                                            <connections>
+                                                                <binding destination="UBL-vs-1PL" name="value" keyPath="representedObject.serialNumber" id="2QG-3b-Nrg"/>
+                                                            </connections>
                                                         </textField>
                                                     </subviews>
                                                     <visibilityPriorities>
@@ -725,6 +728,9 @@
                                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
+                                                            <connections>
+                                                                <binding destination="UBL-vs-1PL" name="value" keyPath="representedObject.version" id="bIq-Vp-JiA"/>
+                                                            </connections>
                                                         </textField>
                                                     </subviews>
                                                     <visibilityPriorities>
@@ -757,6 +763,9 @@
                                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
+                                                            <connections>
+                                                                <binding destination="UBL-vs-1PL" name="value" keyPath="representedObject.radioOptions" id="uF4-vE-nRG"/>
+                                                            </connections>
                                                         </textField>
                                                     </subviews>
                                                     <visibilityPriorities>
@@ -801,6 +810,9 @@
                                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
+                                                            <connections>
+                                                                <binding destination="UBL-vs-1PL" name="value" keyPath="representedObject.region" id="4cv-5e-uQK"/>
+                                                            </connections>
                                                         </textField>
                                                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QTs-Ho-j3Y">
                                                             <rect key="frame" x="103" y="-7" width="87" height="32"/>
@@ -830,6 +842,9 @@
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                         <font key="font" metaFont="system"/>
                                                     </buttonCell>
+                                                    <connections>
+                                                        <binding destination="UBL-vs-1PL" name="value" keyPath="representedObject.remoteOnEnabled" id="x78-Le-DSB"/>
+                                                    </connections>
                                                 </button>
                                                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yqo-CO-FNl">
                                                     <rect key="frame" x="-2" y="-2" width="154" height="18"/>
@@ -878,12 +893,15 @@
                                                 <stackView distribution="fill" orientation="horizontal" alignment="bottom" spacing="56" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IDw-mc-LDI" userLabel="Model Stack View">
                                                     <rect key="frame" x="0.0" y="62" width="263" height="17"/>
                                                     <subviews>
-                                                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="5TS-0F-rR7">
+                                                        <button identifier="Model" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="5TS-0F-rR7">
                                                             <rect key="frame" x="-1" y="-1" width="60" height="18"/>
                                                             <buttonCell key="cell" type="radio" title="Model" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="idT-Ch-dKZ">
                                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                 <font key="font" metaFont="system"/>
                                                             </buttonCell>
+                                                            <connections>
+                                                                <action selector="radioButtons:" target="UBL-vs-1PL" id="Vh1-mr-kkv"/>
+                                                            </connections>
                                                         </button>
                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="snd-Be-vN5">
                                                             <rect key="frame" x="111" y="0.0" width="154" height="17"/>
@@ -895,6 +913,9 @@
                                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
+                                                            <connections>
+                                                                <binding destination="UBL-vs-1PL" name="value" keyPath="representedObject.radioModel" id="PBL-fS-iVx"/>
+                                                            </connections>
                                                         </textField>
                                                     </subviews>
                                                     <visibilityPriorities>
@@ -909,12 +930,15 @@
                                                 <stackView distribution="fill" orientation="horizontal" alignment="centerY" spacing="46" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Xgn-lp-Apc" userLabel="Callsign Stack View">
                                                     <rect key="frame" x="0.0" y="31" width="263" height="22"/>
                                                     <subviews>
-                                                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xfr-b6-aVB">
+                                                        <button identifier="Callsign" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xfr-b6-aVB">
                                                             <rect key="frame" x="-1" y="2" width="70" height="18"/>
                                                             <buttonCell key="cell" type="radio" title="Callsign" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="JwP-u3-wQg">
                                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                 <font key="font" metaFont="system"/>
                                                             </buttonCell>
+                                                            <connections>
+                                                                <action selector="radioButtons:" target="UBL-vs-1PL" id="htx-ro-PzJ"/>
+                                                            </connections>
                                                         </button>
                                                         <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yNt-QU-b8f">
                                                             <rect key="frame" x="113" y="0.0" width="150" height="22"/>
@@ -926,6 +950,9 @@
                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
+                                                            <connections>
+                                                                <binding destination="UBL-vs-1PL" name="value" keyPath="representedObject.callsign" id="oxi-VE-7As"/>
+                                                            </connections>
                                                         </textField>
                                                     </subviews>
                                                     <visibilityPriorities>
@@ -940,12 +967,15 @@
                                                 <stackView distribution="fill" orientation="horizontal" alignment="centerY" spacing="33" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DGA-Ud-Czu" userLabel="Nickname Stack View">
                                                     <rect key="frame" x="0.0" y="0.0" width="263" height="22"/>
                                                     <subviews>
-                                                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ywk-PS-0bN">
+                                                        <button identifier="Nickname" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ywk-PS-0bN">
                                                             <rect key="frame" x="-1" y="2" width="83" height="18"/>
                                                             <buttonCell key="cell" type="radio" title="Nickname" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="uCQ-Dg-giF">
                                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                 <font key="font" metaFont="system"/>
                                                             </buttonCell>
+                                                            <connections>
+                                                                <action selector="radioButtons:" target="UBL-vs-1PL" id="hke-g9-HQC"/>
+                                                            </connections>
                                                         </button>
                                                         <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jYf-Vs-NmJ">
                                                             <rect key="frame" x="113" y="0.0" width="150" height="22"/>
@@ -957,6 +987,9 @@
                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
+                                                            <connections>
+                                                                <binding destination="UBL-vs-1PL" name="value" keyPath="representedObject.nickname" id="mgD-Fm-03I"/>
+                                                            </connections>
                                                         </textField>
                                                     </subviews>
                                                     <visibilityPriorities>

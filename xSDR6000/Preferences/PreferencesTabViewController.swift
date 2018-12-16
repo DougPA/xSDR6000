@@ -45,8 +45,6 @@ final class PreferencesTabViewController    : NSTabViewController {
   override func tabView(_ tabView: NSTabView, didSelect tabViewItem: NSTabViewItem?) {
     super.tabView(tabView, didSelect: tabViewItem)
 
-    Swift.print("tabViewItem!.label = \(tabViewItem!.label)")
-    
     // give the newly selected tab a reference to an object
     switch tabViewItem!.label{
     case "Radio":

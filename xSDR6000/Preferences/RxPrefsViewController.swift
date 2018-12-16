@@ -13,9 +13,12 @@ class RxPrefsViewController: NSViewController {
 
   @objc public func calibrate() {
 
-    Swift.print("RxPrefsViewController, Calibrate")
 
-    if let radio = Api.sharedInstance.radio { radio.startCalibration = true }
+    if let radio = Api.sharedInstance.radio {
+      Swift.print("RxPrefsViewController, Calibrate")
+      radio.startCalibration = true
+      
+    }
 
   }
 }

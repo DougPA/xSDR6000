@@ -29,7 +29,6 @@
 		913F7F452066DC7A00F35E9B /* Filters.plist in Resources */ = {isa = PBXBuildFile; fileRef = 913F7EFE2066DC7900F35E9B /* Filters.plist */; };
 		913F7F462066DC7A00F35E9B /* OpusDecode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7EFF2066DC7900F35E9B /* OpusDecode.swift */; };
 		913F7F472066DC7A00F35E9B /* ParameterMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7F002066DC7900F35E9B /* ParameterMonitor.swift */; };
-		913F7F482066DC7A00F35E9B /* ColorsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7F022066DC7900F35E9B /* ColorsViewController.swift */; };
 		913F7F492066DC7A00F35E9B /* PreferencesTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7F032066DC7900F35E9B /* PreferencesTabViewController.swift */; };
 		913F7F4A2066DC7A00F35E9B /* BandButtonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7F052066DC7900F35E9B /* BandButtonViewController.swift */; };
 		913F7F4C2066DC7A00F35E9B /* MainWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7F082066DC7900F35E9B /* MainWindowController.swift */; };
@@ -58,7 +57,7 @@
 		913F7F692066DC7A00F35E9B /* WaterfallShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 913F7F292066DC7A00F35E9B /* WaterfallShaders.metal */; };
 		913F7F862066E6F600F35E9B /* OpusOSX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 913F7F7C2066E6F600F35E9B /* OpusOSX.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		913F7F872066E6F600F35E9B /* OpusOSX.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 913F7F7C2066E6F600F35E9B /* OpusOSX.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		913F8D7D21C2C2CA004EAE66 /* FiltersPrefsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F8D7C21C2C2CA004EAE66 /* FiltersPrefsViewController.swift */; };
+		913F8D7F21C2FDA8004EAE66 /* RxPrefsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F8D7E21C2FDA8004EAE66 /* RxPrefsViewController.swift */; };
 		91475E5020A28E4600ACE77D /* Flag.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 91475E4E20A28E4600ACE77D /* Flag.storyboard */; };
 		91475E5220A34C2D00ACE77D /* ModeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91475E5120A34C2D00ACE77D /* ModeViewController.swift */; };
 		9168DB46218A2F2A0025F3D6 /* SwiftyUserDefaults.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9168DB45218A2F2A0025F3D6 /* SwiftyUserDefaults.framework */; };
@@ -73,6 +72,7 @@
 		917AE6E221A246010073A5F7 /* DspViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917AE6E121A246010073A5F7 /* DspViewController.swift */; };
 		917AE6E521A2F84B0073A5F7 /* XRitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917AE6E421A2F84B0073A5F7 /* XRitViewController.swift */; };
 		917AE6E721A2F86E0073A5F7 /* DaxViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917AE6E621A2F86E0073A5F7 /* DaxViewController.swift */; };
+		917D5BC121C5EA9D00107EEB /* RadioPrefsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917D5BC021C5EA9D00107EEB /* RadioPrefsViewController.swift */; };
 		9185B0D4208683C7004D4C40 /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9185B0C6208683C7004D4C40 /* Keychain.swift */; };
 		9185B0D5208683C7004D4C40 /* JWTDecode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9185B0C8208683C7004D4C40 /* JWTDecode.swift */; };
 		9185B0D6208683C7004D4C40 /* JWT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9185B0C9208683C7004D4C40 /* JWT.swift */; };
@@ -126,7 +126,6 @@
 		913F7EFE2066DC7900F35E9B /* Filters.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Filters.plist; sourceTree = "<group>"; };
 		913F7EFF2066DC7900F35E9B /* OpusDecode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpusDecode.swift; sourceTree = "<group>"; };
 		913F7F002066DC7900F35E9B /* ParameterMonitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParameterMonitor.swift; sourceTree = "<group>"; };
-		913F7F022066DC7900F35E9B /* ColorsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorsViewController.swift; sourceTree = "<group>"; };
 		913F7F032066DC7900F35E9B /* PreferencesTabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesTabViewController.swift; sourceTree = "<group>"; };
 		913F7F052066DC7900F35E9B /* BandButtonViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BandButtonViewController.swift; sourceTree = "<group>"; };
 		913F7F062066DC7900F35E9B /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -161,7 +160,7 @@
 		913F7F782066E6F500F35E9B /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		913F7F7B2066E6F600F35E9B /* SwiftyUserDefaults.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SwiftyUserDefaults.framework; sourceTree = "<group>"; };
 		913F7F7C2066E6F600F35E9B /* OpusOSX.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OpusOSX.framework; sourceTree = "<group>"; };
-		913F8D7C21C2C2CA004EAE66 /* FiltersPrefsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiltersPrefsViewController.swift; sourceTree = "<group>"; };
+		913F8D7E21C2FDA8004EAE66 /* RxPrefsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxPrefsViewController.swift; sourceTree = "<group>"; };
 		91475E4F20A28E4600ACE77D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Flag.storyboard; sourceTree = "<group>"; };
 		91475E5120A34C2D00ACE77D /* ModeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModeViewController.swift; sourceTree = "<group>"; };
 		9168DB45218A2F2A0025F3D6 /* SwiftyUserDefaults.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SwiftyUserDefaults.framework; sourceTree = "<group>"; };
@@ -180,6 +179,7 @@
 		917AE6E121A246010073A5F7 /* DspViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DspViewController.swift; sourceTree = "<group>"; };
 		917AE6E421A2F84B0073A5F7 /* XRitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XRitViewController.swift; sourceTree = "<group>"; };
 		917AE6E621A2F86E0073A5F7 /* DaxViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaxViewController.swift; sourceTree = "<group>"; };
+		917D5BC021C5EA9D00107EEB /* RadioPrefsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioPrefsViewController.swift; sourceTree = "<group>"; };
 		9181A4582197869000B646C6 /* xSDR6000.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = xSDR6000.entitlements; sourceTree = "<group>"; };
 		9185B0C6208683C7004D4C40 /* Keychain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
 		9185B0C8208683C7004D4C40 /* JWTDecode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JWTDecode.swift; sourceTree = "<group>"; };
@@ -300,10 +300,10 @@
 			isa = PBXGroup;
 			children = (
 				913F7F032066DC7900F35E9B /* PreferencesTabViewController.swift */,
-				913F7F022066DC7900F35E9B /* ColorsViewController.swift */,
 				913615B321C0B178005EA591 /* PCWPrefsViewController.swift */,
 				913615B521C18465005EA591 /* TXPrefsViewController.swift */,
-				913F8D7C21C2C2CA004EAE66 /* FiltersPrefsViewController.swift */,
+				913F8D7E21C2FDA8004EAE66 /* RxPrefsViewController.swift */,
+				917D5BC021C5EA9D00107EEB /* RadioPrefsViewController.swift */,
 			);
 			path = Preferences;
 			sourceTree = "<group>";
@@ -591,9 +591,11 @@
 				916909C62113E2FC00164044 /* OpusEncode.swift in Sources */,
 				913F7F492066DC7A00F35E9B /* PreferencesTabViewController.swift in Sources */,
 				913F7F532066DC7A00F35E9B /* FrequencyLegendView.swift in Sources */,
+				913F8D7F21C2FDA8004EAE66 /* RxPrefsViewController.swift in Sources */,
 				916909C82113E40C00164044 /* AudioHelper.swift in Sources */,
 				9179498A2139CC0000D9750A /* TxViewController.swift in Sources */,
 				9185B0D9208683C7004D4C40 /* DataExtensions.swift in Sources */,
+				917D5BC121C5EA9D00107EEB /* RadioPrefsViewController.swift in Sources */,
 				913F7F422066DC7A00F35E9B /* Band.swift in Sources */,
 				917AE6E021A241260073A5F7 /* AudioViewController.swift in Sources */,
 				913F7F592066DC7A00F35E9B /* RxViewController.swift in Sources */,
@@ -610,10 +612,8 @@
 				9124B4002194BC150036FF2E /* ControlsViewController.swift in Sources */,
 				913F7F582066DC7A00F35E9B /* SideViewController.swift in Sources */,
 				9185B0D6208683C7004D4C40 /* JWT.swift in Sources */,
-				913F8D7D21C2C2CA004EAE66 /* FiltersPrefsViewController.swift in Sources */,
 				9185B0D8208683C7004D4C40 /* DictionaryExtensions.swift in Sources */,
 				913F7F3E2066DC7A00F35E9B /* PanafallViewController.swift in Sources */,
-				913F7F482066DC7A00F35E9B /* ColorsViewController.swift in Sources */,
 				913F7F3F2066DC7A00F35E9B /* PanafallsViewController.swift in Sources */,
 				9185B0DE208683C7004D4C40 /* LANRadioPickerViewController.swift in Sources */,
 				913F7F682066DC7A00F35E9B /* WaterfallViewController.swift in Sources */,
