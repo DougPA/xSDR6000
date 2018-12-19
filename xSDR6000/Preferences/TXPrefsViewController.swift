@@ -11,6 +11,15 @@ import xLib6000
 
 class TXPrefsViewController                 : NSViewController {
 
+  // NOTE:
+  //
+  //      Most of the fields on this View are setup as Bindings or as User Defined Runtime
+  //      Attributes. Those below are the exceptions that required some additionl processing
+  //      not available through other methods.
+  //
+
+  @objc dynamic var txProfile               = Api.sharedInstance.radio?.profiles[Profile.kTx]
+  
   // ----------------------------------------------------------------------------
   // MARK: - Private  properties
   
@@ -62,16 +71,13 @@ class TXPrefsViewController                 : NSViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
-//    view.translatesAutoresizingMaskIntoConstraints = false
-//    view.layer?.backgroundColor = NSColor.lightGray.cgColor
-    
-    // enable/disable all controls
-    setControlState( _radio != nil )
+//    // enable/disable all controls
+//    setControlState( _radio != nil )
 
-    if let radio = _radio { addObservations(radio) }
-
-    // begin receiving notifications
-    addNotifications()
+//    if let radio = _radio { addObservations(radio) }
+//
+//    // begin receiving notifications
+//    addNotifications()
   }
   
   // ----------------------------------------------------------------------------
@@ -144,139 +150,139 @@ class TXPrefsViewController                 : NSViewController {
   ///
   /// - Parameter state:              true = enable
   ///
-  private func setControlState(_ state: Bool) {
-    
-    DispatchQueue.main.async { [weak self] in
-      // Timings
-      self?._accTxCheckbox.isEnabled = state
-      self?._rcaTx1Checkbox.isEnabled = state
-      self?._rcaTx2Checkbox.isEnabled = state
-      self?._rcaTx3Checkbox.isEnabled = state
-      self?._accTxTextField.isEnabled = state
-      self?._rcaTx1TextField.isEnabled = state
-      self?._rcaTx2TextField.isEnabled = state
-      self?._rcaTx3TextField.isEnabled = state
-      self?._txDelayTextField.isEnabled = state
-      self?._txInhibitCheckbox.isEnabled = state
-      self?._txProfilePopUp.isEnabled = state
-      self?._txTimeoutTextField.isEnabled = state
-
-      // Interlocks
-      self?._accessoryInterlockPopup.isEnabled = state
-      self?._rcaInterlockPopup.isEnabled = state
-      
-      // Misc
-      self?._hardwareAlcCheckbox.isEnabled = state
-      self?._maxPowerTextField.isEnabled = state
-      self?._txInWaterfallCheckbox.isEnabled = state
-    }
-  }
+//  private func setControlState(_ state: Bool) {
+//
+//    DispatchQueue.main.async { [weak self] in
+//      // Timings
+//      self?._accTxCheckbox.isEnabled = state
+//      self?._rcaTx1Checkbox.isEnabled = state
+//      self?._rcaTx2Checkbox.isEnabled = state
+//      self?._rcaTx3Checkbox.isEnabled = state
+//      self?._accTxTextField.isEnabled = state
+//      self?._rcaTx1TextField.isEnabled = state
+//      self?._rcaTx2TextField.isEnabled = state
+//      self?._rcaTx3TextField.isEnabled = state
+//      self?._txDelayTextField.isEnabled = state
+//      self?._txInhibitCheckbox.isEnabled = state
+//      self?._txProfilePopUp.isEnabled = state
+//      self?._txTimeoutTextField.isEnabled = state
+//
+//      // Interlocks
+//      self?._accessoryInterlockPopup.isEnabled = state
+//      self?._rcaInterlockPopup.isEnabled = state
+//
+//      // Misc
+//      self?._hardwareAlcCheckbox.isEnabled = state
+//      self?._maxPowerTextField.isEnabled = state
+//      self?._txInWaterfallCheckbox.isEnabled = state
+//    }
+//  }
   
   // ----------------------------------------------------------------------------
   // MARK: - Observation methods
   
-  private var _observations                 = [NSKeyValueObservation]()
+//  private var _observations                 = [NSKeyValueObservation]()
   
   /// Add observations
   ///
-  private func addObservations(_ radio: Radio) {
-    
-    _radio = radio
-    
-    // Interlock observations
-    _observations.append( radio.interlock!.observe(\.accTxDelay, options: [.initial, .new], changeHandler: interlockChange) )
-    _observations.append( radio.interlock!.observe(\.accTxEnabled, options: [.initial, .new], changeHandler: interlockChange) )
-    _observations.append( radio.interlock!.observe(\.txAllowed, options: [.initial, .new], changeHandler: interlockChange) )
-    _observations.append( radio.interlock!.observe(\.txDelay, options: [.initial, .new], changeHandler: interlockChange) )
-    _observations.append( radio.interlock!.observe(\.timeout, options: [.initial, .new], changeHandler: interlockChange) )
-    _observations.append( radio.interlock!.observe(\.tx1Delay, options: [.initial, .new], changeHandler: interlockChange) )
-    _observations.append( radio.interlock!.observe(\.tx2Delay, options: [.initial, .new], changeHandler: interlockChange) )
-    _observations.append( radio.interlock!.observe(\.tx3Delay, options: [.initial, .new], changeHandler: interlockChange) )
-    _observations.append( radio.interlock!.observe(\.tx1Enabled, options: [.initial, .new], changeHandler: interlockChange) )
-    _observations.append( radio.interlock!.observe(\.tx2Enabled, options: [.initial, .new], changeHandler: interlockChange) )
-    _observations.append( radio.interlock!.observe(\.tx3Enabled, options: [.initial, .new], changeHandler: interlockChange) )
-    
-    // Profile observations
-    _observations.append( radio.profiles[Profile.kTx]!.observe(\.list, options: [.initial, .new], changeHandler: profileChange) )
-    _observations.append( radio.profiles[Profile.kTx]!.observe(\.selection, options: [.initial, .new], changeHandler: profileChange) )
-
-    _observations.append( radio.transmit!.observe(\.hwAlcEnabled, options: [.initial, .new], changeHandler: transmitChange) )
-    _observations.append( radio.transmit!.observe(\.maxPowerLevel, options: [.initial, .new], changeHandler: transmitChange) )
-    _observations.append( radio.transmit!.observe(\.txInWaterfallEnabled, options: [.initial, .new], changeHandler: transmitChange) )
-
-  }
+//  private func addObservations(_ radio: Radio) {
+//
+//    _radio = radio
+//
+//    // Interlock observations
+//    _observations.append( radio.interlock!.observe(\.accTxDelay, options: [.initial, .new], changeHandler: interlockChange) )
+//    _observations.append( radio.interlock!.observe(\.accTxEnabled, options: [.initial, .new], changeHandler: interlockChange) )
+//    _observations.append( radio.interlock!.observe(\.txAllowed, options: [.initial, .new], changeHandler: interlockChange) )
+//    _observations.append( radio.interlock!.observe(\.txDelay, options: [.initial, .new], changeHandler: interlockChange) )
+//    _observations.append( radio.interlock!.observe(\.timeout, options: [.initial, .new], changeHandler: interlockChange) )
+//    _observations.append( radio.interlock!.observe(\.tx1Delay, options: [.initial, .new], changeHandler: interlockChange) )
+//    _observations.append( radio.interlock!.observe(\.tx2Delay, options: [.initial, .new], changeHandler: interlockChange) )
+//    _observations.append( radio.interlock!.observe(\.tx3Delay, options: [.initial, .new], changeHandler: interlockChange) )
+//    _observations.append( radio.interlock!.observe(\.tx1Enabled, options: [.initial, .new], changeHandler: interlockChange) )
+//    _observations.append( radio.interlock!.observe(\.tx2Enabled, options: [.initial, .new], changeHandler: interlockChange) )
+//    _observations.append( radio.interlock!.observe(\.tx3Enabled, options: [.initial, .new], changeHandler: interlockChange) )
+//
+//    // Profile observations
+//    _observations.append( radio.profiles[Profile.kTx]!.observe(\.list, options: [.initial, .new], changeHandler: profileChange) )
+//    _observations.append( radio.profiles[Profile.kTx]!.observe(\.selection, options: [.initial, .new], changeHandler: profileChange) )
+//
+//    _observations.append( radio.transmit!.observe(\.hwAlcEnabled, options: [.initial, .new], changeHandler: transmitChange) )
+//    _observations.append( radio.transmit!.observe(\.maxPowerLevel, options: [.initial, .new], changeHandler: transmitChange) )
+//    _observations.append( radio.transmit!.observe(\.txInWaterfallEnabled, options: [.initial, .new], changeHandler: transmitChange) )
+//
+//  }
   /// Invalidate observations (optionally remove)
   ///
   /// - Parameters:
   ///   - observations:                 an array of NSKeyValueObservation
   ///   - remove:                       remove all enabled
   ///
-  func invalidateObservations(remove: Bool = true) {
-    
-    // invalidate each observation
-    _observations.forEach { $0.invalidate() }
-    
-    // if specified, remove the tokens
-    if remove { _observations.removeAll() }
-  }
+//  func invalidateObservations(remove: Bool = true) {
+//
+//    // invalidate each observation
+//    _observations.forEach { $0.invalidate() }
+//
+//    // if specified, remove the tokens
+//    if remove { _observations.removeAll() }
+//  }
   /// Update all Interlock control values
   ///
   /// - Parameter eq:               the Transmit
   ///
-  private func interlockChange(_ interlock: Interlock, _ change: Any) {
-    
-    DispatchQueue.main.async { [weak self] in
-      // Timings
-      self?._accTxTextField.integerValue = interlock.accTxDelay
-      self?._accTxCheckbox.boolState = interlock.accTxEnabled
-      self?._txInhibitCheckbox.boolState = !interlock.txAllowed
-      self?._txDelayTextField.integerValue = interlock.txDelay
-      self?._txTimeoutTextField.integerValue = interlock.timeout
-      self?._rcaTx1TextField.integerValue = interlock.tx1Delay
-      self?._rcaTx2TextField.integerValue = interlock.tx2Delay
-      self?._rcaTx3TextField.integerValue = interlock.tx3Delay
-      self?._rcaTx1Checkbox.boolState = interlock.tx1Enabled
-      self?._rcaTx2Checkbox.boolState = interlock.tx2Enabled
-      self?._rcaTx3Checkbox.boolState = interlock.tx3Enabled
-    }
-  }
+//  private func interlockChange(_ interlock: Interlock, _ change: Any) {
+//
+//    DispatchQueue.main.async { [weak self] in
+//      // Timings
+//      self?._accTxTextField.integerValue = interlock.accTxDelay
+//      self?._accTxCheckbox.boolState = interlock.accTxEnabled
+//      self?._txInhibitCheckbox.boolState = !interlock.txAllowed
+//      self?._txDelayTextField.integerValue = interlock.txDelay
+//      self?._txTimeoutTextField.integerValue = interlock.timeout
+//      self?._rcaTx1TextField.integerValue = interlock.tx1Delay
+//      self?._rcaTx2TextField.integerValue = interlock.tx2Delay
+//      self?._rcaTx3TextField.integerValue = interlock.tx3Delay
+//      self?._rcaTx1Checkbox.boolState = interlock.tx1Enabled
+//      self?._rcaTx2Checkbox.boolState = interlock.tx2Enabled
+//      self?._rcaTx3Checkbox.boolState = interlock.tx3Enabled
+//    }
+//  }
   /// Update all Profile control values
   ///
   /// - Parameter eq:               the Transmit
   ///
-  private func profileChange(_ profile: Profile, _ change: Any) {
-    
-    DispatchQueue.main.async { [weak self] in
-      // Timings
-      self?._txProfilePopUp.removeAllItems()
-      self?._txProfilePopUp.addItems(withTitles: profile.list)
-      self?._txProfilePopUp.selectItem(withTitle: profile.selection)
-    }
-  }
+//  private func profileChange(_ profile: Profile, _ change: Any) {
+//
+//    DispatchQueue.main.async { [weak self] in
+//      // Timings
+//      self?._txProfilePopUp.removeAllItems()
+//      self?._txProfilePopUp.addItems(withTitles: profile.list)
+//      self?._txProfilePopUp.selectItem(withTitle: profile.selection)
+//    }
+//  }
   /// Update all Transmit control values
   ///
   /// - Parameter eq:               the Transmit
   ///
-  private func transmitChange(_ transmit: Transmit, _ change: Any) {
-    
-    DispatchQueue.main.async { [weak self] in
-      self?._hardwareAlcCheckbox.boolState = transmit.hwAlcEnabled
-      self?._maxPowerTextField.integerValue = transmit.maxPowerLevel
-      self?._txInWaterfallCheckbox.boolState = transmit.txInWaterfallEnabled
-    }
-  }
+//  private func transmitChange(_ transmit: Transmit, _ change: Any) {
+//
+//    DispatchQueue.main.async { [weak self] in
+//      self?._hardwareAlcCheckbox.boolState = transmit.hwAlcEnabled
+//      self?._maxPowerTextField.integerValue = transmit.maxPowerLevel
+//      self?._txInWaterfallCheckbox.boolState = transmit.txInWaterfallEnabled
+//    }
+//  }
   
   // ----------------------------------------------------------------------------
   // MARK: - Notification Methods
   
   /// Add subscriptions to Notifications
   ///
-  private func addNotifications() {
-    
-    NC.makeObserver(self, with: #selector(radioHasBeenAdded(_:)), of: .radioHasBeenAdded)
-    
-    NC.makeObserver(self, with: #selector(radioWillBeRemoved(_:)), of: .radioWillBeRemoved)
-  }
+//  private func addNotifications() {
+//
+//    NC.makeObserver(self, with: #selector(radioHasBeenAdded(_:)), of: .radioHasBeenAdded)
+//
+//    NC.makeObserver(self, with: #selector(radioWillBeRemoved(_:)), of: .radioWillBeRemoved)
+//  }
   /// Process .radioHasBeenAdded Notification
   ///
   /// - Parameter note:             a Notification instance
@@ -285,11 +291,11 @@ class TXPrefsViewController                 : NSViewController {
     
     if let radio = note.object as? Radio {
       
-      // begin observing parameters
-      addObservations(radio)
+//      // begin observing parameters
+//      addObservations(radio)
       
-      // enable all controls
-      setControlState(true)
+//      // enable all controls
+//      setControlState(true)
     }
   }
   /// Process .radioWillBeRemoved Notification
@@ -298,12 +304,12 @@ class TXPrefsViewController                 : NSViewController {
   ///
   @objc private func radioWillBeRemoved(_ note: Notification) {
     
-    // disable all controls
-    setControlState(false)
+//    // disable all controls
+//    setControlState(false)
     
-    // invalidate & remove observations
-    invalidateObservations()
+//    // invalidate & remove observations
+//    invalidateObservations()
     
-    _radio = nil
+//    _radio = nil
   }
 }

@@ -7,27 +7,51 @@
 //
 
 import Cocoa
+import xLib6000
 
 class RadioPrefsViewController: NSViewController {
 
+  // NOTE:
+  //
+  //      Most of the fields on this View are setup as Bindings or as User Defined Runtime
+  //      Attributes. Those below are the exceptions that required some additionl processing
+  //      not available through other methods.
+  //
+  
+  // ----------------------------------------------------------------------------
+  // MARK: - Private  properties
   
   private let kModel                        = NSUserInterfaceItemIdentifier(rawValue: "Model")
   private let kCallsign                     = NSUserInterfaceItemIdentifier(rawValue: "Callsign")
   private let kNickname                     = NSUserInterfaceItemIdentifier(rawValue: "Nickname")
 
-  @IBAction func radioButtons(_ sender: NSButton) {
+  // ----------------------------------------------------------------------------
+  // MARK: - Action  methods
+  
+  @IBAction func regionChange(_ sender: NSButton) {
     
-    switch sender.identifier {
-    case kModel:
-      break
-    case kCallsign:
-      break
-    case kNickname:
-      break
-    default:
-      fatalError()
-    }
-    Swift.print("Button = \(sender.identifier)")
+    // TODO: add code
+    
+    Swift.print("radioTabRegionChange")
   }
   
+  @IBAction func screensaver(_ sender: NSButton) {
+    
+    if let radio = Api.sharedInstance.radio {
+      
+      switch sender.identifier {
+      case kModel:
+        radio.radioScreenSaver = "model"
+        
+      case kCallsign:
+        radio.radioScreenSaver = "callsign"
+        
+      case kNickname:
+        radio.radioScreenSaver = "nickname"
+        
+      default:
+        fatalError()
+      }
+    }
+  }
 }

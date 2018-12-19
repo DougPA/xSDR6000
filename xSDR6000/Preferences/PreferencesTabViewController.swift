@@ -22,6 +22,8 @@ final class PreferencesTabViewController    : NSTabViewController {
   private let _autosaveName                 = "PreferencesWindow"
   private let _log                          = OSLog(subsystem: Api.kDomainId + "." + kClientName, category: "Preferences")
 
+//  private let kRadio                       = NSUserInterfaceItemIdentifier(rawValue: "Radio")
+
   // ----------------------------------------------------------------------------
   // MARK: - Overridden methods
   
@@ -45,27 +47,13 @@ final class PreferencesTabViewController    : NSTabViewController {
   override func tabView(_ tabView: NSTabView, didSelect tabViewItem: NSTabViewItem?) {
     super.tabView(tabView, didSelect: tabViewItem)
 
+    Swift.print("tabViewItem!.identifier = \(tabViewItem!.identifier)")
+    
     // give the newly selected tab a reference to an object
-    switch tabViewItem!.label{
-    case "Radio":
+    switch (tabViewItem!.identifier as! NSUserInterfaceItemIdentifier).rawValue {
+    case "Radio", "Network", "Gps", "Tx", "Rx", "Filters", "Xvtr":
       tabViewItem?.viewController?.representedObject = Api.sharedInstance.radio
-    case "Network":
-      break
-    case "GPS":
-      break
-    case "TX":
-      break
-    case "Phone/CW":
-      tabViewItem?.viewController?.representedObject = Defaults
-    case "RX":
-      tabViewItem?.viewController?.representedObject = Api.sharedInstance.radio
-    case "Filters":
-      tabViewItem?.viewController?.representedObject = Api.sharedInstance.radio
-    case "XVTR":
-      break
-    case "Colors":
-      tabViewItem?.viewController?.representedObject = Defaults
-    case "Info":
+    case "Phone/Cw", "Colors", "Info":
       tabViewItem?.viewController?.representedObject = Defaults
     default:
       fatalError()
@@ -96,8 +84,15 @@ final class PreferencesTabViewController    : NSTabViewController {
       NSApp.terminate(self)
     }
   }
+
+  // Rx Tab
   
-  
-  
-  
+  @IBAction func rxTabStart(_ sender: NSButton) {
+    
+    if let radio = Api.sharedInstance.radio {
+      os_log("Calibration started by user", log: self._log, type: .info)
+      radio.startCalibration = true
+    }
+  }
 }
+
