@@ -1174,12 +1174,12 @@
         <scene sceneID="8ej-OM-p3D">
             <objects>
                 <viewController title="Network" id="4Na-DM-iAm" userLabel="Network Tab" customClass="NetworkPrefsViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" misplaced="YES" id="4Uw-z2-vzI" userLabel="Network">
+                    <view key="view" id="4Uw-z2-vzI" userLabel="Network">
                         <rect key="frame" x="0.0" y="0.0" width="601" height="400"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <box title="Network" translatesAutoresizingMaskIntoConstraints="NO" id="c9J-oI-QWS" userLabel="Network Box">
-                                <rect key="frame" x="17" y="266" width="567" height="118"/>
+                                <rect key="frame" x="17" y="262" width="567" height="118"/>
                                 <view key="contentView" id="GJX-td-saf">
                                     <rect key="frame" x="3" y="3" width="561" height="100"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1303,7 +1303,7 @@
                                 </constraints>
                             </box>
                             <box title="Advanced Network" translatesAutoresizingMaskIntoConstraints="NO" id="d5j-a1-pVY" userLabel="Advanced Network Box">
-                                <rect key="frame" x="17" y="63" width="567" height="187"/>
+                                <rect key="frame" x="17" y="59" width="567" height="187"/>
                                 <view key="contentView" id="9xo-Tn-Vv8">
                                     <rect key="frame" x="3" y="3" width="561" height="169"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1533,8 +1533,8 @@
                             <constraint firstItem="c9J-oI-QWS" firstAttribute="leading" secondItem="4Uw-z2-vzI" secondAttribute="leading" constant="20" id="bl6-Uo-SuX"/>
                             <constraint firstItem="c9J-oI-QWS" firstAttribute="top" secondItem="4Uw-z2-vzI" secondAttribute="top" constant="20" id="cpr-oX-eTS"/>
                             <constraint firstItem="d5j-a1-pVY" firstAttribute="top" secondItem="4Uw-z2-vzI" secondAttribute="top" constant="154" id="mKt-Ti-g69"/>
-                            <constraint firstAttribute="bottom" secondItem="c9J-oI-QWS" secondAttribute="bottom" constant="270" id="nbT-Ti-tME"/>
-                            <constraint firstAttribute="bottom" secondItem="d5j-a1-pVY" secondAttribute="bottom" constant="67" id="vW3-DU-w2t"/>
+                            <constraint firstAttribute="bottom" secondItem="c9J-oI-QWS" secondAttribute="bottom" constant="266" id="nbT-Ti-tME"/>
+                            <constraint firstAttribute="bottom" secondItem="d5j-a1-pVY" secondAttribute="bottom" constant="63" id="vW3-DU-w2t"/>
                             <constraint firstAttribute="trailing" secondItem="c9J-oI-QWS" secondAttribute="trailing" constant="20" id="zB2-1K-t2k"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
@@ -2486,7 +2486,7 @@
                                                                     </textFieldCell>
                                                                     <connections>
                                                                         <binding destination="ABp-0s-17Y" name="enabled" keyPath="active" id="03l-hr-1IF"/>
-                                                                        <binding destination="ABp-0s-17Y" name="value" keyPath="representedObject.calFreq" id="mu5-ib-olI"/>
+                                                                        <binding destination="ABp-0s-17Y" name="value" keyPath="radio.calFreq" id="z1M-zD-qkh"/>
                                                                     </connections>
                                                                 </textField>
                                                                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Peb-3z-c1P">
@@ -2541,7 +2541,7 @@
                                                                     </textFieldCell>
                                                                     <connections>
                                                                         <binding destination="ABp-0s-17Y" name="enabled" keyPath="active" id="Vif-N2-uaK"/>
-                                                                        <binding destination="ABp-0s-17Y" name="value" keyPath="representedObject.freqErrorPpb" id="wWd-Ja-WAu"/>
+                                                                        <binding destination="ABp-0s-17Y" name="value" keyPath="radio.freqErrorPpb" id="0ry-fj-jAj"/>
                                                                     </connections>
                                                                 </textField>
                                                             </subviews>
@@ -2597,7 +2597,7 @@
                                                             </buttonCell>
                                                             <connections>
                                                                 <binding destination="ABp-0s-17Y" name="enabled" keyPath="active" id="b0M-vG-zbX"/>
-                                                                <binding destination="ABp-0s-17Y" name="value" keyPath="representedObject.snapTuneEnabled" id="7Lp-Mb-kVT"/>
+                                                                <binding destination="ABp-0s-17Y" name="value" keyPath="radio.snapTuneEnabled" id="FY9-dt-vnR"/>
                                                             </connections>
                                                         </button>
                                                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Blk-BX-9b2">
@@ -2628,7 +2628,7 @@
                                                             </buttonCell>
                                                             <connections>
                                                                 <binding destination="ABp-0s-17Y" name="enabled" keyPath="active" id="hxt-cT-J6F"/>
-                                                                <binding destination="ABp-0s-17Y" name="value" keyPath="representedObject.muteLocalAudio" id="UvI-rG-hlN"/>
+                                                                <binding destination="ABp-0s-17Y" name="value" keyPath="radio.muteLocalAudio" id="xPi-40-O3c"/>
                                                             </connections>
                                                         </button>
                                                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kxN-bs-jgm">
@@ -2639,7 +2639,7 @@
                                                             </buttonCell>
                                                             <connections>
                                                                 <binding destination="ABp-0s-17Y" name="enabled" keyPath="active" id="K4V-6x-tTU"/>
-                                                                <binding destination="ABp-0s-17Y" name="value" keyPath="representedObject.binauralRxEnabled" id="rZd-7o-zWd"/>
+                                                                <binding destination="ABp-0s-17Y" name="value" keyPath="radio.binauralRxEnabled" id="iv2-EX-cml"/>
                                                             </connections>
                                                         </button>
                                                     </subviews>

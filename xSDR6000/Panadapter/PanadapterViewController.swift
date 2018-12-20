@@ -397,15 +397,17 @@ final class PanadapterViewController        : NSViewController, NSGestureRecogni
       // calculate the frequency's position
       current.freqPosition = CGFloat(flagVc.slice!.frequency - _start) / _hzPerUnit
       
+      let flagWidth = flagVc.smallFlagDisplayed ? FlagViewController.kSmallFlagWidth : FlagViewController.kLargeFlagWidth
+      
       // is there room for the Flag on the left?
       if previous.isOnLeft {
-        current.isOnLeft = current.freqPosition - previous.freqPosition > FlagViewController.kFlagWidth + FlagViewController.kFlagOffset
+        current.isOnLeft = current.freqPosition - previous.freqPosition > flagWidth + FlagViewController.kFlagOffset
       } else {
-        current.isOnLeft = current.freqPosition - previous.freqPosition > 2 * (FlagViewController.kFlagWidth + FlagViewController.kFlagOffset) + 10.0
+        current.isOnLeft = current.freqPosition - previous.freqPosition > 2 * (flagWidth + FlagViewController.kFlagOffset) + 10.0
       }
       
       // Flag position based on room for it
-      let flagPosition = (current.isOnLeft ? current.freqPosition - FlagViewController.kFlagWidth - FlagViewController.kFlagOffset : current.freqPosition + FlagViewController.kFlagOffset)
+      let flagPosition = (current.isOnLeft ? current.freqPosition - flagWidth - FlagViewController.kFlagOffset : current.freqPosition + FlagViewController.kFlagOffset)
       
       DispatchQueue.main.async { [unowned self] in
         
@@ -751,21 +753,26 @@ final class PanadapterViewController        : NSViewController, NSGestureRecogni
       
       // pass the FlagVc needed parameters
       flagVc.configure(panadapter: pan, slice: slice, controlsVc: controlsVc)
+      flagVc.smallFlagDisplayed = false
       
       self._flags[slice.id] = flagVc
-
+      
       self.addChild(flagVc)
       self.addChild(controlsVc)
-
+      
       // add its view
       self.view.addSubview(flagVc.view)
       self.view.addSubview(controlsVc.view)
-
+      
       // Flag View constraints: height, width & top of the Flag (constants)
-      flagVc.view.heightAnchor.constraint(equalToConstant: FlagViewController.kFlagHeight).isActive = true
-      flagVc.view.widthAnchor.constraint(greaterThanOrEqualToConstant: FlagViewController.kFlagWidth).isActive = true
+      flagVc.view.heightAnchor.constraint(equalToConstant: FlagViewController.kLargeFlagHeight).isActive = true
+      flagVc.view.widthAnchor.constraint(equalToConstant: FlagViewController.kLargeFlagWidth).isActive = true
       flagVc.view.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
-
+      
+      // Flag View constraints: height, width (constants)
+//      flagVc.view.heightAnchor.constraint(equalToConstant: FlagViewController.kSmallFlagHeight).isActive = true
+//      flagVc.view.widthAnchor.constraint(equalToConstant: FlagViewController.kSmallFlagWidth).isActive = true
+      
       // Controls View constraints: height, leading, trailing & top of the Controls (constants)
       flagVc.controlsHeightConstraint = controlsVc.view.heightAnchor.constraint(equalToConstant: ControlsViewController.kControlsHeight)
       flagVc.controlsHeightConstraint!.isActive = true

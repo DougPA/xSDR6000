@@ -52,8 +52,10 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
   
   static let kSliceLetters : [String]       = ["A", "B", "C", "D", "E", "F", "G", "H"]
   static let kFlagOffset                    : CGFloat = 7.5
-  static let kFlagWidth                     : CGFloat = 311
-  static let kFlagHeight                    : CGFloat = 110
+  static let kLargeFlagWidth                : CGFloat = 290
+  static let kLargeFlagHeight               : CGFloat = 100
+  static let kSmallFlagWidth                : CGFloat = 132
+  static let kSmallFlagHeight               : CGFloat = 55
   static let kFlagBorder                    : CGFloat = 20
   
   // ----------------------------------------------------------------------------
@@ -61,6 +63,8 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
 
   var flagXPositionConstraint               : NSLayoutConstraint?
   var controlsHeightConstraint              : NSLayoutConstraint?
+  var smallFlagDisplayed                    = false
+  
 
   @objc dynamic weak var slice              : xLib6000.Slice?
   @objc dynamic var letterId                : String { return FlagViewController.kSliceLetters[Int(slice!.id)!] }
@@ -69,6 +73,7 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
   
+  @IBOutlet private weak var _alphaButton   : NSButton!
   @IBOutlet private var _filterWidth        : NSTextField!
   @IBOutlet private var _frequencyField     : NSTextField!
   @IBOutlet private var _sMeter             : LevelIndicator!
@@ -95,7 +100,7 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
   private var _doubleClick                  : NSClickGestureRecognizer!
   private var _previousFrequency            = 0
   private var _beginEditing                 = false
-  
+
   private let kLeftButton                   = 0x01                          // masks for Gesture Recognizers
   private let kFlagPixelOffset              : CGFloat = 15.0/2.0
   private let kAudHeight                    : CGFloat = 98.0
@@ -107,6 +112,8 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
   private let kSplitCaption                 = "SPLIT"
   private let kSplitOnAttr                  = [NSAttributedString.Key.foregroundColor : NSColor.systemYellow]
   private let kSplitOffAttr                 = [NSAttributedString.Key.foregroundColor : NSColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.3)]
+
+  private let kLetterAttr                  = [NSAttributedString.Key.foregroundColor : NSColor.systemYellow]
 
   private let kTxCaption                    = "TX"
   private let kTxOnAttr                     = [NSAttributedString.Key.foregroundColor : NSColor.systemRed]
@@ -158,6 +165,8 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
     _sMeter.font = NSFont(name: "Monaco", size: 10.0)
     
     view.identifier = NSUserInterfaceItemIdentifier(rawValue: "Slice Flag")
+    
+    _alphaButton.attributedTitle = NSAttributedString(string: FlagViewController.kSliceLetters[Int(slice!.id)!], attributes: kLetterAttr)
   }
 
   
@@ -211,6 +220,16 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
 
   // ----------------------------------------------------------------------------
   // MARK: - Action methods
+  
+  @IBAction func alphaButton(_ sender: Any) {
+    Swift.print("Alpha Button")
+    
+    smallFlagDisplayed.toggle()
+    
+    // TODO: toggle constraints
+    
+    // TODO: correctly position the small flag
+  }
   
   @IBAction func txButton(_ sender: NSButton) {
 
