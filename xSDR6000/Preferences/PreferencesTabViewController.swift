@@ -44,11 +44,17 @@ final class PreferencesTabViewController    : NSTabViewController {
     }
   }
 
+//  override func tabView(_ tabView: NSTabView, shouldSelect: NSTabViewItem?) -> Bool {
+//
+//    guard Api.sharedInstance.radio != nil else {
+//      return false
+//    }
+//    return true
+//  }
+  
   override func tabView(_ tabView: NSTabView, didSelect tabViewItem: NSTabViewItem?) {
     super.tabView(tabView, didSelect: tabViewItem)
 
-    Swift.print("tabViewItem!.identifier = \(tabViewItem!.identifier)")
-    
     // give the newly selected tab a reference to an object
     switch (tabViewItem!.identifier as! NSUserInterfaceItemIdentifier).rawValue {
     case "Radio", "Network", "Gps", "Tx", "Rx", "Filters", "Xvtr":

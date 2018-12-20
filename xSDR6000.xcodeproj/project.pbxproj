@@ -300,10 +300,10 @@
 			isa = PBXGroup;
 			children = (
 				913F7F032066DC7900F35E9B /* PreferencesTabViewController.swift */,
-				913615B321C0B178005EA591 /* PCWPrefsViewController.swift */,
-				913615B521C18465005EA591 /* TXPrefsViewController.swift */,
 				917D5BC021C5EA9D00107EEB /* RadioPrefsViewController.swift */,
 				9147153C21C98512000EE103 /* NetworkPrefsViewController.swift */,
+				913615B521C18465005EA591 /* TXPrefsViewController.swift */,
+				913615B321C0B178005EA591 /* PCWPrefsViewController.swift */,
 			);
 			path = Preferences;
 			sourceTree = "<group>";

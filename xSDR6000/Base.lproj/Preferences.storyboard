@@ -662,22 +662,22 @@
             <objects>
                 <viewController title="Radio" id="UBL-vs-1PL" userLabel="Radio Tab" customClass="RadioPrefsViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="upT-IE-zqc" userLabel="Radio">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="425"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="400"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <box title="Radio Information" translatesAutoresizingMaskIntoConstraints="NO" id="nwu-TN-iWf" userLabel="Radio Information box">
-                                <rect key="frame" x="17" y="243" width="566" height="162"/>
+                                <rect key="frame" x="17" y="236" width="582" height="134"/>
                                 <view key="contentView" id="YKB-O8-nZS">
-                                    <rect key="frame" x="3" y="3" width="560" height="144"/>
+                                    <rect key="frame" x="3" y="3" width="576" height="116"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="14" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YCs-8F-cnh" userLabel="Left Stack View">
-                                            <rect key="frame" x="20" y="39" width="248" height="85"/>
+                                        <stackView distribution="fillEqually" orientation="vertical" alignment="leading" spacing="20" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YCs-8F-cnh" userLabel="Left Stack View">
+                                            <rect key="frame" x="20" y="21" width="264" height="90"/>
                                             <subviews>
-                                                <stackView distribution="fill" orientation="horizontal" alignment="top" spacing="46" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" ambiguous="YES" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Y2c-Aj-Ggz" userLabel="Radio SN Stack View">
-                                                    <rect key="frame" x="0.0" y="68" width="246" height="17"/>
+                                                <stackView distribution="equalCentering" orientation="horizontal" alignment="top" spacing="30" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Y2c-Aj-Ggz" userLabel="Radio SN Stack View">
+                                                    <rect key="frame" x="0.0" y="73" width="264" height="17"/>
                                                     <subviews>
-                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Shr-0h-xix">
+                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Shr-0h-xix">
                                                             <rect key="frame" x="-2" y="0.0" width="64" height="17"/>
                                                             <textFieldCell key="cell" lineBreakMode="clipping" title="Radio SN:" id="iLU-QA-sXD">
                                                                 <font key="font" usesAppearanceFont="YES"/>
@@ -685,8 +685,8 @@
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                         </textField>
-                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OJ0-DD-LIw">
-                                                            <rect key="frame" x="104" y="0.0" width="144" height="17"/>
+                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="OJ0-DD-LIw">
+                                                            <rect key="frame" x="122" y="0.0" width="144" height="17"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="140" id="Oy3-ds-TwJ"/>
                                                             </constraints>
@@ -696,10 +696,13 @@
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                             <connections>
-                                                                <binding destination="UBL-vs-1PL" name="value" keyPath="representedObject.serialNumber" id="2QG-3b-Nrg"/>
+                                                                <binding destination="UBL-vs-1PL" name="value" keyPath="radio.serialNumber" id="AaN-7p-cBV"/>
                                                             </connections>
                                                         </textField>
                                                     </subviews>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="264" id="mf7-EE-Tec"/>
+                                                    </constraints>
                                                     <visibilityPriorities>
                                                         <integer value="1000"/>
                                                         <integer value="1000"/>
@@ -709,19 +712,19 @@
                                                         <real value="3.4028234663852886e+38"/>
                                                     </customSpacing>
                                                 </stackView>
-                                                <stackView distribution="fill" orientation="horizontal" alignment="top" spacing="33" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" ambiguous="YES" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Nyu-xQ-3Fn" userLabel="HW Version Stack View">
-                                                    <rect key="frame" x="0.0" y="37" width="248" height="17"/>
+                                                <stackView distribution="equalCentering" orientation="horizontal" alignment="top" spacing="30" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Nyu-xQ-3Fn" userLabel="HW Version Stack View">
+                                                    <rect key="frame" x="0.0" y="37" width="264" height="16"/>
                                                     <subviews>
-                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gWN-xx-dba">
-                                                            <rect key="frame" x="-2" y="0.0" width="79" height="17"/>
+                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gWN-xx-dba">
+                                                            <rect key="frame" x="-2" y="0.0" width="79" height="16"/>
                                                             <textFieldCell key="cell" lineBreakMode="clipping" title="HW Version:" id="zRB-mD-fZG">
                                                                 <font key="font" metaFont="system"/>
                                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                         </textField>
-                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="K2q-2l-60I">
-                                                            <rect key="frame" x="106" y="0.0" width="144" height="17"/>
+                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="K2q-2l-60I">
+                                                            <rect key="frame" x="122" y="0.0" width="144" height="16"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="140" id="lXC-LP-xnY"/>
                                                             </constraints>
@@ -731,10 +734,13 @@
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                             <connections>
-                                                                <binding destination="UBL-vs-1PL" name="value" keyPath="representedObject.version" id="bIq-Vp-JiA"/>
+                                                                <binding destination="UBL-vs-1PL" name="value" keyPath="radio.version" id="QBi-Xg-x04"/>
                                                             </connections>
                                                         </textField>
                                                     </subviews>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="264" id="xUu-Hs-WZk"/>
+                                                    </constraints>
                                                     <visibilityPriorities>
                                                         <integer value="1000"/>
                                                         <integer value="1000"/>
@@ -744,19 +750,19 @@
                                                         <real value="3.4028234663852886e+38"/>
                                                     </customSpacing>
                                                 </stackView>
-                                                <stackView distribution="fill" orientation="horizontal" alignment="top" spacing="54" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" ambiguous="YES" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oiV-zt-JqW" userLabel="Options Stack View">
-                                                    <rect key="frame" x="0.0" y="0.0" width="246" height="23"/>
+                                                <stackView distribution="fill" orientation="horizontal" alignment="top" spacing="54" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oiV-zt-JqW" userLabel="Options Stack View">
+                                                    <rect key="frame" x="0.0" y="0.0" width="264" height="17"/>
                                                     <subviews>
-                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CdO-iB-6Fe">
-                                                            <rect key="frame" x="-2" y="6" width="56" height="17"/>
+                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="CdO-iB-6Fe">
+                                                            <rect key="frame" x="-2" y="0.0" width="74" height="17"/>
                                                             <textFieldCell key="cell" lineBreakMode="clipping" title="Options:" id="15l-r8-e3g">
                                                                 <font key="font" metaFont="system"/>
                                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                         </textField>
-                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c0c-fg-cVX">
-                                                            <rect key="frame" x="104" y="6" width="144" height="17"/>
+                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="c0c-fg-cVX">
+                                                            <rect key="frame" x="122" y="0.0" width="144" height="17"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="140" id="2d1-kV-Qxe"/>
                                                             </constraints>
@@ -770,6 +776,9 @@
                                                             </connections>
                                                         </textField>
                                                     </subviews>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="264" id="aLx-rf-Bdr"/>
+                                                    </constraints>
                                                     <visibilityPriorities>
                                                         <integer value="1000"/>
                                                         <integer value="1000"/>
@@ -781,7 +790,7 @@
                                                 </stackView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="85" id="OX7-Xr-9Cz"/>
+                                                <constraint firstAttribute="height" constant="90" id="OX7-Xr-9Cz"/>
                                             </constraints>
                                             <visibilityPriorities>
                                                 <integer value="1000"/>
@@ -794,14 +803,14 @@
                                                 <real value="3.4028234663852886e+38"/>
                                             </customSpacing>
                                         </stackView>
-                                        <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="16" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CPi-gg-PZy" userLabel="Right Stack View">
-                                            <rect key="frame" x="372" y="51" width="184" height="75"/>
+                                        <stackView distribution="fillEqually" orientation="vertical" alignment="leading" spacing="20" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CPi-gg-PZy" userLabel="Right Stack View">
+                                            <rect key="frame" x="372" y="21" width="184" height="90"/>
                                             <subviews>
                                                 <stackView distribution="fill" orientation="horizontal" alignment="centerY" spacing="18" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uZ9-h7-IQm" userLabel="Region Stack View">
-                                                    <rect key="frame" x="0.0" y="58" width="184" height="17"/>
+                                                    <rect key="frame" x="0.0" y="68" width="184" height="22"/>
                                                     <subviews>
                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fDm-0Y-3au">
-                                                            <rect key="frame" x="-2" y="0.0" width="50" height="17"/>
+                                                            <rect key="frame" x="-2" y="3" width="50" height="17"/>
                                                             <textFieldCell key="cell" lineBreakMode="clipping" title="Region:" id="dv2-hf-SWI">
                                                                 <font key="font" metaFont="system"/>
                                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -809,7 +818,7 @@
                                                             </textFieldCell>
                                                         </textField>
                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Uz9-cp-QUL">
-                                                            <rect key="frame" x="62" y="0.0" width="31" height="17"/>
+                                                            <rect key="frame" x="62" y="3" width="31" height="17"/>
                                                             <textFieldCell key="cell" lineBreakMode="clipping" placeholderString="USA" id="Rdh-lO-tWx">
                                                                 <font key="font" metaFont="system"/>
                                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -820,13 +829,14 @@
                                                             </connections>
                                                         </textField>
                                                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QTs-Ho-j3Y">
-                                                            <rect key="frame" x="103" y="-7" width="87" height="28"/>
+                                                            <rect key="frame" x="103" y="-6" width="87" height="32"/>
                                                             <buttonCell key="cell" type="push" title="Change" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="3to-Tx-wKO">
                                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                                 <font key="font" metaFont="system"/>
                                                             </buttonCell>
                                                             <connections>
-                                                                <action selector="screensaver:" target="UBL-vs-1PL" id="QP7-g4-HhA"/>
+                                                                <action selector="regionChange:" target="UBL-vs-1PL" id="8Me-4m-kvs"/>
+                                                                <binding destination="UBL-vs-1PL" name="enabled" keyPath="active" id="cZ1-mn-CvN"/>
                                                             </connections>
                                                         </button>
                                                     </subviews>
@@ -841,32 +851,36 @@
                                                         <real value="3.4028234663852886e+38"/>
                                                     </customSpacing>
                                                 </stackView>
-                                                <button verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GsP-kj-ab2">
-                                                    <rect key="frame" x="-2" y="28" width="154" height="16"/>
+                                                <button verticalHuggingPriority="750" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="GsP-kj-ab2">
+                                                    <rect key="frame" x="-2" y="32" width="154" height="18"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="150" id="IFN-ds-zHm"/>
                                                     </constraints>
-                                                    <buttonCell key="cell" type="check" title="Remote On" bezelStyle="regularSquare" imagePosition="right" state="on" inset="2" id="LWS-E3-v3k">
+                                                    <buttonCell key="cell" type="check" title="Remote On" bezelStyle="regularSquare" imagePosition="right" inset="2" id="LWS-E3-v3k">
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                         <font key="font" metaFont="system"/>
                                                     </buttonCell>
                                                     <connections>
-                                                        <binding destination="UBL-vs-1PL" name="value" keyPath="representedObject.remoteOnEnabled" id="x78-Le-DSB"/>
+                                                        <binding destination="UBL-vs-1PL" name="enabled" keyPath="active" id="VX1-O6-m56"/>
+                                                        <binding destination="UBL-vs-1PL" name="value" keyPath="radio.remoteOnEnabled" id="QWa-hL-bir"/>
                                                     </connections>
                                                 </button>
-                                                <button verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yqo-CO-FNl">
+                                                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yqo-CO-FNl">
                                                     <rect key="frame" x="-2" y="-2" width="154" height="18"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="150" id="5v2-Gr-KDQ"/>
                                                     </constraints>
-                                                    <buttonCell key="cell" type="check" title="FlexControl" bezelStyle="regularSquare" imagePosition="right" state="on" inset="2" id="t7P-Qb-5ZU">
+                                                    <buttonCell key="cell" type="check" title="FlexControl" bezelStyle="regularSquare" imagePosition="right" inset="2" id="t7P-Qb-5ZU">
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                         <font key="font" metaFont="system"/>
                                                     </buttonCell>
+                                                    <connections>
+                                                        <binding destination="UBL-vs-1PL" name="enabled" keyPath="active" id="pox-l4-nEW"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="75" id="kza-vQ-9aw"/>
+                                                <constraint firstAttribute="height" constant="90" id="kza-vQ-9aw"/>
                                             </constraints>
                                             <visibilityPriorities>
                                                 <integer value="1000"/>
@@ -883,34 +897,35 @@
                                 </view>
                                 <constraints>
                                     <constraint firstItem="YCs-8F-cnh" firstAttribute="leading" secondItem="nwu-TN-iWf" secondAttribute="leading" constant="20" id="8u2-sa-cj4"/>
-                                    <constraint firstItem="YCs-8F-cnh" firstAttribute="top" secondItem="nwu-TN-iWf" secondAttribute="top" constant="35" id="Uhg-A2-uHz"/>
-                                    <constraint firstAttribute="bottom" secondItem="YCs-8F-cnh" secondAttribute="bottom" constant="38" id="aPZ-4e-kuH"/>
+                                    <constraint firstItem="YCs-8F-cnh" firstAttribute="top" secondItem="nwu-TN-iWf" secondAttribute="top" constant="20" id="Uhg-A2-uHz"/>
+                                    <constraint firstAttribute="bottom" secondItem="YCs-8F-cnh" secondAttribute="bottom" constant="20" id="aPZ-4e-kuH"/>
                                     <constraint firstAttribute="trailing" secondItem="YCs-8F-cnh" secondAttribute="trailing" constant="292" id="lp0-Zh-pZ1"/>
-                                    <constraint firstItem="CPi-gg-PZy" firstAttribute="top" secondItem="nwu-TN-iWf" secondAttribute="top" constant="33" id="uPH-st-iKl"/>
-                                    <constraint firstAttribute="trailing" secondItem="CPi-gg-PZy" secondAttribute="trailing" constant="4" id="uUT-wZ-bXc"/>
+                                    <constraint firstItem="CPi-gg-PZy" firstAttribute="top" secondItem="nwu-TN-iWf" secondAttribute="top" constant="20" id="uPH-st-iKl"/>
+                                    <constraint firstAttribute="trailing" secondItem="CPi-gg-PZy" secondAttribute="trailing" constant="20" id="uUT-wZ-bXc"/>
                                     <constraint firstItem="CPi-gg-PZy" firstAttribute="leading" secondItem="nwu-TN-iWf" secondAttribute="leading" constant="372" id="z78-xj-dBp"/>
                                 </constraints>
                             </box>
                             <box title="Radio Identification" translatesAutoresizingMaskIntoConstraints="NO" id="bK2-J6-Aor" userLabel="Radio Identification box">
-                                <rect key="frame" x="17" y="81" width="566" height="154"/>
+                                <rect key="frame" x="17" y="61" width="582" height="149"/>
                                 <view key="contentView" id="k4e-Ko-Jzn">
-                                    <rect key="frame" x="3" y="3" width="560" height="136"/>
+                                    <rect key="frame" x="3" y="3" width="576" height="131"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="23" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vhP-vr-PMa" userLabel="Screensaver Choices Stack View">
-                                            <rect key="frame" x="20" y="21" width="80" height="100"/>
+                                            <rect key="frame" x="20" y="21" width="96" height="95"/>
                                             <subviews>
-                                                <button identifier="Model" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5TS-0F-rR7">
-                                                    <rect key="frame" x="-1" y="77" width="60" height="24"/>
+                                                <button identifier="Model" verticalHuggingPriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="5TS-0F-rR7">
+                                                    <rect key="frame" x="-1" y="77" width="60" height="19"/>
                                                     <buttonCell key="cell" type="radio" title="Model" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="idT-Ch-dKZ">
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                         <font key="font" metaFont="system"/>
                                                     </buttonCell>
                                                     <connections>
                                                         <action selector="screensaver:" target="UBL-vs-1PL" id="3Wk-cv-SFm"/>
+                                                        <binding destination="UBL-vs-1PL" name="enabled" keyPath="active" id="2TH-fW-t4g"/>
                                                     </connections>
                                                 </button>
-                                                <button identifier="Callsign" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xfr-b6-aVB">
+                                                <button identifier="Callsign" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xfr-b6-aVB">
                                                     <rect key="frame" x="-1" y="38" width="70" height="18"/>
                                                     <buttonCell key="cell" type="radio" title="Callsign" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="JwP-u3-wQg">
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -918,9 +933,10 @@
                                                     </buttonCell>
                                                     <connections>
                                                         <action selector="screensaver:" target="UBL-vs-1PL" id="TgX-Rv-ogO"/>
+                                                        <binding destination="UBL-vs-1PL" name="enabled" keyPath="active" id="sfa-k7-l15"/>
                                                     </connections>
                                                 </button>
-                                                <button identifier="Nickname" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ywk-PS-0bN">
+                                                <button identifier="Nickname" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ywk-PS-0bN">
                                                     <rect key="frame" x="-1" y="-1" width="83" height="18"/>
                                                     <buttonCell key="cell" type="radio" title="Nickname" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="uCQ-Dg-giF">
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -928,6 +944,7 @@
                                                     </buttonCell>
                                                     <connections>
                                                         <action selector="screensaver:" target="UBL-vs-1PL" id="EA8-Nd-SYg"/>
+                                                        <binding destination="UBL-vs-1PL" name="enabled" keyPath="active" id="hXM-3q-nBL"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -943,10 +960,10 @@
                                             </customSpacing>
                                         </stackView>
                                         <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="18" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rSd-cQ-R7Z" userLabel="Screensaver Values Stack View">
-                                            <rect key="frame" x="132" y="21" width="150" height="100"/>
+                                            <rect key="frame" x="132" y="21" width="166" height="95"/>
                                             <subviews>
-                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="snd-Be-vN5">
-                                                    <rect key="frame" x="-2" y="80" width="154" height="20"/>
+                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="snd-Be-vN5">
+                                                    <rect key="frame" x="-2" y="80" width="154" height="15"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="150" id="Omd-VL-BRs"/>
                                                     </constraints>
@@ -956,10 +973,10 @@
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                     <connections>
-                                                        <binding destination="UBL-vs-1PL" name="value" keyPath="representedObject.radioModel" id="PBL-fS-iVx"/>
+                                                        <binding destination="UBL-vs-1PL" name="value" keyPath="radio.radioModel" id="VtA-Sk-26k"/>
                                                     </connections>
                                                 </textField>
-                                                <textField verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yNt-QU-b8f">
+                                                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yNt-QU-b8f">
                                                     <rect key="frame" x="0.0" y="40" width="150" height="22"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="150" id="WDJ-7y-Alm"/>
@@ -970,10 +987,11 @@
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                     <connections>
-                                                        <binding destination="UBL-vs-1PL" name="value" keyPath="representedObject.callsign" id="oxi-VE-7As"/>
+                                                        <binding destination="UBL-vs-1PL" name="enabled" keyPath="active" id="nPO-Vt-DAx"/>
+                                                        <binding destination="UBL-vs-1PL" name="value" keyPath="radio.callsign" id="OvA-f6-VZr"/>
                                                     </connections>
                                                 </textField>
-                                                <textField verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jYf-Vs-NmJ">
+                                                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jYf-Vs-NmJ">
                                                     <rect key="frame" x="0.0" y="0.0" width="150" height="22"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="150" id="XhX-Ks-OVP"/>
@@ -984,7 +1002,8 @@
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                     <connections>
-                                                        <binding destination="UBL-vs-1PL" name="value" keyPath="representedObject.nickname" id="mgD-Fm-03I"/>
+                                                        <binding destination="UBL-vs-1PL" name="enabled" keyPath="active" id="v6a-md-tbI"/>
+                                                        <binding destination="UBL-vs-1PL" name="value" keyPath="radio.nickname" id="4aW-A9-GFX"/>
                                                     </connections>
                                                 </textField>
                                             </subviews>
@@ -1014,14 +1033,14 @@
                             </box>
                         </subviews>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="bK2-J6-Aor" secondAttribute="bottom" constant="85" id="2Xu-v1-uRI"/>
-                            <constraint firstAttribute="bottom" secondItem="nwu-TN-iWf" secondAttribute="bottom" constant="247" id="39h-Lz-4l6"/>
-                            <constraint firstAttribute="trailing" secondItem="bK2-J6-Aor" secondAttribute="trailing" constant="20" id="5Y9-Vg-oJX"/>
+                            <constraint firstAttribute="bottom" secondItem="bK2-J6-Aor" secondAttribute="bottom" constant="65" id="2Xu-v1-uRI"/>
+                            <constraint firstAttribute="bottom" secondItem="nwu-TN-iWf" secondAttribute="bottom" constant="240" id="39h-Lz-4l6"/>
+                            <constraint firstAttribute="trailing" secondItem="bK2-J6-Aor" secondAttribute="trailing" constant="4" id="5Y9-Vg-oJX"/>
                             <constraint firstItem="bK2-J6-Aor" firstAttribute="leading" secondItem="upT-IE-zqc" secondAttribute="leading" constant="20" id="6xl-QH-0Xm"/>
-                            <constraint firstItem="nwu-TN-iWf" firstAttribute="top" secondItem="upT-IE-zqc" secondAttribute="top" constant="20" id="JtF-Hg-fGH"/>
+                            <constraint firstItem="nwu-TN-iWf" firstAttribute="top" secondItem="upT-IE-zqc" secondAttribute="top" constant="30" id="JtF-Hg-fGH"/>
                             <constraint firstItem="bK2-J6-Aor" firstAttribute="top" secondItem="upT-IE-zqc" secondAttribute="top" constant="190" id="l4E-el-oIC"/>
                             <constraint firstItem="nwu-TN-iWf" firstAttribute="leading" secondItem="upT-IE-zqc" secondAttribute="leading" constant="20" id="w4a-sI-232"/>
-                            <constraint firstAttribute="trailing" secondItem="nwu-TN-iWf" secondAttribute="trailing" constant="20" id="zLP-S8-34s"/>
+                            <constraint firstAttribute="trailing" secondItem="nwu-TN-iWf" secondAttribute="trailing" constant="4" id="zLP-S8-34s"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
@@ -1033,7 +1052,7 @@
                 </viewController>
                 <customObject id="qDg-oJ-BxV" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2767" y="-13"/>
+            <point key="canvasLocation" x="-2766" y="-11"/>
         </scene>
         <!--Info Tab-->
         <scene sceneID="wxA-0t-A3c">
@@ -1155,8 +1174,8 @@
         <scene sceneID="8ej-OM-p3D">
             <objects>
                 <viewController title="Network" id="4Na-DM-iAm" userLabel="Network Tab" customClass="NetworkPrefsViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" id="4Uw-z2-vzI" userLabel="Network">
-                        <rect key="frame" x="0.0" y="0.0" width="601" height="404"/>
+                    <view key="view" misplaced="YES" id="4Uw-z2-vzI" userLabel="Network">
+                        <rect key="frame" x="0.0" y="0.0" width="601" height="400"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <box title="Network" translatesAutoresizingMaskIntoConstraints="NO" id="c9J-oI-QWS" userLabel="Network Box">
@@ -1190,7 +1209,7 @@
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                             <connections>
-                                                                <binding destination="4Na-DM-iAm" name="value" keyPath="representedObject.ipAddress" id="Prf-rC-qm3"/>
+                                                                <binding destination="4Na-DM-iAm" name="value" keyPath="radio.ipAddress" id="mvC-7g-J9q"/>
                                                             </connections>
                                                         </textField>
                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pYK-PH-mXC">
@@ -1212,7 +1231,7 @@
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                             <connections>
-                                                                <binding destination="4Na-DM-iAm" name="value" keyPath="representedObject.netmask" id="nYG-4i-AvD"/>
+                                                                <binding destination="4Na-DM-iAm" name="value" keyPath="radio.netmask" id="Cne-Hw-Pi2"/>
                                                             </connections>
                                                         </textField>
                                                     </subviews>
@@ -1251,7 +1270,7 @@
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                             <connections>
-                                                                <binding destination="4Na-DM-iAm" name="value" keyPath="representedObject.macAddress" id="Mjb-bC-Kgw"/>
+                                                                <binding destination="4Na-DM-iAm" name="value" keyPath="radio.macAddress" id="vsA-PU-Wy8"/>
                                                             </connections>
                                                         </textField>
                                                     </subviews>
@@ -1299,7 +1318,8 @@
                                                         <font key="font" metaFont="system"/>
                                                     </buttonCell>
                                                     <connections>
-                                                        <action selector="networkTabDhcpStatic:" target="4Na-DM-iAm" id="Vyn-Lt-0if"/>
+                                                        <action selector="apply:" target="4Na-DM-iAm" id="Vyn-Lt-0if"/>
+                                                        <binding destination="4Na-DM-iAm" name="enabled" keyPath="active" id="WPg-5u-mpU"/>
                                                     </connections>
                                                 </button>
                                                 <button identifier="Dhcp" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="NH1-pe-dVA">
@@ -1309,7 +1329,8 @@
                                                         <font key="font" metaFont="system"/>
                                                     </buttonCell>
                                                     <connections>
-                                                        <action selector="networkTabDhcpStatic:" target="4Na-DM-iAm" id="Ong-Uq-W5f"/>
+                                                        <action selector="apply:" target="4Na-DM-iAm" id="Ong-Uq-W5f"/>
+                                                        <binding destination="4Na-DM-iAm" name="enabled" keyPath="active" id="Edw-zq-Rd0"/>
                                                     </connections>
                                                 </button>
                                                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sCz-98-2Ji">
@@ -1319,7 +1340,8 @@
                                                         <font key="font" metaFont="system"/>
                                                     </buttonCell>
                                                     <connections>
-                                                        <binding destination="4Na-DM-iAm" name="value" keyPath="representedObject.enforcePrivateIpEnabled" id="hLy-Ji-Z1x"/>
+                                                        <binding destination="4Na-DM-iAm" name="enabled" keyPath="active" id="ndH-Ke-rZ1"/>
+                                                        <binding destination="4Na-DM-iAm" name="value" keyPath="radio.enforcePrivateIpEnabled" id="xrf-CS-eHi"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -1347,7 +1369,8 @@
                                                                 <font key="font" metaFont="system"/>
                                                             </buttonCell>
                                                             <connections>
-                                                                <action selector="networkTabApply:" target="4Na-DM-iAm" id="dHP-1D-T5b"/>
+                                                                <action selector="apply:" target="4Na-DM-iAm" id="dHP-1D-T5b"/>
+                                                                <binding destination="4Na-DM-iAm" name="enabled" keyPath="active" id="u3D-eQ-cKH"/>
                                                             </connections>
                                                         </button>
                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mFw-8R-aLQ">
@@ -1393,11 +1416,7 @@
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                             <connections>
-                                                                <binding destination="4Na-DM-iAm" name="value" keyPath="staticIpAddress" id="34I-gd-C2s">
-                                                                    <dictionary key="options">
-                                                                        <bool key="NSValidatesImmediately" value="YES"/>
-                                                                    </dictionary>
-                                                                </binding>
+                                                                <binding destination="4Na-DM-iAm" name="value" keyPath="radio.staticIp" id="zqW-ta-syj"/>
                                                             </connections>
                                                         </textField>
                                                     </subviews>
@@ -1432,7 +1451,7 @@
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                             <connections>
-                                                                <binding destination="4Na-DM-iAm" name="value" keyPath="representedObject.staticNetmask" id="fmy-wr-AZe"/>
+                                                                <binding destination="4Na-DM-iAm" name="value" keyPath="radio.staticNetmask" id="HpT-zt-5gr"/>
                                                             </connections>
                                                         </textField>
                                                     </subviews>
@@ -1467,7 +1486,7 @@
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                             <connections>
-                                                                <binding destination="4Na-DM-iAm" name="value" keyPath="representedObject.staticGateway" id="ZfE-i3-BTl"/>
+                                                                <binding destination="4Na-DM-iAm" name="value" keyPath="radio.staticGateway" id="x73-i2-SXq"/>
                                                             </connections>
                                                         </textField>
                                                     </subviews>
@@ -1525,10 +1544,14 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </view>
+                    <connections>
+                        <outlet property="_dhcpRadioButton" destination="NH1-pe-dVA" id="aM5-A8-WRd"/>
+                        <outlet property="_staticRadioButton" destination="m8t-KC-rdw" id="x3U-Yf-uEZ"/>
+                    </connections>
                 </viewController>
                 <customObject id="hHz-58-MPq" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2119" y="-13"/>
+            <point key="canvasLocation" x="-2121" y="-11"/>
         </scene>
         <!--GPS Tab-->
         <scene sceneID="st0-zP-ZTV">
@@ -1595,7 +1618,8 @@
                                                                         <font key="font" metaFont="system"/>
                                                                     </buttonCell>
                                                                     <connections>
-                                                                        <binding destination="brP-w7-Ywn" name="value" keyPath="representedObject.interlock.accTxEnabled" id="xcg-xu-hdw"/>
+                                                                        <binding destination="brP-w7-Ywn" name="enabled" keyPath="active" id="4F3-go-ebB"/>
+                                                                        <binding destination="brP-w7-Ywn" name="value" keyPath="radio.interlock.accTxEnabled" id="Osy-iU-cNI"/>
                                                                     </connections>
                                                                 </button>
                                                                 <textField identifier="AccTxDelay" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="imf-oY-r8n">
@@ -1609,7 +1633,8 @@
                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                     <connections>
-                                                                        <binding destination="brP-w7-Ywn" name="value" keyPath="representedObject.interlock.accTxDelay" id="AUp-nT-5vP"/>
+                                                                        <binding destination="brP-w7-Ywn" name="enabled" keyPath="active" id="BFA-m5-G35"/>
+                                                                        <binding destination="brP-w7-Ywn" name="value" keyPath="radio.interlock.accTxDelay" id="V0T-Xr-uxu"/>
                                                                     </connections>
                                                                 </textField>
                                                             </subviews>
@@ -1638,7 +1663,8 @@
                                                                         <font key="font" metaFont="system"/>
                                                                     </buttonCell>
                                                                     <connections>
-                                                                        <binding destination="brP-w7-Ywn" name="value" keyPath="representedObject.interlock.tx1Enabled" id="OQz-1X-QIM"/>
+                                                                        <binding destination="brP-w7-Ywn" name="enabled" keyPath="active" id="oL7-lq-SDl"/>
+                                                                        <binding destination="brP-w7-Ywn" name="value" keyPath="radio.interlock.tx1Enabled" id="UjD-bm-neV"/>
                                                                     </connections>
                                                                 </button>
                                                                 <textField identifier="Tx1Delay" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0H9-9I-Th1">
@@ -1649,7 +1675,8 @@
                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                     <connections>
-                                                                        <binding destination="brP-w7-Ywn" name="value" keyPath="representedObject.interlock.tx1Delay" id="dhI-Z4-QRq"/>
+                                                                        <binding destination="brP-w7-Ywn" name="enabled" keyPath="active" id="niO-uO-179"/>
+                                                                        <binding destination="brP-w7-Ywn" name="value" keyPath="radio.interlock.tx1Delay" id="MFJ-Hr-RrU"/>
                                                                     </connections>
                                                                 </textField>
                                                             </subviews>
@@ -1675,7 +1702,8 @@
                                                                         <font key="font" metaFont="system"/>
                                                                     </buttonCell>
                                                                     <connections>
-                                                                        <binding destination="brP-w7-Ywn" name="value" keyPath="representedObject.interlock.tx2Enabled" id="fNJ-Yz-IDd"/>
+                                                                        <binding destination="brP-w7-Ywn" name="enabled" keyPath="active" id="UBR-au-Ncv"/>
+                                                                        <binding destination="brP-w7-Ywn" name="value" keyPath="radio.interlock.tx2Enabled" id="A5q-1o-BSS"/>
                                                                     </connections>
                                                                 </button>
                                                                 <textField identifier="Tx2Delay" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="5df-8n-Frq">
@@ -1686,7 +1714,8 @@
                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                     <connections>
-                                                                        <binding destination="brP-w7-Ywn" name="value" keyPath="representedObject.interlock.tx2Delay" id="Z7x-vX-2nA"/>
+                                                                        <binding destination="brP-w7-Ywn" name="enabled" keyPath="active" id="S7E-M2-EEi"/>
+                                                                        <binding destination="brP-w7-Ywn" name="value" keyPath="radio.interlock.tx2Delay" id="rpK-am-YEz"/>
                                                                     </connections>
                                                                 </textField>
                                                             </subviews>
@@ -1712,7 +1741,8 @@
                                                                         <font key="font" metaFont="system"/>
                                                                     </buttonCell>
                                                                     <connections>
-                                                                        <binding destination="brP-w7-Ywn" name="value" keyPath="representedObject.interlock.tx3Enabled" id="qjt-qc-MLo"/>
+                                                                        <binding destination="brP-w7-Ywn" name="enabled" keyPath="active" id="Zox-dD-PNq"/>
+                                                                        <binding destination="brP-w7-Ywn" name="value" keyPath="radio.interlock.tx3Enabled" id="C7E-FY-xO0"/>
                                                                     </connections>
                                                                 </button>
                                                                 <textField identifier="Tx3Delay" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ymf-8U-zkG">
@@ -1726,7 +1756,8 @@
                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                     <connections>
-                                                                        <binding destination="brP-w7-Ywn" name="value" keyPath="representedObject.interlock.tx3Delay" id="5p0-Zd-NdF"/>
+                                                                        <binding destination="brP-w7-Ywn" name="enabled" keyPath="active" id="7KL-aW-Edn"/>
+                                                                        <binding destination="brP-w7-Ywn" name="value" keyPath="radio.interlock.tx3Delay" id="j7s-Mb-dIl"/>
                                                                     </connections>
                                                                 </textField>
                                                             </subviews>
@@ -1789,7 +1820,8 @@
                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                     <connections>
-                                                                        <binding destination="brP-w7-Ywn" name="value" keyPath="representedObject.interlock.accTxDelay" id="PYJ-zL-3SQ"/>
+                                                                        <binding destination="brP-w7-Ywn" name="enabled" keyPath="active" id="NVy-Lm-EJg"/>
+                                                                        <binding destination="brP-w7-Ywn" name="value" keyPath="radio.interlock.accTxDelay" id="q7w-l3-HP5"/>
                                                                     </connections>
                                                                 </textField>
                                                             </subviews>
@@ -1824,7 +1856,8 @@
                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                     <connections>
-                                                                        <binding destination="brP-w7-Ywn" name="value" keyPath="representedObject.interlock.timeout" id="sbg-6v-glD"/>
+                                                                        <binding destination="brP-w7-Ywn" name="enabled" keyPath="active" id="3Ey-2t-cQC"/>
+                                                                        <binding destination="brP-w7-Ywn" name="value" keyPath="radio.interlock.timeout" id="eNb-f2-tpt"/>
                                                                     </connections>
                                                                 </textField>
                                                             </subviews>
@@ -1857,6 +1890,7 @@
                                                                 </menu>
                                                             </popUpButtonCell>
                                                             <connections>
+                                                                <binding destination="brP-w7-Ywn" name="enabled" keyPath="active" id="vDk-tf-WMj"/>
                                                                 <binding destination="brP-w7-Ywn" name="content" keyPath="txProfile.list" id="rZz-Xa-Q3o"/>
                                                                 <binding destination="brP-w7-Ywn" name="selectedValue" keyPath="txProfile.selection" previousBinding="rZz-Xa-Q3o" id="Wl4-ne-5YC"/>
                                                             </connections>
@@ -1868,7 +1902,8 @@
                                                                 <font key="font" metaFont="system"/>
                                                             </buttonCell>
                                                             <connections>
-                                                                <binding destination="brP-w7-Ywn" name="value" keyPath="representedObject.transmit.inhibit" id="jx4-ln-RuQ"/>
+                                                                <binding destination="brP-w7-Ywn" name="enabled" keyPath="active" id="45c-Bt-Jm1"/>
+                                                                <binding destination="brP-w7-Ywn" name="value" keyPath="radio.transmit.inhibit" id="4EQ-Cc-kVy"/>
                                                             </connections>
                                                         </button>
                                                     </subviews>
@@ -1924,17 +1959,21 @@
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="125" id="ek9-Ai-nfP"/>
                                                     </constraints>
-                                                    <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="faI-Ni-Yyy" id="iDo-Fx-NcQ">
+                                                    <popUpButtonCell key="cell" type="push" title="Disabled" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="faI-Ni-Yyy" id="iDo-Fx-NcQ">
                                                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                                         <font key="font" metaFont="menu"/>
                                                         <menu key="menu" id="QtP-QQ-zg9">
                                                             <items>
-                                                                <menuItem title="Item 1" state="on" id="faI-Ni-Yyy"/>
-                                                                <menuItem title="Item 2" id="7ms-2Z-PqQ"/>
-                                                                <menuItem title="Item 3" id="Hnz-RM-rtt"/>
+                                                                <menuItem title="Disabled" state="on" identifier="RcaDisabled" id="faI-Ni-Yyy"/>
+                                                                <menuItem title="Active Low" identifier="RcaLow" id="7ms-2Z-PqQ"/>
+                                                                <menuItem title="Active High" identifier="RcaHigh" id="Hnz-RM-rtt"/>
                                                             </items>
                                                         </menu>
                                                     </popUpButtonCell>
+                                                    <connections>
+                                                        <action selector="popups:" target="brP-w7-Ywn" id="26f-qC-MaB"/>
+                                                        <binding destination="brP-w7-Ywn" name="enabled" keyPath="active" id="PEb-63-i2w"/>
+                                                    </connections>
                                                 </popUpButton>
                                                 <textField horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2UR-2S-DJ3">
                                                     <rect key="frame" x="288" y="29" width="71" height="17"/>
@@ -1949,17 +1988,21 @@
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="125" id="2O0-at-jar"/>
                                                     </constraints>
-                                                    <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="3b8-5s-7yB" id="3Q6-9A-QCj">
+                                                    <popUpButtonCell key="cell" type="push" title="Disabled" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="3b8-5s-7yB" id="3Q6-9A-QCj">
                                                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                                         <font key="font" metaFont="menu"/>
                                                         <menu key="menu" id="GSG-9N-TYT">
                                                             <items>
-                                                                <menuItem title="Item 1" state="on" id="3b8-5s-7yB"/>
-                                                                <menuItem title="Item 2" id="pV8-Ur-dNg"/>
-                                                                <menuItem title="Item 3" id="ecb-vJ-r9k"/>
+                                                                <menuItem title="Disabled" state="on" identifier="AccDisabled" id="3b8-5s-7yB"/>
+                                                                <menuItem title="Active Low" identifier="AccLow" id="pV8-Ur-dNg"/>
+                                                                <menuItem title="Active High" identifier="AccHigh" id="ecb-vJ-r9k"/>
                                                             </items>
                                                         </menu>
                                                     </popUpButtonCell>
+                                                    <connections>
+                                                        <action selector="popups:" target="brP-w7-Ywn" id="1JW-06-msX"/>
+                                                        <binding destination="brP-w7-Ywn" name="enabled" keyPath="active" id="bYm-HS-eq6"/>
+                                                    </connections>
                                                 </popUpButton>
                                             </subviews>
                                             <constraints>
@@ -2012,7 +2055,7 @@
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                             <connections>
-                                                                <binding destination="brP-w7-Ywn" name="value" keyPath="representedObject.transmit.maxPowerLevel" id="o9y-ke-6Sy"/>
+                                                                <binding destination="brP-w7-Ywn" name="value" keyPath="radio.transmit.maxPowerLevel" id="3tt-hx-ELF"/>
                                                             </connections>
                                                         </textField>
                                                         <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="5h0-Qd-Na1">
@@ -2022,7 +2065,8 @@
                                                             </constraints>
                                                             <sliderCell key="cell" state="on" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" sliderType="linear" id="Z3l-zS-QCv"/>
                                                             <connections>
-                                                                <binding destination="brP-w7-Ywn" name="value" keyPath="representedObject.transmit.maxPowerLevel" id="Agl-6g-F4U"/>
+                                                                <binding destination="brP-w7-Ywn" name="enabled" keyPath="active" id="C8o-z7-mYO"/>
+                                                                <binding destination="brP-w7-Ywn" name="value" keyPath="radio.transmit.maxPowerLevel" id="dDr-2T-mNx"/>
                                                             </connections>
                                                         </slider>
                                                     </subviews>
@@ -2044,7 +2088,8 @@
                                                         <font key="font" metaFont="system"/>
                                                     </buttonCell>
                                                     <connections>
-                                                        <binding destination="brP-w7-Ywn" name="value" keyPath="representedObject.transmit.txInWaterfallEnabled" id="TOC-5b-kVq"/>
+                                                        <binding destination="brP-w7-Ywn" name="enabled" keyPath="active" id="sqb-Lv-8ce"/>
+                                                        <binding destination="brP-w7-Ywn" name="value" keyPath="radio.transmit.txInWaterfallEnabled" id="e7a-eg-9c7"/>
                                                     </connections>
                                                 </button>
                                                 <button identifier="HardwareAlc" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="VHH-0K-3Jl">
@@ -2054,7 +2099,8 @@
                                                         <font key="font" metaFont="system"/>
                                                     </buttonCell>
                                                     <connections>
-                                                        <binding destination="brP-w7-Ywn" name="value" keyPath="representedObject.transmit.hwAlcEnabled" id="2KP-Dm-qTK"/>
+                                                        <binding destination="brP-w7-Ywn" name="enabled" keyPath="active" id="tff-89-GL0"/>
+                                                        <binding destination="brP-w7-Ywn" name="value" keyPath="radio.transmit.hwAlcEnabled" id="0wb-ZJ-fZl"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -2105,6 +2151,10 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </view>
+                    <connections>
+                        <outlet property="_accessoryInterlockPopup" destination="q4C-It-mjt" id="LAY-Gr-qOe"/>
+                        <outlet property="_rcaInterlockPopup" destination="Njq-YV-IsC" id="OEr-13-s9w"/>
+                    </connections>
                 </viewController>
                 <customObject id="oLw-EZ-2cp" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -2129,32 +2179,35 @@
                                             <subviews>
                                                 <button identifier="MicBias" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="UJJ-JM-LGl">
                                                     <rect key="frame" x="18" y="65" width="123" height="18"/>
-                                                    <buttonCell key="cell" type="check" title="Microphone Bias" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="mZA-XE-9PF">
+                                                    <buttonCell key="cell" type="check" title="Microphone Bias" bezelStyle="regularSquare" imagePosition="left" inset="2" id="mZA-XE-9PF">
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                         <font key="font" metaFont="system"/>
                                                     </buttonCell>
                                                     <connections>
-                                                        <action selector="checkBoxes:" target="FSt-EM-0Rk" id="VWd-Yw-DXP"/>
+                                                        <binding destination="FSt-EM-0Rk" name="enabled" keyPath="active" id="znj-Db-dcX"/>
+                                                        <binding destination="FSt-EM-0Rk" name="value" keyPath="radio.transmit.micBiasEnabled" id="Mnf-Ha-ym7"/>
                                                     </connections>
                                                 </button>
                                                 <button identifier="MicBoost" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ubb-3I-ZKM">
                                                     <rect key="frame" x="18" y="23" width="171" height="18"/>
-                                                    <buttonCell key="cell" type="check" title="+20 dB Microphone gain" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="xyS-JF-UTU">
+                                                    <buttonCell key="cell" type="check" title="+20 dB Microphone gain" bezelStyle="regularSquare" imagePosition="left" inset="2" id="xyS-JF-UTU">
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                         <font key="font" metaFont="system"/>
                                                     </buttonCell>
                                                     <connections>
-                                                        <action selector="checkBoxes:" target="FSt-EM-0Rk" id="zbN-Vv-jmD"/>
+                                                        <binding destination="FSt-EM-0Rk" name="enabled" keyPath="active" id="yc6-x8-Yqh"/>
+                                                        <binding destination="FSt-EM-0Rk" name="value" keyPath="radio.transmit.micBoostEnabled" id="fFc-iv-ktt"/>
                                                     </connections>
                                                 </button>
                                                 <button identifier="MetInRx" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sYU-Qe-BjN">
                                                     <rect key="frame" x="295" y="65" width="223" height="18"/>
-                                                    <buttonCell key="cell" type="check" title="Microphone Level during Receive" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="OSL-9u-pdr">
+                                                    <buttonCell key="cell" type="check" title="Microphone Level during Receive" bezelStyle="regularSquare" imagePosition="left" inset="2" id="OSL-9u-pdr">
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                         <font key="font" metaFont="system"/>
                                                     </buttonCell>
                                                     <connections>
-                                                        <action selector="checkBoxes:" target="FSt-EM-0Rk" id="wdf-vH-Y1q"/>
+                                                        <binding destination="FSt-EM-0Rk" name="enabled" keyPath="active" id="Vid-uV-CLj"/>
+                                                        <binding destination="FSt-EM-0Rk" name="value" keyPath="radio.transmit.metInRxEnabled" id="MhK-h3-si8"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -2178,100 +2231,130 @@
                                             <rect key="frame" x="3" y="3" width="560" height="101"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
-                                                <button identifier="Iambic" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="EVl-OG-IRE">
-                                                    <rect key="frame" x="18" y="65" width="62" height="18"/>
-                                                    <buttonCell key="cell" type="check" title="Iambic" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="coa-qa-cWs">
-                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                        <font key="font" metaFont="system"/>
-                                                    </buttonCell>
-                                                </button>
-                                                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9tZ-ar-c1j">
-                                                    <rect key="frame" x="295" y="65" width="116" height="18"/>
-                                                    <buttonCell key="cell" type="check" title="Swap Dot/Dash" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="vb0-IK-Mws">
-                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                        <font key="font" metaFont="system"/>
-                                                    </buttonCell>
-                                                </button>
-                                                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="G1G-FE-SLc">
-                                                    <rect key="frame" x="295" y="18" width="86" height="18"/>
-                                                    <buttonCell key="cell" type="check" title="CWX Sync" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Qdg-VZ-ZT3">
-                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                        <font key="font" metaFont="system"/>
-                                                    </buttonCell>
-                                                </button>
-                                                <button identifier="IambicA" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6RQ-ox-OKd">
-                                                    <rect key="frame" x="123" y="64" width="31" height="18"/>
-                                                    <buttonCell key="cell" type="radio" title="A" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="oJK-rH-z4G">
-                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                        <font key="font" metaFont="system"/>
-                                                    </buttonCell>
-                                                    <connections>
-                                                        <action selector="iambicMode:" target="FSt-EM-0Rk" id="9Hg-yb-j2e"/>
-                                                    </connections>
-                                                </button>
-                                                <button identifier="IambicB" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ebn-LF-VN4">
-                                                    <rect key="frame" x="200" y="64" width="31" height="18"/>
-                                                    <buttonCell key="cell" type="radio" title="B" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="oln-0Z-kxD">
-                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                        <font key="font" metaFont="system"/>
-                                                    </buttonCell>
-                                                    <connections>
-                                                        <action selector="iambicMode:" target="FSt-EM-0Rk" id="RgK-hh-e31"/>
-                                                    </connections>
-                                                </button>
-                                                <button identifier="CwSidebandUpper" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1gS-2P-OGT">
-                                                    <rect key="frame" x="123" y="19" width="60" height="18"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="57" id="fOz-JZ-9Mn"/>
-                                                    </constraints>
-                                                    <buttonCell key="cell" type="radio" title="Upper" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="ncd-bF-Qvi">
-                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                        <font key="font" metaFont="system"/>
-                                                    </buttonCell>
-                                                    <connections>
-                                                        <action selector="cwSideband:" target="FSt-EM-0Rk" id="Aht-Ef-aRK"/>
-                                                    </connections>
-                                                </button>
-                                                <button identifier="CwSidebandLower" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="N8v-Vu-Kwp">
-                                                    <rect key="frame" x="200" y="19" width="59" height="18"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="56" id="k7x-YJ-5o9"/>
-                                                    </constraints>
-                                                    <buttonCell key="cell" type="radio" title="Lower" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="wbu-Q0-GtL">
-                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                        <font key="font" metaFont="system"/>
-                                                    </buttonCell>
-                                                    <connections>
-                                                        <action selector="cwSideband:" target="FSt-EM-0Rk" id="OwO-xh-YFb"/>
-                                                    </connections>
-                                                </button>
-                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GNO-gV-VaN">
-                                                    <rect key="frame" x="18" y="20" width="87" height="17"/>
-                                                    <textFieldCell key="cell" lineBreakMode="clipping" title="CW Sideband" id="zQ9-0H-247">
-                                                        <font key="font" metaFont="system"/>
-                                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                    </textFieldCell>
-                                                </textField>
+                                                <stackView distribution="fill" orientation="horizontal" alignment="top" spacing="54" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" fixedFrame="YES" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2Ak-nM-7nm">
+                                                    <rect key="frame" x="20" y="65" width="388" height="16"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <subviews>
+                                                        <button identifier="Iambic" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="EVl-OG-IRE">
+                                                            <rect key="frame" x="-2" y="0.0" width="62" height="18"/>
+                                                            <buttonCell key="cell" type="check" title="Iambic" bezelStyle="regularSquare" imagePosition="left" inset="2" id="coa-qa-cWs">
+                                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                                <font key="font" metaFont="system"/>
+                                                            </buttonCell>
+                                                            <connections>
+                                                                <binding destination="FSt-EM-0Rk" name="enabled" keyPath="active" id="C8g-tY-Cvr"/>
+                                                                <binding destination="FSt-EM-0Rk" name="value" keyPath="radio.transmit.cwIambicEnabled" id="YMZ-Rp-Uvj"/>
+                                                            </connections>
+                                                        </button>
+                                                        <button identifier="IambicA" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6RQ-ox-OKd">
+                                                            <rect key="frame" x="111" y="-1" width="31" height="18"/>
+                                                            <buttonCell key="cell" type="radio" title="A" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="oJK-rH-z4G">
+                                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                                <font key="font" metaFont="system"/>
+                                                            </buttonCell>
+                                                            <connections>
+                                                                <action selector="iambicMode:" target="FSt-EM-0Rk" id="mnG-di-d5c"/>
+                                                            </connections>
+                                                        </button>
+                                                        <button identifier="IambicB" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ebn-LF-VN4">
+                                                            <rect key="frame" x="193" y="-1" width="31" height="18"/>
+                                                            <buttonCell key="cell" type="radio" title="B" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="oln-0Z-kxD">
+                                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                                <font key="font" metaFont="system"/>
+                                                            </buttonCell>
+                                                            <connections>
+                                                                <action selector="iambicMode:" target="FSt-EM-0Rk" id="HSl-EV-eiJ"/>
+                                                            </connections>
+                                                        </button>
+                                                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9tZ-ar-c1j">
+                                                            <rect key="frame" x="274" y="0.0" width="116" height="18"/>
+                                                            <buttonCell key="cell" type="check" title="Swap Dot/Dash" bezelStyle="regularSquare" imagePosition="left" inset="2" id="vb0-IK-Mws">
+                                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                                <font key="font" metaFont="system"/>
+                                                            </buttonCell>
+                                                            <connections>
+                                                                <binding destination="FSt-EM-0Rk" name="enabled" keyPath="active" id="oeS-V7-yao"/>
+                                                                <binding destination="FSt-EM-0Rk" name="value" keyPath="radio.transmit.cwSwapPaddles" id="qOU-9u-bif"/>
+                                                            </connections>
+                                                        </button>
+                                                    </subviews>
+                                                    <visibilityPriorities>
+                                                        <integer value="1000"/>
+                                                        <integer value="1000"/>
+                                                        <integer value="1000"/>
+                                                        <integer value="1000"/>
+                                                    </visibilityPriorities>
+                                                    <customSpacing>
+                                                        <real value="3.4028234663852886e+38"/>
+                                                        <real value="3.4028234663852886e+38"/>
+                                                        <real value="3.4028234663852886e+38"/>
+                                                        <real value="3.4028234663852886e+38"/>
+                                                    </customSpacing>
+                                                </stackView>
+                                                <stackView distribution="fill" orientation="horizontal" alignment="bottom" spacing="27" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" fixedFrame="YES" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2jS-BP-1fK">
+                                                    <rect key="frame" x="20" y="20" width="359" height="17"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <subviews>
+                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GNO-gV-VaN">
+                                                            <rect key="frame" x="-2" y="0.0" width="87" height="17"/>
+                                                            <textFieldCell key="cell" lineBreakMode="clipping" title="CW Sideband" id="zQ9-0H-247">
+                                                                <font key="font" metaFont="system"/>
+                                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                            </textFieldCell>
+                                                        </textField>
+                                                        <button identifier="CwSidebandUpper" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1gS-2P-OGT">
+                                                            <rect key="frame" x="109" y="-1" width="60" height="18"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="57" id="fOz-JZ-9Mn"/>
+                                                            </constraints>
+                                                            <buttonCell key="cell" type="radio" title="Upper" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="ncd-bF-Qvi">
+                                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                                <font key="font" metaFont="system"/>
+                                                            </buttonCell>
+                                                            <connections>
+                                                                <action selector="cwSideband:" target="FSt-EM-0Rk" id="Fd7-OX-rNY"/>
+                                                            </connections>
+                                                        </button>
+                                                        <button identifier="CwSidebandLower" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="N8v-Vu-Kwp">
+                                                            <rect key="frame" x="193" y="-1" width="59" height="18"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="56" id="k7x-YJ-5o9"/>
+                                                            </constraints>
+                                                            <buttonCell key="cell" type="radio" title="Lower" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="wbu-Q0-GtL">
+                                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                                <font key="font" metaFont="system"/>
+                                                            </buttonCell>
+                                                            <connections>
+                                                                <action selector="cwSideband:" target="FSt-EM-0Rk" id="Dng-no-vL6"/>
+                                                            </connections>
+                                                        </button>
+                                                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="G1G-FE-SLc">
+                                                            <rect key="frame" x="275" y="-2" width="86" height="18"/>
+                                                            <buttonCell key="cell" type="check" title="CWX Sync" bezelStyle="regularSquare" imagePosition="left" inset="2" id="Qdg-VZ-ZT3">
+                                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                                <font key="font" metaFont="system"/>
+                                                            </buttonCell>
+                                                            <connections>
+                                                                <binding destination="FSt-EM-0Rk" name="enabled" keyPath="active" id="kZt-Sw-dMk"/>
+                                                                <binding destination="FSt-EM-0Rk" name="value" keyPath="radio.transmit.cwSyncCwxEnabled" id="gJ3-Zq-z8b"/>
+                                                            </connections>
+                                                        </button>
+                                                    </subviews>
+                                                    <visibilityPriorities>
+                                                        <integer value="1000"/>
+                                                        <integer value="1000"/>
+                                                        <integer value="1000"/>
+                                                        <integer value="1000"/>
+                                                    </visibilityPriorities>
+                                                    <customSpacing>
+                                                        <real value="3.4028234663852886e+38"/>
+                                                        <real value="3.4028234663852886e+38"/>
+                                                        <real value="3.4028234663852886e+38"/>
+                                                        <real value="3.4028234663852886e+38"/>
+                                                    </customSpacing>
+                                                </stackView>
                                             </subviews>
-                                            <constraints>
-                                                <constraint firstItem="6RQ-ox-OKd" firstAttribute="leading" secondItem="EVl-OG-IRE" secondAttribute="trailing" constant="46" id="1Hj-Dh-F2l"/>
-                                                <constraint firstItem="9tZ-ar-c1j" firstAttribute="leading" secondItem="G1G-FE-SLc" secondAttribute="leading" id="42J-4n-aro"/>
-                                                <constraint firstItem="EVl-OG-IRE" firstAttribute="baseline" secondItem="9tZ-ar-c1j" secondAttribute="baseline" id="4wB-31-fFF"/>
-                                                <constraint firstItem="EVl-OG-IRE" firstAttribute="top" secondItem="6RQ-ox-OKd" secondAttribute="top" id="5So-64-4vB"/>
-                                                <constraint firstItem="1gS-2P-OGT" firstAttribute="leading" secondItem="GNO-gV-VaN" secondAttribute="trailing" constant="21" id="7zV-pj-oia"/>
-                                                <constraint firstItem="6RQ-ox-OKd" firstAttribute="leading" secondItem="1gS-2P-OGT" secondAttribute="leading" id="9SW-iX-8IE"/>
-                                                <constraint firstItem="6RQ-ox-OKd" firstAttribute="baseline" secondItem="Ebn-LF-VN4" secondAttribute="baseline" id="NYU-cA-UVt"/>
-                                                <constraint firstItem="EVl-OG-IRE" firstAttribute="top" secondItem="13C-mw-jWM" secondAttribute="top" constant="20" symbolic="YES" id="Uum-YD-Tun"/>
-                                                <constraint firstItem="EVl-OG-IRE" firstAttribute="leading" secondItem="13C-mw-jWM" secondAttribute="leading" constant="20" symbolic="YES" id="VuA-m8-0JB"/>
-                                                <constraint firstItem="1gS-2P-OGT" firstAttribute="baseline" secondItem="N8v-Vu-Kwp" secondAttribute="baseline" id="Yz6-z8-1SC"/>
-                                                <constraint firstItem="N8v-Vu-Kwp" firstAttribute="leading" secondItem="1gS-2P-OGT" secondAttribute="trailing" constant="20" id="d1v-pT-Ywy"/>
-                                                <constraint firstItem="Ebn-LF-VN4" firstAttribute="leading" secondItem="6RQ-ox-OKd" secondAttribute="trailing" constant="49" id="hy8-tk-bhQ"/>
-                                                <constraint firstItem="GNO-gV-VaN" firstAttribute="baseline" secondItem="1gS-2P-OGT" secondAttribute="baseline" id="qBJ-7f-PYa"/>
-                                                <constraint firstItem="N8v-Vu-Kwp" firstAttribute="bottom" secondItem="G1G-FE-SLc" secondAttribute="bottom" id="ql7-sh-awe"/>
-                                                <constraint firstAttribute="bottom" secondItem="GNO-gV-VaN" secondAttribute="bottom" constant="20" symbolic="YES" id="saQ-8c-LGn"/>
-                                                <constraint firstItem="G1G-FE-SLc" firstAttribute="leading" secondItem="N8v-Vu-Kwp" secondAttribute="trailing" constant="40" id="zIl-D4-XBF"/>
-                                            </constraints>
                                         </view>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="560" id="4lm-Io-Vme"/>
@@ -2303,7 +2386,8 @@
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                     <connections>
-                                                        <action selector="rttyMarkDefault:" target="FSt-EM-0Rk" id="z1H-3R-dxu"/>
+                                                        <binding destination="FSt-EM-0Rk" name="enabled" keyPath="active" id="zOo-Lc-wj9"/>
+                                                        <binding destination="FSt-EM-0Rk" name="value" keyPath="radio.rttyMark" id="ecr-cJ-Zy2"/>
                                                     </connections>
                                                 </textField>
                                             </subviews>
@@ -2348,15 +2432,8 @@
                     <connections>
                         <outlet property="_cwLowerRadioButton" destination="N8v-Vu-Kwp" id="as6-KR-2xx"/>
                         <outlet property="_cwUpperRadioButton" destination="1gS-2P-OGT" id="hyp-n5-z6o"/>
-                        <outlet property="_cwxSyncCheckbox" destination="G1G-FE-SLc" id="Crk-ZQ-6Kn"/>
                         <outlet property="_iambicARadioButton" destination="6RQ-ox-OKd" id="SY0-tz-SWG"/>
                         <outlet property="_iambicBRadioButton" destination="Ebn-LF-VN4" id="ZbT-y8-otU"/>
-                        <outlet property="_iambicCheckbox" destination="EVl-OG-IRE" id="rz9-ud-c8y"/>
-                        <outlet property="_micBiasCheckbox" destination="UJJ-JM-LGl" id="825-rj-LpW"/>
-                        <outlet property="_micBoostCheckbox" destination="ubb-3I-ZKM" id="7Ix-un-Pe1"/>
-                        <outlet property="_micMetInRxCheckbox" destination="sYU-Qe-BjN" id="7ll-EJ-Nm4"/>
-                        <outlet property="_rttyMarkTextField" destination="Pfq-lX-VHh" id="UQs-g3-2G7"/>
-                        <outlet property="_swapPaddlesCheckbox" destination="9tZ-ar-c1j" id="Nu5-cY-OAx"/>
                     </connections>
                 </viewController>
                 <customObject id="9Pt-jH-iq4" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
