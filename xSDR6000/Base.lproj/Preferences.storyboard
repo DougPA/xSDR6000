@@ -2443,7 +2443,7 @@
         <!--RX Tab-->
         <scene sceneID="bFb-2K-aU9">
             <objects>
-                <viewController title="Rx" id="ABp-0s-17Y" userLabel="RX Tab" sceneMemberID="viewController">
+                <viewController title="Rx" id="ABp-0s-17Y" userLabel="RX Tab" customClass="RxPrefsViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" wantsLayer="YES" id="YGf-Kh-4zX" userLabel="RX view">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="400"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -2485,6 +2485,7 @@
                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                     <connections>
+                                                                        <binding destination="ABp-0s-17Y" name="enabled" keyPath="active" id="03l-hr-1IF"/>
                                                                         <binding destination="ABp-0s-17Y" name="value" keyPath="representedObject.calFreq" id="mu5-ib-olI"/>
                                                                     </connections>
                                                                 </textField>
@@ -2495,7 +2496,8 @@
                                                                         <font key="font" metaFont="system"/>
                                                                     </buttonCell>
                                                                     <connections>
-                                                                        <action selector="rxTabStart:" target="fjX-Jr-UFL" id="Xal-GT-0qc"/>
+                                                                        <action selector="calibrate:" target="ABp-0s-17Y" id="zZh-Ga-NT3"/>
+                                                                        <binding destination="ABp-0s-17Y" name="enabled" keyPath="active" id="AUF-1P-0cn"/>
                                                                     </connections>
                                                                 </button>
                                                             </subviews>
@@ -2538,6 +2540,7 @@
                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                     <connections>
+                                                                        <binding destination="ABp-0s-17Y" name="enabled" keyPath="active" id="Vif-N2-uaK"/>
                                                                         <binding destination="ABp-0s-17Y" name="value" keyPath="representedObject.freqErrorPpb" id="wWd-Ja-WAu"/>
                                                                     </connections>
                                                                 </textField>
@@ -2593,6 +2596,7 @@
                                                                 <font key="font" metaFont="system"/>
                                                             </buttonCell>
                                                             <connections>
+                                                                <binding destination="ABp-0s-17Y" name="enabled" keyPath="active" id="b0M-vG-zbX"/>
                                                                 <binding destination="ABp-0s-17Y" name="value" keyPath="representedObject.snapTuneEnabled" id="7Lp-Mb-kVT"/>
                                                             </connections>
                                                         </button>
@@ -2602,6 +2606,9 @@
                                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                 <font key="font" metaFont="system"/>
                                                             </buttonCell>
+                                                            <connections>
+                                                                <binding destination="ABp-0s-17Y" name="enabled" keyPath="active" id="wCx-To-WOQ"/>
+                                                            </connections>
                                                         </button>
                                                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Q9Q-qw-0yL">
                                                             <rect key="frame" x="-2" y="74" width="157" height="18"/>
@@ -2609,6 +2616,9 @@
                                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                 <font key="font" metaFont="system"/>
                                                             </buttonCell>
+                                                            <connections>
+                                                                <binding destination="ABp-0s-17Y" name="enabled" keyPath="active" id="Q8m-96-0QV"/>
+                                                            </connections>
                                                         </button>
                                                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="d2m-Nz-3FK">
                                                             <rect key="frame" x="-2" y="36" width="204" height="18"/>
@@ -2617,6 +2627,7 @@
                                                                 <font key="font" metaFont="system"/>
                                                             </buttonCell>
                                                             <connections>
+                                                                <binding destination="ABp-0s-17Y" name="enabled" keyPath="active" id="hxt-cT-J6F"/>
                                                                 <binding destination="ABp-0s-17Y" name="value" keyPath="representedObject.muteLocalAudio" id="UvI-rG-hlN"/>
                                                             </connections>
                                                         </button>
@@ -2627,6 +2638,7 @@
                                                                 <font key="font" metaFont="system"/>
                                                             </buttonCell>
                                                             <connections>
+                                                                <binding destination="ABp-0s-17Y" name="enabled" keyPath="active" id="K4V-6x-tTU"/>
                                                                 <binding destination="ABp-0s-17Y" name="value" keyPath="representedObject.binauralRxEnabled" id="rZd-7o-zWd"/>
                                                             </connections>
                                                         </button>
@@ -2688,7 +2700,7 @@
         <!--Filters Tab-->
         <scene sceneID="9lg-Iw-Ako">
             <objects>
-                <viewController title="Filters" id="xmR-Sy-wAC" userLabel="Filters Tab" sceneMemberID="viewController">
+                <viewController title="Filters" id="xmR-Sy-wAC" userLabel="Filters Tab" customClass="FiltersPrefsViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" wantsLayer="YES" id="lKe-Lw-XKg" userLabel="Filters View">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="400"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -2753,12 +2765,12 @@
                                                             </constraints>
                                                             <sliderCell key="cell" state="on" alignment="left" maxValue="3" doubleValue="2" tickMarkPosition="above" numberOfTickMarks="4" allowsTickMarkValuesOnly="YES" sliderType="linear" id="0lM-Tz-sgx"/>
                                                             <connections>
-                                                                <binding destination="xmR-Sy-wAC" name="enabled" keyPath="representedObject.filterVoiceAutoEnabled" id="z1e-qI-nrH">
+                                                                <binding destination="xmR-Sy-wAC" name="enabled" keyPath="radio.filterVoiceAutoEnabled" id="jVa-xb-pWA">
                                                                     <dictionary key="options">
                                                                         <string key="NSValueTransformerName">NSNegateBoolean</string>
                                                                     </dictionary>
                                                                 </binding>
-                                                                <binding destination="xmR-Sy-wAC" name="value" keyPath="representedObject.filterVoiceLevel" id="Z2F-XC-yoF"/>
+                                                                <binding destination="xmR-Sy-wAC" name="value" keyPath="radio.filterVoiceLevel" id="pVm-5b-mPe"/>
                                                             </connections>
                                                         </slider>
                                                         <button identifier="VoiceAuto" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2HZ-wB-KIH">
@@ -2768,7 +2780,8 @@
                                                                 <font key="font" metaFont="system"/>
                                                             </buttonCell>
                                                             <connections>
-                                                                <binding destination="xmR-Sy-wAC" name="value" keyPath="representedObject.filterVoiceAutoEnabled" id="Evo-OX-URP"/>
+                                                                <binding destination="xmR-Sy-wAC" name="enabled" keyPath="active" id="xBI-mj-8eY"/>
+                                                                <binding destination="xmR-Sy-wAC" name="value" keyPath="radio.filterVoiceAutoEnabled" id="CjI-Kz-a1p"/>
                                                             </connections>
                                                         </button>
                                                     </subviews>
@@ -2804,12 +2817,12 @@
                                                             </constraints>
                                                             <sliderCell key="cell" state="on" alignment="left" maxValue="3" doubleValue="2" tickMarkPosition="above" numberOfTickMarks="4" allowsTickMarkValuesOnly="YES" sliderType="linear" id="2l0-4K-j1j"/>
                                                             <connections>
-                                                                <binding destination="xmR-Sy-wAC" name="enabled" keyPath="representedObject.filterCwAutoEnabled" id="hhr-mJ-XU9">
+                                                                <binding destination="xmR-Sy-wAC" name="enabled" keyPath="radio.filterCwAutoEnabled" id="JoI-uH-Tye">
                                                                     <dictionary key="options">
                                                                         <string key="NSValueTransformerName">NSNegateBoolean</string>
                                                                     </dictionary>
                                                                 </binding>
-                                                                <binding destination="xmR-Sy-wAC" name="value" keyPath="representedObject.filterCwLevel" id="ZZz-ma-odR"/>
+                                                                <binding destination="xmR-Sy-wAC" name="value" keyPath="radio.filterCwLevel" id="j2b-aC-fOG"/>
                                                             </connections>
                                                         </slider>
                                                         <button identifier="CwAuto" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Gda-iJ-cIR">
@@ -2819,7 +2832,8 @@
                                                                 <font key="font" metaFont="system"/>
                                                             </buttonCell>
                                                             <connections>
-                                                                <binding destination="xmR-Sy-wAC" name="value" keyPath="representedObject.filterCwAutoEnabled" id="Lll-wN-cgt"/>
+                                                                <binding destination="xmR-Sy-wAC" name="enabled" keyPath="active" id="FFA-ro-emt"/>
+                                                                <binding destination="xmR-Sy-wAC" name="value" keyPath="radio.filterCwAutoEnabled" id="nG7-dY-s5S"/>
                                                             </connections>
                                                         </button>
                                                     </subviews>
@@ -2855,12 +2869,12 @@
                                                             </constraints>
                                                             <sliderCell key="cell" state="on" alignment="left" maxValue="3" doubleValue="2" tickMarkPosition="above" numberOfTickMarks="4" allowsTickMarkValuesOnly="YES" sliderType="linear" id="o4r-cQ-G29"/>
                                                             <connections>
-                                                                <binding destination="xmR-Sy-wAC" name="enabled" keyPath="representedObject.filterDigitalAutoEnabled" id="Yx6-LA-gCG">
+                                                                <binding destination="xmR-Sy-wAC" name="enabled" keyPath="radio.filterDigitalAutoEnabled" id="0OQ-o9-Q8t">
                                                                     <dictionary key="options">
                                                                         <string key="NSValueTransformerName">NSNegateBoolean</string>
                                                                     </dictionary>
                                                                 </binding>
-                                                                <binding destination="xmR-Sy-wAC" name="value" keyPath="representedObject.filterDigitalLevel" id="yiA-UZ-4e4"/>
+                                                                <binding destination="xmR-Sy-wAC" name="value" keyPath="radio.filterDigitalLevel" id="td5-EF-7F8"/>
                                                             </connections>
                                                         </slider>
                                                         <button identifier="DigitalAuto" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3VP-ew-VGC">
@@ -2870,7 +2884,8 @@
                                                                 <font key="font" metaFont="system"/>
                                                             </buttonCell>
                                                             <connections>
-                                                                <binding destination="xmR-Sy-wAC" name="value" keyPath="representedObject.filterDigitalAutoEnabled" id="OpW-v6-euu"/>
+                                                                <binding destination="xmR-Sy-wAC" name="enabled" keyPath="active" id="DvP-Lo-1Ig"/>
+                                                                <binding destination="xmR-Sy-wAC" name="value" keyPath="radio.filterDigitalAutoEnabled" id="xVL-65-rrT"/>
                                                             </connections>
                                                         </button>
                                                     </subviews>

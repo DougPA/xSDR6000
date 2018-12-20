@@ -49,7 +49,11 @@ class RadioPrefsViewController: NSViewController {
     
     // TODO: add code
     
-    Swift.print("radioTabRegionChange")
+    let alert = NSAlert()
+    alert.alertStyle = .informational
+    alert.messageText = "Turf change NOT IMPLEMENTED"
+    alert.informativeText = "Later versions may incorporate this feature"
+    alert.beginSheetModal(for: NSApp.mainWindow!, completionHandler: { (response) in })
   }
   
   @IBAction func screensaver(_ sender: NSButton) {

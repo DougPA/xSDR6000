@@ -80,8 +80,6 @@ class PCWPrefsViewController                : NSViewController {
   
   func setupButtons() {
     
-    active = true
-    
     DispatchQueue.main.async { [unowned self] in
       // Iambic A/B
       if self.radio!.transmit.cwIambicMode == 0 {
@@ -102,6 +100,7 @@ class PCWPrefsViewController                : NSViewController {
         self._cwUpperRadioButton.boolState = true
       }
     }
+    active = true
   }
   
   // ----------------------------------------------------------------------------

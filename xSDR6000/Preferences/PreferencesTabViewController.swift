@@ -22,7 +22,8 @@ final class PreferencesTabViewController    : NSTabViewController {
   private let _autosaveName                 = "PreferencesWindow"
   private let _log                          = OSLog(subsystem: Api.kDomainId + "." + kClientName, category: "Preferences")
 
-//  private let kRadio                       = NSUserInterfaceItemIdentifier(rawValue: "Radio")
+  private let kColors                        = NSUserInterfaceItemIdentifier(rawValue: "Colors")
+  private let kInfo                        = NSUserInterfaceItemIdentifier(rawValue: "Info")
 
   // ----------------------------------------------------------------------------
   // MARK: - Overridden methods
@@ -44,25 +45,15 @@ final class PreferencesTabViewController    : NSTabViewController {
     }
   }
 
-//  override func tabView(_ tabView: NSTabView, shouldSelect: NSTabViewItem?) -> Bool {
-//
-//    guard Api.sharedInstance.radio != nil else {
-//      return false
-//    }
-//    return true
-//  }
-  
   override func tabView(_ tabView: NSTabView, didSelect tabViewItem: NSTabViewItem?) {
     super.tabView(tabView, didSelect: tabViewItem)
 
-    // give the newly selected tab a reference to an object
-    switch (tabViewItem!.identifier as! NSUserInterfaceItemIdentifier).rawValue {
-    case "Radio", "Network", "Gps", "Tx", "Rx", "Filters", "Xvtr":
-      tabViewItem?.viewController?.representedObject = Api.sharedInstance.radio
-    case "Phone/Cw", "Colors", "Info":
+    // give the newly selected tab a reference to an object (if needed)
+    switch tabViewItem!.identifier as! NSUserInterfaceItemIdentifier {
+    case kColors, kInfo:
       tabViewItem?.viewController?.representedObject = Defaults
     default:
-      fatalError()
+      break
     }
     // close the ColorPicker (if open)
     if NSColorPanel.shared.isVisible {
@@ -88,16 +79,6 @@ final class PreferencesTabViewController    : NSTabViewController {
       os_log("Application closed by user", log: self._log, type: .info)
       
       NSApp.terminate(self)
-    }
-  }
-
-  // Rx Tab
-  
-  @IBAction func rxTabStart(_ sender: NSButton) {
-    
-    if let radio = Api.sharedInstance.radio {
-      os_log("Calibration started by user", log: self._log, type: .info)
-      radio.startCalibration = true
     }
   }
 }
