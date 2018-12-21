@@ -61,6 +61,8 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
   // ----------------------------------------------------------------------------
   // MARK: - Internal properties
 
+  var flagHeightConstraint                  : NSLayoutConstraint?
+  var flagWidthConstraint                   : NSLayoutConstraint?
   var flagXPositionConstraint               : NSLayoutConstraint?
   var controlsHeightConstraint              : NSLayoutConstraint?
   var smallFlagDisplayed                    = false
@@ -88,7 +90,8 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
   
   private weak var _panadapter              : Panadapter?
   private weak var _controlsVc              : ControlsViewController?
-  
+  private weak var _panadapterVc            : PanadapterViewController?
+
   private var _center                       : Int {return _panadapter!.center }
   private var _bandwidth                    : Int { return _panadapter!.bandwidth }
   private var _start                        : Int { return _center - (_bandwidth/2) }
@@ -197,10 +200,11 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
   ///   - panadapter:               a Panadapter reference
   ///   - slice:                    a Slice reference
   ///
-  func configure(panadapter: Panadapter?, slice: xLib6000.Slice?, controlsVc: ControlsViewController?) {
+  func configure(panadapter: Panadapter?, slice: xLib6000.Slice?, controlsVc: ControlsViewController?, panadapterVc: PanadapterViewController) {
     self._panadapter = panadapter
     self.slice = slice!
     self._controlsVc = controlsVc
+    self._panadapterVc = panadapterVc
 
   }
   /// Invalidate observations (optionally remove)
@@ -222,13 +226,26 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
   // MARK: - Action methods
   
   @IBAction func alphaButton(_ sender: Any) {
-    Swift.print("Alpha Button")
     
     smallFlagDisplayed.toggle()
     
-    // TODO: toggle constraints
-    
-    // TODO: correctly position the small flag
+    flagHeightConstraint!.isActive = false
+    flagWidthConstraint!.isActive = false
+
+    if smallFlagDisplayed {
+      flagHeightConstraint = view.heightAnchor.constraint(equalToConstant: FlagViewController.kSmallFlagHeight)
+      flagWidthConstraint = view.widthAnchor.constraint(equalToConstant: FlagViewController.kSmallFlagWidth)
+
+    } else {
+
+      flagHeightConstraint = view.heightAnchor.constraint(equalToConstant: FlagViewController.kLargeFlagHeight)
+      flagWidthConstraint = view.widthAnchor.constraint(equalToConstant: FlagViewController.kLargeFlagWidth)
+    }
+    flagHeightConstraint!.isActive = true
+    flagWidthConstraint!.isActive = true
+
+    // position the flag
+    _panadapterVc!.positionFlags()
   }
   
   @IBAction func txButton(_ sender: NSButton) {

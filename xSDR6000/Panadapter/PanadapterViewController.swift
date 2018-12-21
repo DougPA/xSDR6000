@@ -187,8 +187,6 @@ final class PanadapterViewController        : NSViewController, NSGestureRecogni
     
     // make the Renderer the Stream Handler
     _panadapter?.delegate = _panadapterRenderer
-    
-    
   }
   
   // ----------------------------------------------------------------------------
@@ -752,7 +750,7 @@ final class PanadapterViewController        : NSViewController, NSGestureRecogni
       controlsVc.configure(panadapter: pan, slice: slice)
       
       // pass the FlagVc needed parameters
-      flagVc.configure(panadapter: pan, slice: slice, controlsVc: controlsVc)
+      flagVc.configure(panadapter: pan, slice: slice, controlsVc: controlsVc, panadapterVc: self)
       flagVc.smallFlagDisplayed = false
       
       self._flags[slice.id] = flagVc
@@ -765,8 +763,10 @@ final class PanadapterViewController        : NSViewController, NSGestureRecogni
       self.view.addSubview(controlsVc.view)
       
       // Flag View constraints: height, width & top of the Flag (constants)
-      flagVc.view.heightAnchor.constraint(equalToConstant: FlagViewController.kLargeFlagHeight).isActive = true
-      flagVc.view.widthAnchor.constraint(equalToConstant: FlagViewController.kLargeFlagWidth).isActive = true
+      flagVc.flagHeightConstraint = flagVc.view.heightAnchor.constraint(equalToConstant: FlagViewController.kLargeFlagHeight)
+      flagVc.flagHeightConstraint!.isActive = true
+      flagVc.flagWidthConstraint = flagVc.view.widthAnchor.constraint(equalToConstant: FlagViewController.kLargeFlagWidth)
+      flagVc.flagWidthConstraint!.isActive = true
       flagVc.view.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
       
       // Flag View constraints: height, width (constants)
