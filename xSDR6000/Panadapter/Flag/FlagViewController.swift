@@ -52,10 +52,11 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
   
   static let kSliceLetters : [String]       = ["A", "B", "C", "D", "E", "F", "G", "H"]
   static let kFlagOffset                    : CGFloat = 7.5
+  static let kFlagMinimumSeparation         : CGFloat = 10
   static let kLargeFlagWidth                : CGFloat = 290
   static let kLargeFlagHeight               : CGFloat = 100
   static let kSmallFlagWidth                : CGFloat = 132
-  static let kSmallFlagHeight               : CGFloat = 55
+  static let kSmallFlagHeight               : CGFloat = 52
   static let kFlagBorder                    : CGFloat = 20
   
   // ----------------------------------------------------------------------------
@@ -66,7 +67,7 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
   var flagXPositionConstraint               : NSLayoutConstraint?
   var controlsHeightConstraint              : NSLayoutConstraint?
   var smallFlagDisplayed                    = false
-  
+  var isOnLeft                              = true
 
   @objc dynamic weak var slice              : xLib6000.Slice?
   @objc dynamic var letterId                : String { return FlagViewController.kSliceLetters[Int(slice!.id)!] }
@@ -226,25 +227,33 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
   // MARK: - Action methods
   
   @IBAction func alphaButton(_ sender: Any) {
+    var flagPosition: CGFloat = 0
     
+    // toggle Flag size
     smallFlagDisplayed.toggle()
-    
+
+    // Disable constraints
     flagHeightConstraint!.isActive = false
     flagWidthConstraint!.isActive = false
+    flagXPositionConstraint!.isActive = false
 
-    if smallFlagDisplayed {
-      flagHeightConstraint = view.heightAnchor.constraint(equalToConstant: FlagViewController.kSmallFlagHeight)
-      flagWidthConstraint = view.widthAnchor.constraint(equalToConstant: FlagViewController.kSmallFlagWidth)
+    // Flag size
+    let width = (smallFlagDisplayed ? FlagViewController.kSmallFlagWidth : FlagViewController.kLargeFlagWidth)
+    let height = (smallFlagDisplayed ? FlagViewController.kSmallFlagHeight : FlagViewController.kLargeFlagHeight)
+    flagHeightConstraint!.constant = height
+    flagWidthConstraint!.constant = width
 
-    } else {
+    // Flag position
+    let freqPosition = CGFloat(slice!.frequency - _start) / _hzPerUnit
+    flagPosition = (isOnLeft ? freqPosition - width - FlagViewController.kFlagOffset : freqPosition + FlagViewController.kFlagOffset)
+    flagXPositionConstraint!.constant = flagPosition
 
-      flagHeightConstraint = view.heightAnchor.constraint(equalToConstant: FlagViewController.kLargeFlagHeight)
-      flagWidthConstraint = view.widthAnchor.constraint(equalToConstant: FlagViewController.kLargeFlagWidth)
-    }
+    // Enable constraints
     flagHeightConstraint!.isActive = true
     flagWidthConstraint!.isActive = true
+    flagXPositionConstraint!.isActive = true
 
-    // position the flag
+    // evaluate all flag positions
     _panadapterVc!.positionFlags()
   }
   
