@@ -228,30 +228,27 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
   
   @IBAction func alphaButton(_ sender: Any) {
     var flagPosition: CGFloat = 0
+    let constraints = [flagHeightConstraint!, flagWidthConstraint!, flagXPositionConstraint!]
     
     // toggle Flag size
     smallFlagDisplayed.toggle()
 
     // Disable constraints
-    flagHeightConstraint!.isActive = false
-    flagWidthConstraint!.isActive = false
-    flagXPositionConstraint!.isActive = false
-
-    // Flag size
+    NSLayoutConstraint.deactivate(constraints)
+    
+    // set Flag size
     let width = (smallFlagDisplayed ? FlagViewController.kSmallFlagWidth : FlagViewController.kLargeFlagWidth)
     let height = (smallFlagDisplayed ? FlagViewController.kSmallFlagHeight : FlagViewController.kLargeFlagHeight)
-    flagHeightConstraint!.constant = height
-    flagWidthConstraint!.constant = width
+    constraints[0].constant = height
+    constraints[1].constant = width
 
-    // Flag position
+    // set Flag position
     let freqPosition = CGFloat(slice!.frequency - _start) / _hzPerUnit
     flagPosition = (isOnLeft ? freqPosition - width - FlagViewController.kFlagOffset : freqPosition + FlagViewController.kFlagOffset)
-    flagXPositionConstraint!.constant = flagPosition
+    constraints[2].constant = flagPosition
 
     // Enable constraints
-    flagHeightConstraint!.isActive = true
-    flagWidthConstraint!.isActive = true
-    flagXPositionConstraint!.isActive = true
+    NSLayoutConstraint.activate(constraints)
 
     // evaluate all flag positions
     _panadapterVc!.positionFlags()

@@ -409,16 +409,9 @@ final class PanadapterViewController        : NSViewController, NSGestureRecogni
       let flagPosition = (current.isOnLeft ? current.freqPosition - flagWidth - FlagViewController.kFlagOffset : current.freqPosition + FlagViewController.kFlagOffset)
       
       DispatchQueue.main.async { [unowned self] in
-        
-        if flagVc.flagXPositionConstraint == nil {
-          // constraints: leading edge of the Flag (will be changed as Flag moves)
-          flagVc.flagXPositionConstraint = flagVc.view.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: flagPosition)
-          flagVc.flagXPositionConstraint!.identifier = "FlagPosition"
-          flagVc.flagXPositionConstraint!.isActive = true
-          
-        } else {
-          flagVc.flagXPositionConstraint?.constant = flagPosition
-        }
+        flagVc.flagXPositionConstraint?.isActive = false
+        flagVc.flagXPositionConstraint?.constant = flagPosition
+        flagVc.flagXPositionConstraint?.isActive = true
       }
       // make the current State the previous one
       previous = current
@@ -764,26 +757,30 @@ final class PanadapterViewController        : NSViewController, NSGestureRecogni
       self.view.addSubview(flagVc.view)
       self.view.addSubview(controlsVc.view)
       
+
       // Flag View constraints: height, width & top of the Flag (constants)
       flagVc.flagHeightConstraint = flagVc.view.heightAnchor.constraint(equalToConstant: FlagViewController.kLargeFlagHeight)
-      flagVc.flagHeightConstraint!.isActive = true
       flagVc.flagWidthConstraint = flagVc.view.widthAnchor.constraint(equalToConstant: FlagViewController.kLargeFlagWidth)
-      flagVc.flagWidthConstraint!.isActive = true
-      flagVc.view.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
+      let top = flagVc.view.topAnchor.constraint(equalTo: self.view.topAnchor)
       
       // Flag View constraints: position (will be changed as Flag moves)
       let freqPosition = CGFloat(flagVc.slice!.frequency - self._start) / self._hzPerUnit
       let flagPosition = freqPosition - FlagViewController.kLargeFlagWidth - FlagViewController.kFlagOffset
       flagVc.flagXPositionConstraint = flagVc.view.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: flagPosition)
-      flagVc.flagXPositionConstraint!.identifier = "FlagPosition"
-      flagVc.flagXPositionConstraint!.isActive = true
+
+      // activate Flag constraints
+      let constraints = [flagVc.flagHeightConstraint!, flagVc.flagWidthConstraint!, flagVc.flagXPositionConstraint!, top]
+      NSLayoutConstraint.activate(constraints)
 
       // Controls View constraints: height, leading, trailing & top of the Controls (constants)
       flagVc.controlsHeightConstraint = controlsVc.view.heightAnchor.constraint(equalToConstant: ControlsViewController.kControlsHeight)
-      flagVc.controlsHeightConstraint!.isActive = true
-      controlsVc.view.leadingAnchor.constraint(equalTo: flagVc.view.leadingAnchor).isActive = true
-      controlsVc.view.trailingAnchor.constraint(equalTo: flagVc.view.trailingAnchor).isActive = true
-      controlsVc.view.topAnchor.constraint(equalTo: flagVc.view.bottomAnchor).isActive = true
+      let leadingConstraint = controlsVc.view.leadingAnchor.constraint(equalTo: flagVc.view.leadingAnchor)
+      let trailingConstraint = controlsVc.view.trailingAnchor.constraint(equalTo: flagVc.view.trailingAnchor)
+      let topConstraint = controlsVc.view.topAnchor.constraint(equalTo: flagVc.view.bottomAnchor)
+
+      // activate Controls constraints
+      let controlsConstraints: [NSLayoutConstraint] = [flagVc.controlsHeightConstraint!, leadingConstraint, trailingConstraint, topConstraint]
+      NSLayoutConstraint.activate(controlsConstraints)
     }
   }
   /// Remove the Flag on the specified Slice
