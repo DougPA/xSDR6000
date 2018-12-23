@@ -53,9 +53,9 @@ public final class PanadapterRenderer       : NSObject {
   }
   
   private struct Constants {
-    var delta                               : Float                         // distance between x coordinates
-    var height                              : Float                         // height of view (yPixels)
-    var maxNumberOfBins                     : UInt32                        // number of DataFrame bins
+    var delta                               : Float = 0                     // distance between x coordinates
+    var height                              : Float = 0                     // height of view (yPixels)
+    var maxNumberOfBins                     : UInt32 = 0                    // number of DataFrame bins
   }
   
   private struct Color {
@@ -75,7 +75,6 @@ public final class PanadapterRenderer       : NSObject {
   
   private var _maxNumberOfBins              : Int = PanadapterRenderer.kMaxIntensities
   
-  private var _constants                    : Constants?
   private var _colorArray                   = [Color](repeating: Color(spectrumColor: NSColor.yellow.float4Color), count: 2)
   
   private var _commandQueue                 : MTLCommandQueue!
@@ -88,10 +87,15 @@ public final class PanadapterRenderer       : NSObject {
   
   // ----- Backing properties - SHOULD NOT BE ACCESSED DIRECTLY -----------------------------------
   //
+  private var __constants                   = Constants()
   private var __currentFrameIndex           = 0
   private var __numberOfBins                : Int = PanadapterRenderer.kMaxIntensities
   //
   // ----- Backing properties - SHOULD NOT BE ACCESSED DIRECTLY -----------------------------------
+  
+  private var _constants: Constants {
+    get { return _panQ.sync { __constants } }
+    set { _panQ.sync( flags: .barrier){ __constants = newValue } } }
   
   private var _currentFrameIndex: Int {
     get { return _panQ.sync { __currentFrameIndex } }
@@ -144,22 +148,13 @@ public final class PanadapterRenderer       : NSObject {
   // MARK: - Internal methods
   
   func updateConstants(size: CGSize) {
-    // Constants struct mapping
-    //  <--- 4 ---> <--- 4 ---> <--- 4 ---> <-- empty -->              delta height maxNumberOfBins
+    // Constants struct mapping (bytes)
+    //  <--- 4 ---> <--- 4 ---> <--- 4 ---> <-- empty -->              delta, height, maxNumberOfBins
     
-    // does the struct exist?
-    if _constants == nil {
-      
-      // NO, create it
-      _constants = Constants(delta: Float(1.0 / (size.width - 1.0)),
-                             height: Float(size.height),
-                             maxNumberOfBins: UInt32(_maxNumberOfBins))
-    } else {
-      // YES, populate it
-      _constants!.delta = Float(1.0 / (size.width - 1.0))
-      _constants!.height = Float(size.height)
-      _constants!.maxNumberOfBins = UInt32(_maxNumberOfBins)
-    }
+    // populate it
+    _constants.delta = Float(1.0 / (size.width - 1.0))
+    _constants.height = Float(size.height)
+    _constants.maxNumberOfBins = UInt32(_maxNumberOfBins)
   }
   
   func updateColor(spectrumColor: NSColor, fillLevel: Int, fillColor: NSColor) {

@@ -83,9 +83,9 @@ public final class WaterfallRenderer: NSObject {
   }
   
   struct Constants {
-    var blackLevel                          : UInt16                        // black level
-    var colorGain                           : Float                         // color gain, 0.0 -> 1.0
-    var lineNumber                          : UInt32                        // line in Texture
+    var blackLevel                          : UInt16 = 0                    // black level
+    var colorGain                           : Float = 0                     // color gain, 0.0 -> 1.0
+    var lineNumber                          : UInt32 = 0                    // line in Texture
   }
   
   struct Params {
@@ -119,15 +119,7 @@ public final class WaterfallRenderer: NSObject {
   
   private var _metalView                    : MTKView!
   private var _device                       : MTLDevice!
-  
-  private var _constants                    : Constants!
-  
   private let _q                            = DispatchQueue(label: Api.kId + ".waterfallRenderQ", qos: .userInteractive)
-
-  private var _constantsX                   : Constants {
-    get { return _q.sync { _constants } }
-    set { _q.sync(flags: .barrier) { _constants = newValue } }
-  }
   
   private var _constantsBuffer              : MTLBuffer!
   
@@ -137,7 +129,6 @@ public final class WaterfallRenderer: NSObject {
   
   private var _colorTexture                 : MTLTexture!                   //
   private var _gradientTexture              : MTLTexture!                   // color gradient
-//  private var _intensityTextures            = [MTLTexture]()                // intensities array
   private var _parameters                   = [Params]()                    // draw parameters array
 
   private var _samplerState                 : MTLSamplerState!              // sampler for draw texture
@@ -153,22 +144,25 @@ public final class WaterfallRenderer: NSObject {
     MTLSizeMake(WaterfallRenderer.kTextureWidth / self._threadGroupCount.width, WaterfallRenderer.kTextureHeight / self._threadGroupCount.height, 1)
   }()
   
-//  private var _textureTopLine               = 0                             // current top Line in _drawTexture
-  
   private var _frameBoundarySemaphore       = DispatchSemaphore(value: WaterfallRenderer.kMaxTextures)
   private let _waterQ                       = DispatchQueue(label: ".waterQ", attributes: [.concurrent])
   
   // ----- Backing properties - SHOULD NOT BE ACCESSED DIRECTLY -----------------------------------
   //
-  private var __frameSize                     = CGSize(width: 0.0, height: 0.0)
-  private var __textureIndex                  = 0                             // mod kMaxTextures
+  private var __constants                   = Constants()
+  private var __frameSize                   = CGSize(width: 0.0, height: 0.0)
+  private var __textureIndex                = 0                             // mod kMaxTextures
 
-  private var __firstBinFreq                 : CGFloat = 0                   // Frequency of first Bin in Hz
-  private var __binBandwidth                 : CGFloat = 0                   // Bandwidth of a single bin in Hz
-  private var __autoBlackLevel               : UInt16 = 0                    // Blacklevel supplied by Radio
+  private var __firstBinFreq                : CGFloat = 0                   // Frequency of first Bin in Hz
+  private var __binBandwidth                : CGFloat = 0                   // Bandwidth of a single bin in Hz
+  private var __autoBlackLevel              : UInt16 = 0                    // Blacklevel supplied by Radio
   //
   // ----- Backing properties - SHOULD NOT BE ACCESSED DIRECTLY -----------------------------------
   
+  private var _constants                    : Constants {
+    get { return _q.sync { __constants } }
+    set { _q.sync(flags: .barrier) { __constants = newValue } }
+  }
   private var _firstBinFreq: CGFloat {
     get { return _waterQ.sync { __firstBinFreq } }
     set { _waterQ.sync( flags: .barrier){ __firstBinFreq = newValue } } }
@@ -211,7 +205,7 @@ public final class WaterfallRenderer: NSObject {
     
     super.init()
     
-    _constantsX = Constants(blackLevel: 0, colorGain: 0.0, lineNumber: 0 )
+//    _constants = Constants(blackLevel: 0, colorGain: 0.0, lineNumber: 0 )
 
     // set the Metal view Clear color
     clearColor(color)
@@ -231,8 +225,8 @@ public final class WaterfallRenderer: NSObject {
     
     let blackLevel = ( autoBlack ? _autoBlackLevel : UInt16( Float(blackLevel)/100.0 * Float(UInt16.max) ))
     
-    _constantsX.blackLevel = blackLevel
-    _constantsX.colorGain = Float(colorGain)/100.0
+    _constants.blackLevel = blackLevel
+    _constants.colorGain = Float(colorGain)/100.0
     
     // Mapping of the Constants struct
     //  <------ 16 ------>                      blackLevel
@@ -243,7 +237,7 @@ public final class WaterfallRenderer: NSObject {
     //      NOTE: simple copy, only possible due to the arrangement of the struct with no padding
     ///
     let bufferPtr = _constantsBuffer!.contents()
-    memcpy(bufferPtr, &_constants, MemoryLayout.stride(ofValue: _constantsX))
+    memcpy(bufferPtr, &_constants, MemoryLayout.stride(ofValue: _constants))
   }  
   /// Copy constants to the Constants Buffer
   ///
@@ -260,7 +254,7 @@ public final class WaterfallRenderer: NSObject {
     //      NOTE: simple copy, only possible due to the arrangement of the struct with no padding
     ///
     let bufferPtr = _constantsBuffer!.contents()
-    memcpy(bufferPtr, &_constants, MemoryLayout.stride(ofValue: _constantsX))
+    memcpy(bufferPtr, &_constants, MemoryLayout.stride(ofValue: _constants))
   }
   /// Change bands & adjust the Waterfall
   ///
@@ -367,7 +361,7 @@ public final class WaterfallRenderer: NSObject {
     }
     
     // create the Uniforms buffer
-    _constantsBuffer = _device.makeBuffer(length: MemoryLayout.stride(ofValue: _constantsX))
+    _constantsBuffer = _device.makeBuffer(length: MemoryLayout.stride(ofValue: _constants))
     
     // create and save a Command Queue object
     _commandQueue = _device.makeCommandQueue()
