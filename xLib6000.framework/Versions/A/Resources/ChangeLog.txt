@@ -1,5 +1,10 @@
 xLib6000 Change Log
 
+v2.2.2
+
+TcpManager.swift - refactored _isWan & _seqNum vars to eliminate race issue
+UdpManager.swift - refactored _udpSuccessfulRegistration var to eliminate race issue
+
 v2.2.1
 
 Profile.swift - refactored profiles to be a dynamic model rather than a static one
@@ -7,6 +12,18 @@ ProfileCommands.swift - changed delete(_:name:callback:) to a class func
 ProfileCommands.swift - changed save(_:name:callback:) to a class func
 Radio.swift - in parseStatus(_:), in .profile changed parseProperties to parseStatus
 Notifications.swift - removed all profile related notifications, add .profileHasBeenAdded & .profileWillBeRemoved
+Profile.swift - changed "list' to be get-only
+Radio.swift - changed _filterCwAutoLevel, _filterVoiceAutoLevel, _filterDigitalAutoLevel from Int to Bool
+Radio.swift - changed _filter--AutoLevel to _filter--AutoEnabled
+RadioCommands.swift - changed filter--AutoLevel to filter--AutoEnabled
+Radio.swift - corrected parseFilterProperties(_:), removed -- = false from .level case
+RadioCommands.swift - added class calibrate(callback:)
+Radio.swift - changed _startOffset to _startCalibration
+RadioCommands.swift - changed startOffset to startCalibration, corrected setter
+Radio.swift - changed _calFreq to be in Hz (not MHz)
+ProfileCommands.swift - corrected profileCmd(_:) and var selection
+RadioCommands.swift - renamed radioStaticCmd(_:_:_:) to staticNetParamsSet(callback:)
+TcpManager.swift - protected var _isWan from potential race condition
 
 v2.1.1
 

@@ -539,7 +539,7 @@ SWIFT_CLASS("_TtC8xLib60007Profile")
 
 
 @interface Profile (SWIFT_EXTENSION(xLib6000))
-@property (nonatomic, copy) NSArray<NSString *> * _Nonnull list;
+@property (nonatomic, readonly, copy) NSArray<NSString *> * _Nonnull list;
 @end
 
 @class Transmit;
@@ -548,7 +548,8 @@ SWIFT_CLASS("_TtC8xLib60007Profile")
 
 SWIFT_CLASS("_TtC8xLib60005Radio")
 @interface Radio : NSObject
-@property (nonatomic, readonly, copy) NSString * _Nonnull radioVersion;
+@property (nonatomic, readonly, copy) NSString * _Nonnull version;
+@property (nonatomic, readonly, copy) NSString * _Nonnull serialNumber;
 @property (nonatomic, readonly, strong) Atu * _Null_unspecified atu;
 @property (nonatomic, readonly, strong) Cwx * _Null_unspecified cwx;
 @property (nonatomic, readonly, strong) Gps * _Null_unspecified gps;
@@ -583,17 +584,17 @@ SWIFT_CLASS("_TtC8xLib60005Radio")
 @property (nonatomic) BOOL fullDuplexEnabled;
 @property (nonatomic) BOOL remoteOnEnabled;
 @property (nonatomic) NSInteger rttyMark;
+@property (nonatomic) BOOL snapTuneEnabled;
 @property (nonatomic) BOOL tnfsEnabled;
 @property (nonatomic) NSInteger backlight;
+@property (nonatomic) BOOL startCalibration;
 @property (nonatomic, copy) NSString * _Nonnull callsign;
 @property (nonatomic) BOOL muteLocalAudio;
 @property (nonatomic, copy) NSString * _Nonnull nickname;
 @property (nonatomic, copy) NSString * _Nonnull radioScreenSaver;
-@property (nonatomic) BOOL snapTuneEnabled;
-@property (nonatomic) BOOL startOffset;
-@property (nonatomic) NSInteger filterCwAutoLevel;
-@property (nonatomic) NSInteger filterDigitalAutoLevel;
-@property (nonatomic) NSInteger filterVoiceAutoLevel;
+@property (nonatomic) BOOL filterCwAutoEnabled;
+@property (nonatomic) BOOL filterDigitalAutoEnabled;
+@property (nonatomic) BOOL filterVoiceAutoEnabled;
 @property (nonatomic) NSInteger filterCwLevel;
 @property (nonatomic) NSInteger filterDigitalLevel;
 @property (nonatomic) NSInteger filterVoiceLevel;
