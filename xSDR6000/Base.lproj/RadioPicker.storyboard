@@ -521,7 +521,7 @@ Gw
                                 </textFieldCell>
                             </textField>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vns-aV-4bu">
-                                <rect key="frame" x="14" y="13" width="75" height="32"/>
+                                <rect key="frame" x="14" y="13" width="74" height="32"/>
                                 <buttonCell key="cell" type="push" title="Close" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="xnb-yS-vyC">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -556,9 +556,28 @@ DQ
                                     <action selector="loginButton:" target="eRj-ml-uw6" id="bnU-tf-s8k"/>
                                 </connections>
                             </button>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="aIF-Tm-gF7">
+                                <rect key="frame" x="215" y="13" width="66" height="32"/>
+                                <buttonCell key="cell" type="push" title="Test" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Y25-Ao-BeD">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="testButton:" target="eRj-ml-uw6" id="1Cm-NE-mco"/>
+                                </connections>
+                            </button>
+                            <button verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Eda-F3-LYt" userLabel="Indicator">
+                                <rect key="frame" x="283" y="20" width="20" height="20"/>
+                                <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSStatusUnavailable" imagePosition="only" alignment="center" alternateImage="NSStatusAvailable" enabled="NO" imageScaling="proportionallyDown" inset="2" id="Fcn-jJ-WvW">
+                                    <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                            </button>
                         </subviews>
                         <constraints>
                             <constraint firstItem="KP2-uL-fNW" firstAttribute="leading" secondItem="rh3-M6-Bta" secondAttribute="trailing" constant="8" symbolic="YES" id="0BD-I2-h6p"/>
+                            <constraint firstAttribute="bottom" secondItem="aIF-Tm-gF7" secondAttribute="bottom" constant="20" id="1Bc-EQ-wCL"/>
+                            <constraint firstItem="Eda-F3-LYt" firstAttribute="leading" secondItem="aIF-Tm-gF7" secondAttribute="trailing" constant="8" id="1CV-gc-cnr"/>
                             <constraint firstAttribute="trailing" secondItem="ENI-0x-j0P" secondAttribute="trailing" constant="22" id="2Is-GR-5CS"/>
                             <constraint firstItem="anK-WM-Pvl" firstAttribute="leading" secondItem="rh3-M6-Bta" secondAttribute="leading" id="3e1-Ee-4y1"/>
                             <constraint firstItem="gge-Ft-Fu1" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="vns-aV-4bu" secondAttribute="trailing" constant="12" symbolic="YES" id="50x-nD-abJ"/>
@@ -574,9 +593,11 @@ DQ
                             <constraint firstItem="g3k-uh-G0R" firstAttribute="trailing" secondItem="gge-Ft-Fu1" secondAttribute="trailing" id="Mk1-Xm-hbM"/>
                             <constraint firstItem="XwJ-jh-cYO" firstAttribute="leading" secondItem="Nnb-zA-OqE" secondAttribute="leading" constant="20" symbolic="YES" id="Nce-f1-MYU"/>
                             <constraint firstItem="rh3-M6-Bta" firstAttribute="top" secondItem="anK-WM-Pvl" secondAttribute="bottom" constant="11" id="OB2-oZ-gwN"/>
+                            <constraint firstItem="aIF-Tm-gF7" firstAttribute="leading" secondItem="vns-aV-4bu" secondAttribute="trailing" constant="139" id="OOJ-Hc-yJA"/>
                             <constraint firstAttribute="trailing" secondItem="g3k-uh-G0R" secondAttribute="trailing" constant="20" symbolic="YES" id="OVs-I0-yBV"/>
                             <constraint firstItem="vns-aV-4bu" firstAttribute="top" secondItem="g3k-uh-G0R" secondAttribute="bottom" constant="20" symbolic="YES" id="PDV-cP-S1I"/>
                             <constraint firstItem="g3k-uh-G0R" firstAttribute="top" secondItem="ENI-0x-j0P" secondAttribute="bottom" constant="30" id="Qje-08-VVK"/>
+                            <constraint firstAttribute="bottom" secondItem="Eda-F3-LYt" secondAttribute="bottom" constant="20" id="SrP-nh-Bpq"/>
                             <constraint firstItem="ENI-0x-j0P" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="kM1-Uc-vo9" secondAttribute="trailing" constant="8" symbolic="YES" id="USy-OL-rff"/>
                             <constraint firstItem="KP2-uL-fNW" firstAttribute="top" secondItem="kM1-Uc-vo9" secondAttribute="bottom" constant="22" id="XWZ-G3-1oh"/>
                             <constraint firstItem="g3k-uh-G0R" firstAttribute="top" secondItem="XwJ-jh-cYO" secondAttribute="bottom" constant="20" id="aFH-Z0-QJr"/>
@@ -585,6 +606,7 @@ DQ
                             <constraint firstItem="anK-WM-Pvl" firstAttribute="leading" secondItem="XwJ-jh-cYO" secondAttribute="trailing" constant="24" id="fng-lA-YkU"/>
                             <constraint firstItem="ENI-0x-j0P" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="gge-Ft-Fu1" secondAttribute="leading" id="kOo-qB-4jk"/>
                             <constraint firstAttribute="bottom" secondItem="vns-aV-4bu" secondAttribute="bottom" constant="20" symbolic="YES" id="lz2-lW-2Jo"/>
+                            <constraint firstItem="aIF-Tm-gF7" firstAttribute="centerX" secondItem="Nnb-zA-OqE" secondAttribute="centerX" id="oug-QK-TsT"/>
                             <constraint firstItem="rh3-M6-Bta" firstAttribute="baseline" secondItem="KP2-uL-fNW" secondAttribute="firstBaseline" id="vC9-SD-tzV"/>
                             <constraint firstItem="XwJ-jh-cYO" firstAttribute="leading" secondItem="g3k-uh-G0R" secondAttribute="leading" id="y8E-PI-mEh"/>
                         </constraints>
@@ -596,6 +618,8 @@ DQ
                         <outlet property="_nameLabel" destination="kM1-Uc-vo9" id="MAK-hb-8I5"/>
                         <outlet property="_radioTableView" destination="2Jy-hn-f1y" id="yGC-8V-vUr"/>
                         <outlet property="_selectButton" destination="gge-Ft-Fu1" id="qJO-yA-NBl"/>
+                        <outlet property="_testButton" destination="aIF-Tm-gF7" id="MgD-0x-zbC"/>
+                        <outlet property="_testIndicator" destination="Eda-F3-LYt" id="QLt-L2-vvT"/>
                     </connections>
                 </viewController>
                 <customObject id="GP3-Lb-EiM" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
@@ -645,4 +669,8 @@ Gw
             <point key="canvasLocation" x="364" y="-784.5"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="NSStatusAvailable" width="16" height="16"/>
+        <image name="NSStatusUnavailable" width="16" height="16"/>
+    </resources>
 </document>
