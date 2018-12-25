@@ -4,6 +4,14 @@ v2.2.2
 
 TcpManager.swift - refactored _isWan & _seqNum vars to eliminate race issue
 UdpManager.swift - refactored _udpSuccessfulRegistration var to eliminate race issue
+RadioParameters.swift - changed public var requiresAdditionalLicense from String to Bool
+WanServer.swift - in public struct WanTestConnectionResults, changed formatting in String()
+WanServer.swift - corrected parseTestConnectionResults(_:)
+WanServer.swift - corrected radioSerial entry in private enum RadioTestConnectionResultsToken
+Vita.swift - changed requiresAdditionalLicense from String to Bool
+Api.swift - added :isWan:wanHandle to connect(_:clientName:isGui:primaryCmdTypes:secondaryCmdTypes:subscriptionCmdTypes:)
+
+
 
 v2.2.1
 
