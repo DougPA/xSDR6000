@@ -570,11 +570,11 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     // fail if no Radio selected
     guard let selectedRadio = radio else { return false }
     
-    _api.isWan = isWan
-    _api.wanConnectionHandle = wanHandle
+//    _api.isWan = isWan
+//    _api.wanConnectionHandle = wanHandle
     
     // attempt to connect to it
-    return _api.connect(selectedRadio, clientName: kClientName, isGui: true)
+    return _api.connect(selectedRadio, clientName: kClientName, isGui: true, isWan: isWan, wanHandle: wanHandle)
   }
   /// Stop the active Radio
   ///
