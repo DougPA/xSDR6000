@@ -43,6 +43,8 @@ final class WANRadioPickerViewController    : NSViewController, NSTableViewDeleg
   @IBOutlet private weak var _nameLabel     : NSTextField!
   @IBOutlet private weak var _callLabel     : NSTextField!
   @IBOutlet private weak var _loginButton   : NSButton!
+  @IBOutlet private weak var _testIndicator : NSButton!
+  @IBOutlet private weak var _testButton    : NSButton!
   
   private var _api                          = Api.sharedInstance
   private let _log                          = OSLog(subsystem: Api.kDomainId + "." + kClientName, category: "WanRadioPickerVC")
@@ -99,6 +101,7 @@ final class WANRadioPickerViewController    : NSViewController, NSTableViewDeleg
     _loginButton.title = kLoginTitle
     _nameLabel.stringValue = ""
     _callLabel.stringValue = ""
+    _testIndicator.boolState = false
 
     // get a reference to the Tab view controller (the "presented" vc)
     _parentVc = parent!
@@ -212,6 +215,15 @@ final class WANRadioPickerViewController    : NSViewController, NSTableViewDeleg
     
     // Log In / Out of SmartLink
     logInOut()
+  }
+  
+  @IBAction func testButton(_ sender: NSButton) {
+
+    os_log("SmartLInk Test initiated", log: _log, type: .info)
+
+    _testIndicator.boolState = false
+
+    _wanServer?.sendTestConnection(radioSerial: _selectedRadio!.serialNumber)
   }
   
   // ----------------------------------------------------------------------------
@@ -560,10 +572,45 @@ final class WANRadioPickerViewController    : NSViewController, NSTableViewDeleg
   
   /// Received Wan test results
   ///
+  /// - Parameter results:            test results
+  ///
   func wanTestConnectionResultsReceived(results: WanTestConnectionResults) {
     
+    // was it successful?
+    let success = results.forwardTcpPortWorking == true &&
+                  results.forwardUdpPortWorking == true &&
+                  results.upnpTcpPortWorking == false &&
+                  results.upnpUdpPortWorking == false &&
+                  results.natSupportsHolePunch  == false
+    // Log the result
+    os_log("SmartLInk Test completed %{public}@", log: self._log, type: .info, (success ? "successfully" : "with errors") )
+
+    DispatchQueue.main.async {
+      
+      // set the indicator
+      self._testIndicator.boolState = success
+        
+      // Alert the user on failure
+      if !success {
+        
+        let alert = NSAlert()
+        alert.alertStyle = .critical
+        let acc = NSTextField(frame: NSMakeRect(0, 0, 233, 100))
+        acc.stringValue = results.string()
+        acc.isEditable = false
+        acc.drawsBackground = true
+        alert.accessoryView = acc
+        alert.messageText = "SmartLink Test Failure"
+        alert.informativeText = "Check your SmartLink settings"
+        
+        alert.beginSheetModal(for: self.view.window!, completionHandler: { (response) in
+          
+          if response == NSApplication.ModalResponse.alertFirstButtonReturn { return }
+        })
+      }
+    }
   }
-  
+    
   // ----------------------------------------------------------------------------
   // MARK: - Auth0 controller Delegate methods
   
@@ -695,6 +742,8 @@ final class WANRadioPickerViewController    : NSViewController, NSTableViewDeleg
     // is a row is selected?
     if _radioTableView.selectedRow >= 0 {
       
+      _testButton.isEnabled = true
+
       // YES, a row is selected
       _selectedRadio = _availableRemoteRadios[_radioTableView.selectedRow]
       
@@ -704,11 +753,13 @@ final class WANRadioPickerViewController    : NSViewController, NSTableViewDeleg
         isActive = ( activeRadio == _availableRemoteRadios[_radioTableView.selectedRow] && (_api.isWan) )
       }
       _selectButton.title = (isActive ? kDisconnectTitle : kConnectTitle)
-      
     } else {
+      
+      _testButton.isEnabled = false
       
       // NO, no row is selected, set the button titles
       _selectButton.title = kConnectTitle
+      _testIndicator.boolState = false
     }
   }
 }
