@@ -275,7 +275,7 @@ final class PanafallViewController          : NSSplitViewController {
       
     case kCreateTnf:          // tell the Radio to create a new Tnf
       let freq = (sender.representedObject! as! NSNumber).intValue
-      Tnf.create(frequency: freq.hzToMhz())
+      Tnf.create(frequency: freq.hzToMhz)
       
     case kRemoveTnf:          // tell the Radio to remove the Tnf
       let tnf = sender.representedObject as! Tnf
