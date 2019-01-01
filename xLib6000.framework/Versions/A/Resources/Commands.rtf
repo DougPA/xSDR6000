@@ -1,4 +1,4 @@
-{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
+{\rtf1\ansi\ansicpg1252\cocoartf1671\cocoasubrtf200
 {\fonttbl\f0\fmodern\fcharset0 CourierNewPSMT;\f1\fmodern\fcharset0 CourierNewPS-BoldMT;}
 {\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
 {\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
@@ -45,8 +45,8 @@ as\
    "atu clear"\
    "atu bypass"\
    "atu start"\
-   "atu set " + .memoriesEnabled.rawValue + "=\\(value.asNumber())"\
-   "atu set " + .enabled.rawValue + "=\\(value.asNumber())"\
+   "atu set " + .memoriesEnabled.rawValue + "=\\(value.asNumber)"\
+   "atu set " + .enabled.rawValue + "=\\(value.asNumber)"\
 \
 
 \f1\b AudioStreamCommands:
@@ -82,7 +82,7 @@ as\
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 \cf0 	"cwx " + "\cf2 delay\cf0 " + " \\(value)"\
 	\
-	"cwx " + .qskEnabled.rawValue + " \\(value.asNumber())"\
+	"cwx " + .qskEnabled.rawValue + " \\(value.asNumber)"\
 	"cwx " + .wpm.rawValue + " \\(value)"\
 	"cwx " + "clear")\
 	"cwx " + "erase \\(numberOfChars)")\
@@ -116,7 +116,7 @@ as\
     case enabled                            = "mode"\
   \}\
 	\
-	"eq " + "\\(id) " + .enabled.rawValue + "=\\(newValue.asNumber())"\
+	"eq " + "\\(id) " + .enabled.rawValue + "=\\(newValue.asNumber)"\
 	"eq " + "\\(id) " + .level63Hz.rawValue + "=\\(newValue)"\
 	"eq " + "\\(id) " + .level125Hz.rawValue + "=\\(newValue)"\
 	"eq " + "\\(id) " + .level250Hz.rawValue + "=\\(newValue)"\
@@ -156,8 +156,8 @@ as\
   \
 	"interlock " + .accTxEnabled.rawValue + "=\\(newValue.asLetter())"\
   	"interlock " + .accTxDelay.rawValue + "=\\(newValue)"\
-  	"interlock " + .accTxReqEnabled.rawValue + "=\\(newValue.asNumber())"\
-  	"interlock " + .accTxReqPolarity.rawValue + "=\\(newValue.asNumber())"\
+  	"interlock " + .accTxReqEnabled.rawValue + "=\\(newValue.asNumber)"\
+  	"interlock " + .accTxReqPolarity.rawValue + "=\\(newValue.asNumber)"\
   	"interlock " + .rcaTxReqEnabled.rawValue + "=\\(newValue.asLetter())"\
   	"interlock " + .rcaTxReqPolarity.rawValue + "=\\(newValue.asLetter())"\
   	"interlock " + .timeout.rawValue + "=\\(newValue)"\
@@ -239,7 +239,7 @@ as\
   	"memory set " + "\\(id) " + .rfPower.rawValue + "=\\(value)"\
   	"memory set " + "\\(id) " + .rttyMark.rawValue + "=\\(value)"\
   	"memory set " + "\\(id) " + .rttyShift.rawValue + "=\\(value)"\
-  	"memory set " + "\\(id) " + .squelchEnabled.rawValue + "=\\(value.asNumber())"\
+  	"memory set " + "\\(id) " + .squelchEnabled.rawValue + "=\\(value.asNumber)"\
   	"memory set " + "\\(id) " + .squelchLevel.rawValue + "=\\(value)"\
   	"memory set " + "\\(id) " + .step.rawValue + "=\\(value)"\
   	"memory set " + "\\(id) " + .toneMode.rawValue + "=\\(value)"\
@@ -266,8 +266,8 @@ as\
   \}\
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
 \cf0 \
-   "remote_audio " + .remoteRxOn.rawValue + "\\(value.asNumber())"\
-   "remote_audio " + .remoteTxOn.rawValue + "\\(value.asNumber())"\
+   "remote_audio " + .remoteRxOn.rawValue + "\\(value.asNumber)"\
+   "remote_audio " + .remoteTxOn.rawValue + "\\(value.asNumber)"\
 \
 
 \f1\b PanadapterCommands:
@@ -313,18 +313,18 @@ as\
    "display panafall set " + "\\(id.hex)" + .center.rawValue + "=\\(newValue.hzToMhz())"\
    "display panafall set " + "\\(id.hex)" + .daxIqChannel.rawValue + "=\\(value)"\
    "display panafall set " + "\\(id.hex)" + .fps.rawValue + "=\\(value)"\
-   "display panafall set " + "\\(id.hex)" + .n1mmSpectrumEnable.rawValue + "=\\(newValue.asNumber())"\
+   "display panafall set " + "\\(id.hex)" + .n1mmSpectrumEnable.rawValue + "=\\(newValue.asNumber)"\
    "display panafall set " + "\\(id.hex)" + .n1mmAddress.rawValue + "=\\(value)"\
    "display panafall set " + "\\(id.hex)" + .n1mmPort.rawValue + "=\\(value)"\
    "display panafall set " + "\\(id.hex)" + .n1mmRadio.rawValue + "=\\(value)"\
-   "display panafall set " + "\\(id.hex)" + .loopAEnabled.rawValue + "=\\(newValue.asNumber())"\
-   "display panafall set " + "\\(id.hex)" + .loopBEnabled.rawValue + "=\\(newValue.asNumber())"\
+   "display panafall set " + "\\(id.hex)" + .loopAEnabled.rawValue + "=\\(newValue.asNumber)"\
+   "display panafall set " + "\\(id.hex)" + .loopBEnabled.rawValue + "=\\(newValue.asNumber)"\
    "display panafall set " + "\\(id.hex)" + .maxDbm.rawValue + "=\\(value)"\
    "display panafall set " + "\\(id.hex)" + .minDbm.rawValue + "=\\(value)"\
    "display panafall set " + "\\(id.hex)" + .rfGain.rawValue + "=\\(value)"\
    "display panafall set " + "\\(id.hex)" + .rxAnt.rawValue + "=\\(value)"\
-   "display panafall set " + "\\(id.hex)" + .weightedAverageEnabled.rawValue + "=\\(newValue.asNumber())"\
-   "display panafall set " + "\\(id.hex)" + .wnbEnabled.rawValue + "=\\(newValue.asNumber())"\
+   "display panafall set " + "\\(id.hex)" + .weightedAverageEnabled.rawValue + "=\\(newValue.asNumber)"\
+   "display panafall set " + "\\(id.hex)" + .wnbEnabled.rawValue + "=\\(newValue.asNumber)"\
    "display panafall set " + "\\(id.hex)" + .wnbLevel.rawValue + "=\\(value)"\
    \
 	"display panafall set " + "\\(id.hex)" + "\cf2 xpixels\cf0 " + "=\\(value)"\
@@ -357,12 +357,12 @@ as\
   Api.Command.antList.rawValue, replyTo: callback == nil ? defaultReplyHandler : callback)\
   Api.Command.clientProgram.rawValue + "low_bw_connect", replyTo: callback)\
   Api.Command.clientProgram.rawValue + "start_persistence off", replyTo: callback)\
-  Transmit.kCwCmd + "key immediate" + " \\(state.asNumber())", replyTo: callback)\
+  Transmit.kCwCmd + "key immediate" + " \\(state.asNumber)", replyTo: callback)\
   return Radio.kLicenseCmd + "refresh", replyTo: callback)\
   Radio.kCmd + RadioToken.staticNetParams.rawValue + " reset", replyTo: callback)\
-  Opus.kCmd + Opus.Token.remoteRxOn.rawValue + " \\(value.asNumber())", replyTo: callback)\
+  Opus.kCmd + Opus.Token.remoteRxOn.rawValue + " \\(value.asNumber)", replyTo: callback)\
   Radio.kCmd + RadioToken.staticNetParams.rawValue + " reset", replyTo: callback)\
-  Radio.kXmitCmd + " \\(value.asNumber())", replyTo: callback)\
+  Radio.kXmitCmd + " \\(value.asNumber)", replyTo: callback)\
   Radio.kStreamRemoveCmd + "\\(id.hex)", replyTo: callback)\
   Radio.kUptimeCmd, replyTo: callback == nil ? defaultReplyHandler : callback)\
   Xvtr.kRemoveCmd + "\\(id)", replyTo: callback)\
@@ -457,7 +457,7 @@ as\
   \}\
   	\
 	"audio client 0 slice " + "0x\\(id)" + " gain" + " \\(value)"\
-  	"audio client 0 slice " + "0x\\(id)" + " mute" + " \\(value.asNumber())"\
+  	"audio client 0 slice " + "0x\\(id)" + " mute" + " \\(value.asNumber)"\
   	"audio client 0 slice " + "0x\\(id)" + " pan" + " \\(value)"\
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
 \cf0 \
@@ -468,53 +468,53 @@ as\
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 \cf0 	"slice " + "\\(newValue == true ? "lock" : "unlock") + " 0x\\(id)"\
 \
-   "slice set " + "0x\\(id)" + .active.rawValue + "=\\(newValue.asNumber())"\
+   "slice set " + "0x\\(id)" + .active.rawValue + "=\\(newValue.asNumber)"\
    "slice set " + "0x\\(id)" + .agcMode.rawValue + "=\\(newValue)"\
    "slice set " + "0x\\(id)" + .agcOffLevel.rawValue + "=\\(newValue)"\
    "slice set " + "0x\\(id)" + .agcThreshold.rawValue + "=\\(newValue)"\
-   "slice set " + "0x\\(id)" + .anfEnabled.rawValue + "=\\(newValue.asNumber())"\
+   "slice set " + "0x\\(id)" + .anfEnabled.rawValue + "=\\(newValue.asNumber)"\
    "slice set " + "0x\\(id)" + .anfLevel.rawValue + "=\\(newValue)" \}\
-   "slice set " + "0x\\(id)" + .apfEnabled.rawValue + "=\\(newValue.asNumber())"\
+   "slice set " + "0x\\(id)" + .apfEnabled.rawValue + "=\\(newValue.asNumber)"\
    "slice set " + "0x\\(id)" + .apfLevel.rawValue + "=\\(newValue)"\
    "slice set " + "0x\\(id)" + .daxChannel.rawValue + "=\\(newValue)"\
-   "slice set " + "0x\\(id)" + .dfmPreDeEmphasisEnabled.rawValue + "=\\(newValue.asNumber())"\
+   "slice set " + "0x\\(id)" + .dfmPreDeEmphasisEnabled.rawValue + "=\\(newValue.asNumber)"\
    "slice set " + "0x\\(id)" + .digitalLowerOffset.rawValue + "=\\(newValue)"\
    "slice set " + "0x\\(id)" + .digitalUpperOffset.rawValue + "=\\(newValue)"\
-   "slice set " + "0x\\(id)" + .diversityEnabled.rawValue + "=\\(newValue.asNumber())"\
+   "slice set " + "0x\\(id)" + .diversityEnabled.rawValue + "=\\(newValue.asNumber)"\
    "slice set " + "0x\\(id)" + .fmDeviation.rawValue + "=\\(newValue)"\
    "slice set " + "0x\\(id)" + .fmRepeaterOffset.rawValue + "=\\(newValue)"\
-   "slice set " + "0x\\(id)" + .fmToneBurstEnabled.rawValue + "=\\(newValue.asNumber())"\
+   "slice set " + "0x\\(id)" + .fmToneBurstEnabled.rawValue + "=\\(newValue.asNumber)"\
    "slice set " + "0x\\(id)" + .fmToneFreq.rawValue + "=\\(newValue)"\
    "slice set " + "0x\\(id)" + .fmToneMode.rawValue + "=\\(newValue)"\
-   "slice set " + "0x\\(id)" + .loopAEnabled.rawValue + "=\\(newValue.asNumber())"\
-   "slice set " + "0x\\(id)" + .loopBEnabled.rawValue + "=\\(newValue.asNumber())"\
+   "slice set " + "0x\\(id)" + .loopAEnabled.rawValue + "=\\(newValue.asNumber)"\
+   "slice set " + "0x\\(id)" + .loopBEnabled.rawValue + "=\\(newValue.asNumber)"\
    "slice set " + "0x\\(id)" + .mode.rawValue + "=\\(newValue)"\
-   "slice set " + "0x\\(id)" + .nbEnabled.rawValue + "=\\(newValue.asNumber())"\
+   "slice set " + "0x\\(id)" + .nbEnabled.rawValue + "=\\(newValue.asNumber)"\
    "slice set " + "0x\\(id)" + .nbLevel.rawValue + "=\\(newValue)"\
-   "slice set " + "0x\\(id)" + .nrEnabled.rawValue + "=\\(newValue.asNumber())"\
+   "slice set " + "0x\\(id)" + .nrEnabled.rawValue + "=\\(newValue.asNumber)"\
    "slice set " + "0x\\(id)" + .nrLevel.rawValue + "=\\(newValue)"\
-   "slice set " + "0x\\(id)" + .playbackEnabled.rawValue + "=\\(newValue.asNumber())"\
-   "slice set " + "0x\\(id)" + .recordEnabled.rawValue + "=\\(newValue.asNumber())"\
+   "slice set " + "0x\\(id)" + .playbackEnabled.rawValue + "=\\(newValue.asNumber)"\
+   "slice set " + "0x\\(id)" + .recordEnabled.rawValue + "=\\(newValue.asNumber)"\
    "slice set " + "0x\\(id)" + .repeaterOffsetDirection.rawValue + "=\\(newValue)"\
    "slice set " + "0x\\(id)" + .rfGain.rawValue + "=\\(newValue)"\
-   "slice set " + "0x\\(id)" + .ritEnabled.rawValue + "=\\(newValue.asNumber())"\
+   "slice set " + "0x\\(id)" + .ritEnabled.rawValue + "=\\(newValue.asNumber)"\
    "slice set " + "0x\\(id)" + .ritOffset.rawValue + "=\\(newValue)"\
    "slice set " + "0x\\(id)" + .rttyMark.rawValue + "=\\(newValue)"\
    "slice set " + "0x\\(id)" + .rttyShift.rawValue + "=\\(newValue)"\
    "slice set " + "0x\\(id)" + .rxAnt.rawValue + "=\\(newValue)"\
    "slice set " + "0x\\(id)" + .step.rawValue + "=\\(newValue)"\
    "slice set " + "0x\\(id)" + .stepList.rawValue + "=\\(newValue)"\
-   "slice set " + "0x\\(id)" + .squelchEnabled.rawValue + "=\\(newValue.asNumber())"\
+   "slice set " + "0x\\(id)" + .squelchEnabled.rawValue + "=\\(newValue.asNumber)"\
    "slice set " + "0x\\(id)" + .squelchLevel.rawValue + "=\\(newValue)"\
    "slice set " + "0x\\(id)" + .txAnt.rawValue + "=\\(newValue)"\
-   "slice set " + "0x\\(id)" + .txEnabled.rawValue + "=\\(newValue.asNumber())"\
+   "slice set " + "0x\\(id)" + .txEnabled.rawValue + "=\\(newValue.asNumber)"\
    "slice set " + "0x\\(id)" + .txOffsetFreq.rawValue + "=\\(newValue)"\
-   "slice set " + "0x\\(id)" + .wnbEnabled.rawValue + "=\\(newValue.asNumber())"\
+   "slice set " + "0x\\(id)" + .wnbEnabled.rawValue + "=\\(newValue.asNumber)"\
    "slice set " + "0x\\(id)" + .wnbLevel.rawValue + "=\\(newValue)"\
-   "slice set " + "0x\\(id)" + .xitEnabled.rawValue + "=\\(newValue.asNumber())"\
+   "slice set " + "0x\\(id)" + .xitEnabled.rawValue + "=\\(newValue.asNumber)"\
    "slice set " + "0x\\(id)" + .xitOffset.rawValue + "=\\(newValue)"\
 \
-   "slice tune " + "0x\\(id)" + " \\(value.hzToMhz())" + " autopan=\\(_autoPan.asNumber())"\
+   "slice tune " + "0x\\(id)" + " \\(value.hzToMhz())" + " autopan=\\(_autoPan.asNumber)"\
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
 \cf0 \
 
@@ -536,7 +536,7 @@ as\
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 \cf0 	 "tnf set " + "\\(id) " + .depth.rawValue + "=\\(value)"\
   	 "tnf set " + "\\(id) " + .frequency.rawValue + "=\\(value.hzToMhz())"\
-  	 "tnf set " + "\\(id) " + .permanent.rawValue + "=\\(value.asNumber())"\
+  	 "tnf set " + "\\(id) " + .permanent.rawValue + "=\\(value.asNumber)"\
   	 "tnf set " + "\\(id) " + .width.rawValue + "=\\(value.hzToMhz())"\
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
 \cf0 \
@@ -593,22 +593,22 @@ as\
   \}\
 \
   	"cw " + .cwBreakInDelay.rawValue + " \\(value)"\
-  	"cw " + .cwBreakInEnabled.rawValue + " \\(value.asNumber())"\
-  	"cw " + .cwIambicEnabled.rawValue + " \\(value.asNumber())"\
+  	"cw " + .cwBreakInEnabled.rawValue + " \\(value.asNumber)"\
+  	"cw " + .cwIambicEnabled.rawValue + " \\(value.asNumber)"\
   	"cw " + "mode" + " \\(value)"\
-  	"cw " + .cwlEnabled.rawValue + " \\(value.asNumber())"\
+  	"cw " + .cwlEnabled.rawValue + " \\(value.asNumber)"\
   	"cw " + .cwPitch.rawValue + " \\(value)"\
-  	"cw " + .cwSidetoneEnabled.rawValue + " \\(value.asNumber())"\
+  	"cw " + .cwSidetoneEnabled.rawValue + " \\(value.asNumber)"\
   	"cw " + "wpm" + " \\(value)"\
-  	"cw " + "swap" + " \\(value.asNumber())"\
-  	"cw " + .cwSyncCwxEnabled.rawValue + " \\(value.asNumber())"\
+  	"cw " + "swap" + " \\(value.asNumber)"\
+  	"cw " + .cwSyncCwxEnabled.rawValue + " \\(value.asNumber)"\
   	"cw " + "weight" + " \\(value)"\
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
 \cf0 \
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
-\cf0   	"mic " + "acc" + " \\(value.asNumber())"\
-  	"mic " + "bias" + " \\(value.asNumber())"\
-  	"mic " + "boost" + " \\(value.asNumber())"\
+\cf0   	"mic " + "acc" + " \\(value.asNumber)"\
+  	"mic " + "bias" + " \\(value.asNumber)"\
+  	"mic " + "boost" + " \\(value.asNumber)"\
   	"mic " + "input" + " \\(value)"\
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
 \cf0 \
@@ -618,29 +618,29 @@ as\
 \cf0 \
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 \cf0   	"transmit set " + "am_carrier" + "=\\(value)\
-  	"transmit set " + .companderEnabled.rawValue + "=\\(value.asNumber())"\
+  	"transmit set " + .companderEnabled.rawValue + "=\\(value.asNumber)"\
   	"transmit set " + .companderLevel.rawValue + "=\\(value)"\
-  	"transmit set " + "auto_space" + "=\\(value.asNumber())\
-  	"transmit set " + .daxEnabled.rawValue + "=\\(value.asNumber())"\
-  	"transmit set " + .hwAlcEnabled.rawValue + "=\\(value.asNumber())"\
-  	"transmit set " + .inhibit.rawValue + "=\\(value.asNumber())"\
+  	"transmit set " + "auto_space" + "=\\(value.asNumber)\
+  	"transmit set " + .daxEnabled.rawValue + "=\\(value.asNumber)"\
+  	"transmit set " + .hwAlcEnabled.rawValue + "=\\(value.asNumber)"\
+  	"transmit set " + .inhibit.rawValue + "=\\(value.asNumber)"\
   	"transmit set " + .maxPowerLevel.rawValue + "=\\(value)"\
-  	"transmit set " + .metInRxEnabled.rawValue + "=\\(value.asNumber())"\
+  	"transmit set " + .metInRxEnabled.rawValue + "=\\(value.asNumber)"\
   	"transmit set " + "miclevel" + "=\\(value)\
   	"transmit set " + .rfPower.rawValue + "=\\(value)"\
-  	"transmit set " + .speechProcessorEnabled.rawValue + "=\\(value.asNumber())"\
+  	"transmit set " + .speechProcessorEnabled.rawValue + "=\\(value.asNumber)"\
   	"transmit set " + .speechProcessorLevel.rawValue + "=\\(value)"\
-  	"transmit set " + "ssb_peak_control" + "=\\(value.asNumber())\
+  	"transmit set " + "ssb_peak_control" + "=\\(value.asNumber)\
   	"transmit set " + .tunePower.rawValue + "=\\(value)"\
   	"transmit set " + "filter_high" + "=\\(value)\
   	"transmit set " + "filter_low" + "=\\(value)\
-  	"transmit set " + .txInWaterfallEnabled.rawValue + "=\\(value.asNumber())"\
-  	"transmit set " + "mon" + "=\\(value.asNumber())\
+  	"transmit set " + .txInWaterfallEnabled.rawValue + "=\\(value.asNumber)"\
+  	"transmit set " + "mon" + "=\\(value.asNumber)\
   	"transmit set " + .txMonitorGainCw.rawValue + "=\\(value)"\
   	"transmit set " + .txMonitorGainSb.rawValue + "=\\(value)"\
   	"transmit set " + .txMonitorPanCw.rawValue + "=\\(value)"\
   	"transmit set " + .txMonitorPanSb.rawValue + "=\\(value)"\
-  	"transmit set " + .voxEnabled.rawValue + "=\\(value.asNumber())"\
+  	"transmit set " + .voxEnabled.rawValue + "=\\(value.asNumber)"\
   	"transmit set " + .voxDelay.rawValue + "=\\(value)"\
   	"transmit set " + .voxLevel.rawValue + "=\\(value)"\
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
@@ -658,7 +658,7 @@ as\
   \}\
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
 \cf0 \
-   "dax tx " + "\\(value.asNumber())"\
+   "dax tx " + "\\(value.asNumber)"\
 \
 
 \f1\b UsbCableCommands:
@@ -688,14 +688,14 @@ as\
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
 \cf0 \
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
-\cf0 	 "usb_cable set " + "\\(id) " + .autoReport.rawValue + "=\\(value.asNumber())"\
+\cf0 	 "usb_cable set " + "\\(id) " + .autoReport.rawValue + "=\\(value.asNumber)"\
   	 "usb_cable set " + "\\(id) " + .band.rawValue + "=\\(value)"\
   	 "usb_cable set " + "\\(id) " + .dataBits.rawValue + "=\\(value)"\
-  	 "usb_cable set " + "\\(id) " + .enable.rawValue + "=\\(value.asNumber())"\
+  	 "usb_cable set " + "\\(id) " + .enable.rawValue + "=\\(value.asNumber)"\
   	 "usb_cable set " + "\\(id) " + .flowControl.rawValue + "=\\(value)"\
   	 "usb_cable set " + "\\(id) " + .name.rawValue + "=\\(value)"\
   	 "usb_cable set " + "\\(id) " + .parity.rawValue + "=\\(value)"\
-  	 "usb_cable set " + "\\(id) " + .pluggedIn.rawValue + "=\\(value.asNumber())"\
+  	 "usb_cable set " + "\\(id) " + .pluggedIn.rawValue + "=\\(value.asNumber)"\
   	 "usb_cable set " + "\\(id) " + .polarity.rawValue + "=\\(value)")\
   	 "usb_cable set " + "\\(id) " + .preamp.rawValue + "=\\(value)"\
   	 "usb_cable set " + "\\(id) " + .source.rawValue + "=\\(value)"\
@@ -704,7 +704,7 @@ as\
   	 "usb_cable set " + "\\(id) " + .sourceTxAn.rawValue + "=\\(value)"\
   	 "usb_cable set " + "\\(id) " + .speed.rawValue + "=\\(value)"\
   	 "usb_cable set " + "\\(id) " + .stopBits.rawValue + "=\\(value)"\
-  	 "usb_cable set " + "\\(id) " + .usbLog.rawValue + "=\\(value.asNumber())"\
+  	 "usb_cable set " + "\\(id) " + .usbLog.rawValue + "=\\(value.asNumber)"\
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
 \cf0 \
 
@@ -722,7 +722,7 @@ as\
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
 \cf0 \
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
-\cf0    "display panafall set " + "\\id.hex) " + .autoBlackEnabled.rawValue + "=\\(value.asNumber())"\
+\cf0    "display panafall set " + "\\id.hex) " + .autoBlackEnabled.rawValue + "=\\(value.asNumber)"\
    "display panafall set " + "\\id.hex) " + .blackLevel.rawValue + "=\\(value)"\
    "display panafall set " + "\\id.hex) " + .colorGain.rawValue + "=\\(value)"\
    "display panafall set " + "\\id.hex) " + .gradientIndex.rawValue + "=\\(value)"\

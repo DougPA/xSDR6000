@@ -932,6 +932,8 @@ SWIFT_CLASS("_TtC8xLib60009WanServer")
 @end
 
 
+
+
 @interface WanServer (SWIFT_EXTENSION(xLib6000))
 @property (nonatomic, readonly) BOOL isConnected;
 @property (nonatomic, readonly, copy) NSString * _Nonnull sslClientPublicIp;

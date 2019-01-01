@@ -8,8 +8,13 @@ RadioParameters.swift - changed public var requiresAdditionalLicense from String
 WanServer.swift - in public struct WanTestConnectionResults, changed formatting in String()
 WanServer.swift - corrected parseTestConnectionResults(_:)
 WanServer.swift - corrected radioSerial entry in private enum RadioTestConnectionResultsToken
+WanServer.swift - removed unnecessary initializer from public struct WanUserSettings
 Vita.swift - changed requiresAdditionalLicense from String to Bool
 Api.swift - added :isWan:wanHandle to connect(_:clientName:isGui:primaryCmdTypes:secondaryCmdTypes:subscriptionCmdTypes:)
+Added WanServerCommands.swift - contains class smartlinkConfigure(tcpPort:udpPort:callback:)
+AppExtensions.swift - changed all Bool extensions from function to var
+AppExtensions.swift - changed Int extension: hzToMHz from function to var
+AppExtensions.swift - changed String extensions: mhzToHz, iValue, bValue, fValue, tValue, dValue from func to var
 
 
 
@@ -189,7 +194,7 @@ v1.2.5
 
 ALL MODELS - replaced usage of update(_:property:value:key:) with this style
     willChangeValue(for: \.carrierLevel)
-    _carrierLevel = property.value.iValue()
+    _carrierLevel = property.value.iValue
     didChangeValue(for: \.carrierLevel)
 
 v1.2.4
