@@ -251,17 +251,13 @@ final class WANRadioPickerViewController    : NSViewController, NSTableViewDeleg
         alert.addButton(withTitle: "Yes")
         alert.addButton(withTitle: "No")
         
-        // do nothing if closing is not confirmed by the user
-        if alert.runModal() == NSApplication.ModalResponse.alertSecondButtonReturn { return }
+        // ignore if not confirmed by the user
+        alert.beginSheetModal(for: view.window!, completionHandler: { (response) in
+          // close the connected Radio if the YES button pressed
+          if response == NSApplication.ModalResponse.alertFirstButtonReturn { self.openRadio(lowBW: lowBW) }
+        })
       }
-      _selectedRadio?.lowBandwidthConnect = lowBW
       
-      getAuthentificationForRadio(_selectedRadio)
-
-      DispatchQueue.main.async { [unowned self] in
-        self.closeButton(self)
-      }
-
     } else {
       
       // DISCONNECT, RadioPicker sheet will remain open & Radio will be disconnected
@@ -271,6 +267,17 @@ final class WANRadioPickerViewController    : NSViewController, NSTableViewDeleg
       
       // toggle the button title
       _selectButton.title = kConnectTitle
+    }
+  }
+  /// Open a Radio & close the Picker
+  ///
+  private func openRadio(lowBW: Bool) {
+    _selectedRadio?.lowBandwidthConnect = lowBW
+    
+    getAuthentificationForRadio(_selectedRadio)
+    
+    DispatchQueue.main.async { [unowned self] in
+      self.closeButton(self)
     }
   }
   /// Start the process to get Authentifictaion for radio connection
@@ -577,13 +584,19 @@ final class WANRadioPickerViewController    : NSViewController, NSTableViewDeleg
   func wanTestConnectionResultsReceived(results: WanTestConnectionResults) {
     
     // was it successful?
-    let success = results.forwardTcpPortWorking == true &&
+    let success = (results.forwardTcpPortWorking == true &&
                   results.forwardUdpPortWorking == true &&
                   results.upnpTcpPortWorking == false &&
                   results.upnpUdpPortWorking == false &&
-                  results.natSupportsHolePunch  == false
+                  results.natSupportsHolePunch  == false) ||
+      
+                  (results.forwardTcpPortWorking == false &&
+                  results.forwardUdpPortWorking == false &&
+                  results.upnpTcpPortWorking == true &&
+                  results.upnpUdpPortWorking == true &&
+                  results.natSupportsHolePunch  == false)
     // Log the result
-    os_log("SmartLInk Test completed %{public}@", log: self._log, type: .info, (success ? "successfully" : "with errors") )
+    os_log("SmartLink Test completed %{public}@", log: self._log, type: .info, (success ? "successfully" : "with errors") )
 
     DispatchQueue.main.async {
       
@@ -592,10 +605,10 @@ final class WANRadioPickerViewController    : NSViewController, NSTableViewDeleg
         
       // Alert the user on failure
       if !success {
-        
+      
         let alert = NSAlert()
         alert.alertStyle = .critical
-        let acc = NSTextField(frame: NSMakeRect(0, 0, 233, 100))
+        let acc = NSTextField(frame: NSMakeRect(0, 0, 233, 125))
         acc.stringValue = results.string()
         acc.isEditable = false
         acc.drawsBackground = true

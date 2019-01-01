@@ -197,17 +197,12 @@ final class LANRadioPickerViewController    : NSViewController, NSTableViewDeleg
         alert.addButton(withTitle: "No")    // 1001
 
         // ignore if not confirmed by the user
-        if alert.runModal() == NSApplication.ModalResponse.alertSecondButtonReturn { return }
+        alert.beginSheetModal(for: view.window!, completionHandler: { (response) in
+          // close the connected Radio if the YES button pressed
+          if response == NSApplication.ModalResponse.alertFirstButtonReturn { self.openRadio() }
+        })
       }
 
-      // RadioPicker sheet will close & Radio will be opened
-      
-      // tell the delegate to connect to the selected Radio
-      let _ = _delegate?.openRadio(_selectedRadio, isWan: false, wanHandle: "")
-      
-      DispatchQueue.main.async { [unowned self] in
-        self.closeButton(self)
-      }
 
     } else {
       // RadioPicker sheet will remain open & Radio will be disconnected
@@ -215,6 +210,19 @@ final class LANRadioPickerViewController    : NSViewController, NSTableViewDeleg
       // tell the delegate to disconnect
       _delegate?.closeRadio()
       _selectButton.title = kConnectTitle
+    }
+  }
+  /// Open a Radio & close the Picker
+  ///
+  private func openRadio() {
+    
+    // RadioPicker sheet will close & Radio will be opened
+    
+    // tell the delegate to connect to the selected Radio
+    let _ = _delegate?.openRadio(_selectedRadio, isWan: false, wanHandle: "")
+    
+    DispatchQueue.main.async { [unowned self] in
+      self.closeButton(self)
     }
   }
   
