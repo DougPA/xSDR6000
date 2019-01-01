@@ -201,8 +201,10 @@ final class LANRadioPickerViewController    : NSViewController, NSTableViewDeleg
           // close the connected Radio if the YES button pressed
           if response == NSApplication.ModalResponse.alertFirstButtonReturn { self.openRadio() }
         })
+      } else {
+        // NO, just open it
+        openRadio()
       }
-
 
     } else {
       // RadioPicker sheet will remain open & Radio will be disconnected
