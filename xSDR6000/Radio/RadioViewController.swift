@@ -547,9 +547,10 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
       alert.messageText = "xSDR6000 has been disconnected."
       alert.informativeText = explanation
       alert.addButton(withTitle: "Ok")
-      alert.runModal()
-      
-      closeRadio()
+      alert.beginSheetModal(for: self.view.window!, completionHandler: { [unowned self] (response) in
+        
+      })
+      self.closeRadio()
     }
   }
   // ----------------------------------------------------------------------------
