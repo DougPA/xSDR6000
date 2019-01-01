@@ -15,8 +15,10 @@ Added WanServerCommands.swift - contains class smartlinkConfigure(tcpPort:udpPor
 AppExtensions.swift - changed all Bool extensions from function to var
 AppExtensions.swift - changed Int extension: hzToMHz from function to var
 AppExtensions.swift - changed String extensions: mhzToHz, iValue, bValue, fValue, tValue, dValue from func to var
-
-
+Panadapter.swift - in class PanadapterFrame: reworked accumulate(vita:expectedIndex:)
+Panadapter.swift - in class Panadapter: reworked vitaProcessor(_:)
+Waterfall.swift - in class WaterfallFrame: reworked accumulate(vita:expectedIndex:)
+Waterfall.swift - in class Waterfall: reworked vitaProcessor(_:)
 
 v2.2.1
 
