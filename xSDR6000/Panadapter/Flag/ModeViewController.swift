@@ -52,19 +52,16 @@ final public class ModeViewController       : NSViewController {
   private var _slice                        : xLib6000.Slice {
     return representedObject as! xLib6000.Slice }
 
-  private var _observations                 : [NSKeyValueObservation]?
+  private var _observations                 = [NSKeyValueObservation]()
   
   // ----------------------------------------------------------------------------
   // MARK: - Overridden methods
   
   public override func viewDidLoad() {
-    super.viewWillAppear()
+    super.viewDidLoad()
     
-    if _observations == nil {
-      _observations = [NSKeyValueObservation]()
-      
-      addObservations()
-    }
+    addObservations()
+    
     _quickMode0.title = Defaults[.quickMode0].uppercased()
     _quickMode1.title = Defaults[.quickMode1].uppercased()
     _quickMode2.title = Defaults[.quickMode2].uppercased()
