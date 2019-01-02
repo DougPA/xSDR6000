@@ -16,19 +16,6 @@ import SwiftyUserDefaults
 
 final public class ModeViewController       : NSViewController {
 
-//  static let filterChoices    = [                             // Names of filters (by mode)
-//    "AM"    : ["5.6k", "6.0k", "8.0k", "10k", "12k", "14k", "16k", "20k"],
-//    "SAM"   : ["5.6k", "6.0k", "8.0k", "10k", "12k", "14k", "16k", "20k"],
-//    "CW"    : ["50", "100", "250", "400", "800", "1.0k", "1.5k", "3.0k"],
-//    "USB"   : ["1.6k", "1.8k", "2.1k", "2.4k", "2.7k", "2.9k", "3.3k", "4.0k"],
-//    "LSB"   : ["1.6k", "1.8k", "2.1k", "2.4k", "2.7k", "2.9k", "3.3k", "4.0k"],
-//    "FM"    : [],
-//    "NFM"   : [],
-//    "DFM"   : ["6.0k", "8.0k", "10k", "12k", "14k", "16k", "18k", "20k"],
-//    "DIGU"  : ["100", "300", "600", "1.0k", "1.5k", "2.0k", "3.0k", "5.0k"],
-//    "DIGL"  : ["100", "300", "600", "1.0k", "1.5k", "2.0k", "3.0k", "5.0k"],
-//    "RTTY"  : ["250", "300", "350", "400", "500", "1.0k", "1.5k", "3.0k"]
-//  ]
   static let filterValues    = [                              // Values of filters (by mode)
     "AM"    : [3_000, 4_000, 5_600, 6_000, 8_000, 10_000, 12_000, 14_000, 16_000, 20_000],
     "SAM"   : [3_000, 4_000, 5_600, 6_000, 8_000, 10_000, 12_000, 14_000, 16_000, 20_000],
@@ -42,19 +29,9 @@ final public class ModeViewController       : NSViewController {
     "DIGL"  : [100, 200, 300, 400, 600, 1_000, 1_500, 2_000, 3_000, 5_000],
     "RTTY"  : [250, 300, 350, 400, 450, 500, 750, 1_000, 1_500, 3_000]
   ]
-  
-// ----------------------------------------------------------------------------
-// MARK: - Internal properties
 
-  @objc dynamic public var mode             : String {
-    get { return (representedObject as! xLib6000.Slice).mode }
-    set { (representedObject as! xLib6000.Slice).mode = newValue }
-  }
-  
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
-  
-  @IBOutlet private weak var _modePopup     : NSPopUpButton!
   
   @IBOutlet private weak var _quickMode0    : NSButton!
   @IBOutlet private weak var _quickMode1    : NSButton!
@@ -86,8 +63,6 @@ final public class ModeViewController       : NSViewController {
     if _observations == nil {
       _observations = [NSKeyValueObservation]()
       
-      _modePopup.addItems(withTitles: _slice.modeList)
-      
       addObservations()
     }
     _quickMode0.title = Defaults[.quickMode0].uppercased()
@@ -99,13 +74,6 @@ final public class ModeViewController       : NSViewController {
   // ----------------------------------------------------------------------------
   // MARK: - Action methods
 
-  /// Respond to the Mode popup
-  ///
-  /// - Parameter sender:         the popup
-  ///
-  @IBAction func modeButton(_ sender: NSPopUpButton) {
-    _slice.mode = sender.titleOfSelectedItem!
-  }
   /// Respond to one of the Quick Mode buttons
   ///
   /// - Parameter sender:         the button
@@ -114,13 +82,13 @@ final public class ModeViewController       : NSViewController {
     
     switch sender.tag {
     case 0:
-      mode = Defaults[.quickMode0].uppercased()
+      _slice.mode = Defaults[.quickMode0].uppercased()
     case 1:
-      mode = Defaults[.quickMode1].uppercased()
+       _slice.mode = Defaults[.quickMode1].uppercased()
     case 2:
-      mode = Defaults[.quickMode2].uppercased()
+       _slice.mode = Defaults[.quickMode2].uppercased()
     case 3:
-      mode = Defaults[.quickMode3].uppercased()
+       _slice.mode = Defaults[.quickMode3].uppercased()
     default:
       // unknown tag
       break
@@ -133,34 +101,32 @@ final public class ModeViewController       : NSViewController {
   @IBAction func filterButtons(_ sender: NSButton) {
     
     // get the possible filters for the current mode
-    guard let filters = ModeViewController.filterValues[mode] else { return }
+    guard let filters = ModeViewController.filterValues[ _slice.mode] else { return }
     
     // get the width of the filter
     let filterValue = filters[sender.tag]
     
-    let slice = representedObject as! xLib6000.Slice
-    
     // position the filter based on mode
-    switch Slice.Mode(rawValue: mode)! {
+    switch Slice.Mode(rawValue:  _slice.mode)! {
     case .RTTY, .DFM, .AM, .SAM:
-      slice.filterLow = -filterValue/2
-      slice.filterHigh = +filterValue/2
+      _slice.filterLow = -filterValue/2
+      _slice.filterHigh = +filterValue/2
     
     case .CW, .USB, .DIGU:
-      slice.filterLow = +100
-      slice.filterHigh = +filterValue + 100
+      _slice.filterLow = +100
+      _slice.filterHigh = +filterValue + 100
     
     case .LSB, .DIGL:
-      slice.filterLow = -filterValue - 100
-      slice.filterHigh = -100
+      _slice.filterLow = -filterValue - 100
+      _slice.filterHigh = -100
     
     case .FM:
-      slice.filterLow = -8_000
-      slice.filterHigh = +8_000
+      _slice.filterLow = -8_000
+      _slice.filterHigh = +8_000
     
     case .NFM:
-      slice.filterLow = -5_500
-      slice.filterHigh = +5_500
+      _slice.filterLow = -5_500
+      _slice.filterHigh = +5_500
 
     // FIXME: are these needed?
 

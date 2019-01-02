@@ -98,7 +98,7 @@ final class EqViewController                : NSViewController {
   ///
   /// - Parameter sender:           the slider
   ///
-  @IBAction func slider(_ sender: NSSlider) {
+  @IBAction func sliders(_ sender: NSSlider) {
     
     // tell the Radio to change the Eq setting
     switch sender.identifier {
