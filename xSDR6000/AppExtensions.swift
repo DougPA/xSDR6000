@@ -527,6 +527,15 @@ extension Float {
 // ----------------------------------------------------------------------------
 // MARK: - TOP-LEVEL FUNCTIONS
 
+func notImplemented(_ featureName: String) -> NSAlert {
+  
+  let alert = NSAlert()
+  alert.alertStyle = .informational
+  alert.messageText = featureName + " NOT IMPLEMENTED"
+  alert.informativeText = "Later versions may incorporate this feature"
+  return alert
+}
+
 /// Find versions for this app and the specified framework
 ///
 func versionInfo(framework: String) -> (String, String) {
