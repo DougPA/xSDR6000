@@ -132,8 +132,10 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     // setup & register Defaults
     defaults(from: "Defaults.plist")
     
-    // set the window title
-    updateWindowTitle()
+    // get the versions
+    _versions = versionInfo(framework: Api.kBundleIdentifier)
+    Defaults[.versionApi] = _versions!.api
+    Defaults[.versionGui] = _versions!.app
 
     // get the Storyboard containing the RadioPicker
     _radioPickerStoryboard = NSStoryboard(name: kRadioPickerStoryboardName, bundle: nil)
@@ -324,26 +326,18 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     
   /// Set the Window's title. toolbar & side view
   ///
-  func updateWindowTitle() {
+  func updateWindowTitle(_ radio: Radio? = nil) {
+    var title = ""
     
-    // have the versions been captured?
-    if _versions == nil {
-      // NO, get the versions
-      _versions = versionInfo(framework: Api.kBundleIdentifier)
-
-      Defaults[.versionApi] = _versions!.api
-      Defaults[.versionGui] = _versions!.app
+    // is there e Radio?
+    if let radio = radio {
       
-      // log them
-      os_log("%{public}@, v%{public}@, xLib6000 v%{public}@", log: _log, type: .info, kClientName, _versions!.app, _versions!.api)
+      // format and set the window title
+      title = "v\(radio.version)     \(radio.nickname) (\(_api.isWan ? "SmartLink" : "Local"))"
     }
-    
-    // format and set the window title
-    let title = (_api.activeRadio == nil ? "" : "- \(_api.activeRadio!.nickname) @ \(_api.activeRadio!.publicIp) (\(_api.isWan ? "SmartLink" : "Local"))")
     DispatchQueue.main.async { [unowned self] in
-      
       // Title
-      self.view.window?.title = "\(kClientName) v\(self._versions!.app), xLib6000 v\(self._versions!.api) \(title)"
+      self.view.window?.title = title
     }
   }
   /// Set the toolbar controls
@@ -456,7 +450,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     Defaults[.radioModel] = _api.activeRadio!.model
     
     // update the title bar
-    updateWindowTitle()
+    updateWindowTitle(radio)
     
     // update the toolbar items
     updateToolbar()
@@ -487,9 +481,6 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
         self.splitViewItems[1].isCollapsed = true
       }
     }
-    
-    // update the title bar
-    updateWindowTitle()
   }
   /// Process .radioHasBeenRemoved Notification
   ///
