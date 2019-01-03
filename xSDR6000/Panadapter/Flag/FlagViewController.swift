@@ -261,6 +261,8 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
   
   @IBAction func splitButton(_ sender: NSButton) {
     sender.attributedTitle = NSAttributedString(string: kSplitCaption, attributes: sender.boolState ? kSplitOnAttr : kSplitOffAttr)
+    
+    notImplemented(sender.title).beginSheetModal(for: NSApp.mainWindow!, completionHandler: { response in } )
   }
   /// Respond to the cClose button
   ///
