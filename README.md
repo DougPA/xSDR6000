@@ -3,24 +3,14 @@
 
 ### Built on:
 
-v2.x.x:
 *  macOS 10.14 (Deployment Target of macOS 10.12)
 *  Xcode 10
 *  Swift 4.2
 
-Requires a v2 build of xLib6000
 
+**Supports SmartLink (TM).**  
+**REQUIRES a Mac that supports Metal**  
 
-v1.x.x:
-*  macOS 10.13.5 (Deployment Target of macOS 10.11)
-*  Xcode 9.4
-*  Swift 4.1
-
-Requires a v1 build of xLib6000
-
-
-**This version supports SmartLink (TM).**  
-**It REQUIRES a Mac that supports Metal**  
 
 ## Usage
 
@@ -47,10 +37,10 @@ If you require a Mac version of DAX and/or CAT, please see.
 
 ## Builds
 
-A compiled DEBUG build executable (with  embedded frameworks) is contained in the GitHub  
+A compiled RELEASE build executable (with  embedded frameworks) is contained in the GitHub  
 Release if you would rather not build from sources.  
 
-If you require a RELEASE build you will have to build from sources. The required frameworks are   
+If you require a DEBUG build you will have to build from sources. The required frameworks are   
 contained in this repo.
 
 
@@ -60,14 +50,6 @@ douglas.adams@me.com
 
 
 ## Credits
-
-AudioLibrary: (Used in early v1.x.x only)
-
-* http://www.w7ay.net/site/Software/Audio%20Library/index.html
-
-XCGLogger & ObjcExceptionBridging: (Used in v1.x.x only)
-
-* https://github.com/DaveWoodCom/XCGLogger
 
 SwiftyUserDefaults:
 
@@ -84,7 +66,7 @@ xLib6000:
 
 ## Known Issues
 
-* Although the side area will open/close, many / all of the side panels are not yet implemented
+* CW & Slice side panels are not implemented
 * CWX is not implemented
 * Memories are not fully implemented
 
