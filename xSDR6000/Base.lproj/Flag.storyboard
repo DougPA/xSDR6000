@@ -501,13 +501,13 @@
                                         </items>
                                     </menu>
                                     <connections>
-                                        <binding destination="My9-cI-9u7" name="content" keyPath="representedObject.agcNames" id="gWe-1Z-YOA"/>
                                         <binding destination="My9-cI-9u7" name="selectedValue" keyPath="representedObject.agcMode" previousBinding="gWe-1Z-YOA" id="yc5-8w-cBR"/>
+                                        <binding destination="My9-cI-9u7" name="content" keyPath="representedObject.agcNames" id="gWe-1Z-YOA"/>
                                     </connections>
                                 </popUpButtonCell>
                                 <connections>
-                                    <binding destination="My9-cI-9u7" name="content" keyPath="representedObject.agcNames" id="pyF-As-qCA"/>
                                     <binding destination="My9-cI-9u7" name="selectedValue" keyPath="representedObject.agcMode" previousBinding="pyF-As-qCA" id="WmL-7z-ElJ"/>
+                                    <binding destination="My9-cI-9u7" name="content" keyPath="representedObject.agcNames" id="pyF-As-qCA"/>
                                 </connections>
                             </popUpButton>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1Is-ZQ-5rl">
@@ -731,8 +731,8 @@
                                             <menu key="menu" id="12S-IH-R9c"/>
                                         </popUpButtonCell>
                                         <connections>
-                                            <binding destination="jnR-au-HBU" name="content" keyPath="representedObject.modeList" id="SXt-Bt-8h2"/>
                                             <binding destination="jnR-au-HBU" name="selectedValue" keyPath="representedObject.mode" previousBinding="SXt-Bt-8h2" id="eds-xh-Trr"/>
+                                            <binding destination="jnR-au-HBU" name="content" keyPath="representedObject.modeList" id="SXt-Bt-8h2"/>
                                         </connections>
                                     </popUpButton>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="W6n-fT-26X">
@@ -989,7 +989,7 @@
         <!--xritVC-->
         <scene sceneID="MGs-5q-XWg">
             <objects>
-                <viewController identifier="XRITvc" storyboardIdentifier="XRIT" id="pG7-fD-vJI" userLabel="xritVC" customClass="XRitViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController identifier="XRITvc" storyboardIdentifier="XRIT" id="pG7-fD-vJI" userLabel="xritVC" sceneMemberID="viewController">
                     <view key="view" autoresizesSubviews="NO" wantsLayer="YES" id="vZI-Mq-qLU">
                         <rect key="frame" x="0.0" y="0.0" width="300" height="69"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1116,7 +1116,7 @@
         <!--daxVC-->
         <scene sceneID="04g-g8-NSs">
             <objects>
-                <viewController title="daxVC" identifier="DAXvc" storyboardIdentifier="DAX" id="qHG-cG-Dd3" userLabel="daxVC" customClass="DaxViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="daxVC" identifier="DAXvc" storyboardIdentifier="DAX" id="qHG-cG-Dd3" userLabel="daxVC" sceneMemberID="viewController">
                     <view key="view" wantsLayer="YES" id="XNf-ih-hpv">
                         <rect key="frame" x="0.0" y="0.0" width="300" height="43"/>
                         <autoresizingMask key="autoresizingMask"/>

@@ -61,7 +61,7 @@
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
                                         <connections>
-                                            <action selector="sliders:" target="yhz-wz-Qrr" id="wsm-bZ-oxu"/>
+                                            <action selector="buttons:" target="yhz-wz-Qrr" id="a5E-qn-HRL"/>
                                         </connections>
                                     </button>
                                     <button identifier="EqRx" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Eha-AZ-qIj" userLabel="RX button">
@@ -71,7 +71,7 @@
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
                                         <connections>
-                                            <action selector="sliders:" target="yhz-wz-Qrr" id="t03-9g-ylk"/>
+                                            <action selector="buttons:" target="yhz-wz-Qrr" id="V6Z-9Y-iLo"/>
                                         </connections>
                                     </button>
                                     <button identifier="EqTx" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="S4X-Ak-Xxz" userLabel="TX button">
@@ -81,7 +81,7 @@
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
                                         <connections>
-                                            <action selector="sliders:" target="yhz-wz-Qrr" id="k2O-m6-PDf"/>
+                                            <action selector="buttons:" target="yhz-wz-Qrr" id="NQa-gn-I9m"/>
                                         </connections>
                                     </button>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qfY-kf-LiZ" userLabel="-10 dB label">
