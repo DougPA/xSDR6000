@@ -1,5 +1,18 @@
 xLib6000 Change Log
 
+v3.0.0
+
+*** All Models - now perform ALL parseProperties(_:) on the Main Queue (async) ***
+Panadapter.swift - added logging to PanadapterFrame
+Waterfall.swift - added logging to WaterfallFrame
+
+
+
+
+Changed major version number from 2 to 3 due to changes in queue usage
+
+============================================================
+
 v2.2.2
 
 TcpManager.swift - refactored _isWan & _seqNum vars to eliminate race issue

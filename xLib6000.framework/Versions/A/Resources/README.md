@@ -8,6 +8,9 @@
 
 *V2.x.x drops the use of a Log Delegate and replaces it with Apple's Unified Logging
 
+*V3.x.x changes the use of dispatch queues putting parsing on the Main Queue
+
+*All new work is in the v2 Branch of this repo (including the v3,x,x code)
 
 ## Usage
 
@@ -32,9 +35,9 @@ If you require a Mac version of DAX and/or CAT, please see.
 
 ## Builds
 
-A compiled DEBUG build executable is contained in the GitHub Release if you would rather not build from sources.  
+A compiled RELEASE build executable is contained in the GitHub Release if you would rather not build from sources.  
 
-If you require a RELEASE build you will have to build from sources.   
+If you require a DEBUG build you will have to build from sources.   
 
 
 ## Comments / Questions
