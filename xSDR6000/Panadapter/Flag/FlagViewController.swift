@@ -55,7 +55,7 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
   static let kFlagMinimumSeparation         : CGFloat = 10
   static let kLargeFlagWidth                : CGFloat = 290
   static let kLargeFlagHeight               : CGFloat = 100
-  static let kSmallFlagWidth                : CGFloat = 132
+  static let kSmallFlagWidth                : CGFloat = 125 
   static let kSmallFlagHeight               : CGFloat = 52
   static let kFlagBorder                    : CGFloat = 20
   
@@ -68,6 +68,7 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
   var controlsHeightConstraint              : NSLayoutConstraint?
   var smallFlagDisplayed                    = false
   var isOnLeft                              = true
+  var controlsVc                            : ControlsViewController?
 
   @objc dynamic weak var slice              : xLib6000.Slice?
   @objc dynamic var letterId                : String { return FlagViewController.kSliceLetters[Int(slice!.id)!] }
@@ -90,7 +91,6 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
   @IBOutlet private weak var _txButton      : NSButton!
   
   private weak var _panadapter              : Panadapter?
-  private weak var _controlsVc              : ControlsViewController?
   private weak var _panadapterVc            : PanadapterViewController?
 
   private var _center                       : Int {return _panadapter!.center }
@@ -110,7 +110,7 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
   private let kAudHeight                    : CGFloat = 98.0
   private let kDspHeight                    : CGFloat = 100.0
   private let kModeHeight                   : CGFloat = 84.0
-  private let kXRitHeight                   : CGFloat = 69.0
+  private let kXRitHeight                   : CGFloat = 100.0 
   private let kDaxHeight                    : CGFloat = 43.0
 
   private let kSplitCaption                 = "SPLIT"
@@ -204,7 +204,7 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
   func configure(panadapter: Panadapter?, slice: xLib6000.Slice?, controlsVc: ControlsViewController?, panadapterVc: PanadapterViewController) {
     self._panadapter = panadapter
     self.slice = slice!
-    self._controlsVc = controlsVc
+    self.controlsVc = controlsVc
     self._panadapterVc = panadapterVc
 
   }
@@ -289,7 +289,7 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
       if sender.identifier != kDax { _daxButton.boolState = false}
     
       // select the desired tab
-      _controlsVc?.selectedTabViewItemIndex = sender.tag
+      controlsVc?.selectedTabViewItemIndex = sender.tag
       
       // set the height of the Controls View
       switch sender.identifier {
@@ -311,12 +311,12 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
       controlsHeightConstraint!.isActive = true
 
       // unhide the controls
-      _controlsVc!.view.isHidden = false
+      controlsVc!.view.isHidden = false
 
     } else {
       
       // hide the controls
-      _controlsVc!.view.isHidden = true
+      controlsVc!.view.isHidden = true
     }
   }
   

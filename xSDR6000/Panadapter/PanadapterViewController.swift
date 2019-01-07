@@ -621,6 +621,8 @@ final class PanadapterViewController        : NSViewController, NSGestureRecogni
 
     // update the Constant values with the new size
     _panadapterRenderer.updateConstants(size: view.frame.size)
+    
+    positionFlags()
   }
   /// Process .panadapterWillBeRemoved Notification
   ///
@@ -653,7 +655,7 @@ final class PanadapterViewController        : NSViewController, NSGestureRecogni
     if let panadapter = _panadapter, slice.panadapterId == panadapter.id {
       
       // YES, log the event
-      os_log("Slice added: ID = %{public}@, pan = %{public}@", log: _log, type: .info, slice.id, panadapter.id.hex)
+      os_log("Slice added: ID = %{public}@, pan = %{public}@, freq = %{public}d", log: _log, type: .info, slice.id, panadapter.id.hex, slice.frequency)
       
       // observe removal of this Slice
       NC.makeObserver(self, with: #selector(sliceWillBeRemoved(_:)), of: .sliceWillBeRemoved, object: slice)
@@ -757,15 +759,17 @@ final class PanadapterViewController        : NSViewController, NSGestureRecogni
       self.view.addSubview(flagVc.view)
       self.view.addSubview(controlsVc.view)
       
+      let height = ( flagVc.smallFlagDisplayed ? FlagViewController.kSmallFlagHeight : FlagViewController.kLargeFlagHeight )
+      let width = ( flagVc.smallFlagDisplayed ? FlagViewController.kSmallFlagWidth : FlagViewController.kLargeFlagWidth )
 
       // Flag View constraints: height, width & top of the Flag (constants)
-      flagVc.flagHeightConstraint = flagVc.view.heightAnchor.constraint(equalToConstant: FlagViewController.kLargeFlagHeight)
-      flagVc.flagWidthConstraint = flagVc.view.widthAnchor.constraint(equalToConstant: FlagViewController.kLargeFlagWidth)
+      flagVc.flagHeightConstraint = flagVc.view.heightAnchor.constraint(equalToConstant: height)
+      flagVc.flagWidthConstraint = flagVc.view.widthAnchor.constraint(equalToConstant: width)
       let top = flagVc.view.topAnchor.constraint(equalTo: self.view.topAnchor)
       
       // Flag View constraints: position (will be changed as Flag moves)
       let freqPosition = CGFloat(flagVc.slice!.frequency - self._start) / self._hzPerUnit
-      let flagPosition = freqPosition - FlagViewController.kLargeFlagWidth - FlagViewController.kFlagOffset
+      let flagPosition = freqPosition - width - FlagViewController.kFlagOffset
       flagVc.flagXPositionConstraint = flagVc.view.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: flagPosition)
 
       // activate Flag constraints
@@ -790,6 +794,7 @@ final class PanadapterViewController        : NSViewController, NSGestureRecogni
   private func removeFlag(for slice: xLib6000.Slice) {
     
     let flagVc = _flags[slice.id]
+    let controlsVc = flagVc?.controlsVc
     flagVc?.invalidateObservations()
 
     _flags[slice.id] = nil
@@ -797,9 +802,11 @@ final class PanadapterViewController        : NSViewController, NSGestureRecogni
     DispatchQueue.main.async {
       
       // remove its view
+      controlsVc?.view.removeFromSuperview()
       flagVc?.view.removeFromSuperview()
       
       // remove the view controller
+      controlsVc?.removeFromParent()
       flagVc?.removeFromParent()
 
     }
