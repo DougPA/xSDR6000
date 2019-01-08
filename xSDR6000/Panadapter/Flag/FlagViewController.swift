@@ -78,7 +78,18 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
   // MARK: - Private properties
   
   @IBOutlet private weak var _alphaButton   : NSButton!
-  @IBOutlet private var _filterWidth        : NSTextField!
+  @IBOutlet private weak var _filterWidth   : NSTextField!
+  @IBOutlet private weak var _rxAntPopUp    : NSPopUpButton!
+  @IBOutlet private weak var _txAntPopUp    : NSPopUpButton!
+  
+  @IBOutlet private weak var _lockButton    : NSButton!
+  @IBOutlet private weak var _nbButton      : NSButton!
+  @IBOutlet private weak var _nrButton      : NSButton!
+  @IBOutlet private weak var _anfButton     : NSButton!
+  @IBOutlet private weak var _qskButton     : NSButton!
+  
+  
+  
   @IBOutlet private var _frequencyField     : NSTextField!
   @IBOutlet private var _sMeter             : LevelIndicator!
   @IBOutlet private var _sLevel             : NSTextField!
@@ -139,6 +150,10 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
 
     // set the background color of the Flag
     view.layer?.backgroundColor = NSColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.5).cgColor
+
+    // setup the antenna popups
+    _rxAntPopUp.addItems(withTitles: slice!.rxAntList)
+    _txAntPopUp.addItems(withTitles: slice!.txAntList)
 
     // find the S-Meter feed (if any, it may alreaady exist or it may come later as a sliceMeterAdded Notification)
     findSMeter()
@@ -275,7 +290,7 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
   ///
   /// - Parameter sender:         the button
   ///
-  @IBAction func buttons(_ sender: NSButton) {
+  @IBAction func controlsButtons(_ sender: NSButton) {
     var height : CGFloat = 0.0
     
     // is the button "on"?
@@ -319,7 +334,41 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
       controlsVc!.view.isHidden = true
     }
   }
-  
+  /// One of the popups has been clicked
+  ///
+  /// - Parameter sender:         the popup
+  ///
+  @IBAction func popups(_ sender: NSPopUpButton) {
+    
+    switch sender.identifier!.rawValue {
+    case "rxAnt":
+      slice?.rxAnt = sender.titleOfSelectedItem!
+    case "txAnt":
+      slice?.txAnt = sender.titleOfSelectedItem!
+    default:
+      fatalError()
+    }
+  }
+  /// One of the buttons has been clicked
+  ///
+  /// - Parameter sender:         the button
+  ///
+  @IBAction func buttons(_ sender: NSButton) {
+    
+    switch sender.identifier!.rawValue {
+    case "nb":
+      slice?.nbEnabled = sender.boolState
+    case "nr":
+      slice?.nrEnabled = sender.boolState
+    case "anf":
+      slice?.anfEnabled = sender.boolState
+    case "qsk":
+      slice?.qskEnabled = sender.boolState
+    default:
+      fatalError()
+    }
+  }
+
   // ----------------------------------------------------------------------------
   // MARK: - Private methods
   
@@ -365,6 +414,14 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
       slice.observe(\.filterHigh, options: [.initial, .new], changeHandler: filterRefresh(_:_:)),
       slice.observe(\.filterLow, options: [.initial, .new], changeHandler: filterRefresh(_:_:)),
       slice.observe(\.frequency, options: [.initial, .new], changeHandler: positionFlags(_:_:)),
+      slice.observe(\.nbEnabled, options: [.initial, .new], changeHandler: buttonsChange(_:_:)),
+      slice.observe(\.nrEnabled, options: [.initial, .new], changeHandler: buttonsChange(_:_:)),
+      slice.observe(\.anfEnabled, options: [.initial, .new], changeHandler: buttonsChange(_:_:)),
+      slice.observe(\.qskEnabled, options: [.initial, .new], changeHandler: buttonsChange(_:_:)),
+      slice.observe(\.locked, options: [.initial, .new], changeHandler: buttonsChange(_:_:)),
+      slice.observe(\.rxAnt, options: [.initial, .new], changeHandler: antennaChange(_:_:)),
+      slice.observe(\.txAnt, options: [.initial, .new], changeHandler: antennaChange(_:_:)),
+
       panadapter.observe(\.center, options: [.initial, .new], changeHandler: positionFlags(_:_:)),
       panadapter.observe(\.bandwidth, options: [.initial, .new], changeHandler: positionFlags(_:_:))
     ]
@@ -405,6 +462,35 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
 
     // update the filter outline
     (parent as? PanadapterViewController)?.redrawFrequencyLegend()
+  }
+  /// Respond to a change in buttons
+  ///
+  /// - Parameters:
+  ///   - slice:                the slice that changed
+  ///   - change:               the change
+  ///
+  private func buttonsChange(_ slice: xLib6000.Slice, _ change: Any) {
+    
+    DispatchQueue.main.async {
+      self._lockButton.boolState = slice.locked
+      self._nbButton.boolState = slice.nbEnabled
+      self._nrButton.boolState = slice.nrEnabled
+      self._anfButton.boolState = slice.anfEnabled
+      self._qskButton.boolState = slice.qskEnabled
+    }
+  }
+  /// Respond to a change in Antennas
+  ///
+  /// - Parameters:
+  ///   - slice:                the slice that changed
+  ///   - change:               the change
+  ///
+  private func antennaChange(_ slice: xLib6000.Slice, _ change: Any) {
+    
+    DispatchQueue.main.async {
+      self._rxAntPopUp.selectItem(withTitle: slice.rxAnt)
+      self._txAntPopUp.selectItem(withTitle: slice.txAnt)
+    }
   }
   /// Respond to a change in Panadapter or Slice properties
   ///

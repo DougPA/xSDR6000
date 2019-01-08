@@ -33,6 +33,7 @@ final public class ModeViewController       : NSViewController {
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
   
+  @IBOutlet private weak var _modePopUp     : NSPopUpButton!
   @IBOutlet private weak var _quickMode0    : NSButton!
   @IBOutlet private weak var _quickMode1    : NSButton!
   @IBOutlet private weak var _quickMode2    : NSButton!
@@ -60,17 +61,30 @@ final public class ModeViewController       : NSViewController {
   public override func viewDidLoad() {
     super.viewDidLoad()
     
-    addObservations()
+    // populate & select the mode
+    _modePopUp.addItems(withTitles: Slice.Mode.allCases.map {$0.rawValue} )
+    _modePopUp.selectItem(withTitle: _slice.mode)
     
+    // populate the Quick Mode buttons
     _quickMode0.title = Defaults[.quickMode0].uppercased()
     _quickMode1.title = Defaults[.quickMode1].uppercased()
     _quickMode2.title = Defaults[.quickMode2].uppercased()
     _quickMode3.title = Defaults[.quickMode3].uppercased()
+
+    // start observing
+    addObservations()
   }
   
   // ----------------------------------------------------------------------------
   // MARK: - Action methods
 
+  /// Respond to the Mode button
+  ///
+  /// - Parameter sender:         the button
+  ///
+  @IBAction func modePopUp(_ sender: NSPopUpButton) {
+    _slice.mode = sender.titleOfSelectedItem!
+  }
   /// Respond to one of the Quick Mode buttons
   ///
   /// - Parameter sender:         the button

@@ -31,7 +31,7 @@
                                                 </buttonCell>
                                                 <color key="contentTintColor" red="1" green="1" blue="1" alpha="0.29725146051571311" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <connections>
-                                                    <action selector="splitButton:" target="Lmw-yC-7qh" id="H5m-pI-8o9"/>
+                                                    <action selector="controlsButtons:" target="Lmw-yC-7qh" id="H5m-pI-8o9"/>
                                                 </connections>
                                             </button>
                                             <button translatesAutoresizingMaskIntoConstraints="NO" id="f1H-1i-UGn" userLabel="TX button">
@@ -45,7 +45,7 @@
                                                 </buttonCell>
                                                 <color key="contentTintColor" red="1" green="1" blue="1" alpha="0.29981995366639808" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <connections>
-                                                    <action selector="txButton:" target="Lmw-yC-7qh" id="FqY-6O-Ybs"/>
+                                                    <action selector="controlsButtons:" target="Lmw-yC-7qh" id="FqY-6O-Ybs"/>
                                                 </connections>
                                             </button>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1db-5H-JDr" userLabel="Alpha Button">
@@ -59,7 +59,7 @@
                                                 </buttonCell>
                                                 <color key="contentTintColor" red="1" green="1" blue="1" alpha="0.29981995369999997" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <connections>
-                                                    <action selector="alphaButton:" target="Lmw-yC-7qh" id="eDe-wT-gdo"/>
+                                                    <action selector="controlsButtons:" target="Lmw-yC-7qh" id="eDe-wT-gdo"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -114,46 +114,32 @@
                                         </buttonCell>
                                         <color key="contentTintColor" red="1" green="0.1106421309" blue="0.02582195826" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
-                                            <action selector="closeButton:" target="Lmw-yC-7qh" id="9ML-xt-b77"/>
+                                            <action selector="controlsButtons:" target="Lmw-yC-7qh" id="9ML-xt-b77"/>
                                         </connections>
                                     </button>
-                                    <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Zp6-Oe-dIV" userLabel="RxAnt popup">
+                                    <popUpButton identifier="rxAnt" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Zp6-Oe-dIV" userLabel="RxAnt popup">
                                         <rect key="frame" x="18" y="-3" width="55" height="25"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="50" id="i0J-cE-5ri"/>
                                         </constraints>
-                                        <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" arrowPosition="noArrow" selectedItem="1KL-5l-1zA" id="y2d-I3-kg0">
+                                        <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="center" lineBreakMode="truncatingTail" borderStyle="border" imageScaling="proportionallyDown" inset="2" arrowPosition="noArrow" id="y2d-I3-kg0">
                                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="menu"/>
-                                            <menu key="menu" id="NSV-Jw-Rca">
-                                                <items>
-                                                    <menuItem title="Item 1" state="on" id="1KL-5l-1zA"/>
-                                                    <menuItem title="Item 2" id="Fa8-xq-ezY"/>
-                                                    <menuItem title="Item 3" id="MI0-Fv-Yer"/>
-                                                </items>
-                                            </menu>
+                                            <menu key="menu" id="NSV-Jw-Rca"/>
                                         </popUpButtonCell>
                                         <connections>
-                                            <binding destination="Lmw-yC-7qh" name="selectedValue" keyPath="slice.rxAnt" previousBinding="idu-AF-rah" id="nyS-Br-o3q"/>
-                                            <binding destination="Lmw-yC-7qh" name="content" keyPath="slice.rxAntList" id="idu-AF-rah"/>
+                                            <action selector="popups:" target="Lmw-yC-7qh" id="vzx-pt-LgU"/>
                                         </connections>
                                     </popUpButton>
-                                    <popUpButton verticalHuggingPriority="750" horizontalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="9Hl-BA-XFJ" userLabel="TxAnt popup">
+                                    <popUpButton identifier="txAnt" verticalHuggingPriority="750" horizontalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="9Hl-BA-XFJ" userLabel="TxAnt popup">
                                         <rect key="frame" x="68" y="-3" width="55" height="25"/>
-                                        <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" arrowPosition="noArrow" selectedItem="eZj-YI-tx3" id="8lD-MP-8Gu">
+                                        <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="center" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" arrowPosition="noArrow" id="8lD-MP-8Gu">
                                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="menu"/>
-                                            <menu key="menu" id="ukX-h6-QYI">
-                                                <items>
-                                                    <menuItem title="Item 1" state="on" id="eZj-YI-tx3"/>
-                                                    <menuItem title="Item 2" id="iqG-LC-QFp"/>
-                                                    <menuItem title="Item 3" id="dVl-lg-Urc"/>
-                                                </items>
-                                            </menu>
+                                            <menu key="menu" id="ukX-h6-QYI"/>
                                         </popUpButtonCell>
                                         <connections>
-                                            <binding destination="Lmw-yC-7qh" name="selectedValue" keyPath="slice.txAnt" previousBinding="1kO-0A-KLI" id="LQ3-vO-cPF"/>
-                                            <binding destination="Lmw-yC-7qh" name="content" keyPath="slice.txAntList" id="1kO-0A-KLI"/>
+                                            <action selector="popups:" target="Lmw-yC-7qh" id="7Zf-Sw-jks"/>
                                         </connections>
                                     </popUpButton>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wFR-Fm-HU4" userLabel="Filter label">
@@ -194,11 +180,8 @@
                                             <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
-                                        <connections>
-                                            <binding destination="Lmw-yC-7qh" name="value" keyPath="slice.locked" id="fXk-HX-E1h"/>
-                                        </connections>
                                     </button>
-                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="amT-qe-1nd">
+                                    <button identifier="nb" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="amT-qe-1nd">
                                         <rect key="frame" x="19" y="-7" width="47" height="32"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="35" id="hwC-GO-i7z"/>
@@ -208,37 +191,37 @@
                                             <font key="font" metaFont="system" size="10"/>
                                         </buttonCell>
                                         <connections>
-                                            <binding destination="Lmw-yC-7qh" name="value" keyPath="slice.nbEnabled" id="H5h-95-BdO"/>
+                                            <action selector="buttons:" target="Lmw-yC-7qh" id="LM7-iR-YaT"/>
                                         </connections>
                                     </button>
-                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jAv-7c-w22">
+                                    <button identifier="nr" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jAv-7c-w22">
                                         <rect key="frame" x="54" y="-7" width="47" height="32"/>
                                         <buttonCell key="cell" type="push" title="NR" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="B3Q-Cr-Naw">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                                             <font key="font" metaFont="system" size="10"/>
                                         </buttonCell>
                                         <connections>
-                                            <binding destination="Lmw-yC-7qh" name="value" keyPath="slice.nrEnabled" id="vsF-4Y-fGl"/>
+                                            <action selector="buttons:" target="Lmw-yC-7qh" id="o00-gE-qjd"/>
                                         </connections>
                                     </button>
-                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="KSG-RZ-oQA">
+                                    <button identifier="anf" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="KSG-RZ-oQA">
                                         <rect key="frame" x="89" y="-7" width="47" height="32"/>
                                         <buttonCell key="cell" type="push" title="ANF" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Cop-Xu-NHi">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                                             <font key="font" metaFont="system" size="10"/>
                                         </buttonCell>
                                         <connections>
-                                            <binding destination="Lmw-yC-7qh" name="value" keyPath="slice.anfEnabled" id="3Xn-MM-ABM"/>
+                                            <action selector="buttons:" target="Lmw-yC-7qh" id="smI-vL-Diu"/>
                                         </connections>
                                     </button>
-                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1dU-yC-yCa">
+                                    <button identifier="qsk" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1dU-yC-yCa">
                                         <rect key="frame" x="124" y="-7" width="47" height="32"/>
                                         <buttonCell key="cell" type="push" title="QSK" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="G7K-VF-Xrr">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                                             <font key="font" metaFont="system" size="10"/>
                                         </buttonCell>
                                         <connections>
-                                            <binding destination="Lmw-yC-7qh" name="value" keyPath="slice.qskEnabled" id="hcd-a8-5z4"/>
+                                            <action selector="buttons:" target="Lmw-yC-7qh" id="qVh-q2-JMV"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -325,7 +308,7 @@
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
                                         <connections>
-                                            <action selector="buttons:" target="Lmw-yC-7qh" id="LUh-rm-Q6e"/>
+                                            <action selector="controlsButtons:" target="Lmw-yC-7qh" id="LUh-rm-Q6e"/>
                                         </connections>
                                     </button>
                                     <button identifier="DSP" verticalHuggingPriority="750" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="ygS-Ic-OjB">
@@ -335,7 +318,7 @@
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
                                         <connections>
-                                            <action selector="buttons:" target="Lmw-yC-7qh" id="aJ8-gI-y58"/>
+                                            <action selector="controlsButtons:" target="Lmw-yC-7qh" id="aJ8-gI-y58"/>
                                         </connections>
                                     </button>
                                     <button identifier="MODE" verticalHuggingPriority="750" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="JhF-eX-EH0">
@@ -345,7 +328,7 @@
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
                                         <connections>
-                                            <action selector="buttons:" target="Lmw-yC-7qh" id="SSM-dZ-d4N"/>
+                                            <action selector="controlsButtons:" target="Lmw-yC-7qh" id="SSM-dZ-d4N"/>
                                             <binding destination="Lmw-yC-7qh" name="title" keyPath="slice.mode" id="694-CW-uTz"/>
                                         </connections>
                                     </button>
@@ -356,7 +339,7 @@
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
                                         <connections>
-                                            <action selector="buttons:" target="Lmw-yC-7qh" id="Fn7-eV-EUi"/>
+                                            <action selector="controlsButtons:" target="Lmw-yC-7qh" id="Fn7-eV-EUi"/>
                                         </connections>
                                     </button>
                                     <button identifier="DAX" verticalHuggingPriority="750" tag="4" translatesAutoresizingMaskIntoConstraints="NO" id="o4A-pP-dCh">
@@ -366,7 +349,7 @@
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
                                         <connections>
-                                            <action selector="buttons:" target="Lmw-yC-7qh" id="tmP-Hi-7TS"/>
+                                            <action selector="controlsButtons:" target="Lmw-yC-7qh" id="tmP-Hi-7TS"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -409,14 +392,21 @@
                     </view>
                     <connections>
                         <outlet property="_alphaButton" destination="1db-5H-JDr" id="Gek-WQ-JFX"/>
+                        <outlet property="_anfButton" destination="KSG-RZ-oQA" id="rjo-BD-Ajy"/>
                         <outlet property="_audButton" destination="19n-Cu-jeD" id="FL3-6a-xS8"/>
                         <outlet property="_daxButton" destination="o4A-pP-dCh" id="gO2-80-GQm"/>
                         <outlet property="_dspButton" destination="ygS-Ic-OjB" id="wBt-Dn-VUk"/>
                         <outlet property="_filterWidth" destination="wFR-Fm-HU4" id="7Er-Ns-2jE"/>
                         <outlet property="_frequencyField" destination="ZdQ-2F-wr5" id="rds-Sb-X65"/>
+                        <outlet property="_lockButton" destination="WIZ-v0-8bz" id="i45-A2-8ph"/>
                         <outlet property="_modeButton" destination="JhF-eX-EH0" id="stx-FA-sVI"/>
+                        <outlet property="_nbButton" destination="amT-qe-1nd" id="i12-ze-GQu"/>
+                        <outlet property="_nrButton" destination="jAv-7c-w22" id="WC0-IZ-969"/>
+                        <outlet property="_qskButton" destination="1dU-yC-yCa" id="Qd8-KT-1Nh"/>
+                        <outlet property="_rxAntPopUp" destination="Zp6-Oe-dIV" id="DjF-eS-snY"/>
                         <outlet property="_sLevel" destination="FXy-WX-GDY" id="h46-eM-OCU"/>
                         <outlet property="_sMeter" destination="Kkb-rb-ggc" id="zgp-Ca-fgU"/>
+                        <outlet property="_txAntPopUp" destination="9Hl-BA-XFJ" id="3d2-Cq-82f"/>
                         <outlet property="_txButton" destination="f1H-1i-UGn" id="wuL-PN-lGd"/>
                         <outlet property="_xritButton" destination="6Ea-s9-S9F" id="Fo5-jc-9N5"/>
                     </connections>
@@ -462,7 +452,7 @@
         <!--audVC-->
         <scene sceneID="k5s-at-puA">
             <objects>
-                <viewController identifier="AUDvc" storyboardIdentifier="AUD" id="My9-cI-9u7" userLabel="audVC" sceneMemberID="viewController">
+                <viewController identifier="AUDvc" storyboardIdentifier="AUD" id="My9-cI-9u7" userLabel="audVC" customClass="AudioViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" autoresizesSubviews="NO" wantsLayer="YES" id="LkQ-yf-PwG">
                         <rect key="frame" x="0.0" y="0.0" width="311" height="100"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -481,7 +471,7 @@
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
                                         <connections>
-                                            <binding destination="My9-cI-9u7" name="value" keyPath="representedObject.audioMute" id="Dv8-Bw-cvG"/>
+                                            <action selector="audioMuteButton:" target="My9-cI-9u7" id="Ezj-Ae-VdJ"/>
                                         </connections>
                                     </button>
                                     <slider identifier="audioGain" autoresizesSubviews="NO" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="nxC-80-uqM">
@@ -491,7 +481,7 @@
                                         </constraints>
                                         <sliderCell key="cell" continuous="YES" state="on" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" sliderType="linear" id="T61-TB-Qhm"/>
                                         <connections>
-                                            <binding destination="My9-cI-9u7" name="value" keyPath="representedObject.audioGain" id="igm-Kj-ceb"/>
+                                            <action selector="sliders:" target="My9-cI-9u7" id="Aii-ix-DRO"/>
                                         </connections>
                                     </slider>
                                 </subviews>
@@ -526,7 +516,7 @@
                                         </constraints>
                                         <sliderCell key="cell" continuous="YES" state="on" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" sliderType="linear" id="qWd-j7-oUa"/>
                                         <connections>
-                                            <binding destination="My9-cI-9u7" name="value" keyPath="representedObject.audioPan" id="qcI-He-vM3"/>
+                                            <action selector="sliders:" target="My9-cI-9u7" id="xUX-WS-fPH"/>
                                         </connections>
                                     </slider>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="aGr-c3-Qeq">
@@ -570,8 +560,7 @@
                                             </connections>
                                         </popUpButtonCell>
                                         <connections>
-                                            <binding destination="My9-cI-9u7" name="content" keyPath="representedObject.agcNames" id="4Ss-ep-ff8"/>
-                                            <binding destination="My9-cI-9u7" name="selectedValue" keyPath="representedObject.agcMode" previousBinding="4Ss-ep-ff8" id="kUe-Hu-0C4"/>
+                                            <action selector="agcModeButton:" target="My9-cI-9u7" id="nX2-DG-wXC"/>
                                         </connections>
                                     </popUpButton>
                                     <slider identifier="agcThreshold" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8T0-Ls-6Dh">
@@ -581,7 +570,7 @@
                                         </constraints>
                                         <sliderCell key="cell" continuous="YES" state="on" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" sliderType="linear" id="Xy8-Sk-zCo"/>
                                         <connections>
-                                            <binding destination="My9-cI-9u7" name="value" keyPath="representedObject.agcThreshold" id="uLw-1i-c2i"/>
+                                            <action selector="sliders:" target="My9-cI-9u7" id="3is-jg-VOm"/>
                                         </connections>
                                     </slider>
                                 </subviews>
@@ -608,6 +597,13 @@
                         </constraints>
                         <accessibility identifier="AudioTabViewItem"/>
                     </view>
+                    <connections>
+                        <outlet property="_agcModePopUp" destination="FEl-bw-dKr" id="7Vl-n8-i8a"/>
+                        <outlet property="_agcThresholdSlider" destination="8T0-Ls-6Dh" id="lyE-hk-gb7"/>
+                        <outlet property="_audioGainSlider" destination="nxC-80-uqM" id="tvX-Cc-vFH"/>
+                        <outlet property="_audioMuteButton" destination="Ibz-Hr-qrU" id="4PX-Lz-VY9"/>
+                        <outlet property="_audioPanSlider" destination="IQM-e9-DXN" id="OyB-hY-mrc"/>
+                    </connections>
                 </viewController>
                 <customObject id="OVV-pk-MjG" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -616,7 +612,7 @@
         <!--dspVC-->
         <scene sceneID="v6z-wA-6gD">
             <objects>
-                <viewController identifier="DSPvc" storyboardIdentifier="DSP" id="Xq5-Es-VCO" userLabel="dspVC" sceneMemberID="viewController">
+                <viewController identifier="DSPvc" storyboardIdentifier="DSP" id="Xq5-Es-VCO" userLabel="dspVC" customClass="DspViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" autoresizesSubviews="NO" wantsLayer="YES" id="fJQ-hb-hVs">
                         <rect key="frame" x="0.0" y="0.0" width="311" height="100"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -624,44 +620,44 @@
                             <stackView distribution="fill" orientation="vertical" alignment="centerX" spacing="2" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NkG-o7-7lM" userLabel="Button stack view">
                                 <rect key="frame" x="8" y="5" width="81" height="90"/>
                                 <subviews>
-                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wbR-zB-ogr">
+                                    <button identifier="wnbButton" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wbR-zB-ogr">
                                         <rect key="frame" x="5" y="62" width="71" height="32"/>
                                         <buttonCell key="cell" type="push" title="WNB" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="bLR-K0-azd">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
                                         <connections>
-                                            <binding destination="Xq5-Es-VCO" name="value" keyPath="representedObject.wnbEnabled" id="eib-z3-pit"/>
+                                            <action selector="buttons:" target="Xq5-Es-VCO" id="bjn-Ea-SqG"/>
                                         </connections>
                                     </button>
-                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QGr-vY-I19">
+                                    <button identifier="nbButton" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QGr-vY-I19">
                                         <rect key="frame" x="5" y="39" width="71" height="32"/>
                                         <buttonCell key="cell" type="push" title="NB" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Cuf-p4-y1T">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
                                         <connections>
-                                            <binding destination="Xq5-Es-VCO" name="value" keyPath="representedObject.nbEnabled" id="yfL-S9-gNy"/>
+                                            <action selector="buttons:" target="Xq5-Es-VCO" id="jaV-UW-KIB"/>
                                         </connections>
                                     </button>
-                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WlI-l8-vrc">
+                                    <button identifier="nrButton" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WlI-l8-vrc">
                                         <rect key="frame" x="5" y="16" width="71" height="32"/>
                                         <buttonCell key="cell" type="push" title="NR" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="tbc-jH-v7N">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
                                         <connections>
-                                            <binding destination="Xq5-Es-VCO" name="value" keyPath="representedObject.nrEnabled" id="bqs-OQ-ill"/>
+                                            <action selector="buttons:" target="Xq5-Es-VCO" id="fJD-at-Dqa"/>
                                         </connections>
                                     </button>
-                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="aQF-9M-kZd">
+                                    <button identifier="anfButton" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="aQF-9M-kZd">
                                         <rect key="frame" x="5" y="-7" width="71" height="32"/>
                                         <buttonCell key="cell" type="push" title="ANF" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="pDV-II-2qz">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
                                         <connections>
-                                            <binding destination="Xq5-Es-VCO" name="value" keyPath="representedObject.anfEnabled" id="TbQ-tU-PPK"/>
+                                            <action selector="buttons:" target="Xq5-Es-VCO" id="mhk-zx-v9z"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -686,35 +682,35 @@
                             <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3Wp-wn-P5R" userLabel="Slider stack view">
                                 <rect key="frame" x="97" y="8" width="194" height="84"/>
                                 <subviews>
-                                    <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="OQA-Gw-htQ">
+                                    <slider identifier="wnbSlider" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="OQA-Gw-htQ">
                                         <rect key="frame" x="-2" y="67" width="184" height="19"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="180" id="qnr-LF-Nu4"/>
                                         </constraints>
                                         <sliderCell key="cell" alignment="left" maxValue="100" doubleValue="49.784374999999997" tickMarkPosition="above" sliderType="linear" id="o9i-hB-pL2"/>
                                         <connections>
-                                            <binding destination="Xq5-Es-VCO" name="value" keyPath="representedObject.wnbLevel" id="8lI-57-4X8"/>
+                                            <action selector="sliders:" target="Xq5-Es-VCO" id="CdC-9b-UCJ"/>
                                         </connections>
                                     </slider>
-                                    <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Hqg-k6-SNB">
+                                    <slider identifier="nbSlider" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Hqg-k6-SNB">
                                         <rect key="frame" x="-2" y="44" width="184" height="19"/>
                                         <sliderCell key="cell" alignment="left" maxValue="100" doubleValue="49.784374999999997" tickMarkPosition="above" sliderType="linear" id="XFV-py-pJh"/>
                                         <connections>
-                                            <binding destination="Xq5-Es-VCO" name="value" keyPath="representedObject.nbLevel" id="aF2-xv-6Di"/>
+                                            <action selector="sliders:" target="Xq5-Es-VCO" id="Ofj-KK-6xx"/>
                                         </connections>
                                     </slider>
-                                    <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zA3-pO-26c">
+                                    <slider identifier="nrSlider" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zA3-pO-26c">
                                         <rect key="frame" x="-2" y="21" width="184" height="19"/>
                                         <sliderCell key="cell" alignment="left" maxValue="100" doubleValue="49.784374999999997" tickMarkPosition="above" sliderType="linear" id="uM2-fx-fgl"/>
                                         <connections>
-                                            <binding destination="Xq5-Es-VCO" name="value" keyPath="representedObject.nrLevel" id="bcP-xA-UO3"/>
+                                            <action selector="sliders:" target="Xq5-Es-VCO" id="mlh-b4-rtg"/>
                                         </connections>
                                     </slider>
-                                    <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cVr-Tn-CqQ">
+                                    <slider identifier="anfSlider" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cVr-Tn-CqQ">
                                         <rect key="frame" x="-2" y="-2" width="184" height="19"/>
                                         <sliderCell key="cell" alignment="left" maxValue="100" doubleValue="49.784374999999997" tickMarkPosition="above" sliderType="linear" id="zs3-zK-1d2"/>
                                         <connections>
-                                            <binding destination="Xq5-Es-VCO" name="value" keyPath="representedObject.anfLevel" id="1HN-mk-emd"/>
+                                            <action selector="sliders:" target="Xq5-Es-VCO" id="LmP-Hp-wYJ"/>
                                         </connections>
                                     </slider>
                                 </subviews>
@@ -746,6 +742,16 @@
                             <constraint firstItem="NkG-o7-7lM" firstAttribute="top" secondItem="fJQ-hb-hVs" secondAttribute="top" constant="5" id="wV0-cg-xEL"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="_anfButton" destination="aQF-9M-kZd" id="xyJ-ZB-17q"/>
+                        <outlet property="_anfSlider" destination="cVr-Tn-CqQ" id="NNW-Bh-gla"/>
+                        <outlet property="_nbButton" destination="QGr-vY-I19" id="9vH-Iy-5v3"/>
+                        <outlet property="_nbSlider" destination="Hqg-k6-SNB" id="4E0-Wa-WtS"/>
+                        <outlet property="_nrButton" destination="WlI-l8-vrc" id="gL9-tK-jmW"/>
+                        <outlet property="_nrSlider" destination="zA3-pO-26c" id="v8w-GH-wp9"/>
+                        <outlet property="_wnbButton" destination="wbR-zB-ogr" id="dps-S5-eJM"/>
+                        <outlet property="_wnbSlider" destination="OQA-Gw-htQ" id="vLN-9T-yiZ"/>
+                    </connections>
                 </viewController>
                 <customObject id="70Q-HS-afR" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -773,6 +779,7 @@
                                             <menu key="menu" id="12S-IH-R9c"/>
                                         </popUpButtonCell>
                                         <connections>
+                                            <action selector="modePopUp:" target="jnR-au-HBU" id="Uvv-t6-Ynh"/>
                                             <binding destination="jnR-au-HBU" name="selectedValue" keyPath="representedObject.mode" previousBinding="SXt-Bt-8h2" id="eds-xh-Trr"/>
                                             <binding destination="jnR-au-HBU" name="content" keyPath="representedObject.modeList" id="SXt-Bt-8h2"/>
                                         </connections>
@@ -1018,6 +1025,7 @@
                         <outlet property="_filter7" destination="2H4-fb-0jR" id="56M-J6-ULY"/>
                         <outlet property="_filter8" destination="gn1-ub-Cce" id="S5z-1C-TLd"/>
                         <outlet property="_filter9" destination="JPb-JF-rt7" id="glp-Oq-NRh"/>
+                        <outlet property="_modePopUp" destination="xy8-oG-cXF" id="dvZ-JD-UUq"/>
                         <outlet property="_quickMode0" destination="W6n-fT-26X" id="t3K-V5-ZKE"/>
                         <outlet property="_quickMode1" destination="IV0-jA-TFB" id="c9h-az-hNG"/>
                         <outlet property="_quickMode2" destination="iKy-mO-SoA" id="EiE-zy-plx"/>
@@ -1031,12 +1039,12 @@
         <!--xritVC-->
         <scene sceneID="MGs-5q-XWg">
             <objects>
-                <viewController identifier="XRITvc" storyboardIdentifier="XRIT" id="pG7-fD-vJI" userLabel="xritVC" sceneMemberID="viewController">
+                <viewController identifier="XRITvc" storyboardIdentifier="XRIT" id="pG7-fD-vJI" userLabel="xritVC" customClass="XritViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" autoresizesSubviews="NO" wantsLayer="YES" id="vZI-Mq-qLU">
                         <rect key="frame" x="0.0" y="0.0" width="300" height="100"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="k8h-Pb-iPa">
+                            <textField identifier="ritOffset" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="k8h-Pb-iPa">
                                 <rect key="frame" x="20" y="40" width="73" height="22"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="left" placeholderString="100" id="ibo-S8-CsG">
                                     <font key="font" metaFont="system"/>
@@ -1044,18 +1052,17 @@
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                                 <connections>
-                                    <binding destination="pG7-fD-vJI" name="value" keyPath="representedObject.ritOffset" id="nNK-la-T6I"/>
+                                    <action selector="textFields:" target="pG7-fD-vJI" id="F6O-Cv-XfD"/>
                                 </connections>
                             </textField>
-                            <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bii-Xv-Dji">
+                            <stepper identifier="ritStepper" horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bii-Xv-Dji">
                                 <rect key="frame" x="104" y="37" width="25" height="27"/>
                                 <stepperCell key="cell" continuous="YES" alignment="left" increment="10" minValue="-1000" maxValue="1000" id="7VO-j2-kHS"/>
                                 <connections>
-                                    <action selector="takeIntegerValueFrom:" target="k8h-Pb-iPa" id="3CS-Nr-r1h"/>
-                                    <binding destination="pG7-fD-vJI" name="value" keyPath="representedObject.ritOffset" id="M6x-dC-94z"/>
+                                    <action selector="steppers:" target="pG7-fD-vJI" id="Us4-7e-fgS"/>
                                 </connections>
                             </stepper>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="XKr-Rs-ZVI">
+                            <textField identifier="xitOffset" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="XKr-Rs-ZVI">
                                 <rect key="frame" x="160" y="40" width="72" height="22"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="left" placeholderString="100" id="x3g-91-F1m">
                                     <font key="font" metaFont="system"/>
@@ -1063,54 +1070,54 @@
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                                 <connections>
-                                    <binding destination="pG7-fD-vJI" name="value" keyPath="representedObject.xitOffset" id="hIR-Qy-cuF"/>
+                                    <action selector="textFields:" target="pG7-fD-vJI" id="TL8-s3-a29"/>
                                 </connections>
                             </textField>
-                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3GW-pV-qJk">
+                            <button identifier="ritButton" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3GW-pV-qJk">
                                 <rect key="frame" x="14" y="65" width="85" height="32"/>
                                 <buttonCell key="cell" type="push" title="RIT" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="d7V-Db-r6z">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
                                 <connections>
-                                    <binding destination="pG7-fD-vJI" name="value" keyPath="representedObject.ritEnabled" id="2P5-2Q-Vpk"/>
+                                    <action selector="buttons:" target="pG7-fD-vJI" id="Qdb-pd-GIM"/>
                                 </connections>
                             </button>
-                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="azr-wr-eVx">
+                            <button identifier="xitButton" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="azr-wr-eVx">
                                 <rect key="frame" x="154" y="65" width="84" height="32"/>
                                 <buttonCell key="cell" type="push" title="XIT" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="4ws-58-iUT">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
                                 <connections>
-                                    <binding destination="pG7-fD-vJI" name="value" keyPath="representedObject.xitEnabled" id="rpC-4q-b1z"/>
+                                    <action selector="buttons:" target="pG7-fD-vJI" id="M28-AO-tE4"/>
                                 </connections>
                             </button>
-                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Zdv-0c-sfF">
+                            <button identifier="xitZeroButton" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Zdv-0c-sfF">
                                 <rect key="frame" x="233" y="65" width="49" height="32"/>
                                 <buttonCell key="cell" type="push" title="0" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="h72-9z-RKz">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
                                 <connections>
-                                    <action selector="zeroXit:" target="BJC-eX-HmP" id="U2t-Z7-4VF"/>
+                                    <action selector="buttons:" target="pG7-fD-vJI" id="1xH-eU-poV"/>
                                 </connections>
                             </button>
-                            <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="iYj-3g-foY">
+                            <stepper identifier="xitStepper" horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="iYj-3g-foY">
                                 <rect key="frame" x="245" y="37" width="25" height="27"/>
                                 <stepperCell key="cell" continuous="YES" alignment="left" increment="10" minValue="-1000" maxValue="1000" id="kI8-Y8-wTh"/>
                                 <connections>
-                                    <binding destination="pG7-fD-vJI" name="value" keyPath="representedObject.xitOffset" id="MFx-ia-ldQ"/>
+                                    <action selector="steppers:" target="pG7-fD-vJI" id="C5l-bW-ADm"/>
                                 </connections>
                             </stepper>
-                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="d6a-mT-vca">
+                            <button identifier="ritZeroButton" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="d6a-mT-vca">
                                 <rect key="frame" x="92" y="65" width="49" height="32"/>
                                 <buttonCell key="cell" type="push" title="0" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="dqk-8c-ofI">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
                                 <connections>
-                                    <action selector="zeroRit:" target="BJC-eX-HmP" id="xss-x2-nbb"/>
+                                    <action selector="buttons:" target="pG7-fD-vJI" id="iGh-eh-P48"/>
                                 </connections>
                             </button>
                             <stackView distribution="fill" orientation="horizontal" alignment="centerY" spacing="12" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jVG-Vf-2Xr" userLabel="Step Stack View">
@@ -1123,7 +1130,7 @@
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Vmt-Es-bhC">
+                                    <textField identifier="step" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Vmt-Es-bhC">
                                         <rect key="frame" x="83" y="1" width="72" height="22"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="left" placeholderString="100" id="nNQ-aO-mGP">
                                             <font key="font" metaFont="system"/>
@@ -1131,14 +1138,14 @@
                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                         <connections>
-                                            <binding destination="pG7-fD-vJI" name="value" keyPath="representedObject.step" id="acn-yT-A2l"/>
+                                            <action selector="textFields:" target="pG7-fD-vJI" id="eph-Yv-YAM"/>
                                         </connections>
                                     </textField>
-                                    <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="DZy-Ia-RTD">
+                                    <stepper identifier="stepStepper" horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="DZy-Ia-RTD">
                                         <rect key="frame" x="164" y="-2" width="19" height="27"/>
                                         <stepperCell key="cell" continuous="YES" alignment="left" increment="10" minValue="-1000" maxValue="1000" id="k4m-RH-uwB"/>
                                         <connections>
-                                            <binding destination="pG7-fD-vJI" name="value" keyPath="representedObject.step" id="HQM-9E-qwu"/>
+                                            <action selector="steppers:" target="pG7-fD-vJI" id="Syl-Rs-ktG"/>
                                         </connections>
                                     </stepper>
                                 </subviews>
@@ -1185,14 +1192,16 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="_rit" destination="3GW-pV-qJk" id="qIQ-cU-go3"/>
-                        <outlet property="_ritOffset" destination="k8h-Pb-iPa" id="0i6-PM-YK5"/>
-                        <outlet property="_ritStepper" destination="bii-Xv-Dji" id="ioc-Gs-o5X"/>
-                        <outlet property="_ritZero" destination="d6a-mT-vca" id="Uxy-sG-j52"/>
-                        <outlet property="_xit" destination="azr-wr-eVx" id="oqm-tr-0bD"/>
-                        <outlet property="_xitOffset" destination="XKr-Rs-ZVI" id="fMU-dg-WdK"/>
-                        <outlet property="_xitStepper" destination="iYj-3g-foY" id="Yys-S8-1cq"/>
-                        <outlet property="_xitZero" destination="Zdv-0c-sfF" id="f7t-Kh-Zzs"/>
+                        <outlet property="_ritButton" destination="3GW-pV-qJk" id="gLW-RI-7G1"/>
+                        <outlet property="_ritStepper" destination="bii-Xv-Dji" id="xrJ-Cx-sZg"/>
+                        <outlet property="_ritTextField" destination="k8h-Pb-iPa" id="Va6-bQ-FFo"/>
+                        <outlet property="_ritZeroButton" destination="d6a-mT-vca" id="fVB-6E-5P6"/>
+                        <outlet property="_stepStepper" destination="DZy-Ia-RTD" id="Rre-To-2nu"/>
+                        <outlet property="_stepTextField" destination="Vmt-Es-bhC" id="j8T-cY-11N"/>
+                        <outlet property="_xitButton" destination="azr-wr-eVx" id="RFg-rv-0L1"/>
+                        <outlet property="_xitStepper" destination="iYj-3g-foY" id="Oa1-uA-Zug"/>
+                        <outlet property="_xitTextField" destination="XKr-Rs-ZVI" id="0rc-eT-lKw"/>
+                        <outlet property="_xitZeroButton" destination="Zdv-0c-sfF" id="bWP-oM-o2L"/>
                     </connections>
                 </viewController>
                 <customObject id="BJC-eX-HmP" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
@@ -1202,7 +1211,7 @@
         <!--daxVC-->
         <scene sceneID="04g-g8-NSs">
             <objects>
-                <viewController title="daxVC" identifier="DAXvc" storyboardIdentifier="DAX" id="qHG-cG-Dd3" userLabel="daxVC" sceneMemberID="viewController">
+                <viewController title="daxVC" identifier="DAXvc" storyboardIdentifier="DAX" id="qHG-cG-Dd3" userLabel="daxVC" customClass="DaxViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" wantsLayer="YES" id="XNf-ih-hpv">
                         <rect key="frame" x="0.0" y="0.0" width="300" height="100"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1229,7 +1238,7 @@
                                             <menu key="menu" id="v2M-fu-t4H"/>
                                         </popUpButtonCell>
                                         <connections>
-                                            <action selector="daxPopup:" target="qHG-cG-Dd3" id="s9C-O9-nUw"/>
+                                            <action selector="buttons:" target="qHG-cG-Dd3" id="fyq-St-6nO"/>
                                             <binding destination="qHG-cG-Dd3" name="selectedIndex" keyPath="representedObject.daxChannel" previousBinding="4Dx-VB-I3r" id="zTM-FC-060"/>
                                             <binding destination="qHG-cG-Dd3" name="content" keyPath="representedObject.daxChoices" id="4Dx-VB-I3r"/>
                                         </connections>
@@ -1251,6 +1260,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="_daxPopUp" destination="8Uo-67-Pwa" id="2QA-mw-omk"/>
                         <outlet property="_daxPopup" destination="8Uo-67-Pwa" id="sPz-3n-Lrp"/>
                     </connections>
                 </viewController>

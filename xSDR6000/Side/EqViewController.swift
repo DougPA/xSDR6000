@@ -35,18 +35,6 @@ final class EqViewController                : NSViewController {
   private var _equalizerTx                  : Equalizer!                    // Tx Equalizer
   private var _eq                           : Equalizer!                    // Current Equalizer
   
-  private let kEqOn                         = NSUserInterfaceItemIdentifier(rawValue: "EqOn")
-  private let kEqRx                         = NSUserInterfaceItemIdentifier(rawValue: "EqRx")
-  private let kEqTx                         = NSUserInterfaceItemIdentifier(rawValue: "EqTx")
-  private let kLevel63Hz                    = NSUserInterfaceItemIdentifier(rawValue: "Level63Hz")
-  private let kLevel125Hz                   = NSUserInterfaceItemIdentifier(rawValue: "Level125Hz")
-  private let kLevel250Hz                   = NSUserInterfaceItemIdentifier(rawValue: "Level250Hz")
-  private let kLevel500Hz                   = NSUserInterfaceItemIdentifier(rawValue: "Level500Hz")
-  private let kLevel1000Hz                  = NSUserInterfaceItemIdentifier(rawValue: "Level1000Hz")
-  private let kLevel2000Hz                  = NSUserInterfaceItemIdentifier(rawValue: "Level2000Hz")
-  private let kLevel4000Hz                  = NSUserInterfaceItemIdentifier(rawValue: "Level4000Hz")
-  private let kLevel8000Hz                  = NSUserInterfaceItemIdentifier(rawValue: "Level8000Hz")
-
   // ----------------------------------------------------------------------------
   // MARK: - Overriden methods
   
@@ -72,18 +60,18 @@ final class EqViewController                : NSViewController {
   ///
   @IBAction func buttons(_ sender: NSButton) {
     
-    switch sender.identifier {
+    switch sender.identifier!.rawValue {
       
-    case kEqOn:
+    case "EqOn":
       // set the displayed Equalizer On / Off
       _eq!.eqEnabled = onButton.boolState
 
-    case kEqRx:
+    case "EqRx":
       // select the Rx equalizer
       _eq = _equalizerRx
       Defaults[.eqRxSelected] = sender.boolState
 
-    case kEqTx:
+    case "EqTx":
       // select the Tx equalizer
       _eq = _equalizerTx
       Defaults[.eqRxSelected] = !sender.boolState
@@ -101,22 +89,22 @@ final class EqViewController                : NSViewController {
   @IBAction func sliders(_ sender: NSSlider) {
     
     // tell the Radio to change the Eq setting
-    switch sender.identifier {
-    case kLevel63Hz:
+    switch sender.identifier!.rawValue {
+    case "Level63Hz":
       _eq.level63Hz = sender.integerValue
-    case kLevel125Hz:
+    case "Level125Hz":
       _eq.level125Hz = sender.integerValue
-    case kLevel250Hz:
+    case "Level250Hz":
       _eq.level250Hz = sender.integerValue
-    case kLevel500Hz:
+    case "Level500Hz":
       _eq.level500Hz = sender.integerValue
-    case kLevel1000Hz:
+    case "Level1000Hz":
       _eq.level1000Hz = sender.integerValue
-    case kLevel2000Hz:
+    case "Level2000Hz":
       _eq.level2000Hz = sender.integerValue
-    case kLevel4000Hz:
+    case "Level4000Hz":
       _eq.level4000Hz = sender.integerValue
-    case kLevel8000Hz:
+    case "Level8000Hz":
       _eq.level8000Hz = sender.integerValue
     default:
       fatalError()

@@ -25,6 +25,7 @@ final class SideViewController              : NSViewController {
   @IBOutlet private weak var _pcwButton     : NSButton!
   @IBOutlet private weak var _phneButton    : NSButton!
   @IBOutlet private weak var _eqButton      : NSButton!
+
   @IBOutlet private weak var _insideViewHeight      : NSLayoutConstraint!
   @IBOutlet private weak var _rxContainerHeight     : NSLayoutConstraint!
   @IBOutlet private weak var _txContainerHeight     : NSLayoutConstraint!
@@ -32,13 +33,6 @@ final class SideViewController              : NSViewController {
   @IBOutlet private weak var _phneContainerHeight   : NSLayoutConstraint!
   @IBOutlet private weak var _eqContainerHeight     : NSLayoutConstraint!
   
-  private let kRx                           = NSUserInterfaceItemIdentifier(rawValue: "RX")
-  private let kTx                           = NSUserInterfaceItemIdentifier(rawValue: "TX")
-  private let kPcw                          = NSUserInterfaceItemIdentifier(rawValue: "PCW")
-  private let kPhne                         = NSUserInterfaceItemIdentifier(rawValue: "PHNE")
-  private let kEq                           = NSUserInterfaceItemIdentifier(rawValue: "EQ")
-  private let kStateOn                      = NSControl.StateValue.on
-  private let kStateOff                     = NSControl.StateValue.off
   private let kSideViewWidth                : CGFloat = 311
   private let kRxHeightOpen                 : CGFloat = 210
   private let kTxHeightOpen                 : CGFloat = 210
@@ -95,20 +89,20 @@ final class SideViewController              : NSViewController {
   ///
   @IBAction func sideButtons(_ sender: NSButton) {
     
-    switch sender.identifier {
-    case kRx:
+    switch sender.identifier!.rawValue {
+    case "RX":
       Defaults[.sideRxOpen] = sender.boolState
       _rxContainerHeight.constant = (sender.boolState ? kRxHeightOpen : kHeightClosed)
-    case kTx:
+    case "TX":
       Defaults[.sideTxOpen] = sender.boolState
       _txContainerHeight.constant = (sender.boolState ? kTxHeightOpen : kHeightClosed)
-    case kPcw:
+    case "PCW":
       Defaults[.sidePcwOpen] = sender.boolState
       _pcwContainerHeight.constant = (sender.boolState ? kPcwHeightOpen : kHeightClosed)
-    case kPhne:
+    case "PHNE":
       Defaults[.sidePhneOpen] = sender.boolState
       _phneContainerHeight.constant = (sender.boolState ? kPhneHeightOpen : kHeightClosed)
-    case kEq:
+    case "EQ":
       Defaults[.sideEqOpen] = sender.boolState
       _eqContainerHeight.constant = (sender.boolState ? kEqHeightOpen : kHeightClosed)
     default:

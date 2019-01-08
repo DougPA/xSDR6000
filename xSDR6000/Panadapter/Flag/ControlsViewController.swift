@@ -72,15 +72,15 @@ class ControlsViewController: NSTabViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    
+
     view.translatesAutoresizingMaskIntoConstraints = false
     
     // set the background color of the Flag
 //    view.layer?.backgroundColor = NSColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.5).cgColor
 
     view.isHidden = true
+
   }
-  /// Respond to a Tab change
   ///
   /// - Parameters:
   ///   - tabView:                  the TabView
@@ -107,6 +107,8 @@ class ControlsViewController: NSTabViewController {
   func configure(panadapter: Panadapter?, slice: xLib6000.Slice?) {
     self.panadapter = panadapter
     self.slice = slice!
+    
+    tabViewItems[0].viewController!.representedObject = slice
   }
 
   // ----------------------------------------------------------------------------

@@ -31,13 +31,7 @@ class TxViewController                      : NSViewController {
 
   private let kPowerForward                 = Api.MeterShortName.powerForward.rawValue
   private let kSwr                          = Api.MeterShortName.swr.rawValue
-  private let kTune                         = NSUserInterfaceItemIdentifier(rawValue: "Tune")
-  private let kMox                          = NSUserInterfaceItemIdentifier(rawValue: "Mox")
-  private let kAtu                          = NSUserInterfaceItemIdentifier(rawValue: "Atu")
-  private let kMem                          = NSUserInterfaceItemIdentifier(rawValue: "Mem")
-  private let kTunePower                    = NSUserInterfaceItemIdentifier(rawValue: "TunePower")
-  private let kRfPower                      = NSUserInterfaceItemIdentifier(rawValue: "RfPower")
-  private let kSave                         = NSUserInterfaceItemIdentifier(rawValue: "Save")
+
 
   // ----------------------------------------------------------------------------
   // MARK: - Overriden methods
@@ -62,29 +56,29 @@ class TxViewController                      : NSViewController {
   // MARK: - Action methods
   
   @IBAction func buttons(_ sender: NSButton) {
-    
-    switch sender.identifier {
-      case kTune:
+
+    switch sender.identifier!.rawValue {
+      case "Tune":
         _radio?.transmit.tune = sender.boolState
-      case kMox:
+      case "Mox":
         _radio?.mox = sender.boolState
-      case kAtu:
+      case "Atu":
         // initiate a tuning cycle
         _radio?.atu.atuStart()
-      case kMem:
+      case "Mem":
         _radio?.atu.memoriesEnabled = sender.boolState
-      case kSave:
+      case "Save":
         showDialog(sender)
       default:
         fatalError()
     }
   }
   @IBAction func sliders(_ sender: NSSlider) {
-    switch sender.identifier {
+    switch sender.identifier!.rawValue {
 
-    case kTunePower:
+    case "TunePower":
       _radio?.transmit.tunePower = sender.integerValue
-    case kRfPower:
+    case "RfPower":
       _radio?.transmit.rfPower = sender.integerValue
     default:
       fatalError()

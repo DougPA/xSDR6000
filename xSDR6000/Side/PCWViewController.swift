@@ -34,16 +34,6 @@ class PCWViewController                     : NSViewController {
   private let kMicrophoneOutput             = Api.MeterShortName.microphoneOutput.rawValue
   private let kMicrophonePeak               = Api.MeterShortName.microphonePeak.rawValue
   private let kCompression                  = Api.MeterShortName.postClipper.rawValue
-  private let kSave                         = NSUserInterfaceItemIdentifier(rawValue: "Save")
-  private let kProc                         = NSUserInterfaceItemIdentifier(rawValue: "Proc")
-  private let kMon                          = NSUserInterfaceItemIdentifier(rawValue: "Mon")
-  private let kAcc                          = NSUserInterfaceItemIdentifier(rawValue: "Acc")
-  private let kDax                          = NSUserInterfaceItemIdentifier(rawValue: "DaxMic")
-  private let kMicLevel                     = NSUserInterfaceItemIdentifier(rawValue: "MicLevel")
-  private let kSpeechProcessorLevel         = NSUserInterfaceItemIdentifier(rawValue: "SpeechProcessorLevel")
-  private let kTxMonitorGainSb              = NSUserInterfaceItemIdentifier(rawValue: "TxMonitorGainSb")
-  private let kMicProfile                   = NSUserInterfaceItemIdentifier(rawValue: "MicProfile")
-  private let kMicSelection                 = NSUserInterfaceItemIdentifier(rawValue: "MicSelection")
 
   // ----------------------------------------------------------------------------
   // MARK: - Overriden methods
@@ -69,10 +59,10 @@ class PCWViewController                     : NSViewController {
   ///
   @IBAction func popups(_ sender: NSPopUpButton)  {
     
-    switch sender.identifier {
-    case kMicProfile:
+    switch sender.identifier!.rawValue {
+    case "MicProfile":
       _radio!.profiles["mic"]?.selection = sender.selectedItem!.title
-    case kMicSelection:
+    case "MicSelection":
       _radio!.transmit?.micSelection = sender.selectedItem!.title
     default:
       fatalError()
@@ -84,16 +74,16 @@ class PCWViewController                     : NSViewController {
   ///
   @IBAction func buttons(_ sender: NSButton) {
     
-    switch sender.identifier {
-    case kAcc:
+    switch sender.identifier!.rawValue {
+    case "Acc":
       _radio!.transmit?.micAccEnabled = sender.boolState
-    case kDax:
+    case "DaxMic":
        _radio!.transmit?.daxEnabled = sender.boolState
-    case kMon:
+    case "Mon":
        _radio!.transmit?.txMonitorEnabled = sender.boolState
-    case kProc:
+    case "Proc":
       _radio!.transmit?.speechProcessorEnabled = sender.boolState
-    case kSave:
+    case "Save":
       showDialog(sender)
     default:
       fatalError()
@@ -105,12 +95,12 @@ class PCWViewController                     : NSViewController {
   ///
   @IBAction func sliders(_ sender: NSSlider) {
   
-    switch sender.identifier {
-    case kMicLevel:
+    switch sender.identifier!.rawValue {
+    case "MicLevel":
      _radio!.transmit?.micLevel = sender.integerValue
-    case kSpeechProcessorLevel:
+    case "SpeechProcessorLevel":
       _radio!.transmit?.speechProcessorLevel = sender.integerValue
-    case kTxMonitorGainSb:
+    case "TxMonitorGainSb":
       _radio!.transmit?.txMonitorGainSb = sender.integerValue
     default:
       fatalError()

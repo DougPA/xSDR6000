@@ -32,14 +32,6 @@ class PhoneViewController                   : NSViewController {
   
   private var _transmit                     : Transmit?
   
-  private let kVox                          = NSUserInterfaceItemIdentifier(rawValue: "Vox")
-  private let kDexp                         = NSUserInterfaceItemIdentifier(rawValue: "Dexp")
-  private let kTxLowStepper                 = NSUserInterfaceItemIdentifier(rawValue: "TxLowStepper")
-  private let kTxHighStepper                = NSUserInterfaceItemIdentifier(rawValue: "TxHighStepper")
-  private let kMicBias                      = NSUserInterfaceItemIdentifier(rawValue: "MicBias")
-  private let kMicBoost                     = NSUserInterfaceItemIdentifier(rawValue: "MicBoost")
-  private let kMeterInRx                    = NSUserInterfaceItemIdentifier(rawValue: "MeterInRx")
-  
   private let kFilterStep                   = 10
   
   // ----------------------------------------------------------------------------
@@ -67,16 +59,16 @@ class PhoneViewController                   : NSViewController {
   ///
   @IBAction func buttons(_ sender: NSButton) {
     
-    switch sender.identifier {
-    case kDexp:
+    switch sender.identifier!.rawValue {
+    case "Dexp":
       _transmit?.companderEnabled = sender.boolState
-    case kVox:
+    case "Vox":
       _transmit?.voxEnabled = sender.boolState
-    case kMicBias:
+    case "MicBias":
       _transmit?.micBiasEnabled = sender.boolState
-    case kMicBoost:
+    case "MicBoost":
       _transmit?.micBoostEnabled = sender.boolState
-    case kMeterInRx:
+    case "MeterInRx":
       _transmit?.metInRxEnabled = sender.boolState
     default:
       fatalError()
@@ -88,10 +80,10 @@ class PhoneViewController                   : NSViewController {
   ///
 @IBAction func steppers(_ sender: NSStepper) {
 
-    switch sender.identifier {
-    case kTxHighStepper:
+    switch sender.identifier!.rawValue {
+    case "TxHighStepper":
       _transmit?.txFilterHigh += Int(sender.increment)
-    case kTxLowStepper:
+    case "TxLowStepper":
       _transmit?.txFilterLow += Int(sender.increment)
     default:
       fatalError()
