@@ -31,7 +31,7 @@
                                                 </buttonCell>
                                                 <color key="contentTintColor" red="1" green="1" blue="1" alpha="0.29725146051571311" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <connections>
-                                                    <action selector="controlsButtons:" target="Lmw-yC-7qh" id="H5m-pI-8o9"/>
+                                                    <action selector="splitButton:" target="Lmw-yC-7qh" id="Rwv-Vb-Gwo"/>
                                                 </connections>
                                             </button>
                                             <button translatesAutoresizingMaskIntoConstraints="NO" id="f1H-1i-UGn" userLabel="TX button">
@@ -45,7 +45,7 @@
                                                 </buttonCell>
                                                 <color key="contentTintColor" red="1" green="1" blue="1" alpha="0.29981995366639808" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <connections>
-                                                    <action selector="controlsButtons:" target="Lmw-yC-7qh" id="FqY-6O-Ybs"/>
+                                                    <action selector="txButton:" target="Lmw-yC-7qh" id="KCd-lS-uOt"/>
                                                 </connections>
                                             </button>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1db-5H-JDr" userLabel="Alpha Button">
@@ -59,7 +59,7 @@
                                                 </buttonCell>
                                                 <color key="contentTintColor" red="1" green="1" blue="1" alpha="0.29981995369999997" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <connections>
-                                                    <action selector="controlsButtons:" target="Lmw-yC-7qh" id="eDe-wT-gdo"/>
+                                                    <action selector="alphaButton:" target="Lmw-yC-7qh" id="ldJ-CR-fpW"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -114,7 +114,7 @@
                                         </buttonCell>
                                         <color key="contentTintColor" red="1" green="0.1106421309" blue="0.02582195826" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
-                                            <action selector="controlsButtons:" target="Lmw-yC-7qh" id="9ML-xt-b77"/>
+                                            <action selector="closeButton:" target="Lmw-yC-7qh" id="Vbc-9D-HKC"/>
                                         </connections>
                                     </button>
                                     <popUpButton identifier="rxAnt" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Zp6-Oe-dIV" userLabel="RxAnt popup">

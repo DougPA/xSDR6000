@@ -112,8 +112,6 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
     super.viewDidLoad()
     
     view.translatesAutoresizingMaskIntoConstraints = false
-
-    // set the background color of the Flag
     view.layer?.backgroundColor = NSColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.5).cgColor
 
     // populate the choices
@@ -181,7 +179,7 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
   ///   - panadapter:               a Panadapter reference
   ///   - slice:                    a Slice reference
   ///
-  func configure(panadapter: Panadapter?, slice: xLib6000.Slice?, controlsVc: ControlsViewController?, panadapterVc: PanadapterViewController) {
+  func configure(panadapter: Panadapter?, slice: xLib6000.Slice?, controlsVc: ControlsViewController?, panadapterVc: PanadapterViewController?) {
     self._panadapter = panadapter
     self.slice = slice!
     self.controlsVc = controlsVc
@@ -207,12 +205,16 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
   // MARK: - Action methods
   
   @IBAction func alphaButton(_ sender: Any) {
+   
+    // return if this a Side flag (i.e. not on a Slice)
+    guard _panadapterVc != nil else { return }
+      
     var flagPosition: CGFloat = 0
     let constraints = [flagHeightConstraint!, flagWidthConstraint!, flagXPositionConstraint!]
     
     // toggle Flag size
     smallFlagDisplayed.toggle()
-
+    
     // Disable constraints
     NSLayoutConstraint.deactivate(constraints)
     
@@ -221,15 +223,15 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
     let height = (smallFlagDisplayed ? FlagViewController.kSmallFlagHeight : FlagViewController.kLargeFlagHeight)
     constraints[0].constant = height
     constraints[1].constant = width
-
+    
     // set Flag position
     let freqPosition = CGFloat(slice!.frequency - _start) / _hzPerUnit
     flagPosition = (isOnLeft ? freqPosition - width - FlagViewController.kFlagOffset : freqPosition + FlagViewController.kFlagOffset)
     constraints[2].constant = flagPosition
-
+    
     // Enable constraints
     NSLayoutConstraint.activate(constraints)
-
+    
     // evaluate all flag positions
     _panadapterVc!.positionFlags()
   }
@@ -244,7 +246,7 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
     
     notImplemented(sender.title).beginSheetModal(for: NSApp.mainWindow!, completionHandler: { response in } )
   }
-  /// Respond to the cClose button
+  /// Respond to the Close button
   ///
   /// - Parameter sender:         the button
   ///

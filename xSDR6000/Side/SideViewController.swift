@@ -18,6 +18,8 @@ final class SideViewController              : NSViewController {
   
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
+
+  @IBOutlet private weak var _rxContainer   : NSView!
   
   @IBOutlet private weak var _scrollView    : NSScrollView!
   @IBOutlet private weak var _rxButton      : NSButton!
@@ -48,13 +50,16 @@ final class SideViewController              : NSViewController {
     super.viewDidLoad()
 
     view.translatesAutoresizingMaskIntoConstraints = false
-    view.layer?.backgroundColor = NSColor.lightGray.cgColor
+//    view.layer?.backgroundColor = Defaults[.spectrumBackground].cgColor
+    _rxContainer.layer?.backgroundColor = Defaults[.spectrumBackground].cgColor
     
     addNotifications()
     
     let widthConstraint = view.widthAnchor.constraint(equalToConstant: kSideViewWidth)
     widthConstraint.identifier = "Side width constraint"
     widthConstraint.isActive = true
+
+    addRxView()
     
     // set the button states
     _rxButton.state = Defaults[.sideRxOpen].state
@@ -93,6 +98,7 @@ final class SideViewController              : NSViewController {
     case "RX":
       Defaults[.sideRxOpen] = sender.boolState
       _rxContainerHeight.constant = (sender.boolState ? kRxHeightOpen : kHeightClosed)
+      if sender.boolState { addRxView() }
     case "TX":
       Defaults[.sideTxOpen] = sender.boolState
       _txContainerHeight.constant = (sender.boolState ? kTxHeightOpen : kHeightClosed)
@@ -113,6 +119,64 @@ final class SideViewController              : NSViewController {
   // ----------------------------------------------------------------------------
   // MARK: - Private methods
   
+  private func addRxView() {
+    
+    DispatchQueue.main.async { [unowned self] in
+      
+      if let radio = Api.sharedInstance.radio {
+        
+        // find the active Slice
+        if let slice = Slice.findActive() {
+          
+          // find the Panadapter of the Slice
+          let pan = radio.panadapters[slice.panadapterId]
+          
+          // get the Storyboard containing a Flag View Controller
+          let sb = NSStoryboard(name: "Flag", bundle: nil)
+          
+          // create a Flag View Controller & pass it needed parameters
+          let flagVc = sb.instantiateController(withIdentifier: "Flag") as! FlagViewController
+          
+          // create a Controls View Controller & pass it needed parameters
+          let controlsVc = sb.instantiateController(withIdentifier: "Controls") as! ControlsViewController
+          controlsVc.configure(panadapter: pan, slice: slice)
+          
+          // pass the FlagVc needed parameters
+          flagVc.configure(panadapter: pan, slice: slice, controlsVc: controlsVc, panadapterVc: nil)
+          flagVc.smallFlagDisplayed = false
+          flagVc.isOnLeft = true
+          
+          // add its view
+          self._rxContainer.addSubview(flagVc.view)
+          self._rxContainer.addSubview(controlsVc.view)
+          controlsVc.view.isHidden = false
+          
+         // Flag View constraints: height, width & top of the Flag (constants)
+          flagVc.flagHeightConstraint = flagVc.view.heightAnchor.constraint(equalToConstant: FlagViewController.kLargeFlagHeight)
+          flagVc.flagWidthConstraint = flagVc.view.widthAnchor.constraint(equalToConstant: FlagViewController.kLargeFlagWidth)
+          let top = flagVc.view.topAnchor.constraint(equalTo: self._rxContainer.topAnchor)
+          
+          // Flag View constraints: position (will be changed as Flag moves)
+          flagVc.flagXPositionConstraint = flagVc.view.leadingAnchor.constraint(equalTo: self._rxContainer.leadingAnchor, constant: 0)
+          
+          // activate Flag constraints
+          let constraints = [flagVc.flagHeightConstraint!, flagVc.flagWidthConstraint!, flagVc.flagXPositionConstraint!, top]
+          NSLayoutConstraint.activate(constraints)
+          
+          // Controls View constraints: height, leading, trailing & top of the Controls (constants)
+          flagVc.controlsHeightConstraint = controlsVc.view.heightAnchor.constraint(equalToConstant: ControlsViewController.kControlsHeight)
+          let leadingConstraint = controlsVc.view.leadingAnchor.constraint(equalTo: flagVc.view.leadingAnchor)
+          let trailingConstraint = controlsVc.view.trailingAnchor.constraint(equalTo: flagVc.view.trailingAnchor)
+          let topConstraint = controlsVc.view.topAnchor.constraint(equalTo: flagVc.view.bottomAnchor)
+          
+          // activate Controls constraints
+          let controlsConstraints: [NSLayoutConstraint] = [flagVc.controlsHeightConstraint!, leadingConstraint, trailingConstraint, topConstraint]
+          NSLayoutConstraint.activate(controlsConstraints)
+
+        }
+      }
+    }
+  }
   /// Position a scroll view at the top
   ///
   /// - Parameter scrollView:         the ScrollView
