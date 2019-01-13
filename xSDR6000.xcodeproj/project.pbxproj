@@ -64,13 +64,17 @@
 		913FDDED21E4045A006DFE27 /* AntennaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913FDDEC21E4045A006DFE27 /* AntennaViewController.swift */; };
 		913FDDEF21E43BDC006DFE27 /* DisplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913FDDEE21E43BDC006DFE27 /* DisplayViewController.swift */; };
 		913FDDF121E44C70006DFE27 /* DaxIqViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913FDDF021E44C70006DFE27 /* DaxIqViewController.swift */; };
+		91463CEC21E501BA00177843 /* InfoPrefsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91463CEB21E501BA00177843 /* InfoPrefsViewController.swift */; };
+		91463CEE21E5052E00177843 /* SwiftyUserDefaults.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91463CED21E5052E00177843 /* SwiftyUserDefaults.framework */; };
+		91463CEF21E5052E00177843 /* SwiftyUserDefaults.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 91463CED21E5052E00177843 /* SwiftyUserDefaults.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		91463CF121E50AE300177843 /* ColorsPrefsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91463CF021E50AE300177843 /* ColorsPrefsViewController.swift */; };
+		91463CF321E529C600177843 /* XvtrPrefsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91463CF221E529C600177843 /* XvtrPrefsViewController.swift */; };
+		91463CF521E52A0800177843 /* GpsPrefsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91463CF421E52A0800177843 /* GpsPrefsViewController.swift */; };
 		9147153D21C98512000EE103 /* NetworkPrefsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9147153C21C98512000EE103 /* NetworkPrefsViewController.swift */; };
 		91475E5020A28E4600ACE77D /* Flag.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 91475E4E20A28E4600ACE77D /* Flag.storyboard */; };
 		91475E5220A34C2D00ACE77D /* ModeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91475E5120A34C2D00ACE77D /* ModeViewController.swift */; };
 		9148CEA921CBE28100306FC0 /* RxPrefsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9148CEA821CBE28100306FC0 /* RxPrefsViewController.swift */; };
 		9148CEAB21CBE54100306FC0 /* FiltersPrefsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9148CEAA21CBE54100306FC0 /* FiltersPrefsViewController.swift */; };
-		9168DB46218A2F2A0025F3D6 /* SwiftyUserDefaults.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9168DB45218A2F2A0025F3D6 /* SwiftyUserDefaults.framework */; };
-		9168DB47218A2F2A0025F3D6 /* SwiftyUserDefaults.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9168DB45218A2F2A0025F3D6 /* SwiftyUserDefaults.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		916909C62113E2FC00164044 /* OpusEncode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916909C52113E2FB00164044 /* OpusEncode.swift */; };
 		916909C82113E40C00164044 /* AudioHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916909C72113E40C00164044 /* AudioHelper.swift */; };
 		91794983212EFB0F00D9750A /* RingBuffer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9179497F212EFB0E00D9750A /* RingBuffer.mm */; };
@@ -98,7 +102,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				9168DB47218A2F2A0025F3D6 /* SwiftyUserDefaults.framework in Embed Frameworks */,
+				91463CEF21E5052E00177843 /* SwiftyUserDefaults.framework in Embed Frameworks */,
 				913F7F872066E6F600F35E9B /* OpusOSX.framework in Embed Frameworks */,
 				91396424214702D5002C9D8B /* xLib6000.framework in Embed Frameworks */,
 			);
@@ -162,7 +166,6 @@
 		913F7F6F2066DD5A00F35E9B /* xLib6000.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = xLib6000.framework; sourceTree = "<group>"; };
 		913F7F772066E6F500F35E9B /* xLib6000.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = xLib6000.framework; sourceTree = "<group>"; };
 		913F7F782066E6F500F35E9B /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		913F7F7B2066E6F600F35E9B /* SwiftyUserDefaults.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SwiftyUserDefaults.framework; sourceTree = "<group>"; };
 		913F7F7C2066E6F600F35E9B /* OpusOSX.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OpusOSX.framework; sourceTree = "<group>"; };
 		913FDDE421E3B8E4006DFE27 /* DspViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DspViewController.swift; sourceTree = "<group>"; };
 		913FDDE621E3BF87006DFE27 /* AudioViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioViewController.swift; sourceTree = "<group>"; };
@@ -171,12 +174,16 @@
 		913FDDEC21E4045A006DFE27 /* AntennaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AntennaViewController.swift; sourceTree = "<group>"; };
 		913FDDEE21E43BDC006DFE27 /* DisplayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayViewController.swift; sourceTree = "<group>"; };
 		913FDDF021E44C70006DFE27 /* DaxIqViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaxIqViewController.swift; sourceTree = "<group>"; };
+		91463CEB21E501BA00177843 /* InfoPrefsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoPrefsViewController.swift; sourceTree = "<group>"; };
+		91463CED21E5052E00177843 /* SwiftyUserDefaults.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SwiftyUserDefaults.framework; sourceTree = "<group>"; };
+		91463CF021E50AE300177843 /* ColorsPrefsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorsPrefsViewController.swift; sourceTree = "<group>"; };
+		91463CF221E529C600177843 /* XvtrPrefsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XvtrPrefsViewController.swift; sourceTree = "<group>"; };
+		91463CF421E52A0800177843 /* GpsPrefsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GpsPrefsViewController.swift; sourceTree = "<group>"; };
 		9147153C21C98512000EE103 /* NetworkPrefsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkPrefsViewController.swift; sourceTree = "<group>"; };
 		91475E4F20A28E4600ACE77D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Flag.storyboard; sourceTree = "<group>"; };
 		91475E5120A34C2D00ACE77D /* ModeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModeViewController.swift; sourceTree = "<group>"; };
 		9148CEA821CBE28100306FC0 /* RxPrefsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxPrefsViewController.swift; sourceTree = "<group>"; };
 		9148CEAA21CBE54100306FC0 /* FiltersPrefsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiltersPrefsViewController.swift; sourceTree = "<group>"; };
-		9168DB45218A2F2A0025F3D6 /* SwiftyUserDefaults.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SwiftyUserDefaults.framework; sourceTree = "<group>"; };
 		916909C52113E2FB00164044 /* OpusEncode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpusEncode.swift; sourceTree = "<group>"; };
 		916909C72113E40C00164044 /* AudioHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioHelper.swift; sourceTree = "<group>"; };
 		9179497C212EFB0E00D9750A /* CAAtomic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAtomic.h; sourceTree = "<group>"; };
@@ -208,7 +215,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9168DB46218A2F2A0025F3D6 /* SwiftyUserDefaults.framework in Frameworks */,
+				91463CEE21E5052E00177843 /* SwiftyUserDefaults.framework in Frameworks */,
 				913964252147031C002C9D8B /* xLib6000.framework in Frameworks */,
 				913F7F862066E6F600F35E9B /* OpusOSX.framework in Frameworks */,
 			);
@@ -220,10 +227,9 @@
 		913F7EB82066DBBE00F35E9B = {
 			isa = PBXGroup;
 			children = (
+				91463CED21E5052E00177843 /* SwiftyUserDefaults.framework */,
 				913F7F782066E6F500F35E9B /* README.md */,
-				9168DB45218A2F2A0025F3D6 /* SwiftyUserDefaults.framework */,
 				913F7F7C2066E6F600F35E9B /* OpusOSX.framework */,
-				913F7F7B2066E6F600F35E9B /* SwiftyUserDefaults.framework */,
 				913F7F772066E6F500F35E9B /* xLib6000.framework */,
 				913F7EC32066DBBE00F35E9B /* xSDR6000 */,
 				913F7EC22066DBBE00F35E9B /* Products */,
@@ -314,6 +320,10 @@
 				913615B321C0B178005EA591 /* PCWPrefsViewController.swift */,
 				9148CEA821CBE28100306FC0 /* RxPrefsViewController.swift */,
 				9148CEAA21CBE54100306FC0 /* FiltersPrefsViewController.swift */,
+				91463CEB21E501BA00177843 /* InfoPrefsViewController.swift */,
+				91463CF021E50AE300177843 /* ColorsPrefsViewController.swift */,
+				91463CF221E529C600177843 /* XvtrPrefsViewController.swift */,
+				91463CF421E52A0800177843 /* GpsPrefsViewController.swift */,
 			);
 			path = Preferences;
 			sourceTree = "<group>";
@@ -577,6 +587,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				913F7F5C2066DC7A00F35E9B /* PhoneViewController.swift in Sources */,
+				91463CF321E529C600177843 /* XvtrPrefsViewController.swift in Sources */,
 				913F7F502066DC7A00F35E9B /* DbLegendView.swift in Sources */,
 				913F7F4F2066DC7A00F35E9B /* FlagViewController.swift in Sources */,
 				913F7F472066DC7A00F35E9B /* ParameterMonitor.swift in Sources */,
@@ -589,6 +600,7 @@
 				913F7F662066DC7A00F35E9B /* WaterfallRenderer.swift in Sources */,
 				913F7F692066DC7A00F35E9B /* WaterfallShaders.metal in Sources */,
 				913F7F572066DC7A00F35E9B /* PanadapterShaders.metal in Sources */,
+				91463CEC21E501BA00177843 /* InfoPrefsViewController.swift in Sources */,
 				913FDDEF21E43BDC006DFE27 /* DisplayViewController.swift in Sources */,
 				913F7F5D2066DC7A00F35E9B /* AppDelegate.swift in Sources */,
 				9185B0DA208683C7004D4C40 /* StringExtensions.swift in Sources */,
@@ -602,9 +614,11 @@
 				913F7F542066DC7A00F35E9B /* PanadapterRenderer.swift in Sources */,
 				916909C62113E2FC00164044 /* OpusEncode.swift in Sources */,
 				913F7F492066DC7A00F35E9B /* PreferencesTabViewController.swift in Sources */,
+				91463CF121E50AE300177843 /* ColorsPrefsViewController.swift in Sources */,
 				913FDDF121E44C70006DFE27 /* DaxIqViewController.swift in Sources */,
 				913FDDE921E3D517006DFE27 /* XritViewController.swift in Sources */,
 				913F7F532066DC7A00F35E9B /* FrequencyLegendView.swift in Sources */,
+				91463CF521E52A0800177843 /* GpsPrefsViewController.swift in Sources */,
 				9148CEA921CBE28100306FC0 /* RxPrefsViewController.swift in Sources */,
 				916909C82113E40C00164044 /* AudioHelper.swift in Sources */,
 				9179498A2139CC0000D9750A /* TxViewController.swift in Sources */,

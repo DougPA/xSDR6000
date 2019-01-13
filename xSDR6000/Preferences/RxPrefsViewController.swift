@@ -10,17 +10,21 @@ import Cocoa
 import xLib6000
 
 class RxPrefsViewController: NSViewController {
-
-  // NOTE:
-  //
-  //      Most of the fields on this View are setup as Bindings or as User Defined Runtime
-  //      Attributes. Those below are the exceptions that required some additionl processing
-  //      not available through other methods.
-  //
   
-  // KVO for bindings
-  @objc dynamic var active                  = false                     // enable/disable all controls
-  @objc dynamic var radio                   : Radio?
+  // ----------------------------------------------------------------------------
+  // MARK: - Private properties
+  
+  @IBOutlet private weak var _calibrateButton: NSButton!
+  @IBOutlet private weak var _calFreqTextField        : NSTextField!
+  @IBOutlet private weak var _calOffsetTextField      : NSTextField!  
+  @IBOutlet private weak var _snapTuneCheckbox        : NSButton!
+  @IBOutlet private weak var _singleClickCheckbox     : NSButton!
+  @IBOutlet private weak var _startSliceMinCheckbox   : NSButton!
+  @IBOutlet private weak var _muteLocalAudioCheckbox  : NSButton!
+  @IBOutlet private weak var _binauralAudioCheckbox   : NSButton!
+  
+  private var _radio                        : Radio?
+  private var _observations                 = [NSKeyValueObservation]()
   
   // ----------------------------------------------------------------------------
   // MARK: - Overridden  methods
@@ -28,8 +32,13 @@ class RxPrefsViewController: NSViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    view.translatesAutoresizingMaskIntoConstraints = false
+    
+    // set the background color of the Flag
+    view.layer?.backgroundColor = NSColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5).cgColor
+
     // check for an active radio
-    if let radio = Api.sharedInstance.radio{ self.radio = radio ; active = true }
+    if let radio = Api.sharedInstance.radio{ _radio = radio ; setControlStatus(true) }
     
     // start receiving notifications
     addNotifications()
@@ -46,6 +55,73 @@ class RxPrefsViewController: NSViewController {
     }
   }
   
+  // ----------------------------------------------------------------------------
+  // MARK: - Private methods
+  
+  /// Enable / Disable controls
+  ///
+  /// - Parameter status:             true = enable
+  ///
+  private func setControlStatus(_ status: Bool) {
+    
+    if status {
+      addObservations()
+    } else {
+      removeObservations()
+    }
+    
+    _calibrateButton.isEnabled = status
+    _calFreqTextField.isEnabled = status
+    _calOffsetTextField.isEnabled = status
+    _snapTuneCheckbox.isEnabled = status
+//    _singleClickCheckbox.isEnabled = status
+//    _startSliceMinCheckbox.isEnabled = status
+    _muteLocalAudioCheckbox.isEnabled = status
+    _binauralAudioCheckbox.isEnabled = status
+  }
+
+  // ----------------------------------------------------------------------------
+  // MARK: - Observation methods
+  
+  /// Add observations of various properties used by the view
+  ///
+  private func addObservations() {
+    
+    _observations = [
+      _radio!.observe(\.calFreq, options: [.initial, .new], changeHandler: changeHandler(_:_:)),
+      _radio!.observe(\.freqErrorPpb, options: [.initial, .new], changeHandler: changeHandler(_:_:)),
+      _radio!.observe(\.snapTuneEnabled, options: [.initial, .new], changeHandler: changeHandler(_:_:)),
+      _radio!.observe(\.muteLocalAudio, options: [.initial, .new], changeHandler: changeHandler(_:_:)),
+      _radio!.observe(\.binauralRxEnabled, options: [.initial, .new], changeHandler: changeHandler(_:_:))
+    ]
+  }
+  /// Remove observations
+  ///
+  func removeObservations() {
+    
+    // invalidate each observation
+    _observations.forEach { $0.invalidate() }
+    
+    // remove the tokens
+    _observations.removeAll()
+  }
+  /// Process observations
+  ///
+  /// - Parameters:
+  ///   - slice:                    the panadapter being observed
+  ///   - change:                   the change
+  ///
+  private func changeHandler(_ radio: Radio, _ change: Any) {
+
+    DispatchQueue.main.async { [weak self] in
+      self?._calFreqTextField.integerValue = radio.calFreq
+      self?._calOffsetTextField.integerValue = radio.freqErrorPpb
+      self?._snapTuneCheckbox.boolState = radio.snapTuneEnabled
+      self?._muteLocalAudioCheckbox.boolState = radio.muteLocalAudio
+      self?._binauralAudioCheckbox.boolState = radio.binauralRxEnabled
+    }
+  }
+
   // ----------------------------------------------------------------------------
   // MARK: - Notification Methods
   
@@ -65,10 +141,10 @@ class RxPrefsViewController: NSViewController {
     
     if let radio = note.object as? Radio {
       
-      self.radio = radio
+      _radio = radio
       
       // enable all controls
-      active = true
+      setControlStatus(true)
     }
   }
   /// Process .radioWillBeRemoved Notification
@@ -78,8 +154,8 @@ class RxPrefsViewController: NSViewController {
   @objc private func radioWillBeRemoved(_ note: Notification) {
     
     // disable all controls
-    active = false
+    setControlStatus(false)
     
-    radio = nil
+    _radio = nil
   }
 }

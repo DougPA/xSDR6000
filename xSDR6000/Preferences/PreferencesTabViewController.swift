@@ -22,16 +22,29 @@ final class PreferencesTabViewController    : NSTabViewController {
   private let _autosaveName                 = "PreferencesWindow"
   private let _log                          = OSLog(subsystem: Api.kDomainId + "." + kClientName, category: "Preferences")
 
-  private let kColors                        = NSUserInterfaceItemIdentifier(rawValue: "Colors")
-  private let kInfo                        = NSUserInterfaceItemIdentifier(rawValue: "Info")
-
   // ----------------------------------------------------------------------------
   // MARK: - Overridden methods
   
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    
+    view.translatesAutoresizingMaskIntoConstraints = false
+    
+    // set the background color of the Flag
+    view.layer?.backgroundColor = NSColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5).cgColor
+    
+    Swift.print("Loaded tabId \(Defaults[.preferencesTabId])")
+
+    tabView.selectTabViewItem(withIdentifier: NSUserInterfaceItemIdentifier(Defaults[.preferencesTabId]) )
+  }
+
   override func viewWillAppear() {
     super.viewWillAppear()
     
     view.window!.setFrameUsingName(_autosaveName)
+    
+    // select the previously displayed tab
+    tabView.selectTabViewItem(withIdentifier: NSUserInterfaceItemIdentifier(Defaults[.preferencesTabId]) )
   }
   
   override func viewWillDisappear() {
@@ -43,14 +56,17 @@ final class PreferencesTabViewController    : NSTabViewController {
     if NSColorPanel.shared.isVisible {
       NSColorPanel.shared.performClose(nil)
     }
+    // save the currently displayed tab
+    Defaults[.preferencesTabId] = (tabView.selectedTabViewItem?.identifier as! NSUserInterfaceItemIdentifier).rawValue
   }
 
-  override func tabView(_ tabView: NSTabView, didSelect tabViewItem: NSTabViewItem?) {
-    super.tabView(tabView, didSelect: tabViewItem)
+  override func tabView(_ tabView: NSTabView, willSelect tabViewItem: NSTabViewItem?) {
+    super.tabView(tabView, willSelect: tabViewItem)
 
+    let id = (tabViewItem!.identifier as! NSUserInterfaceItemIdentifier).rawValue
     // give the newly selected tab a reference to an object (if needed)
-    switch tabViewItem!.identifier as! NSUserInterfaceItemIdentifier {
-    case kColors, kInfo:
+    switch id {
+    case "Colors", "Info":
       tabViewItem?.viewController?.representedObject = Defaults
     default:
       break

@@ -10,31 +10,105 @@ import Cocoa
 import xLib6000
 
 class FiltersPrefsViewController: NSViewController {
-
-  // NOTE:
-  //
-  //      Most of the fields on this View are setup as Bindings or as User Defined Runtime
-  //      Attributes. Those below are the exceptions that required some additionl processing
-  //      not available through other methods.
-  //
-  
-  // KVO for bindings
-  @objc dynamic var active                  = false                     // enable/disable all controls
-  @objc dynamic var radio                   : Radio?
   
   // ----------------------------------------------------------------------------
-  // MARK: - Overridden  methods
+  // MARK: - Private properties
+  
+  @IBOutlet private weak var _voiceSlider         : NSSlider!
+  @IBOutlet private weak var _cwSlider            : NSSlider!
+  @IBOutlet private weak var _digitalSlider       : NSSlider!
+  @IBOutlet private weak var _voiceAutoCheckbox   : NSButton!
+  @IBOutlet private weak var _cwAutoCheckbox      : NSButton!
+  @IBOutlet private weak var _digitalAutoCheckbox : NSButton!
+  
+  private var _radio                        : Radio?
+  private var _observations                 = [NSKeyValueObservation]()
+  
+  // ----------------------------------------------------------------------------
+  // MARK: - Overridden methods
   
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    view.translatesAutoresizingMaskIntoConstraints = false
+    
+    // set the background color of the Flag
+    view.layer?.backgroundColor = NSColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5).cgColor
+
     // check for an active radio
-    if let radio = Api.sharedInstance.radio{ self.radio = radio ; active = true }
+    if let radio = Api.sharedInstance.radio { _radio = radio ; setControlStatus(true) }
     
     // start receiving notifications
     addNotifications()
   }
   
+  // ----------------------------------------------------------------------------
+  // MARK: - Private methods
+  
+  /// Enable / Disable controls
+  ///
+  /// - Parameter status:             true = enable
+  ///
+  private func setControlStatus(_ status: Bool) {
+    
+    if status {
+      addObservations()
+    } else {
+      removeObservations()
+    }
+
+    _voiceSlider.isEnabled = status
+    _cwSlider.isEnabled = status
+    _digitalSlider.isEnabled = status
+    _voiceAutoCheckbox.isEnabled = status
+    _cwAutoCheckbox.isEnabled = status
+    _digitalAutoCheckbox.isEnabled = status
+  }
+
+  // ----------------------------------------------------------------------------
+  // MARK: - Observation methods
+  
+  /// Add observations of various properties used by the view
+  ///
+  private func addObservations() {
+    
+    _observations = [
+      _radio!.observe(\.filterVoiceLevel, options: [.initial, .new], changeHandler: changeHandler(_:_:)),
+      _radio!.observe(\.filterCwLevel, options: [.initial, .new], changeHandler: changeHandler(_:_:)),
+      _radio!.observe(\.filterDigitalLevel, options: [.initial, .new], changeHandler: changeHandler(_:_:)),
+      _radio!.observe(\.filterVoiceAutoEnabled, options: [.initial, .new], changeHandler: changeHandler(_:_:)),
+      _radio!.observe(\.filterCwAutoEnabled, options: [.initial, .new], changeHandler: changeHandler(_:_:)),
+      _radio!.observe(\.filterDigitalAutoEnabled, options: [.initial, .new], changeHandler: changeHandler(_:_:))
+    ]
+  }
+  /// Remove observations
+  ///
+  func removeObservations() {
+    
+    // invalidate each observation
+    _observations.forEach { $0.invalidate() }
+    
+    // remove the tokens
+    _observations.removeAll()
+  }
+  /// Process observations
+  ///
+  /// - Parameters:
+  ///   - slice:                    the panadapter being observed
+  ///   - change:                   the change
+  ///
+  private func changeHandler(_ radio: Radio, _ change: Any) {
+    
+    DispatchQueue.main.async { [weak self] in
+      self?._voiceSlider.integerValue = radio.filterVoiceLevel
+      self?._cwSlider.integerValue = radio.filterCwLevel
+      self?._digitalSlider.integerValue = radio.filterDigitalLevel
+      self?._voiceAutoCheckbox.boolState = radio.filterVoiceAutoEnabled
+      self?._cwAutoCheckbox.boolState = radio.filterCwAutoEnabled
+      self?._digitalAutoCheckbox.boolState = radio.filterDigitalAutoEnabled
+    }
+  }
+
   // ----------------------------------------------------------------------------
   // MARK: - Notification Methods
   
@@ -52,13 +126,10 @@ class FiltersPrefsViewController: NSViewController {
   ///
   @objc private func radioHasBeenAdded(_ note: Notification) {
     
-    if let radio = note.object as? Radio {
-      
-      self.radio = radio
-      
-      // enable all controls
-      active = true
-    }
+    _radio = note.object as? Radio
+    
+    // enable controls
+    setControlStatus(true)
   }
   /// Process .radioWillBeRemoved Notification
   ///
@@ -66,9 +137,9 @@ class FiltersPrefsViewController: NSViewController {
   ///
   @objc private func radioWillBeRemoved(_ note: Notification) {
     
-    // disable all controls
-    active = false
-    
-    radio = nil
+    // disable controls
+    setControlStatus(false)
+
+    _radio = nil
   }
 }

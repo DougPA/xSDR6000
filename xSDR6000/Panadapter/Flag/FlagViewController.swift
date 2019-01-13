@@ -6,41 +6,6 @@
 //  Copyright © 2017 Douglas Adams. All rights reserved.
 //
 
-// --------------------------------------------------------------------------------
-//  Created by PanadapterViewController - .sliceHasBeenAdded
-//  Removed by PanadapterViewController - .sliceWillBeRemoved
-//
-//  **** Notifications received ****
-//      .sliceMeterHasBeenAdded
-//
-//  **** Observations ****
-//      Slice:
-//          frequency
-//      Panadapter:
-//          center
-//          bandwidth
-//      Meters:
-//          .signalPassband
-//
-//  **** View Bindings ****
-//      Slice:
-//          anfEnabled
-//          frequency
-//          locked
-//          nbEnabled
-//          nrEnabled
-//          qskEnabled
-//          rcvAnt
-//          rcvAntList
-//          txAnt
-//          txAntList
-//          txEnabled
-//
-//      FlagViewController:
-//          filterWidth
-//          letterId
-// --------------------------------------------------------------------------------
-
 import Cocoa
 import xLib6000
 
@@ -151,7 +116,7 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
     // set the background color of the Flag
     view.layer?.backgroundColor = NSColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.5).cgColor
 
-    // setup the antenna popups
+    // populate the choices
     _rxAntPopUp.addItems(withTitles: slice!.rxAntList)
     _txAntPopUp.addItems(withTitles: slice!.txAntList)
 

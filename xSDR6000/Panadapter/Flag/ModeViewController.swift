@@ -61,9 +61,14 @@ final public class ModeViewController       : NSViewController {
   public override func viewDidLoad() {
     super.viewDidLoad()
     
-    // populate & select the mode
+    view.translatesAutoresizingMaskIntoConstraints = false
+    
+    // set the background color of the Flag
+    view.layer?.backgroundColor = NSColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.5).cgColor
+
+    // populate the choices
     _modePopUp.addItems(withTitles: Slice.Mode.allCases.map {$0.rawValue} )
-    _modePopUp.selectItem(withTitle: _slice.mode)
+//    _modePopUp.selectItem(withTitle: _slice.mode)
     
     // populate the Quick Mode buttons
     _quickMode0.title = Defaults[.quickMode0].uppercased()

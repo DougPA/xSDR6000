@@ -11,34 +11,39 @@ import xLib6000
 
 class NetworkPrefsViewController: NSViewController {
   
-  // NOTE:
-  //
-  //      Most of the fields on this View are setup as Bindings or as User Defined Runtime
-  //      Attributes. Those below are the exceptions that required some additionl processing
-  //      not available through other methods.
-  //
-  
-  // KVO for bindings
-  @objc dynamic var active                  = false                     // enable/disable all controls
-  @objc dynamic var radio                   : Radio?
-
   // ----------------------------------------------------------------------------
   // MARK: - Private  properties
   
-  @IBOutlet private weak var _staticRadioButton : NSButton!
-  @IBOutlet private weak var _dhcpRadioButton   : NSButton!
-
-  private let kDhcp                         = NSUserInterfaceItemIdentifier(rawValue: "Dhcp")
-  private let kStatic                       = NSUserInterfaceItemIdentifier(rawValue: "Static")
+  @IBOutlet private weak var _ipAddressTextField        : NSTextField!
+  @IBOutlet private weak var _macAddressTextField       : NSTextField!
+  @IBOutlet private weak var _netMaskTextField          : NSTextField!
+  @IBOutlet private weak var _staticIpAddressTextField  : NSTextField!
+  @IBOutlet private weak var _staticMaskTextField       : NSTextField!
+  @IBOutlet private weak var _staticGatewayTextField    : NSTextField!
   
+  @IBOutlet private weak var _enforcePrivateIpCheckbox  : NSButton!
+  
+  @IBOutlet private weak var _staticRadioButton         : NSButton!
+  @IBOutlet private weak var _dhcpRadioButton           : NSButton!
+
+  @IBOutlet private weak var _applyButton               : NSButton!
+  
+  private var _radio                            : Radio?
+  private var _observations                     = [NSKeyValueObservation]()
+
   // ----------------------------------------------------------------------------
   // MARK: - Overridden  methods
   
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    view.translatesAutoresizingMaskIntoConstraints = false
+    
+    // set the background color of the Flag
+    view.layer?.backgroundColor = NSColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5).cgColor
+    
     // check for an active radio
-    if let radio = Api.sharedInstance.radio{ self.radio = radio ; setupRadioButtons() ; active = true }
+    if let radio = Api.sharedInstance.radio { _radio = radio ; enableControls(true) }
     
     // start receiving notifications
     addNotifications()
@@ -55,7 +60,7 @@ class NetworkPrefsViewController: NSViewController {
       
     } else {
       // Static, are the values valid?
-      if radio!.staticIp.isValidIP4() && radio!.staticNetmask.isValidIP4() && radio!.staticGateway.isValidIP4() {
+      if _radio!.staticIp.isValidIP4() && _radio!.staticNetmask.isValidIP4() && _radio!.staticGateway.isValidIP4() {
         // YES, make the change
         changeNetwork(dhcp: false)
       } else {
@@ -76,43 +81,105 @@ class NetworkPrefsViewController: NSViewController {
   
   // ----------------------------------------------------------------------------
   // MARK: - Private  methods
+  
+  /// Enable / Disable controls
+  ///
+  /// - Parameter status:             true = enable
+  ///
+  private func enableControls(_ state: Bool = true) {
 
+    if state {
+      addObservations()
+    } else {
+      removeObservations()
+    }
+    _staticRadioButton.isEnabled = state
+    _dhcpRadioButton.isEnabled = state
+    
+    _staticIpAddressTextField.isEnabled = state
+    _staticMaskTextField.isEnabled = state
+    _staticGatewayTextField.isEnabled = state
+    _enforcePrivateIpCheckbox.isEnabled = state
+    
+    _applyButton.isEnabled = state
+  }
+
+  /// Change between DHCP and Static
+  ///
+  /// - Parameter dhcp:               true = DHCP
+  ///
   private func changeNetwork(dhcp: Bool) {
     
     if dhcp {
       // DHCP
-      radio?.staticNetParamsReset()
+      _radio?.staticNetParamsReset()
     
     } else {
-      radio?.staticNetParamsSet()
+      _radio?.staticNetParamsSet()
     }
     // reboot the radio
-    radio?.rebootRequest()
+    _radio?.rebootRequest()
     
     sleep(1)
     
     // perform an orderly shutdown of all the components
     Api.sharedInstance.shutdown(reason: .normal)
-    
-//    DispatchQueue.main.async {
-//      os_log("Application closed by user", log: self._log, type: .info)
-      
-//      // close the app
-//      NSApp.terminate(self)
-//    }
   }
-  
-  func setupRadioButtons() {
 
-    DispatchQueue.main.async { [unowned self] in
-      if self.radio!.staticIp == "" && self.radio!.staticNetmask == "" && self.radio!.staticGateway == "" {
-        self._dhcpRadioButton.boolState = true
+  // ----------------------------------------------------------------------------
+  // MARK: - Observation methods
+  
+  /// Add observations of various properties used by the view
+  ///
+  private func addObservations() {
+    
+    _observations = [
+      _radio!.observe(\.ipAddress, options: [.initial, .new], changeHandler: radioHandler(_:_:)),
+      _radio!.observe(\.macAddress, options: [.initial, .new], changeHandler: radioHandler(_:_:)),
+      _radio!.observe(\.netmask, options: [.initial, .new], changeHandler: radioHandler(_:_:)),
+      _radio!.observe(\.enforcePrivateIpEnabled, options: [.initial, .new], changeHandler: radioHandler(_:_:)),
+
+      _radio!.observe(\.staticIp, options: [.initial, .new], changeHandler: radioHandler(_:_:)),
+      _radio!.observe(\.staticNetmask, options: [.initial, .new], changeHandler: radioHandler(_:_:)),
+      _radio!.observe(\.staticGateway, options: [.initial, .new], changeHandler: radioHandler(_:_:))
+    ]
+  }
+  /// Remove observations
+  ///
+  func removeObservations() {
+    
+    // invalidate each observation
+    _observations.forEach { $0.invalidate() }
+    
+    // remove the tokens
+    _observations.removeAll()
+  }
+  /// Process observations
+  ///
+  /// - Parameters:
+  ///   - profile:                  the Radio being observed
+  ///   - change:                   the change
+  ///
+  private func radioHandler(_ radio: Radio, _ change: Any) {
+    
+    DispatchQueue.main.async { [weak self] in
+      self?._ipAddressTextField.stringValue = radio.ipAddress
+      self?._macAddressTextField.stringValue = radio.macAddress
+      self?._netMaskTextField.stringValue = radio.netmask
+      self?._staticIpAddressTextField.stringValue = radio.staticIp
+      self?._staticMaskTextField.stringValue = radio.staticNetmask
+      self?._staticGatewayTextField.stringValue = radio.staticGateway
+
+      self?._enforcePrivateIpCheckbox.boolState = radio.enforcePrivateIpEnabled
+      
+      if radio.staticIp == "" && radio.staticNetmask == "" && radio.staticGateway == "" {
+        self?._dhcpRadioButton.boolState = true
       } else {
-        self._staticRadioButton.boolState = true
+        self?._staticRadioButton.boolState = true
       }
     }
   }
-  
+
   // ----------------------------------------------------------------------------
   // MARK: - Notification Methods
   
@@ -130,12 +197,10 @@ class NetworkPrefsViewController: NSViewController {
   ///
   @objc private func radioHasBeenAdded(_ note: Notification) {
     
-    self.radio = note.object as? Radio
+    _radio = note.object as? Radio
     
-    setupRadioButtons()
-    
-    // enable all controls
-    active = true
+    // enable controls
+    enableControls()
   }
   /// Process .radioWillBeRemoved Notification
   ///
@@ -143,9 +208,9 @@ class NetworkPrefsViewController: NSViewController {
   ///
   @objc private func radioWillBeRemoved(_ note: Notification) {
     
-    // disable all controls
-    active = false
+    // disable controls
+    enableControls(false)
     
-    radio = nil
+    _radio = nil
   }
 }

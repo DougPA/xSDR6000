@@ -43,6 +43,7 @@ extension DefaultsKeys {
   static let lowBandwidthEnabled          = DefaultsKey<Bool>("lowBandwidthEnabled")
   static let macAudioEnabled              = DefaultsKey<Bool>("macAudioEnabled")
   static let markersEnabled               = DefaultsKey<Bool>("markersEnabled")
+  static let preferencesTabId             = DefaultsKey<String>("preferencesTabId")
   static let quickMode0                   = DefaultsKey<String>("quickMode0")
   static let quickMode1                   = DefaultsKey<String>("quickMode1")
   static let quickMode2                   = DefaultsKey<String>("quickMode2")

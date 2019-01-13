@@ -3,7 +3,6 @@
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
-        <capability name="System colors introduced in macOS 10.14" minToolsVersion="10.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -31,7 +30,7 @@
         <!--Preference Tabs-->
         <scene sceneID="rdp-1L-oes">
             <objects>
-                <tabViewController selectedTabViewItemIndex="4" id="f5E-4P-cEO" userLabel="Preference Tabs" customClass="PreferencesTabViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
+                <tabViewController selectedTabViewItemIndex="0" id="f5E-4P-cEO" userLabel="Preference Tabs" customClass="PreferencesTabViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
                     <tabViewItems>
                         <tabViewItem identifier="Radio" id="VqQ-ZR-z6L">
                             <nil key="label"/>
@@ -75,7 +74,7 @@
         <!--Colors Tab-->
         <scene sceneID="GU6-BE-ej6">
             <objects>
-                <viewController title="Colors" id="3IL-Xb-5ey" userLabel="Colors Tab" sceneMemberID="viewController">
+                <viewController title="Colors" id="3IL-Xb-5ey" userLabel="Colors Tab" customClass="ColorsPrefsViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" wantsLayer="YES" id="VEM-Wk-vwv" userLabel="Colors view">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="400"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -94,7 +93,7 @@
                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
                                             </textField>
-                                            <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="Xyk-ry-DaE" userLabel="Spectrum Color Well">
+                                            <colorWell identifier="spectrum" translatesAutoresizingMaskIntoConstraints="NO" id="Xyk-ry-DaE" userLabel="Spectrum Color Well">
                                                 <rect key="frame" x="146" y="0.0" width="50" height="23"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="23" id="I98-bJ-sgQ"/>
@@ -102,11 +101,7 @@
                                                 </constraints>
                                                 <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <connections>
-                                                    <binding destination="3IL-Xb-5ey" name="value" keyPath="representedObject.spectrum" id="2WN-ii-Hpc">
-                                                        <dictionary key="options">
-                                                            <string key="NSValueTransformerName">NSKeyedUnarchiveFromData</string>
-                                                        </dictionary>
-                                                    </binding>
+                                                    <action selector="colors:" target="3IL-Xb-5ey" id="32j-ao-CuZ"/>
                                                 </connections>
                                             </colorWell>
                                         </subviews>
@@ -130,7 +125,7 @@
                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
                                             </textField>
-                                            <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="Wi4-40-WxH" userLabel="Frequency Legend Color Well">
+                                            <colorWell identifier="frequencyLegend" translatesAutoresizingMaskIntoConstraints="NO" id="Wi4-40-WxH" userLabel="Frequency Legend Color Well">
                                                 <rect key="frame" x="146" y="0.0" width="50" height="23"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="23" id="SoZ-tL-7i9"/>
@@ -138,11 +133,7 @@
                                                 </constraints>
                                                 <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <connections>
-                                                    <binding destination="3IL-Xb-5ey" name="value" keyPath="representedObject.frequencyLegend" id="kAo-hk-Y14">
-                                                        <dictionary key="options">
-                                                            <string key="NSValueTransformerName">NSKeyedUnarchiveFromData</string>
-                                                        </dictionary>
-                                                    </binding>
+                                                    <action selector="colors:" target="3IL-Xb-5ey" id="eij-aa-mjG"/>
                                                 </connections>
                                             </colorWell>
                                         </subviews>
@@ -166,7 +157,7 @@
                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
                                             </textField>
-                                            <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="Iwh-pb-hkL" userLabel="dbLegend Color Well">
+                                            <colorWell identifier="dbLegend" translatesAutoresizingMaskIntoConstraints="NO" id="Iwh-pb-hkL" userLabel="dbLegend Color Well">
                                                 <rect key="frame" x="146" y="0.0" width="50" height="23"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="23" id="hKa-hI-dpZ"/>
@@ -174,11 +165,7 @@
                                                 </constraints>
                                                 <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <connections>
-                                                    <binding destination="3IL-Xb-5ey" name="value" keyPath="representedObject.dbLegend" id="jXa-F4-2e1">
-                                                        <dictionary key="options">
-                                                            <string key="NSValueTransformerName">NSKeyedUnarchiveFromData</string>
-                                                        </dictionary>
-                                                    </binding>
+                                                    <action selector="colors:" target="3IL-Xb-5ey" id="Eh6-AX-vdj"/>
                                                 </connections>
                                             </colorWell>
                                         </subviews>
@@ -202,7 +189,7 @@
                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
                                             </textField>
-                                            <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="WyR-v8-h7E" userLabel="Grid Lines Color Well">
+                                            <colorWell identifier="gridLine" translatesAutoresizingMaskIntoConstraints="NO" id="WyR-v8-h7E" userLabel="Grid Lines Color Well">
                                                 <rect key="frame" x="145" y="0.0" width="50" height="23"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="50" id="Nwi-3Q-czc"/>
@@ -210,11 +197,7 @@
                                                 </constraints>
                                                 <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <connections>
-                                                    <binding destination="3IL-Xb-5ey" name="value" keyPath="representedObject.gridLine" id="4EV-ok-Ica">
-                                                        <dictionary key="options">
-                                                            <string key="NSValueTransformerName">NSKeyedUnarchiveFromData</string>
-                                                        </dictionary>
-                                                    </binding>
+                                                    <action selector="colors:" target="3IL-Xb-5ey" id="RaA-8j-CB0"/>
                                                 </connections>
                                             </colorWell>
                                         </subviews>
@@ -238,7 +221,7 @@
                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
                                             </textField>
-                                            <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="rMS-7y-HFo" userLabel="Spectrum Background Color Well">
+                                            <colorWell identifier="spectrumBackground" translatesAutoresizingMaskIntoConstraints="NO" id="rMS-7y-HFo" userLabel="Spectrum Background Color Well">
                                                 <rect key="frame" x="146" y="0.0" width="50" height="23"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="23" id="eSl-wh-QOS"/>
@@ -246,11 +229,7 @@
                                                 </constraints>
                                                 <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <connections>
-                                                    <binding destination="3IL-Xb-5ey" name="value" keyPath="representedObject.spectrumBackground" id="wwC-rr-hlg">
-                                                        <dictionary key="options">
-                                                            <string key="NSValueTransformerName">NSKeyedUnarchiveFromData</string>
-                                                        </dictionary>
-                                                    </binding>
+                                                    <action selector="colors:" target="3IL-Xb-5ey" id="lTW-zL-OEv"/>
                                                 </connections>
                                             </colorWell>
                                         </subviews>
@@ -349,7 +328,7 @@
                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
                                             </textField>
-                                            <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="tcB-Ys-pgW" userLabel="Tnf Active Color Well">
+                                            <colorWell identifier="tnfActive" translatesAutoresizingMaskIntoConstraints="NO" id="tcB-Ys-pgW" userLabel="Tnf Active Color Well">
                                                 <rect key="frame" x="96" y="0.0" width="50" height="23"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="50" id="G3m-ly-Biy"/>
@@ -357,14 +336,10 @@
                                                 </constraints>
                                                 <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <connections>
-                                                    <binding destination="3IL-Xb-5ey" name="value" keyPath="representedObject.tnfActive" id="ViN-ls-oHy">
-                                                        <dictionary key="options">
-                                                            <string key="NSValueTransformerName">NSKeyedUnarchiveFromData</string>
-                                                        </dictionary>
-                                                    </binding>
+                                                    <action selector="colors:" target="3IL-Xb-5ey" id="FzN-B0-aBc"/>
                                                 </connections>
                                             </colorWell>
-                                            <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="iaJ-7H-4XK" userLabel="Tnf Inactive Color Well">
+                                            <colorWell identifier="tnfInactive" translatesAutoresizingMaskIntoConstraints="NO" id="iaJ-7H-4XK" userLabel="Tnf Inactive Color Well">
                                                 <rect key="frame" x="206" y="0.0" width="50" height="23"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="23" id="3WL-mC-jxL"/>
@@ -372,11 +347,7 @@
                                                 </constraints>
                                                 <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <connections>
-                                                    <binding destination="3IL-Xb-5ey" name="value" keyPath="representedObject.tnfInactive" id="Vx6-mb-low">
-                                                        <dictionary key="options">
-                                                            <string key="NSValueTransformerName">NSKeyedUnarchiveFromData</string>
-                                                        </dictionary>
-                                                    </binding>
+                                                    <action selector="colors:" target="3IL-Xb-5ey" id="lCQ-rZ-6C0"/>
                                                 </connections>
                                             </colorWell>
                                         </subviews>
@@ -408,7 +379,7 @@
                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
                                             </textField>
-                                            <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="P5o-wZ-CxB" userLabel="Slice Active Color Well">
+                                            <colorWell identifier="sliceActive" translatesAutoresizingMaskIntoConstraints="NO" id="P5o-wZ-CxB" userLabel="Slice Active Color Well">
                                                 <rect key="frame" x="96" y="0.0" width="50" height="23"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="23" id="Jdr-bL-iJY"/>
@@ -416,14 +387,10 @@
                                                 </constraints>
                                                 <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <connections>
-                                                    <binding destination="3IL-Xb-5ey" name="value" keyPath="representedObject.sliceActive" id="dcI-fT-5pZ">
-                                                        <dictionary key="options">
-                                                            <string key="NSValueTransformerName">NSKeyedUnarchiveFromData</string>
-                                                        </dictionary>
-                                                    </binding>
+                                                    <action selector="colors:" target="3IL-Xb-5ey" id="Qxf-26-orm"/>
                                                 </connections>
                                             </colorWell>
-                                            <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="BgP-dp-Luy" userLabel="Slice Inactive Color Well">
+                                            <colorWell identifier="sliceInactive" translatesAutoresizingMaskIntoConstraints="NO" id="BgP-dp-Luy" userLabel="Slice Inactive Color Well">
                                                 <rect key="frame" x="206" y="0.0" width="50" height="23"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="23" id="Wtt-n7-4TR"/>
@@ -431,11 +398,7 @@
                                                 </constraints>
                                                 <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <connections>
-                                                    <binding destination="3IL-Xb-5ey" name="value" keyPath="representedObject.sliceInactive" id="o7w-rG-YE0">
-                                                        <dictionary key="options">
-                                                            <string key="NSValueTransformerName">NSKeyedUnarchiveFromData</string>
-                                                        </dictionary>
-                                                    </binding>
+                                                    <action selector="colors:" target="3IL-Xb-5ey" id="XIF-eU-2RW"/>
                                                 </connections>
                                             </colorWell>
                                         </subviews>
@@ -464,7 +427,7 @@
                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
                                             </textField>
-                                            <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="Sox-99-8dt" userLabel="Slice Filter Color Well">
+                                            <colorWell identifier="sliceFilter" translatesAutoresizingMaskIntoConstraints="NO" id="Sox-99-8dt" userLabel="Slice Filter Color Well">
                                                 <rect key="frame" x="150" y="0.0" width="50" height="23"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="23" id="h9L-UX-62n"/>
@@ -472,11 +435,7 @@
                                                 </constraints>
                                                 <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <connections>
-                                                    <binding destination="3IL-Xb-5ey" name="value" keyPath="representedObject.sliceFilter" id="lFF-9a-tvA">
-                                                        <dictionary key="options">
-                                                            <string key="NSValueTransformerName">NSKeyedUnarchiveFromData</string>
-                                                        </dictionary>
-                                                    </binding>
+                                                    <action selector="colors:" target="3IL-Xb-5ey" id="R4e-xG-yJb"/>
                                                 </connections>
                                             </colorWell>
                                         </subviews>
@@ -503,7 +462,7 @@
                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
                                             </textField>
-                                            <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="6Di-5v-mpw" userLabel="Marker Color Well">
+                                            <colorWell identifier="marker" translatesAutoresizingMaskIntoConstraints="NO" id="6Di-5v-mpw" userLabel="Marker Color Well">
                                                 <rect key="frame" x="150" y="0.0" width="50" height="23"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="23" id="Wtu-dC-fsS"/>
@@ -511,11 +470,7 @@
                                                 </constraints>
                                                 <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <connections>
-                                                    <binding destination="3IL-Xb-5ey" name="value" keyPath="representedObject.marker" id="yu4-Fe-aNH">
-                                                        <dictionary key="options">
-                                                            <string key="NSValueTransformerName">NSKeyedUnarchiveFromData</string>
-                                                        </dictionary>
-                                                    </binding>
+                                                    <action selector="colors:" target="3IL-Xb-5ey" id="5Tu-c3-h1M"/>
                                                 </connections>
                                             </colorWell>
                                         </subviews>
@@ -542,7 +497,7 @@
                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
                                             </textField>
-                                            <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="mlF-LR-Qf3" userLabel="Segment Edge Color Well">
+                                            <colorWell identifier="markerSegment" translatesAutoresizingMaskIntoConstraints="NO" id="mlF-LR-Qf3" userLabel="Segment Edge Color Well">
                                                 <rect key="frame" x="150" y="0.0" width="50" height="23"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="23" id="67Q-BG-75q"/>
@@ -550,11 +505,7 @@
                                                 </constraints>
                                                 <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <connections>
-                                                    <binding destination="3IL-Xb-5ey" name="value" keyPath="representedObject.markerSegment" id="Q0o-F0-Ou9">
-                                                        <dictionary key="options">
-                                                            <string key="NSValueTransformerName">NSKeyedUnarchiveFromData</string>
-                                                        </dictionary>
-                                                    </binding>
+                                                    <action selector="colors:" target="3IL-Xb-5ey" id="ZkA-X2-20W"/>
                                                 </connections>
                                             </colorWell>
                                         </subviews>
@@ -581,7 +532,7 @@
                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
                                             </textField>
-                                            <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="dbk-Wt-WNv" userLabel="Band Edge Color Well">
+                                            <colorWell identifier="markerEdge" translatesAutoresizingMaskIntoConstraints="NO" id="dbk-Wt-WNv" userLabel="Band Edge Color Well">
                                                 <rect key="frame" x="150" y="0.0" width="50" height="23"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="23" id="6zy-Hz-2CO"/>
@@ -589,11 +540,7 @@
                                                 </constraints>
                                                 <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <connections>
-                                                    <binding destination="3IL-Xb-5ey" name="value" keyPath="representedObject.markerEdge" id="9Gt-pE-am7">
-                                                        <dictionary key="options">
-                                                            <string key="NSValueTransformerName">NSKeyedUnarchiveFromData</string>
-                                                        </dictionary>
-                                                    </binding>
+                                                    <action selector="colors:" target="3IL-Xb-5ey" id="dx2-Be-z94"/>
                                                 </connections>
                                             </colorWell>
                                         </subviews>
@@ -644,13 +591,22 @@
                             <constraint firstItem="kUW-DV-7jY" firstAttribute="leading" secondItem="VEM-Wk-vwv" secondAttribute="leading" constant="20" id="rXL-t1-mKP"/>
                             <constraint firstItem="K2N-AR-0ZL" firstAttribute="top" secondItem="VEM-Wk-vwv" secondAttribute="top" constant="20" id="tiv-gT-yph"/>
                         </constraints>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="boolean" keyPath="translatesAutoresizingMaskIntoConstraints" value="NO"/>
-                            <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
-                                <color key="value" name="unemphasizedSelectedTextBackgroundColor" catalog="System" colorSpace="catalog"/>
-                            </userDefinedRuntimeAttribute>
-                        </userDefinedRuntimeAttributes>
                     </view>
+                    <connections>
+                        <outlet property="_dbLegendColor" destination="Iwh-pb-hkL" id="4JS-Zm-ZCD"/>
+                        <outlet property="_frequencyLegendColor" destination="Wi4-40-WxH" id="iQf-gh-Hy6"/>
+                        <outlet property="_gridLineColor" destination="WyR-v8-h7E" id="MYg-3a-dfx"/>
+                        <outlet property="_markerColor" destination="6Di-5v-mpw" id="OPo-yq-0cK"/>
+                        <outlet property="_markerEdgeColor" destination="dbk-Wt-WNv" id="wrT-XR-Qx2"/>
+                        <outlet property="_markerSegmentColor" destination="mlF-LR-Qf3" id="nhW-k9-KsK"/>
+                        <outlet property="_sliceActiveColor" destination="P5o-wZ-CxB" id="KE7-gl-AiI"/>
+                        <outlet property="_sliceFilterColor" destination="Sox-99-8dt" id="niu-p5-QaQ"/>
+                        <outlet property="_sliceInactiveColor" destination="BgP-dp-Luy" id="4WM-GX-FKn"/>
+                        <outlet property="_spectrumBackgroundColor" destination="rMS-7y-HFo" id="njD-bu-ZX6"/>
+                        <outlet property="_spectrumColor" destination="Xyk-ry-DaE" id="l7T-4z-AdK"/>
+                        <outlet property="_tnfActiveColor" destination="tcB-Ys-pgW" id="FsX-FD-1wb"/>
+                        <outlet property="_tnfInactiveColor" destination="iaJ-7H-4XK" id="rSG-JM-zy3"/>
+                    </connections>
                 </viewController>
                 <customObject id="nwb-VZ-KSN" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
                 <userDefaultsController representsSharedInstance="YES" id="YfB-Q4-j8R"/>
@@ -661,7 +617,7 @@
         <scene sceneID="V06-Uu-3xC">
             <objects>
                 <viewController title="Radio" id="UBL-vs-1PL" userLabel="Radio Tab" customClass="RadioPrefsViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" id="upT-IE-zqc" userLabel="Radio">
+                    <view key="view" wantsLayer="YES" id="upT-IE-zqc" userLabel="Radio view">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="400"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
@@ -690,14 +646,11 @@
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="140" id="Oy3-ds-TwJ"/>
                                                             </constraints>
-                                                            <textFieldCell key="cell" lineBreakMode="clipping" placeholderString="Serial Number" id="F9p-2k-94Z">
+                                                            <textFieldCell key="cell" lineBreakMode="clipping" enabled="NO" placeholderString="Serial Number" id="F9p-2k-94Z">
                                                                 <font key="font" metaFont="system"/>
                                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
-                                                            <connections>
-                                                                <binding destination="UBL-vs-1PL" name="value" keyPath="radio.serialNumber" id="AaN-7p-cBV"/>
-                                                            </connections>
                                                         </textField>
                                                     </subviews>
                                                     <constraints>
@@ -728,14 +681,11 @@
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="140" id="lXC-LP-xnY"/>
                                                             </constraints>
-                                                            <textFieldCell key="cell" lineBreakMode="clipping" placeholderString="v20.100.200" id="WnS-ew-6mD">
+                                                            <textFieldCell key="cell" lineBreakMode="clipping" enabled="NO" placeholderString="v20.100.200" id="WnS-ew-6mD">
                                                                 <font key="font" metaFont="system"/>
                                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
-                                                            <connections>
-                                                                <binding destination="UBL-vs-1PL" name="value" keyPath="radio.version" id="QBi-Xg-x04"/>
-                                                            </connections>
                                                         </textField>
                                                     </subviews>
                                                     <constraints>
@@ -766,14 +716,11 @@
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="140" id="2d1-kV-Qxe"/>
                                                             </constraints>
-                                                            <textFieldCell key="cell" lineBreakMode="clipping" placeholderString="None" id="tdX-RG-Yci">
+                                                            <textFieldCell key="cell" lineBreakMode="clipping" enabled="NO" placeholderString="None" id="tdX-RG-Yci">
                                                                 <font key="font" metaFont="system"/>
                                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
-                                                            <connections>
-                                                                <binding destination="UBL-vs-1PL" name="value" keyPath="representedObject.radioOptions" id="uF4-vE-nRG"/>
-                                                            </connections>
                                                         </textField>
                                                     </subviews>
                                                     <constraints>
@@ -819,24 +766,20 @@
                                                         </textField>
                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Uz9-cp-QUL">
                                                             <rect key="frame" x="62" y="3" width="31" height="17"/>
-                                                            <textFieldCell key="cell" lineBreakMode="clipping" placeholderString="USA" id="Rdh-lO-tWx">
+                                                            <textFieldCell key="cell" lineBreakMode="clipping" enabled="NO" placeholderString="USA" id="Rdh-lO-tWx">
                                                                 <font key="font" metaFont="system"/>
                                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
-                                                            <connections>
-                                                                <binding destination="UBL-vs-1PL" name="value" keyPath="representedObject.region" id="4cv-5e-uQK"/>
-                                                            </connections>
                                                         </textField>
                                                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QTs-Ho-j3Y">
                                                             <rect key="frame" x="103" y="-6" width="87" height="32"/>
-                                                            <buttonCell key="cell" type="push" title="Change" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="3to-Tx-wKO">
+                                                            <buttonCell key="cell" type="push" title="Change" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="3to-Tx-wKO">
                                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                                 <font key="font" metaFont="system"/>
                                                             </buttonCell>
                                                             <connections>
                                                                 <action selector="regionChange:" target="UBL-vs-1PL" id="8Me-4m-kvs"/>
-                                                                <binding destination="UBL-vs-1PL" name="enabled" keyPath="active" id="cZ1-mn-CvN"/>
                                                             </connections>
                                                         </button>
                                                     </subviews>
@@ -851,31 +794,30 @@
                                                         <real value="3.4028234663852886e+38"/>
                                                     </customSpacing>
                                                 </stackView>
-                                                <button verticalHuggingPriority="750" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="GsP-kj-ab2">
+                                                <button identifier="RemoteOn" verticalHuggingPriority="750" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="GsP-kj-ab2">
                                                     <rect key="frame" x="-2" y="32" width="154" height="18"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="150" id="IFN-ds-zHm"/>
                                                     </constraints>
-                                                    <buttonCell key="cell" type="check" title="Remote On" bezelStyle="regularSquare" imagePosition="right" inset="2" id="LWS-E3-v3k">
+                                                    <buttonCell key="cell" type="check" title="Remote On" bezelStyle="regularSquare" imagePosition="right" enabled="NO" inset="2" id="LWS-E3-v3k">
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                         <font key="font" metaFont="system"/>
                                                     </buttonCell>
                                                     <connections>
-                                                        <binding destination="UBL-vs-1PL" name="enabled" keyPath="active" id="VX1-O6-m56"/>
-                                                        <binding destination="UBL-vs-1PL" name="value" keyPath="radio.remoteOnEnabled" id="QWa-hL-bir"/>
+                                                        <action selector="checkboxes:" target="UBL-vs-1PL" id="MHB-3o-WPd"/>
                                                     </connections>
                                                 </button>
-                                                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yqo-CO-FNl">
+                                                <button identifier="FlexControl" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yqo-CO-FNl">
                                                     <rect key="frame" x="-2" y="-2" width="154" height="18"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="150" id="5v2-Gr-KDQ"/>
                                                     </constraints>
-                                                    <buttonCell key="cell" type="check" title="FlexControl" bezelStyle="regularSquare" imagePosition="right" inset="2" id="t7P-Qb-5ZU">
+                                                    <buttonCell key="cell" type="check" title="FlexControl" bezelStyle="regularSquare" imagePosition="right" enabled="NO" inset="2" id="t7P-Qb-5ZU">
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                         <font key="font" metaFont="system"/>
                                                     </buttonCell>
                                                     <connections>
-                                                        <binding destination="UBL-vs-1PL" name="enabled" keyPath="active" id="pox-l4-nEW"/>
+                                                        <action selector="checkboxes:" target="UBL-vs-1PL" id="qvM-VE-g4N"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -916,35 +858,32 @@
                                             <subviews>
                                                 <button identifier="Model" verticalHuggingPriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="5TS-0F-rR7">
                                                     <rect key="frame" x="-1" y="77" width="60" height="19"/>
-                                                    <buttonCell key="cell" type="radio" title="Model" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="idT-Ch-dKZ">
+                                                    <buttonCell key="cell" type="radio" title="Model" bezelStyle="regularSquare" imagePosition="left" alignment="left" enabled="NO" inset="2" id="idT-Ch-dKZ">
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                         <font key="font" metaFont="system"/>
                                                     </buttonCell>
                                                     <connections>
                                                         <action selector="screensaver:" target="UBL-vs-1PL" id="3Wk-cv-SFm"/>
-                                                        <binding destination="UBL-vs-1PL" name="enabled" keyPath="active" id="2TH-fW-t4g"/>
                                                     </connections>
                                                 </button>
                                                 <button identifier="Callsign" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xfr-b6-aVB">
                                                     <rect key="frame" x="-1" y="38" width="70" height="18"/>
-                                                    <buttonCell key="cell" type="radio" title="Callsign" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="JwP-u3-wQg">
+                                                    <buttonCell key="cell" type="radio" title="Callsign" bezelStyle="regularSquare" imagePosition="left" alignment="left" enabled="NO" inset="2" id="JwP-u3-wQg">
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                         <font key="font" metaFont="system"/>
                                                     </buttonCell>
                                                     <connections>
                                                         <action selector="screensaver:" target="UBL-vs-1PL" id="TgX-Rv-ogO"/>
-                                                        <binding destination="UBL-vs-1PL" name="enabled" keyPath="active" id="sfa-k7-l15"/>
                                                     </connections>
                                                 </button>
                                                 <button identifier="Nickname" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ywk-PS-0bN">
                                                     <rect key="frame" x="-1" y="-1" width="83" height="18"/>
-                                                    <buttonCell key="cell" type="radio" title="Nickname" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="uCQ-Dg-giF">
+                                                    <buttonCell key="cell" type="radio" title="Nickname" bezelStyle="regularSquare" imagePosition="left" alignment="left" enabled="NO" inset="2" id="uCQ-Dg-giF">
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                         <font key="font" metaFont="system"/>
                                                     </buttonCell>
                                                     <connections>
                                                         <action selector="screensaver:" target="UBL-vs-1PL" id="EA8-Nd-SYg"/>
-                                                        <binding destination="UBL-vs-1PL" name="enabled" keyPath="active" id="hXM-3q-nBL"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -967,43 +906,38 @@
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="150" id="Omd-VL-BRs"/>
                                                     </constraints>
-                                                    <textFieldCell key="cell" lineBreakMode="clipping" placeholderString="Flex-6500" id="NYv-1r-enS">
+                                                    <textFieldCell key="cell" lineBreakMode="clipping" enabled="NO" placeholderString="Flex-6500" id="NYv-1r-enS">
                                                         <font key="font" metaFont="system"/>
                                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
-                                                    <connections>
-                                                        <binding destination="UBL-vs-1PL" name="value" keyPath="radio.radioModel" id="VtA-Sk-26k"/>
-                                                    </connections>
                                                 </textField>
-                                                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yNt-QU-b8f">
+                                                <textField identifier="CallsignText" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yNt-QU-b8f">
                                                     <rect key="frame" x="0.0" y="40" width="150" height="22"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="150" id="WDJ-7y-Alm"/>
                                                     </constraints>
-                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="Zxf-SG-YJm">
+                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" enabled="NO" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="Zxf-SG-YJm">
                                                         <font key="font" metaFont="system"/>
                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                     <connections>
-                                                        <binding destination="UBL-vs-1PL" name="enabled" keyPath="active" id="nPO-Vt-DAx"/>
-                                                        <binding destination="UBL-vs-1PL" name="value" keyPath="radio.callsign" id="OvA-f6-VZr"/>
+                                                        <action selector="textFields:" target="UBL-vs-1PL" id="6eC-Le-fNL"/>
                                                     </connections>
                                                 </textField>
-                                                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jYf-Vs-NmJ">
+                                                <textField identifier="NicknameText" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jYf-Vs-NmJ">
                                                     <rect key="frame" x="0.0" y="0.0" width="150" height="22"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="150" id="XhX-Ks-OVP"/>
                                                     </constraints>
-                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="hpX-GT-VPg">
+                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" enabled="NO" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="hpX-GT-VPg">
                                                         <font key="font" metaFont="system"/>
                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                     <connections>
-                                                        <binding destination="UBL-vs-1PL" name="enabled" keyPath="active" id="v6a-md-tbI"/>
-                                                        <binding destination="UBL-vs-1PL" name="value" keyPath="radio.nickname" id="4aW-A9-GFX"/>
+                                                        <action selector="textFields:" target="UBL-vs-1PL" id="WYy-zO-j6v"/>
                                                     </connections>
                                                 </textField>
                                             </subviews>
@@ -1042,13 +976,20 @@
                             <constraint firstItem="nwu-TN-iWf" firstAttribute="leading" secondItem="upT-IE-zqc" secondAttribute="leading" constant="20" id="w4a-sI-232"/>
                             <constraint firstAttribute="trailing" secondItem="nwu-TN-iWf" secondAttribute="trailing" constant="4" id="zLP-S8-34s"/>
                         </constraints>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
-                                <color key="value" name="unemphasizedSelectedContentBackgroundColor" catalog="System" colorSpace="catalog"/>
-                            </userDefinedRuntimeAttribute>
-                            <userDefinedRuntimeAttribute type="boolean" keyPath="translatesAutoresizingMaskIntoConstraints" value="NO"/>
-                        </userDefinedRuntimeAttributes>
                     </view>
+                    <connections>
+                        <outlet property="_callsignRadioButton" destination="xfr-b6-aVB" id="Veg-dB-lrm"/>
+                        <outlet property="_callsignTextField" destination="yNt-QU-b8f" id="fRq-8W-KeP"/>
+                        <outlet property="_flexControlEnabledCheckbox" destination="yqo-CO-FNl" id="FjU-1P-9kt"/>
+                        <outlet property="_hwVersionTextField" destination="K2q-2l-60I" id="vb0-uG-xTE"/>
+                        <outlet property="_modelRadioButton" destination="5TS-0F-rR7" id="ff6-v0-zhS"/>
+                        <outlet property="_modelTextField" destination="snd-Be-vN5" id="AKZ-hz-SWl"/>
+                        <outlet property="_nicknameRadioButton" destination="Ywk-PS-0bN" id="vXY-cg-ZF7"/>
+                        <outlet property="_nicknameTextField" destination="jYf-Vs-NmJ" id="ydk-m4-9Ah"/>
+                        <outlet property="_optionsTextField" destination="c0c-fg-cVX" id="hJu-Wb-Glx"/>
+                        <outlet property="_remoteOnEnabledCheckbox" destination="GsP-kj-ab2" id="gm4-54-NlB"/>
+                        <outlet property="_serialNumberTextField" destination="OJ0-DD-LIw" id="Ooc-wQ-8He"/>
+                    </connections>
                 </viewController>
                 <customObject id="qDg-oJ-BxV" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1057,7 +998,7 @@
         <!--Info Tab-->
         <scene sceneID="wxA-0t-A3c">
             <objects>
-                <viewController title="Info" id="BlG-y8-jgO" userLabel="Info Tab" sceneMemberID="viewController">
+                <viewController title="Info" id="BlG-y8-jgO" userLabel="Info Tab" customClass="InfoPrefsViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" wantsLayer="YES" id="MB7-kC-occ" userLabel="Info view">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="400"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1086,9 +1027,6 @@
                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
-                                                <connections>
-                                                    <binding destination="BlG-y8-jgO" name="value" keyPath="representedObject.versionGui" id="FrK-9e-eJO"/>
-                                                </connections>
                                             </textField>
                                         </subviews>
                                         <constraints>
@@ -1124,9 +1062,6 @@
                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
-                                                <connections>
-                                                    <binding destination="BlG-y8-jgO" name="value" keyPath="representedObject.versionApi" id="uYf-DP-cit"/>
-                                                </connections>
                                             </textField>
                                         </subviews>
                                         <constraints>
@@ -1158,13 +1093,11 @@
                             <constraint firstAttribute="bottom" secondItem="oel-ej-srH" secondAttribute="bottom" constant="321" id="uQb-mV-Nyy"/>
                             <constraint firstItem="oel-ej-srH" firstAttribute="top" secondItem="MB7-kC-occ" secondAttribute="top" constant="17" id="x1B-AR-4Xq"/>
                         </constraints>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
-                                <color key="value" name="unemphasizedSelectedContentBackgroundColor" catalog="System" colorSpace="catalog"/>
-                            </userDefinedRuntimeAttribute>
-                            <userDefinedRuntimeAttribute type="boolean" keyPath="translatesAutoresizingMaskIntoConstraints" value="NO"/>
-                        </userDefinedRuntimeAttributes>
                     </view>
+                    <connections>
+                        <outlet property="_versionApiTextField" destination="YKg-wi-WTR" id="H5N-b5-obz"/>
+                        <outlet property="_versionGuiTextField" destination="2A3-Re-Kfm" id="kso-fK-YPl"/>
+                    </connections>
                 </viewController>
                 <customObject id="pH9-yV-bSg" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1174,7 +1107,7 @@
         <scene sceneID="8ej-OM-p3D">
             <objects>
                 <viewController title="Network" id="4Na-DM-iAm" userLabel="Network Tab" customClass="NetworkPrefsViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" id="4Uw-z2-vzI" userLabel="Network">
+                    <view key="view" wantsLayer="YES" id="4Uw-z2-vzI" userLabel="Network view">
                         <rect key="frame" x="0.0" y="0.0" width="601" height="400"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
@@ -1203,14 +1136,11 @@
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="140" id="ve8-a7-GX4"/>
                                                             </constraints>
-                                                            <textFieldCell key="cell" lineBreakMode="clipping" placeholderString="10.0.1.100" id="zlv-SH-ua6">
+                                                            <textFieldCell key="cell" lineBreakMode="clipping" enabled="NO" id="zlv-SH-ua6">
                                                                 <font key="font" metaFont="system"/>
                                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
-                                                            <connections>
-                                                                <binding destination="4Na-DM-iAm" name="value" keyPath="radio.ipAddress" id="mvC-7g-J9q"/>
-                                                            </connections>
                                                         </textField>
                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pYK-PH-mXC">
                                                             <rect key="frame" x="267" y="0.0" width="40" height="17"/>
@@ -1225,14 +1155,11 @@
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="140" id="Frs-48-A6S"/>
                                                             </constraints>
-                                                            <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" placeholderString="255.255.255.0" id="EGt-23-ZUP">
+                                                            <textFieldCell key="cell" lineBreakMode="clipping" enabled="NO" alignment="left" id="EGt-23-ZUP">
                                                                 <font key="font" metaFont="system"/>
                                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
-                                                            <connections>
-                                                                <binding destination="4Na-DM-iAm" name="value" keyPath="radio.netmask" id="Cne-Hw-Pi2"/>
-                                                            </connections>
                                                         </textField>
                                                     </subviews>
                                                     <visibilityPriorities>
@@ -1264,14 +1191,11 @@
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="200" id="i6v-Rw-xKN"/>
                                                             </constraints>
-                                                            <textFieldCell key="cell" lineBreakMode="clipping" placeholderString="NN:NN:NN:NN:NN::NN" id="e5a-oQ-uVL">
+                                                            <textFieldCell key="cell" lineBreakMode="clipping" enabled="NO" id="e5a-oQ-uVL">
                                                                 <font key="font" metaFont="system"/>
                                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
-                                                            <connections>
-                                                                <binding destination="4Na-DM-iAm" name="value" keyPath="radio.macAddress" id="vsA-PU-Wy8"/>
-                                                            </connections>
                                                         </textField>
                                                     </subviews>
                                                     <visibilityPriorities>
@@ -1313,36 +1237,30 @@
                                             <subviews>
                                                 <button identifier="Static" verticalHuggingPriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="m8t-KC-rdw">
                                                     <rect key="frame" x="-1" y="83" width="57" height="25"/>
-                                                    <buttonCell key="cell" type="radio" title="Static" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="rwU-pB-Acl">
+                                                    <buttonCell key="cell" type="radio" title="Static" bezelStyle="regularSquare" imagePosition="left" alignment="left" enabled="NO" inset="2" id="rwU-pB-Acl">
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                         <font key="font" metaFont="system"/>
                                                     </buttonCell>
                                                     <connections>
                                                         <action selector="apply:" target="4Na-DM-iAm" id="Vyn-Lt-0if"/>
-                                                        <binding destination="4Na-DM-iAm" name="enabled" keyPath="active" id="WPg-5u-mpU"/>
                                                     </connections>
                                                 </button>
                                                 <button identifier="Dhcp" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="NH1-pe-dVA">
                                                     <rect key="frame" x="-1" y="40" width="59" height="18"/>
-                                                    <buttonCell key="cell" type="radio" title="DHCP" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="Eyh-JX-Md6">
+                                                    <buttonCell key="cell" type="radio" title="DHCP" bezelStyle="regularSquare" imagePosition="left" alignment="left" enabled="NO" inset="2" id="Eyh-JX-Md6">
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                         <font key="font" metaFont="system"/>
                                                     </buttonCell>
                                                     <connections>
                                                         <action selector="apply:" target="4Na-DM-iAm" id="Ong-Uq-W5f"/>
-                                                        <binding destination="4Na-DM-iAm" name="enabled" keyPath="active" id="Edw-zq-Rd0"/>
                                                     </connections>
                                                 </button>
                                                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sCz-98-2Ji">
                                                     <rect key="frame" x="-2" y="-2" width="209" height="18"/>
-                                                    <buttonCell key="cell" type="check" title="Enforce Private IP Connections" bezelStyle="regularSquare" imagePosition="left" inset="2" id="egs-Z9-X5F">
+                                                    <buttonCell key="cell" type="check" title="Enforce Private IP Connections" bezelStyle="regularSquare" imagePosition="left" enabled="NO" inset="2" id="egs-Z9-X5F">
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                         <font key="font" metaFont="system"/>
                                                     </buttonCell>
-                                                    <connections>
-                                                        <binding destination="4Na-DM-iAm" name="enabled" keyPath="active" id="ndH-Ke-rZ1"/>
-                                                        <binding destination="4Na-DM-iAm" name="value" keyPath="radio.enforcePrivateIpEnabled" id="xrf-CS-eHi"/>
-                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <visibilityPriorities>
@@ -1364,13 +1282,12 @@
                                                     <subviews>
                                                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="T9Y-Yr-Vzc">
                                                             <rect key="frame" x="-6" y="-7" width="75" height="32"/>
-                                                            <buttonCell key="cell" type="push" title="Apply" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="90A-ml-MdV">
+                                                            <buttonCell key="cell" type="push" title="Apply" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="90A-ml-MdV">
                                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                                 <font key="font" metaFont="system"/>
                                                             </buttonCell>
                                                             <connections>
                                                                 <action selector="apply:" target="4Na-DM-iAm" id="dHP-1D-T5b"/>
-                                                                <binding destination="4Na-DM-iAm" name="enabled" keyPath="active" id="u3D-eQ-cKH"/>
                                                             </connections>
                                                         </button>
                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mFw-8R-aLQ">
@@ -1410,14 +1327,11 @@
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="125" id="Zjp-YO-s1v"/>
                                                             </constraints>
-                                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="zy1-5B-LbC">
+                                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" enabled="NO" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="zy1-5B-LbC">
                                                                 <font key="font" metaFont="system"/>
                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
-                                                            <connections>
-                                                                <binding destination="4Na-DM-iAm" name="value" keyPath="radio.staticIp" id="zqW-ta-syj"/>
-                                                            </connections>
                                                         </textField>
                                                     </subviews>
                                                     <visibilityPriorities>
@@ -1445,14 +1359,11 @@
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="125" id="fQu-7V-qGX"/>
                                                             </constraints>
-                                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="u08-ft-t8t">
+                                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" enabled="NO" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="u08-ft-t8t">
                                                                 <font key="font" metaFont="system"/>
                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
-                                                            <connections>
-                                                                <binding destination="4Na-DM-iAm" name="value" keyPath="radio.staticNetmask" id="HpT-zt-5gr"/>
-                                                            </connections>
                                                         </textField>
                                                     </subviews>
                                                     <visibilityPriorities>
@@ -1480,14 +1391,11 @@
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="125" id="yXe-LY-d30"/>
                                                             </constraints>
-                                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="wgb-7m-btf">
+                                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" enabled="NO" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="wgb-7m-btf">
                                                                 <font key="font" metaFont="system"/>
                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
-                                                            <connections>
-                                                                <binding destination="4Na-DM-iAm" name="value" keyPath="radio.staticGateway" id="x73-i2-SXq"/>
-                                                            </connections>
                                                         </textField>
                                                     </subviews>
                                                     <visibilityPriorities>
@@ -1537,15 +1445,17 @@
                             <constraint firstAttribute="bottom" secondItem="d5j-a1-pVY" secondAttribute="bottom" constant="63" id="vW3-DU-w2t"/>
                             <constraint firstAttribute="trailing" secondItem="c9J-oI-QWS" secondAttribute="trailing" constant="20" id="zB2-1K-t2k"/>
                         </constraints>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="boolean" keyPath="translatesAutoresizingMaskIntoConstraints" value="NO"/>
-                            <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
-                                <color key="value" name="unemphasizedSelectedContentBackgroundColor" catalog="System" colorSpace="catalog"/>
-                            </userDefinedRuntimeAttribute>
-                        </userDefinedRuntimeAttributes>
                     </view>
                     <connections>
+                        <outlet property="_applyButton" destination="T9Y-Yr-Vzc" id="ozg-ot-VKw"/>
                         <outlet property="_dhcpRadioButton" destination="NH1-pe-dVA" id="aM5-A8-WRd"/>
+                        <outlet property="_enforcePrivateIpCheckbox" destination="sCz-98-2Ji" id="jOE-mh-nfj"/>
+                        <outlet property="_ipAddressTextField" destination="P5Q-pQ-cv4" id="9zc-py-UwK"/>
+                        <outlet property="_macAddressTextField" destination="PD6-u0-Swk" id="cMX-CO-Yz7"/>
+                        <outlet property="_netMaskTextField" destination="Qe7-B9-sRj" id="YOk-fC-kiy"/>
+                        <outlet property="_staticGatewayTextField" destination="cwq-w7-ppr" id="yc9-DN-lWA"/>
+                        <outlet property="_staticIpAddressTextField" destination="nay-W7-qEo" id="abg-zj-Dqy"/>
+                        <outlet property="_staticMaskTextField" destination="XiJ-be-Wie" id="qQ5-J4-loe"/>
                         <outlet property="_staticRadioButton" destination="m8t-KC-rdw" id="x3U-Yf-uEZ"/>
                     </connections>
                 </viewController>
@@ -1556,8 +1466,8 @@
         <!--GPS Tab-->
         <scene sceneID="st0-zP-ZTV">
             <objects>
-                <viewController title="Gps" id="Xnh-Zk-cbK" userLabel="GPS Tab" sceneMemberID="viewController">
-                    <view key="view" id="ecR-6n-W84" userLabel="GPS view">
+                <viewController title="Gps" id="Xnh-Zk-cbK" userLabel="GPS Tab" customClass="GpsPrefsViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" wantsLayer="YES" id="ecR-6n-W84" userLabel="GPS view">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="400"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
@@ -1576,12 +1486,6 @@
                             <constraint firstItem="Bqd-uS-KtV" firstAttribute="top" secondItem="ecR-6n-W84" secondAttribute="top" constant="191" id="D7g-JO-jIy"/>
                             <constraint firstAttribute="trailing" secondItem="Bqd-uS-KtV" secondAttribute="trailing" constant="286" id="fyY-w2-X8j"/>
                         </constraints>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="boolean" keyPath="translatesAutoresizingMaskIntoConstraints" value="NO"/>
-                            <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
-                                <color key="value" name="unemphasizedSelectedContentBackgroundColor" catalog="System" colorSpace="catalog"/>
-                            </userDefinedRuntimeAttribute>
-                        </userDefinedRuntimeAttributes>
                     </view>
                 </viewController>
                 <customObject id="FVU-Wg-NIX" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
@@ -1613,13 +1517,12 @@
                                                             <subviews>
                                                                 <button identifier="AccTx" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="42G-DV-SH5">
                                                                     <rect key="frame" x="-2" y="2" width="73" height="18"/>
-                                                                    <buttonCell key="cell" type="check" title="ACC TX:" bezelStyle="regularSquare" imagePosition="left" inset="2" id="Kyz-qh-vTI">
+                                                                    <buttonCell key="cell" type="check" title="ACC TX:" bezelStyle="regularSquare" imagePosition="left" enabled="NO" inset="2" id="Kyz-qh-vTI">
                                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                         <font key="font" metaFont="system"/>
                                                                     </buttonCell>
                                                                     <connections>
-                                                                        <binding destination="brP-w7-Ywn" name="enabled" keyPath="active" id="4F3-go-ebB"/>
-                                                                        <binding destination="brP-w7-Ywn" name="value" keyPath="radio.interlock.accTxEnabled" id="Osy-iU-cNI"/>
+                                                                        <action selector="checkBoxes:" target="brP-w7-Ywn" id="uiS-5e-Zij"/>
                                                                     </connections>
                                                                 </button>
                                                                 <textField identifier="AccTxDelay" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="imf-oY-r8n">
@@ -1627,14 +1530,13 @@
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="95" id="csv-Wv-Biv"/>
                                                                     </constraints>
-                                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="1bo-Xk-ctf">
+                                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" enabled="NO" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="1bo-Xk-ctf">
                                                                         <font key="font" metaFont="system"/>
                                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                     <connections>
-                                                                        <binding destination="brP-w7-Ywn" name="enabled" keyPath="active" id="BFA-m5-G35"/>
-                                                                        <binding destination="brP-w7-Ywn" name="value" keyPath="radio.interlock.accTxDelay" id="V0T-Xr-uxu"/>
+                                                                        <action selector="textFields:" target="brP-w7-Ywn" id="tz1-tZ-yOa"/>
                                                                     </connections>
                                                                 </textField>
                                                             </subviews>
@@ -1658,25 +1560,23 @@
                                                             <subviews>
                                                                 <button identifier="RcaTx1" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Z4I-Ts-qWy">
                                                                     <rect key="frame" x="-2" y="2" width="79" height="18"/>
-                                                                    <buttonCell key="cell" type="check" title="RCA TX1:" bezelStyle="regularSquare" imagePosition="left" inset="2" id="tZA-NS-Qaw">
+                                                                    <buttonCell key="cell" type="check" title="RCA TX1:" bezelStyle="regularSquare" imagePosition="left" enabled="NO" inset="2" id="tZA-NS-Qaw">
                                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                         <font key="font" metaFont="system"/>
                                                                     </buttonCell>
                                                                     <connections>
-                                                                        <binding destination="brP-w7-Ywn" name="enabled" keyPath="active" id="oL7-lq-SDl"/>
-                                                                        <binding destination="brP-w7-Ywn" name="value" keyPath="radio.interlock.tx1Enabled" id="UjD-bm-neV"/>
+                                                                        <action selector="checkBoxes:" target="brP-w7-Ywn" id="X9Y-Oc-yrt"/>
                                                                     </connections>
                                                                 </button>
                                                                 <textField identifier="Tx1Delay" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0H9-9I-Th1">
                                                                     <rect key="frame" x="113" y="0.0" width="95" height="22"/>
-                                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="1aq-pr-Luc">
+                                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" enabled="NO" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="1aq-pr-Luc">
                                                                         <font key="font" metaFont="system"/>
                                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                     <connections>
-                                                                        <binding destination="brP-w7-Ywn" name="enabled" keyPath="active" id="niO-uO-179"/>
-                                                                        <binding destination="brP-w7-Ywn" name="value" keyPath="radio.interlock.tx1Delay" id="MFJ-Hr-RrU"/>
+                                                                        <action selector="textFields:" target="brP-w7-Ywn" id="85W-Er-DXE"/>
                                                                     </connections>
                                                                 </textField>
                                                             </subviews>
@@ -1697,25 +1597,23 @@
                                                             <subviews>
                                                                 <button identifier="RcaTx2" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="BSP-XT-bC5">
                                                                     <rect key="frame" x="-2" y="2" width="81" height="18"/>
-                                                                    <buttonCell key="cell" type="check" title="RCA TX2:" bezelStyle="regularSquare" imagePosition="left" inset="2" id="Nb8-Zw-erK">
+                                                                    <buttonCell key="cell" type="check" title="RCA TX2:" bezelStyle="regularSquare" imagePosition="left" enabled="NO" inset="2" id="Nb8-Zw-erK">
                                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                         <font key="font" metaFont="system"/>
                                                                     </buttonCell>
                                                                     <connections>
-                                                                        <binding destination="brP-w7-Ywn" name="enabled" keyPath="active" id="UBR-au-Ncv"/>
-                                                                        <binding destination="brP-w7-Ywn" name="value" keyPath="radio.interlock.tx2Enabled" id="A5q-1o-BSS"/>
+                                                                        <action selector="checkBoxes:" target="brP-w7-Ywn" id="MtX-A3-KDR"/>
                                                                     </connections>
                                                                 </button>
                                                                 <textField identifier="Tx2Delay" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="5df-8n-Frq">
                                                                     <rect key="frame" x="114" y="0.0" width="94" height="22"/>
-                                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="8H6-DM-Wc4">
+                                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" enabled="NO" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="8H6-DM-Wc4">
                                                                         <font key="font" metaFont="system"/>
                                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                     <connections>
-                                                                        <binding destination="brP-w7-Ywn" name="enabled" keyPath="active" id="S7E-M2-EEi"/>
-                                                                        <binding destination="brP-w7-Ywn" name="value" keyPath="radio.interlock.tx2Delay" id="rpK-am-YEz"/>
+                                                                        <action selector="textFields:" target="brP-w7-Ywn" id="RZc-T7-5Gk"/>
                                                                     </connections>
                                                                 </textField>
                                                             </subviews>
@@ -1736,13 +1634,12 @@
                                                             <subviews>
                                                                 <button identifier="RcaTx3" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="uHL-t9-R8G">
                                                                     <rect key="frame" x="-2" y="2" width="80" height="18"/>
-                                                                    <buttonCell key="cell" type="check" title="RCA TX3:" bezelStyle="regularSquare" imagePosition="left" inset="2" id="vBT-MS-Na3">
+                                                                    <buttonCell key="cell" type="check" title="RCA TX3:" bezelStyle="regularSquare" imagePosition="left" enabled="NO" inset="2" id="vBT-MS-Na3">
                                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                         <font key="font" metaFont="system"/>
                                                                     </buttonCell>
                                                                     <connections>
-                                                                        <binding destination="brP-w7-Ywn" name="enabled" keyPath="active" id="Zox-dD-PNq"/>
-                                                                        <binding destination="brP-w7-Ywn" name="value" keyPath="radio.interlock.tx3Enabled" id="C7E-FY-xO0"/>
+                                                                        <action selector="checkBoxes:" target="brP-w7-Ywn" id="nFT-uZ-LWt"/>
                                                                     </connections>
                                                                 </button>
                                                                 <textField identifier="Tx3Delay" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ymf-8U-zkG">
@@ -1750,14 +1647,13 @@
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="95" id="P1D-a4-OtM"/>
                                                                     </constraints>
-                                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="abF-74-617">
+                                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" enabled="NO" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="abF-74-617">
                                                                         <font key="font" metaFont="system"/>
                                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                     <connections>
-                                                                        <binding destination="brP-w7-Ywn" name="enabled" keyPath="active" id="7KL-aW-Edn"/>
-                                                                        <binding destination="brP-w7-Ywn" name="value" keyPath="radio.interlock.tx3Delay" id="j7s-Mb-dIl"/>
+                                                                        <action selector="textFields:" target="brP-w7-Ywn" id="xPn-3t-cJA"/>
                                                                     </connections>
                                                                 </textField>
                                                             </subviews>
@@ -1814,14 +1710,13 @@
                                                                 </textField>
                                                                 <textField identifier="TxDelay" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6c2-bB-gBc">
                                                                     <rect key="frame" x="116" y="0.0" width="89" height="22"/>
-                                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="egE-aZ-faI">
+                                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" enabled="NO" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="egE-aZ-faI">
                                                                         <font key="font" metaFont="system"/>
                                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                     <connections>
-                                                                        <binding destination="brP-w7-Ywn" name="enabled" keyPath="active" id="NVy-Lm-EJg"/>
-                                                                        <binding destination="brP-w7-Ywn" name="value" keyPath="radio.interlock.accTxDelay" id="q7w-l3-HP5"/>
+                                                                        <action selector="textFields:" target="brP-w7-Ywn" id="MED-CP-WkG"/>
                                                                     </connections>
                                                                 </textField>
                                                             </subviews>
@@ -1850,14 +1745,13 @@
                                                                 </textField>
                                                                 <textField identifier="Timeout" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2mX-FM-iXU">
                                                                     <rect key="frame" x="116" y="0.0" width="89" height="22"/>
-                                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="nbg-WL-OiF">
+                                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" enabled="NO" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="nbg-WL-OiF">
                                                                         <font key="font" metaFont="system"/>
                                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                     <connections>
-                                                                        <binding destination="brP-w7-Ywn" name="enabled" keyPath="active" id="3Ey-2t-cQC"/>
-                                                                        <binding destination="brP-w7-Ywn" name="value" keyPath="radio.interlock.timeout" id="eNb-f2-tpt"/>
+                                                                        <action selector="textFields:" target="brP-w7-Ywn" id="Z8Y-8G-DkC"/>
                                                                     </connections>
                                                                 </textField>
                                                             </subviews>
@@ -1878,21 +1772,14 @@
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="205" id="aYM-O8-LZn"/>
                                                             </constraints>
-                                                            <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="S8u-Tx-JJ8" id="MQ0-CI-CPA">
+                                                            <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" enabled="NO" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="MQ0-CI-CPA">
                                                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                                                 <font key="font" metaFont="menu"/>
-                                                                <menu key="menu" id="JTw-oH-ejE">
-                                                                    <items>
-                                                                        <menuItem title="Item 1" state="on" id="S8u-Tx-JJ8"/>
-                                                                        <menuItem title="Item 2" id="wM4-MR-r1Q"/>
-                                                                        <menuItem title="Item 3" id="Lja-SA-h6h"/>
-                                                                    </items>
-                                                                </menu>
+                                                                <menu key="menu" id="JTw-oH-ejE"/>
                                                             </popUpButtonCell>
                                                             <connections>
-                                                                <binding destination="brP-w7-Ywn" name="enabled" keyPath="active" id="vDk-tf-WMj"/>
-                                                                <binding destination="brP-w7-Ywn" name="content" keyPath="txProfile.list" id="rZz-Xa-Q3o"/>
-                                                                <binding destination="brP-w7-Ywn" name="selectedValue" keyPath="txProfile.selection" previousBinding="rZz-Xa-Q3o" id="Wl4-ne-5YC"/>
+                                                                <action selector="popups:" target="brP-w7-Ywn" id="3H5-It-l1Q"/>
+                                                                <binding destination="brP-w7-Ywn" name="selectedValue" keyPath="txProfile.selection" id="eNe-IE-VvD"/>
                                                             </connections>
                                                         </popUpButton>
                                                         <button identifier="TxInhibit" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="L0m-uJ-x36">
@@ -1902,8 +1789,7 @@
                                                                 <font key="font" metaFont="system"/>
                                                             </buttonCell>
                                                             <connections>
-                                                                <binding destination="brP-w7-Ywn" name="enabled" keyPath="active" id="45c-Bt-Jm1"/>
-                                                                <binding destination="brP-w7-Ywn" name="value" keyPath="radio.transmit.inhibit" id="4EQ-Cc-kVy"/>
+                                                                <action selector="checkBoxes:" target="brP-w7-Ywn" id="sSS-pU-TXy"/>
                                                             </connections>
                                                         </button>
                                                     </subviews>
@@ -1959,7 +1845,7 @@
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="125" id="ek9-Ai-nfP"/>
                                                     </constraints>
-                                                    <popUpButtonCell key="cell" type="push" title="Disabled" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="faI-Ni-Yyy" id="iDo-Fx-NcQ">
+                                                    <popUpButtonCell key="cell" type="push" title="Disabled" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" enabled="NO" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="faI-Ni-Yyy" id="iDo-Fx-NcQ">
                                                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                                         <font key="font" metaFont="menu"/>
                                                         <menu key="menu" id="QtP-QQ-zg9">
@@ -1972,7 +1858,6 @@
                                                     </popUpButtonCell>
                                                     <connections>
                                                         <action selector="popups:" target="brP-w7-Ywn" id="26f-qC-MaB"/>
-                                                        <binding destination="brP-w7-Ywn" name="enabled" keyPath="active" id="PEb-63-i2w"/>
                                                     </connections>
                                                 </popUpButton>
                                                 <textField horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2UR-2S-DJ3">
@@ -1988,7 +1873,7 @@
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="125" id="2O0-at-jar"/>
                                                     </constraints>
-                                                    <popUpButtonCell key="cell" type="push" title="Disabled" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="3b8-5s-7yB" id="3Q6-9A-QCj">
+                                                    <popUpButtonCell key="cell" type="push" title="Disabled" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" enabled="NO" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="3b8-5s-7yB" id="3Q6-9A-QCj">
                                                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                                         <font key="font" metaFont="menu"/>
                                                         <menu key="menu" id="GSG-9N-TYT">
@@ -2001,7 +1886,6 @@
                                                     </popUpButtonCell>
                                                     <connections>
                                                         <action selector="popups:" target="brP-w7-Ywn" id="1JW-06-msX"/>
-                                                        <binding destination="brP-w7-Ywn" name="enabled" keyPath="active" id="bYm-HS-eq6"/>
                                                     </connections>
                                                 </popUpButton>
                                             </subviews>
@@ -2049,24 +1933,20 @@
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="23" id="1wJ-J6-ezl"/>
                                                             </constraints>
-                                                            <textFieldCell key="cell" lineBreakMode="clipping" placeholderString="100" id="0mi-W3-0lf">
+                                                            <textFieldCell key="cell" lineBreakMode="clipping" enabled="NO" placeholderString="100" id="0mi-W3-0lf">
                                                                 <font key="font" metaFont="system"/>
                                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
-                                                            <connections>
-                                                                <binding destination="brP-w7-Ywn" name="value" keyPath="radio.transmit.maxPowerLevel" id="3tt-hx-ELF"/>
-                                                            </connections>
                                                         </textField>
                                                         <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="5h0-Qd-Na1">
                                                             <rect key="frame" x="141" y="-1" width="154" height="19"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="150" id="M77-47-WET"/>
                                                             </constraints>
-                                                            <sliderCell key="cell" state="on" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" sliderType="linear" id="Z3l-zS-QCv"/>
+                                                            <sliderCell key="cell" continuous="YES" enabled="NO" state="on" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" sliderType="linear" id="Z3l-zS-QCv"/>
                                                             <connections>
-                                                                <binding destination="brP-w7-Ywn" name="enabled" keyPath="active" id="C8o-z7-mYO"/>
-                                                                <binding destination="brP-w7-Ywn" name="value" keyPath="radio.transmit.maxPowerLevel" id="dDr-2T-mNx"/>
+                                                                <action selector="powerSlider:" target="brP-w7-Ywn" id="hfm-qg-4wh"/>
                                                             </connections>
                                                         </slider>
                                                     </subviews>
@@ -2083,24 +1963,22 @@
                                                 </stackView>
                                                 <button identifier="TxInWaterfall" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Pws-pW-ngG">
                                                     <rect key="frame" x="18" y="18" width="148" height="18"/>
-                                                    <buttonCell key="cell" type="check" title="Show TX in Waterfall" bezelStyle="regularSquare" imagePosition="left" inset="2" id="k9p-WL-V9Y">
+                                                    <buttonCell key="cell" type="check" title="Show TX in Waterfall" bezelStyle="regularSquare" imagePosition="left" enabled="NO" inset="2" id="k9p-WL-V9Y">
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                         <font key="font" metaFont="system"/>
                                                     </buttonCell>
                                                     <connections>
-                                                        <binding destination="brP-w7-Ywn" name="enabled" keyPath="active" id="sqb-Lv-8ce"/>
-                                                        <binding destination="brP-w7-Ywn" name="value" keyPath="radio.transmit.txInWaterfallEnabled" id="e7a-eg-9c7"/>
+                                                        <action selector="checkBoxes:" target="brP-w7-Ywn" id="gs7-HR-aPJ"/>
                                                     </connections>
                                                 </button>
                                                 <button identifier="HardwareAlc" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="VHH-0K-3Jl">
                                                     <rect key="frame" x="413" y="68" width="109" height="18"/>
-                                                    <buttonCell key="cell" type="check" title="Hardware ALC" bezelStyle="regularSquare" imagePosition="left" inset="2" id="MnM-iP-LRi">
+                                                    <buttonCell key="cell" type="check" title="Hardware ALC" bezelStyle="regularSquare" imagePosition="left" enabled="NO" inset="2" id="MnM-iP-LRi">
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                         <font key="font" metaFont="system"/>
                                                     </buttonCell>
                                                     <connections>
-                                                        <binding destination="brP-w7-Ywn" name="enabled" keyPath="active" id="tff-89-GL0"/>
-                                                        <binding destination="brP-w7-Ywn" name="value" keyPath="radio.transmit.hwAlcEnabled" id="0wb-ZJ-fZl"/>
+                                                        <action selector="checkBoxes:" target="brP-w7-Ywn" id="kVV-8l-wdE"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -2144,16 +2022,26 @@
                             <constraint firstItem="FoH-mU-tJb" firstAttribute="leading" secondItem="m6j-lo-PCd" secondAttribute="leading" constant="20" id="ZMy-cv-Mv8"/>
                             <constraint firstItem="FoH-mU-tJb" firstAttribute="top" secondItem="m6j-lo-PCd" secondAttribute="top" constant="10" id="ofn-nU-RAn"/>
                         </constraints>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="boolean" keyPath="translatesAutoresizingMaskIntoConstraints" value="NO"/>
-                            <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
-                                <color key="value" name="unemphasizedSelectedContentBackgroundColor" catalog="System" colorSpace="catalog"/>
-                            </userDefinedRuntimeAttribute>
-                        </userDefinedRuntimeAttributes>
                     </view>
                     <connections>
-                        <outlet property="_accessoryInterlockPopup" destination="q4C-It-mjt" id="LAY-Gr-qOe"/>
+                        <outlet property="_accInterlockPopup" destination="q4C-It-mjt" id="LAY-Gr-qOe"/>
+                        <outlet property="_accTxCheckbox" destination="42G-DV-SH5" id="xFI-9p-SsC"/>
+                        <outlet property="_accTxTextField" destination="imf-oY-r8n" id="3fU-a5-ROX"/>
+                        <outlet property="_hardWareAlcCheckbox" destination="VHH-0K-3Jl" id="qJx-Fm-Fxa"/>
+                        <outlet property="_maxPowerSlider" destination="5h0-Qd-Na1" id="2io-8G-gi0"/>
+                        <outlet property="_maxPowerTextField" destination="nq6-bC-T63" id="P6H-nJ-I8B"/>
                         <outlet property="_rcaInterlockPopup" destination="Njq-YV-IsC" id="OEr-13-s9w"/>
+                        <outlet property="_rcaTx1Checkbox" destination="Z4I-Ts-qWy" id="I3h-jS-7sn"/>
+                        <outlet property="_rcaTx1TextField" destination="0H9-9I-Th1" id="Gam-p0-TZz"/>
+                        <outlet property="_rcaTx2Checkbox" destination="BSP-XT-bC5" id="8Fo-fr-L5d"/>
+                        <outlet property="_rcaTx2TextField" destination="5df-8n-Frq" id="gJ3-qh-90s"/>
+                        <outlet property="_rcaTx3Checkbox" destination="uHL-t9-R8G" id="FpB-dc-Nc1"/>
+                        <outlet property="_rcaTx3TextField" destination="Ymf-8U-zkG" id="hC7-5a-hCE"/>
+                        <outlet property="_showTxInWaterfallCheckbox" destination="Pws-pW-ngG" id="nxe-9A-NKx"/>
+                        <outlet property="_txDelayTextField" destination="6c2-bB-gBc" id="IVZ-lv-SBr"/>
+                        <outlet property="_txInhibitCheckbox" destination="L0m-uJ-x36" id="d25-N8-6yB"/>
+                        <outlet property="_txProfilePopUp" destination="Nxt-Wl-RVi" id="5QT-dI-FEJ"/>
+                        <outlet property="_txTimeoutTextField" destination="2mX-FM-iXU" id="Sqy-hW-Gb9"/>
                     </connections>
                 </viewController>
                 <customObject id="oLw-EZ-2cp" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
@@ -2179,36 +2067,24 @@
                                             <subviews>
                                                 <button identifier="MicBias" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="UJJ-JM-LGl">
                                                     <rect key="frame" x="18" y="65" width="123" height="18"/>
-                                                    <buttonCell key="cell" type="check" title="Microphone Bias" bezelStyle="regularSquare" imagePosition="left" inset="2" id="mZA-XE-9PF">
+                                                    <buttonCell key="cell" type="check" title="Microphone Bias" bezelStyle="regularSquare" imagePosition="left" enabled="NO" inset="2" id="mZA-XE-9PF">
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                         <font key="font" metaFont="system"/>
                                                     </buttonCell>
-                                                    <connections>
-                                                        <binding destination="FSt-EM-0Rk" name="enabled" keyPath="active" id="znj-Db-dcX"/>
-                                                        <binding destination="FSt-EM-0Rk" name="value" keyPath="radio.transmit.micBiasEnabled" id="Mnf-Ha-ym7"/>
-                                                    </connections>
                                                 </button>
                                                 <button identifier="MicBoost" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ubb-3I-ZKM">
                                                     <rect key="frame" x="18" y="23" width="171" height="18"/>
-                                                    <buttonCell key="cell" type="check" title="+20 dB Microphone gain" bezelStyle="regularSquare" imagePosition="left" inset="2" id="xyS-JF-UTU">
+                                                    <buttonCell key="cell" type="check" title="+20 dB Microphone gain" bezelStyle="regularSquare" imagePosition="left" enabled="NO" inset="2" id="xyS-JF-UTU">
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                         <font key="font" metaFont="system"/>
                                                     </buttonCell>
-                                                    <connections>
-                                                        <binding destination="FSt-EM-0Rk" name="enabled" keyPath="active" id="yc6-x8-Yqh"/>
-                                                        <binding destination="FSt-EM-0Rk" name="value" keyPath="radio.transmit.micBoostEnabled" id="fFc-iv-ktt"/>
-                                                    </connections>
                                                 </button>
                                                 <button identifier="MetInRx" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sYU-Qe-BjN">
                                                     <rect key="frame" x="295" y="65" width="223" height="18"/>
-                                                    <buttonCell key="cell" type="check" title="Microphone Level during Receive" bezelStyle="regularSquare" imagePosition="left" inset="2" id="OSL-9u-pdr">
+                                                    <buttonCell key="cell" type="check" title="Microphone Level during Receive" bezelStyle="regularSquare" imagePosition="left" enabled="NO" inset="2" id="OSL-9u-pdr">
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                         <font key="font" metaFont="system"/>
                                                     </buttonCell>
-                                                    <connections>
-                                                        <binding destination="FSt-EM-0Rk" name="enabled" keyPath="active" id="Vid-uV-CLj"/>
-                                                        <binding destination="FSt-EM-0Rk" name="value" keyPath="radio.transmit.metInRxEnabled" id="MhK-h3-si8"/>
-                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <constraints>
@@ -2237,18 +2113,14 @@
                                                     <subviews>
                                                         <button identifier="Iambic" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="EVl-OG-IRE">
                                                             <rect key="frame" x="-2" y="0.0" width="62" height="18"/>
-                                                            <buttonCell key="cell" type="check" title="Iambic" bezelStyle="regularSquare" imagePosition="left" inset="2" id="coa-qa-cWs">
+                                                            <buttonCell key="cell" type="check" title="Iambic" bezelStyle="regularSquare" imagePosition="left" enabled="NO" inset="2" id="coa-qa-cWs">
                                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                 <font key="font" metaFont="system"/>
                                                             </buttonCell>
-                                                            <connections>
-                                                                <binding destination="FSt-EM-0Rk" name="enabled" keyPath="active" id="C8g-tY-Cvr"/>
-                                                                <binding destination="FSt-EM-0Rk" name="value" keyPath="radio.transmit.cwIambicEnabled" id="YMZ-Rp-Uvj"/>
-                                                            </connections>
                                                         </button>
                                                         <button identifier="IambicA" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6RQ-ox-OKd">
                                                             <rect key="frame" x="111" y="-1" width="31" height="18"/>
-                                                            <buttonCell key="cell" type="radio" title="A" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="oJK-rH-z4G">
+                                                            <buttonCell key="cell" type="radio" title="A" bezelStyle="regularSquare" imagePosition="left" alignment="left" enabled="NO" inset="2" id="oJK-rH-z4G">
                                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                 <font key="font" metaFont="system"/>
                                                             </buttonCell>
@@ -2258,7 +2130,7 @@
                                                         </button>
                                                         <button identifier="IambicB" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ebn-LF-VN4">
                                                             <rect key="frame" x="193" y="-1" width="31" height="18"/>
-                                                            <buttonCell key="cell" type="radio" title="B" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="oln-0Z-kxD">
+                                                            <buttonCell key="cell" type="radio" title="B" bezelStyle="regularSquare" imagePosition="left" alignment="left" enabled="NO" inset="2" id="oln-0Z-kxD">
                                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                 <font key="font" metaFont="system"/>
                                                             </buttonCell>
@@ -2268,14 +2140,10 @@
                                                         </button>
                                                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9tZ-ar-c1j">
                                                             <rect key="frame" x="274" y="0.0" width="116" height="18"/>
-                                                            <buttonCell key="cell" type="check" title="Swap Dot/Dash" bezelStyle="regularSquare" imagePosition="left" inset="2" id="vb0-IK-Mws">
+                                                            <buttonCell key="cell" type="check" title="Swap Dot/Dash" bezelStyle="regularSquare" imagePosition="left" enabled="NO" inset="2" id="vb0-IK-Mws">
                                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                 <font key="font" metaFont="system"/>
                                                             </buttonCell>
-                                                            <connections>
-                                                                <binding destination="FSt-EM-0Rk" name="enabled" keyPath="active" id="oeS-V7-yao"/>
-                                                                <binding destination="FSt-EM-0Rk" name="value" keyPath="radio.transmit.cwSwapPaddles" id="qOU-9u-bif"/>
-                                                            </connections>
                                                         </button>
                                                     </subviews>
                                                     <visibilityPriorities>
@@ -2308,7 +2176,7 @@
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="57" id="fOz-JZ-9Mn"/>
                                                             </constraints>
-                                                            <buttonCell key="cell" type="radio" title="Upper" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="ncd-bF-Qvi">
+                                                            <buttonCell key="cell" type="radio" title="Upper" bezelStyle="regularSquare" imagePosition="left" alignment="left" enabled="NO" inset="2" id="ncd-bF-Qvi">
                                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                 <font key="font" metaFont="system"/>
                                                             </buttonCell>
@@ -2321,7 +2189,7 @@
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="56" id="k7x-YJ-5o9"/>
                                                             </constraints>
-                                                            <buttonCell key="cell" type="radio" title="Lower" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="wbu-Q0-GtL">
+                                                            <buttonCell key="cell" type="radio" title="Lower" bezelStyle="regularSquare" imagePosition="left" alignment="left" enabled="NO" inset="2" id="wbu-Q0-GtL">
                                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                 <font key="font" metaFont="system"/>
                                                             </buttonCell>
@@ -2331,14 +2199,10 @@
                                                         </button>
                                                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="G1G-FE-SLc">
                                                             <rect key="frame" x="275" y="-2" width="86" height="18"/>
-                                                            <buttonCell key="cell" type="check" title="CWX Sync" bezelStyle="regularSquare" imagePosition="left" inset="2" id="Qdg-VZ-ZT3">
+                                                            <buttonCell key="cell" type="check" title="CWX Sync" bezelStyle="regularSquare" imagePosition="left" enabled="NO" inset="2" id="Qdg-VZ-ZT3">
                                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                 <font key="font" metaFont="system"/>
                                                             </buttonCell>
-                                                            <connections>
-                                                                <binding destination="FSt-EM-0Rk" name="enabled" keyPath="active" id="kZt-Sw-dMk"/>
-                                                                <binding destination="FSt-EM-0Rk" name="value" keyPath="radio.transmit.cwSyncCwxEnabled" id="gJ3-Zq-z8b"/>
-                                                            </connections>
                                                         </button>
                                                     </subviews>
                                                     <visibilityPriorities>
@@ -2380,15 +2244,11 @@
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="96" id="qmT-Lw-vIJ"/>
                                                     </constraints>
-                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="3iN-RA-SL1">
+                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" enabled="NO" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="3iN-RA-SL1">
                                                         <font key="font" metaFont="system"/>
                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
-                                                    <connections>
-                                                        <binding destination="FSt-EM-0Rk" name="enabled" keyPath="active" id="zOo-Lc-wj9"/>
-                                                        <binding destination="FSt-EM-0Rk" name="value" keyPath="radio.rttyMark" id="ecr-cJ-Zy2"/>
-                                                    </connections>
                                                 </textField>
                                             </subviews>
                                             <constraints>
@@ -2422,18 +2282,19 @@
                             <constraint firstAttribute="bottom" secondItem="GnG-5T-82a" secondAttribute="bottom" constant="11" id="aTm-qH-aRY"/>
                             <constraint firstAttribute="trailing" secondItem="GnG-5T-82a" secondAttribute="trailing" constant="20" id="pNg-Yh-Zba"/>
                         </constraints>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="boolean" keyPath="translatesAutoresizingMaskIntoConstraints" value="NO"/>
-                            <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
-                                <color key="value" name="unemphasizedSelectedContentBackgroundColor" catalog="System" colorSpace="catalog"/>
-                            </userDefinedRuntimeAttribute>
-                        </userDefinedRuntimeAttributes>
                     </view>
                     <connections>
                         <outlet property="_cwLowerRadioButton" destination="N8v-Vu-Kwp" id="as6-KR-2xx"/>
                         <outlet property="_cwUpperRadioButton" destination="1gS-2P-OGT" id="hyp-n5-z6o"/>
+                        <outlet property="_cwxSyncCheckbox" destination="G1G-FE-SLc" id="KJt-u3-eQc"/>
                         <outlet property="_iambicARadioButton" destination="6RQ-ox-OKd" id="SY0-tz-SWG"/>
                         <outlet property="_iambicBRadioButton" destination="Ebn-LF-VN4" id="ZbT-y8-otU"/>
+                        <outlet property="_iambicCheckbox" destination="EVl-OG-IRE" id="CNa-2x-zmO"/>
+                        <outlet property="_metInRxCheckbox" destination="sYU-Qe-BjN" id="BwC-AG-CFC"/>
+                        <outlet property="_micBiasCheckbox" destination="UJJ-JM-LGl" id="6ZJ-KY-Wsx"/>
+                        <outlet property="_micBoostCheckbox" destination="ubb-3I-ZKM" id="dcv-R3-FZg"/>
+                        <outlet property="_rttyMarkTextField" destination="Pfq-lX-VHh" id="2Qa-03-2JG"/>
+                        <outlet property="_swapPaddlesCheckbox" destination="9tZ-ar-c1j" id="3Wj-Ey-LoW"/>
                     </connections>
                 </viewController>
                 <customObject id="9Pt-jH-iq4" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
@@ -2458,10 +2319,10 @@
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="17" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9Hq-I5-4bh">
-                                                    <rect key="frame" x="20" y="18" width="366" height="61"/>
+                                                    <rect key="frame" x="20" y="18" width="520" height="61"/>
                                                     <subviews>
                                                         <stackView distribution="fill" orientation="horizontal" alignment="centerY" spacing="51" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RoY-mX-kHG">
-                                                            <rect key="frame" x="0.0" y="39" width="366" height="22"/>
+                                                            <rect key="frame" x="0.0" y="39" width="388" height="22"/>
                                                             <subviews>
                                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Nxr-26-012">
                                                                     <rect key="frame" x="-2" y="2" width="124" height="17"/>
@@ -2479,25 +2340,23 @@
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="96" id="Mva-8p-OSU"/>
                                                                     </constraints>
-                                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="5v9-aI-xDH">
+                                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" enabled="NO" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="5v9-aI-xDH">
                                                                         <font key="font" metaFont="system"/>
                                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
-                                                                    <connections>
-                                                                        <binding destination="ABp-0s-17Y" name="enabled" keyPath="active" id="03l-hr-1IF"/>
-                                                                        <binding destination="ABp-0s-17Y" name="value" keyPath="radio.calFreq" id="z1M-zD-qkh"/>
-                                                                    </connections>
                                                                 </textField>
                                                                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Peb-3z-c1P">
-                                                                    <rect key="frame" x="312" y="-7" width="60" height="32"/>
-                                                                    <buttonCell key="cell" type="push" title="Start" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Smh-FQ-6lJ">
+                                                                    <rect key="frame" x="312" y="-7" width="82" height="32"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" constant="70" id="tSJ-Kw-82L"/>
+                                                                    </constraints>
+                                                                    <buttonCell key="cell" type="push" title="Calibrate" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Smh-FQ-6lJ">
                                                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                                         <font key="font" metaFont="system"/>
                                                                     </buttonCell>
                                                                     <connections>
                                                                         <action selector="calibrate:" target="ABp-0s-17Y" id="zZh-Ga-NT3"/>
-                                                                        <binding destination="ABp-0s-17Y" name="enabled" keyPath="active" id="AUF-1P-0cn"/>
                                                                     </connections>
                                                                 </button>
                                                             </subviews>
@@ -2534,15 +2393,11 @@
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="96" id="Nje-2i-Unq"/>
                                                                     </constraints>
-                                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="Cag-3i-QyE">
+                                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" enabled="NO" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="Cag-3i-QyE">
                                                                         <font key="font" metaFont="system"/>
                                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
-                                                                    <connections>
-                                                                        <binding destination="ABp-0s-17Y" name="enabled" keyPath="active" id="Vif-N2-uaK"/>
-                                                                        <binding destination="ABp-0s-17Y" name="value" keyPath="radio.freqErrorPpb" id="0ry-fj-jAj"/>
-                                                                    </connections>
                                                                 </textField>
                                                             </subviews>
                                                             <visibilityPriorities>
@@ -2572,7 +2427,7 @@
                                             <constraint firstItem="RoY-mX-kHG" firstAttribute="leading" secondItem="mp8-Xe-jzd" secondAttribute="leading" constant="20" id="I3o-2o-a3m"/>
                                             <constraint firstAttribute="height" constant="110" id="KxG-0l-qlH"/>
                                             <constraint firstAttribute="bottom" secondItem="RoY-mX-kHG" secondAttribute="bottom" constant="55.5" id="Llb-mY-lqp"/>
-                                            <constraint firstAttribute="trailing" secondItem="9Hq-I5-4bh" secondAttribute="trailing" constant="174" id="SWy-Pa-rP0"/>
+                                            <constraint firstAttribute="trailing" secondItem="9Hq-I5-4bh" secondAttribute="trailing" constant="20" id="SWy-Pa-rP0"/>
                                             <constraint firstItem="9Hq-I5-4bh" firstAttribute="leading" secondItem="mp8-Xe-jzd" secondAttribute="leading" constant="20" id="W9P-X2-dY1"/>
                                             <constraint firstItem="4Bh-gQ-PfW" firstAttribute="top" secondItem="mp8-Xe-jzd" secondAttribute="top" constant="71.5" id="Wwa-75-d2n"/>
                                             <constraint firstAttribute="width" constant="560" id="fxc-Kf-54z"/>
@@ -2591,14 +2446,10 @@
                                                     <subviews>
                                                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8bP-2l-5Kn">
                                                             <rect key="frame" x="-2" y="150" width="130" height="18"/>
-                                                            <buttonCell key="cell" type="check" title="Snap to tune step" bezelStyle="regularSquare" imagePosition="left" inset="2" id="exD-Za-g8e">
+                                                            <buttonCell key="cell" type="check" title="Snap to tune step" bezelStyle="regularSquare" imagePosition="left" enabled="NO" inset="2" id="exD-Za-g8e">
                                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                 <font key="font" metaFont="system"/>
                                                             </buttonCell>
-                                                            <connections>
-                                                                <binding destination="ABp-0s-17Y" name="enabled" keyPath="active" id="b0M-vG-zbX"/>
-                                                                <binding destination="ABp-0s-17Y" name="value" keyPath="radio.snapTuneEnabled" id="FY9-dt-vnR"/>
-                                                            </connections>
                                                         </button>
                                                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Blk-BX-9b2">
                                                             <rect key="frame" x="-2" y="112" width="137" height="18"/>
@@ -2606,9 +2457,6 @@
                                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                 <font key="font" metaFont="system"/>
                                                             </buttonCell>
-                                                            <connections>
-                                                                <binding destination="ABp-0s-17Y" name="enabled" keyPath="active" id="wCx-To-WOQ"/>
-                                                            </connections>
                                                         </button>
                                                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Q9Q-qw-0yL">
                                                             <rect key="frame" x="-2" y="74" width="157" height="18"/>
@@ -2616,31 +2464,20 @@
                                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                 <font key="font" metaFont="system"/>
                                                             </buttonCell>
-                                                            <connections>
-                                                                <binding destination="ABp-0s-17Y" name="enabled" keyPath="active" id="Q8m-96-0QV"/>
-                                                            </connections>
                                                         </button>
                                                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="d2m-Nz-3FK">
                                                             <rect key="frame" x="-2" y="36" width="204" height="18"/>
-                                                            <buttonCell key="cell" type="check" title="Mute local audio when remote" bezelStyle="regularSquare" imagePosition="left" inset="2" id="dJ1-gQ-ygU">
+                                                            <buttonCell key="cell" type="check" title="Mute local audio when remote" bezelStyle="regularSquare" imagePosition="left" enabled="NO" inset="2" id="dJ1-gQ-ygU">
                                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                 <font key="font" metaFont="system"/>
                                                             </buttonCell>
-                                                            <connections>
-                                                                <binding destination="ABp-0s-17Y" name="enabled" keyPath="active" id="hxt-cT-J6F"/>
-                                                                <binding destination="ABp-0s-17Y" name="value" keyPath="radio.muteLocalAudio" id="xPi-40-O3c"/>
-                                                            </connections>
                                                         </button>
                                                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kxN-bs-jgm">
                                                             <rect key="frame" x="-2" y="-2" width="108" height="18"/>
-                                                            <buttonCell key="cell" type="check" title="Binaural audio" bezelStyle="regularSquare" imagePosition="left" inset="2" id="b7i-AN-xFB">
+                                                            <buttonCell key="cell" type="check" title="Binaural audio" bezelStyle="regularSquare" imagePosition="left" enabled="NO" inset="2" id="b7i-AN-xFB">
                                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                 <font key="font" metaFont="system"/>
                                                             </buttonCell>
-                                                            <connections>
-                                                                <binding destination="ABp-0s-17Y" name="enabled" keyPath="active" id="K4V-6x-tTU"/>
-                                                                <binding destination="ABp-0s-17Y" name="value" keyPath="radio.binauralRxEnabled" id="iv2-EX-cml"/>
-                                                            </connections>
                                                         </button>
                                                     </subviews>
                                                     <visibilityPriorities>
@@ -2685,13 +2522,17 @@
                             <constraint firstAttribute="bottom" secondItem="qO4-kb-TRq" secondAttribute="bottom" constant="28" id="OT2-t8-FL1"/>
                             <constraint firstItem="qO4-kb-TRq" firstAttribute="leading" secondItem="YGf-Kh-4zX" secondAttribute="leading" constant="20" id="ZCX-XT-Onh"/>
                         </constraints>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="boolean" keyPath="translatesAutoresizingMaskIntoConstraints" value="NO"/>
-                            <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
-                                <color key="value" name="unemphasizedSelectedContentBackgroundColor" catalog="System" colorSpace="catalog"/>
-                            </userDefinedRuntimeAttribute>
-                        </userDefinedRuntimeAttributes>
                     </view>
+                    <connections>
+                        <outlet property="_binauralAudioCheckbox" destination="kxN-bs-jgm" id="Uoq-Ha-kEg"/>
+                        <outlet property="_calFreqTextField" destination="2lQ-Id-vIk" id="q8m-d4-GNb"/>
+                        <outlet property="_calOffsetTextField" destination="kw7-Wh-hUH" id="YeF-ng-hf0"/>
+                        <outlet property="_calibrateButton" destination="Peb-3z-c1P" id="apa-0O-Cdy"/>
+                        <outlet property="_muteLocalAudioCheckbox" destination="d2m-Nz-3FK" id="hKY-w0-9aP"/>
+                        <outlet property="_singleClickCheckbox" destination="Blk-BX-9b2" id="M2g-Do-Auo"/>
+                        <outlet property="_snapTuneCheckbox" destination="8bP-2l-5Kn" id="JOV-6S-As6"/>
+                        <outlet property="_startSliceMinCheckbox" destination="Q9Q-qw-0yL" id="caP-Bp-pGc"/>
+                    </connections>
                 </viewController>
                 <customObject id="fjX-Jr-UFL" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -2763,26 +2604,14 @@
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="254" id="WKR-Od-CFn"/>
                                                             </constraints>
-                                                            <sliderCell key="cell" state="on" alignment="left" maxValue="3" doubleValue="2" tickMarkPosition="above" numberOfTickMarks="4" allowsTickMarkValuesOnly="YES" sliderType="linear" id="0lM-Tz-sgx"/>
-                                                            <connections>
-                                                                <binding destination="xmR-Sy-wAC" name="enabled" keyPath="radio.filterVoiceAutoEnabled" id="jVa-xb-pWA">
-                                                                    <dictionary key="options">
-                                                                        <string key="NSValueTransformerName">NSNegateBoolean</string>
-                                                                    </dictionary>
-                                                                </binding>
-                                                                <binding destination="xmR-Sy-wAC" name="value" keyPath="radio.filterVoiceLevel" id="pVm-5b-mPe"/>
-                                                            </connections>
+                                                            <sliderCell key="cell" enabled="NO" state="on" alignment="left" maxValue="3" doubleValue="2" tickMarkPosition="above" numberOfTickMarks="4" allowsTickMarkValuesOnly="YES" sliderType="linear" id="0lM-Tz-sgx"/>
                                                         </slider>
                                                         <button identifier="VoiceAuto" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2HZ-wB-KIH">
                                                             <rect key="frame" x="410" y="1" width="62" height="18"/>
-                                                            <buttonCell key="cell" type="check" title="Auto" bezelStyle="regularSquare" imagePosition="left" inset="2" id="oJ3-b4-yA7">
+                                                            <buttonCell key="cell" type="check" title="Auto" bezelStyle="regularSquare" imagePosition="left" enabled="NO" inset="2" id="oJ3-b4-yA7">
                                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                 <font key="font" metaFont="system"/>
                                                             </buttonCell>
-                                                            <connections>
-                                                                <binding destination="xmR-Sy-wAC" name="enabled" keyPath="active" id="xBI-mj-8eY"/>
-                                                                <binding destination="xmR-Sy-wAC" name="value" keyPath="radio.filterVoiceAutoEnabled" id="CjI-Kz-a1p"/>
-                                                            </connections>
                                                         </button>
                                                     </subviews>
                                                     <constraints>
@@ -2815,26 +2644,14 @@
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="254" id="8Qx-gI-NTO"/>
                                                             </constraints>
-                                                            <sliderCell key="cell" state="on" alignment="left" maxValue="3" doubleValue="2" tickMarkPosition="above" numberOfTickMarks="4" allowsTickMarkValuesOnly="YES" sliderType="linear" id="2l0-4K-j1j"/>
-                                                            <connections>
-                                                                <binding destination="xmR-Sy-wAC" name="enabled" keyPath="radio.filterCwAutoEnabled" id="JoI-uH-Tye">
-                                                                    <dictionary key="options">
-                                                                        <string key="NSValueTransformerName">NSNegateBoolean</string>
-                                                                    </dictionary>
-                                                                </binding>
-                                                                <binding destination="xmR-Sy-wAC" name="value" keyPath="radio.filterCwLevel" id="j2b-aC-fOG"/>
-                                                            </connections>
+                                                            <sliderCell key="cell" enabled="NO" state="on" alignment="left" maxValue="3" doubleValue="2" tickMarkPosition="above" numberOfTickMarks="4" allowsTickMarkValuesOnly="YES" sliderType="linear" id="2l0-4K-j1j"/>
                                                         </slider>
                                                         <button identifier="CwAuto" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Gda-iJ-cIR">
                                                             <rect key="frame" x="399" y="1" width="51" height="18"/>
-                                                            <buttonCell key="cell" type="check" title="Auto" bezelStyle="regularSquare" imagePosition="left" inset="2" id="k1M-bs-Cjh">
+                                                            <buttonCell key="cell" type="check" title="Auto" bezelStyle="regularSquare" imagePosition="left" enabled="NO" inset="2" id="k1M-bs-Cjh">
                                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                 <font key="font" metaFont="system"/>
                                                             </buttonCell>
-                                                            <connections>
-                                                                <binding destination="xmR-Sy-wAC" name="enabled" keyPath="active" id="FFA-ro-emt"/>
-                                                                <binding destination="xmR-Sy-wAC" name="value" keyPath="radio.filterCwAutoEnabled" id="nG7-dY-s5S"/>
-                                                            </connections>
                                                         </button>
                                                     </subviews>
                                                     <constraints>
@@ -2867,26 +2684,14 @@
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="254" id="jQr-AX-gIg"/>
                                                             </constraints>
-                                                            <sliderCell key="cell" state="on" alignment="left" maxValue="3" doubleValue="2" tickMarkPosition="above" numberOfTickMarks="4" allowsTickMarkValuesOnly="YES" sliderType="linear" id="o4r-cQ-G29"/>
-                                                            <connections>
-                                                                <binding destination="xmR-Sy-wAC" name="enabled" keyPath="radio.filterDigitalAutoEnabled" id="0OQ-o9-Q8t">
-                                                                    <dictionary key="options">
-                                                                        <string key="NSValueTransformerName">NSNegateBoolean</string>
-                                                                    </dictionary>
-                                                                </binding>
-                                                                <binding destination="xmR-Sy-wAC" name="value" keyPath="radio.filterDigitalLevel" id="td5-EF-7F8"/>
-                                                            </connections>
+                                                            <sliderCell key="cell" enabled="NO" state="on" alignment="left" maxValue="3" doubleValue="2" tickMarkPosition="above" numberOfTickMarks="4" allowsTickMarkValuesOnly="YES" sliderType="linear" id="o4r-cQ-G29"/>
                                                         </slider>
                                                         <button identifier="DigitalAuto" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3VP-ew-VGC">
                                                             <rect key="frame" x="415" y="1" width="64" height="18"/>
-                                                            <buttonCell key="cell" type="check" title="Auto" bezelStyle="regularSquare" imagePosition="left" inset="2" id="9SQ-Vl-d9h">
+                                                            <buttonCell key="cell" type="check" title="Auto" bezelStyle="regularSquare" imagePosition="left" enabled="NO" inset="2" id="9SQ-Vl-d9h">
                                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                 <font key="font" metaFont="system"/>
                                                             </buttonCell>
-                                                            <connections>
-                                                                <binding destination="xmR-Sy-wAC" name="enabled" keyPath="active" id="DvP-Lo-1Ig"/>
-                                                                <binding destination="xmR-Sy-wAC" name="value" keyPath="radio.filterDigitalAutoEnabled" id="xVL-65-rrT"/>
-                                                            </connections>
                                                         </button>
                                                     </subviews>
                                                     <constraints>
@@ -2946,13 +2751,15 @@
                             <constraint firstAttribute="bottom" secondItem="FHT-dM-9Vc" secondAttribute="bottom" constant="20" id="e90-Aq-V8z"/>
                             <constraint firstItem="FHT-dM-9Vc" firstAttribute="top" secondItem="lKe-Lw-XKg" secondAttribute="top" constant="20" id="uZW-b1-tBY"/>
                         </constraints>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="boolean" keyPath="translatesAutoresizingMaskIntoConstraints" value="NO"/>
-                            <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
-                                <color key="value" name="unemphasizedSelectedTextBackgroundColor" catalog="System" colorSpace="catalog"/>
-                            </userDefinedRuntimeAttribute>
-                        </userDefinedRuntimeAttributes>
                     </view>
+                    <connections>
+                        <outlet property="_cwAutoCheckbox" destination="Gda-iJ-cIR" id="bft-9n-sQs"/>
+                        <outlet property="_cwSlider" destination="mzN-UO-Otl" id="072-Hv-qWb"/>
+                        <outlet property="_digitalAutoCheckbox" destination="3VP-ew-VGC" id="XjC-4b-cXG"/>
+                        <outlet property="_digitalSlider" destination="Dmg-ki-hJV" id="uUF-zh-VfH"/>
+                        <outlet property="_voiceAutoCheckbox" destination="2HZ-wB-KIH" id="Rzp-7z-YTs"/>
+                        <outlet property="_voiceSlider" destination="G7D-fc-R9W" id="BEI-s1-anr"/>
+                    </connections>
                 </viewController>
                 <customObject id="0cP-3X-KOV" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -2961,7 +2768,7 @@
         <!--XVTR Tab-->
         <scene sceneID="7T3-aK-KMQ">
             <objects>
-                <viewController title="Xvtr" id="psL-Hq-nyB" userLabel="XVTR Tab" sceneMemberID="viewController">
+                <viewController title="Xvtr" id="psL-Hq-nyB" userLabel="XVTR Tab" customClass="XvtrPrefsViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" wantsLayer="YES" id="YoO-V3-Loj">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="400"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -2981,12 +2788,6 @@
                             <constraint firstAttribute="trailing" secondItem="29r-2y-njh" secondAttribute="trailing" constant="282" id="P70-AW-Ges"/>
                             <constraint firstItem="29r-2y-njh" firstAttribute="top" secondItem="YoO-V3-Loj" secondAttribute="top" constant="191" id="WfQ-Vc-Y0x"/>
                         </constraints>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="boolean" keyPath="translatesAutoresizingMaskIntoConstraints" value="NO"/>
-                            <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
-                                <color key="value" name="unemphasizedSelectedTextBackgroundColor" catalog="System" colorSpace="catalog"/>
-                            </userDefinedRuntimeAttribute>
-                        </userDefinedRuntimeAttributes>
                     </view>
                 </viewController>
                 <customObject id="mdo-Cl-eNe" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>

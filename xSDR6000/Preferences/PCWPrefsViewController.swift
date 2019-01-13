@@ -9,32 +9,29 @@
 import Cocoa
 import xLib6000
 
-
 class PCWPrefsViewController                : NSViewController {
-
-  // NOTE:
-  //
-  //      Most of the fields on this View are setup as Bindings or as User Defined Runtime
-  //      Attributes. Those below are the exceptions that required some additionl processing
-  //      not available through other methods.
-  //
-  
-  // KVO for bindings
-  @objc dynamic var active                  = false                     // enable/disable all controls
-  @objc dynamic var radio                   : Radio?
 
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
   
+  @IBOutlet private weak var _micBiasCheckbox       : NSButton!
+  @IBOutlet private weak var _metInRxCheckbox       : NSButton!
+  @IBOutlet private weak var _micBoostCheckbox      : NSButton!
+  @IBOutlet private weak var _iambicCheckbox        : NSButton!
+  @IBOutlet private weak var _swapPaddlesCheckbox   : NSButton!
+  @IBOutlet private weak var _cwxSyncCheckbox       : NSButton!
   @IBOutlet private weak var _cwLowerRadioButton    : NSButton!
   @IBOutlet private weak var _cwUpperRadioButton    : NSButton!
   @IBOutlet private weak var _iambicARadioButton    : NSButton!
   @IBOutlet private weak var _iambicBRadioButton    : NSButton!
+  @IBOutlet private weak var _rttyMarkTextField     : NSTextField!
   
-  private let kCwSidebandLower              = NSUserInterfaceItemIdentifier(rawValue: "CwSidebandLower")
-  private let kCwSidebandUpper              = NSUserInterfaceItemIdentifier(rawValue: "CwSidebandUpper")
-  private let kIambicA                      = NSUserInterfaceItemIdentifier(rawValue: "IambicA")
-  private let kIambicB                      = NSUserInterfaceItemIdentifier(rawValue: "IambicB")
+  private var _radio                        : Radio?
+  private var _transmit                     : Transmit? {
+    return _radio!.transmit
+  }
+  private var _observations                 = [NSKeyValueObservation]()
+  
 
   // ----------------------------------------------------------------------------
   // MARK: - Overridden methods
@@ -42,67 +39,158 @@ class PCWPrefsViewController                : NSViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    if let radio = Api.sharedInstance.radio { self.radio = radio ; setupButtons() }
+    view.translatesAutoresizingMaskIntoConstraints = false
     
-    // begin receiving notifications
+    // set the background color of the Flag
+    view.layer?.backgroundColor = NSColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5).cgColor
+
+    // check for an active radio
+    if let radio = Api.sharedInstance.radio { _radio = radio ; setControlStatus(true) }
+    
+    // start receiving notifications
     addNotifications()
   }
 
   // ----------------------------------------------------------------------------
   // MARK: - Action methods
   
+  /// Respond to the Iambic radio buttons
+  ///
+  /// - Parameter sender:             the button
+  ///
   @IBAction func iambicMode(_ sender: NSButton) {
     
-    switch sender.identifier {
-    case kIambicA:
-      radio?.transmit.cwIambicMode = 0
-    case kIambicB:
-      radio?.transmit.cwIambicMode = 1
+    switch sender.identifier?.rawValue {
+    case "IambicA":
+      _transmit!.cwIambicMode = 0
+    case "IambicB":
+      _transmit!.cwIambicMode = 1
     default:
       fatalError()
     }
   }
-  
+  /// Respond to the Cw radio buttons
+  ///
+  /// - Parameter sender:             the button
+  ///
   @IBAction func cwSideband(_ sender: NSButton) {
     
-    switch sender.identifier {
-    case kCwSidebandUpper:
-      radio?.transmit.cwlEnabled = false
-    case kCwSidebandLower:
-      radio?.transmit.cwlEnabled = true
+    switch sender.identifier?.rawValue {
+    case "CwSidebandUpper":
+      _transmit!.cwlEnabled = false
+    case "CwSidebandLower":
+      _transmit!.cwlEnabled = true
     default:
       fatalError()
     }
   }
   
   // ----------------------------------------------------------------------------
-  // MARK: - Private Methods
+  // MARK: - Private methods
   
-  func setupButtons() {
+  /// Enable / Disable controls
+  ///
+  /// - Parameter status:             true = enable
+  ///
+  private func setControlStatus(_ status: Bool) {
     
-    DispatchQueue.main.async { [unowned self] in
-      // Iambic A/B
-      if self.radio!.transmit.cwIambicMode == 0 {
-        // A Mode
-        self._iambicARadioButton.boolState = true
+    if status {
+      addObservations()
+    } else {
+      removeObservations()
+    }
+    _iambicCheckbox.isEnabled = status
+    _swapPaddlesCheckbox.isEnabled = status
+    _cwxSyncCheckbox.isEnabled = status
+
+    _micBiasCheckbox.isEnabled = status
+    _metInRxCheckbox.isEnabled = status
+    _micBoostCheckbox.isEnabled = status
+
+    _cwLowerRadioButton.isEnabled = status
+    _cwUpperRadioButton.isEnabled = status
+    _iambicARadioButton.isEnabled = status
+    _iambicBRadioButton.isEnabled = status
+
+    _rttyMarkTextField.isEnabled = status
+  }
+
+  // ----------------------------------------------------------------------------
+  // MARK: - Observation methods
+  
+  /// Add observations of various properties used by the view
+  ///
+  private func addObservations() {
+
+    _observations = [
+      _transmit!.observe(\.micBiasEnabled, options: [.initial, .new], changeHandler: transmitHandler(_:_:)),
+      _transmit!.observe(\.metInRxEnabled, options: [.initial, .new], changeHandler: transmitHandler(_:_:)),
+      _transmit!.observe(\.micBoostEnabled, options: [.initial, .new], changeHandler: transmitHandler(_:_:)),
+      _transmit!.observe(\.cwIambicEnabled, options: [.initial, .new], changeHandler: transmitHandler(_:_:)),
+      _transmit!.observe(\.cwIambicMode, options: [.initial, .new], changeHandler: transmitHandler(_:_:)),
+      _transmit!.observe(\.cwlEnabled, options: [.initial, .new], changeHandler: transmitHandler(_:_:)),
+      _transmit!.observe(\.cwSwapPaddles, options: [.initial, .new], changeHandler: transmitHandler(_:_:)),
+      _radio!.observe(\.rttyMark, options: [.initial, .new], changeHandler: radioHandler(_:_:))
+    ]
+  }
+  /// Remove observations
+  ///
+  func removeObservations() {
+    
+    // invalidate each observation
+    _observations.forEach { $0.invalidate() }
+    
+    // remove the tokens
+    _observations.removeAll()
+  }
+  /// Process observations
+  ///
+  /// - Parameters:
+  ///   - transmit:                 the Transmit being observed
+  ///   - change:                   the change
+  ///
+  private func transmitHandler(_ transmit: Transmit, _ change: Any) {
+    
+    DispatchQueue.main.async { [weak self] in
+      self?._micBiasCheckbox.boolState = transmit.micBiasEnabled
+      self?._metInRxCheckbox.boolState = transmit.metInRxEnabled
+      self?._micBoostCheckbox.boolState = transmit.micBoostEnabled
+      self?._iambicCheckbox.boolState = transmit.cwIambicEnabled
+      self?._swapPaddlesCheckbox.boolState = transmit.cwSwapPaddles
       
+      // Iambic A/B
+      if self?._transmit!.cwIambicMode == 0 {
+        // A Mode
+        self?._iambicARadioButton.boolState = true
+        
       } else {
         // B Mode
-        self._iambicBRadioButton.boolState = true
+        self?._iambicBRadioButton.boolState = true
       }
       // CW Upper/Lower sideband
-      if self.radio!.transmit.cwlEnabled {
+      if self?._transmit!.cwlEnabled ?? false {
         // Lower
-        self._cwLowerRadioButton.boolState = true
-      
+        self?._cwLowerRadioButton.boolState = true
+        
       } else {
         // Upper
-        self._cwUpperRadioButton.boolState = true
+        self?._cwUpperRadioButton.boolState = true
       }
     }
-    active = true
   }
-  
+  /// Process observations
+  ///
+  /// - Parameters:
+  ///   - radio:                    the Radio being observed
+  ///   - change:                   the change
+  ///
+  private func radioHandler(_ radio: Radio, _ change: Any) {
+    
+    DispatchQueue.main.async { [unowned self] in
+      self._rttyMarkTextField.integerValue = radio.rttyMark
+    }
+  }
+
   // ----------------------------------------------------------------------------
   // MARK: - Notification Methods
   
@@ -120,9 +208,10 @@ class PCWPrefsViewController                : NSViewController {
   ///
   @objc private func radioHasBeenAdded(_ note: Notification) {
     
-    self.radio = note.object as? Radio
+    _radio = note.object as? Radio
     
-    setupButtons()
+    // enable controls
+    setControlStatus(true)
   }
   /// Process .radioWillBeRemoved Notification
   ///
@@ -130,7 +219,9 @@ class PCWPrefsViewController                : NSViewController {
   ///
   @objc private func radioWillBeRemoved(_ note: Notification) {
     
-    self.radio = nil
-    active = false
+    // disable controls
+    setControlStatus(false)
+    
+    _radio = nil
   }
 }

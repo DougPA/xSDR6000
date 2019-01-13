@@ -6,50 +6,6 @@
 //  Copyright © 2018 Douglas Adams. All rights reserved.
 //
 
-
-// --------------------------------------------------------------------------------
-//  Created by PanadapterViewController - .sliceHasBeenAdded
-//  Removed by PanadapterViewController - .sliceWillBeRemoved
-//
-//  **** Notifications received ****
-//      none
-//
-//  **** Observations made ****
-//      none
-//
-//  **** View Bindings ****
-//      AUD:
-//        agcNames
-//        agcMode
-//        agcThreahold
-//        audioGain
-//        audioMute
-//        audioPan
-//      DSP:
-//        anfEnabled
-//        anfLevel
-//        nbEnabled
-//        nbLevel
-//        nrEnabled
-//        nrLevel
-//        wnbEnabled
-//        wnbLevel
-//      MOD:
-//
-//      XRIT:
-//        ritEnabled
-//        ritOffset
-//        xitEnabled
-//        xitOffset
-//      DAX:
-//        daxChannel
-//        daxCHoices
-//
-//  **** 1st Responder Action Methods ****
-//      zeroRit(_:)
-//      zeroXit(_:)
-// --------------------------------------------------------------------------------
-
 import Cocoa
 import xLib6000
 
@@ -76,10 +32,9 @@ class ControlsViewController: NSTabViewController {
     view.translatesAutoresizingMaskIntoConstraints = false
     
     // set the background color of the Flag
-//    view.layer?.backgroundColor = NSColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.5).cgColor
+    view.layer?.backgroundColor = NSColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.5).cgColor    
 
     view.isHidden = true
-
   }
   ///
   /// - Parameters:
