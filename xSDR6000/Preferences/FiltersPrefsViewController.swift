@@ -56,13 +56,14 @@ class FiltersPrefsViewController: NSViewController {
     } else {
       removeObservations()
     }
-
-    _voiceSlider.isEnabled = status
-    _cwSlider.isEnabled = status
-    _digitalSlider.isEnabled = status
-    _voiceAutoCheckbox.isEnabled = status
-    _cwAutoCheckbox.isEnabled = status
-    _digitalAutoCheckbox.isEnabled = status
+    DispatchQueue.main.async { [weak self] in
+      self?._voiceSlider.isEnabled = status
+      self?._cwSlider.isEnabled = status
+      self?._digitalSlider.isEnabled = status
+      self?._voiceAutoCheckbox.isEnabled = status
+      self?._cwAutoCheckbox.isEnabled = status
+      self?._digitalAutoCheckbox.isEnabled = status
+    }
   }
 
   // ----------------------------------------------------------------------------

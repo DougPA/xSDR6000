@@ -99,20 +99,22 @@ class PCWPrefsViewController                : NSViewController {
     } else {
       removeObservations()
     }
-    _iambicCheckbox.isEnabled = status
-    _swapPaddlesCheckbox.isEnabled = status
-    _cwxSyncCheckbox.isEnabled = status
-
-    _micBiasCheckbox.isEnabled = status
-    _metInRxCheckbox.isEnabled = status
-    _micBoostCheckbox.isEnabled = status
-
-    _cwLowerRadioButton.isEnabled = status
-    _cwUpperRadioButton.isEnabled = status
-    _iambicARadioButton.isEnabled = status
-    _iambicBRadioButton.isEnabled = status
-
-    _rttyMarkTextField.isEnabled = status
+    DispatchQueue.main.async { [weak self] in
+      self?._iambicCheckbox.isEnabled = status
+      self?._swapPaddlesCheckbox.isEnabled = status
+      self?._cwxSyncCheckbox.isEnabled = status
+      
+      self?._micBiasCheckbox.isEnabled = status
+      self?._metInRxCheckbox.isEnabled = status
+      self?._micBoostCheckbox.isEnabled = status
+      
+      self?._cwLowerRadioButton.isEnabled = status
+      self?._cwUpperRadioButton.isEnabled = status
+      self?._iambicARadioButton.isEnabled = status
+      self?._iambicBRadioButton.isEnabled = status
+      
+      self?._rttyMarkTextField.isEnabled = status
+    }
   }
 
   // ----------------------------------------------------------------------------

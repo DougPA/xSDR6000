@@ -69,15 +69,16 @@ class RxPrefsViewController: NSViewController {
     } else {
       removeObservations()
     }
-    
-    _calibrateButton.isEnabled = status
-    _calFreqTextField.isEnabled = status
-    _calOffsetTextField.isEnabled = status
-    _snapTuneCheckbox.isEnabled = status
-//    _singleClickCheckbox.isEnabled = status
-//    _startSliceMinCheckbox.isEnabled = status
-    _muteLocalAudioCheckbox.isEnabled = status
-    _binauralAudioCheckbox.isEnabled = status
+    DispatchQueue.main.async { [weak self] in
+      self?._calibrateButton.isEnabled = status
+      self?._calFreqTextField.isEnabled = status
+      self?._calOffsetTextField.isEnabled = status
+      self?._snapTuneCheckbox.isEnabled = status
+      //    self?._singleClickCheckbox.isEnabled = status
+      //    self?._startSliceMinCheckbox.isEnabled = status
+      self?._muteLocalAudioCheckbox.isEnabled = status
+      self?._binauralAudioCheckbox.isEnabled = status
+    }
   }
 
   // ----------------------------------------------------------------------------

@@ -93,15 +93,17 @@ class NetworkPrefsViewController: NSViewController {
     } else {
       removeObservations()
     }
-    _staticRadioButton.isEnabled = state
-    _dhcpRadioButton.isEnabled = state
-    
-    _staticIpAddressTextField.isEnabled = state
-    _staticMaskTextField.isEnabled = state
-    _staticGatewayTextField.isEnabled = state
-    _enforcePrivateIpCheckbox.isEnabled = state
-    
-    _applyButton.isEnabled = state
+    DispatchQueue.main.async { [weak self] in
+      self?._staticRadioButton.isEnabled = state
+      self?._dhcpRadioButton.isEnabled = state
+      
+      self?._staticIpAddressTextField.isEnabled = state
+      self?._staticMaskTextField.isEnabled = state
+      self?._staticGatewayTextField.isEnabled = state
+      self?._enforcePrivateIpCheckbox.isEnabled = state
+      
+      self?._applyButton.isEnabled = state
+    }
   }
 
   /// Change between DHCP and Static

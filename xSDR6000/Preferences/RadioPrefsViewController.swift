@@ -134,7 +134,8 @@ class RadioPrefsViewController: NSViewController {
       self?._modelRadioButton.isEnabled = state
       self?._callsignRadioButton.isEnabled = state
       self?._nicknameRadioButton.isEnabled = state
-    }  }
+    }
+  }
   // ----------------------------------------------------------------------------
   // MARK: - Observation methods
   

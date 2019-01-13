@@ -184,26 +184,28 @@ class TXPrefsViewController                 : NSViewController {
       
       removeObservations()
     }
-    _accTxCheckbox.isEnabled = state
-    _rcaTx1Checkbox.isEnabled = state
-    _rcaTx2Checkbox.isEnabled = state
-    _rcaTx3Checkbox.isEnabled = state
-    _txInhibitCheckbox.isEnabled = state
-    _hardWareAlcCheckbox.isEnabled = state
-    _showTxInWaterfallCheckbox.isEnabled = state
-
-    _accTxTextField.isEnabled = state
-    _rcaTx1TextField.isEnabled = state
-    _rcaTx2TextField.isEnabled = state
-    _rcaTx3TextField.isEnabled = state
-    _txDelayTextField.isEnabled = state
-    _txTimeoutTextField.isEnabled = state
-
-    _txProfilePopUp.isEnabled = state
-    _rcaInterlockPopup.isEnabled = state
-    _accInterlockPopup.isEnabled = state
-
-    _maxPowerSlider.isEnabled = state
+    DispatchQueue.main.async { [weak self] in
+      self?._accTxCheckbox.isEnabled = state
+      self?._rcaTx1Checkbox.isEnabled = state
+      self?._rcaTx2Checkbox.isEnabled = state
+      self?._rcaTx3Checkbox.isEnabled = state
+      self?._txInhibitCheckbox.isEnabled = state
+      self?._hardWareAlcCheckbox.isEnabled = state
+      self?._showTxInWaterfallCheckbox.isEnabled = state
+      
+      self?._accTxTextField.isEnabled = state
+      self?._rcaTx1TextField.isEnabled = state
+      self?._rcaTx2TextField.isEnabled = state
+      self?._rcaTx3TextField.isEnabled = state
+      self?._txDelayTextField.isEnabled = state
+      self?._txTimeoutTextField.isEnabled = state
+      
+      self?._txProfilePopUp.isEnabled = state
+      self?._rcaInterlockPopup.isEnabled = state
+      self?._accInterlockPopup.isEnabled = state
+      
+      self?._maxPowerSlider.isEnabled = state
+    }
   }
 
   // ----------------------------------------------------------------------------
