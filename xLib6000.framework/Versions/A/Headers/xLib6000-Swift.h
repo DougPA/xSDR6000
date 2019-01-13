@@ -337,6 +337,7 @@ SWIFT_CLASS("_TtC8xLib60009Interlock")
 @property (nonatomic) BOOL rcaTxReqEnabled;
 @property (nonatomic) BOOL rcaTxReqPolarity;
 @property (nonatomic) NSInteger timeout;
+@property (nonatomic) NSInteger txDelay;
 @property (nonatomic) BOOL tx1Enabled;
 @property (nonatomic) NSInteger tx1Delay;
 @property (nonatomic) BOOL tx2Enabled;
@@ -352,7 +353,6 @@ SWIFT_CLASS("_TtC8xLib60009Interlock")
 @property (nonatomic, readonly, copy) NSString * _Nonnull amplifier;
 @property (nonatomic, readonly, copy) NSString * _Nonnull state;
 @property (nonatomic, readonly) BOOL txAllowed;
-@property (nonatomic, readonly) NSInteger txDelay;
 @end
 
 

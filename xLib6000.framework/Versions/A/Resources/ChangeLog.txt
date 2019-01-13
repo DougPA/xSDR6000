@@ -2,10 +2,14 @@ xLib6000 Change Log
 
 v2.3.3
 
+**** Reversed the changes from v3.0.0 ****
 Panadapter.swift - added logging to PanadapterFrame
 Waterfall.swift - added logging to WaterfallFrame
-
-
+Radio.swift - rename filterVoiceAutoLevel to filterVoiceAutoEnabled (all 3 variants)
+Radio.swift - rename filterCwAutoLevel to filterCwAutoEnabled (all 3 variants)
+Radio.swift - rename filterDigitalAutoLevel to filterDigitalAutoEnabled (all 3 variants)
+Interlock.swift - removed var txDelay
+InterlockCommands.swift - added var txDelay (read/write with command to Radio)
 
 
 v2.2.2
