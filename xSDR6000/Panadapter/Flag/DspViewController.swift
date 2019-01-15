@@ -18,11 +18,16 @@ class DspViewController: NSViewController {
   @IBOutlet private weak var _nbButton      : NSButton!
   @IBOutlet private weak var _nrButton      : NSButton!
   @IBOutlet private weak var _anfButton     : NSButton!
-  @IBOutlet private weak var _wnbSlider: NSSlider!
-  @IBOutlet private weak var _nbSlider: NSSlider!
-  @IBOutlet private weak var _nrSlider: NSSlider!
-  @IBOutlet private weak var _anfSlider: NSSlider!
+  @IBOutlet private weak var _wnbSlider     : NSSlider!
+  @IBOutlet private weak var _nbSlider      : NSSlider!
+  @IBOutlet private weak var _nrSlider      : NSSlider!
+  @IBOutlet private weak var _anfSlider     : NSSlider!
 
+  @IBOutlet private weak var _wnbTextField  : NSTextField!
+  @IBOutlet private weak var _nbTextField   : NSTextField!
+  @IBOutlet private weak var _nrTextField   : NSTextField!
+  @IBOutlet private weak var _anfTextField  : NSTextField!
+  
   private var _slice                        : xLib6000.Slice {
     return representedObject as! xLib6000.Slice }
   
@@ -121,6 +126,11 @@ class DspViewController: NSViewController {
       self?._nbSlider.integerValue = slice.nbLevel
       self?._nrSlider.integerValue = slice.nrLevel
       self?._anfSlider.integerValue = slice.anfLevel
+
+      self?._wnbTextField.integerValue = slice.wnbLevel
+      self?._nbTextField.integerValue = slice.nbLevel
+      self?._nrTextField.integerValue = slice.nrLevel
+      self?._anfTextField.integerValue = slice.anfLevel
     }
   }
 }

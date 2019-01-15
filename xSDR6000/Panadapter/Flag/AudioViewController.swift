@@ -14,12 +14,15 @@ class AudioViewController: NSViewController {
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
 
-  @IBOutlet private weak var _audioMuteButton     : NSButton!
-  @IBOutlet private weak var _agcModePopUp        : NSPopUpButton!
-  @IBOutlet private weak var _audioGainSlider     : NSSlider!
-  @IBOutlet private weak var _audioPanSlider      : NSSlider!
-  @IBOutlet private weak var _agcThresholdSlider  : NSSlider!
+  @IBOutlet private weak var _audioMuteButton       : NSButton!
+  @IBOutlet private weak var _agcModePopUp          : NSPopUpButton!
+  @IBOutlet private weak var _audioGainSlider       : NSSlider!
+  @IBOutlet private weak var _audioPanSlider        : NSSlider!
+  @IBOutlet private weak var _agcThresholdSlider    : NSSlider!
 
+  @IBOutlet private weak var _audioGainTextField    : NSTextField!
+  @IBOutlet private weak var _agcThresholdTextField : NSTextField!
+  
   private var _slice                        : xLib6000.Slice {
     return representedObject as! xLib6000.Slice }
   
@@ -108,8 +111,12 @@ class AudioViewController: NSViewController {
       self?._audioMuteButton.boolState = slice.audioMute
       
       self?._audioGainSlider.integerValue = slice.audioGain
+      self?._audioGainTextField.integerValue = slice.audioGain
+      
       self?._audioPanSlider.integerValue = slice.audioPan
+      
       self?._agcThresholdSlider.integerValue = slice.agcThreshold
+      self?._agcThresholdTextField.integerValue = slice.agcThreshold
       
       self?._agcModePopUp.selectItem(withTitle: slice.agcMode)
     }

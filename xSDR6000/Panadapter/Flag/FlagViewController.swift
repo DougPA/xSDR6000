@@ -83,11 +83,6 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
 
   private let kLeftButton                   = 0x01                          // masks for Gesture Recognizers
   private let kFlagPixelOffset              : CGFloat = 15.0/2.0
-  private let kAudHeight                    : CGFloat = 98.0
-  private let kDspHeight                    : CGFloat = 100.0
-  private let kModeHeight                   : CGFloat = 84.0
-  private let kXRitHeight                   : CGFloat = 100.0 
-  private let kDaxHeight                    : CGFloat = 43.0
 
   private let kSplitCaption                 = "SPLIT"
   private let kSplitOnAttr                  = [NSAttributedString.Key.foregroundColor : NSColor.systemYellow]
@@ -99,12 +94,6 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
   private let kTxOnAttr                     = [NSAttributedString.Key.foregroundColor : NSColor.systemRed]
   private let kTxOffAttr                    = [NSAttributedString.Key.foregroundColor : NSColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.3)]
   
-  private let kAud                          = NSUserInterfaceItemIdentifier(rawValue: "AUD")
-  private let kDsp                          = NSUserInterfaceItemIdentifier(rawValue: "DSP")
-  private let kMode                         = NSUserInterfaceItemIdentifier(rawValue: "MODE")
-  private let kXRit                         = NSUserInterfaceItemIdentifier(rawValue: "XRIT")
-  private let kDax                          = NSUserInterfaceItemIdentifier(rawValue: "DAX")
-
   // ----------------------------------------------------------------------------
   // MARK: - Overridden methods
   
@@ -200,7 +189,28 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
     // if specified, remove the tokens
     if remove { _observations.removeAll() }
   }
-
+  /// Select one of the Controls views
+  ///
+  /// - Parameter id:                   an identifier String
+  ///
+  func selectControls(_ tag: Int) {
+    
+    switch tag {
+    case 0:
+      _audButton.performClick(self)
+    case 1:
+      _dspButton.performClick(self)
+    case 2:
+      _modeButton.performClick(self)
+    case 3:
+      _xritButton.performClick(self)
+    case 4:
+      _daxButton.performClick(self)
+    default:
+      _audButton.performClick(self)
+    }
+  }
+  
   // ----------------------------------------------------------------------------
   // MARK: - Action methods
   
@@ -258,43 +268,22 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
   /// - Parameter sender:         the button
   ///
   @IBAction func controlsButtons(_ sender: NSButton) {
-    var height : CGFloat = 0.0
-    
     // is the button "on"?
     if sender.boolState {
-
+      
       // YES, turn off any other buttons
-      if sender.identifier != kAud { _audButton.boolState = false}
-      if sender.identifier != kDsp { _dspButton.boolState = false}
-      if sender.identifier != kMode { _modeButton.boolState = false}
-      if sender.identifier != kXRit { _xritButton.boolState = false}
-      if sender.identifier != kDax { _daxButton.boolState = false}
-    
+      if sender.tag != 0 { _audButton.boolState = false}
+      if sender.tag != 1 { _dspButton.boolState = false}
+      if sender.tag != 2 { _modeButton.boolState = false}
+      if sender.tag != 3 { _xritButton.boolState = false}
+      if sender.tag != 4 { _daxButton.boolState = false}
+
       // select the desired tab
       controlsVc?.selectedTabViewItemIndex = sender.tag
       
-      // set the height of the Controls View
-      switch sender.identifier {
-      case kAud:
-        height = kAudHeight
-      case kDsp:
-        height = kDspHeight
-      case kMode:
-        height = kModeHeight
-      case kXRit:
-        height = kXRitHeight
-      case kDax:
-        height = kDaxHeight
-      default:
-        height = 100.0
-      }
-      controlsHeightConstraint!.isActive = false
-      controlsHeightConstraint!.constant = height
-      controlsHeightConstraint!.isActive = true
-
-      // unhide the controls
-      controlsVc!.view.isHidden = false
-
+    // unhide the controls
+    controlsVc!.view.isHidden = false
+      
     } else {
       
       // hide the controls

@@ -1354,14 +1354,14 @@
                                             <rect key="frame" x="-1" y="-1" width="311" height="1050"/>
                                             <subviews>
                                                 <containerView wantsLayer="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wNm-qC-krW" userLabel="Rx View container">
-                                                    <rect key="frame" x="0.0" y="840" width="311" height="210"/>
+                                                    <rect key="frame" x="0.0" y="850" width="311" height="200"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="311" id="dxo-0a-apt"/>
-                                                        <constraint firstAttribute="height" constant="210" id="tAj-GH-gY5"/>
+                                                        <constraint firstAttribute="height" constant="200" id="tAj-GH-gY5"/>
                                                     </constraints>
                                                 </containerView>
                                                 <containerView translatesAutoresizingMaskIntoConstraints="NO" id="hHA-SF-aVp" userLabel="Tx View container">
-                                                    <rect key="frame" x="0.0" y="630" width="311" height="210"/>
+                                                    <rect key="frame" x="0.0" y="640" width="311" height="210"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="311" id="P83-dK-6Hm"/>
                                                         <constraint firstAttribute="height" constant="210" id="Svd-SS-oVl"/>
@@ -1371,7 +1371,7 @@
                                                     </connections>
                                                 </containerView>
                                                 <containerView translatesAutoresizingMaskIntoConstraints="NO" id="mKQ-NT-mCo" userLabel="Pcw View container">
-                                                    <rect key="frame" x="0.0" y="420" width="311" height="210"/>
+                                                    <rect key="frame" x="0.0" y="430" width="311" height="210"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="311" id="3Ia-CF-ie6"/>
                                                         <constraint firstAttribute="height" constant="210" id="NQK-yO-bCK"/>
@@ -1381,7 +1381,7 @@
                                                     </connections>
                                                 </containerView>
                                                 <containerView translatesAutoresizingMaskIntoConstraints="NO" id="eED-TT-H8j" userLabel="Phne View container">
-                                                    <rect key="frame" x="0.0" y="210" width="311" height="210"/>
+                                                    <rect key="frame" x="0.0" y="220" width="311" height="210"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="311" id="8K8-VF-6nT"/>
                                                         <constraint firstAttribute="height" constant="210" id="R4m-3J-D0Z"/>
@@ -1391,7 +1391,7 @@
                                                     </connections>
                                                 </containerView>
                                                 <containerView identifier="Container view" translatesAutoresizingMaskIntoConstraints="NO" id="eBz-RL-KvA" userLabel="Eq View container">
-                                                    <rect key="frame" x="0.0" y="0.0" width="311" height="210"/>
+                                                    <rect key="frame" x="0.0" y="10" width="311" height="210"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="311" id="OgD-LQ-BLy"/>
                                                         <constraint firstAttribute="height" constant="210" id="eC3-D0-WPI"/>

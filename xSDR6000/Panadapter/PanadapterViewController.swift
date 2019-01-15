@@ -781,9 +781,10 @@ final class PanadapterViewController        : NSViewController, NSGestureRecogni
       let leadingConstraint = controlsVc.view.leadingAnchor.constraint(equalTo: flagVc.view.leadingAnchor)
       let trailingConstraint = controlsVc.view.trailingAnchor.constraint(equalTo: flagVc.view.trailingAnchor)
       let topConstraint = controlsVc.view.topAnchor.constraint(equalTo: flagVc.view.bottomAnchor)
+      let heightConstraint = controlsVc.view.heightAnchor.constraint(equalToConstant: 100.0)
 
       // activate Controls constraints
-      let controlsConstraints: [NSLayoutConstraint] = [flagVc.controlsHeightConstraint!, leadingConstraint, trailingConstraint, topConstraint]
+      let controlsConstraints: [NSLayoutConstraint] = [flagVc.controlsHeightConstraint!, leadingConstraint, trailingConstraint, topConstraint, heightConstraint]
       NSLayoutConstraint.activate(controlsConstraints)
     }
   }

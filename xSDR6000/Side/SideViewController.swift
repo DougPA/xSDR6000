@@ -34,9 +34,10 @@ final class SideViewController              : NSViewController {
   @IBOutlet private weak var _pcwContainerHeight    : NSLayoutConstraint!
   @IBOutlet private weak var _phneContainerHeight   : NSLayoutConstraint!
   @IBOutlet private weak var _eqContainerHeight     : NSLayoutConstraint!
-  
+
+  private var _rxViewLoaded                 = false
   private let kSideViewWidth                : CGFloat = 311
-  private let kRxHeightOpen                 : CGFloat = 210
+  private let kRxHeightOpen                 : CGFloat = 200
   private let kTxHeightOpen                 : CGFloat = 210
   private let kPcwHeightOpen                : CGFloat = 240
   private let kPhneHeightOpen               : CGFloat = 210
@@ -59,7 +60,7 @@ final class SideViewController              : NSViewController {
     widthConstraint.identifier = "Side width constraint"
     widthConstraint.isActive = true
 
-    addRxView()
+    
     
     // set the button states
     _rxButton.state = Defaults[.sideRxOpen].state
@@ -77,8 +78,11 @@ final class SideViewController              : NSViewController {
 
     _scrollView.needsLayout = true
   }
-  /// A layout cycle has occurred
-  ///
+  override func viewWillAppear() {
+    super.viewWillAppear()
+    
+    if Defaults[.sideRxOpen] && !_rxViewLoaded { addRxView() }
+  }
   override func viewDidLayout() {
 
     // position the scroll view at the top
@@ -98,7 +102,7 @@ final class SideViewController              : NSViewController {
     case "RX":
       Defaults[.sideRxOpen] = sender.boolState
       _rxContainerHeight.constant = (sender.boolState ? kRxHeightOpen : kHeightClosed)
-      if sender.boolState { addRxView() }
+      if sender.boolState  && !_rxViewLoaded { addRxView() }
     case "TX":
       Defaults[.sideTxOpen] = sender.boolState
       _txContainerHeight.constant = (sender.boolState ? kTxHeightOpen : kHeightClosed)
@@ -128,6 +132,8 @@ final class SideViewController              : NSViewController {
         // find the active Slice
         if let slice = Slice.findActive() {
           
+          self._rxViewLoaded = true
+
           // find the Panadapter of the Slice
           let pan = radio.panadapters[slice.panadapterId]
           
@@ -151,7 +157,7 @@ final class SideViewController              : NSViewController {
           self._rxContainer.addSubview(controlsVc.view)
           controlsVc.view.isHidden = false
           
-         // Flag View constraints: height, width & top of the Flag (constants)
+          // Flag View constraints: height, width & top of the Flag (constants)
           flagVc.flagHeightConstraint = flagVc.view.heightAnchor.constraint(equalToConstant: FlagViewController.kLargeFlagHeight)
           flagVc.flagWidthConstraint = flagVc.view.widthAnchor.constraint(equalToConstant: FlagViewController.kLargeFlagWidth)
           let top = flagVc.view.topAnchor.constraint(equalTo: self._rxContainer.topAnchor)
@@ -168,11 +174,13 @@ final class SideViewController              : NSViewController {
           let leadingConstraint = controlsVc.view.leadingAnchor.constraint(equalTo: flagVc.view.leadingAnchor)
           let trailingConstraint = controlsVc.view.trailingAnchor.constraint(equalTo: flagVc.view.trailingAnchor)
           let topConstraint = controlsVc.view.topAnchor.constraint(equalTo: flagVc.view.bottomAnchor)
-          
+          let heightConstraint = controlsVc.view.heightAnchor.constraint(equalToConstant: 100.0)
+
           // activate Controls constraints
-          let controlsConstraints: [NSLayoutConstraint] = [flagVc.controlsHeightConstraint!, leadingConstraint, trailingConstraint, topConstraint]
+          let controlsConstraints: [NSLayoutConstraint] = [flagVc.controlsHeightConstraint!, leadingConstraint, trailingConstraint, topConstraint, heightConstraint]
           NSLayoutConstraint.activate(controlsConstraints)
 
+          flagVc.selectControls(0)
         }
       }
     }
