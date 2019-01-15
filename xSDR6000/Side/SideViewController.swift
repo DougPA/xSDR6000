@@ -60,8 +60,6 @@ final class SideViewController              : NSViewController {
     widthConstraint.identifier = "Side width constraint"
     widthConstraint.isActive = true
 
-    
-    
     // set the button states
     _rxButton.state = Defaults[.sideRxOpen].state
     _txButton.state = Defaults[.sideTxOpen].state
@@ -121,6 +119,13 @@ final class SideViewController              : NSViewController {
   }
   
   // ----------------------------------------------------------------------------
+  // MARK: - Internal methods
+  
+  func setRxHeight(_ height: CGFloat) {
+    self._rxContainerHeight.constant = height
+  }
+  
+  // ----------------------------------------------------------------------------
   // MARK: - Private methods
   
   private func addRxView() {
@@ -148,14 +153,14 @@ final class SideViewController              : NSViewController {
           controlsVc.configure(panadapter: pan, slice: slice)
           
           // pass the FlagVc needed parameters
-          flagVc.configure(panadapter: pan, slice: slice, controlsVc: controlsVc, panadapterVc: nil)
+          flagVc.configure(panadapter: pan, slice: slice, controlsVc: controlsVc, vc: self)
           flagVc.smallFlagDisplayed = false
           flagVc.isOnLeft = true
           
           // add its view
           self._rxContainer.addSubview(flagVc.view)
           self._rxContainer.addSubview(controlsVc.view)
-          controlsVc.view.isHidden = false
+//          controlsVc.view.isHidden = false
           
           // Flag View constraints: height, width & top of the Flag (constants)
           flagVc.flagHeightConstraint = flagVc.view.heightAnchor.constraint(equalToConstant: FlagViewController.kLargeFlagHeight)
@@ -175,12 +180,17 @@ final class SideViewController              : NSViewController {
           let trailingConstraint = controlsVc.view.trailingAnchor.constraint(equalTo: flagVc.view.trailingAnchor)
           let topConstraint = controlsVc.view.topAnchor.constraint(equalTo: flagVc.view.bottomAnchor)
           let heightConstraint = controlsVc.view.heightAnchor.constraint(equalToConstant: 100.0)
+          let widthConstraint = controlsVc.view.widthAnchor.constraint(equalToConstant: 311.0)
 
           // activate Controls constraints
-          let controlsConstraints: [NSLayoutConstraint] = [flagVc.controlsHeightConstraint!, leadingConstraint, trailingConstraint, topConstraint, heightConstraint]
+          let controlsConstraints: [NSLayoutConstraint] = [flagVc.controlsHeightConstraint!, leadingConstraint, trailingConstraint, topConstraint, heightConstraint, widthConstraint]
           NSLayoutConstraint.activate(controlsConstraints)
+//
+//          flagVc.selectControls(0)
+          self._rxContainerHeight.constant = (controlsVc.view.isHidden ? 100 : 200)
 
-          flagVc.selectControls(0)
+          Swift.print("Side FlagVc width = \(flagVc.view.frame.width)")
+          Swift.print("Side ControlsVc width = \(controlsVc.view.frame.width)")
         }
       }
     }

@@ -14,6 +14,152 @@
                         <rect key="frame" x="0.0" y="0.0" width="311" height="100"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
+                            <stackView distribution="equalSpacing" orientation="horizontal" alignment="centerY" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ldc-rG-ght" userLabel="Ant stack view">
+                                <rect key="frame" x="15" y="77" width="156" height="21"/>
+                                <subviews>
+                                    <button horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ce0-Xg-TdH" userLabel="X Bevel Button">
+                                        <rect key="frame" x="0.0" y="1" width="20" height="20"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="20" id="d21-nD-KhW"/>
+                                            <constraint firstAttribute="width" constant="20" id="hU5-sz-C7y"/>
+                                        </constraints>
+                                        <buttonCell key="cell" type="bevel" bezelStyle="circular" image="NSStopProgressTemplate" imagePosition="only" alignment="center" alternateImage="NSStopProgressTemplate" imageScaling="proportionallyDown" inset="2" id="zIZ-mP-qNz">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <color key="contentTintColor" red="1" green="0.1106421309" blue="0.02582195826" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <connections>
+                                            <action selector="closeButton:" target="Lmw-yC-7qh" id="Vbc-9D-HKC"/>
+                                        </connections>
+                                    </button>
+                                    <popUpButton identifier="rxAnt" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Zp6-Oe-dIV" userLabel="RxAnt popup">
+                                        <rect key="frame" x="18" y="-3" width="55" height="25"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="50" id="i0J-cE-5ri"/>
+                                        </constraints>
+                                        <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="center" lineBreakMode="truncatingTail" borderStyle="border" imageScaling="proportionallyDown" inset="2" arrowPosition="noArrow" id="y2d-I3-kg0">
+                                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="menu"/>
+                                            <menu key="menu" id="NSV-Jw-Rca"/>
+                                        </popUpButtonCell>
+                                        <connections>
+                                            <action selector="popups:" target="Lmw-yC-7qh" id="vzx-pt-LgU"/>
+                                        </connections>
+                                    </popUpButton>
+                                    <popUpButton identifier="txAnt" verticalHuggingPriority="750" horizontalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="9Hl-BA-XFJ" userLabel="TxAnt popup">
+                                        <rect key="frame" x="68" y="-3" width="55" height="25"/>
+                                        <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="center" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" arrowPosition="noArrow" id="8lD-MP-8Gu">
+                                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="menu"/>
+                                            <menu key="menu" id="ukX-h6-QYI"/>
+                                        </popUpButtonCell>
+                                        <connections>
+                                            <action selector="popups:" target="Lmw-yC-7qh" id="7Zf-Sw-jks"/>
+                                        </connections>
+                                    </popUpButton>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wFR-Fm-HU4" userLabel="Filter label">
+                                        <rect key="frame" x="118" y="1" width="40" height="19"/>
+                                        <textFieldCell key="cell" lineBreakMode="clipping" placeholderString="xx.xk" id="TIL-cG-KV0">
+                                            <font key="font" metaFont="system" size="15"/>
+                                            <color key="textColor" name="systemYellowColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="9Hl-BA-XFJ" firstAttribute="width" secondItem="Zp6-Oe-dIV" secondAttribute="width" id="eUz-HR-MnI"/>
+                                </constraints>
+                                <visibilityPriorities>
+                                    <integer value="1000"/>
+                                    <integer value="1000"/>
+                                    <integer value="1000"/>
+                                    <integer value="1000"/>
+                                </visibilityPriorities>
+                                <customSpacing>
+                                    <real value="3.4028234663852886e+38"/>
+                                    <real value="3.4028234663852886e+38"/>
+                                    <real value="3.4028234663852886e+38"/>
+                                    <real value="3.4028234663852886e+38"/>
+                                </customSpacing>
+                            </stackView>
+                            <stackView distribution="fill" orientation="horizontal" alignment="top" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jie-8p-irq" userLabel="Lock stack view">
+                                <rect key="frame" x="6" y="52" width="165" height="21"/>
+                                <subviews>
+                                    <button translatesAutoresizingMaskIntoConstraints="NO" id="WIZ-v0-8bz" userLabel="Lock button">
+                                        <rect key="frame" x="0.0" y="1" width="25" height="20"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="20" id="UlC-Vo-rCG"/>
+                                            <constraint firstAttribute="width" constant="25" id="shV-fH-ovG"/>
+                                        </constraints>
+                                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="Unlocked" imagePosition="only" alignment="center" alternateImage="Locked" imageScaling="proportionallyUpOrDown" sound="Morse" inset="2" id="xZ9-HY-snN">
+                                            <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                    </button>
+                                    <button identifier="nb" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="amT-qe-1nd">
+                                        <rect key="frame" x="19" y="-7" width="47" height="32"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="35" id="hwC-GO-i7z"/>
+                                        </constraints>
+                                        <buttonCell key="cell" type="push" title="NB" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Fp1-6U-w07">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
+                                            <font key="font" metaFont="system" size="10"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="buttons:" target="Lmw-yC-7qh" id="LM7-iR-YaT"/>
+                                        </connections>
+                                    </button>
+                                    <button identifier="nr" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jAv-7c-w22">
+                                        <rect key="frame" x="54" y="-7" width="47" height="32"/>
+                                        <buttonCell key="cell" type="push" title="NR" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="B3Q-Cr-Naw">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
+                                            <font key="font" metaFont="system" size="10"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="buttons:" target="Lmw-yC-7qh" id="o00-gE-qjd"/>
+                                        </connections>
+                                    </button>
+                                    <button identifier="anf" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="KSG-RZ-oQA">
+                                        <rect key="frame" x="89" y="-7" width="47" height="32"/>
+                                        <buttonCell key="cell" type="push" title="ANF" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Cop-Xu-NHi">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
+                                            <font key="font" metaFont="system" size="10"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="buttons:" target="Lmw-yC-7qh" id="smI-vL-Diu"/>
+                                        </connections>
+                                    </button>
+                                    <button identifier="qsk" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1dU-yC-yCa">
+                                        <rect key="frame" x="124" y="-7" width="47" height="32"/>
+                                        <buttonCell key="cell" type="push" title="QSK" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="G7K-VF-Xrr">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
+                                            <font key="font" metaFont="system" size="10"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="buttons:" target="Lmw-yC-7qh" id="qVh-q2-JMV"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="jAv-7c-w22" firstAttribute="width" secondItem="amT-qe-1nd" secondAttribute="width" id="gr0-kk-Ges"/>
+                                    <constraint firstItem="KSG-RZ-oQA" firstAttribute="width" secondItem="amT-qe-1nd" secondAttribute="width" id="h0v-hI-Tco"/>
+                                    <constraint firstItem="1dU-yC-yCa" firstAttribute="width" secondItem="amT-qe-1nd" secondAttribute="width" id="xmd-kh-8Zl"/>
+                                </constraints>
+                                <visibilityPriorities>
+                                    <integer value="1000"/>
+                                    <integer value="1000"/>
+                                    <integer value="1000"/>
+                                    <integer value="1000"/>
+                                    <integer value="1000"/>
+                                </visibilityPriorities>
+                                <customSpacing>
+                                    <real value="3.4028234663852886e+38"/>
+                                    <real value="3.4028234663852886e+38"/>
+                                    <real value="3.4028234663852886e+38"/>
+                                    <real value="3.4028234663852886e+38"/>
+                                    <real value="3.4028234663852886e+38"/>
+                                </customSpacing>
+                            </stackView>
                             <stackView distribution="fill" orientation="vertical" alignment="trailing" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qui-El-IVB" userLabel="Corner Stack View">
                                 <rect key="frame" x="186" y="49" width="125" height="51"/>
                                 <subviews>
@@ -99,154 +245,8 @@
                                     <real value="3.4028234663852886e+38"/>
                                 </customSpacing>
                             </stackView>
-                            <stackView distribution="equalSpacing" orientation="horizontal" alignment="centerY" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ldc-rG-ght" userLabel="Ant stack view">
-                                <rect key="frame" x="25" y="77" width="156" height="21"/>
-                                <subviews>
-                                    <button horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ce0-Xg-TdH" userLabel="X Bevel Button">
-                                        <rect key="frame" x="0.0" y="1" width="20" height="20"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="20" id="d21-nD-KhW"/>
-                                            <constraint firstAttribute="width" constant="20" id="hU5-sz-C7y"/>
-                                        </constraints>
-                                        <buttonCell key="cell" type="bevel" bezelStyle="circular" image="NSStopProgressTemplate" imagePosition="only" alignment="center" alternateImage="NSStopProgressTemplate" imageScaling="proportionallyDown" inset="2" id="zIZ-mP-qNz">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" metaFont="system"/>
-                                        </buttonCell>
-                                        <color key="contentTintColor" red="1" green="0.1106421309" blue="0.02582195826" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <connections>
-                                            <action selector="closeButton:" target="Lmw-yC-7qh" id="Vbc-9D-HKC"/>
-                                        </connections>
-                                    </button>
-                                    <popUpButton identifier="rxAnt" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Zp6-Oe-dIV" userLabel="RxAnt popup">
-                                        <rect key="frame" x="18" y="-3" width="55" height="25"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="50" id="i0J-cE-5ri"/>
-                                        </constraints>
-                                        <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="center" lineBreakMode="truncatingTail" borderStyle="border" imageScaling="proportionallyDown" inset="2" arrowPosition="noArrow" id="y2d-I3-kg0">
-                                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" metaFont="menu"/>
-                                            <menu key="menu" id="NSV-Jw-Rca"/>
-                                        </popUpButtonCell>
-                                        <connections>
-                                            <action selector="popups:" target="Lmw-yC-7qh" id="vzx-pt-LgU"/>
-                                        </connections>
-                                    </popUpButton>
-                                    <popUpButton identifier="txAnt" verticalHuggingPriority="750" horizontalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="9Hl-BA-XFJ" userLabel="TxAnt popup">
-                                        <rect key="frame" x="68" y="-3" width="55" height="25"/>
-                                        <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="center" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" arrowPosition="noArrow" id="8lD-MP-8Gu">
-                                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" metaFont="menu"/>
-                                            <menu key="menu" id="ukX-h6-QYI"/>
-                                        </popUpButtonCell>
-                                        <connections>
-                                            <action selector="popups:" target="Lmw-yC-7qh" id="7Zf-Sw-jks"/>
-                                        </connections>
-                                    </popUpButton>
-                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wFR-Fm-HU4" userLabel="Filter label">
-                                        <rect key="frame" x="118" y="1" width="40" height="19"/>
-                                        <textFieldCell key="cell" lineBreakMode="clipping" placeholderString="xx.xk" id="TIL-cG-KV0">
-                                            <font key="font" metaFont="system" size="15"/>
-                                            <color key="textColor" name="systemYellowColor" catalog="System" colorSpace="catalog"/>
-                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                        </textFieldCell>
-                                    </textField>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstItem="9Hl-BA-XFJ" firstAttribute="width" secondItem="Zp6-Oe-dIV" secondAttribute="width" id="eUz-HR-MnI"/>
-                                </constraints>
-                                <visibilityPriorities>
-                                    <integer value="1000"/>
-                                    <integer value="1000"/>
-                                    <integer value="1000"/>
-                                    <integer value="1000"/>
-                                </visibilityPriorities>
-                                <customSpacing>
-                                    <real value="3.4028234663852886e+38"/>
-                                    <real value="3.4028234663852886e+38"/>
-                                    <real value="3.4028234663852886e+38"/>
-                                    <real value="3.4028234663852886e+38"/>
-                                </customSpacing>
-                            </stackView>
-                            <stackView distribution="fill" orientation="horizontal" alignment="top" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jie-8p-irq" userLabel="Lock stack view">
-                                <rect key="frame" x="16" y="52" width="165" height="21"/>
-                                <subviews>
-                                    <button translatesAutoresizingMaskIntoConstraints="NO" id="WIZ-v0-8bz" userLabel="Lock button">
-                                        <rect key="frame" x="0.0" y="1" width="25" height="20"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="20" id="UlC-Vo-rCG"/>
-                                            <constraint firstAttribute="width" constant="25" id="shV-fH-ovG"/>
-                                        </constraints>
-                                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="Unlocked" imagePosition="only" alignment="center" alternateImage="Locked" imageScaling="proportionallyUpOrDown" sound="Morse" inset="2" id="xZ9-HY-snN">
-                                            <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
-                                            <font key="font" metaFont="system"/>
-                                        </buttonCell>
-                                    </button>
-                                    <button identifier="nb" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="amT-qe-1nd">
-                                        <rect key="frame" x="19" y="-7" width="47" height="32"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="35" id="hwC-GO-i7z"/>
-                                        </constraints>
-                                        <buttonCell key="cell" type="push" title="NB" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Fp1-6U-w07">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
-                                            <font key="font" metaFont="system" size="10"/>
-                                        </buttonCell>
-                                        <connections>
-                                            <action selector="buttons:" target="Lmw-yC-7qh" id="LM7-iR-YaT"/>
-                                        </connections>
-                                    </button>
-                                    <button identifier="nr" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jAv-7c-w22">
-                                        <rect key="frame" x="54" y="-7" width="47" height="32"/>
-                                        <buttonCell key="cell" type="push" title="NR" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="B3Q-Cr-Naw">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
-                                            <font key="font" metaFont="system" size="10"/>
-                                        </buttonCell>
-                                        <connections>
-                                            <action selector="buttons:" target="Lmw-yC-7qh" id="o00-gE-qjd"/>
-                                        </connections>
-                                    </button>
-                                    <button identifier="anf" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="KSG-RZ-oQA">
-                                        <rect key="frame" x="89" y="-7" width="47" height="32"/>
-                                        <buttonCell key="cell" type="push" title="ANF" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Cop-Xu-NHi">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
-                                            <font key="font" metaFont="system" size="10"/>
-                                        </buttonCell>
-                                        <connections>
-                                            <action selector="buttons:" target="Lmw-yC-7qh" id="smI-vL-Diu"/>
-                                        </connections>
-                                    </button>
-                                    <button identifier="qsk" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1dU-yC-yCa">
-                                        <rect key="frame" x="124" y="-7" width="47" height="32"/>
-                                        <buttonCell key="cell" type="push" title="QSK" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="G7K-VF-Xrr">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
-                                            <font key="font" metaFont="system" size="10"/>
-                                        </buttonCell>
-                                        <connections>
-                                            <action selector="buttons:" target="Lmw-yC-7qh" id="qVh-q2-JMV"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstItem="jAv-7c-w22" firstAttribute="width" secondItem="amT-qe-1nd" secondAttribute="width" id="gr0-kk-Ges"/>
-                                    <constraint firstItem="KSG-RZ-oQA" firstAttribute="width" secondItem="amT-qe-1nd" secondAttribute="width" id="h0v-hI-Tco"/>
-                                    <constraint firstItem="1dU-yC-yCa" firstAttribute="width" secondItem="amT-qe-1nd" secondAttribute="width" id="xmd-kh-8Zl"/>
-                                </constraints>
-                                <visibilityPriorities>
-                                    <integer value="1000"/>
-                                    <integer value="1000"/>
-                                    <integer value="1000"/>
-                                    <integer value="1000"/>
-                                    <integer value="1000"/>
-                                </visibilityPriorities>
-                                <customSpacing>
-                                    <real value="3.4028234663852886e+38"/>
-                                    <real value="3.4028234663852886e+38"/>
-                                    <real value="3.4028234663852886e+38"/>
-                                    <real value="3.4028234663852886e+38"/>
-                                    <real value="3.4028234663852886e+38"/>
-                                </customSpacing>
-                            </stackView>
                             <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uKl-h1-c2L" userLabel="S-Meter stack view">
-                                <rect key="frame" x="31" y="27" width="250" height="20"/>
+                                <rect key="frame" x="21" y="27" width="250" height="20"/>
                                 <subviews>
                                     <customView translatesAutoresizingMaskIntoConstraints="NO" id="Kkb-rb-ggc" customClass="LevelIndicator" customModule="xSDR6000" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="222" height="20"/>
@@ -296,7 +296,7 @@
                                 </customSpacing>
                             </stackView>
                             <stackView distribution="equalSpacing" orientation="horizontal" alignment="top" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="V5N-wl-2dY" userLabel="Buttons stack view">
-                                <rect key="frame" x="29" y="1" width="275" height="21"/>
+                                <rect key="frame" x="19" y="1" width="275" height="21"/>
                                 <subviews>
                                     <button identifier="AUD" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="19n-Cu-jeD">
                                         <rect key="frame" x="-6" y="-7" width="67" height="32"/>
@@ -381,12 +381,12 @@
                             <constraint firstItem="V5N-wl-2dY" firstAttribute="top" secondItem="uKl-h1-c2L" secondAttribute="bottom" constant="5" id="AZ2-nQ-dds"/>
                             <constraint firstAttribute="trailing" secondItem="qui-El-IVB" secondAttribute="trailing" id="B8S-2Y-rV0"/>
                             <constraint firstItem="jie-8p-irq" firstAttribute="top" secondItem="Ldc-rG-ght" secondAttribute="bottom" constant="4" id="ELX-vB-WGz"/>
-                            <constraint firstItem="qui-El-IVB" firstAttribute="leading" secondItem="jie-8p-irq" secondAttribute="trailing" constant="5" id="QX4-WZ-gPI"/>
-                            <constraint firstAttribute="trailing" secondItem="uKl-h1-c2L" secondAttribute="trailing" constant="30" id="VW5-9O-KN5"/>
+                            <constraint firstItem="qui-El-IVB" firstAttribute="leading" secondItem="jie-8p-irq" secondAttribute="trailing" constant="15" id="QX4-WZ-gPI"/>
+                            <constraint firstAttribute="trailing" secondItem="uKl-h1-c2L" secondAttribute="trailing" constant="40" id="VW5-9O-KN5"/>
                             <constraint firstItem="qui-El-IVB" firstAttribute="top" secondItem="gnm-lQ-RMP" secondAttribute="top" id="Yac-H5-mt3"/>
                             <constraint firstItem="qui-El-IVB" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="gnm-lQ-RMP" secondAttribute="leading" id="hqH-st-yFE"/>
-                            <constraint firstItem="qui-El-IVB" firstAttribute="leading" secondItem="Ldc-rG-ght" secondAttribute="trailing" constant="5" id="kge-9Q-tLH"/>
-                            <constraint firstAttribute="trailing" secondItem="V5N-wl-2dY" secondAttribute="trailing" constant="7" id="nqR-9c-Cug"/>
+                            <constraint firstItem="qui-El-IVB" firstAttribute="leading" secondItem="Ldc-rG-ght" secondAttribute="trailing" constant="15" id="kge-9Q-tLH"/>
+                            <constraint firstAttribute="trailing" secondItem="V5N-wl-2dY" secondAttribute="trailing" constant="17" id="nqR-9c-Cug"/>
                             <constraint firstItem="Ldc-rG-ght" firstAttribute="top" secondItem="gnm-lQ-RMP" secondAttribute="top" constant="2" id="sSU-sg-b7N"/>
                         </constraints>
                     </view>
@@ -447,7 +447,7 @@
                 </tabViewController>
                 <customObject id="tuz-kb-emV" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1359" y="46"/>
+            <point key="canvasLocation" x="1356" y="45"/>
         </scene>
         <!--audVC-->
         <scene sceneID="k5s-at-puA">
@@ -489,7 +489,7 @@
                                         <constraints>
                                             <constraint firstAttribute="width" constant="25" id="dMZ-YI-B23"/>
                                         </constraints>
-                                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" id="8gh-fn-t5J">
+                                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" placeholderString="xxx" id="8gh-fn-t5J">
                                             <font key="font" usesAppearanceFont="YES"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
@@ -589,7 +589,7 @@
                                         <constraints>
                                             <constraint firstAttribute="width" constant="25" id="vpb-6I-F2N"/>
                                         </constraints>
-                                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" id="FUM-SB-WVl">
+                                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" placeholderString="xxx" id="FUM-SB-WVl">
                                             <font key="font" usesAppearanceFont="YES"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
@@ -765,7 +765,7 @@
                                         <constraints>
                                             <constraint firstAttribute="width" constant="25" id="R6o-Xf-xsD"/>
                                         </constraints>
-                                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" id="R4c-F5-6ZC">
+                                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" placeholderString="xxx" id="R4c-F5-6ZC">
                                             <font key="font" usesAppearanceFont="YES"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
@@ -775,7 +775,7 @@
                                         <constraints>
                                             <constraint firstAttribute="width" constant="25" id="0Xf-wv-eVE"/>
                                         </constraints>
-                                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" id="6Ti-B7-XVx">
+                                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" placeholderString="xxx" id="6Ti-B7-XVx">
                                             <font key="font" usesAppearanceFont="YES"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
@@ -785,7 +785,7 @@
                                         <constraints>
                                             <constraint firstAttribute="width" constant="25" id="LC9-do-CLg"/>
                                         </constraints>
-                                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" id="sz5-hQ-tuR">
+                                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" placeholderString="xxx" id="sz5-hQ-tuR">
                                             <font key="font" usesAppearanceFont="YES"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
@@ -795,7 +795,7 @@
                                         <constraints>
                                             <constraint firstAttribute="width" constant="25" id="4Ll-ob-oYI"/>
                                         </constraints>
-                                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" id="IF3-y0-Z5N">
+                                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" placeholderString="xxx" id="IF3-y0-Z5N">
                                             <font key="font" usesAppearanceFont="YES"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>

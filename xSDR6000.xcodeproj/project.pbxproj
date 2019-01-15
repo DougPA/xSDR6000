@@ -40,7 +40,6 @@
 		913F7F542066DC7A00F35E9B /* PanadapterRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7F112066DC7A00F35E9B /* PanadapterRenderer.swift */; };
 		913F7F572066DC7A00F35E9B /* PanadapterShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 913F7F142066DC7A00F35E9B /* PanadapterShaders.metal */; };
 		913F7F582066DC7A00F35E9B /* SideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7F162066DC7A00F35E9B /* SideViewController.swift */; };
-		913F7F592066DC7A00F35E9B /* RxViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7F172066DC7A00F35E9B /* RxViewController.swift */; };
 		913F7F5A2066DC7A00F35E9B /* EqViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7F182066DC7A00F35E9B /* EqViewController.swift */; };
 		913F7F5B2066DC7A00F35E9B /* PCWViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7F192066DC7A00F35E9B /* PCWViewController.swift */; };
 		913F7F5C2066DC7A00F35E9B /* PhoneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7F1A2066DC7A00F35E9B /* PhoneViewController.swift */; };
@@ -146,7 +145,6 @@
 		913F7F112066DC7A00F35E9B /* PanadapterRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PanadapterRenderer.swift; sourceTree = "<group>"; };
 		913F7F142066DC7A00F35E9B /* PanadapterShaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = PanadapterShaders.metal; sourceTree = "<group>"; };
 		913F7F162066DC7A00F35E9B /* SideViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideViewController.swift; sourceTree = "<group>"; };
-		913F7F172066DC7A00F35E9B /* RxViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxViewController.swift; sourceTree = "<group>"; };
 		913F7F182066DC7A00F35E9B /* EqViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EqViewController.swift; sourceTree = "<group>"; };
 		913F7F192066DC7A00F35E9B /* PCWViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PCWViewController.swift; sourceTree = "<group>"; };
 		913F7F1A2066DC7A00F35E9B /* PhoneViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhoneViewController.swift; sourceTree = "<group>"; };
@@ -365,7 +363,6 @@
 			isa = PBXGroup;
 			children = (
 				913F7F162066DC7A00F35E9B /* SideViewController.swift */,
-				913F7F172066DC7A00F35E9B /* RxViewController.swift */,
 				917949892139CC0000D9750A /* TxViewController.swift */,
 				913F7F192066DC7A00F35E9B /* PCWViewController.swift */,
 				913F7F1A2066DC7A00F35E9B /* PhoneViewController.swift */,
@@ -626,7 +623,6 @@
 				917D5BC121C5EA9D00107EEB /* RadioPrefsViewController.swift in Sources */,
 				9148CEAB21CBE54100306FC0 /* FiltersPrefsViewController.swift in Sources */,
 				913F7F422066DC7A00F35E9B /* Band.swift in Sources */,
-				913F7F592066DC7A00F35E9B /* RxViewController.swift in Sources */,
 				91794984212EFB0F00D9750A /* CARingBuffer.cpp in Sources */,
 				913F7F4C2066DC7A00F35E9B /* MainWindowController.swift in Sources */,
 				9185B0D5208683C7004D4C40 /* JWTDecode.swift in Sources */,

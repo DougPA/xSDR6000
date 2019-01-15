@@ -746,7 +746,7 @@ final class PanadapterViewController        : NSViewController, NSGestureRecogni
       controlsVc.configure(panadapter: pan, slice: slice)
       
       // pass the FlagVc needed parameters
-      flagVc.configure(panadapter: pan, slice: slice, controlsVc: controlsVc, panadapterVc: self)
+      flagVc.configure(panadapter: pan, slice: slice, controlsVc: controlsVc, vc: self)
       flagVc.smallFlagDisplayed = false
       flagVc.isOnLeft = true
       
@@ -782,10 +782,14 @@ final class PanadapterViewController        : NSViewController, NSGestureRecogni
       let trailingConstraint = controlsVc.view.trailingAnchor.constraint(equalTo: flagVc.view.trailingAnchor)
       let topConstraint = controlsVc.view.topAnchor.constraint(equalTo: flagVc.view.bottomAnchor)
       let heightConstraint = controlsVc.view.heightAnchor.constraint(equalToConstant: 100.0)
+      let widthConstraint = controlsVc.view.widthAnchor.constraint(equalToConstant: 311.0)
 
       // activate Controls constraints
-      let controlsConstraints: [NSLayoutConstraint] = [flagVc.controlsHeightConstraint!, leadingConstraint, trailingConstraint, topConstraint, heightConstraint]
+      let controlsConstraints: [NSLayoutConstraint] = [flagVc.controlsHeightConstraint!, leadingConstraint, trailingConstraint, topConstraint, heightConstraint, widthConstraint]
       NSLayoutConstraint.activate(controlsConstraints)
+
+      Swift.print("Flag FlagVc width = \(flagVc.view.frame.width)")
+      Swift.print("Flag ControlsVc width = \(controlsVc.view.frame.width)")
     }
   }
   /// Remove the Flag on the specified Slice

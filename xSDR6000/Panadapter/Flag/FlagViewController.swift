@@ -18,7 +18,7 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
   static let kSliceLetters : [String]       = ["A", "B", "C", "D", "E", "F", "G", "H"]
   static let kFlagOffset                    : CGFloat = 7.5
   static let kFlagMinimumSeparation         : CGFloat = 10
-  static let kLargeFlagWidth                : CGFloat = 290
+  static let kLargeFlagWidth                : CGFloat = 311
   static let kLargeFlagHeight               : CGFloat = 100
   static let kSmallFlagWidth                : CGFloat = 125 
   static let kSmallFlagHeight               : CGFloat = 52
@@ -67,7 +67,7 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
   @IBOutlet private weak var _txButton      : NSButton!
   
   private weak var _panadapter              : Panadapter?
-  private weak var _panadapterVc            : PanadapterViewController?
+  private weak var _vc                      : NSViewController?
 
   private var _center                       : Int {return _panadapter!.center }
   private var _bandwidth                    : Int { return _panadapter!.bandwidth }
@@ -168,11 +168,11 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
   ///   - panadapter:               a Panadapter reference
   ///   - slice:                    a Slice reference
   ///
-  func configure(panadapter: Panadapter?, slice: xLib6000.Slice?, controlsVc: ControlsViewController?, panadapterVc: PanadapterViewController?) {
+  func configure(panadapter: Panadapter?, slice: xLib6000.Slice?, controlsVc: ControlsViewController?, vc: NSViewController) {
     self._panadapter = panadapter
     self.slice = slice!
     self.controlsVc = controlsVc
-    self._panadapterVc = panadapterVc
+    self._vc = vc
 
   }
   /// Invalidate observations (optionally remove)
@@ -217,7 +217,7 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
   @IBAction func alphaButton(_ sender: Any) {
    
     // return if this a Side flag (i.e. not on a Slice)
-    guard _panadapterVc != nil else { return }
+    guard _vc is PanadapterViewController else { return }
       
     var flagPosition: CGFloat = 0
     let constraints = [flagHeightConstraint!, flagWidthConstraint!, flagXPositionConstraint!]
@@ -243,7 +243,7 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
     NSLayoutConstraint.activate(constraints)
     
     // evaluate all flag positions
-    _panadapterVc!.positionFlags()
+    (_vc as! PanadapterViewController).positionFlags()
   }
   
   @IBAction func txButton(_ sender: NSButton) {
@@ -283,11 +283,15 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
       
     // unhide the controls
     controlsVc!.view.isHidden = false
+    
+      if _vc is SideViewController { (_vc as! SideViewController).setRxHeight(200) }
       
     } else {
       
       // hide the controls
       controlsVc!.view.isHidden = true
+
+      if _vc is SideViewController { (_vc as! SideViewController).setRxHeight(100) }
     }
   }
   /// One of the popups has been clicked
