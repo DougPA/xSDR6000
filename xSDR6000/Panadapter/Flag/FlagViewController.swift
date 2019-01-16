@@ -34,10 +34,7 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
   var smallFlagDisplayed                    = false
   var isOnLeft                              = true
   var controlsVc                            : ControlsViewController?
-
-  @objc dynamic weak var slice              : xLib6000.Slice?
-  @objc dynamic var letterId                : String { return FlagViewController.kSliceLetters[Int(slice!.id)!] }
-  @objc dynamic var tx                      : String { return slice!.txEnabled ? "TX" : "" }
+  @objc dynamic var slice                   : xLib6000.Slice?
 
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
@@ -106,15 +103,6 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
     // populate the choices
     _rxAntPopUp.addItems(withTitles: slice!.rxAntList)
     _txAntPopUp.addItems(withTitles: slice!.txAntList)
-
-    // find the S-Meter feed (if any, it may alreaady exist or it may come later as a sliceMeterAdded Notification)
-    findSMeter()
-    
-    // create observations of Slice & Panadapter properties
-    createObservations(slice: slice!, panadapter: _panadapter!)
-
-    // start receiving Notifications
-    addNotifications()
     
     // setup Left Double Click recognizer
     _doubleClick = NSClickGestureRecognizer(target: self, action: #selector(leftDoubleClick(_:)))
@@ -169,25 +157,46 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
   ///   - slice:                    a Slice reference
   ///
   func configure(panadapter: Panadapter?, slice: xLib6000.Slice?, controlsVc: ControlsViewController?, vc: NSViewController) {
-    self._panadapter = panadapter
-    self.slice = slice!
-    self.controlsVc = controlsVc
-    self._vc = vc
 
-  }
-  /// Invalidate observations (optionally remove)
-  ///
-  /// - Parameters:
-  ///   - observations:                 an array of NSKeyValueObservation
-  ///   - remove:                       remove all enabled
-  ///
-  func invalidateObservations(remove: Bool = true) {
-    
-    // invalidate each observation
-    _observations.forEach { $0.invalidate() }
-    
-    // if specified, remove the tokens
-    if remove { _observations.removeAll() }
+    // is this the initial setup for this Flag?
+    if _vc == nil {
+      
+      // YES, save the params
+      _panadapter = panadapter
+      self.slice = slice!
+      self.controlsVc = controlsVc
+      _vc = vc
+      
+      controlsVc?.configure(slice: slice!)
+
+      // find the S-Meter feed (if any, it may alreaady exist or it may come later as a sliceMeterAdded Notification)
+      findSMeter()
+      
+      // create observations of Slice & Panadapter properties
+      addObservations(slice: slice!, panadapter: _panadapter!)
+      
+      // start receiving Notifications
+      addNotifications()
+      
+    } else {
+      
+      // YES, save the params
+      _panadapter = panadapter
+      self.slice = slice!
+      self.controlsVc = controlsVc
+      _vc = vc
+      
+      controlsVc?.configure(slice: slice!)
+      
+      // remove all previous observations
+      removeObservations()
+      
+      // find the S-Meter feed (if any, it may alreaady exist or it may come later as a sliceMeterAdded Notification)
+      findSMeter()
+
+      // add observations of Slice & Panadapter properties
+      addObservations(slice: slice!, panadapter: _panadapter!)
+    }
   }
   /// Select one of the Controls views
   ///
@@ -337,7 +346,7 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
   private func findSMeter() {
     
     if let item = slice!.meters.first(where: { $0.value.name == Api.MeterShortName.signalPassband.rawValue} ) {
-      observerSMeter( item.value)
+      addMeterObservation( item.value)
     }
   }
   
@@ -367,24 +376,52 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
   
   /// Add observers for properties used by the Flag
   ///
-  private func createObservations(slice: xLib6000.Slice, panadapter: Panadapter ) {
+  private func addObservations(slice: xLib6000.Slice, panadapter: Panadapter ) {
     
-    _observations = [
-      slice.observe(\.txEnabled, options: [.initial, .new], changeHandler: txRefresh(_:_:)),
-      slice.observe(\.filterHigh, options: [.initial, .new], changeHandler: filterRefresh(_:_:)),
-      slice.observe(\.filterLow, options: [.initial, .new], changeHandler: filterRefresh(_:_:)),
-      slice.observe(\.frequency, options: [.initial, .new], changeHandler: positionFlags(_:_:)),
-      slice.observe(\.nbEnabled, options: [.initial, .new], changeHandler: buttonsChange(_:_:)),
-      slice.observe(\.nrEnabled, options: [.initial, .new], changeHandler: buttonsChange(_:_:)),
-      slice.observe(\.anfEnabled, options: [.initial, .new], changeHandler: buttonsChange(_:_:)),
-      slice.observe(\.qskEnabled, options: [.initial, .new], changeHandler: buttonsChange(_:_:)),
-      slice.observe(\.locked, options: [.initial, .new], changeHandler: buttonsChange(_:_:)),
-      slice.observe(\.rxAnt, options: [.initial, .new], changeHandler: antennaChange(_:_:)),
-      slice.observe(\.txAnt, options: [.initial, .new], changeHandler: antennaChange(_:_:)),
+    _observations.append( slice.observe(\.active, options: [.initial, .new], changeHandler: sliceChange(_:_:)) )
+   
+    _observations.append( slice.observe(\.txEnabled, options: [.initial, .new], changeHandler: txChange(_:_:)) )
+    
+    _observations.append( slice.observe(\.filterHigh, options: [.initial, .new], changeHandler: filterChange(_:_:)) )
+    _observations.append( slice.observe(\.filterLow, options: [.initial, .new], changeHandler: filterChange(_:_:)) )
+    
+    _observations.append( slice.observe(\.frequency, options: [.initial, .new], changeHandler: positionChange(_:_:)) )
+    _observations.append( panadapter.observe(\.center, options: [.initial, .new], changeHandler: positionChange(_:_:)) )
+    _observations.append( panadapter.observe(\.bandwidth, options: [.initial, .new], changeHandler: positionChange(_:_:)) )
 
-      panadapter.observe(\.center, options: [.initial, .new], changeHandler: positionFlags(_:_:)),
-      panadapter.observe(\.bandwidth, options: [.initial, .new], changeHandler: positionFlags(_:_:))
-    ]
+    _observations.append( slice.observe(\.nbEnabled, options: [.initial, .new], changeHandler: buttonsChange(_:_:)) )
+    _observations.append( slice.observe(\.nrEnabled, options: [.initial, .new], changeHandler: buttonsChange(_:_:)) )
+    _observations.append( slice.observe(\.anfEnabled, options: [.initial, .new], changeHandler: buttonsChange(_:_:)) )
+    _observations.append( slice.observe(\.qskEnabled, options: [.initial, .new], changeHandler: buttonsChange(_:_:)) )
+    _observations.append( slice.observe(\.locked, options: [.initial, .new], changeHandler: buttonsChange(_:_:)) )
+    
+    _observations.append( slice.observe(\.rxAnt, options: [.initial, .new], changeHandler: antennaChange(_:_:)) )
+    _observations.append( slice.observe(\.txAnt, options: [.initial, .new], changeHandler: antennaChange(_:_:)) )
+    
+  }
+  /// Add Observation of the S-Meter feed
+  ///
+  ///     Note: meters may not be available at Slice creation.
+  ///     If not, the .sliceMeterHasBeenAdded notification will identify the S-Meter
+  ///
+  func addMeterObservation(_ meter: Meter) {
+    
+    // add the observation
+    _observations.append( meter.observe(\.value, options: [.initial, .new], changeHandler: meterChange(_:_:)) )
+  }
+  /// Invalidate observations (optionally remove)
+  ///
+  /// - Parameters:
+  ///   - observations:                 an array of NSKeyValueObservation
+  ///   - remove:                       remove all enabled
+  ///
+  func removeObservations() {
+    
+    // invalidate each observation
+    _observations.forEach { $0.invalidate() }
+    
+    // remove the tokens
+    _observations.removeAll()
   }
   /// Respond to a change in Slice Tx state
   ///
@@ -392,7 +429,7 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
   ///   - object:               the object that changed
   ///   - change:               the change
   ///
-  private func txRefresh(_ slice: xLib6000.Slice, _ change: Any) {
+  private func txChange(_ slice: xLib6000.Slice, _ change: Any) {
 
     DispatchQueue.main.async {
       self._txButton.attributedTitle = NSAttributedString(string: self.kTxCaption, attributes: (slice.txEnabled ? self.kTxOnAttr : self.kTxOffAttr))
@@ -404,7 +441,7 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
   ///   - object:               the object that changed
   ///   - change:               the change
   ///
-  private func filterRefresh(_ slice: xLib6000.Slice, _ change: Any) {
+  private func filterChange(_ slice: xLib6000.Slice, _ change: Any) {
     var formattedWidth = ""
     
     let width = slice.filterHigh - slice.filterLow
@@ -452,15 +489,32 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
       self._txAntPopUp.selectItem(withTitle: slice.txAnt)
     }
   }
+  /// Respond to a change in the active Slice
+  ///
+  /// - Parameters:
+  ///   - slice:                the slice that changed
+  ///   - change:               the change
+  ///
+  private func sliceChange(_ slice: xLib6000.Slice, _ change: Any) {
+    
+    if _vc is SideViewController {
+      // this Flag is on a Side view
+      
+      // TODO: need code
+      
+    } else {
+      
+      // This Flag is on a Slice, force a redraw
+      (_vc as! PanadapterViewController).redrawFrequencyLegend()
+    }
+  }
   /// Respond to a change in Panadapter or Slice properties
   ///
   /// - Parameters:
   ///   - object:               the object rhat changed
   ///   - change:               the change
   ///
-  private func positionFlags(_ object: Any, _ change: Any) {
-    
-//    Swift.print("FlagViewController: positionFlags, object = \(object), change = \(change), parent = \(parent)")
+  private func positionChange(_ object: Any, _ change: Any) {
     
     // move the Flag(s)
     (parent as? PanadapterViewController)?.positionFlags()
@@ -492,22 +546,12 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
       
       // S-Meter
       case Api.MeterShortName.signalPassband.rawValue:
-        observerSMeter( meter )
+        addMeterObservation( meter )
       
       default:
         break
       }
     }
-  }
-  /// Observe the S-Meter feed
-  ///
-  ///     Note: meters may not be available at Slice creation.
-  ///     If not, the .sliceMeterHasBeenAdded notification will identify the S-Meter
-  ///
-  func observerSMeter(_ meter: Meter) {
-    
-    // create the observation
-    _meterObservations.append( meter.observe(\.value, options: [.initial, .new], changeHandler: meterUpdate(_:_:)) )
   }
   /// Respond to a change in the S-Meter
   ///
@@ -515,7 +559,7 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
   ///   - object:                 the Meter
   ///   - change:                 the Change
   ///
-  private func meterUpdate(_ object: Any, _ change: Any) {
+  private func meterChange(_ object: Any, _ change: Any) {
     
     DispatchQueue.main.async { [unowned self] in
 

@@ -23,8 +23,8 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="5" id="yTY-WE-Qfp"/>
                                 </constraints>
-                                <color key="borderColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                <color key="fillColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                <color key="borderColor" red="1" green="1" blue="0.67843137254901964" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="fillColor" red="1" green="1" blue="0.67843137254901964" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </box>
                             <stackView distribution="fill" orientation="vertical" alignment="centerX" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Nj1-DW-PlA" userLabel="Buttons stack view">
                                 <rect key="frame" x="10" y="25" width="48" height="160"/>
@@ -355,8 +355,8 @@
                                     <constraint firstAttribute="height" constant="5" id="U5i-B6-4kX"/>
                                     <constraint firstAttribute="width" constant="311" id="UHo-mZ-iFG"/>
                                 </constraints>
-                                <color key="borderColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                <color key="fillColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                <color key="borderColor" red="1" green="1" blue="0.67843137254901964" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="fillColor" red="0.97406743802767515" green="1" blue="0.45674690665836049" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </box>
                             <box boxType="custom" cornerRadius="4" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="cep-jD-7gY" userLabel="Indicators Box">
                                 <rect key="frame" x="0.0" y="120" width="311" height="85"/>
@@ -688,8 +688,8 @@
                                     <constraint firstAttribute="height" constant="5" id="eM7-Dn-hZC"/>
                                     <constraint firstAttribute="width" constant="311" id="uha-jl-3tH"/>
                                 </constraints>
-                                <color key="borderColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                <color key="fillColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                <color key="borderColor" red="1" green="1" blue="0.67843137254901964" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="fillColor" red="1" green="1" blue="0.67843137254901964" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </box>
                             <box boxType="custom" cornerRadius="4" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="x2Q-jw-WsX" userLabel="Indicators Box">
                                 <rect key="frame" x="0.0" y="145" width="311" height="85"/>
@@ -1018,8 +1018,8 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="5" id="fM4-rr-L0j"/>
                                 </constraints>
-                                <color key="borderColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                <color key="fillColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                <color key="borderColor" red="1" green="1" blue="0.67843137254901964" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="fillColor" red="1" green="1" blue="0.67843137254901964" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </box>
                             <stackView distribution="fillEqually" orientation="vertical" alignment="centerX" spacing="14" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fGP-w5-RyK" userLabel="Buttons stack view">
                                 <rect key="frame" x="12" y="5" width="70" height="183"/>

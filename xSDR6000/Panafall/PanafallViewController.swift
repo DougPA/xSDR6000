@@ -10,29 +10,6 @@ import Cocoa
 import xLib6000
 
 // --------------------------------------------------------------------------------
-//  Created by PanafallsViewController
-//  Removed by WaterfallViewController
-//
-//  **** Notifications received ****
-//      None
-//
-//  **** Action Methods ****
-//      Left Doubleclick -> move active Slice
-//      Right Singleclick -> context menu (create/remove Slice/Tnf)
-//      ScrollWheel -> Slice frequency +/-
-//
-//  **** Observations ****
-//      None
-//
-//  **** Tracking Areas ****
-//      None
-//
-//  **** Constraints manipulated ***
-//      None
-//
-// --------------------------------------------------------------------------------
-
-// --------------------------------------------------------------------------------
 // MARK: - Panafall View Controller class implementation
 // --------------------------------------------------------------------------------
 
@@ -54,7 +31,7 @@ final class PanafallViewController          : NSSplitViewController {
   
   private weak var _panadapterViewController     : PanadapterViewController? { return _panadapterSplitViewItem.viewController as? PanadapterViewController }
   
-  private var _doubleClick                  : NSClickGestureRecognizer!
+  private var _singleLeftClick                  : NSClickGestureRecognizer!
   private var _rightClick                   : NSClickGestureRecognizer!
   private let kLeftButton                   = 0x01                          // masks for Gesture Recognizers
   private let kRightButton                  = 0x02
@@ -84,10 +61,10 @@ final class PanafallViewController          : NSSplitViewController {
     splitView.delegate = self
     
     // setup Left Double Click recognizer
-    _doubleClick = NSClickGestureRecognizer(target: self, action: #selector(leftDoubleClick(_:)))
-    _doubleClick.buttonMask = kLeftButton
-    _doubleClick.numberOfClicksRequired = 2
-    splitView.addGestureRecognizer(_doubleClick)
+    _singleLeftClick = NSClickGestureRecognizer(target: self, action: #selector(singleLeftClick(_:)))
+    _singleLeftClick.buttonMask = kLeftButton
+    _singleLeftClick.numberOfClicksRequired = 1
+    splitView.addGestureRecognizer(_singleLeftClick)
     
     // setup Right Single Click recognizer
     _rightClick = NSClickGestureRecognizer(target: self, action: #selector(rightClick(_:)))
@@ -151,7 +128,7 @@ final class PanafallViewController          : NSSplitViewController {
   ///
   /// - Parameter gr: the GestureRecognizer
   ///
-  @objc private func leftDoubleClick(_ gr: NSClickGestureRecognizer) {
+  @objc private func singleLeftClick(_ gr: NSClickGestureRecognizer) {
     
     // get the coordinates and convert to this View
     let mouseLocation = gr.location(in: splitView)
@@ -159,8 +136,14 @@ final class PanafallViewController          : NSSplitViewController {
     // calculate the frequency
     let mouseFrequency = Int(mouseLocation.x * _hzPerUnit) + _start
     
-    // is there an active Slice
-    if let slice = Slice.findActive(with: _panadapter!.id) {
+    // is the Frequency inside a Slice?
+    let slice = xLib6000.Slice.find(with: _panadapter!.id, byFrequency: mouseFrequency, minWidth: Int( CGFloat(_bandwidth) * kSliceFindWidth ))
+    if let slice = slice {
+      
+      // YES, mouse is in a Slice, make it active
+      slice.active = true
+    
+    } else if let slice = Slice.findActive(with: _panadapter!.id) {
       
       // YES, force it to the nearest step value
       let delta = (mouseFrequency % slice.step)
@@ -174,11 +157,6 @@ final class PanafallViewController          : NSSplitViewController {
         // move it to the step value below the click
         slice.frequency = mouseFrequency - delta
       }
-      
-    } else {
-      
-      // NO, create one at the mouse position
-      xLib6000.Slice.create(panadapter: _panadapter!, frequency: mouseFrequency)
     }
     // redraw the Slices
     _panadapterViewController?.redrawSlices()

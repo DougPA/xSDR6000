@@ -18,10 +18,9 @@ class ControlsViewController: NSTabViewController {
   static let kControlsHeight                : CGFloat = 100
 
   // ----------------------------------------------------------------------------
-  // MARK: - Internal properties
+  // MARK: - Private properties
   
-  @objc dynamic weak var slice              : xLib6000.Slice?
-  @objc dynamic weak var panadapter         : Panadapter?
+  private weak var _slice                   : xLib6000.Slice?
 
   // ----------------------------------------------------------------------------
   // MARK: - Overridden methods
@@ -44,7 +43,7 @@ class ControlsViewController: NSTabViewController {
   override func tabView(_ tabView: NSTabView, willSelect tabViewItem: NSTabViewItem?) {
     
     // give it a reference to the Slice
-    tabViewItem?.viewController?.representedObject = slice
+    tabViewItem?.viewController?.representedObject = _slice
     
     // set Background color of the TabViewItem view
     tabViewItem?.view?.layer?.backgroundColor = NSColor(red: 0.3, green: 0.3, blue: 0.3, alpha: 0.9).cgColor
@@ -59,11 +58,11 @@ class ControlsViewController: NSTabViewController {
   ///   - panadapter:               a Panadapter reference
   ///   - slice:                    a Slice reference
   ///
-  func configure(panadapter: Panadapter?, slice: xLib6000.Slice?) {
-    self.panadapter = panadapter
-    self.slice = slice!
+  func configure(slice: xLib6000.Slice?) {
+//    self.panadapter = panadapter
+    _slice = slice!
     
-    tabViewItems[0].viewController!.representedObject = slice
+    tabViewItems[0].viewController!.representedObject = _slice
   }
 
   // ----------------------------------------------------------------------------
@@ -74,14 +73,14 @@ class ControlsViewController: NSTabViewController {
   /// - Parameter sender:           a button
   ///
   @IBAction func zeroRit(_ sender: NSButton) {
-    slice!.ritOffset = 0
+    _slice?.ritOffset = 0
   }
   /// Respond to the 0 button for Xit
   ///
   /// - Parameter sender:           a button
   ///
   @IBAction func zeroXit(_ sender: NSButton) {
-    slice!.xitOffset = 0
+    _slice?.xitOffset = 0
   }
 
   // ----------------------------------------------------------------------------

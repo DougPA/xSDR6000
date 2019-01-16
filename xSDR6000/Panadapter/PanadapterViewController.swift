@@ -13,56 +13,6 @@ import SwiftyUserDefaults
 import xLib6000
 
 // --------------------------------------------------------------------------------
-//  Created by PanafallsViewController
-//  Removed by WaterfallViewController
-//
-//  **** Notifications received ****
-//      frameDidChange -> update xPixels & yPixels
-//      .panadapterWillBeRemoved -> stop observations, stop stream processing
-//      .sliceHasBeenAdd -> add Flag & Slice observations
-//      .sliceWillBeRemoved -> remove Flag & slice observations
-//      .tnfHasBeenAdded -> add Tnf observations
-//      .tnfWillBeRemoved -> remove Tnf observations
-//
-//  **** Action Methods ****
-//      Left Doubleclick -> move active Slice
-//      Right Singleclick -> context menu (create/remove Slice/Tnf)
-//      ScrollWheel -> Slice frequency +/-
-//
-//  **** Observations ****
-//      Colors:
-//        Defaults.dbLegend
-//        Defaults.marker
-//        Defaults.dbLegendSpacing
-//        Defaults.frequencyLegend
-//        Defaults.sliceActive
-//        Defaults.markerSegment
-//        Defaults.markerEdge
-//        Defaults.sliceFilter,
-//        Defaults.sliceInactive
-//        Defaults.tnfActive
-//        Defaults.tnfInactive
-//        Defaults.gridLine
-//        Defaults.spectrum
-//        Defaults.spectrumBackground
-//
-//      Other values:
-//        Defaults.spectrumFillLevel
-//        Defaults.markersEnabled
-//        Panadapter.bandwidth
-//        Panadapter.center
-//        Radio.tnfsEnabled
-//        Tnf.frequency
-//        Tnf.depth
-//        Tnf.width
-//        Tnf.permanent
-//
-//  **** Constraints manipulated ***
-//      None
-//
-// --------------------------------------------------------------------------------
-
-// --------------------------------------------------------------------------------
 // MARK: - Panadapter View Controller class implementation
 // --------------------------------------------------------------------------------
 
@@ -279,14 +229,14 @@ final class PanadapterViewController        : NSViewController, NSGestureRecogni
         // in spectrum, check for presence of Slice or Tnf
         let dragSlice = hitTestSlice(at: _dr.frequency)
         let dragTnf = hitTestTnf(at: _dr.frequency)
-        if let _ =  dragSlice{
-          // in Slice drag / resize
+        if let _ =  dragSlice {
+          // in Slice - drag Slice / resize Slice Filter
           _dr.type = .slice
           _dr.object = dragSlice
           _dr.cursor = NSCursor.crosshair
 
         } else if let _ = dragTnf {
-          // in Tnf drag / resize
+          // in Tnf - drag Tnf / resize Tnf width
           _dr.type = .tnf
           _dr.object = dragTnf
           _dr.cursor = NSCursor.crosshair
@@ -297,7 +247,7 @@ final class PanadapterViewController        : NSViewController, NSGestureRecogni
           _dr.cursor = NSCursor.resizeLeftRight
         }
       } else {
-        // in db legend, db legend drag
+        // in db legend - db legend drag
         _dr.type = .dbm
         _dr.cursor = NSCursor.resizeUpDown
       }
@@ -387,8 +337,6 @@ final class PanadapterViewController        : NSViewController, NSGestureRecogni
     var current  : (isOnLeft: Bool, freqPosition: CGFloat) = (true, 0.0)
     var previous : (isOnLeft: Bool, freqPosition: CGFloat) = (true, 0.0)
 
-//    Swift.print("_flags = \(_flags)")
-    
     // sort the Flags from left to right
     for flagVc in _flags.values.sorted(by: {$0.slice!.frequency < $1.slice!.frequency}) {
       
@@ -743,7 +691,7 @@ final class PanadapterViewController        : NSViewController, NSGestureRecogni
       
       // create a Controls View Controller & pass it needed parameters
       let controlsVc = sb.instantiateController(withIdentifier: "Controls") as! ControlsViewController
-      controlsVc.configure(panadapter: pan, slice: slice)
+//      controlsVc.configure(slice: slice)
       
       // pass the FlagVc needed parameters
       flagVc.configure(panadapter: pan, slice: slice, controlsVc: controlsVc, vc: self)
@@ -781,15 +729,12 @@ final class PanadapterViewController        : NSViewController, NSGestureRecogni
       let leadingConstraint = controlsVc.view.leadingAnchor.constraint(equalTo: flagVc.view.leadingAnchor)
       let trailingConstraint = controlsVc.view.trailingAnchor.constraint(equalTo: flagVc.view.trailingAnchor)
       let topConstraint = controlsVc.view.topAnchor.constraint(equalTo: flagVc.view.bottomAnchor)
-      let heightConstraint = controlsVc.view.heightAnchor.constraint(equalToConstant: 100.0)
-      let widthConstraint = controlsVc.view.widthAnchor.constraint(equalToConstant: 311.0)
+      let heightConstraint = controlsVc.view.heightAnchor.constraint(equalToConstant: FlagViewController.kLargeFlagHeight)
+      let widthConstraint = controlsVc.view.widthAnchor.constraint(equalToConstant: FlagViewController.kLargeFlagWidth)
 
       // activate Controls constraints
       let controlsConstraints: [NSLayoutConstraint] = [flagVc.controlsHeightConstraint!, leadingConstraint, trailingConstraint, topConstraint, heightConstraint, widthConstraint]
       NSLayoutConstraint.activate(controlsConstraints)
-
-      Swift.print("Flag FlagVc width = \(flagVc.view.frame.width)")
-      Swift.print("Flag ControlsVc width = \(controlsVc.view.frame.width)")
     }
   }
   /// Remove the Flag on the specified Slice
@@ -800,7 +745,7 @@ final class PanadapterViewController        : NSViewController, NSGestureRecogni
     
     let flagVc = _flags[slice.id]
     let controlsVc = flagVc?.controlsVc
-    flagVc?.invalidateObservations()
+    flagVc?.removeObservations()
 
     _flags[slice.id] = nil
     
