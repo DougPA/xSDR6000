@@ -13,7 +13,7 @@ import xLib6000
 // MARK: - Panafall View Controller class implementation
 // --------------------------------------------------------------------------------
 
-final class PanafallViewController          : NSSplitViewController {
+final class PanafallViewController          : NSSplitViewController, NSGestureRecognizerDelegate {
  
   static let kEdgeTolerance                 : CGFloat = 0.1                 // percent of bandwidth
 
@@ -29,9 +29,8 @@ final class PanafallViewController          : NSSplitViewController {
   private var _end                          : Int { return _center + (_bandwidth/2) }
   private var _hzPerUnit                    : CGFloat { return CGFloat(_end - _start) / view.frame.width }
   
-  private weak var _panadapterViewController     : PanadapterViewController? { return _panadapterSplitViewItem.viewController as? PanadapterViewController }
+  private weak var _panadapterViewController  : PanadapterViewController? { return _panadapterSplitViewItem.viewController as? PanadapterViewController }
   
-  private var _singleLeftClick                  : NSClickGestureRecognizer!
   private var _rightClick                   : NSClickGestureRecognizer!
   private let kLeftButton                   = 0x01                          // masks for Gesture Recognizers
   private let kRightButton                  = 0x02
@@ -60,22 +59,50 @@ final class PanafallViewController          : NSSplitViewController {
     
     splitView.delegate = self
     
-    // setup Left Double Click recognizer
-    _singleLeftClick = NSClickGestureRecognizer(target: self, action: #selector(singleLeftClick(_:)))
-    _singleLeftClick.buttonMask = kLeftButton
-    _singleLeftClick.numberOfClicksRequired = 1
-    splitView.addGestureRecognizer(_singleLeftClick)
-    
     // setup Right Single Click recognizer
     _rightClick = NSClickGestureRecognizer(target: self, action: #selector(rightClick(_:)))
     _rightClick.buttonMask = kRightButton
     _rightClick.numberOfClicksRequired = 1
     splitView.addGestureRecognizer(_rightClick)
   }
-  
-  // ----------------------------------------------------------------------------
-  // MARK: - Action methods
-  
+  /// Detect single left mouse button click
+  ///
+  /// - Parameter event:                the event
+  ///
+  override func mouseDown(with event: NSEvent) {
+    
+    if event.type == .leftMouseDown && event.clickCount == 1 {
+      
+      // get the coordinates and convert to this View
+      let location = event.locationInWindow
+      // calculate the frequency
+      let mouseFrequency = Int(location.x * _hzPerUnit) + _start
+      
+      // is the Frequency inside a Slice?
+      if let slice = xLib6000.Slice.find(with: _panadapter!.id, byFrequency: mouseFrequency, minWidth: Int( CGFloat(_bandwidth) * kSliceFindWidth )) {
+        
+        // YES, mouse is in a Slice, make it active
+        slice.active = true
+        
+      } else if let slice = Slice.findActive(with: _panadapter!.id) {
+        
+        // YES, force it to the nearest step value
+        let delta = (mouseFrequency % slice.step)
+        if delta >= slice.step / 2 {
+          
+          // move it to the step value above the click
+          slice.frequency = mouseFrequency + (slice.step - delta)
+          
+        } else {
+          
+          // move it to the step value below the click
+          slice.frequency = mouseFrequency - delta
+        }
+      }
+    }
+    // redraw the Slices
+    _panadapterViewController?.redrawSlices()
+  }
   /// Process scroll wheel events to change the Active Slice frequency
   ///
   /// - Parameter theEvent: a Scroll Wheel event
@@ -122,45 +149,8 @@ final class PanafallViewController          : NSSplitViewController {
   }
 
   // ----------------------------------------------------------------------------
-  // MARK: - Private methods
+  // MARK: - Private methods  
   
-  /// Respond to Left Double Click gesture
-  ///
-  /// - Parameter gr: the GestureRecognizer
-  ///
-  @objc private func singleLeftClick(_ gr: NSClickGestureRecognizer) {
-    
-    // get the coordinates and convert to this View
-    let mouseLocation = gr.location(in: splitView)
-    
-    // calculate the frequency
-    let mouseFrequency = Int(mouseLocation.x * _hzPerUnit) + _start
-    
-    // is the Frequency inside a Slice?
-    let slice = xLib6000.Slice.find(with: _panadapter!.id, byFrequency: mouseFrequency, minWidth: Int( CGFloat(_bandwidth) * kSliceFindWidth ))
-    if let slice = slice {
-      
-      // YES, mouse is in a Slice, make it active
-      slice.active = true
-    
-    } else if let slice = Slice.findActive(with: _panadapter!.id) {
-      
-      // YES, force it to the nearest step value
-      let delta = (mouseFrequency % slice.step)
-      if delta >= slice.step / 2 {
-        
-        // move it to the step value above the click
-        slice.frequency = mouseFrequency + (slice.step - delta)
-        
-      } else {
-        
-        // move it to the step value below the click
-        slice.frequency = mouseFrequency - delta
-      }
-    }
-    // redraw the Slices
-    _panadapterViewController?.redrawSlices()
-  }
   /// Respond to a Right Click gesture
   ///
   /// - Parameter gr: the GestureRecognizer
