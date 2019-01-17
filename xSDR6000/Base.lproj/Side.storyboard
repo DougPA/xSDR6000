@@ -1376,14 +1376,14 @@
                                     <real value="3.4028234663852886e+38"/>
                                 </customSpacing>
                             </stackView>
-                            <scrollView identifier="Scroll view" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cXN-5r-vYF">
+                            <scrollView identifier="Scroll view" borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cXN-5r-vYF">
                                 <rect key="frame" x="0.0" y="0.0" width="311" height="1050"/>
                                 <clipView key="contentView" identifier="Clip view" id="k0h-jX-gWp">
-                                    <rect key="frame" x="1" y="1" width="309" height="1048"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="311" height="1050"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <view identifier="Inside view" translatesAutoresizingMaskIntoConstraints="NO" id="WdK-Jx-DB2" userLabel="Inside View">
-                                            <rect key="frame" x="-1" y="-1" width="311" height="1050"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="311" height="1050"/>
                                             <subviews>
                                                 <containerView wantsLayer="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wNm-qC-krW" userLabel="Rx View container">
                                                     <rect key="frame" x="0.0" y="850" width="311" height="200"/>
@@ -1454,6 +1454,7 @@
                                             </constraints>
                                         </view>
                                     </subviews>
+                                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </clipView>
                                 <constraints>
                                     <constraint firstItem="WdK-Jx-DB2" firstAttribute="leading" secondItem="cXN-5r-vYF" secondAttribute="leading" id="9ec-gr-NbV"/>
@@ -1465,7 +1466,7 @@
                                     <rect key="frame" x="-100" y="-100" width="325" height="16"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
-                                <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="2L3-qT-kuv">
+                                <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="2L3-qT-kuv">
                                     <rect key="frame" x="294" y="1" width="16" height="1048"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>

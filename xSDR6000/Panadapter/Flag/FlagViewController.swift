@@ -156,48 +156,41 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
   ///   - panadapter:               a Panadapter reference
   ///   - slice:                    a Slice reference
   ///
-  func configure(panadapter: Panadapter?, slice: xLib6000.Slice?, controlsVc: ControlsViewController?, vc: NSViewController) {
-
-    // is this the initial setup for this Flag?
-    if _vc == nil {
-      
-      // YES, save the params
-      _panadapter = panadapter
-      self.slice = slice!
-      self.controlsVc = controlsVc
-      _vc = vc
-      
-      controlsVc?.configure(slice: slice!)
-
-      // find the S-Meter feed (if any, it may alreaady exist or it may come later as a sliceMeterAdded Notification)
-      findSMeter()
-      
-      // create observations of Slice & Panadapter properties
-      addObservations(slice: slice!, panadapter: _panadapter!)
-      
-      // start receiving Notifications
-      addNotifications()
-      
-    } else {
-      
-      // YES, save the params
-      _panadapter = panadapter
-      self.slice = slice!
-      self.controlsVc = controlsVc
-      _vc = vc
-      
-      controlsVc?.configure(slice: slice!)
-      
-      // remove all previous observations
-      removeObservations()
-      
-      // find the S-Meter feed (if any, it may alreaady exist or it may come later as a sliceMeterAdded Notification)
-      findSMeter()
-
-      // add observations of Slice & Panadapter properties
-      addObservations(slice: slice!, panadapter: _panadapter!)
-    }
+  func configure(panadapter: Panadapter, slice: xLib6000.Slice, controlsVc: ControlsViewController, vc: NSViewController) {
+    
+    // save the params
+    _panadapter = panadapter
+    self.slice = slice
+    self.controlsVc = controlsVc
+    _vc = vc
+    
+    controlsVc.configure(slice: slice)
+    
+    // find the S-Meter feed (if any, it may alreaady exist or it may come later as a sliceMeterAdded Notification)
+    findSMeter(for: slice)
+    
+    // create observations of Slice & Panadapter properties
+    addObservations(slice: slice, panadapter: _panadapter!)
+    
+    // start receiving Notifications
+    addNotifications()
   }
+
+  func updateObservations(slice: xLib6000.Slice, panadapter: Panadapter) {
+    
+    _panadapter = panadapter
+    self.slice = slice
+
+    removeObservations()
+    
+    findSMeter(for: slice)
+    
+    addObservations(slice: slice, panadapter: panadapter)
+  }
+
+
+
+
   /// Select one of the Controls views
   ///
   /// - Parameter id:                   an identifier String
@@ -343,9 +336,9 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
   
   /// Find the S-Meter for this Slice (if any)
   ///
-  private func findSMeter() {
+  private func findSMeter(for slice: xLib6000.Slice) {
     
-    if let item = slice!.meters.first(where: { $0.value.name == Api.MeterShortName.signalPassband.rawValue} ) {
+    if let item = slice.meters.first(where: { $0.value.name == Api.MeterShortName.signalPassband.rawValue} ) {
       addMeterObservation( item.value)
     }
   }
@@ -495,17 +488,12 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
   ///   - slice:                the slice that changed
   ///   - change:               the change
   ///
-  private func sliceChange(_ slice: xLib6000.Slice, _ change: Any) {
+  private func sliceChange(_ slice: xLib6000.Slice, _ change: NSKeyValueObservedChange<Bool>) {
     
-    if _vc is SideViewController {
-      // this Flag is on a Side view
+    if let pan = _vc as? PanadapterViewController {
       
-      // TODO: need code
-      
-    } else {
-      
-      // This Flag is on a Slice, force a redraw
-      (_vc as! PanadapterViewController).redrawFrequencyLegend()
+      // This is a Slice Flag
+      pan.redrawFrequencyLegend()
     }
   }
   /// Respond to a change in Panadapter or Slice properties

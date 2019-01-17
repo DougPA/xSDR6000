@@ -34,7 +34,7 @@ final class SideViewController              : NSViewController {
   @IBOutlet private weak var _pcwContainerHeight    : NSLayoutConstraint!
   @IBOutlet private weak var _phneContainerHeight   : NSLayoutConstraint!
   @IBOutlet private weak var _eqContainerHeight     : NSLayoutConstraint!
-
+  
   private var _rxViewLoaded                 = false
   private var _flagVc                       : FlagViewController?
   private var _observations                 = [NSKeyValueObservation]()
@@ -53,8 +53,10 @@ final class SideViewController              : NSViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
+    Swift.print("SideViewController - viewDidLoad")
+    
     view.translatesAutoresizingMaskIntoConstraints = false
-    _rxContainer.layer?.backgroundColor = Defaults[.spectrumBackground].cgColor
+    view.layer?.backgroundColor = NSColor.black.cgColor
     
     addNotifications()
     
@@ -78,13 +80,11 @@ final class SideViewController              : NSViewController {
 
     _scrollView.needsLayout = true
   }
-  override func viewWillAppear() {
-    super.viewWillAppear()
-    
-    if Defaults[.sideViewOpen] && Defaults[.sideRxOpen] && !_rxViewLoaded {
-      loadRxView()
-    }
-  }
+//  override func viewWillAppear() {
+//    super.viewWillAppear()
+//
+//    if Defaults[.sideRxOpen] && !_rxViewLoaded { initialFlagLoad() }
+//  }
   override func viewDidLayout() {
 
     // position the scroll view at the top
@@ -104,7 +104,6 @@ final class SideViewController              : NSViewController {
     case "RX":
       Defaults[.sideRxOpen] = sender.boolState
       _rxContainerHeight.constant = (sender.boolState ? kRxHeightOpen : kHeightClosed)
-      if sender.boolState  && !_rxViewLoaded { loadRxView() }
     case "TX":
       Defaults[.sideTxOpen] = sender.boolState
       _txContainerHeight.constant = (sender.boolState ? kTxHeightOpen : kHeightClosed)
@@ -124,26 +123,7 @@ final class SideViewController              : NSViewController {
   
   // ----------------------------------------------------------------------------
   // MARK: - Internal methods
-
-  func loadRxView() {
-
-    if let radio = Api.sharedInstance.radio {
-      
-      // find the active Slice
-      if let slice = Slice.findActive() {
-        
-        _rxViewLoaded = true
-        
-        // find the Panadapter of the Slice
-        let pan = radio.panadapters[slice.panadapterId]!
-        
-        DispatchQueue.main.async {
-          self.addRxView(slice: slice, panadapter: pan)
-        }
-      }
-    }
-  }
-  
+ 
   func setRxHeight(_ height: CGFloat) {
     self._rxContainerHeight.constant = height
   }
@@ -161,45 +141,41 @@ final class SideViewController              : NSViewController {
     
     // create a Controls View Controller & pass it needed parameters
     let controlsVc = sb.instantiateController(withIdentifier: "Controls") as! ControlsViewController
-    //        controlsVc.configure(slice: slice)
     
     // pass the FlagVc needed parameters
     _flagVc!.configure(panadapter: panadapter, slice: slice, controlsVc: controlsVc, vc: self)
     _flagVc!.smallFlagDisplayed = false
     _flagVc!.isOnLeft = true
-    
-    // add its view
-    _rxContainer.addSubview(_flagVc!.view)
-    _rxContainer.addSubview(controlsVc.view)
-    
+
+    // add the views
+    self._rxContainer.addSubview(self._flagVc!.view)
+    self._rxContainer.addSubview(self._flagVc!.controlsVc!.view)
+
     // Flag View constraints: height, width & top of the Flag (constants)
-    _flagVc!.flagHeightConstraint = _flagVc!.view.heightAnchor.constraint(equalToConstant: FlagViewController.kLargeFlagHeight)
-    _flagVc!.flagWidthConstraint = _flagVc!.view.widthAnchor.constraint(equalToConstant: FlagViewController.kLargeFlagWidth)
-    let top = _flagVc!.view.topAnchor.constraint(equalTo: _rxContainer.topAnchor)
+    self._flagVc!.flagHeightConstraint = self._flagVc!.view.heightAnchor.constraint(equalToConstant: FlagViewController.kLargeFlagHeight)
+    self._flagVc!.flagWidthConstraint = self._flagVc!.view.widthAnchor.constraint(equalToConstant: FlagViewController.kLargeFlagWidth)
+    let top = self._flagVc!.view.topAnchor.constraint(equalTo: self._rxContainer.topAnchor)
     
     // Flag View constraints: position (will be changed as Flag moves)
-    _flagVc!.flagXPositionConstraint = _flagVc!.view.leadingAnchor.constraint(equalTo: _rxContainer.leadingAnchor, constant: 0)
+    self._flagVc!.flagXPositionConstraint = self._flagVc!.view.leadingAnchor.constraint(equalTo: self._rxContainer.leadingAnchor, constant: 0)
     
     // activate Flag constraints
-    let constraints = [_flagVc!.flagHeightConstraint!, _flagVc!.flagWidthConstraint!, _flagVc!.flagXPositionConstraint!, top]
+    let constraints = [self._flagVc!.flagHeightConstraint!, self._flagVc!.flagWidthConstraint!, self._flagVc!.flagXPositionConstraint!, top]
     NSLayoutConstraint.activate(constraints)
     
     // Controls View constraints: height, leading, trailing & top of the Controls (constants)
-    self._flagVc!.controlsHeightConstraint = controlsVc.view.heightAnchor.constraint(equalToConstant: ControlsViewController.kControlsHeight)
-    let leadingConstraint = controlsVc.view.leadingAnchor.constraint(equalTo: _flagVc!.view.leadingAnchor)
-    let trailingConstraint = controlsVc.view.trailingAnchor.constraint(equalTo: _flagVc!.view.trailingAnchor)
-    let topConstraint = controlsVc.view.topAnchor.constraint(equalTo: _flagVc!.view.bottomAnchor)
-    let heightConstraint = controlsVc.view.heightAnchor.constraint(equalToConstant: FlagViewController.kLargeFlagHeight)
-    let widthConstraint = controlsVc.view.widthAnchor.constraint(equalToConstant: FlagViewController.kLargeFlagWidth)
+    self._flagVc!.controlsHeightConstraint = self._flagVc!.controlsVc!.view.heightAnchor.constraint(equalToConstant: ControlsViewController.kControlsHeight)
+    let leadingConstraint = self._flagVc!.controlsVc!.view.leadingAnchor.constraint(equalTo: self._flagVc!.view.leadingAnchor)
+    let trailingConstraint = self._flagVc!.controlsVc!.view.trailingAnchor.constraint(equalTo: self._flagVc!.view.trailingAnchor)
+    let topConstraint = self._flagVc!.controlsVc!.view.topAnchor.constraint(equalTo: self._flagVc!.view.bottomAnchor)
+    let heightConstraint = self._flagVc!.controlsVc!.view.heightAnchor.constraint(equalToConstant: FlagViewController.kLargeFlagHeight)
+    let widthConstraint = self._flagVc!.controlsVc!.view.widthAnchor.constraint(equalToConstant: FlagViewController.kLargeFlagWidth)
     
     // activate Controls constraints
-    let controlsConstraints: [NSLayoutConstraint] = [_flagVc!.controlsHeightConstraint!, leadingConstraint, trailingConstraint, topConstraint, heightConstraint, widthConstraint]
+    let controlsConstraints: [NSLayoutConstraint] = [self._flagVc!.controlsHeightConstraint!, leadingConstraint, trailingConstraint, topConstraint, heightConstraint, widthConstraint]
     NSLayoutConstraint.activate(controlsConstraints)
-    //
-    //          flagVc.selectControls(0)
-    self._rxContainerHeight.constant = (controlsVc.view.isHidden ? 100 : 200)
     
-//    addObservations(slice: slice)
+    self._rxContainerHeight.constant = (self._flagVc!.controlsVc!.view.isHidden ? 100 : 200)
   }
   /// Position a scroll view at the top
   ///
@@ -212,64 +188,6 @@ final class SideViewController              : NSViewController {
       docView.scroll(NSPoint(x: 0, y: view.frame.height))
     }
   }
-  
-  // ----------------------------------------------------------------------------
-  // MARK: - Observation methods
-  
-  /// Add observers for properties used by the Flag
-  ///
-//  private func addObservations(slice: xLib6000.Slice) {
-//
-//    _observations.append( slice.observe(\.active, options: [.new], changeHandler: sliceChange(_:_:)) )
-//
-//  }
-//  /// Remove observations
-//  ///
-//  /// - Parameters:
-//  ///   - observations:                 an array of NSKeyValueObservation
-//  ///   - remove:                       remove all enabled
-//  ///
-//  func removeObservations() {
-//
-//    // invalidate each observation
-//    _observations.forEach { $0.invalidate() }
-//
-//    // remove the tokens
-//    _observations.removeAll()
-//  }
-//  /// Respond to a change in the active Slice
-//  ///
-//  /// - Parameters:
-//  ///   - slice:                the Slice that changed
-//  ///   - change:               the change
-//  ///
-//  private func sliceChange(_ slice: xLib6000.Slice, _ change: Any) {
-//
-//    Swift.print("slice = \(slice.id), sliceChange, freq = \(slice.frequency), change = \(change)")
-//
-//    removeObservations()
-//
-//    if let radio = Api.sharedInstance.radio {
-//
-//      sleep(1)
-//
-//      // find the active Slice
-//      if let activeSlice = Slice.findActive() {
-//
-//        Swift.print("new slice = \(activeSlice.id), freq = \(activeSlice.frequency)")
-//
-//        // find the Panadapter of the Slice
-//        let pan = radio.panadapters[activeSlice.panadapterId]
-//
-//        _flagVc!.configure(panadapter: pan, slice: activeSlice, controlsVc: _flagVc!.controlsVc, vc: self)
-//
-//        addObservations(slice: activeSlice)
-//      } else {
-//
-//        Swift.print("No active Slice")
-//      }
-//    }
-//  }
 
   // ----------------------------------------------------------------------------
   // MARK: - Notification Methods
@@ -280,8 +198,8 @@ final class SideViewController              : NSViewController {
   private func addNotifications() {
     
     NC.makeObserver(self, with: #selector(frameDidChange(_:)), of: NSView.frameDidChangeNotification.rawValue, object: view)
-
-    NC.makeObserver(self, with: #selector(sliceHasBeenAdded(_:)), of: .sliceHasBeenAdded)
+    NC.makeObserver(self, with: #selector(activeSliceChange(_:)), of: .sliceHasBeenAdded)
+    NC.makeObserver(self, with: #selector(activeSliceChange(_:)), of: .sliceBecameActive)
   }
   /// Process frameDidChange Notification
   ///
@@ -291,14 +209,35 @@ final class SideViewController              : NSViewController {
     
     _scrollView.needsLayout = true
   }
-  /// Process .sliceHasBeenAdded Notification
+  /// Process .sliceHasBeenAdded & .sliceBecameActiv Notification
   ///
   /// - Parameter note:               a Notification instance
   ///
-  @objc private func sliceHasBeenAdded(_ note: Notification) {
+  @objc private func activeSliceChange(_ note: Notification) {
     
-    if let slice = note.object as? xLib6000.Slice {
-      Swift.print("Slice added @ \(slice.frequency) on pan \(slice.panadapterId), active = \(slice.active)")
+    let slice = note.object as! xLib6000.Slice
+
+    // find the Panadapter of the Slice
+    let pan = Api.sharedInstance.radio!.panadapters[slice.panadapterId]!
+    
+    if _rxViewLoaded  {
+      
+      Swift.print("Updating Flag for slice \(slice.id)")
+      
+      DispatchQueue.main.async {
+        
+        self._flagVc!.updateObservations(slice: slice, panadapter: pan)
+      }
+
+    } else {
+      
+      Swift.print("Creating Flag for slice \(slice.id)")
+      _rxViewLoaded = true
+
+      DispatchQueue.main.async {
+
+        self.addRxView(slice: slice, panadapter: pan)
+      }
     }
   }
 }

@@ -123,6 +123,8 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    Swift.print("RadioViewController - viewDidLoad")
+    
     identifier = NSUserInterfaceItemIdentifier(rawValue: "RadioViewController")
     view.identifier = NSUserInterfaceItemIdentifier(rawValue: "Radio split view")
         
