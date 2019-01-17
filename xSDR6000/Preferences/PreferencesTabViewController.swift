@@ -40,7 +40,8 @@ final class PreferencesTabViewController    : NSTabViewController {
     super.viewWillAppear()
     
     view.window!.setFrameUsingName(_autosaveName)
-    
+    view.window!.level = .floating
+
     // select the previously displayed tab
     tabView.selectTabViewItem(withIdentifier: NSUserInterfaceItemIdentifier(Defaults[.preferencesTabId]) )
   }
