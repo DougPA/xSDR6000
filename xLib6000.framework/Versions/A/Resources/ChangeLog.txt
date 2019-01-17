@@ -1,5 +1,10 @@
 xLib6000 Change Log
 
+v2.3.4
+
+Notifications.swift - added sliceBecameActive
+Slice.swift - in "internal var _active: Bool" added post of sliceBecameActive
+
 v2.3.3
 
 **** Reversed the changes from v3.0.0 ****
