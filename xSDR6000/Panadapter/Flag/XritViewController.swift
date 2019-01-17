@@ -82,9 +82,6 @@ class XritViewController: NSViewController {
       _slice.xitOffset = sender.integerValue
     case "stepStepper":
       _slice.step = sender.integerValue
-      
-      Swift.print("integerValue = \(sender.integerValue), increment = \(sender.increment)")
-      
     default:
       fatalError()
     }

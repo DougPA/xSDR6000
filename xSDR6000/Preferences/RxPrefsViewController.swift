@@ -50,7 +50,6 @@ class RxPrefsViewController: NSViewController {
   @IBAction func calibrate(_ sender: NSButton) {
 
     if let radio = Api.sharedInstance.radio {
-      Swift.print("RxPrefsViewController, Calibrate")
       radio.startCalibration = true      
     }
   }

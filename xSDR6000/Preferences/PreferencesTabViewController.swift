@@ -33,8 +33,6 @@ final class PreferencesTabViewController    : NSTabViewController {
     // set the background color of the Flag
     view.layer?.backgroundColor = NSColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5).cgColor
     
-    Swift.print("Loaded tabId \(Defaults[.preferencesTabId])")
-
     tabView.selectTabViewItem(withIdentifier: NSUserInterfaceItemIdentifier(Defaults[.preferencesTabId]) )
   }
 
