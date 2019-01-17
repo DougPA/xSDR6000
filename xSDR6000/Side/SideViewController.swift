@@ -52,8 +52,6 @@ final class SideViewController              : NSViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-
-    Swift.print("SideViewController - viewDidLoad")
     
     view.translatesAutoresizingMaskIntoConstraints = false
     view.layer?.backgroundColor = NSColor.black.cgColor
