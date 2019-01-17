@@ -9,18 +9,18 @@
         <!--Panafall Button View Controller-->
         <scene sceneID="QPt-Bn-Nu6">
             <objects>
-                <viewController storyboardIdentifier="Button" id="euw-tc-dP2" customClass="PanafallButtonViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" identifier="PanafallButton" id="aTE-Di-0an">
+                <viewController identifier="Panafall Button View Controller" storyboardIdentifier="Button" id="euw-tc-dP2" customClass="PanafallButtonViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" identifier="Panafall Button view" id="aTE-Di-0an">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <containerView translatesAutoresizingMaskIntoConstraints="NO" id="fEj-HR-VF1">
+                            <containerView identifier="Panafall Button View Container view" translatesAutoresizingMaskIntoConstraints="NO" id="fEj-HR-VF1">
                                 <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                                 <connections>
                                     <segue destination="cCR-9u-87r" kind="embed" identifier="PanafallEmbed" id="EvA-Kz-a01"/>
                                 </connections>
                             </containerView>
-                            <customView wantsLayer="YES" translatesAutoresizingMaskIntoConstraints="NO" id="a59-Gz-pgR" userLabel="Button View" customClass="PanafallButtonView" customModule="xSDR6000" customModuleProvider="target">
+                            <customView identifier="Panafall Button View Button view" wantsLayer="YES" translatesAutoresizingMaskIntoConstraints="NO" id="a59-Gz-pgR" userLabel="Button View" customClass="PanafallButtonView" customModule="xSDR6000" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="75" height="300"/>
                                 <subviews>
                                     <stackView distribution="fill" orientation="vertical" alignment="centerX" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VxK-js-2Oq">
@@ -206,12 +206,12 @@
         <!--Panafall-->
         <scene sceneID="Bs3-gG-X1W">
             <objects>
-                <splitViewController storyboardIdentifier="Panafall" id="cCR-9u-87r" userLabel="Panafall" customClass="PanafallViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
+                <splitViewController identifier="Panafall View Controller" storyboardIdentifier="Panafall" id="cCR-9u-87r" userLabel="Panafall" customClass="PanafallViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
                     <splitViewItems>
                         <splitViewItem id="wXf-R0-54b"/>
                         <splitViewItem id="dLv-AJ-50i"/>
                     </splitViewItems>
-                    <splitView key="splitView" identifier="Panafall" autosaveName="Panafall" dividerStyle="thin" id="eSL-4j-ZUz">
+                    <splitView key="splitView" identifier="Panafall Split view" autosaveName="Panafall" dividerStyle="thin" id="eSL-4j-ZUz">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <connections>
@@ -233,8 +233,8 @@
         <scene sceneID="Xfj-eF-lNV">
             <objects>
                 <customObject id="WaM-Xb-K61" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-                <viewController storyboardIdentifier="Panadapter" id="ywe-lT-40r" userLabel="PanadapterVC" customClass="PanadapterViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
-                    <customView key="view" wantsLayer="YES" id="RX6-ul-e3s" userLabel="Container">
+                <viewController identifier="Panadapter View Controller" storyboardIdentifier="Panadapter" id="ywe-lT-40r" userLabel="PanadapterVC" customClass="PanadapterViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
+                    <customView key="view" identifier="Panadapter Container view" wantsLayer="YES" id="RX6-ul-e3s" userLabel="Container">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="150"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <subviews>

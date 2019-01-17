@@ -714,7 +714,7 @@
         <scene sceneID="R2V-B0-nI4">
             <objects>
                 <windowController storyboardIdentifier="MainWindow" id="B8D-0N-5wS" userLabel="Radio Main window controller" customClass="MainWindowController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
-                    <window key="window" title="xSDR6000" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="IQv-IB-iLA" userLabel="Main window">
+                    <window key="window" identifier="Radio Main Window" title="xSDR6000" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="IQv-IB-iLA" userLabel="Main window">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="30" y="240" width="945" height="300"/>
@@ -975,12 +975,12 @@
         <!--Radio view controller-->
         <scene sceneID="hg3-hZ-gZY">
             <objects>
-                <splitViewController id="2ro-LE-ZBU" userLabel="Radio view controller" customClass="RadioViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
+                <splitViewController identifier="Radio View Controller" id="2ro-LE-ZBU" userLabel="Radio view controller" customClass="RadioViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
                     <splitViewItems>
                         <splitViewItem id="0W5-iK-sGW" userLabel="Panafalls split item"/>
                         <splitViewItem id="99V-vb-QuP"/>
                     </splitViewItems>
-                    <splitView key="splitView" misplaced="YES" dividerStyle="thin" vertical="YES" id="oU9-Vu-xiy" userLabel="Radio split view">
+                    <splitView key="splitView" identifier="Radio Split View" misplaced="YES" dividerStyle="thin" vertical="YES" id="oU9-Vu-xiy" userLabel="Radio split view">
                         <rect key="frame" x="0.0" y="0.0" width="958" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <userDefinedRuntimeAttributes>
@@ -1011,8 +1011,8 @@
         <!--Panafalls view controller-->
         <scene sceneID="2B4-2I-NKY">
             <objects>
-                <splitViewController storyboardIdentifier="Panafalls" showSeguePresentationStyle="single" id="uMM-BY-Dcg" userLabel="Panafalls view controller" customClass="PanafallsViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
-                    <splitView key="splitView" autosaveName="Panafalls" dividerStyle="thin" id="Mfh-In-tH1" userLabel="Panafalls split view">
+                <splitViewController identifier="Panafalls View Controller" storyboardIdentifier="Panafalls" showSeguePresentationStyle="single" id="uMM-BY-Dcg" userLabel="Panafalls view controller" customClass="PanafallsViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
+                    <splitView key="splitView" identifier="Panafalls Split View" autosaveName="Panafalls" dividerStyle="thin" id="Mfh-In-tH1" userLabel="Panafalls split view">
                         <rect key="frame" x="0.0" y="0.0" width="945" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <userDefinedRuntimeAttributes>

@@ -9,8 +9,8 @@
         <!--Eq View Controller-->
         <scene sceneID="8kI-qh-C60">
             <objects>
-                <viewController storyboardIdentifier="EQ" id="yhz-wz-Qrr" customClass="EqViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" wantsLayer="YES" id="EPz-Xv-tol">
+                <viewController identifier="Equalizer View Controller" storyboardIdentifier="EQ" id="yhz-wz-Qrr" customClass="EqViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" identifier="Equalizer view" wantsLayer="YES" id="EPz-Xv-tol">
                         <rect key="frame" x="0.0" y="0.0" width="311" height="210"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
@@ -340,8 +340,8 @@
         <!--Tx View Controller-->
         <scene sceneID="c7q-1P-0zz">
             <objects>
-                <viewController storyboardIdentifier="TX" id="jqe-kd-5d6" customClass="TxViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" wantsLayer="YES" id="246-rc-7iy">
+                <viewController identifier="Tx View Controller" storyboardIdentifier="TX" id="jqe-kd-5d6" customClass="TxViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" identifier="Tx View" wantsLayer="YES" id="246-rc-7iy">
                         <rect key="frame" x="0.0" y="0.0" width="311" height="210"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
@@ -673,8 +673,8 @@
         <!--PCW View Controller-->
         <scene sceneID="JSR-vZ-9PL">
             <objects>
-                <viewController storyboardIdentifier="PCW" id="CNy-BK-6hp" userLabel="PCW View Controller" customClass="PCWViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" wantsLayer="YES" id="lRw-Dq-Co8">
+                <viewController identifier="Pcw View Controller" storyboardIdentifier="PCW" id="CNy-BK-6hp" userLabel="PCW View Controller" customClass="PCWViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" identifier="Pcw View" wantsLayer="YES" id="lRw-Dq-Co8">
                         <rect key="frame" x="0.0" y="0.0" width="311" height="235"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
@@ -1004,8 +1004,8 @@
         <!--Phone View Controller-->
         <scene sceneID="Aly-LI-5PS">
             <objects>
-                <viewController storyboardIdentifier="PHNE" id="4Er-qS-ODr" customClass="PhoneViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" wantsLayer="YES" id="V5K-Dt-M7N">
+                <viewController identifier="Phone View Controller" storyboardIdentifier="PHNE" id="4Er-qS-ODr" customClass="PhoneViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" identifier="Phone view" wantsLayer="YES" id="V5K-Dt-M7N">
                         <rect key="frame" x="0.0" y="0.0" width="311" height="210"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
@@ -1291,12 +1291,12 @@
         <!--Side View Controller-->
         <scene sceneID="Zer-Tp-Jae">
             <objects>
-                <viewController id="sri-rJ-Lo4" customClass="SideViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" identifier="Top view" wantsLayer="YES" id="JWf-Xw-QVy">
+                <viewController identifier="Side View Controller" id="sri-rJ-Lo4" customClass="SideViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" identifier="Side Top view" wantsLayer="YES" id="JWf-Xw-QVy">
                         <rect key="frame" x="0.0" y="0.0" width="311" height="1087"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <stackView identifier="Buttons view" wantsLayer="YES" distribution="fillEqually" orientation="horizontal" alignment="centerY" spacing="4" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" horizontalClippingResistancePriority="750" verticalClippingResistancePriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ViS-6c-7jW" userLabel="Side Buttons stack view">
+                            <stackView identifier="Side Buttons view" wantsLayer="YES" distribution="fillEqually" orientation="horizontal" alignment="centerY" spacing="4" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" horizontalClippingResistancePriority="750" verticalClippingResistancePriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ViS-6c-7jW" userLabel="Side Buttons stack view">
                                 <rect key="frame" x="5" y="1050" width="301" height="37"/>
                                 <subviews>
                                     <button identifier="RX" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="TtR-2c-epm">
@@ -1376,7 +1376,7 @@
                                     <real value="3.4028234663852886e+38"/>
                                 </customSpacing>
                             </stackView>
-                            <scrollView identifier="Scroll view" borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cXN-5r-vYF">
+                            <scrollView identifier="Side Scroll view" borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cXN-5r-vYF">
                                 <rect key="frame" x="0.0" y="0.0" width="311" height="1050"/>
                                 <clipView key="contentView" identifier="Clip view" id="k0h-jX-gWp">
                                     <rect key="frame" x="0.0" y="0.0" width="311" height="1050"/>
@@ -1385,14 +1385,14 @@
                                         <view identifier="Inside view" translatesAutoresizingMaskIntoConstraints="NO" id="WdK-Jx-DB2" userLabel="Inside View">
                                             <rect key="frame" x="0.0" y="0.0" width="311" height="1050"/>
                                             <subviews>
-                                                <containerView wantsLayer="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wNm-qC-krW" userLabel="Rx View container">
+                                                <containerView identifier="Rx Container View" wantsLayer="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wNm-qC-krW" userLabel="Rx View container">
                                                     <rect key="frame" x="0.0" y="850" width="311" height="200"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="311" id="dxo-0a-apt"/>
                                                         <constraint firstAttribute="height" constant="200" id="tAj-GH-gY5"/>
                                                     </constraints>
                                                 </containerView>
-                                                <containerView translatesAutoresizingMaskIntoConstraints="NO" id="hHA-SF-aVp" userLabel="Tx View container">
+                                                <containerView identifier="Tx COntainer View" translatesAutoresizingMaskIntoConstraints="NO" id="hHA-SF-aVp" userLabel="Tx View container">
                                                     <rect key="frame" x="0.0" y="640" width="311" height="210"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="311" id="P83-dK-6Hm"/>
@@ -1402,7 +1402,7 @@
                                                         <segue destination="jqe-kd-5d6" kind="embed" id="SOj-Rj-Hbz"/>
                                                     </connections>
                                                 </containerView>
-                                                <containerView translatesAutoresizingMaskIntoConstraints="NO" id="mKQ-NT-mCo" userLabel="Pcw View container">
+                                                <containerView identifier="Pcw Container View" translatesAutoresizingMaskIntoConstraints="NO" id="mKQ-NT-mCo" userLabel="Pcw View container">
                                                     <rect key="frame" x="0.0" y="430" width="311" height="210"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="311" id="3Ia-CF-ie6"/>
@@ -1412,7 +1412,7 @@
                                                         <segue destination="CNy-BK-6hp" kind="embed" id="f9Q-nq-X9v"/>
                                                     </connections>
                                                 </containerView>
-                                                <containerView translatesAutoresizingMaskIntoConstraints="NO" id="eED-TT-H8j" userLabel="Phne View container">
+                                                <containerView identifier="Phone Container View" translatesAutoresizingMaskIntoConstraints="NO" id="eED-TT-H8j" userLabel="Phne View container">
                                                     <rect key="frame" x="0.0" y="220" width="311" height="210"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="311" id="8K8-VF-6nT"/>
@@ -1422,7 +1422,7 @@
                                                         <segue destination="4Er-qS-ODr" kind="embed" id="JU9-Vo-SA6"/>
                                                     </connections>
                                                 </containerView>
-                                                <containerView identifier="Container view" translatesAutoresizingMaskIntoConstraints="NO" id="eBz-RL-KvA" userLabel="Eq View container">
+                                                <containerView identifier="Eq Container view" translatesAutoresizingMaskIntoConstraints="NO" id="eBz-RL-KvA" userLabel="Eq View container">
                                                     <rect key="frame" x="0.0" y="10" width="311" height="210"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="311" id="OgD-LQ-BLy"/>

@@ -9,7 +9,7 @@
         <!--Flag View Controller-->
         <scene sceneID="rSb-95-jkI">
             <objects>
-                <viewController storyboardIdentifier="Flag" id="Lmw-yC-7qh" customClass="FlagViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController identifier="Flag View Controller" storyboardIdentifier="Flag" id="Lmw-yC-7qh" customClass="FlagViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" autoresizesSubviews="NO" wantsLayer="YES" id="gnm-lQ-RMP" userLabel="Flag view">
                         <rect key="frame" x="0.0" y="0.0" width="311" height="100"/>
                         <autoresizingMask key="autoresizingMask"/>
