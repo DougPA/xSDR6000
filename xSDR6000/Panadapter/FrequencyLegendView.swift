@@ -235,11 +235,6 @@ public final class FrequencyLegendView      : NSView {
       self.needsDisplay = true      
     }
   }
-  
-  
-  
-  
-  
   /// Incr/decr the Slice frequency (scroll panafall at edges)
   ///
   /// - Parameters:
@@ -274,14 +269,6 @@ public final class FrequencyLegendView      : NSView {
     // redraw all the slices
     redraw()
   }
-
-  
-  
-  
-  
-  
-  
-  
   
   // ----------------------------------------------------------------------------
   // MARK: - Private methods
