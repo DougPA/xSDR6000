@@ -609,9 +609,13 @@ final class PanadapterViewController        : NSViewController, NSGestureRecogni
       NC.makeObserver(self, with: #selector(sliceWillBeRemoved(_:)), of: .sliceWillBeRemoved, object: slice)
       
       // add a Flag & Observations of this Slice
-      addFlag(for: slice, on: panadapter)
+      loadFlag(for: slice, on: panadapter)
       
       _frequencyLegendView.redraw()
+      
+      DispatchQueue.main.async { [unowned self] in 
+        self.positionFlags()
+      }
     }
   }
   /// Process .sliceWillBeRemoved Notification
@@ -679,7 +683,7 @@ final class PanadapterViewController        : NSViewController, NSGestureRecogni
   ///
   /// - Parameter for:            a Slice
   ///
-  private func addFlag(for slice: xLib6000.Slice, on pan: Panadapter) {
+  private func loadFlag(for slice: xLib6000.Slice, on pan: Panadapter) {
 
     DispatchQueue.main.async { [unowned self] in
       
