@@ -123,8 +123,8 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
     ]
     _sMeter.font = NSFont(name: "Monaco", size: 10.0)
     
-    view.identifier = NSUserInterfaceItemIdentifier(rawValue: "Slice Flag")
-    
+//    view.identifier = NSUserInterfaceItemIdentifier(rawValue: "Slice Flag")
+
     _alphaButton.attributedTitle = NSAttributedString(string: FlagViewController.kSliceLetters[Int(slice!.id)!], attributes: kLetterAttr)
   }
 
@@ -176,7 +176,7 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
     addNotifications()
   }
 
-  func updateObservations(slice: xLib6000.Slice, panadapter: Panadapter) {
+  func updateFlag(slice: xLib6000.Slice, panadapter: Panadapter) {
     
     _panadapter = panadapter
     self.slice = slice
@@ -186,11 +186,9 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
     findSMeter(for: slice)
     
     addObservations(slice: slice, panadapter: panadapter)
+
+    _alphaButton.attributedTitle = NSAttributedString(string: FlagViewController.kSliceLetters[Int(slice.id)!], attributes: kLetterAttr)
   }
-
-
-
-
   /// Select one of the Controls views
   ///
   /// - Parameter id:                   an identifier String
@@ -372,7 +370,7 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
   private func addObservations(slice: xLib6000.Slice, panadapter: Panadapter ) {
     
     _observations.append( slice.observe(\.active, options: [.initial, .new], changeHandler: sliceChange(_:_:)) )
-   
+
     _observations.append( slice.observe(\.txEnabled, options: [.initial, .new], changeHandler: txChange(_:_:)) )
     
     _observations.append( slice.observe(\.filterHigh, options: [.initial, .new], changeHandler: filterChange(_:_:)) )
@@ -492,7 +490,7 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
     
     if let pan = _vc as? PanadapterViewController {
       
-      // This is a Slice Flag
+     // This is a Slice Flag
       pan.redrawFrequencyLegend()
     }
   }
