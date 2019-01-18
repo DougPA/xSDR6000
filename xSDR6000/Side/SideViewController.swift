@@ -40,7 +40,7 @@ final class SideViewController              : NSViewController {
   private var _observations                 = [NSKeyValueObservation]()
   
   private let kSideViewWidth                : CGFloat = 311
-  private let kRxHeightOpen                 : CGFloat = 200
+  private let kRxHeightOpen                 : CGFloat = 100
   private let kTxHeightOpen                 : CGFloat = 210
   private let kPcwHeightOpen                : CGFloat = 240
   private let kPhneHeightOpen               : CGFloat = 210
