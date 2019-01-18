@@ -129,7 +129,7 @@ final class SideViewController              : NSViewController {
   // ----------------------------------------------------------------------------
   // MARK: - Private methods
   
-  private func addRxView(slice: xLib6000.Slice, panadapter: Panadapter) {
+  private func loadFlag(slice: xLib6000.Slice, panadapter: Panadapter) {
     
     // get the Storyboard containing a Flag View Controller
     let sb = NSStoryboard(name: "Flag", bundle: nil)
@@ -218,23 +218,20 @@ final class SideViewController              : NSViewController {
     // find the Panadapter of the Slice
     let pan = Api.sharedInstance.radio!.panadapters[slice.panadapterId]!
     
+    // has the Rx Side view been loaded?
     if _rxViewLoaded  {
-      
-      Swift.print("Updating Flag for slice \(slice.id)")
-      
+      // YES, update it
       DispatchQueue.main.async {
         
-        self._flagVc!.updateObservations(slice: slice, panadapter: pan)
+        self._flagVc!.updateFlag(slice: slice, panadapter: pan)
       }
 
     } else {
-      
-      Swift.print("Creating Flag for slice \(slice.id)")
+      // NO, load it
       _rxViewLoaded = true
-
       DispatchQueue.main.async {
 
-        self.addRxView(slice: slice, panadapter: pan)
+        self.loadFlag(slice: slice, panadapter: pan)
       }
     }
   }
