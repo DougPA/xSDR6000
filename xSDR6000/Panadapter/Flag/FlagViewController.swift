@@ -577,10 +577,10 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
   ///
   private func sliceChange(_ slice: xLib6000.Slice, _ change: NSKeyValueObservedChange<Bool>) {
     
-    if let pan = _vc as? PanadapterViewController {
+    if let panVc = _vc as? PanadapterViewController {
       
-     // This is a Slice Flag
-      pan.redrawFrequencyLegend()
+     // this is a Slice Flag, redraw
+      panVc.redrawFrequencyLegend()
     }
   }
   /// Respond to a change in Panadapter or Slice properties
@@ -591,8 +591,10 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
   ///
   private func positionChange(_ object: Any, _ change: Any) {
     
-    // move the Flag(s)
-    (parent as? PanadapterViewController)?.positionFlags()
+    if let panVc = _vc as? PanadapterViewController {
+      // this is a Slice Flag, move the Flag(s)
+      panVc.positionFlags()
+    }
   }
   
   // ----------------------------------------------------------------------------

@@ -164,6 +164,7 @@ final class PanadapterViewController        : NSViewController, NSGestureRecogni
   
   func redrawFrequencyLegend() {
     _frequencyLegendView.redraw()
+    positionFlags()
   }
   func redrawDbLegend() {
     _dbLegendView.redraw()
