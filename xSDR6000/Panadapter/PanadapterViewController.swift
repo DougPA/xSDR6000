@@ -608,8 +608,8 @@ final class PanadapterViewController        : NSViewController, NSGestureRecogni
       // observe removal of this Slice
       NC.makeObserver(self, with: #selector(sliceWillBeRemoved(_:)), of: .sliceWillBeRemoved, object: slice)
       
-      // add a Flag & Observations of this Slice
-      loadFlag(for: slice, on: panadapter)
+      // add a Flag for this Slice
+      sliceFlag(slice: slice, pan: panadapter, viewController: self)
       
       _frequencyLegendView.redraw()
       
@@ -679,66 +679,32 @@ final class PanadapterViewController        : NSViewController, NSGestureRecogni
     // force a redraw
     _frequencyLegendView.redraw()
   }
-  /// Create a Flag for the specified Slice
+  /// Add a Flag to a Slice
   ///
-  /// - Parameter for:            a Slice
+  /// - Parameters:
+  ///   - slice:                    a Slice
+  ///   - pan:                      the Panadapter containing the Slice
+  ///   - viewController:           the parent ViewController
   ///
-  private func loadFlag(for slice: xLib6000.Slice, on pan: Panadapter) {
-
-    DispatchQueue.main.async { [unowned self] in
-      
-      // get the Storyboard containing a Flag View Controller
-      let sb = NSStoryboard(name: "Flag", bundle: nil)
-      
-      // create a Flag View Controller & pass it needed parameters
-      let flagVc = sb.instantiateController(withIdentifier: "Flag") as! FlagViewController
-      
-      // create a Controls View Controller & pass it needed parameters
-      let controlsVc = sb.instantiateController(withIdentifier: "Controls") as! ControlsViewController
-//      controlsVc.configure(slice: slice)
-      
-      // pass the FlagVc needed parameters
-      flagVc.configure(panadapter: pan, slice: slice, controlsVc: controlsVc, vc: self)
-      flagVc.smallFlagDisplayed = false
-      flagVc.isOnLeft = true
-      
+  func sliceFlag(slice: xLib6000.Slice, pan: Panadapter, viewController: NSViewController) {
+  
+    DispatchQueue.main.async {
+      // create a Flag with the Panadapter view controller as its parent
+      let flagVc = FlagViewController.createFlag(for: slice, and: pan, on: viewController)
+    
+      // add it to the list of Flags
       self._flags[slice.id] = flagVc
-      
-      self.addChild(flagVc)
-      self.addChild(controlsVc)
-      
-      // add its view
-      self.view.addSubview(flagVc.view)
-      self.view.addSubview(controlsVc.view)
-      
-      let height = ( flagVc.smallFlagDisplayed ? FlagViewController.kSmallFlagHeight : FlagViewController.kLargeFlagHeight )
-      let width = ( flagVc.smallFlagDisplayed ? FlagViewController.kSmallFlagWidth : FlagViewController.kLargeFlagWidth )
 
-      // Flag View constraints: height, width & top of the Flag (constants)
-      flagVc.flagHeightConstraint = flagVc.view.heightAnchor.constraint(equalToConstant: height)
-      flagVc.flagWidthConstraint = flagVc.view.widthAnchor.constraint(equalToConstant: width)
-      let top = flagVc.view.topAnchor.constraint(equalTo: self.view.topAnchor)
-      
-      // Flag View constraints: position (will be changed as Flag moves)
+      // determine the Flag x-position
       let freqPosition = CGFloat(flagVc.slice!.frequency - self._start) / self._hzPerUnit
-      let flagPosition = freqPosition - width - FlagViewController.kFlagOffset
-      flagVc.flagXPositionConstraint = flagVc.view.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: flagPosition)
+      let flagPosition = freqPosition - FlagViewController.kLargeFlagWidth - FlagViewController.kFlagOffset
 
-      // activate Flag constraints
-      let constraints = [flagVc.flagHeightConstraint!, flagVc.flagWidthConstraint!, flagVc.flagXPositionConstraint!, top]
-      NSLayoutConstraint.activate(constraints)
-
-      // Controls View constraints: height, leading, trailing & top of the Controls (constants)
-      flagVc.controlsHeightConstraint = controlsVc.view.heightAnchor.constraint(equalToConstant: ControlsViewController.kControlsHeight)
-      let leadingConstraint = controlsVc.view.leadingAnchor.constraint(equalTo: flagVc.view.leadingAnchor)
-      let trailingConstraint = controlsVc.view.trailingAnchor.constraint(equalTo: flagVc.view.trailingAnchor)
-      let topConstraint = controlsVc.view.topAnchor.constraint(equalTo: flagVc.view.bottomAnchor)
-      let heightConstraint = controlsVc.view.heightAnchor.constraint(equalToConstant: FlagViewController.kLargeFlagHeight)
-      let widthConstraint = controlsVc.view.widthAnchor.constraint(equalToConstant: FlagViewController.kLargeFlagWidth)
-
-      // activate Controls constraints
-      let controlsConstraints: [NSLayoutConstraint] = [flagVc.controlsHeightConstraint!, leadingConstraint, trailingConstraint, topConstraint, heightConstraint, widthConstraint]
-      NSLayoutConstraint.activate(controlsConstraints)
+      // add the Flag to the view hierarchy
+      FlagViewController.addFlag(flagVc,
+                                 to: viewController.view,
+                                 flagPosition: flagPosition,
+                                 flagHeight: FlagViewController.kLargeFlagHeight,
+                                 flagWidth: FlagViewController.kLargeFlagWidth)
     }
   }
   /// Remove the Flag on the specified Slice
@@ -747,22 +713,19 @@ final class PanadapterViewController        : NSViewController, NSGestureRecogni
   ///
   private func removeFlag(for slice: xLib6000.Slice) {
     
+    // get the Flag view controller
     let flagVc = _flags[slice.id]
-    let controlsVc = flagVc?.controlsVc
+    
+    // remove all of the Flag's observations
     flagVc?.removeObservations()
 
+    // remove it from the list of Flags
     _flags[slice.id] = nil
     
-    DispatchQueue.main.async {
-      
-      // remove its view
-      controlsVc?.view.removeFromSuperview()
+    DispatchQueue.main.async {      
+      // remove the Flag from the view hierarchy
+      flagVc?.controlsVc?.view.removeFromSuperview()
       flagVc?.view.removeFromSuperview()
-      
-      // remove the view controller
-      controlsVc?.removeFromParent()
-      flagVc?.removeFromParent()
-
     }
   }
 }

@@ -92,6 +92,75 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
   private let kTxOffAttr                    = [NSAttributedString.Key.foregroundColor : NSColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.3)]
   
   // ----------------------------------------------------------------------------
+  // MARK: - Class methods
+  
+  /// Create a Flag for the specified Slice
+  ///
+  /// - Parameters:
+  ///   - slice:                  a Slice
+  ///   - pan:                    the Slice's Panadapter
+  ///   - viewController:         the parent ViewController
+  /// - Returns:                  a FlagViewController
+  ///
+  class func createFlag(for slice: xLib6000.Slice, and pan: Panadapter, on viewController: NSViewController) -> FlagViewController {
+    
+    // get the Storyboard containing a Flag View Controller
+    let sb = NSStoryboard(name: "Flag", bundle: nil)
+    
+    // create a Flag View Controller & pass it needed parameters
+    let flagVc = sb.instantiateController(withIdentifier: "Flag") as! FlagViewController
+    
+    // create a Controls View Controller & pass it needed parameters
+    let controlsVc = sb.instantiateController(withIdentifier: "Controls") as! ControlsViewController
+    
+    // pass the FlagVc needed parameters
+    flagVc.configure(panadapter: pan, slice: slice, controlsVc: controlsVc, vc: viewController)
+    flagVc.smallFlagDisplayed = false
+    flagVc.isOnLeft = true
+    
+    return flagVc
+  }
+  /// Add a Flag to the specified view
+  ///
+  /// - Parameters:
+  ///   - flagVc:                 a FlagViewController
+  ///   - view:                   the parent View
+  ///   - flagPosition:           the Flag's x-position
+  ///   - flagHeight:             the Flag's height
+  ///   - flagWidth:              the Flag's width
+  ///
+  class func addFlag(_ flagVc: FlagViewController, to view: NSView, flagPosition: CGFloat, flagHeight: CGFloat, flagWidth: CGFloat) {
+    
+    // add the views
+    view.addSubview(flagVc.view)
+    view.addSubview(flagVc.controlsVc!.view)
+        
+    // Flag View constraints: height, width & top of the Flag (constants)
+    flagVc.flagHeightConstraint = flagVc.view.heightAnchor.constraint(equalToConstant: flagHeight)
+    flagVc.flagWidthConstraint = flagVc.view.widthAnchor.constraint(equalToConstant: flagWidth)
+    let top = flagVc.view.topAnchor.constraint(equalTo: view.topAnchor)
+    
+    // Flag View constraints: position (will be changed as Flag moves)
+    flagVc.flagXPositionConstraint = flagVc.view.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: flagPosition)
+    
+    // activate Flag constraints
+    let constraints = [flagVc.flagHeightConstraint!, flagVc.flagWidthConstraint!, flagVc.flagXPositionConstraint!, top]
+    NSLayoutConstraint.activate(constraints)
+    
+    // Controls View constraints: height, leading, trailing & top of the Controls (constants)
+    flagVc.controlsHeightConstraint = flagVc.controlsVc!.view.heightAnchor.constraint(equalToConstant: ControlsViewController.kControlsHeight)
+    let leadingConstraint = flagVc.controlsVc!.view.leadingAnchor.constraint(equalTo: flagVc.view.leadingAnchor)
+    let trailingConstraint = flagVc.controlsVc!.view.trailingAnchor.constraint(equalTo: flagVc.view.trailingAnchor)
+    let topConstraint = flagVc.controlsVc!.view.topAnchor.constraint(equalTo: flagVc.view.bottomAnchor)
+    let heightConstraint = flagVc.controlsVc!.view.heightAnchor.constraint(equalToConstant: FlagViewController.kLargeFlagHeight)
+    let widthConstraint = flagVc.controlsVc!.view.widthAnchor.constraint(equalToConstant: FlagViewController.kLargeFlagWidth)
+    
+    // activate Controls constraints
+    let controlsConstraints: [NSLayoutConstraint] = [flagVc.controlsHeightConstraint!, leadingConstraint, trailingConstraint, topConstraint, heightConstraint, widthConstraint]
+    NSLayoutConstraint.activate(controlsConstraints)
+  }
+  
+  // ----------------------------------------------------------------------------
   // MARK: - Overridden methods
   
   public override func viewDidLoad() {
@@ -127,7 +196,6 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
 
     _alphaButton.attributedTitle = NSAttributedString(string: FlagViewController.kSliceLetters[Int(slice!.id)!], attributes: kLetterAttr)
   }
-
   
   public func controlTextDidBeginEditing(_ note: Notification) {
 
@@ -150,7 +218,7 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
   // ----------------------------------------------------------------------------
   // MARK: - Internal methods
 
-  /// Configure needed parameters
+  /// Configure a new Flag
   ///
   /// - Parameters:
   ///   - panadapter:               a Panadapter reference
@@ -164,6 +232,7 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
     self.controlsVc = controlsVc
     _vc = vc
     
+    // pass values to the Controls view controller
     controlsVc.configure(slice: slice)
     
     // find the S-Meter feed (if any, it may alreaady exist or it may come later as a sliceMeterAdded Notification)
@@ -175,18 +244,28 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
     // start receiving Notifications
     addNotifications()
   }
-
+  /// Update an existing Flag
+  ///
+  /// - Parameters:
+  ///   - slice:                    the Flag's new Slice
+  ///   - panadapter:               the Flag's new panadapter
+  ///
   func updateFlag(slice: xLib6000.Slice, panadapter: Panadapter) {
     
+    // save the new Slice & Panadapter
     _panadapter = panadapter
     self.slice = slice
 
+    // remove the previous observations
     removeObservations()
     
+    // find the s-meter feed for the new Slice
     findSMeter(for: slice)
     
+    // add observations of the new obkects
     addObservations(slice: slice, panadapter: panadapter)
 
+    // update the Slice Letter
     _alphaButton.attributedTitle = NSAttributedString(string: FlagViewController.kSliceLetters[Int(slice.id)!], attributes: kLetterAttr)
   }
   /// Select one of the Controls views
@@ -214,6 +293,10 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
   // ----------------------------------------------------------------------------
   // MARK: - Action methods
   
+  /// Respond to the Slice Letter button
+  ///
+  /// - Parameter sender:             the button
+  ///
   @IBAction func alphaButton(_ sender: Any) {
    
     // return if this a Side flag (i.e. not on a Slice)
@@ -242,15 +325,21 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
     // Enable constraints
     NSLayoutConstraint.activate(constraints)
     
-    // evaluate all flag positions
+    // re-evaluate all flag positions
     (_vc as! PanadapterViewController).positionFlags()
   }
-  
+  /// Respond to the TX button
+  ///
+  /// - Parameter sender:             the button
+  ///
   @IBAction func txButton(_ sender: NSButton) {
 
     slice?.txEnabled = !sender.boolState
   }
-  
+  /// DescriptionRespond to the SPLIT button
+  ///
+  /// - Parameter sender:             the button
+  ///
   @IBAction func splitButton(_ sender: NSButton) {
     sender.attributedTitle = NSAttributedString(string: kSplitCaption, attributes: sender.boolState ? kSplitOnAttr : kSplitOffAttr)
     
