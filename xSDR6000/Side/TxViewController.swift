@@ -40,7 +40,7 @@ class TxViewController                      : NSViewController {
     super.viewDidLoad()
     
     view.translatesAutoresizingMaskIntoConstraints = false    
-    view.layer?.backgroundColor = NSColor.lightGray.cgColor
+//    view.layer?.backgroundColor = NSColor.windowBackgroundColor.cgColor
     
     // setup the RfPower & Swr graphs
     setupBarGraphs()

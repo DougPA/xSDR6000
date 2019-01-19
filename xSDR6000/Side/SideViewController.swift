@@ -54,7 +54,7 @@ final class SideViewController              : NSViewController {
     super.viewDidLoad()
     
     view.translatesAutoresizingMaskIntoConstraints = false
-    view.layer?.backgroundColor = NSColor.black.cgColor
+//    view.layer?.backgroundColor = NSColor.black.cgColor
     
     addNotifications()
     

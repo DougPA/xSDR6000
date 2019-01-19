@@ -42,7 +42,7 @@ final class EqViewController                : NSViewController {
     super.viewDidLoad()
     
     view.translatesAutoresizingMaskIntoConstraints = false
-    view.layer?.backgroundColor = NSColor.lightGray.cgColor
+//    view.layer?.backgroundColor = NSColor.lightGray.cgColor
     
     // disable all controls
     setControlState(false)

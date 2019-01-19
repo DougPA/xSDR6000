@@ -32,8 +32,8 @@ class FiltersPrefsViewController: NSViewController {
     
     view.translatesAutoresizingMaskIntoConstraints = false
     
-    // set the background color of the Flag
-    view.layer?.backgroundColor = NSColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5).cgColor
+//    // set the background color of the Flag
+//    view.layer?.backgroundColor = NSColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5).cgColor
 
     // check for an active radio
     if let radio = Api.sharedInstance.radio { _radio = radio ; setControlStatus(true) }

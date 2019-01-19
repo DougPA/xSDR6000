@@ -77,19 +77,20 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
   private var _doubleClick                  : NSClickGestureRecognizer!
   private var _previousFrequency            = 0
   private var _beginEditing                 = false
+  private var _darkMode                     = false
 
   private let kLeftButton                   = 0x01                          // masks for Gesture Recognizers
   private let kFlagPixelOffset              : CGFloat = 15.0/2.0
 
   private let kSplitCaption                 = "SPLIT"
-  private let kSplitOnAttr                  = [NSAttributedString.Key.foregroundColor : NSColor.systemYellow]
-  private let kSplitOffAttr                 = [NSAttributedString.Key.foregroundColor : NSColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.3)]
+  private let kSplitOnAttr                  = [NSAttributedString.Key.foregroundColor : NSColor.systemRed]
+  private let kSplitOffAttr                 = [NSAttributedString.Key.foregroundColor : NSColor.lightGray]
 
-  private let kLetterAttr                  = [NSAttributedString.Key.foregroundColor : NSColor.systemYellow]
+  private let kLetterAttr                   = [NSAttributedString.Key.foregroundColor : NSColor.systemYellow]
 
   private let kTxCaption                    = "TX"
   private let kTxOnAttr                     = [NSAttributedString.Key.foregroundColor : NSColor.systemRed]
-  private let kTxOffAttr                    = [NSAttributedString.Key.foregroundColor : NSColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.3)]
+  private let kTxOffAttr                    = [NSAttributedString.Key.foregroundColor : NSColor.lightGray]
   
   // ----------------------------------------------------------------------------
   // MARK: - Class methods
@@ -167,7 +168,7 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
     super.viewDidLoad()
     
     view.translatesAutoresizingMaskIntoConstraints = false
-    view.layer?.backgroundColor = NSColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.5).cgColor
+    view.layer?.backgroundColor = NSColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0).cgColor
 
     // populate the choices
     _rxAntPopUp.addItems(withTitles: slice!.rxAntList)
@@ -192,9 +193,8 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
     ]
     _sMeter.font = NSFont(name: "Monaco", size: 10.0)
     
-//    view.identifier = NSUserInterfaceItemIdentifier(rawValue: "Slice Flag")
-
-    _alphaButton.attributedTitle = NSAttributedString(string: FlagViewController.kSliceLetters[Int(slice!.id)!], attributes: kLetterAttr)
+    _alphaButton.attributedTitle = NSAttributedString(string: FlagViewController.kSliceLetters[Int(slice!.id)!],
+                                                      attributes: kLetterAttr)
   }
   
   public func controlTextDidBeginEditing(_ note: Notification) {

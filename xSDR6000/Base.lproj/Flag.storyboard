@@ -10,7 +10,7 @@
         <scene sceneID="rSb-95-jkI">
             <objects>
                 <viewController identifier="Flag View Controller" storyboardIdentifier="Flag" id="Lmw-yC-7qh" customClass="FlagViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" autoresizesSubviews="NO" wantsLayer="YES" id="gnm-lQ-RMP" userLabel="Flag view">
+                    <view key="view" autoresizesSubviews="NO" wantsLayer="YES" appearanceType="darkAqua" id="gnm-lQ-RMP" userLabel="Flag view">
                         <rect key="frame" x="0.0" y="0.0" width="311" height="100"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
@@ -175,7 +175,6 @@
                                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                                                     <font key="font" metaFont="systemBold" size="18"/>
                                                 </buttonCell>
-                                                <color key="contentTintColor" red="1" green="1" blue="1" alpha="0.29725146051571311" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <connections>
                                                     <action selector="splitButton:" target="Lmw-yC-7qh" id="Rwv-Vb-Gwo"/>
                                                 </connections>
@@ -189,7 +188,6 @@
                                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                                                     <font key="font" metaFont="systemBold" size="18"/>
                                                 </buttonCell>
-                                                <color key="contentTintColor" red="1" green="1" blue="1" alpha="0.29981995366639808" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <connections>
                                                     <action selector="txButton:" target="Lmw-yC-7qh" id="KCd-lS-uOt"/>
                                                 </connections>
@@ -203,7 +201,7 @@
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="systemBold" size="18"/>
                                                 </buttonCell>
-                                                <color key="contentTintColor" red="1" green="1" blue="1" alpha="0.29981995369999997" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="contentTintColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <connections>
                                                     <action selector="alphaButton:" target="Lmw-yC-7qh" id="ldJ-CR-fpW"/>
                                                 </connections>

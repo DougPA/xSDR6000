@@ -33,7 +33,6 @@ class ParameterMonitor: NSToolbarItem {
   // ----------------------------------------------------------------------------
   // MARK: - Public properties
   
-  public var colors                         : (high: NSColor, normal: NSColor, low: NSColor) = (NSColor.red, NSColor.green, NSColor.yellow)
   public var formatString                   = "%0.2f"
   
   // ----------------------------------------------------------------------------
@@ -126,17 +125,17 @@ class ParameterMonitor: NSToolbarItem {
   private func updateField(_ field: NSTextField, for meter: Meter, units: String) {
     
     DispatchQueue.main.async { [unowned self] in
-      
+
       // determine the background color
       switch meter.value {
       case ...meter.low:                                    // < low
-        field.backgroundColor = self.colors.low
+        field.backgroundColor = NSColor.systemYellow.withAlphaComponent(0.5)
       case meter.high...:                                   // > high
-        field.backgroundColor = self.colors.high
+        field.backgroundColor = NSColor.systemRed.withAlphaComponent(0.5)
       case meter.low...meter.high:                          // between low & high
-        field.backgroundColor = self.colors.normal
+        field.backgroundColor = NSColor.systemGreen.withAlphaComponent(0.5)
       default:                                              // should never happen
-        field.backgroundColor = self.colors.normal
+        field.backgroundColor = NSColor.controlBackgroundColor
       }
       // set the field value
       field.stringValue = String(format: self.formatString + " \(units)" , meter.value)

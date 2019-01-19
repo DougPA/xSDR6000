@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
+        <capability name="System colors introduced in macOS 10.14" minToolsVersion="10.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -23,8 +24,8 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="5" id="yTY-WE-Qfp"/>
                                 </constraints>
-                                <color key="borderColor" red="1" green="1" blue="0.67843137254901964" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <color key="fillColor" red="1" green="1" blue="0.67843137254901964" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="borderColor" name="separatorColor" catalog="System" colorSpace="catalog"/>
+                                <color key="fillColor" name="separatorColor" catalog="System" colorSpace="catalog"/>
                             </box>
                             <stackView distribution="fill" orientation="vertical" alignment="centerX" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Nj1-DW-PlA" userLabel="Buttons stack view">
                                 <rect key="frame" x="10" y="25" width="48" height="160"/>
@@ -355,8 +356,8 @@
                                     <constraint firstAttribute="height" constant="5" id="U5i-B6-4kX"/>
                                     <constraint firstAttribute="width" constant="311" id="UHo-mZ-iFG"/>
                                 </constraints>
-                                <color key="borderColor" red="1" green="1" blue="0.67843137254901964" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <color key="fillColor" red="0.97406743802767515" green="1" blue="0.45674690665836049" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="borderColor" name="separatorColor" catalog="System" colorSpace="catalog"/>
+                                <color key="fillColor" name="separatorColor" catalog="System" colorSpace="catalog"/>
                             </box>
                             <box boxType="custom" cornerRadius="4" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="cep-jD-7gY" userLabel="Indicators Box">
                                 <rect key="frame" x="0.0" y="120" width="311" height="85"/>
@@ -386,6 +387,15 @@
                                                 <userDefinedRuntimeAttribute type="number" keyPath="_rightValue">
                                                     <real key="value" value="120"/>
                                                 </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="color" keyPath="_criticalColor">
+                                                    <color key="value" name="systemRedColor" catalog="System" colorSpace="catalog"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="color" keyPath="_warningColor">
+                                                    <color key="value" name="systemYellowColor" catalog="System" colorSpace="catalog"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="color" keyPath="_normalColor">
+                                                    <color key="value" name="systemGreenColor" catalog="System" colorSpace="catalog"/>
+                                                </userDefinedRuntimeAttribute>
                                             </userDefinedRuntimeAttributes>
                                         </customView>
                                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="12d-PX-xT9" customClass="LevelIndicator" customModule="xSDR6000" customModuleProvider="target">
@@ -410,6 +420,15 @@
                                                 <userDefinedRuntimeAttribute type="number" keyPath="_rightValue">
                                                     <real key="value" value="3"/>
                                                 </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="color" keyPath="_criticalColor">
+                                                    <color key="value" name="systemRedColor" catalog="System" colorSpace="catalog"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="color" keyPath="_warningColor">
+                                                    <color key="value" name="systemYellowColor" catalog="System" colorSpace="catalog"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="color" keyPath="_normalColor">
+                                                    <color key="value" name="systemGreenColor" catalog="System" colorSpace="catalog"/>
+                                                </userDefinedRuntimeAttribute>
                                             </userDefinedRuntimeAttributes>
                                         </customView>
                                     </subviews>
@@ -426,7 +445,8 @@
                                     <constraint firstAttribute="height" constant="85" id="Xft-mI-zE7"/>
                                     <constraint firstAttribute="width" constant="311" id="e5v-Gh-oYt"/>
                                 </constraints>
-                                <color key="fillColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="borderColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="fillColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </box>
                             <stackView distribution="fill" orientation="horizontal" alignment="centerY" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jBS-bh-JAb" userLabel="RF Power stack view">
                                 <rect key="frame" x="8" y="95" width="290" height="17"/>
@@ -688,8 +708,8 @@
                                     <constraint firstAttribute="height" constant="5" id="eM7-Dn-hZC"/>
                                     <constraint firstAttribute="width" constant="311" id="uha-jl-3tH"/>
                                 </constraints>
-                                <color key="borderColor" red="1" green="1" blue="0.67843137254901964" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <color key="fillColor" red="1" green="1" blue="0.67843137254901964" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="borderColor" name="separatorColor" catalog="System" colorSpace="catalog"/>
+                                <color key="fillColor" name="separatorColor" catalog="System" colorSpace="catalog"/>
                             </box>
                             <box boxType="custom" cornerRadius="4" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="x2Q-jw-WsX" userLabel="Indicators Box">
                                 <rect key="frame" x="0.0" y="145" width="311" height="85"/>
@@ -719,6 +739,15 @@
                                                 <userDefinedRuntimeAttribute type="number" keyPath="_rightValue">
                                                     <real key="value" value="10"/>
                                                 </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="color" keyPath="_criticalColor">
+                                                    <color key="value" name="systemRedColor" catalog="System" colorSpace="catalog"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="color" keyPath="_warningColor">
+                                                    <color key="value" name="systemYellowColor" catalog="System" colorSpace="catalog"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="color" keyPath="_normalColor">
+                                                    <color key="value" name="systemGreenColor" catalog="System" colorSpace="catalog"/>
+                                                </userDefinedRuntimeAttribute>
                                             </userDefinedRuntimeAttributes>
                                         </customView>
                                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="oMZ-QI-F8r" customClass="LevelIndicator" customModule="xSDR6000" customModuleProvider="target">
@@ -743,6 +772,15 @@
                                                 <userDefinedRuntimeAttribute type="number" keyPath="_rightValue">
                                                     <real key="value" value="-25"/>
                                                 </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="color" keyPath="_criticalColor">
+                                                    <color key="value" name="systemRedColor" catalog="System" colorSpace="catalog"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="color" keyPath="_warningColor">
+                                                    <color key="value" name="systemYellowColor" catalog="System" colorSpace="catalog"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="color" keyPath="_normalColor">
+                                                    <color key="value" name="systemGreenColor" catalog="System" colorSpace="catalog"/>
+                                                </userDefinedRuntimeAttribute>
                                             </userDefinedRuntimeAttributes>
                                         </customView>
                                     </subviews>
@@ -759,7 +797,8 @@
                                     <constraint firstAttribute="height" constant="85" id="qWW-HA-UtS"/>
                                     <constraint firstAttribute="width" constant="311" id="vxk-et-g6X"/>
                                 </constraints>
-                                <color key="fillColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="borderColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="fillColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </box>
                             <popUpButton identifier="MicProfile" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vQd-Ns-GSa" userLabel="Mic Profile">
                                 <rect key="frame" x="6" y="113" width="233" height="25"/>
@@ -1018,8 +1057,8 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="5" id="fM4-rr-L0j"/>
                                 </constraints>
-                                <color key="borderColor" red="1" green="1" blue="0.67843137254901964" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <color key="fillColor" red="1" green="1" blue="0.67843137254901964" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="borderColor" name="separatorColor" catalog="System" colorSpace="catalog"/>
+                                <color key="fillColor" name="separatorColor" catalog="System" colorSpace="catalog"/>
                             </box>
                             <stackView distribution="fillEqually" orientation="vertical" alignment="centerX" spacing="14" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fGP-w5-RyK" userLabel="Buttons stack view">
                                 <rect key="frame" x="12" y="5" width="70" height="183"/>
@@ -1454,7 +1493,7 @@
                                             </constraints>
                                         </view>
                                     </subviews>
-                                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="backgroundColor" name="windowBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </clipView>
                                 <constraints>
                                     <constraint firstItem="WdK-Jx-DB2" firstAttribute="leading" secondItem="cXN-5r-vYF" secondAttribute="leading" id="9ec-gr-NbV"/>
@@ -1481,11 +1520,6 @@
                             <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="cXN-5r-vYF" secondAttribute="bottom" id="hi1-qb-nrT"/>
                             <constraint firstItem="cXN-5r-vYF" firstAttribute="leading" secondItem="JWf-Xw-QVy" secondAttribute="leading" id="oH4-Qc-72d"/>
                         </constraints>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="color" keyPath="layer.backgroundColor">
-                                <color key="value" name="systemGrayColor" catalog="System" colorSpace="catalog"/>
-                            </userDefinedRuntimeAttribute>
-                        </userDefinedRuntimeAttributes>
                     </view>
                     <connections>
                         <outlet property="_eqButton" destination="O0T-VG-TMC" id="nZd-ig-uh2"/>
