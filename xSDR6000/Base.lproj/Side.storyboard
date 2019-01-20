@@ -1206,8 +1206,11 @@
                                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
+                                                <connections>
+                                                    <action selector="textFields:" target="4Er-qS-ODr" id="hr1-0c-o5p"/>
+                                                </connections>
                                             </textField>
-                                            <stepper identifier="TxLowStepper" horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="RJR-QA-4Fr" userLabel="Tx Filter Low stepper">
+                                            <stepper identifier="TxLowStepper" horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="RJR-QA-4Fr" userLabel="Tx Low stepper">
                                                 <rect key="frame" x="65" y="-2" width="19" height="27"/>
                                                 <stepperCell key="cell" continuous="YES" alignment="left" increment="50" maxValue="10000" id="bZR-kY-f3Z"/>
                                                 <connections>
@@ -1221,8 +1224,11 @@
                                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
+                                                <connections>
+                                                    <action selector="textFields:" target="4Er-qS-ODr" id="JDO-w7-gGh"/>
+                                                </connections>
                                             </textField>
-                                            <stepper identifier="TxHighStepper" horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="57r-Nf-jWZ" userLabel="Tx Filter High stepper">
+                                            <stepper identifier="TxHighStepper" horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="57r-Nf-jWZ" userLabel="Tx High stepper">
                                                 <rect key="frame" x="154" y="-2" width="19" height="27"/>
                                                 <stepperCell key="cell" continuous="YES" alignment="left" increment="50" maxValue="10000" id="JSp-ie-HAM"/>
                                                 <connections>
