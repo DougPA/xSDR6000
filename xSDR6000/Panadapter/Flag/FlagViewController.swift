@@ -20,7 +20,7 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
   static let kFlagMinimumSeparation         : CGFloat = 10
   static let kLargeFlagWidth                : CGFloat = 311
   static let kLargeFlagHeight               : CGFloat = 100
-  static let kSmallFlagWidth                : CGFloat = 125 
+  static let kSmallFlagWidth                : CGFloat = 133
   static let kSmallFlagHeight               : CGFloat = 52
   static let kFlagBorder                    : CGFloat = 20
   
