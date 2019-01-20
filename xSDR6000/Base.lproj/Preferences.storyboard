@@ -75,7 +75,7 @@
         <scene sceneID="GU6-BE-ej6">
             <objects>
                 <viewController title="Colors" id="3IL-Xb-5ey" userLabel="Colors Tab" customClass="ColorsPrefsViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" wantsLayer="YES" id="VEM-Wk-vwv" userLabel="Colors view">
+                    <view key="view" id="VEM-Wk-vwv" userLabel="Colors view">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="400"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
@@ -617,7 +617,7 @@
         <scene sceneID="V06-Uu-3xC">
             <objects>
                 <viewController title="Radio" id="UBL-vs-1PL" userLabel="Radio Tab" customClass="RadioPrefsViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" wantsLayer="YES" id="upT-IE-zqc" userLabel="Radio view">
+                    <view key="view" id="upT-IE-zqc" userLabel="Radio view">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="400"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
@@ -999,7 +999,7 @@
         <scene sceneID="wxA-0t-A3c">
             <objects>
                 <viewController title="Info" id="BlG-y8-jgO" userLabel="Info Tab" customClass="InfoPrefsViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" wantsLayer="YES" id="MB7-kC-occ" userLabel="Info view">
+                    <view key="view" id="MB7-kC-occ" userLabel="Info view">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="400"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
@@ -1107,7 +1107,7 @@
         <scene sceneID="8ej-OM-p3D">
             <objects>
                 <viewController title="Network" id="4Na-DM-iAm" userLabel="Network Tab" customClass="NetworkPrefsViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" wantsLayer="YES" id="4Uw-z2-vzI" userLabel="Network view">
+                    <view key="view" id="4Uw-z2-vzI" userLabel="Network view">
                         <rect key="frame" x="0.0" y="0.0" width="601" height="400"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
@@ -1467,7 +1467,7 @@
         <scene sceneID="st0-zP-ZTV">
             <objects>
                 <viewController title="Gps" id="Xnh-Zk-cbK" userLabel="GPS Tab" customClass="GpsPrefsViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" wantsLayer="YES" id="ecR-6n-W84" userLabel="GPS view">
+                    <view key="view" id="ecR-6n-W84" userLabel="GPS view">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="400"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
@@ -1496,7 +1496,7 @@
         <scene sceneID="8Lv-wd-MRN">
             <objects>
                 <viewController title="Tx" id="brP-w7-Ywn" userLabel="TX Tab" customClass="TXPrefsViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" wantsLayer="YES" id="m6j-lo-PCd" userLabel="TX view">
+                    <view key="view" id="m6j-lo-PCd" userLabel="TX view">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="400"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
@@ -2052,7 +2052,7 @@
         <scene sceneID="AYr-fK-SK2">
             <objects>
                 <viewController title="Phone/Cw" id="FSt-EM-0Rk" userLabel="Phone/CW Tab" customClass="PCWPrefsViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" wantsLayer="YES" id="g3r-jo-OgH" userLabel="Phone/CW view">
+                    <view key="view" id="g3r-jo-OgH" userLabel="Phone/CW view">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="400"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
@@ -2305,7 +2305,7 @@
         <scene sceneID="bFb-2K-aU9">
             <objects>
                 <viewController title="Rx" id="ABp-0s-17Y" userLabel="RX Tab" customClass="RxPrefsViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" wantsLayer="YES" id="YGf-Kh-4zX" userLabel="RX view">
+                    <view key="view" id="YGf-Kh-4zX" userLabel="RX view">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="400"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
@@ -2542,7 +2542,7 @@
         <scene sceneID="9lg-Iw-Ako">
             <objects>
                 <viewController title="Filters" id="xmR-Sy-wAC" userLabel="Filters Tab" customClass="FiltersPrefsViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" wantsLayer="YES" id="lKe-Lw-XKg" userLabel="Filters View">
+                    <view key="view" id="lKe-Lw-XKg" userLabel="Filters View">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="400"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
@@ -2769,7 +2769,7 @@
         <scene sceneID="7T3-aK-KMQ">
             <objects>
                 <viewController title="Xvtr" id="psL-Hq-nyB" userLabel="XVTR Tab" customClass="XvtrPrefsViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" wantsLayer="YES" id="YoO-V3-Loj">
+                    <view key="view" id="YoO-V3-Loj">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="400"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
