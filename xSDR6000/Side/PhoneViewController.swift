@@ -74,6 +74,21 @@ class PhoneViewController                   : NSViewController {
       fatalError()
     }
   }
+  /// Respond to one of the text fields
+  ///
+  /// - Parameter sender:             the textField
+  ///
+  @IBAction func textFields(_ sender: NSTextField) {
+
+    switch sender.identifier!.rawValue {
+    case "TxHigh":
+      _transmit?.txFilterHigh = sender.integerValue
+    case "TxLow":
+      _transmit?.txFilterLow = sender.integerValue
+    default:
+      fatalError()
+    }
+  }
   /// Respond to one of the steppers
   ///
   /// - Parameter sender:             the stepper
@@ -82,9 +97,9 @@ class PhoneViewController                   : NSViewController {
 
     switch sender.identifier!.rawValue {
     case "TxHighStepper":
-      _transmit?.txFilterHigh += Int(sender.increment)
+      _transmit?.txFilterHigh = sender.integerValue
     case "TxLowStepper":
-      _transmit?.txFilterLow += Int(sender.increment)
+      _transmit?.txFilterLow = sender.integerValue
     default:
       fatalError()
     }
@@ -183,9 +198,14 @@ class PhoneViewController                   : NSViewController {
       self._dexpSlider.integerValue = transmit.companderLevel
       self._voxDelaySlider.integerValue = transmit.voxDelay
       self._voxLevelSlider.integerValue = transmit.voxLevel
+      
       // Textfields
       self._txFilterHigh.integerValue = transmit.txFilterHigh
       self._txFilterLow.integerValue = transmit.txFilterLow
+
+      // Steppers
+      self._txFilterHighStepper.integerValue = transmit.txFilterHigh
+      self._txFilterLowStepper.integerValue = transmit.txFilterLow
     }
   }
 
