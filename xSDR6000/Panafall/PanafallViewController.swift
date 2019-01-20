@@ -64,6 +64,9 @@ final class PanafallViewController          : NSSplitViewController, NSGestureRe
     _rightClick.buttonMask = kRightButton
     _rightClick.numberOfClicksRequired = 1
     splitView.addGestureRecognizer(_rightClick)
+    
+    // save the divider position
+    splitView.autosaveName = "Panadapter \(_panadapter?.id.hex ?? "0x99999999")"
   }
   /// Detect single left mouse button click
   ///
