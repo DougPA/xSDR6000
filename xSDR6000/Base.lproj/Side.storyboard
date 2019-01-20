@@ -3,7 +3,6 @@
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
-        <capability name="System colors introduced in macOS 10.14" minToolsVersion="10.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -16,19 +15,19 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <box boxType="custom" cornerRadius="4" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="lRY-zV-xNC" userLabel="Divider Box">
-                                <rect key="frame" x="0.0" y="205" width="311" height="5"/>
+                                <rect key="frame" x="0.0" y="208" width="311" height="2"/>
                                 <view key="contentView" id="Fdo-XP-yyf">
-                                    <rect key="frame" x="1" y="1" width="309" height="3"/>
+                                    <rect key="frame" x="1" y="1" width="309" height="0.0"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 </view>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="5" id="yTY-WE-Qfp"/>
+                                    <constraint firstAttribute="height" constant="2" id="yTY-WE-Qfp"/>
                                 </constraints>
-                                <color key="borderColor" name="separatorColor" catalog="System" colorSpace="catalog"/>
-                                <color key="fillColor" name="separatorColor" catalog="System" colorSpace="catalog"/>
+                                <color key="borderColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="fillColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             </box>
                             <stackView distribution="fill" orientation="vertical" alignment="centerX" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Nj1-DW-PlA" userLabel="Buttons stack view">
-                                <rect key="frame" x="10" y="25" width="48" height="160"/>
+                                <rect key="frame" x="10" y="28" width="48" height="160"/>
                                 <subviews>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Opy-zb-04e" userLabel="HZ label">
                                         <rect key="frame" x="12" y="140" width="25" height="20"/>
@@ -304,18 +303,33 @@
                                     <real value="3.4028234663852886e+38"/>
                                 </customSpacing>
                             </stackView>
+                            <box boxType="custom" cornerRadius="4" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="JVT-W8-alq" userLabel="Divider Box">
+                                <rect key="frame" x="0.0" y="0.0" width="311" height="2"/>
+                                <view key="contentView" id="CwJ-Vi-3eQ">
+                                    <rect key="frame" x="1" y="1" width="309" height="0.0"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                </view>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="2" id="ukH-RA-EYf"/>
+                                </constraints>
+                                <color key="borderColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="fillColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            </box>
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="yxX-X0-Zbd" secondAttribute="trailing" constant="9" id="2hx-vY-0iZ" userLabel="Labels training"/>
+                            <constraint firstAttribute="bottom" secondItem="JVT-W8-alq" secondAttribute="bottom" id="37W-Pw-W5i"/>
                             <constraint firstItem="Nj1-DW-PlA" firstAttribute="leading" secondItem="EPz-Xv-tol" secondAttribute="leading" constant="10" id="4Oj-SU-GR9" userLabel="Buttons stack leading"/>
                             <constraint firstItem="yxX-X0-Zbd" firstAttribute="top" secondItem="EPz-Xv-tol" secondAttribute="top" constant="25" id="9m4-lK-qVy" userLabel="Labels top"/>
                             <constraint firstItem="Nj1-DW-PlA" firstAttribute="top" secondItem="lRY-zV-xNC" secondAttribute="bottom" constant="20" id="Beg-Fy-qUA"/>
+                            <constraint firstItem="JVT-W8-alq" firstAttribute="leading" secondItem="EPz-Xv-tol" secondAttribute="leading" id="Lal-JP-A6D"/>
                             <constraint firstItem="Bdx-dY-Vad" firstAttribute="top" secondItem="EPz-Xv-tol" secondAttribute="top" constant="50" id="NFZ-za-X8j" userLabel="Sliders stack top"/>
                             <constraint firstAttribute="trailing" secondItem="Bdx-dY-Vad" secondAttribute="trailing" constant="4" id="Qkd-kk-XrS" userLabel="Sliders stack trailing"/>
                             <constraint firstItem="yxX-X0-Zbd" firstAttribute="leading" secondItem="EPz-Xv-tol" secondAttribute="leading" constant="68" id="Xep-1r-56Y" userLabel="Labels leading"/>
                             <constraint firstAttribute="trailing" secondItem="lRY-zV-xNC" secondAttribute="trailing" id="XiB-Sm-aAc"/>
                             <constraint firstItem="Bdx-dY-Vad" firstAttribute="leading" secondItem="EPz-Xv-tol" secondAttribute="leading" constant="68" id="ajN-05-QKF" userLabel="Sliders stack leading"/>
                             <constraint firstAttribute="trailing" secondItem="Nj1-DW-PlA" secondAttribute="trailing" constant="253" id="bkw-ND-nQc" userLabel="Buttons stack trailing"/>
+                            <constraint firstAttribute="trailing" secondItem="JVT-W8-alq" secondAttribute="trailing" id="nCr-xH-VlQ"/>
                             <constraint firstItem="lRY-zV-xNC" firstAttribute="leading" secondItem="EPz-Xv-tol" secondAttribute="leading" id="tzs-iq-LFC"/>
                             <constraint firstItem="lRY-zV-xNC" firstAttribute="top" secondItem="EPz-Xv-tol" secondAttribute="top" id="xpd-rk-e2L"/>
                         </constraints>
@@ -347,20 +361,20 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <box boxType="custom" cornerRadius="4" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="8Kd-Pj-IJw" userLabel="Divider Box">
-                                <rect key="frame" x="0.0" y="205" width="311" height="5"/>
+                                <rect key="frame" x="0.0" y="208" width="311" height="2"/>
                                 <view key="contentView" id="klL-HH-kdb">
-                                    <rect key="frame" x="1" y="1" width="309" height="3"/>
+                                    <rect key="frame" x="1" y="1" width="309" height="0.0"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 </view>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="5" id="U5i-B6-4kX"/>
+                                    <constraint firstAttribute="height" constant="2" id="U5i-B6-4kX"/>
                                     <constraint firstAttribute="width" constant="311" id="UHo-mZ-iFG"/>
                                 </constraints>
-                                <color key="borderColor" name="separatorColor" catalog="System" colorSpace="catalog"/>
-                                <color key="fillColor" name="separatorColor" catalog="System" colorSpace="catalog"/>
+                                <color key="borderColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="fillColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             </box>
                             <box boxType="custom" cornerRadius="4" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="cep-jD-7gY" userLabel="Indicators Box">
-                                <rect key="frame" x="0.0" y="120" width="311" height="85"/>
+                                <rect key="frame" x="0.0" y="123" width="311" height="85"/>
                                 <view key="contentView" id="FM4-Ye-Kuc">
                                     <rect key="frame" x="1" y="1" width="309" height="83"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -449,7 +463,7 @@
                                 <color key="fillColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </box>
                             <stackView distribution="fill" orientation="horizontal" alignment="centerY" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jBS-bh-JAb" userLabel="RF Power stack view">
-                                <rect key="frame" x="8" y="95" width="290" height="17"/>
+                                <rect key="frame" x="8" y="98" width="290" height="17"/>
                                 <subviews>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vcm-jy-JTr" userLabel="RF Power label">
                                         <rect key="frame" x="-2" y="0.0" width="79" height="17"/>
@@ -496,7 +510,7 @@
                                 </customSpacing>
                             </stackView>
                             <stackView distribution="equalSpacing" orientation="horizontal" alignment="centerY" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qFG-De-gFc" userLabel="Tune Power stack view">
-                                <rect key="frame" x="8" y="70" width="290" height="17"/>
+                                <rect key="frame" x="8" y="73" width="290" height="17"/>
                                 <subviews>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iQV-u8-8Xp" userLabel="Tune Power label">
                                         <rect key="frame" x="-2" y="0.0" width="79" height="17"/>
@@ -544,7 +558,7 @@
                                 </customSpacing>
                             </stackView>
                             <stackView distribution="fill" orientation="horizontal" alignment="top" spacing="10" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BSv-uk-qcg" userLabel="Mic stack view">
-                                <rect key="frame" x="8" y="41" width="294" height="21"/>
+                                <rect key="frame" x="8" y="44" width="294" height="21"/>
                                 <subviews>
                                     <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QZL-jW-hLs" userLabel="Tx Profile">
                                         <rect key="frame" x="-2" y="-3" width="115" height="25"/>
@@ -591,7 +605,7 @@
                                 </customSpacing>
                             </stackView>
                             <stackView distribution="equalSpacing" orientation="horizontal" alignment="centerY" spacing="14" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QU7-zL-dEq" userLabel="Buttons stack view">
-                                <rect key="frame" x="8" y="12" width="294" height="21"/>
+                                <rect key="frame" x="8" y="15" width="294" height="21"/>
                                 <subviews>
                                     <button identifier="Tune" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="m0f-XZ-nen">
                                         <rect key="frame" x="-6" y="-7" width="75" height="32"/>
@@ -655,6 +669,19 @@
                                     <real value="3.4028234663852886e+38"/>
                                 </customSpacing>
                             </stackView>
+                            <box boxType="custom" cornerRadius="4" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="jqX-b7-vfO" userLabel="Divider Box">
+                                <rect key="frame" x="0.0" y="0.0" width="311" height="2"/>
+                                <view key="contentView" id="3OX-vV-zAU">
+                                    <rect key="frame" x="1" y="1" width="309" height="0.0"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                </view>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="311" id="1X5-sV-XI1"/>
+                                    <constraint firstAttribute="height" constant="2" id="g0v-Tg-aYG"/>
+                                </constraints>
+                                <color key="borderColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="fillColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            </box>
                         </subviews>
                         <constraints>
                             <constraint firstItem="8Kd-Pj-IJw" firstAttribute="leading" secondItem="246-rc-7iy" secondAttribute="leading" id="8r2-y8-ViW"/>
@@ -664,10 +691,13 @@
                             <constraint firstItem="BSv-uk-qcg" firstAttribute="top" secondItem="qFG-De-gFc" secondAttribute="bottom" constant="8" id="I2f-Ja-cHz"/>
                             <constraint firstItem="qFG-De-gFc" firstAttribute="top" secondItem="jBS-bh-JAb" secondAttribute="bottom" constant="8" id="OCv-ax-qyX"/>
                             <constraint firstItem="8Kd-Pj-IJw" firstAttribute="top" secondItem="246-rc-7iy" secondAttribute="top" id="VYe-ws-dxc"/>
+                            <constraint firstAttribute="trailing" secondItem="jqX-b7-vfO" secondAttribute="trailing" id="Zt8-qa-Iji"/>
                             <constraint firstItem="QU7-zL-dEq" firstAttribute="top" secondItem="BSv-uk-qcg" secondAttribute="bottom" constant="8" id="a8m-Xv-Ohn"/>
                             <constraint firstItem="jBS-bh-JAb" firstAttribute="leading" secondItem="246-rc-7iy" secondAttribute="leading" constant="8" id="aBv-Hd-4wA"/>
                             <constraint firstItem="cep-jD-7gY" firstAttribute="leading" secondItem="246-rc-7iy" secondAttribute="leading" id="aWk-cO-WCF"/>
+                            <constraint firstItem="jqX-b7-vfO" firstAttribute="leading" secondItem="246-rc-7iy" secondAttribute="leading" id="ahQ-fk-OpC"/>
                             <constraint firstItem="8Kd-Pj-IJw" firstAttribute="bottom" secondItem="cep-jD-7gY" secondAttribute="top" id="hTq-lN-Q9c"/>
+                            <constraint firstAttribute="bottom" secondItem="jqX-b7-vfO" secondAttribute="bottom" id="ivV-oX-wcy"/>
                             <constraint firstItem="BSv-uk-qcg" firstAttribute="leading" secondItem="246-rc-7iy" secondAttribute="leading" constant="8" id="uhX-2R-NPZ"/>
                         </constraints>
                     </view>
@@ -699,20 +729,20 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <box boxType="custom" cornerRadius="4" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="PiF-Uc-69g" userLabel="Divider Box">
-                                <rect key="frame" x="0.0" y="230" width="311" height="5"/>
+                                <rect key="frame" x="0.0" y="233" width="311" height="2"/>
                                 <view key="contentView" id="Vt8-Gc-Q91">
-                                    <rect key="frame" x="1" y="1" width="309" height="3"/>
+                                    <rect key="frame" x="1" y="1" width="309" height="0.0"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 </view>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="5" id="eM7-Dn-hZC"/>
+                                    <constraint firstAttribute="height" constant="2" id="eM7-Dn-hZC"/>
                                     <constraint firstAttribute="width" constant="311" id="uha-jl-3tH"/>
                                 </constraints>
-                                <color key="borderColor" name="separatorColor" catalog="System" colorSpace="catalog"/>
-                                <color key="fillColor" name="separatorColor" catalog="System" colorSpace="catalog"/>
+                                <color key="borderColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="fillColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             </box>
                             <box boxType="custom" cornerRadius="4" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="x2Q-jw-WsX" userLabel="Indicators Box">
-                                <rect key="frame" x="0.0" y="145" width="311" height="85"/>
+                                <rect key="frame" x="0.0" y="148" width="311" height="85"/>
                                 <view key="contentView" id="Jpf-ab-wjc">
                                     <rect key="frame" x="1" y="1" width="309" height="83"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -801,7 +831,7 @@
                                 <color key="fillColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </box>
                             <popUpButton identifier="MicProfile" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vQd-Ns-GSa" userLabel="Mic Profile">
-                                <rect key="frame" x="6" y="113" width="233" height="25"/>
+                                <rect key="frame" x="6" y="116" width="233" height="25"/>
                                 <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="P9h-JN-YvE">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="menu"/>
@@ -812,7 +842,7 @@
                                 </connections>
                             </popUpButton>
                             <button identifier="Save" toolTip="Save / Delete MIC profile" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fUH-dH-UyU">
-                                <rect key="frame" x="261" y="117" width="44" height="17"/>
+                                <rect key="frame" x="261" y="120" width="44" height="17"/>
                                 <buttonCell key="cell" type="inline" title="Save" bezelStyle="inline" alignment="center" enabled="NO" borderStyle="border" inset="2" id="mrl-MJ-F5B">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="smallSystemBold"/>
@@ -822,7 +852,7 @@
                                 </connections>
                             </button>
                             <stackView distribution="fill" orientation="horizontal" alignment="centerY" spacing="14" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ksl-im-UoL" userLabel="Mic stack view">
-                                <rect key="frame" x="8" y="85" width="298" height="21"/>
+                                <rect key="frame" x="8" y="88" width="298" height="21"/>
                                 <subviews>
                                     <popUpButton identifier="MicSelection" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8pF-hW-YHP" userLabel="Mic Selection">
                                         <rect key="frame" x="-2" y="-3" width="65" height="25"/>
@@ -874,7 +904,7 @@
                                 </customSpacing>
                             </stackView>
                             <stackView distribution="fill" orientation="horizontal" alignment="top" spacing="35" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="S2c-H8-KHQ" userLabel="Proc Labels stack view">
-                                <rect key="frame" x="88" y="63" width="142" height="17"/>
+                                <rect key="frame" x="88" y="66" width="142" height="17"/>
                                 <subviews>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RDQ-yg-b1M">
                                         <rect key="frame" x="-2" y="0.0" width="32" height="17"/>
@@ -913,7 +943,7 @@
                                 </customSpacing>
                             </stackView>
                             <stackView distribution="fill" orientation="horizontal" alignment="bottom" spacing="14" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Wcz-HS-Wtl" userLabel="Proc stack view">
-                                <rect key="frame" x="8" y="36" width="298" height="22"/>
+                                <rect key="frame" x="8" y="39" width="298" height="22"/>
                                 <subviews>
                                     <button identifier="Proc" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hS4-yD-3DZ">
                                         <rect key="frame" x="-6" y="-7" width="72" height="32"/>
@@ -964,7 +994,7 @@
                                 </customSpacing>
                             </stackView>
                             <stackView distribution="fill" orientation="horizontal" alignment="centerY" spacing="17" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FmC-Ag-2ZD" userLabel="Mon stack view">
-                                <rect key="frame" x="8" y="5" width="297" height="21"/>
+                                <rect key="frame" x="8" y="8" width="297" height="21"/>
                                 <subviews>
                                     <button identifier="Mon" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="055-NT-Nba">
                                         <rect key="frame" x="-6" y="-7" width="72" height="32"/>
@@ -999,10 +1029,26 @@
                                     <real value="3.4028234663852886e+38"/>
                                 </customSpacing>
                             </stackView>
+                            <box boxType="custom" cornerRadius="4" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="cJ5-uX-bo5" userLabel="Divider Box">
+                                <rect key="frame" x="0.0" y="0.0" width="311" height="2"/>
+                                <view key="contentView" id="qVc-BM-rGo">
+                                    <rect key="frame" x="1" y="1" width="309" height="0.0"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                </view>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="311" id="HXV-Ik-FBf"/>
+                                    <constraint firstAttribute="height" constant="2" id="RMv-wI-0Ih"/>
+                                </constraints>
+                                <color key="borderColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="fillColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            </box>
                         </subviews>
                         <constraints>
+                            <constraint firstItem="cJ5-uX-bo5" firstAttribute="leading" secondItem="lRw-Dq-Co8" secondAttribute="leading" id="3zL-Hd-c8f"/>
+                            <constraint firstAttribute="bottom" secondItem="cJ5-uX-bo5" secondAttribute="bottom" id="5vN-au-haP"/>
                             <constraint firstItem="Ksl-im-UoL" firstAttribute="top" secondItem="vQd-Ns-GSa" secondAttribute="bottom" constant="10" id="Eat-EH-fnV"/>
                             <constraint firstItem="x2Q-jw-WsX" firstAttribute="top" secondItem="PiF-Uc-69g" secondAttribute="bottom" id="FXt-yT-37u"/>
+                            <constraint firstAttribute="trailing" secondItem="cJ5-uX-bo5" secondAttribute="trailing" id="IXP-e5-A2i"/>
                             <constraint firstAttribute="trailing" secondItem="fUH-dH-UyU" secondAttribute="trailing" constant="6" id="L59-GC-Mzw"/>
                             <constraint firstItem="PiF-Uc-69g" firstAttribute="leading" secondItem="lRw-Dq-Co8" secondAttribute="leading" id="MWI-Qb-iR3"/>
                             <constraint firstItem="fUH-dH-UyU" firstAttribute="top" secondItem="x2Q-jw-WsX" secondAttribute="bottom" constant="11" id="Pcb-HE-Cuh"/>
@@ -1049,19 +1095,19 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <box boxType="custom" cornerRadius="4" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="rjk-t1-Ab5" userLabel="Divider Box">
-                                <rect key="frame" x="0.0" y="205" width="311" height="5"/>
+                                <rect key="frame" x="0.0" y="208" width="311" height="2"/>
                                 <view key="contentView" id="tVd-20-00f">
-                                    <rect key="frame" x="1" y="1" width="309" height="3"/>
+                                    <rect key="frame" x="1" y="1" width="309" height="0.0"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 </view>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="5" id="fM4-rr-L0j"/>
+                                    <constraint firstAttribute="height" constant="2" id="fM4-rr-L0j"/>
                                 </constraints>
-                                <color key="borderColor" name="separatorColor" catalog="System" colorSpace="catalog"/>
-                                <color key="fillColor" name="separatorColor" catalog="System" colorSpace="catalog"/>
+                                <color key="borderColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="fillColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             </box>
                             <stackView distribution="fillEqually" orientation="vertical" alignment="centerX" spacing="14" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fGP-w5-RyK" userLabel="Buttons stack view">
-                                <rect key="frame" x="12" y="5" width="70" height="183"/>
+                                <rect key="frame" x="12" y="8" width="70" height="183"/>
                                 <subviews>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dGs-g0-vIk">
                                         <rect key="frame" x="-2" y="166" width="74" height="17"/>
@@ -1304,10 +1350,25 @@
                                     <real value="3.4028234663852886e+38"/>
                                 </customSpacing>
                             </stackView>
+                            <box boxType="custom" cornerRadius="4" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="yn7-1t-kem" userLabel="Divider Box">
+                                <rect key="frame" x="0.0" y="0.0" width="311" height="2"/>
+                                <view key="contentView" id="YJA-ki-5Tw">
+                                    <rect key="frame" x="1" y="1" width="309" height="0.0"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                </view>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="2" id="UhN-fR-YHi"/>
+                                </constraints>
+                                <color key="borderColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="fillColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            </box>
                         </subviews>
                         <constraints>
                             <constraint firstItem="rjk-t1-Ab5" firstAttribute="top" secondItem="V5K-Dt-M7N" secondAttribute="top" id="4Pc-wQ-x16"/>
+                            <constraint firstItem="yn7-1t-kem" firstAttribute="leading" secondItem="V5K-Dt-M7N" secondAttribute="leading" id="9sP-Uf-yce"/>
                             <constraint firstItem="rjk-t1-Ab5" firstAttribute="leading" secondItem="V5K-Dt-M7N" secondAttribute="leading" id="EeI-7V-ylN"/>
+                            <constraint firstAttribute="bottom" secondItem="yn7-1t-kem" secondAttribute="bottom" id="J7h-Tc-ooi"/>
+                            <constraint firstAttribute="trailing" secondItem="yn7-1t-kem" secondAttribute="trailing" id="ZtW-Yp-u5s"/>
                             <constraint firstAttribute="trailing" secondItem="rjk-t1-Ab5" secondAttribute="trailing" id="hTz-aW-eQ6"/>
                             <constraint firstItem="fGP-w5-RyK" firstAttribute="leading" secondItem="V5K-Dt-M7N" secondAttribute="leading" constant="12" id="lrC-Rv-RNC"/>
                             <constraint firstItem="fGP-w5-RyK" firstAttribute="top" secondItem="rjk-t1-Ab5" secondAttribute="bottom" constant="17" id="qfb-7Q-apD"/>
