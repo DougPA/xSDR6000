@@ -15,7 +15,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <stackView distribution="equalSpacing" orientation="horizontal" alignment="centerY" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ldc-rG-ght" userLabel="Ant stack view">
-                                <rect key="frame" x="15" y="77" width="156" height="21"/>
+                                <rect key="frame" x="7" y="77" width="156" height="21"/>
                                 <subviews>
                                     <button horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ce0-Xg-TdH" userLabel="X Bevel Button">
                                         <rect key="frame" x="0.0" y="1" width="20" height="20"/>
@@ -83,7 +83,7 @@
                                 </customSpacing>
                             </stackView>
                             <stackView distribution="fill" orientation="horizontal" alignment="top" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jie-8p-irq" userLabel="Lock stack view">
-                                <rect key="frame" x="6" y="52" width="165" height="21"/>
+                                <rect key="frame" x="-2" y="52" width="165" height="21"/>
                                 <subviews>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="WIZ-v0-8bz" userLabel="Lock button">
                                         <rect key="frame" x="0.0" y="1" width="25" height="20"/>
@@ -161,10 +161,10 @@
                                 </customSpacing>
                             </stackView>
                             <stackView distribution="fill" orientation="vertical" alignment="trailing" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qui-El-IVB" userLabel="Corner Stack View">
-                                <rect key="frame" x="186" y="49" width="125" height="51"/>
+                                <rect key="frame" x="178" y="49" width="130" height="51"/>
                                 <subviews>
                                     <stackView distribution="fill" orientation="horizontal" alignment="centerY" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Y91-Jn-yZh" userLabel="Split Stack View">
-                                        <rect key="frame" x="19" y="29" width="106" height="22"/>
+                                        <rect key="frame" x="24" y="29" width="106" height="22"/>
                                         <subviews>
                                             <button translatesAutoresizingMaskIntoConstraints="NO" id="WX7-HX-umE" userLabel="Split button">
                                                 <rect key="frame" x="0.0" y="0.0" width="52" height="22"/>
@@ -219,9 +219,9 @@
                                         </customSpacing>
                                     </stackView>
                                     <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ZdQ-2F-wr5" userLabel="Frequency text field">
-                                        <rect key="frame" x="-2" y="0.0" width="129" height="29"/>
+                                        <rect key="frame" x="-2" y="0.0" width="134" height="29"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="125" id="rzd-77-VLy"/>
+                                            <constraint firstAttribute="width" constant="130" id="rzd-77-VLy"/>
                                         </constraints>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" refusesFirstResponder="YES" state="on" focusRingType="none" alignment="right" placeholderString="7.235.000" id="2eB-fm-ltp">
                                             <numberFormatter key="formatter" formatterBehavior="default10_4" usesGroupingSeparator="NO" groupingSize="0" minimumIntegerDigits="0" maximumIntegerDigits="42" id="zQS-Sx-h8q" customClass="FrequencyFormatter" customModule="xSDR6000" customModuleProvider="target"/>
@@ -377,7 +377,7 @@
                             <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="qui-El-IVB" secondAttribute="bottom" id="0tY-9S-xF0"/>
                             <constraint firstItem="uKl-h1-c2L" firstAttribute="top" secondItem="jie-8p-irq" secondAttribute="bottom" constant="5" id="1ZO-rE-WH9"/>
                             <constraint firstItem="V5N-wl-2dY" firstAttribute="top" secondItem="uKl-h1-c2L" secondAttribute="bottom" constant="5" id="AZ2-nQ-dds"/>
-                            <constraint firstAttribute="trailing" secondItem="qui-El-IVB" secondAttribute="trailing" id="B8S-2Y-rV0"/>
+                            <constraint firstAttribute="trailing" secondItem="qui-El-IVB" secondAttribute="trailing" constant="3" id="B8S-2Y-rV0"/>
                             <constraint firstItem="jie-8p-irq" firstAttribute="top" secondItem="Ldc-rG-ght" secondAttribute="bottom" constant="4" id="ELX-vB-WGz"/>
                             <constraint firstItem="qui-El-IVB" firstAttribute="leading" secondItem="jie-8p-irq" secondAttribute="trailing" constant="15" id="QX4-WZ-gPI"/>
                             <constraint firstAttribute="trailing" secondItem="uKl-h1-c2L" secondAttribute="trailing" constant="40" id="VW5-9O-KN5"/>
