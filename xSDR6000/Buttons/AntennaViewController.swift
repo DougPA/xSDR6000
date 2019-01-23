@@ -9,7 +9,7 @@
 import Cocoa
 import xLib6000
 
-class AntennaViewController: NSViewController {
+class AntennaViewController: NSViewController, NSPopoverDelegate {
 
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
@@ -33,6 +33,10 @@ class AntennaViewController: NSViewController {
     
     // start observing
     addObservations()
+  }
+  
+  func popoverShouldDetach(_ popover: NSPopover) -> Bool {
+    return true
   }
   
   // ----------------------------------------------------------------------------

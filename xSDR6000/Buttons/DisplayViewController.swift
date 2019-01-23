@@ -10,7 +10,7 @@ import Cocoa
 import xLib6000
 import SwiftyUserDefaults
 
-class DisplayViewController: NSViewController {
+class DisplayViewController: NSViewController, NSPopoverDelegate {
 
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
@@ -54,6 +54,10 @@ class DisplayViewController: NSViewController {
     
     // start observing
     addObservations()
+  }
+  
+  func popoverShouldDetach(_ popover: NSPopover) -> Bool {
+    return true
   }
   
   // ----------------------------------------------------------------------------

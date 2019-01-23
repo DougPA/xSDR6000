@@ -9,7 +9,7 @@
 import Cocoa
 import xLib6000
 
-class BandButtonViewController              : NSViewController {
+class BandButtonViewController              : NSViewController, NSPopoverDelegate {
   
   // ----------------------------------------------------------------------------
   // MARK: - Internal properties
@@ -61,6 +61,10 @@ class BandButtonViewController              : NSViewController {
         }
       }
     }
+  }
+  
+  func popoverShouldDetach(_ popover: NSPopover) -> Bool {
+    return true
   }
   
   // ----------------------------------------------------------------------------

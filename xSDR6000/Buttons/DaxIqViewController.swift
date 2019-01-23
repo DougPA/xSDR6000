@@ -9,7 +9,7 @@
 import Cocoa
 import xLib6000
 
-class DaxIqViewController: NSViewController {
+class DaxIqViewController: NSViewController, NSPopoverDelegate {
 
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
@@ -32,7 +32,11 @@ class DaxIqViewController: NSViewController {
     // start observing
     addObservations()
   }
-  
+
+  func popoverShouldDetach(_ popover: NSPopover) -> Bool {
+    return true
+  }
+
   // ----------------------------------------------------------------------------
   // MARK: - Action methods
   
