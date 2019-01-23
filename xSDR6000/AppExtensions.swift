@@ -600,21 +600,48 @@ func defaults(from file: String) {
 func responderChain(for rootView: NSView) {
   var currentResponder :NSResponder?
   
-  currentResponder = rootView as NSResponder
-  
-  Swift.print("\nResponder chain for \(rootView.identifier?.rawValue ?? "No Identifier")\n")
-  while true {
-    if let responder = currentResponder?.nextResponder {
-      
-      if let view = responder as? NSView {
-        Swift.print("\t\(view.identifier?.rawValue ?? String(describing: view))")
-      } else if let vc = responder as? NSViewController {
-        Swift.print("\t\(vc.identifier?.rawValue ?? String(describing: vc))")
+  DispatchQueue.main.async {
+    currentResponder = rootView as NSResponder
+    
+    Swift.print("\nResponder chain for \(rootView.identifier?.rawValue ?? "No Identifier")\n")
+    while true {
+      if let responder = currentResponder?.nextResponder {
+        
+        if let view = responder as? NSView {
+          Swift.print("\t\(view.identifier?.rawValue ?? String(describing: view))")
+        } else if let vc = responder as? NSViewController {
+          Swift.print("\t\(vc.identifier?.rawValue ?? String(describing: vc))")
+        }
+        currentResponder = responder
+      } else {
+        break
       }
-      currentResponder = responder
-    } else {
-      break
     }
+    Swift.print("")
   }
-  Swift.print("")
+}
+/// Print a View Hierarchy on the console
+///
+/// - Parameter view:               a view at the root of the chain
+///
+func viewHierarchy(for rootView: NSView) {
+  var currentView :NSView?
+
+  DispatchQueue.main.async {
+    currentView = rootView as NSView
+    
+    Swift.print("\nView Hierarchy for \(rootView.identifier?.rawValue ?? "No Identifier")\n")
+    while currentView != nil {
+      if let view = currentView?.superview {
+        
+        if view === NSApp.mainWindow?.contentView {
+          Swift.print("\t\(NSApp.mainWindow?.identifier?.rawValue ?? String(describing: NSApp.mainWindow))")
+        } else {
+          Swift.print("\t\(view.identifier?.rawValue ?? String(describing: view))")
+        }
+        currentView = view
+      }
+    }
+    Swift.print("")
+  }
 }
