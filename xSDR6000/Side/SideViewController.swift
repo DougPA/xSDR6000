@@ -40,7 +40,7 @@ final class SideViewController              : NSViewController {
   private var _observations                 = [NSKeyValueObservation]()
   
   private let kSideViewWidth                : CGFloat = 311
-  private let kRxHeightOpen                 : CGFloat = 100
+  private let kRxHeightOpen                 : CGFloat = 90
   private let kTxHeightOpen                 : CGFloat = 210
   private let kPcwHeightOpen                : CGFloat = 240
   private let kPhneHeightOpen               : CGFloat = 210
@@ -54,7 +54,6 @@ final class SideViewController              : NSViewController {
     super.viewDidLoad()
     
     view.translatesAutoresizingMaskIntoConstraints = false
-//    view.layer?.backgroundColor = NSColor.black.cgColor
     
     addNotifications()
     
@@ -142,8 +141,9 @@ final class SideViewController              : NSViewController {
                                flagPosition: 0,
                                flagHeight: FlagViewController.kLargeFlagHeight,
                                flagWidth: FlagViewController.kLargeFlagWidth)
-    // setup it's visible height
-    self._rxContainerHeight.constant = (self._flagVc!.controlsVc!.view.isHidden ? 100 : 200)
+    
+    // if selected, make it visible (i.e. height > 0)
+    _rxContainerHeight.constant = (Defaults[.sideRxOpen] ? kRxHeightOpen : kHeightClosed)
   }
   /// Position a scroll view at the top
   ///

@@ -9,7 +9,7 @@
 import Cocoa
 import xLib6000
 
-class AudioViewController: NSViewController {
+final class AudioViewController: NSViewController {
 
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
@@ -36,17 +36,20 @@ class AudioViewController: NSViewController {
     
     view.translatesAutoresizingMaskIntoConstraints = false
     
-    // set the background color of the Flag
-    view.layer?.backgroundColor = NSColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.5).cgColor
-
     // populate the choices
     _agcModePopUp.addItems(withTitles: Slice.AgcMode.allCases.map {$0.rawValue} )
-//    _agcModePopUp.selectItem(withTitle: _slice.agcMode)
 
     // start observing
     addObservations()
   }
-  
+
+  override func viewWillAppear() {
+    super.viewWillAppear()
+    
+    // set the background color of the Flag
+    view.layer?.backgroundColor = ControlsViewController.kBackgroundColor
+  }
+
   // ----------------------------------------------------------------------------
   // MARK: - Action methods
   

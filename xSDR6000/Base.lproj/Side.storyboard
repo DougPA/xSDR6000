@@ -1491,15 +1491,8 @@
                                         <view identifier="Inside view" translatesAutoresizingMaskIntoConstraints="NO" id="WdK-Jx-DB2" userLabel="Inside View">
                                             <rect key="frame" x="0.0" y="0.0" width="311" height="1050"/>
                                             <subviews>
-                                                <containerView identifier="Rx Container View" wantsLayer="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wNm-qC-krW" userLabel="Rx View container">
-                                                    <rect key="frame" x="0.0" y="850" width="311" height="200"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="311" id="dxo-0a-apt"/>
-                                                        <constraint firstAttribute="height" constant="200" id="tAj-GH-gY5"/>
-                                                    </constraints>
-                                                </containerView>
                                                 <containerView identifier="Tx COntainer View" translatesAutoresizingMaskIntoConstraints="NO" id="hHA-SF-aVp" userLabel="Tx View container">
-                                                    <rect key="frame" x="0.0" y="640" width="311" height="210"/>
+                                                    <rect key="frame" x="0.0" y="660" width="311" height="210"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="311" id="P83-dK-6Hm"/>
                                                         <constraint firstAttribute="height" constant="210" id="Svd-SS-oVl"/>
@@ -1509,7 +1502,7 @@
                                                     </connections>
                                                 </containerView>
                                                 <containerView identifier="Pcw Container View" translatesAutoresizingMaskIntoConstraints="NO" id="mKQ-NT-mCo" userLabel="Pcw View container">
-                                                    <rect key="frame" x="0.0" y="430" width="311" height="210"/>
+                                                    <rect key="frame" x="0.0" y="450" width="311" height="210"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="311" id="3Ia-CF-ie6"/>
                                                         <constraint firstAttribute="height" constant="210" id="NQK-yO-bCK"/>
@@ -1519,7 +1512,7 @@
                                                     </connections>
                                                 </containerView>
                                                 <containerView identifier="Phone Container View" translatesAutoresizingMaskIntoConstraints="NO" id="eED-TT-H8j" userLabel="Phne View container">
-                                                    <rect key="frame" x="0.0" y="220" width="311" height="210"/>
+                                                    <rect key="frame" x="0.0" y="240" width="311" height="210"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="311" id="8K8-VF-6nT"/>
                                                         <constraint firstAttribute="height" constant="210" id="R4m-3J-D0Z"/>
@@ -1529,7 +1522,7 @@
                                                     </connections>
                                                 </containerView>
                                                 <containerView identifier="Eq Container view" translatesAutoresizingMaskIntoConstraints="NO" id="eBz-RL-KvA" userLabel="Eq View container">
-                                                    <rect key="frame" x="0.0" y="10" width="311" height="210"/>
+                                                    <rect key="frame" x="0.0" y="30" width="311" height="210"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="311" id="OgD-LQ-BLy"/>
                                                         <constraint firstAttribute="height" constant="210" id="eC3-D0-WPI"/>
@@ -1537,6 +1530,13 @@
                                                     <connections>
                                                         <segue destination="yhz-wz-Qrr" kind="embed" id="0at-Li-BlG"/>
                                                     </connections>
+                                                </containerView>
+                                                <containerView identifier="Rx Container View" wantsLayer="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wNm-qC-krW" userLabel="Rx View container">
+                                                    <rect key="frame" x="18" y="870" width="275" height="180"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="275" id="dxo-0a-apt"/>
+                                                        <constraint firstAttribute="height" constant="180" id="tAj-GH-gY5"/>
+                                                    </constraints>
                                                 </containerView>
                                             </subviews>
                                             <constraints>
@@ -1553,10 +1553,10 @@
                                                 <constraint firstAttribute="trailing" secondItem="mKQ-NT-mCo" secondAttribute="trailing" id="hth-cF-zEt"/>
                                                 <constraint firstItem="eBz-RL-KvA" firstAttribute="top" secondItem="eED-TT-H8j" secondAttribute="bottom" id="iQS-Lb-t8q"/>
                                                 <constraint firstAttribute="trailing" secondItem="eED-TT-H8j" secondAttribute="trailing" id="m0B-K4-nv4"/>
-                                                <constraint firstAttribute="trailing" secondItem="wNm-qC-krW" secondAttribute="trailing" id="mbz-uz-zLT"/>
+                                                <constraint firstAttribute="trailing" secondItem="wNm-qC-krW" secondAttribute="trailing" constant="18" id="mbz-uz-zLT"/>
                                                 <constraint firstItem="eED-TT-H8j" firstAttribute="leading" secondItem="WdK-Jx-DB2" secondAttribute="leading" id="sU7-Wq-r9U"/>
                                                 <constraint firstAttribute="trailing" secondItem="eBz-RL-KvA" secondAttribute="trailing" id="sbW-I6-xNT"/>
-                                                <constraint firstItem="wNm-qC-krW" firstAttribute="leading" secondItem="WdK-Jx-DB2" secondAttribute="leading" id="yyA-62-uvV"/>
+                                                <constraint firstItem="wNm-qC-krW" firstAttribute="leading" secondItem="WdK-Jx-DB2" secondAttribute="leading" constant="18" id="yyA-62-uvV"/>
                                             </constraints>
                                         </view>
                                     </subviews>

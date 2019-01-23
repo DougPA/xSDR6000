@@ -9,7 +9,7 @@
 import Cocoa
 import xLib6000
 
-class XritViewController: NSViewController {
+final class XritViewController: NSViewController {
 
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
@@ -40,13 +40,16 @@ class XritViewController: NSViewController {
     
     view.translatesAutoresizingMaskIntoConstraints = false
     
-    // set the background color of the Flag
-    view.layer?.backgroundColor = NSColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.5).cgColor
-
     // start observing
     addObservations()
   }
-  
+  override func viewWillAppear() {
+    super.viewWillAppear()
+    
+    // set the background color of the Flag
+    view.layer?.backgroundColor = ControlsViewController.kBackgroundColor
+  }
+
   // ----------------------------------------------------------------------------
   // MARK: - Action methods
   

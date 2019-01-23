@@ -13,9 +13,10 @@ import xLib6000
 // MARK: - Controls View Controller class implementation
 // --------------------------------------------------------------------------------
 
-class ControlsViewController: NSTabViewController {
+final class ControlsViewController: NSTabViewController {
 
-  static let kControlsHeight                : CGFloat = 100
+  static let kControlsHeight                : CGFloat = 90  
+  static let kBackgroundColor               = NSColor.black.withAlphaComponent(0.3).cgColor
 
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
@@ -30,10 +31,14 @@ class ControlsViewController: NSTabViewController {
 
     view.translatesAutoresizingMaskIntoConstraints = false
     
-    // set the background color of the Flag
-    view.layer?.backgroundColor = NSColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.5).cgColor    
-
     view.isHidden = true
+  }
+
+  override func viewWillAppear() {
+    super.viewWillAppear()
+    
+    // set the background color of the Flag
+    view.layer?.backgroundColor = ControlsViewController.kBackgroundColor
   }
   ///
   /// - Parameters:
@@ -45,8 +50,8 @@ class ControlsViewController: NSTabViewController {
     // give it a reference to the Slice
     tabViewItem?.viewController?.representedObject = _slice
     
-    // set Background color of the TabViewItem view
-    tabViewItem?.view?.layer?.backgroundColor = NSColor(red: 0.3, green: 0.3, blue: 0.3, alpha: 0.9).cgColor
+//    // set Background color of the TabViewItem view
+//    tabViewItem?.view?.layer?.backgroundColor = NSColor(red: 0.3, green: 0.3, blue: 0.3, alpha: 0.9).cgColor
   }
 
   // ----------------------------------------------------------------------------

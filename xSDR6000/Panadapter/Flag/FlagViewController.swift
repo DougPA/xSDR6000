@@ -13,15 +13,15 @@ import xLib6000
 // MARK: - Flag View Controller class implementation
 // --------------------------------------------------------------------------------
 
-final public class FlagViewController       : NSViewController, NSTextFieldDelegate {
+final class FlagViewController       : NSViewController, NSTextFieldDelegate {
   
   static let kSliceLetters : [String]       = ["A", "B", "C", "D", "E", "F", "G", "H"]
   static let kFlagOffset                    : CGFloat = 7.5
   static let kFlagMinimumSeparation         : CGFloat = 10
-  static let kLargeFlagWidth                : CGFloat = 311
-  static let kLargeFlagHeight               : CGFloat = 100
-  static let kSmallFlagWidth                : CGFloat = 133
-  static let kSmallFlagHeight               : CGFloat = 52
+  static let kLargeFlagWidth                : CGFloat = 275
+  static let kLargeFlagHeight               : CGFloat = 90
+  static let kSmallFlagWidth                : CGFloat = 123
+  static let kSmallFlagHeight               : CGFloat = 46
   static let kFlagBorder                    : CGFloat = 20
   
   // ----------------------------------------------------------------------------
@@ -154,10 +154,11 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
     let trailingConstraint = flagVc.controlsVc!.view.trailingAnchor.constraint(equalTo: flagVc.view.trailingAnchor)
     let topConstraint = flagVc.controlsVc!.view.topAnchor.constraint(equalTo: flagVc.view.bottomAnchor)
     let heightConstraint = flagVc.controlsVc!.view.heightAnchor.constraint(equalToConstant: FlagViewController.kLargeFlagHeight)
-    let widthConstraint = flagVc.controlsVc!.view.widthAnchor.constraint(equalToConstant: FlagViewController.kLargeFlagWidth)
+//    let widthConstraint = flagVc.controlsVc!.view.widthAnchor.constraint(equalToConstant: FlagViewController.kLargeFlagWidth)
     
     // activate Controls constraints
-    let controlsConstraints: [NSLayoutConstraint] = [flagVc.controlsHeightConstraint!, leadingConstraint, trailingConstraint, topConstraint, heightConstraint, widthConstraint]
+//    let controlsConstraints: [NSLayoutConstraint] = [flagVc.controlsHeightConstraint!, leadingConstraint, trailingConstraint, topConstraint, heightConstraint, widthConstraint]
+    let controlsConstraints: [NSLayoutConstraint] = [flagVc.controlsHeightConstraint!, leadingConstraint, trailingConstraint, topConstraint, heightConstraint]
     NSLayoutConstraint.activate(controlsConstraints)
   }
   
@@ -168,7 +169,6 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
     super.viewDidLoad()
     
     view.translatesAutoresizingMaskIntoConstraints = false
-    view.layer?.backgroundColor = NSColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0).cgColor
 
     // populate the choices
     _rxAntPopUp.addItems(withTitles: slice!.rxAntList)
@@ -196,7 +196,20 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
     _alphaButton.attributedTitle = NSAttributedString(string: FlagViewController.kSliceLetters[Int(slice!.id)!],
                                                       attributes: kLetterAttr)
   }
-  
+
+  override func viewWillAppear() {
+    super.viewWillAppear()
+    
+    // set the background color of the Flag
+    if _vc is SideViewController {
+      // make it opague if a Side view
+      view.layer?.backgroundColor = NSColor.black.cgColor
+    } else {
+      // can be less opague as a Slice flag
+      view.layer?.backgroundColor = ControlsViewController.kBackgroundColor
+    }
+  }
+
   public func controlTextDidBeginEditing(_ note: Notification) {
 
     if let field = note.object as? NSTextField, field == _frequencyField {
@@ -370,17 +383,17 @@ final public class FlagViewController       : NSViewController, NSTextFieldDeleg
       // select the desired tab
       controlsVc?.selectedTabViewItemIndex = sender.tag
       
-    // unhide the controls
-    controlsVc!.view.isHidden = false
+      // unhide the controls
+      controlsVc!.view.isHidden = false
     
-      if _vc is SideViewController { (_vc as! SideViewController).setRxHeight(200) }
+      if _vc is SideViewController { (_vc as! SideViewController).setRxHeight(2 * FlagViewController.kLargeFlagHeight) }
       
     } else {
       
       // hide the controls
       controlsVc!.view.isHidden = true
 
-      if _vc is SideViewController { (_vc as! SideViewController).setRxHeight(100) }
+      if _vc is SideViewController { (_vc as! SideViewController).setRxHeight( FlagViewController.kLargeFlagHeight) }
     }
   }
   /// One of the popups has been clicked

@@ -14,7 +14,7 @@ import SwiftyUserDefaults
 // MARK: - Mode View Controller class implementation
 // --------------------------------------------------------------------------------
 
-final public class ModeViewController       : NSViewController {
+final class ModeViewController       : NSViewController {
 
   static let filterValues    = [                              // Values of filters (by mode)
     "AM"    : [3_000, 4_000, 5_600, 6_000, 8_000, 10_000, 12_000, 14_000, 16_000, 20_000],
@@ -58,17 +58,13 @@ final public class ModeViewController       : NSViewController {
   // ----------------------------------------------------------------------------
   // MARK: - Overridden methods
   
-  public override func viewDidLoad() {
+  override func viewDidLoad() {
     super.viewDidLoad()
     
     view.translatesAutoresizingMaskIntoConstraints = false
     
-    // set the background color of the Flag
-    view.layer?.backgroundColor = NSColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.5).cgColor
-
     // populate the choices
     _modePopUp.addItems(withTitles: Slice.Mode.allCases.map {$0.rawValue} )
-//    _modePopUp.selectItem(withTitle: _slice.mode)
     
     // populate the Quick Mode buttons
     _quickMode0.title = Defaults[.quickMode0].uppercased()
@@ -79,7 +75,14 @@ final public class ModeViewController       : NSViewController {
     // start observing
     addObservations()
   }
-  
+
+  override func viewWillAppear() {
+    super.viewWillAppear()
+    
+    // set the background color of the Flag
+    view.layer?.backgroundColor = ControlsViewController.kBackgroundColor
+  }
+
   // ----------------------------------------------------------------------------
   // MARK: - Action methods
 
