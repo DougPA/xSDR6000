@@ -64,6 +64,7 @@
 		913FDDEF21E43BDC006DFE27 /* DisplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913FDDEE21E43BDC006DFE27 /* DisplayViewController.swift */; };
 		913FDDF121E44C70006DFE27 /* DaxIqViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913FDDF021E44C70006DFE27 /* DaxIqViewController.swift */; };
 		9143BD9721FA3CC400C2CCBD /* ChangeLog.txt in Resources */ = {isa = PBXBuildFile; fileRef = 9143BD9621FA3CC300C2CCBD /* ChangeLog.txt */; };
+		9143BD9921FA3F6600C2CCBD /* KnownIssues.md in Resources */ = {isa = PBXBuildFile; fileRef = 9143BD9821FA3F6500C2CCBD /* KnownIssues.md */; };
 		91463CEC21E501BA00177843 /* InfoPrefsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91463CEB21E501BA00177843 /* InfoPrefsViewController.swift */; };
 		91463CEE21E5052E00177843 /* SwiftyUserDefaults.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91463CED21E5052E00177843 /* SwiftyUserDefaults.framework */; };
 		91463CEF21E5052E00177843 /* SwiftyUserDefaults.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 91463CED21E5052E00177843 /* SwiftyUserDefaults.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -174,6 +175,7 @@
 		913FDDEE21E43BDC006DFE27 /* DisplayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayViewController.swift; sourceTree = "<group>"; };
 		913FDDF021E44C70006DFE27 /* DaxIqViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaxIqViewController.swift; sourceTree = "<group>"; };
 		9143BD9621FA3CC300C2CCBD /* ChangeLog.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ChangeLog.txt; sourceTree = "<group>"; };
+		9143BD9821FA3F6500C2CCBD /* KnownIssues.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = KnownIssues.md; sourceTree = "<group>"; };
 		91463CEB21E501BA00177843 /* InfoPrefsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoPrefsViewController.swift; sourceTree = "<group>"; };
 		91463CED21E5052E00177843 /* SwiftyUserDefaults.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SwiftyUserDefaults.framework; sourceTree = "<group>"; };
 		91463CF021E50AE300177843 /* ColorsPrefsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorsPrefsViewController.swift; sourceTree = "<group>"; };
@@ -227,6 +229,7 @@
 		913F7EB82066DBBE00F35E9B = {
 			isa = PBXGroup;
 			children = (
+				9143BD9821FA3F6500C2CCBD /* KnownIssues.md */,
 				9143BD9621FA3CC300C2CCBD /* ChangeLog.txt */,
 				91463CED21E5052E00177843 /* SwiftyUserDefaults.framework */,
 				913F7F782066E6F500F35E9B /* README.md */,
@@ -570,6 +573,7 @@
 				913F7F2A2066DC7A00F35E9B /* Assets.xcassets in Resources */,
 				913F7F652066DC7A00F35E9B /* Purple.tex in Resources */,
 				913F7F2E2066DC7A00F35E9B /* RadioPicker.storyboard in Resources */,
+				9143BD9921FA3F6600C2CCBD /* KnownIssues.md in Resources */,
 				913F7F672066DC7A00F35E9B /* Tritanopia.tex in Resources */,
 				913F7F5F2066DC7A00F35E9B /* Grayscale.tex in Resources */,
 				913F7F2F2066DC7A00F35E9B /* Main.storyboard in Resources */,
