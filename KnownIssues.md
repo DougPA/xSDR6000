@@ -4,14 +4,14 @@
 
 ### Not implemented:
 
-CWX
-CW Side panel
-Amplifier functionality
-Audio recording & playback
+1. CWX
+2. CW Side panel
+3. Amplifier functionality
+4. Audio recording & playback
 
 
 ### Bugs
 
-Failures under some scenarios when client disconnected by another client  
+1. Failures under some scenarios when client disconnected by another client
 
 
