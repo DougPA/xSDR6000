@@ -1,0 +1,6 @@
+xSDR6000 Change Log
+
+v2.0.5 - 24 Jan 2019
+
+Band, Antenna, Display & DAX popovers can now be detached, if not detached they close automatically after 10 seconds
+
