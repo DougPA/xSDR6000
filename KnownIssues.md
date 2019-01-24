@@ -12,6 +12,6 @@ Audio recording & playback
 
 ### Bugs
 
-Failures under some scenarios when client disconnected by another client
+Failures under some scenarios when client disconnected by another client  
 
 
