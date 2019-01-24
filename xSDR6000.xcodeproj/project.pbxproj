@@ -175,7 +175,7 @@
 		913FDDEE21E43BDC006DFE27 /* DisplayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayViewController.swift; sourceTree = "<group>"; };
 		913FDDF021E44C70006DFE27 /* DaxIqViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaxIqViewController.swift; sourceTree = "<group>"; };
 		9143BD9621FA3CC300C2CCBD /* ChangeLog.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ChangeLog.txt; sourceTree = "<group>"; };
-		9143BD9821FA3F6500C2CCBD /* KnownIssues.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = KnownIssues.md; sourceTree = "<group>"; };
+		9143BD9821FA3F6500C2CCBD /* KnownIssues.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = KnownIssues.md; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.markdown; };
 		91463CEB21E501BA00177843 /* InfoPrefsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoPrefsViewController.swift; sourceTree = "<group>"; };
 		91463CED21E5052E00177843 /* SwiftyUserDefaults.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SwiftyUserDefaults.framework; sourceTree = "<group>"; };
 		91463CF021E50AE300177843 /* ColorsPrefsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorsPrefsViewController.swift; sourceTree = "<group>"; };

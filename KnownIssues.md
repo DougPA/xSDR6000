@@ -2,7 +2,7 @@
 
 ## 24-Jan-2019 - list started
 
-issues will be added/removed as issues are discovered/fixed
+Issues will be added/removed as issues are discovered/fixed
 
 ### Not implemented:
 
