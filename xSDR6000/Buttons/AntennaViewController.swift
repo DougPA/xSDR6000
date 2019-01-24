@@ -11,6 +11,8 @@ import xLib6000
 
 class AntennaViewController: NSViewController, NSPopoverDelegate {
 
+  static let kTimeout = 10
+  
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
   
@@ -22,7 +24,8 @@ class AntennaViewController: NSViewController, NSPopoverDelegate {
     return representedObject as! Panadapter }
   
   private var _observations                 = [NSKeyValueObservation]()
-  
+  private var _isDetached                   = false
+
   // ----------------------------------------------------------------------------
   // MARK: - Overridden methods
   
@@ -33,9 +36,15 @@ class AntennaViewController: NSViewController, NSPopoverDelegate {
     
     // start observing
     addObservations()
+
+    // start the timer
+    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(AntennaViewController.kTimeout)) {
+      if !self._isDetached { self.dismiss(nil) }
+    }
   }
   
   func popoverShouldDetach(_ popover: NSPopover) -> Bool {
+    _isDetached = true
     return true
   }
   

@@ -58,9 +58,11 @@ final class PanafallButtonViewController    : NSViewController {
   @IBOutlet private weak var buttonView             : PanafallButtonView!
   
   private var _bandwidth                    : Int { return panadapter!.bandwidth }
+  private var _popover                      : NSPopover?
   
   private let kPanafallEmbedIdentifier      = "PanafallEmbed"
   private let kBandPopoverIdentifier        = "BandPopover"
+  private let kBandPopoverNewIdentifier     = "BandPopoverNew"
   private let kAntennaPopoverIdentifier     = "AntennaPopover"
   private let kDisplayPopoverIdentifier     = "DisplayPopover"
   private let kDaxPopoverIdentifier         = "DaxPopover"
@@ -78,6 +80,8 @@ final class PanafallButtonViewController    : NSViewController {
   ///   - sender: the sender
   ///
   override func prepare(for segue: NSStoryboardSegue, sender: Any?) {
+    
+    _popover = segue.destinationController as? NSPopover
     
     switch segue.identifier! {
       
@@ -105,7 +109,7 @@ final class PanafallButtonViewController    : NSViewController {
       // pass the Popovers a reference to this controller
       (segue.destinationController as! NSViewController).representedObject = self
       
-    case kAntennaPopoverIdentifier, kBandPopoverIdentifier, kDaxPopoverIdentifier:
+    case kAntennaPopoverIdentifier, kBandPopoverIdentifier, kBandPopoverNewIdentifier, kDaxPopoverIdentifier:
       
       // pass the Popovers a reference to the panadapter
       (segue.destinationController as! NSViewController).representedObject = panadapter
@@ -114,7 +118,7 @@ final class PanafallButtonViewController    : NSViewController {
       break
     }
   }
-  
+
   // ----------------------------------------------------------------------------
   // MARK: - Internal methods
   

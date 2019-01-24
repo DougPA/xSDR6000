@@ -10,68 +10,109 @@ import Cocoa
 import xLib6000
 
 class BandButtonViewController              : NSViewController, NSPopoverDelegate {
-  
-  // ----------------------------------------------------------------------------
-  // MARK: - Internal properties
+
+  static let kTimeout = 10
   
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
   
-  @IBOutlet private weak var bandButtons    : NSMatrix!
+  private let _hfPanel = [
+    "160", "80", "60",
+    "40", "30", "20",
+    "17", "15", "12",
+    "10", "6", "4",
+    "", "WWV", "GEN",
+    "2200", "6300", "XVTR"
+  ]
   
-  private var _bands                        = Band.sharedInstance
+  private let _xvtrPanel =
+  [
+    "", "", "",
+    "", "", "",
+    "", "", "",
+    "", "", "",
+    "", "", "",
+    "", "", "HF"
+  ]
+
+  // unfortunately, macOS does not support IBOutletCollection
   
-  private let kNumberOfColumns              = 3
+  @IBOutlet private weak var _button0         : NSButton!
+  @IBOutlet private weak var _button1         : NSButton!
+  @IBOutlet private weak var _button2         : NSButton!
+  @IBOutlet private weak var _button3         : NSButton!
+  @IBOutlet private weak var _button4         : NSButton!
+  @IBOutlet private weak var _button5         : NSButton!
+  @IBOutlet private weak var _button6         : NSButton!
+  @IBOutlet private weak var _button7         : NSButton!
+  @IBOutlet private weak var _button8         : NSButton!
+  @IBOutlet private weak var _button9         : NSButton!
+  @IBOutlet private weak var _button10        : NSButton!
+  @IBOutlet private weak var _button11        : NSButton!
+  @IBOutlet private weak var _button12        : NSButton!
+  @IBOutlet private weak var _button13        : NSButton!
+  @IBOutlet private weak var _button14        : NSButton!
+  @IBOutlet private weak var _button15        : NSButton!
+  @IBOutlet private weak var _button16        : NSButton!
+  @IBOutlet private weak var _button17        : NSButton!
+
+  private var _isDetached                     = false
+  private var buttons                         : [NSButton] {
+    return
+      [
+        _button0, _button1, _button2,
+        _button3, _button4, _button5,
+        _button6, _button7, _button8,
+        _button9, _button10, _button11,
+        _button12, _button13, _button14,
+        _button15, _button16, _button17
+      ]
+  }
   
   // ----------------------------------------------------------------------------
   // MARK: - Overridden methods
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    var bandTitle = (representedObject as! Panadapter).band
     
-    // there is 1 row of kNumberOfColumns buttons by default
-    let buttonsToAdd: Int = _bands.sortedBands.count - kNumberOfColumns
-    var rowsToAdd: Int = buttonsToAdd / kNumberOfColumns
-    let cellsToAdd: Int = buttonsToAdd % kNumberOfColumns
-    rowsToAdd = (rowsToAdd + (cellsToAdd > 0 ? 1 : 0))
-    
-    // add needed rows
-    for _ in 1...rowsToAdd {
-      
-      bandButtons.addRow()
+    switch bandTitle {
+    case "33":
+      bandTitle = "WWV"
+    case "34":
+      bandTitle = "GEN"
+    default:
+      break
     }
-    // resize the NSMatrix (constraints will resize the View)
-    bandButtons.sizeToCells()
+    // load the button titles
+    if _hfPanel.contains(bandTitle) { loadButtons(_hfPanel) }
+    if _xvtrPanel.contains(bandTitle) { loadButtons(_xvtrPanel) }
     
-    for row in 0..<bandButtons.numberOfRows {
-      
-      for col in 0..<bandButtons.numberOfColumns {
-        
-        let cell = bandButtons.cell(atRow: row, column: col)
-        let index = (row * kNumberOfColumns + col)
-        if index < _bands.sortedBands.count {
-          
-          // populate the button's Title
-          cell!.title = _bands.sortedBands[index]
-          
-        } else {
-          
-          // disable unused buttons (in the last row)
-          cell!.isEnabled = false
-        }
-      }
+    // handle the special cases
+    // highlight the current band button
+    for button in buttons {
+      button.boolState = (bandTitle == button.title)
+    }
+    // start the timer
+    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(BandButtonViewController.kTimeout)) {
+      if !self._isDetached { self.dismiss(nil) }
     }
   }
   
   func popoverShouldDetach(_ popover: NSPopover) -> Bool {
+    _isDetached = true
     return true
   }
   
   // ----------------------------------------------------------------------------
   // MARK: - Action methods
   
-  @IBAction func buttonPush(_ sender: NSMatrix) {
-    var band = sender.selectedCell()!.title
+  @IBAction func buttonPush(_ sender: NSButton) {
+    var band = sender.title
+    
+    for button in buttons {
+      button.boolState = (button == sender && sender.boolState)
+    }
     
     // handle the special cases
     switch  band {
@@ -82,6 +123,17 @@ class BandButtonViewController              : NSViewController, NSPopoverDelegat
     case "GEN":
       band = "34"
       
+    case "XVTR":
+      loadAndSetButtons(_xvtrPanel)
+      return
+      
+    case "HF":
+      loadAndSetButtons(_hfPanel)
+      return
+
+    case "":
+      return
+      
     default:
       break
     }
@@ -89,4 +141,21 @@ class BandButtonViewController              : NSViewController, NSPopoverDelegat
     (representedObject as! Panadapter).band = band
   }
   
+  // ----------------------------------------------------------------------------
+  // MARK: - Private methods
+  
+  private func loadButtons(_ titles: [String]) {
+    
+    for(i, button) in buttons.enumerated() {
+      button.title = titles[i]
+    }
+  }
+  private func loadAndSetButtons(_ titles: [String]) {
+    
+    loadButtons(titles)
+    
+    for button in buttons {
+      button.boolState = (representedObject as! Panadapter).band == button.title
+    }
+  }
 }

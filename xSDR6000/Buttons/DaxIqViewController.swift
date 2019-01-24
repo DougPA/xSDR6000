@@ -11,6 +11,8 @@ import xLib6000
 
 class DaxIqViewController: NSViewController, NSPopoverDelegate {
 
+  static let kTimeout = 10
+  
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
   
@@ -20,7 +22,8 @@ class DaxIqViewController: NSViewController, NSPopoverDelegate {
     return representedObject as! Panadapter }
 
   private var _observations                 = [NSKeyValueObservation]()
-  
+  private var _isDetached                   = false
+
   // ----------------------------------------------------------------------------
   // MARK: - Overridden methods
   
@@ -31,9 +34,15 @@ class DaxIqViewController: NSViewController, NSPopoverDelegate {
     
     // start observing
     addObservations()
+
+    // start the timer
+    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(DaxIqViewController.kTimeout)) {
+      if !self._isDetached { self.dismiss(nil) }
+    }
   }
 
   func popoverShouldDetach(_ popover: NSPopover) -> Bool {
+    _isDetached = true
     return true
   }
 
