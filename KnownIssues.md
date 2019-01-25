@@ -4,7 +4,7 @@
 
 Issues will be added/removed as issues are discovered/fixed
 
-### Not implemented:
+### Not implemented (yet):
 
 1. CWX
 2. CW Side panel
