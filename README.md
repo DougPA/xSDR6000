@@ -21,8 +21,6 @@ Provides functionality similar to the FlexRadio (TM) SmartSDR (TM) app.
 Portions of this app do not work and changes may be added from time to time which will break all or part of this app.  
 Releases will be created at relatively stable points, please use them.  
 
-Please see ChangeLog.txt for a running list of changes (starting at v2.0.5) and KnownIssues.md for a list of the known issues.
-
 
 If you want to learn more about the 6000 series API, please take a look at the xLib6000 project. 
 
@@ -68,9 +66,7 @@ xLib6000:
 
 ## Known Issues
 
-* CW & Slice side panels are not implemented
-* CWX is not implemented
-* Memories are not fully implemented
+Please see ChangeLog.txt for a running list of changes (starting at v2.0.5) and KnownIssues.md for a list of the known issues.
 
 Please reports any bugs you observe to douglas.adams@me.com
 
