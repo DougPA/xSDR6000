@@ -99,5 +99,7 @@
 	<string>1.9.10.11</string>
 	<key>versionRadio</key>
 	<string></string>
+	<key>supportingApps</key>
+	<array/>
 </dict>
 </plist>
