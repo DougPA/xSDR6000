@@ -8,9 +8,7 @@
 
 *V2.x.x drops the use of a Log Delegate and replaces it with Apple's Unified Logging
 
-*V3.x.x changes the use of dispatch queues putting parsing on the Main Queue
-
-*All new work is in the v2 Branch of this repo (including the v3,x,x code)
+*All new work is in the v2 Branch of this repo 
 
 ## Usage
 
@@ -54,6 +52,6 @@ Version 7.6.3 of CocoaAsyncSocket is embedded in this project as source code. It
 
 ## Known Issues
 
-* None
+Please see ChangeLog.txt for a running list of changes and KnownIssues.md for a list of the known issues.
 
 Please reports any bugs you observe to douglas.adams@me.com

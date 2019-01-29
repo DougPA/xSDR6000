@@ -1,5 +1,11 @@
 xLib6000 Change Log
 
+v2.3.5
+
+Notifications.swift - added updateRequired
+Api.swift - in checkFirmware() added notification .updateRequired
+added KnownIssues.md
+
 v2.3.4
 
 Notifications.swift - added sliceBecameActive
