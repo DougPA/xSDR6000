@@ -30,9 +30,7 @@ final class PreferencesTabViewController    : NSTabViewController {
     
     view.translatesAutoresizingMaskIntoConstraints = false
     
-//    // set the background color of the Flag
-//    view.layer?.backgroundColor = NSColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5).cgColor
-    
+    // select the previously selelcted tab
     tabView.selectTabViewItem(withIdentifier: NSUserInterfaceItemIdentifier(Defaults[.preferencesTabId]) )
   }
 
