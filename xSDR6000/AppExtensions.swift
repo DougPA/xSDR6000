@@ -56,6 +56,7 @@ extension DefaultsKeys {
   static let sidePcwOpen                  = DefaultsKey<Bool>("sidePcwOpen")
   static let sidePhneOpen                 = DefaultsKey<Bool>("sidePhneOpen")
   static let sideEqOpen                   = DefaultsKey<Bool>("sideEqOpen")
+  static let supportingApps               = DefaultsKey<[Any]?>("supportingApps")
 
   
   static let smartLinkAuth0Email          = DefaultsKey<String>("smartLinkAuth0Email")
@@ -158,6 +159,10 @@ extension  UserDefaults {
   @objc dynamic var spectrumFillLevel : Int {
     get { return Defaults[.spectrumFillLevel] }
     set { Defaults[.spectrumFillLevel] = newValue } }
+  
+  @objc dynamic var supportingApps : [Any]? {
+    get { return Defaults[.supportingApps] }
+    set { Defaults[.supportingApps] = newValue } }
   
   @objc dynamic var tnfActive : NSColor {
     get { return Defaults[.tnfActive] }
