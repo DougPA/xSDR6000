@@ -1,5 +1,11 @@
 xSDR6000 Change Log
 
+v2.0.6 - 29 Jan 2019
+
+Added receipt of .updateRequired notification and NSAlert to the user (in RadioViewController.swift)
+Added ability to launch selected apps at launch of this app ("supportedApps") - see Preferences>Info
+
+
 v2.0.5 - 24 Jan 2019
 
 Band, Antenna, Display & DAX popovers can now be detached, if not detached they close automatically after 10 seconds

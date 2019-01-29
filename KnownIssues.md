@@ -19,6 +19,8 @@ Some of the items in these lists may require additions/changes to the underlying
 9. SmartDax, SmartCat (use xDax & xCAT from https://dl3lsm.blogspot.com)
 10. Turf files / Region change
 11. Rit/Xit works but does not change the Slice appearance
+12. Memories
+13. Split button in the Slice Flag
 
 
 ### Bugs

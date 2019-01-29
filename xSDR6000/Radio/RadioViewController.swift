@@ -123,11 +123,15 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    
     // FIXME: Is this necessary???
 //    _activity = ProcessInfo().beginActivity(options: ProcessInfo.ActivityOptions.latencyCritical, reason: "Good Reason")
     
     // setup & register Defaults
     defaults(from: "Defaults.plist")
+    
+    // schedule the start of other apps (if any)
+    scheduleSupportingApps()
     
     // get the versions
     _versions = versionInfo(framework: Api.kBundleIdentifier)
@@ -321,6 +325,33 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   // ----------------------------------------------------------------------------
   // MARK: - Private methods
     
+  private func scheduleSupportingApps() {
+    
+    (Defaults[.supportingApps] as? [Dictionary<String, Any>])?.forEach({
+
+      // if the app is enabled
+      if ($0[InfoPrefsViewController.kEnabled] as! Bool) {
+        
+        // get the App name
+        let appName = ($0[InfoPrefsViewController.kAppName] as! String)
+        
+        // get the startup delay (ms)
+        let delay = ($0[InfoPrefsViewController.kDelay] as! Bool) ? $0[InfoPrefsViewController.kInterval] as! Int : 0
+        
+        // get the Cmd Line parameters
+        let parameters = $0[InfoPrefsViewController.kParameters] as! String
+        
+        // schedule the launch
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .milliseconds( delay )) {
+          
+          // TODO: Add Parameters
+          NSWorkspace.shared.launchApplication(appName)
+
+          os_log("%{public}@ launched with delay of %{public}d", log: self._log, type: .info, appName, delay)
+        }
+      }
+    })
+  }
   /// Set the Window's title. toolbar & side view
   ///
   func updateWindowTitle(_ radio: Radio? = nil) {
@@ -403,6 +434,8 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     NC.makeObserver(self, with: #selector(opusRxHasBeenAdded(_:)), of: .opusRxHasBeenAdded)
 
     NC.makeObserver(self, with: #selector(tcpDidDisconnect(_:)), of: .tcpDidDisconnect)
+
+    NC.makeObserver(self, with: #selector(updateRequired(_:)), of: .updateRequired)
   }
   /// Process .meterHasBeenAdded Notification
   ///
@@ -539,6 +572,28 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
       self.closeRadio()
     }
   }
+  /// Process .updateRequired Notification
+  ///
+  /// - Parameter note:     a Notification instance
+  ///
+  @objc private func updateRequired(_ note: Notification) {
+    
+    let versions = (note.object as! String).split(separator: ",")
+    
+    // the API & Radio versions are not compatible
+    // alert if other than normal
+    DispatchQueue.main.async {
+      let alert = NSAlert()
+      alert.alertStyle = .warning
+      alert.messageText = "Version update needed."
+      alert.informativeText = "Radio:\tv\(versions[1])\n" +
+        "API:\t\tv\(versions[0])\n" + "\n" +
+      "Use SmartSDR to perform an update"
+      alert.addButton(withTitle: "Ok")
+      alert.beginSheetModal(for: self.view.window!, completionHandler: { (response) in })
+    }
+  }
+  
   // ----------------------------------------------------------------------------
   // MARK: - RadioPicker delegate methods
   
