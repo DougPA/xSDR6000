@@ -14,13 +14,13 @@ Some of the items in these lists may require additions/changes to the underlying
 4. Audio recording & playback
 5. Gps preferences
 6. Xvtr preferences
-7. SmartLink initial setup
-8. Radio version upgrade/downgrade
-9. SmartDax, SmartCat (use xDax & xCAT from https://dl3lsm.blogspot.com)
+7. SmartLink initial setup -->> use SmartSDR for now
+8. Radio version upgrade/downgrade -->> use SmartSDR for now
+9. SmartDax, SmartCat -->> use xDax & xCAT from https://dl3lsm.blogspot.com
 10. Turf files / Region change
 11. Rit/Xit works but does not change the Slice appearance
 12. Memories
-13. Split button in the Slice Flag
+13. Split button in the Slice Flag (present but not functional)
 
 
 ### Bugs
