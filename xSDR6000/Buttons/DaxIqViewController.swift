@@ -11,8 +11,6 @@ import xLib6000
 
 class DaxIqViewController: NSViewController, NSPopoverDelegate {
 
-  static let kTimeout = 10
-  
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
   
@@ -36,7 +34,7 @@ class DaxIqViewController: NSViewController, NSPopoverDelegate {
     addObservations()
 
     // start the timer
-    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(DaxIqViewController.kTimeout)) {
+    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(PanafallButtonViewController.kTimeout)) {
       if !self._isDetached { self.dismiss(nil) }
     }
   }

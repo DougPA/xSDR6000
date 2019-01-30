@@ -11,8 +11,6 @@ import xLib6000
 
 class AntennaViewController: NSViewController, NSPopoverDelegate {
 
-  static let kTimeout = 10
-  
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
   
@@ -38,7 +36,7 @@ class AntennaViewController: NSViewController, NSPopoverDelegate {
     addObservations()
 
     // start the timer
-    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(AntennaViewController.kTimeout)) {
+    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(PanafallButtonViewController.kTimeout)) {
       if !self._isDetached { self.dismiss(nil) }
     }
   }
