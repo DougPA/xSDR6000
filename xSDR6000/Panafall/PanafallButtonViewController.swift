@@ -39,6 +39,8 @@ import SwiftyUserDefaults
 // --------------------------------------------------------------------------------
 
 final class PanafallButtonViewController    : NSViewController {
+
+  static let kTimeout                       = 10
   
   // ----------------------------------------------------------------------------
   // MARK: - Internal properties
