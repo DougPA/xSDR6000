@@ -74,14 +74,17 @@ class TxViewController                      : NSViewController {
     }
   }
   @IBAction func sliders(_ sender: NSSlider) {
-    switch sender.identifier!.rawValue {
 
-    case "TunePower":
-      _radio?.transmit.tunePower = sender.integerValue
-    case "RfPower":
-      _radio?.transmit.rfPower = sender.integerValue
-    default:
-      fatalError()
+    if sender.integerValue <= _radio!.transmit.maxPowerLevel && _radio!.transmit.txRfPowerChanges {
+      
+      switch sender.identifier!.rawValue {
+      case "TunePower":
+        _radio?.transmit.tunePower = sender.integerValue
+      case "RfPower":
+        _radio!.transmit.rfPower = sender.integerValue
+      default:
+        fatalError()
+      }
     }
   }
   
@@ -185,10 +188,6 @@ class TxViewController                      : NSViewController {
     _observations.append( radio.atu.observe(\.enabled, options: [.initial, .new], changeHandler: atuChange) )
     _observations.append( radio.atu.observe(\.memoriesEnabled, options: [.initial, .new], changeHandler: atuChange) )
     
-    // Meter parameters
-    let meters = radio.meters.filter {$0.value.name == kPowerForward || $0.value.name == kSwr}
-    meters.forEach { _observations.append( $0.value.observe(\.value, options: [.initial, .new], changeHandler: meterChange)) }
-
     // Radio parameters
     _observations.append( radio.observe(\.mox, options: [.initial, .new], changeHandler: radioChange) )
     
@@ -291,6 +290,8 @@ class TxViewController                      : NSViewController {
     NC.makeObserver(self, with: #selector(radioWillBeRemoved(_:)), of: .radioWillBeRemoved)
     
     NC.makeObserver(self, with: #selector(profileHasBeenAdded(_:)), of: .profileHasBeenAdded)
+
+    NC.makeObserver(self, with: #selector(meterHasBeenAdded(_:)), of: .meterHasBeenAdded)
   }
   /// Process .radioHasBeenAdded Notification
   ///
@@ -335,6 +336,19 @@ class TxViewController                      : NSViewController {
       // add Mic Profile observations
       _observations.append( _radio!.profiles[Profile.kTx]!.observe(\.list, options: [.initial, .new], changeHandler: profileChange) )
       _observations.append( _radio!.profiles[Profile.kTx]!.observe(\.selection, options: [.initial, .new], changeHandler: profileChange) )
+    }
+  }
+  /// Process .meterHasBeenAdded Notification
+  ///
+  /// - Parameter note:           a Notification instance
+  ///
+  @objc private func meterHasBeenAdded(_ note: Notification) {
+    
+    let meter = note.object as! Meter
+    
+    // Add observations for RfPower & SWR
+    if meter.name == kPowerForward || meter.name == kSwr {
+      _observations.append( meter.observe(\.value, options: [.initial, .new], changeHandler: meterChange))
     }
   }
 }

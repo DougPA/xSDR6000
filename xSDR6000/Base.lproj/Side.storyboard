@@ -757,7 +757,7 @@
                                                     <integer key="value" value="5"/>
                                                 </userDefinedRuntimeAttribute>
                                                 <userDefinedRuntimeAttribute type="number" keyPath="_warningLevel">
-                                                    <real key="value" value="0.0"/>
+                                                    <real key="value" value="-10"/>
                                                 </userDefinedRuntimeAttribute>
                                                 <userDefinedRuntimeAttribute type="number" keyPath="_criticalLevel">
                                                     <real key="value" value="0.0"/>
@@ -963,7 +963,7 @@
                                         <constraints>
                                             <constraint firstAttribute="width" constant="150" id="Sy5-hY-Akk"/>
                                         </constraints>
-                                        <sliderCell key="cell" state="on" alignment="left" maxValue="2" tickMarkPosition="above" numberOfTickMarks="3" allowsTickMarkValuesOnly="YES" sliderType="linear" id="az0-6K-xQx"/>
+                                        <sliderCell key="cell" state="on" alignment="left" identifier="SpeechProcessorLevel" maxValue="2" tickMarkPosition="above" numberOfTickMarks="3" allowsTickMarkValuesOnly="YES" sliderType="linear" id="az0-6K-xQx"/>
                                         <connections>
                                             <action selector="sliders:" target="CNy-BK-6hp" id="Lk1-AT-bBJ"/>
                                         </connections>

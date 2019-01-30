@@ -53,6 +53,10 @@ class PCWViewController                     : NSViewController {
     // begin receiving notifications
     addNotifications()
   }
+
+  // ----------------------------------------------------------------------------
+  // MARK: - Action methods
+
   /// Respond to one of the popups
   ///
   /// - Parameter sender:             the popup
@@ -98,10 +102,13 @@ class PCWViewController                     : NSViewController {
     switch sender.identifier!.rawValue {
     case "MicLevel":
      _radio!.transmit?.micLevel = sender.integerValue
+    
     case "SpeechProcessorLevel":
       _radio!.transmit?.speechProcessorLevel = sender.integerValue
+      
     case "TxMonitorGainSb":
       _radio!.transmit?.txMonitorGainSb = sender.integerValue
+    
     default:
       fatalError()
     }
@@ -303,26 +310,35 @@ class PCWViewController                     : NSViewController {
   ///
   private func meterChange(_ meter: Meter, _ change: Any) {
 
-    if _radio!.transmit.metInRxEnabled {
+    // which meter?
+    switch meter.name {
       
-      // which meter?
-      switch meter.name {
-        
-      case kMicrophoneAverage:
-        DispatchQueue.main.async { self._micLevelIndicator.level = CGFloat(meter.value) }
-      case kMicrophonePeak:
-        DispatchQueue.main.async { self._micLevelIndicator.peak = CGFloat(meter.value) }
-        
-      case kCompression:
-        let value = meter.value == -250 ? 0 : meter.value
-        DispatchQueue.main.async { self._compressionIndicator.level = CGFloat(value) }
-        
-      default:
-        fatalError()
-      }
+    case kMicrophoneAverage:
+      let value = _radio?.interlock.state == "TRANSMITTING" ||
+        _radio!.transmit.metInRxEnabled ? CGFloat(meter.value) : -50
+      
+//      Swift.print("Mic avg = \(value)")
+      DispatchQueue.main.async { self._micLevelIndicator.level = value }
+      
+    case kMicrophonePeak:
+      let value = _radio?.interlock.state == "TRANSMITTING" ||
+        _radio!.transmit.metInRxEnabled ? CGFloat(meter.value) : -50
+      
+//      Swift.print("Mic peak = \(value)")
+      DispatchQueue.main.async { self._micLevelIndicator.peak = value }
+      
+    case kCompression:
+      let value = _radio?.interlock.state == "TRANSMITTING" ||
+        _radio!.transmit.metInRxEnabled ? CGFloat(meter.value) : 10
+      
+//      Swift.print("Mic comp = \(value)")
+      DispatchQueue.main.async { self._compressionIndicator.level = value }
+      
+    default:
+      fatalError()
     }
   }
-  
+
   // ----------------------------------------------------------------------------
   // MARK: - Notification Methods
   
@@ -391,7 +407,7 @@ class PCWViewController                     : NSViewController {
     let meter = note.object as! Meter
     
     // observe MicLevel, MicPeak & Compression
-    if meter.name == kMicrophoneAverage || meter.name == kMicrophonePeak || meter.name == kCompression {
+    if meter.name == kMicrophoneAverage || meter.name == kMicrophonePeak || meter.name == kCompression {     
       _observations.append( meter.observe(\.value, options: [.initial, .new], changeHandler: meterChange) )
     }
   }
