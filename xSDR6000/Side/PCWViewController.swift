@@ -9,19 +9,19 @@
 import Cocoa
 import xLib6000
 
-class PCWViewController                     : NSViewController {
+final class PCWViewController                     : NSViewController {
 
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
   
   @IBOutlet private weak var _compressionIndicator    : LevelIndicator!
   @IBOutlet private weak var _micLevelIndicator       : LevelIndicator!
-  @IBOutlet private weak var _micProfile              : NSPopUpButton!
-  @IBOutlet private weak var _micSelection            : NSPopUpButton!
-  @IBOutlet private weak var _micLevel                : NSSlider!
+  @IBOutlet private weak var _micProfilePopUp         : NSPopUpButton!
+  @IBOutlet private weak var _micSelectionPopUp       : NSPopUpButton!
+  @IBOutlet private weak var _micLevelSlider          : NSSlider!
   @IBOutlet private weak var _accButton               : NSButton!
   @IBOutlet private weak var _procButton              : NSButton!
-  @IBOutlet private weak var _companderLevel          : NSSlider!
+  @IBOutlet private weak var _processorLevelSlider    : NSSlider!
   @IBOutlet private weak var _daxButton               : NSButton!
   @IBOutlet private weak var _monButton               : NSButton!
   @IBOutlet private weak var _monLevel                : NSSlider!
@@ -42,7 +42,6 @@ class PCWViewController                     : NSViewController {
     super.viewDidLoad()
     
     view.translatesAutoresizingMaskIntoConstraints = false
-//    view.layer?.backgroundColor = NSColor.lightGray.cgColor
     
     // setup the MicLevel & Compression graphs
     setupBarGraphs()
@@ -143,15 +142,17 @@ class PCWViewController                     : NSViewController {
     _compressionIndicator.level = 20
     _compressionIndicator.peak = 20
   }
-  /// Show a Save / Delete profile dialog
+  /// Show a Save / Delete dialog as a sheet
   ///
   /// - Parameter sender:             a button
   ///
   private func showDialog(_ sender: NSButton) {
     let alert = NSAlert()
     let acc = NSTextField(frame: NSMakeRect(0, 0, 233, 25))
-    acc.stringValue = _radio!.profiles["mic"]!.selection
+    acc.stringValue = "NewProfile"
     acc.isEditable = true
+    acc.formatter = ProfileFormatter()
+    
     acc.drawsBackground = true
     alert.accessoryView = acc
     alert.addButton(withTitle: "Cancel")
@@ -159,14 +160,15 @@ class PCWViewController                     : NSViewController {
     // ask the user to confirm
     if sender.title == "Save" {
       // Save a Profile
-      alert.messageText = "Save Mic Profile as:"
+      alert.messageText = "Save Mic Profile \(_radio!.profiles["mic"]!.selection) as:"
       alert.addButton(withTitle: "Save")
       
       alert.beginSheetModal(for: NSApp.mainWindow!, completionHandler: { (response) in
         if response == NSApplication.ModalResponse.alertFirstButtonReturn { return }
-        
-        // save profile
-        Profile.save(Profile.kMic + "_list", name: acc.stringValue)
+        if acc.stringValue != "" {
+          // save profile
+          Profile.save(Profile.kMic + "_list", name: acc.stringValue)
+        }
       } )
     
     } else {
@@ -179,7 +181,6 @@ class PCWViewController                     : NSViewController {
         
         // delete profile
         Profile.delete(Profile.kMic + "_list", name: acc.stringValue)
-        self._micProfile.selectItem(at: 0)
       } )
     }
   }
@@ -191,12 +192,12 @@ class PCWViewController                     : NSViewController {
     
     DispatchQueue.main.async { [unowned self] in
       // Popups
-      self._micProfile.isEnabled = state
-      self._micSelection.isEnabled = state
+      self._micProfilePopUp.isEnabled = state
+      self._micSelectionPopUp.isEnabled = state
       
       // Sliders
-      self._micLevel.isEnabled = state
-      self._companderLevel.isEnabled = state
+      self._micLevelSlider.isEnabled = state
+      self._processorLevelSlider.isEnabled = state
       self._monLevel.isEnabled = state
 
       // Buttons
@@ -227,7 +228,9 @@ class PCWViewController                     : NSViewController {
     _observations.append( radio.transmit!.observe(\.daxEnabled, options: [.initial, .new], changeHandler: transmitChange) )
     _observations.append( radio.transmit!.observe(\.txMonitorEnabled, options: [.initial, .new], changeHandler: transmitChange) )
     _observations.append( radio.transmit!.observe(\.txMonitorGainSb, options: [.initial, .new], changeHandler: transmitChange) )
-   }
+    _observations.append( radio.transmit!.observe(\.speechProcessorEnabled, options: [.initial, .new], changeHandler: transmitChange) )
+    _observations.append( radio.transmit!.observe(\.speechProcessorLevel, options: [.initial, .new], changeHandler: transmitChange) )
+  }
   /// Invalidate observations (optionally remove)
   ///
   /// - Parameters:
@@ -250,17 +253,12 @@ class PCWViewController                     : NSViewController {
     
     DispatchQueue.main.async { [unowned self] in
       // reload the Mic Profiles
-      self._micProfile.removeAllItems()
-      self._micProfile.addItems(withTitles: profile.list)
-      self._micProfile.selectItem(withTitle: profile.selection)
-      
+      self._micProfilePopUp.removeAllItems()
+      self._micProfilePopUp.addItems(withTitles: profile.list)
+      self._micProfilePopUp.selectItem(withTitle: profile.selection)
+
       if profile.selection != "" {
-        if profile.selection == "Default" {
-          
-          // Default is selected
-          self._saveButton.title = "---"
-          self._saveButton.isEnabled = false
-        } else if profile.selection.first == "*" {
+        if profile.selection.first == "*" {
           
           // a selection has been modified (begins with *)
           self._saveButton.title = "Save"
@@ -271,10 +269,6 @@ class PCWViewController                     : NSViewController {
           self._saveButton.title = "Del"
           self._saveButton.isEnabled = true
         }
-      } else {
-        
-        // No selection
-        profile.selection = "Default"
       }
     }
   }
@@ -286,13 +280,13 @@ class PCWViewController                     : NSViewController {
     
     DispatchQueue.main.async { [unowned self] in
       // reload the Mic Sources
-      self._micSelection.removeAllItems()
-      self._micSelection.addItems(withTitles: self._radio!.micList)
-      self._micSelection.selectItem(withTitle: transmit.micSelection)
+      self._micSelectionPopUp.removeAllItems()
+      self._micSelectionPopUp.addItems(withTitles: self._radio!.micList)
+      self._micSelectionPopUp.selectItem(withTitle: transmit.micSelection)
       
       // set the Slider values
-      self._micLevel.integerValue = transmit.micLevel
-      self._companderLevel.integerValue = transmit.companderLevel
+      self._micLevelSlider.integerValue = transmit.micLevel
+      self._processorLevelSlider.integerValue = transmit.speechProcessorLevel
       self._monLevel.integerValue = transmit.txMonitorGainSb
       
       // set the Button states
@@ -316,22 +310,17 @@ class PCWViewController                     : NSViewController {
     case kMicrophoneAverage:
       let value = _radio?.interlock.state == "TRANSMITTING" ||
         _radio!.transmit.metInRxEnabled ? CGFloat(meter.value) : -50
-      
-//      Swift.print("Mic avg = \(value)")
+
       DispatchQueue.main.async { self._micLevelIndicator.level = value }
       
     case kMicrophonePeak:
       let value = _radio?.interlock.state == "TRANSMITTING" ||
         _radio!.transmit.metInRxEnabled ? CGFloat(meter.value) : -50
-      
-//      Swift.print("Mic peak = \(value)")
       DispatchQueue.main.async { self._micLevelIndicator.peak = value }
       
     case kCompression:
       let value = _radio?.interlock.state == "TRANSMITTING" ||
         _radio!.transmit.metInRxEnabled ? CGFloat(meter.value) : 10
-      
-//      Swift.print("Mic comp = \(value)")
       DispatchQueue.main.async { self._compressionIndicator.level = value }
       
     default:
@@ -382,8 +371,8 @@ class PCWViewController                     : NSViewController {
     invalidateObservations()
     
     _radio = nil
-    _micProfile.removeAllItems()
-    _micSelection.removeAllItems()
+    _micProfilePopUp.removeAllItems()
+    _micSelectionPopUp.removeAllItems()
   }
   /// Process .profileHasBeenAdded Notification
   ///
@@ -410,5 +399,41 @@ class PCWViewController                     : NSViewController {
     if meter.name == kMicrophoneAverage || meter.name == kMicrophonePeak || meter.name == kCompression {     
       _observations.append( meter.observe(\.value, options: [.initial, .new], changeHandler: meterChange) )
     }
+  }
+}
+
+
+class ProfileFormatter : Formatter {
+  var unexpectedChars = CharacterSet()
+  
+  override init() {
+    // build the allowed character set
+    var expectedChars = CharacterSet.alphanumerics
+    expectedChars = expectedChars.union(CharacterSet(charactersIn: " _-"))
+    
+    // make the inverse
+    unexpectedChars = expectedChars.inverted
+    
+    super.init()
+  }
+  
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+  
+  override func string(for obj: Any?) -> String? {
+    // the object is a String
+    return obj as? String
+  }
+  
+  override func getObjectValue(_ obj: AutoreleasingUnsafeMutablePointer<AnyObject?>?, for string: String, errorDescription error: AutoreleasingUnsafeMutablePointer<NSString?>?) -> Bool {
+    // the object is a String
+    obj!.pointee = string as AnyObject
+    return true
+  }
+  override func isPartialStringValid(_ partialString: String, newEditingString newString: AutoreleasingUnsafeMutablePointer<NSString?>?, errorDescription error: AutoreleasingUnsafeMutablePointer<NSString?>?) -> Bool {
+    
+    // only allow A-Z, a-z, 0-9, "-_ "
+    return partialString.rangeOfCharacter(from: unexpectedChars) == nil
   }
 }

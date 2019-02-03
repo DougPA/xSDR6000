@@ -12,7 +12,7 @@ import MetalKit
 import SwiftyUserDefaults
 import xLib6000
 
-class WaterfallViewController               : NSViewController, NSGestureRecognizerDelegate {
+final class WaterfallViewController               : NSViewController, NSGestureRecognizerDelegate {
   
   enum GradientType: String {
     case Basic
@@ -71,8 +71,6 @@ class WaterfallViewController               : NSViewController, NSGestureRecogni
   override func viewDidLoad() {
     super.viewDidLoad()
     
-//    Swift.print("WaterfallViewController - viewDidLoad")
-    
     // determine how the various views are blended on screen
     _waterfallView.compositingFilter = _filter
 
@@ -89,10 +87,6 @@ class WaterfallViewController               : NSViewController, NSGestureRecogni
     // make the Renderer the Stream Handler
     _waterfall?.delegate = _waterfallRenderer
   }
-
-//  deinit {
-//    Swift.print("WaterfallViewController - deinit")
-//  }
   
   // ----------------------------------------------------------------------------
   // MARK: - Public methods

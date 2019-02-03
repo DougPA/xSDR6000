@@ -9,7 +9,7 @@
 import Cocoa
 import SwiftyUserDefaults
 
-class InfoPrefsViewController: NSViewController , NSTableViewDelegate, NSTableViewDataSource {
+final class InfoPrefsViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
 
   static let kAppName                               = "appName"
   static let kEnabled                               = "enabled"

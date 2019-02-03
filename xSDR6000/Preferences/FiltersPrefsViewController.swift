@@ -9,7 +9,7 @@
 import Cocoa
 import xLib6000
 
-class FiltersPrefsViewController: NSViewController {
+final class FiltersPrefsViewController: NSViewController {
   
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
@@ -21,7 +21,7 @@ class FiltersPrefsViewController: NSViewController {
   @IBOutlet private weak var _cwAutoCheckbox      : NSButton!
   @IBOutlet private weak var _digitalAutoCheckbox : NSButton!
   
-  private var _radio                        : Radio?
+  private var _radio                        : Radio? { return Api.sharedInstance.radio }
   private var _observations                 = [NSKeyValueObservation]()
   
   // ----------------------------------------------------------------------------
@@ -32,11 +32,13 @@ class FiltersPrefsViewController: NSViewController {
     
     view.translatesAutoresizingMaskIntoConstraints = false
     
-    // check for an active radio
-    if let radio = Api.sharedInstance.radio { _radio = radio ; setControlStatus(true) }
+//    // check for an active radio
+//    if let radio = Api.sharedInstance.radio { _radio = radio ; setControlStatus(true) }
+//
+//    // start receiving notifications
+//    addNotifications()
     
-    // start receiving notifications
-    addNotifications()
+    addObservations()
   }
   
   // ----------------------------------------------------------------------------
@@ -46,22 +48,22 @@ class FiltersPrefsViewController: NSViewController {
   ///
   /// - Parameter status:             true = enable
   ///
-  private func setControlStatus(_ status: Bool) {
-    
-    if status {
-      addObservations()
-    } else {
-      removeObservations()
-    }
-    DispatchQueue.main.async { [weak self] in
-      self?._voiceSlider.isEnabled = status
-      self?._cwSlider.isEnabled = status
-      self?._digitalSlider.isEnabled = status
-      self?._voiceAutoCheckbox.isEnabled = status
-      self?._cwAutoCheckbox.isEnabled = status
-      self?._digitalAutoCheckbox.isEnabled = status
-    }
-  }
+//  private func setControlStatus(_ status: Bool) {
+//
+//    if status {
+//      addObservations()
+//    } else {
+//      removeObservations()
+//    }
+//    DispatchQueue.main.async { [weak self] in
+//      self?._voiceSlider.isEnabled = status
+//      self?._cwSlider.isEnabled = status
+//      self?._digitalSlider.isEnabled = status
+//      self?._voiceAutoCheckbox.isEnabled = status
+//      self?._cwAutoCheckbox.isEnabled = status
+//      self?._digitalAutoCheckbox.isEnabled = status
+//    }
+//  }
 
   // ----------------------------------------------------------------------------
   // MARK: - Observation methods
@@ -81,14 +83,14 @@ class FiltersPrefsViewController: NSViewController {
   }
   /// Remove observations
   ///
-  func removeObservations() {
-    
-    // invalidate each observation
-    _observations.forEach { $0.invalidate() }
-    
-    // remove the tokens
-    _observations.removeAll()
-  }
+//  func removeObservations() {
+//
+//    // invalidate each observation
+//    _observations.forEach { $0.invalidate() }
+//
+//    // remove the tokens
+//    _observations.removeAll()
+//  }
   /// Process observations
   ///
   /// - Parameters:
@@ -112,32 +114,32 @@ class FiltersPrefsViewController: NSViewController {
   
   /// Add subscriptions to Notifications
   ///
-  private func addNotifications() {
-    
-    NC.makeObserver(self, with: #selector(radioHasBeenAdded(_:)), of: .radioHasBeenAdded)
-    
-    NC.makeObserver(self, with: #selector(radioWillBeRemoved(_:)), of: .radioWillBeRemoved)
-  }
+//  private func addNotifications() {
+//
+//    NC.makeObserver(self, with: #selector(radioHasBeenAdded(_:)), of: .radioHasBeenAdded)
+//
+//    NC.makeObserver(self, with: #selector(radioWillBeRemoved(_:)), of: .radioWillBeRemoved)
+//  }
   /// Process .radioHasBeenAdded Notification
   ///
   /// - Parameter note:             a Notification instance
   ///
-  @objc private func radioHasBeenAdded(_ note: Notification) {
-    
-    _radio = note.object as? Radio
-    
-    // enable controls
-    setControlStatus(true)
-  }
+//  @objc private func radioHasBeenAdded(_ note: Notification) {
+//
+//    _radio = note.object as? Radio
+//
+//    // enable controls
+//    setControlStatus(true)
+//  }
   /// Process .radioWillBeRemoved Notification
   ///
   /// - Parameter note:             a Notification instance
   ///
-  @objc private func radioWillBeRemoved(_ note: Notification) {
-    
-    // disable controls
-    setControlStatus(false)
-
-    _radio = nil
-  }
+//  @objc private func radioWillBeRemoved(_ note: Notification) {
+//    
+//    // disable controls
+//    setControlStatus(false)
+//
+//    _radio = nil
+//  }
 }

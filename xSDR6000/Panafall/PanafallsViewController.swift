@@ -29,7 +29,7 @@ import xLib6000
 //
 // --------------------------------------------------------------------------------
 
-class PanafallsViewController               : NSSplitViewController {
+final class PanafallsViewController               : NSSplitViewController {
   
   // ----------------------------------------------------------------------------
   // MARK: - Private properties

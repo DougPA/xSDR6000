@@ -9,7 +9,7 @@
 import Cocoa
 import xLib6000
 
-class RadioPrefsViewController: NSViewController {
+final class RadioPrefsViewController: NSViewController {
   
   // ----------------------------------------------------------------------------
   // MARK: - Private  properties
@@ -28,7 +28,7 @@ class RadioPrefsViewController: NSViewController {
   @IBOutlet private weak var _callsignRadioButton         : NSButton!
   @IBOutlet private weak var _nicknameRadioButton         : NSButton!
   
-  private var _radio                        : Radio?
+  private var _radio                        : Radio? { return Api.sharedInstance.radio }
   private var _observations                 = [NSKeyValueObservation]()
 
   // ----------------------------------------------------------------------------
@@ -39,11 +39,7 @@ class RadioPrefsViewController: NSViewController {
     
     view.translatesAutoresizingMaskIntoConstraints = false
     
-    // check for an active radio
-    if let radio = Api.sharedInstance.radio { _radio = radio ; enableControls(true) }
-    
-    // start receiving notifications
-    addNotifications()
+    addObservations()
   }
   
   // ----------------------------------------------------------------------------
@@ -58,29 +54,17 @@ class RadioPrefsViewController: NSViewController {
   
   @IBAction func screensaver(_ sender: NSButton) {
     
-    switch sender.identifier!.rawValue {
-    case "Model":
-      _radio!.radioScreenSaver = "model"
-      
-    case "Callsign":
-      _radio!.radioScreenSaver = "callsign"
-      
-    case "Nickname":
-      _radio!.radioScreenSaver = "nickname"
-      
-    default:
-      fatalError()
-    }
+    _radio?.radioScreenSaver = sender.identifier!.rawValue
   }
   
   @IBAction func textFields(_ sender: NSTextField) {
     
     switch sender.identifier!.rawValue {
     case "CallsignText":
-      _radio!.callsign = sender.stringValue
+      _radio?.callsign = sender.stringValue
       
     case "NicknameText":
-      _radio!.nickname = sender.stringValue
+      _radio?.nickname = sender.stringValue
       
     default:
       fatalError()
@@ -91,10 +75,10 @@ class RadioPrefsViewController: NSViewController {
 
     switch sender.identifier!.rawValue {
     case "RemoteOn":
-      _radio!.remoteOnEnabled = sender.boolState
+      _radio?.remoteOnEnabled = sender.boolState
       
 //    case "FlexControl":
-//      _radio!.flexControlEnabled = sender.boolState
+//      _radio?.flexControlEnabled = sender.boolState
       
     default:
       fatalError()
@@ -108,31 +92,32 @@ class RadioPrefsViewController: NSViewController {
   ///
   /// - Parameter status:             true = enable
   ///
-  private func enableControls(_ state: Bool = true) {
-    
-    if state {
-      
-      addObservations()
-    } else {
-      
-      removeObservations()
-    }
-    DispatchQueue.main.async { [weak self] in
-      self?._serialNumberTextField.isEnabled = state
-      self?._hwVersionTextField.isEnabled = state
-      self?._optionsTextField.isEnabled = state
-      self?._modelTextField.isEnabled = state
-      self?._callsignTextField.isEnabled = state
-      self?._nicknameTextField.isEnabled = state
-      
-      self?._remoteOnEnabledCheckbox.isEnabled = state
-      //      self._flexControlEnabledCheckbox = radio.flex
-      
-      self?._modelRadioButton.isEnabled = state
-      self?._callsignRadioButton.isEnabled = state
-      self?._nicknameRadioButton.isEnabled = state
-    }
-  }
+//  private func enableControls(_ state: Bool = true) {
+//
+//    if state {
+//
+//      addObservations()
+//    } else {
+//
+//      removeObservations()
+//    }
+//    DispatchQueue.main.async { [weak self] in
+//      self?._serialNumberTextField.isEnabled = state
+//      self?._hwVersionTextField.isEnabled = state
+//      self?._optionsTextField.isEnabled = state
+//      self?._modelTextField.isEnabled = state
+//      self?._callsignTextField.isEnabled = state
+//      self?._nicknameTextField.isEnabled = state
+//
+//      self?._remoteOnEnabledCheckbox.isEnabled = state
+//      //      self._flexControlEnabledCheckbox = radio.flex
+//
+//      self?._modelRadioButton.isEnabled = state
+//      self?._callsignRadioButton.isEnabled = state
+//      self?._nicknameRadioButton.isEnabled = state
+//    }
+//  }
+  
   // ----------------------------------------------------------------------------
   // MARK: - Observation methods
   
@@ -192,32 +177,32 @@ class RadioPrefsViewController: NSViewController {
   
   /// Add subscriptions to Notifications
   ///
-  private func addNotifications() {
-    
-    NC.makeObserver(self, with: #selector(radioHasBeenAdded(_:)), of: .radioHasBeenAdded)
-    
-    NC.makeObserver(self, with: #selector(radioWillBeRemoved(_:)), of: .radioWillBeRemoved)
-  }
+//  private func addNotifications() {
+//
+//    NC.makeObserver(self, with: #selector(radioHasBeenAdded(_:)), of: .radioHasBeenAdded)
+//
+//    NC.makeObserver(self, with: #selector(radioWillBeRemoved(_:)), of: .radioWillBeRemoved)
+//  }
   /// Process .radioHasBeenAdded Notification
   ///
   /// - Parameter note:             a Notification instance
   ///
-  @objc private func radioHasBeenAdded(_ note: Notification) {
-    
-    _radio = note.object as? Radio
-    
-    // enable controls
-    enableControls()
-  }
+//  @objc private func radioHasBeenAdded(_ note: Notification) {
+//
+//    _radio = note.object as? Radio
+//
+//    // enable controls
+//    enableControls()
+//  }
   /// Process .radioWillBeRemoved Notification
   ///
   /// - Parameter note:             a Notification instance
   ///
-  @objc private func radioWillBeRemoved(_ note: Notification) {
-    
-    // disable controls
-    enableControls(false)
-    
-    _radio = nil
-  }
+//  @objc private func radioWillBeRemoved(_ note: Notification) {
+//
+//    // disable controls
+//    enableControls(false)
+//
+//    _radio = nil
+//  }
 }

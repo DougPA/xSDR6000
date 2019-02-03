@@ -12,43 +12,6 @@ import xLib6000
 import SwiftyUserDefaults
 
 // --------------------------------------------------------------------------------
-//  Created by Application load
-//  Removed by Application termination
-//
-//  **** Notifications received ****
-//      .radioHasBeenAdded -> set Radio version, title & toolbar
-//      .radioWillBeRemoved -> clear Radio version & toolbar
-//      .radioHasBeenRemoved -> log, clear title
-//      .meterHasBeenAdded -> capture meters for ParameterMonitors
-//      .opusRxHasBeenAdded -> create Opus components & set stream delegate
-//      .tcpDidDisconnect -> alert if caused by error or other user
-//
-//  **** Menu Actions ****
-//      Quit
-//      Open RadioPicker sheet
-//
-//  **** Action Methods ****
-//      Quit
-//      Mac Audio
-//      LineoutAudio gain
-//      LineOutAudio mute
-//      HeadphoneAudio gain
-//      HeadphoneAudio mute
-//      Panadapter create
-//      SidePanel open/close
-//      CWX open/close
-//      Markers enable
-//      Tnfs enable
-//
-//  **** Observations ****
-//      None
-//
-//  **** View Bindings ****
-//      None
-//
-// --------------------------------------------------------------------------------
-
-// --------------------------------------------------------------------------------
 // MARK: - RadioPicker Delegate definition
 // --------------------------------------------------------------------------------
 
@@ -77,7 +40,7 @@ protocol RadioPickerDelegate: class {
 
 final class RadioViewController             : NSSplitViewController, RadioPickerDelegate {
 
-  @objc dynamic var radio                   = Api.sharedInstance.radio
+//  @objc dynamic var radio                   = Api.sharedInstance.radio
   
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
@@ -85,6 +48,8 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   private let _log                          = OSLog(subsystem: Api.kDomainId + "." + kClientName, category: "RadioVC")
   private var _api                          = Api.sharedInstance
   private var _mainWindowController         : MainWindowController?
+  private var _preferencesStoryboard        : NSStoryboard?
+  private var _profilesStoryboard           : NSStoryboard?
   private var _radioPickerStoryboard        : NSStoryboard?
   private var _sideStoryboard               : NSStoryboard?
   private var _voltageMeterAvailable        = false
@@ -99,8 +64,12 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   private let kGuiFirmwareSupport           = "2.3.7.x"                     // Radio firmware supported by this App
   private let kVoltageTemperature           = "VoltageTemp"                 // Identifier of toolbar VoltageTemperature toolbarItem
 
+  private let kPreferencesStoryboardName    = "Preferences"
+  private let kProfilesStoryboardName       = "Profiles"
   private let kRadioPickerStoryboardName    = "RadioPicker"
   private let kSideStoryboardName           = "Side"
+  private let kPreferencesIdentifier        = "Preferences"
+  private let kProfilesIdentifier           = "Profiles"
   private let kRadioPickerIdentifier        = "RadioPicker"
   private let kPcwIdentifier                = "PCW"
   private let kPhoneIdentifier              = "Phone"
@@ -123,7 +92,6 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    
     // FIXME: Is this necessary???
 //    _activity = ProcessInfo().beginActivity(options: ProcessInfo.ActivityOptions.latencyCritical, reason: "Good Reason")
     
@@ -138,7 +106,9 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     Defaults[.versionApi] = _versions!.api
     Defaults[.versionGui] = _versions!.app
 
-    // get the Storyboard containing the RadioPicker
+    // get the Storyboards
+    _preferencesStoryboard = NSStoryboard(name: kPreferencesStoryboardName, bundle: nil)
+    _profilesStoryboard = NSStoryboard(name: kProfilesStoryboardName, bundle: nil)
     _radioPickerStoryboard = NSStoryboard(name: kRadioPickerStoryboardName, bundle: nil)
     _sideStoryboard = NSStoryboard(name: kSideStoryboardName, bundle: nil)
 
@@ -147,6 +117,9 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     // add notification subscriptions
     addNotifications()
     
+    // limit color pickers to the ColorWheel
+    NSColorPanel.setPickerMask(NSColorPanel.Options.wheelModeMask)
+
    // is the default Radio available?
     if let defaultRadio = defaultRadioFound() {
       
@@ -164,7 +137,24 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
       openRadioPicker( self)
     }
   }
-  
+
+  override func validateUserInterfaceItem(_ item: NSValidatedUserInterfaceItem) -> Bool {
+    
+    switch item.action {
+    case #selector(openProfiles(_:)):
+      return _api.activeRadio != nil
+    
+    case #selector(openPreferences(_:)):
+      return _api.activeRadio != nil
+    
+    case #selector(sideButton(_:)):
+      return _api.activeRadio != nil
+
+    default:
+      return true
+    }
+  }
+
   // ----------------------------------------------------------------------------
   // MARK: - Action methods
   
@@ -313,6 +303,36 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
       self.presentAsSheet(radioPickerTabViewController!)
     }
   }
+  /// Respond to the Preferences menu
+  ///
+  /// - Parameter sender:         the MenuItem
+  ///
+  @IBAction func openPreferences(_ sender: NSMenuItem) {
+    
+    // get an instance of the Profiles
+    let preferencesWindowController = _preferencesStoryboard!.instantiateController(withIdentifier: kPreferencesIdentifier) as? NSWindowController
+    
+    DispatchQueue.main.async {
+      
+      // show the Preferences window
+      preferencesWindowController?.showWindow(self)
+    }
+  }
+  /// Respond to the Profiles menu
+  ///
+  /// - Parameter sender:         the MenuItem
+  ///
+  @IBAction func openProfiles(_ sender: NSMenuItem) {
+  
+    // get an instance of the Profiles
+    let profilesWindowController = _profilesStoryboard!.instantiateController(withIdentifier: kProfilesIdentifier) as? NSWindowController
+    
+    DispatchQueue.main.async {
+      
+      // show the Profiles window
+     profilesWindowController?.showWindow(self)
+    }
+  }
   /// Respond to the xSDR6000 Quit menu
   ///
   /// - Parameter sender:         the Menu item
@@ -370,22 +390,53 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   }
   /// Set the toolbar controls
   ///
-  func updateToolbar() {
+  func updateToolbar(_ enabled: Bool) {
     
     DispatchQueue.main.async { [unowned self] in
-      let mainWindowController = self.view.window?.windowController as? MainWindowController
-      mainWindowController!.lineoutGain.integerValue = self._api.radio!.lineoutGain
-      mainWindowController!.lineoutMute.state = self._api.radio!.lineoutMute.state
-      mainWindowController!.headphoneGain.integerValue = self._api.radio!.headphoneGain
-      mainWindowController!.headphoneMute.state = self._api.radio!.headphoneMute.state
-      mainWindowController!.sideViewOpen.state = Defaults[.sideViewOpen].state
-      mainWindowController!.tnfsEnabled.state = Defaults[.tnfsEnabled].state
-      mainWindowController!.fullDuplexEnabled.state = Defaults[.fullDuplexEnabled].state
-      mainWindowController!.markersEnabled.state = Defaults[.markersEnabled].state
-
-      self.splitViewItems[1].isCollapsed = !Defaults[.sideViewOpen]
       
-      // FIXME: add other toolbar controls
+      // enable / disable the toolbar items
+      let toolbar = self.view.window!.toolbar
+      for item in toolbar!.items {
+        item.isEnabled = enabled
+      }
+      // if active, set the values of the toolbar items
+      if enabled {
+        
+        for item in toolbar!.items {
+          
+          switch item.itemIdentifier.rawValue {
+          case "tnfsEnabled":
+            (item.view as! NSButton).boolState = Defaults[.tnfsEnabled]
+          case "markersEnabled":
+            (item.view as! NSButton).boolState = Defaults[.markersEnabled]
+          case "lineoutGain":
+            (item.view as! NSSlider).integerValue = self._api.radio!.lineoutGain
+          case "headphoneGain":
+            (item.view as! NSSlider).integerValue = self._api.radio!.headphoneGain
+          case "sideEnabled":
+            (item.view as! NSButton).boolState = Defaults[.sideViewOpen]
+          case "macAudioEnabled":
+            (item.view as! NSButton).boolState = Defaults[.macAudioEnabled]
+          case "lineoutMute":
+            (item.view as! NSButton).boolState = self._api.radio!.lineoutMute
+          case "headphoneMute":
+            (item.view as! NSButton).boolState = self._api.radio!.headphoneMute
+          case "fdxEnabled":
+            (item.view as! NSButton).boolState = Defaults[.fullDuplexEnabled]
+          case "cwxEnabled":
+            // (item.view as! NSButton).boolState = Defaults[.cwxEnabled]
+            break
+          case "addPan", "VoltageTemp":
+            break
+          case "NSToolbarFlexibleSpaceItem", "NSToolbarSpaceItem":
+            break
+          default:
+            Swift.print("\(item.itemIdentifier.rawValue)")
+            fatalError()
+          }
+        }
+        self.splitViewItems[1].isCollapsed = !Defaults[.sideViewOpen]
+      }
     }
   }
   /// Check if there is a Default Radio
@@ -460,10 +511,10 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     
     DispatchQueue.main.async { [unowned self] in
       // start the Voltage/Temperature monitor
-      let mainWindowController = self.view.window?.windowController as? MainWindowController
-      mainWindowController?.voltageTempMonitor?.activate(radio: self._api.radio!, meterShortNames: [.voltageAfterFuse, .temperaturePa], units: ["v", "c"])
+      let toolbar = self.view.window!.toolbar!
+      let monitor = toolbar.items.findElement({  $0.itemIdentifier.rawValue == "VoltageTemp"} ) as! ParameterMonitor
+      monitor.activate(radio: self._api.radio!, meterShortNames: [.voltageAfterFuse, .temperaturePa], units: ["v", "c"])
     }
-    
   }
   /// Process .radioHasBeenAdded Notification
   ///
@@ -483,12 +534,14 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     updateWindowTitle(radio)
     
     // update the toolbar items
-    updateToolbar()
+    updateToolbar(true)
     
     // show/hide the Side view
     DispatchQueue.main.async { [unowned self] in
       self.splitViewItems[1].isCollapsed = !Defaults[.sideViewOpen]
     }
+    
+    
   }
   /// Process .radioWillBeRemoved Notification
   ///
@@ -503,6 +556,9 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     
     Defaults[.versionRadio] = ""
     
+    // update the toolbar items
+    updateToolbar(false)
+
     // remove all objects on Radio
     radio.removeAll()
     
@@ -593,7 +649,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
       alert.beginSheetModal(for: self.view.window!, completionHandler: { (response) in })
     }
   }
-  
+
   // ----------------------------------------------------------------------------
   // MARK: - RadioPicker delegate methods
   

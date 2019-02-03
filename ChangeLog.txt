@@ -1,5 +1,19 @@
 xSDR6000 Change Log
 
+v2.0.8 - 03-Feb-2019
+
+Enable xSDR6000->Preferences menu item only when a radio is connected
+Added xSDR6000->Profiles menu item, enabled only when a radio is connected
+Added & Completed Profiles view
+Corrected use of NSColorPanel to only allow rgb choices
+Corrections in PCW Side view
+Corrections in Display popover
+Simplification of code in all Preferences view controllers (unneeded code commented out for now)
+Additions to Defaults.plist
+Adjusted Defaults.plist colors to be suitable default values
+Added RESET button to Preferences->Colors
+Changed observations of Voltage & Temperature to make them appear sooner
+
 v2.0.7 - 30 Jan 2019
 
 Corrections to level indicators in the TX & PCW side views

@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class GpsPrefsViewController: NSViewController {
+final class GpsPrefsViewController: NSViewController {
   
   // ----------------------------------------------------------------------------
   // MARK: - Overridden methods

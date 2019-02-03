@@ -9,7 +9,7 @@
 import Cocoa
 import xLib6000
 
-class PhoneViewController                   : NSViewController {
+final class PhoneViewController                   : NSViewController {
   
   // ----------------------------------------------------------------------------
   // MARK: - Private properties

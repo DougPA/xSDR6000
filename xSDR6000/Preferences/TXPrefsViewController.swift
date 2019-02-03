@@ -9,7 +9,7 @@
 import Cocoa
 import xLib6000
 
-class TXPrefsViewController                 : NSViewController {
+final class TXPrefsViewController                 : NSViewController {
 
   @objc dynamic var txProfile               : Profile?
   
@@ -38,7 +38,7 @@ class TXPrefsViewController                 : NSViewController {
   @IBOutlet private weak var _hardWareAlcCheckbox       : NSButton!
   @IBOutlet private weak var _showTxInWaterfallCheckbox : NSButton!
   
-  private var _radio                        : Radio?
+  private var _radio                        : Radio? { return Api.sharedInstance.radio }
   private var _interlock                    : Interlock? { return _radio!.interlock }
   private var _transmit                     : Transmit? { return _radio!.transmit }
   private var _txProfile                    : Profile? { return _radio!.profiles[Profile.kTx] }
@@ -52,11 +52,13 @@ class TXPrefsViewController                 : NSViewController {
         
     view.translatesAutoresizingMaskIntoConstraints = false
     
-    // check for an active radio
-    if let radio = Api.sharedInstance.radio { _radio = radio ; enableControls(true) }
+//    // check for an active radio
+//    if let radio = Api.sharedInstance.radio { _radio = radio ; enableControls(true) }
+//
+//    // start receiving notifications
+//    addNotifications()
     
-    // start receiving notifications
-    addNotifications()
+    addObservations()
   }
   
   // ----------------------------------------------------------------------------
@@ -170,40 +172,40 @@ class TXPrefsViewController                 : NSViewController {
   ///
   /// - Parameter status:             true = enable
   ///
-  private func enableControls(_ state: Bool = true) {
-    
-    if state {
-      _txProfilePopUp.removeAllItems()
-      _txProfilePopUp.addItems(withTitles: _txProfile!.list)
-      
-      addObservations()
-    } else {
-      
-      removeObservations()
-    }
-    DispatchQueue.main.async { [weak self] in
-      self?._accTxCheckbox.isEnabled = state
-      self?._rcaTx1Checkbox.isEnabled = state
-      self?._rcaTx2Checkbox.isEnabled = state
-      self?._rcaTx3Checkbox.isEnabled = state
-      self?._txInhibitCheckbox.isEnabled = state
-      self?._hardWareAlcCheckbox.isEnabled = state
-      self?._showTxInWaterfallCheckbox.isEnabled = state
-      
-      self?._accTxTextField.isEnabled = state
-      self?._rcaTx1TextField.isEnabled = state
-      self?._rcaTx2TextField.isEnabled = state
-      self?._rcaTx3TextField.isEnabled = state
-      self?._txDelayTextField.isEnabled = state
-      self?._txTimeoutTextField.isEnabled = state
-      
-      self?._txProfilePopUp.isEnabled = state
-      self?._rcaInterlockPopup.isEnabled = state
-      self?._accInterlockPopup.isEnabled = state
-      
-      self?._maxPowerSlider.isEnabled = state
-    }
-  }
+//  private func enableControls(_ state: Bool = true) {
+//
+//    if state {
+//      _txProfilePopUp.removeAllItems()
+//      _txProfilePopUp.addItems(withTitles: _txProfile!.list)
+//
+//      addObservations()
+//    } else {
+//
+//      removeObservations()
+//    }
+//    DispatchQueue.main.async { [weak self] in
+//      self?._accTxCheckbox.isEnabled = state
+//      self?._rcaTx1Checkbox.isEnabled = state
+//      self?._rcaTx2Checkbox.isEnabled = state
+//      self?._rcaTx3Checkbox.isEnabled = state
+//      self?._txInhibitCheckbox.isEnabled = state
+//      self?._hardWareAlcCheckbox.isEnabled = state
+//      self?._showTxInWaterfallCheckbox.isEnabled = state
+//
+//      self?._accTxTextField.isEnabled = state
+//      self?._rcaTx1TextField.isEnabled = state
+//      self?._rcaTx2TextField.isEnabled = state
+//      self?._rcaTx3TextField.isEnabled = state
+//      self?._txDelayTextField.isEnabled = state
+//      self?._txTimeoutTextField.isEnabled = state
+//
+//      self?._txProfilePopUp.isEnabled = state
+//      self?._rcaInterlockPopup.isEnabled = state
+//      self?._accInterlockPopup.isEnabled = state
+//
+//      self?._maxPowerSlider.isEnabled = state
+//    }
+//  }
 
   // ----------------------------------------------------------------------------
   // MARK: - Observation methods
@@ -236,14 +238,14 @@ class TXPrefsViewController                 : NSViewController {
   }
   /// Remove observations
   ///
-  func removeObservations() {
-    
-    // invalidate each observation
-    _observations.forEach { $0.invalidate() }
-    
-    // remove the tokens
-    _observations.removeAll()
-  }
+//  func removeObservations() {
+//
+//    // invalidate each observation
+//    _observations.forEach { $0.invalidate() }
+//
+//    // remove the tokens
+//    _observations.removeAll()
+//  }
   /// Process observations
   ///
   /// - Parameters:
@@ -316,32 +318,32 @@ class TXPrefsViewController                 : NSViewController {
   
   /// Add subscriptions to Notifications
   ///
-  private func addNotifications() {
-    
-    NC.makeObserver(self, with: #selector(radioHasBeenAdded(_:)), of: .radioHasBeenAdded)
-    
-    NC.makeObserver(self, with: #selector(radioWillBeRemoved(_:)), of: .radioWillBeRemoved)
-  }
+//  private func addNotifications() {
+//
+//    NC.makeObserver(self, with: #selector(radioHasBeenAdded(_:)), of: .radioHasBeenAdded)
+//
+//    NC.makeObserver(self, with: #selector(radioWillBeRemoved(_:)), of: .radioWillBeRemoved)
+//  }
   /// Process .radioHasBeenAdded Notification
   ///
   /// - Parameter note:             a Notification instance
   ///
-  @objc private func radioHasBeenAdded(_ note: Notification) {
-    
-    _radio = note.object as? Radio
-    
-    // enable controls
-    enableControls()
-  }
+//  @objc private func radioHasBeenAdded(_ note: Notification) {
+//
+//    _radio = note.object as? Radio
+//
+//    // enable controls
+//    enableControls()
+//  }
   /// Process .radioWillBeRemoved Notification
   ///
   /// - Parameter note:             a Notification instance
   ///
-  @objc private func radioWillBeRemoved(_ note: Notification) {
-    
-    // disable controls
-    enableControls(false)
-    
-    _radio = nil
-  }
+//  @objc private func radioWillBeRemoved(_ note: Notification) {
+//    
+//    // disable controls
+//    enableControls(false)
+//    
+//    _radio = nil
+//  }
 }

@@ -10,7 +10,7 @@ import Cocoa
 import xLib6000
 import SwiftyUserDefaults
 
-class DisplayViewController: NSViewController, NSPopoverDelegate {
+final class DisplayViewController                     : NSViewController, NSPopoverDelegate {
 
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
@@ -133,7 +133,9 @@ class DisplayViewController: NSViewController, NSPopoverDelegate {
       _waterfall!.observe(\.blackLevel, options: [.initial, .new], changeHandler: changeHandler(_:_:)),
       _waterfall!.observe(\.lineDuration, options: [.initial, .new], changeHandler: changeHandler(_:_:)),
       _waterfall!.observe(\.autoBlackEnabled, options: [.initial, .new], changeHandler: changeHandler(_:_:)),
-      _waterfall!.observe(\.gradientIndex, options: [.initial, .new], changeHandler: changeHandler(_:_:))
+      _waterfall!.observe(\.gradientIndex, options: [.initial, .new], changeHandler: changeHandler(_:_:)),
+      
+      Defaults.observe(\.spectrumFillLevel, options: [.initial, .new], changeHandler: defaultsHandler(_:_:)),
     ]
   }
   /// Process observations
@@ -156,9 +158,6 @@ class DisplayViewController: NSViewController, NSPopoverDelegate {
         self._framesSlider.integerValue = panadapter.fps
         self._framesTextField.integerValue = panadapter.fps
 
-        self._fillSlider.integerValue = Defaults[.spectrumFillLevel]
-        self._fillTextField.integerValue = Defaults[.spectrumFillLevel]
-        
         self._weightedAverageCheckbox.boolState = panadapter.weightedAverageEnabled
 
       } else if let waterfall = object as? Waterfall {
@@ -176,6 +175,20 @@ class DisplayViewController: NSViewController, NSPopoverDelegate {
         
         self._gradientPopUp.selectItem(at: waterfall.gradientIndex)
       }
+    }
+  }
+  /// Process observations
+  ///
+  /// - Parameters:
+  ///   - slice:                    the object being observed
+  ///   - change:                   the change
+  ///
+  private func defaultsHandler(_ object: Any, _ change: Any) {
+    
+    DispatchQueue.main.async { [unowned self] in
+      
+      self._fillSlider.integerValue = Defaults[.spectrumFillLevel]
+      self._fillTextField.integerValue = Defaults[.spectrumFillLevel]
     }
   }
 }

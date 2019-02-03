@@ -9,7 +9,7 @@
 import Cocoa
 import xLib6000
 
-class BandButtonViewController              : NSViewController, NSPopoverDelegate {
+final class BandButtonViewController              : NSViewController, NSPopoverDelegate {
 
   // ----------------------------------------------------------------------------
   // MARK: - Private properties

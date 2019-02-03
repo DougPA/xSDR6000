@@ -44,6 +44,7 @@ extension DefaultsKeys {
   static let macAudioEnabled              = DefaultsKey<Bool>("macAudioEnabled")
   static let markersEnabled               = DefaultsKey<Bool>("markersEnabled")
   static let preferencesTabId             = DefaultsKey<String>("preferencesTabId")
+  static let profilesTabId                = DefaultsKey<String>("profilesTabId")
   static let quickMode0                   = DefaultsKey<String>("quickMode0")
   static let quickMode1                   = DefaultsKey<String>("quickMode1")
   static let quickMode2                   = DefaultsKey<String>("quickMode2")
@@ -95,7 +96,6 @@ extension DefaultsKeys {
 extension  UserDefaults {
   
   // alternate access to allow KVO observation
-  
   @objc dynamic var dbLegend : NSColor {
     get { return Defaults[.dbLegend] }
     set { Defaults[.dbLegend] = newValue } }

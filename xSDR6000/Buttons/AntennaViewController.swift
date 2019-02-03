@@ -9,7 +9,7 @@
 import Cocoa
 import xLib6000
 
-class AntennaViewController: NSViewController, NSPopoverDelegate {
+final class AntennaViewController           : NSViewController, NSPopoverDelegate {
 
   // ----------------------------------------------------------------------------
   // MARK: - Private properties

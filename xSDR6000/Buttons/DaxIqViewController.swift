@@ -9,7 +9,7 @@
 import Cocoa
 import xLib6000
 
-class DaxIqViewController: NSViewController, NSPopoverDelegate {
+final class DaxIqViewController             : NSViewController, NSPopoverDelegate {
 
   // ----------------------------------------------------------------------------
   // MARK: - Private properties

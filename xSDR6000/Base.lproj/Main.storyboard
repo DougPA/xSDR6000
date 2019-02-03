@@ -29,9 +29,15 @@
                                                 <action selector="openRadioPicker:" target="Ady-hI-5gd" id="MTX-uh-Ert"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Preferences…" keyEquivalent="," id="BOF-NM-1cW">
+                                        <menuItem title="Preferences…" enabled="NO" keyEquivalent="," id="BOF-NM-1cW">
                                             <connections>
-                                                <segue destination="YVz-fo-rYJ" kind="show" id="VDI-LN-Owk"/>
+                                                <action selector="openPreferences:" target="Ady-hI-5gd" id="5IF-b5-vxp"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Profiles" enabled="NO" id="Bhn-Ih-OT8">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="openProfiles:" target="Ady-hI-5gd" id="GCG-V5-l8N"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="wFC-TO-SCJ"/>
@@ -721,7 +727,7 @@
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
                         <toolbar key="toolbar" implicitIdentifier="A44065CE-0360-4C00-A5E5-D3890B0E4516" explicitIdentifier="toolbar" displayMode="iconAndLabel" sizeMode="regular" id="C1P-Np-CDr">
                             <allowedToolbarItems>
-                                <toolbarItem implicitItemIdentifier="E9ACE623-0962-48CD-82CD-F785533B6DE6" explicitItemIdentifier="Pan" label="Add Pan" paletteLabel="Add Pan" toolTip="Add a Panadapter" id="SRQ-Qz-auw">
+                                <toolbarItem implicitItemIdentifier="E9ACE623-0962-48CD-82CD-F785533B6DE6" explicitItemIdentifier="addPan" label="Add Pan" paletteLabel="Add Pan" toolTip="Add a Panadapter" id="SRQ-Qz-auw">
                                     <size key="minSize" width="47" height="28"/>
                                     <size key="maxSize" width="68" height="32"/>
                                     <button key="view" verticalHuggingPriority="750" id="nXv-bQ-NeI">
@@ -738,7 +744,7 @@
                                         </connections>
                                     </button>
                                 </toolbarItem>
-                                <toolbarItem implicitItemIdentifier="CFC52F3D-8BFA-4108-A08F-468E2891B581" explicitItemIdentifier="tnfEnabled" label="Tnf On/Off" paletteLabel="Tnf On/Off" toolTip="Tnf On/Off" tag="1" id="HTE-sv-0bk">
+                                <toolbarItem implicitItemIdentifier="CFC52F3D-8BFA-4108-A08F-468E2891B581" explicitItemIdentifier="tnfsEnabled" label="Tnf On/Off" paletteLabel="Tnf On/Off" toolTip="Tnf On/Off" tag="1" id="HTE-sv-0bk">
                                     <size key="minSize" width="47" height="25"/>
                                     <size key="maxSize" width="62" height="32"/>
                                     <button key="view" verticalHuggingPriority="750" tag="1" id="588-fP-5FQ">
@@ -755,7 +761,7 @@
                                         </connections>
                                     </button>
                                 </toolbarItem>
-                                <toolbarItem implicitItemIdentifier="111CF6C6-C149-4BA3-B5E8-F31B191875E4" explicitItemIdentifier="Markers" label="Markers On/Off" paletteLabel="Markers On/Off" toolTip="Markers On/Off" tag="2" id="JhY-lZ-UVg">
+                                <toolbarItem implicitItemIdentifier="111CF6C6-C149-4BA3-B5E8-F31B191875E4" explicitItemIdentifier="markersEnabled" label="Markers On/Off" paletteLabel="Markers On/Off" toolTip="Markers On/Off" tag="2" id="JhY-lZ-UVg">
                                     <size key="minSize" width="47" height="25"/>
                                     <size key="maxSize" width="62" height="32"/>
                                     <button key="view" verticalHuggingPriority="750" tag="2" id="svQ-GW-lJt">
@@ -779,10 +785,10 @@
                                         <rect key="frame" x="0.0" y="14" width="96" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <sliderCell key="cell" continuous="YES" state="on" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" sliderType="linear" id="xYg-2C-oMt"/>
+                                        <connections>
+                                            <action selector="lineoutGain:" target="Oky-zY-oP4" id="GxM-OJ-kc3"/>
+                                        </connections>
                                     </slider>
-                                    <connections>
-                                        <action selector="lineoutGain:" target="Oky-zY-oP4" id="G4G-c9-UUh"/>
-                                    </connections>
                                 </toolbarItem>
                                 <toolbarItem implicitItemIdentifier="38BC3D7C-9854-4E3B-80F2-59FE9C93983E" explicitItemIdentifier="headphoneGain" label="Headphone Gain" paletteLabel="Headphone Gain" toolTip="Headphone Gain" tag="6" id="AHs-Na-iad">
                                     <size key="minSize" width="96" height="21"/>
@@ -791,12 +797,12 @@
                                         <rect key="frame" x="0.0" y="14" width="96" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <sliderCell key="cell" continuous="YES" state="on" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" sliderType="linear" id="ZiO-iG-BDi"/>
+                                        <connections>
+                                            <action selector="headphoneGain:" target="Oky-zY-oP4" id="ZtJ-YS-Qoc"/>
+                                        </connections>
                                     </slider>
-                                    <connections>
-                                        <action selector="headphoneGain:" target="Oky-zY-oP4" id="Fhf-al-6Br"/>
-                                    </connections>
                                 </toolbarItem>
-                                <toolbarItem implicitItemIdentifier="66FEEF35-D9FD-4BEB-8572-F41E95491D3A" explicitItemIdentifier="Side" label="Side On/Off" paletteLabel="Side On/Off" toolTip="Sidebar On/Off" tag="7" id="PJI-AR-W8E">
+                                <toolbarItem implicitItemIdentifier="66FEEF35-D9FD-4BEB-8572-F41E95491D3A" explicitItemIdentifier="sideEnabled" label="Side On/Off" paletteLabel="Side On/Off" toolTip="Sidebar On/Off" tag="7" autovalidates="NO" id="PJI-AR-W8E">
                                     <size key="minSize" width="47" height="25"/>
                                     <size key="maxSize" width="62" height="32"/>
                                     <button key="view" verticalHuggingPriority="750" tag="7" id="q5v-Kd-Um5">
@@ -809,7 +815,7 @@
                                             <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                                         </buttonCell>
                                         <connections>
-                                            <binding destination="MeG-fG-mdw" name="value" keyPath="values.sideOpen" id="LxZ-cJ-l71"/>
+                                            <action selector="sideButton:" target="Oky-zY-oP4" id="vC1-Gu-M6J"/>
                                         </connections>
                                     </button>
                                     <connections>
@@ -818,7 +824,7 @@
                                 </toolbarItem>
                                 <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="b3x-Xh-oFv"/>
                                 <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="qnV-ol-DRw"/>
-                                <toolbarItem implicitItemIdentifier="AE697A3C-2CBB-449E-ADBE-94E5A8F088C6" explicitItemIdentifier="rxEnabled" label="Rx On/Off" paletteLabel="Rx On/Off" tag="8" id="z4t-r2-UAf">
+                                <toolbarItem implicitItemIdentifier="AE697A3C-2CBB-449E-ADBE-94E5A8F088C6" explicitItemIdentifier="macAudioEnabled" label="Mac Audio" paletteLabel="Mac Audio" tag="8" id="z4t-r2-UAf">
                                     <nil key="toolTip"/>
                                     <size key="minSize" width="47" height="25"/>
                                     <size key="maxSize" width="80" height="32"/>
@@ -833,7 +839,6 @@
                                         </buttonCell>
                                         <connections>
                                             <action selector="opusRxAudio:" target="Oky-zY-oP4" id="99e-s5-h1Q"/>
-                                            <binding destination="MeG-fG-mdw" name="value" keyPath="values.remoteRxEnabled" id="5wy-qJ-QB9"/>
                                         </connections>
                                     </button>
                                 </toolbarItem>
@@ -881,10 +886,10 @@
                                             <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
+                                        <connections>
+                                            <action selector="muteLineout:" target="Oky-zY-oP4" id="5B2-Dr-ECV"/>
+                                        </connections>
                                     </button>
-                                    <connections>
-                                        <action selector="muteLineout:" target="Oky-zY-oP4" id="ugt-wg-vkV"/>
-                                    </connections>
                                 </toolbarItem>
                                 <toolbarItem implicitItemIdentifier="94FCD323-E28C-4171-82B7-AF7182C4EC26" explicitItemIdentifier="headphoneMute" label="Mute" paletteLabel="Mute Headphone" tag="5" image="NSStatusAvailable" id="MD2-zq-j4r">
                                     <nil key="toolTip"/>
@@ -897,12 +902,12 @@
                                             <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
+                                        <connections>
+                                            <action selector="muteHeadphone:" target="Oky-zY-oP4" id="Y1R-hN-HAa"/>
+                                        </connections>
                                     </button>
-                                    <connections>
-                                        <action selector="muteHeadphone:" target="Oky-zY-oP4" id="CTh-SG-457"/>
-                                    </connections>
                                 </toolbarItem>
-                                <toolbarItem implicitItemIdentifier="DEEDC29B-D1E9-4A60-BBE3-577FC2873C04" explicitItemIdentifier="FDX" label="FDX On/Off" paletteLabel="FDX On/Off" toolTip="Markers On/Off" tag="2" id="bSr-nw-2sZ">
+                                <toolbarItem implicitItemIdentifier="DEEDC29B-D1E9-4A60-BBE3-577FC2873C04" explicitItemIdentifier="fdxEnabled" label="FDX On/Off" paletteLabel="FDX On/Off" toolTip="Markers On/Off" tag="2" id="bSr-nw-2sZ">
                                     <size key="minSize" width="47" height="25"/>
                                     <size key="maxSize" width="62" height="32"/>
                                     <button key="view" verticalHuggingPriority="750" tag="2" id="lSI-pj-GOM">
@@ -919,7 +924,7 @@
                                         </connections>
                                     </button>
                                 </toolbarItem>
-                                <toolbarItem implicitItemIdentifier="0DE5B23D-2F26-469E-9BF4-92EE46B481AA" explicitItemIdentifier="CWX" label="CWX On/Off" paletteLabel="CWX On/Off" toolTip="CWX On/Off" tag="2" id="fPm-lX-g4y">
+                                <toolbarItem implicitItemIdentifier="0DE5B23D-2F26-469E-9BF4-92EE46B481AA" explicitItemIdentifier="cwxEnabled" label="CWX On/Off" paletteLabel="CWX On/Off" toolTip="CWX On/Off" tag="2" id="fPm-lX-g4y">
                                     <size key="minSize" width="47" height="25"/>
                                     <size key="maxSize" width="62" height="32"/>
                                     <button key="view" verticalHuggingPriority="750" tag="2" id="Yu1-bq-afA">
@@ -931,6 +936,9 @@
                                             <string key="keyEquivalent">m</string>
                                             <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                                         </buttonCell>
+                                        <connections>
+                                            <action selector="cwxButton:" target="Oky-zY-oP4" id="Tmq-IY-MFC"/>
+                                        </connections>
                                     </button>
                                 </toolbarItem>
                             </allowedToolbarItems>
@@ -953,17 +961,6 @@
                         </connections>
                     </window>
                     <connections>
-                        <outlet property="cwxEnabled" destination="Yu1-bq-afA" id="dau-Em-8aa"/>
-                        <outlet property="fullDuplexEnabled" destination="lSI-pj-GOM" id="wuZ-YL-ZWa"/>
-                        <outlet property="headphoneGain" destination="l0h-rt-Rcg" id="ocN-Za-71n"/>
-                        <outlet property="headphoneMute" destination="UGS-Cq-w2K" id="jI5-Bd-GBh"/>
-                        <outlet property="lineoutGain" destination="hjS-Bh-5By" id="Vah-bU-NfO"/>
-                        <outlet property="lineoutMute" destination="Bvj-ys-C6i" id="PQ3-qG-eFB"/>
-                        <outlet property="macAudioEnabled" destination="Jch-IC-yYb" id="Er2-SL-Qji"/>
-                        <outlet property="markersEnabled" destination="svQ-GW-lJt" id="kH0-kN-jga"/>
-                        <outlet property="sideViewOpen" destination="q5v-Kd-Um5" id="jm4-sw-37i"/>
-                        <outlet property="tnfsEnabled" destination="588-fP-5FQ" id="Fnt-f0-l6y"/>
-                        <outlet property="voltageTempMonitor" destination="xxh-2I-BDg" id="QhS-zI-FkL"/>
                         <segue destination="2ro-LE-ZBU" kind="relationship" relationship="window.shadowedContentViewController" id="94i-bM-0aG"/>
                     </connections>
                 </windowController>
@@ -999,14 +996,6 @@
                 <customObject id="mdj-KA-Ifz" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="141" y="750"/>
-        </scene>
-        <!--Preferences connector-->
-        <scene sceneID="3q7-KT-4ql">
-            <objects>
-                <controllerPlaceholder storyboardIdentifier="Preferences" storyboardName="Preferences" id="YVz-fo-rYJ" userLabel="Preferences connector" sceneMemberID="viewController"/>
-                <customObject id="3ca-nx-KSE" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="63" y="-105"/>
         </scene>
         <!--Panafalls view controller-->
         <scene sceneID="2B4-2I-NKY">

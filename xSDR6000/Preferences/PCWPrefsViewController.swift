@@ -9,7 +9,7 @@
 import Cocoa
 import xLib6000
 
-class PCWPrefsViewController                : NSViewController {
+final class PCWPrefsViewController                : NSViewController {
 
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
@@ -26,10 +26,8 @@ class PCWPrefsViewController                : NSViewController {
   @IBOutlet private weak var _iambicBRadioButton    : NSButton!
   @IBOutlet private weak var _rttyMarkTextField     : NSTextField!
   
-  private var _radio                        : Radio?
-  private var _transmit                     : Transmit? {
-    return _radio!.transmit
-  }
+  private var _radio                        : Radio? { return Api.sharedInstance.radio }
+  private var _transmit                     : Transmit? { return _radio!.transmit }
   private var _observations                 = [NSKeyValueObservation]()
   
 
@@ -41,11 +39,13 @@ class PCWPrefsViewController                : NSViewController {
     
     view.translatesAutoresizingMaskIntoConstraints = false
     
-    // check for an active radio
-    if let radio = Api.sharedInstance.radio { _radio = radio ; setControlStatus(true) }
+//    // check for an active radio
+//    if let radio = Api.sharedInstance.radio { _radio = radio ; setControlStatus(true) }
+//
+//    // start receiving notifications
+//    addNotifications()
     
-    // start receiving notifications
-    addNotifications()
+    addObservations()
   }
 
   // ----------------------------------------------------------------------------
@@ -89,30 +89,30 @@ class PCWPrefsViewController                : NSViewController {
   ///
   /// - Parameter status:             true = enable
   ///
-  private func setControlStatus(_ status: Bool) {
-    
-    if status {
-      addObservations()
-    } else {
-      removeObservations()
-    }
-    DispatchQueue.main.async { [weak self] in
-      self?._iambicCheckbox.isEnabled = status
-      self?._swapPaddlesCheckbox.isEnabled = status
-      self?._cwxSyncCheckbox.isEnabled = status
-      
-      self?._micBiasCheckbox.isEnabled = status
-      self?._metInRxCheckbox.isEnabled = status
-      self?._micBoostCheckbox.isEnabled = status
-      
-      self?._cwLowerRadioButton.isEnabled = status
-      self?._cwUpperRadioButton.isEnabled = status
-      self?._iambicARadioButton.isEnabled = status
-      self?._iambicBRadioButton.isEnabled = status
-      
-      self?._rttyMarkTextField.isEnabled = status
-    }
-  }
+//  private func setControlStatus(_ status: Bool) {
+//
+//    if status {
+//      addObservations()
+//    } else {
+//      removeObservations()
+//    }
+//    DispatchQueue.main.async { [weak self] in
+//      self?._iambicCheckbox.isEnabled = status
+//      self?._swapPaddlesCheckbox.isEnabled = status
+//      self?._cwxSyncCheckbox.isEnabled = status
+//
+//      self?._micBiasCheckbox.isEnabled = status
+//      self?._metInRxCheckbox.isEnabled = status
+//      self?._micBoostCheckbox.isEnabled = status
+//
+//      self?._cwLowerRadioButton.isEnabled = status
+//      self?._cwUpperRadioButton.isEnabled = status
+//      self?._iambicARadioButton.isEnabled = status
+//      self?._iambicBRadioButton.isEnabled = status
+//
+//      self?._rttyMarkTextField.isEnabled = status
+//    }
+//  }
 
   // ----------------------------------------------------------------------------
   // MARK: - Observation methods
@@ -134,14 +134,14 @@ class PCWPrefsViewController                : NSViewController {
   }
   /// Remove observations
   ///
-  func removeObservations() {
-    
-    // invalidate each observation
-    _observations.forEach { $0.invalidate() }
-    
-    // remove the tokens
-    _observations.removeAll()
-  }
+//  func removeObservations() {
+//
+//    // invalidate each observation
+//    _observations.forEach { $0.invalidate() }
+//
+//    // remove the tokens
+//    _observations.removeAll()
+//  }
   /// Process observations
   ///
   /// - Parameters:
@@ -195,32 +195,32 @@ class PCWPrefsViewController                : NSViewController {
   
   /// Add subscriptions to Notifications
   ///
-  private func addNotifications() {
-    
-    NC.makeObserver(self, with: #selector(radioHasBeenAdded(_:)), of: .radioHasBeenAdded)
-    
-    NC.makeObserver(self, with: #selector(radioWillBeRemoved(_:)), of: .radioWillBeRemoved)
-  }
+//  private func addNotifications() {
+//
+//    NC.makeObserver(self, with: #selector(radioHasBeenAdded(_:)), of: .radioHasBeenAdded)
+//
+//    NC.makeObserver(self, with: #selector(radioWillBeRemoved(_:)), of: .radioWillBeRemoved)
+//  }
   /// Process .radioHasBeenAdded Notification
   ///
   /// - Parameter note:             a Notification instance
   ///
-  @objc private func radioHasBeenAdded(_ note: Notification) {
-    
-    _radio = note.object as? Radio
-    
-    // enable controls
-    setControlStatus(true)
-  }
+//  @objc private func radioHasBeenAdded(_ note: Notification) {
+//
+//    _radio = note.object as? Radio
+//
+//    // enable controls
+//    setControlStatus(true)
+//  }
   /// Process .radioWillBeRemoved Notification
   ///
   /// - Parameter note:             a Notification instance
   ///
-  @objc private func radioWillBeRemoved(_ note: Notification) {
-    
-    // disable controls
-    setControlStatus(false)
-    
-    _radio = nil
-  }
+//  @objc private func radioWillBeRemoved(_ note: Notification) {
+//
+//    // disable controls
+//    setControlStatus(false)
+//
+//    _radio = nil
+//  }
 }

@@ -82,7 +82,7 @@ class ParameterMonitor: NSToolbarItem {
       if let meter = Meter.findBy(shortName: _meterShortNames[i].rawValue) {
         
         // YES, observe it's value
-        _observations.append( meter.observe(\.value, options: [.new],changeHandler: updateValue))
+        _observations.append( meter.observe(\.value, options: [.initial, .new],changeHandler: updateValue))
       }
     }
   }

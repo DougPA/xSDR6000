@@ -9,7 +9,7 @@
 import Cocoa
 import xLib6000
 
-class RxPrefsViewController: NSViewController {
+final class RxPrefsViewController: NSViewController {
   
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
@@ -23,7 +23,7 @@ class RxPrefsViewController: NSViewController {
   @IBOutlet private weak var _muteLocalAudioCheckbox  : NSButton!
   @IBOutlet private weak var _binauralAudioCheckbox   : NSButton!
   
-  private var _radio                        : Radio?
+  private var _radio                        : Radio? { return Api.sharedInstance.radio }
   private var _observations                 = [NSKeyValueObservation]()
   
   // ----------------------------------------------------------------------------
@@ -34,11 +34,12 @@ class RxPrefsViewController: NSViewController {
     
     view.translatesAutoresizingMaskIntoConstraints = false
     
-    // check for an active radio
-    if let radio = Api.sharedInstance.radio{ _radio = radio ; setControlStatus(true) }
-    
-    // start receiving notifications
-    addNotifications()
+//    // check for an active radio
+//    if let radio = Api.sharedInstance.radio{ _radio = radio ; setControlStatus(true) }
+//
+//    // start receiving notifications
+//    addNotifications()
+    addObservations()
   }
 
   // ----------------------------------------------------------------------------
@@ -46,9 +47,7 @@ class RxPrefsViewController: NSViewController {
   
   @IBAction func calibrate(_ sender: NSButton) {
 
-    if let radio = Api.sharedInstance.radio {
-      radio.startCalibration = true      
-    }
+    _radio?.startCalibration = true
   }
   
   // ----------------------------------------------------------------------------
@@ -58,24 +57,24 @@ class RxPrefsViewController: NSViewController {
   ///
   /// - Parameter status:             true = enable
   ///
-  private func setControlStatus(_ status: Bool) {
-    
-    if status {
-      addObservations()
-    } else {
-      removeObservations()
-    }
-    DispatchQueue.main.async { [weak self] in
-      self?._calibrateButton.isEnabled = status
-      self?._calFreqTextField.isEnabled = status
-      self?._calOffsetTextField.isEnabled = status
-      self?._snapTuneCheckbox.isEnabled = status
-      //    self?._singleClickCheckbox.isEnabled = status
-      //    self?._startSliceMinCheckbox.isEnabled = status
-      self?._muteLocalAudioCheckbox.isEnabled = status
-      self?._binauralAudioCheckbox.isEnabled = status
-    }
-  }
+//  private func setControlStatus(_ status: Bool) {
+//
+//    if status {
+//      addObservations()
+//    } else {
+//      removeObservations()
+//    }
+//    DispatchQueue.main.async { [weak self] in
+//      self?._calibrateButton.isEnabled = status
+//      self?._calFreqTextField.isEnabled = status
+//      self?._calOffsetTextField.isEnabled = status
+//      self?._snapTuneCheckbox.isEnabled = status
+//      //    self?._singleClickCheckbox.isEnabled = status
+//      //    self?._startSliceMinCheckbox.isEnabled = status
+//      self?._muteLocalAudioCheckbox.isEnabled = status
+//      self?._binauralAudioCheckbox.isEnabled = status
+//    }
+//  }
 
   // ----------------------------------------------------------------------------
   // MARK: - Observation methods
@@ -94,14 +93,14 @@ class RxPrefsViewController: NSViewController {
   }
   /// Remove observations
   ///
-  func removeObservations() {
-    
-    // invalidate each observation
-    _observations.forEach { $0.invalidate() }
-    
-    // remove the tokens
-    _observations.removeAll()
-  }
+//  func removeObservations() {
+//
+//    // invalidate each observation
+//    _observations.forEach { $0.invalidate() }
+//
+//    // remove the tokens
+//    _observations.removeAll()
+//  }
   /// Process observations
   ///
   /// - Parameters:
@@ -124,35 +123,35 @@ class RxPrefsViewController: NSViewController {
   
   /// Add subscriptions to Notifications
   ///
-  private func addNotifications() {
-    
-    NC.makeObserver(self, with: #selector(radioHasBeenAdded(_:)), of: .radioHasBeenAdded)
-    
-    NC.makeObserver(self, with: #selector(radioWillBeRemoved(_:)), of: .radioWillBeRemoved)
-  }
+//  private func addNotifications() {
+//
+//    NC.makeObserver(self, with: #selector(radioHasBeenAdded(_:)), of: .radioHasBeenAdded)
+//
+//    NC.makeObserver(self, with: #selector(radioWillBeRemoved(_:)), of: .radioWillBeRemoved)
+//  }
   /// Process .radioHasBeenAdded Notification
   ///
   /// - Parameter note:             a Notification instance
   ///
-  @objc private func radioHasBeenAdded(_ note: Notification) {
-    
-    if let radio = note.object as? Radio {
-      
-      _radio = radio
-      
-      // enable all controls
-      setControlStatus(true)
-    }
-  }
+//  @objc private func radioHasBeenAdded(_ note: Notification) {
+//
+//    if let radio = note.object as? Radio {
+//
+//      _radio = radio
+//
+//      // enable all controls
+//      setControlStatus(true)
+//    }
+//  }
   /// Process .radioWillBeRemoved Notification
   ///
   /// - Parameter note:             a Notification instance
   ///
-  @objc private func radioWillBeRemoved(_ note: Notification) {
-    
-    // disable all controls
-    setControlStatus(false)
-    
-    _radio = nil
-  }
+//  @objc private func radioWillBeRemoved(_ note: Notification) {
+//
+//    // disable all controls
+//    setControlStatus(false)
+//
+//    _radio = nil
+//  }
 }

@@ -9,7 +9,7 @@
 import Cocoa
 import xLib6000
 
-class TxViewController                      : NSViewController {
+final class TxViewController                      : NSViewController {
   
   // ----------------------------------------------------------------------------
   // MARK: - Private properties

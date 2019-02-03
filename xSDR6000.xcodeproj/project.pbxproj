@@ -65,6 +65,8 @@
 		913FDDF121E44C70006DFE27 /* DaxIqViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913FDDF021E44C70006DFE27 /* DaxIqViewController.swift */; };
 		9143BD9721FA3CC400C2CCBD /* ChangeLog.txt in Resources */ = {isa = PBXBuildFile; fileRef = 9143BD9621FA3CC300C2CCBD /* ChangeLog.txt */; };
 		9143BD9921FA3F6600C2CCBD /* KnownIssues.md in Resources */ = {isa = PBXBuildFile; fileRef = 9143BD9821FA3F6500C2CCBD /* KnownIssues.md */; };
+		9143BDC32202459900C2CCBD /* Profiles.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9143BDC12202459800C2CCBD /* Profiles.storyboard */; };
+		9143BDC522024A7000C2CCBD /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9143BDC422024A7000C2CCBD /* ProfileViewController.swift */; };
 		91463CEC21E501BA00177843 /* InfoPrefsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91463CEB21E501BA00177843 /* InfoPrefsViewController.swift */; };
 		91463CEE21E5052E00177843 /* SwiftyUserDefaults.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91463CED21E5052E00177843 /* SwiftyUserDefaults.framework */; };
 		91463CEF21E5052E00177843 /* SwiftyUserDefaults.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 91463CED21E5052E00177843 /* SwiftyUserDefaults.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -176,6 +178,8 @@
 		913FDDF021E44C70006DFE27 /* DaxIqViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaxIqViewController.swift; sourceTree = "<group>"; };
 		9143BD9621FA3CC300C2CCBD /* ChangeLog.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ChangeLog.txt; sourceTree = "<group>"; };
 		9143BD9821FA3F6500C2CCBD /* KnownIssues.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = KnownIssues.md; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.markdown; };
+		9143BDC22202459900C2CCBD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Profiles.storyboard; sourceTree = "<group>"; };
+		9143BDC422024A7000C2CCBD /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		91463CEB21E501BA00177843 /* InfoPrefsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoPrefsViewController.swift; sourceTree = "<group>"; };
 		91463CED21E5052E00177843 /* SwiftyUserDefaults.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SwiftyUserDefaults.framework; sourceTree = "<group>"; };
 		91463CF021E50AE300177843 /* ColorsPrefsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorsPrefsViewController.swift; sourceTree = "<group>"; };
@@ -266,6 +270,7 @@
 				913F7F0B2066DC7A00F35E9B /* Panadapter */,
 				913F7F1D2066DC7A00F35E9B /* Waterfall */,
 				913F7F012066DC7900F35E9B /* Preferences */,
+				9143BDBE2202445F00C2CCBD /* Profiles */,
 				913F7EFA2066DC7900F35E9B /* Misc */,
 				9185B0C4208683C7004D4C40 /* CommonClientCode */,
 				913F7F1C2066DC7A00F35E9B /* Documentation */,
@@ -282,6 +287,7 @@
 				913F7ED72066DC7900F35E9B /* Preferences.storyboard */,
 				913F7EDD2066DC7900F35E9B /* RadioPicker.storyboard */,
 				913F7EDB2066DC7900F35E9B /* Side.storyboard */,
+				9143BDC12202459800C2CCBD /* Profiles.storyboard */,
 			);
 			path = Base.lproj;
 			sourceTree = "<group>";
@@ -403,6 +409,14 @@
 				913F7F6F2066DD5A00F35E9B /* xLib6000.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		9143BDBE2202445F00C2CCBD /* Profiles */ = {
+			isa = PBXGroup;
+			children = (
+				9143BDC422024A7000C2CCBD /* ProfileViewController.swift */,
+			);
+			path = Profiles;
 			sourceTree = "<group>";
 		};
 		9179497B212EFB0E00D9750A /* RingBuffer */ = {
@@ -564,6 +578,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				91475E5020A28E4600ACE77D /* Flag.storyboard in Resources */,
+				9143BDC32202459900C2CCBD /* Profiles.storyboard in Resources */,
 				913F7F452066DC7A00F35E9B /* Filters.plist in Resources */,
 				9143BD9721FA3CC400C2CCBD /* ChangeLog.txt in Resources */,
 				913F7F612066DC7A00F35E9B /* Deuteranopia.tex in Resources */,
@@ -621,6 +636,7 @@
 				913F7F492066DC7A00F35E9B /* PreferencesTabViewController.swift in Sources */,
 				91463CF121E50AE300177843 /* ColorsPrefsViewController.swift in Sources */,
 				913FDDF121E44C70006DFE27 /* DaxIqViewController.swift in Sources */,
+				9143BDC522024A7000C2CCBD /* ProfileViewController.swift in Sources */,
 				913FDDE921E3D517006DFE27 /* XritViewController.swift in Sources */,
 				913F7F532066DC7A00F35E9B /* FrequencyLegendView.swift in Sources */,
 				91463CF521E52A0800177843 /* GpsPrefsViewController.swift in Sources */,
@@ -698,6 +714,14 @@
 				913F7EE02066DC7900F35E9B /* Base */,
 			);
 			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		9143BDC12202459800C2CCBD /* Profiles.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9143BDC22202459900C2CCBD /* Base */,
+			);
+			name = Profiles.storyboard;
 			sourceTree = "<group>";
 		};
 		91475E4E20A28E4600ACE77D /* Flag.storyboard */ = {

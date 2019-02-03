@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class XvtrPrefsViewController: NSViewController {
+final class XvtrPrefsViewController: NSViewController {
 
   // ----------------------------------------------------------------------------
   // MARK: - Overridden methods

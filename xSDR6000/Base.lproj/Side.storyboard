@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="sri-rJ-Lo4">
     <dependencies>
-        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -1069,16 +1068,16 @@
                     </view>
                     <connections>
                         <outlet property="_accButton" destination="Qrg-Rl-WST" id="vGe-3r-GWS"/>
-                        <outlet property="_companderLevel" destination="fhO-2g-Ken" id="W8Z-YQ-EgO"/>
                         <outlet property="_compressionIndicator" destination="oMZ-QI-F8r" id="kYu-Kp-PwA"/>
                         <outlet property="_daxButton" destination="Tb1-Zk-MX0" id="7UO-WN-R1l"/>
-                        <outlet property="_micLevel" destination="CRP-mo-UWc" id="Y0Y-RS-NLu"/>
                         <outlet property="_micLevelIndicator" destination="XxF-iq-frd" id="6Lg-yg-XcX"/>
-                        <outlet property="_micProfile" destination="vQd-Ns-GSa" id="vfd-VH-AOr"/>
-                        <outlet property="_micSelection" destination="8pF-hW-YHP" id="2mU-U3-lRR"/>
+                        <outlet property="_micLevelSlider" destination="CRP-mo-UWc" id="Y0Y-RS-NLu"/>
+                        <outlet property="_micProfilePopUp" destination="vQd-Ns-GSa" id="vfd-VH-AOr"/>
+                        <outlet property="_micSelectionPopUp" destination="8pF-hW-YHP" id="2mU-U3-lRR"/>
                         <outlet property="_monButton" destination="055-NT-Nba" id="6HA-za-qwu"/>
                         <outlet property="_monLevel" destination="acI-WQ-nEv" id="Av3-Yo-eV2"/>
                         <outlet property="_procButton" destination="hS4-yD-3DZ" id="BXO-Rj-hj5"/>
+                        <outlet property="_processorLevelSlider" destination="fhO-2g-Ken" id="W8Z-YQ-EgO"/>
                         <outlet property="_saveButton" destination="fUH-dH-UyU" id="LGS-jt-fUl"/>
                     </connections>
                 </viewController>
@@ -1486,7 +1485,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="311" height="1050"/>
                                 <clipView key="contentView" identifier="Clip view" id="k0h-jX-gWp">
                                     <rect key="frame" x="0.0" y="0.0" width="311" height="1050"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view identifier="Inside view" translatesAutoresizingMaskIntoConstraints="NO" id="WdK-Jx-DB2" userLabel="Inside View">
                                             <rect key="frame" x="0.0" y="0.0" width="311" height="1050"/>
