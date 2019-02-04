@@ -16,7 +16,6 @@ final class ProfileViewController: NSViewController, NSTableViewDelegate, NSTabl
   @IBOutlet private weak var _segmentedControl  : NSSegmentedControl!
   @IBOutlet private weak var _tableView         : NSTableView!
   @IBOutlet private weak var _loadButton        : NSButton!
-  @IBOutlet private weak var _renameButton      : NSButton!
   @IBOutlet private weak var _deleteButton      : NSButton!
   
   private var _radio                            : Radio? { return Api.sharedInstance.radio }
@@ -273,7 +272,6 @@ final class ProfileViewController: NSViewController, NSTableViewDelegate, NSTabl
     // A row must be selected to enable buttons
     _loadButton.isEnabled = (_tableView.selectedRow >= 0)
     _deleteButton.isEnabled = (_tableView.selectedRow >= 0)
-    _renameButton.isEnabled = (_tableView.selectedRow >= 0)
   }
 
 }
