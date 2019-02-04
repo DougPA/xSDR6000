@@ -1,5 +1,10 @@
 xSDR6000 Change Log
 
+v2.0.9 - 03-Feb-2019
+
+Corrected agcMode control that caused a crash
+Redraw when changing Slice.mode was missing, added it.
+
 v2.0.8 - 03-Feb-2019
 
 Enable xSDR6000->Preferences menu item only when a radio is connected

@@ -26,7 +26,6 @@
 		913F7F422066DC7A00F35E9B /* Band.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7EFB2066DC7900F35E9B /* Band.swift */; };
 		913F7F432066DC7A00F35E9B /* Defaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 913F7EFC2066DC7900F35E9B /* Defaults.plist */; };
 		913F7F442066DC7A00F35E9B /* BandSegments.plist in Resources */ = {isa = PBXBuildFile; fileRef = 913F7EFD2066DC7900F35E9B /* BandSegments.plist */; };
-		913F7F452066DC7A00F35E9B /* Filters.plist in Resources */ = {isa = PBXBuildFile; fileRef = 913F7EFE2066DC7900F35E9B /* Filters.plist */; };
 		913F7F462066DC7A00F35E9B /* OpusDecode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7EFF2066DC7900F35E9B /* OpusDecode.swift */; };
 		913F7F472066DC7A00F35E9B /* ParameterMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7F002066DC7900F35E9B /* ParameterMonitor.swift */; };
 		913F7F492066DC7A00F35E9B /* PreferencesTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7F032066DC7900F35E9B /* PreferencesTabViewController.swift */; };
@@ -134,7 +133,6 @@
 		913F7EFB2066DC7900F35E9B /* Band.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Band.swift; sourceTree = "<group>"; };
 		913F7EFC2066DC7900F35E9B /* Defaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Defaults.plist; sourceTree = "<group>"; };
 		913F7EFD2066DC7900F35E9B /* BandSegments.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = BandSegments.plist; sourceTree = "<group>"; };
-		913F7EFE2066DC7900F35E9B /* Filters.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Filters.plist; sourceTree = "<group>"; };
 		913F7EFF2066DC7900F35E9B /* OpusDecode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpusDecode.swift; sourceTree = "<group>"; };
 		913F7F002066DC7900F35E9B /* ParameterMonitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParameterMonitor.swift; sourceTree = "<group>"; };
 		913F7F032066DC7900F35E9B /* PreferencesTabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesTabViewController.swift; sourceTree = "<group>"; };
@@ -310,7 +308,6 @@
 				913F7EFB2066DC7900F35E9B /* Band.swift */,
 				913F7EFD2066DC7900F35E9B /* BandSegments.plist */,
 				913F7EFC2066DC7900F35E9B /* Defaults.plist */,
-				913F7EFE2066DC7900F35E9B /* Filters.plist */,
 				91D60770215149A300123D77 /* LevelIndicator.swift */,
 				913F7EFF2066DC7900F35E9B /* OpusDecode.swift */,
 				916909C52113E2FB00164044 /* OpusEncode.swift */,
@@ -579,7 +576,6 @@
 			files = (
 				91475E5020A28E4600ACE77D /* Flag.storyboard in Resources */,
 				9143BDC32202459900C2CCBD /* Profiles.storyboard in Resources */,
-				913F7F452066DC7A00F35E9B /* Filters.plist in Resources */,
 				9143BD9721FA3CC400C2CCBD /* ChangeLog.txt in Resources */,
 				913F7F612066DC7A00F35E9B /* Deuteranopia.tex in Resources */,
 				913F7F642066DC7A00F35E9B /* Basic.tex in Resources */,
