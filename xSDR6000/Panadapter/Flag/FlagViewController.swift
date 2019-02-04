@@ -472,6 +472,7 @@ final class FlagViewController       : NSViewController, NSTextFieldDelegate {
   private func addObservations(slice: xLib6000.Slice, panadapter: Panadapter ) {
     
     _observations.append( slice.observe(\.active, options: [.initial, .new], changeHandler: sliceChange(_:_:)) )
+    _observations.append( slice.observe(\.mode, options: [.initial, .new], changeHandler: sliceChange(_:_:)) )
 
     _observations.append( slice.observe(\.txEnabled, options: [.initial, .new], changeHandler: txChange(_:_:)) )
     
@@ -588,10 +589,13 @@ final class FlagViewController       : NSViewController, NSTextFieldDelegate {
   ///   - slice:                the slice that changed
   ///   - change:               the change
   ///
-  private func sliceChange(_ slice: xLib6000.Slice, _ change: NSKeyValueObservedChange<Bool>) {
+  private func sliceChange(_ slice: xLib6000.Slice, _ change: Any) {
     
     if let panVc = _vc as? PanadapterViewController {
       
+      DispatchQueue.main.async {
+        self._modeButton.title = slice.mode
+      }
      // this is a Slice Flag, redraw
       panVc.redrawFrequencyLegend()
     }

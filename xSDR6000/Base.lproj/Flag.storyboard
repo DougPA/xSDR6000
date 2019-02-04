@@ -329,7 +329,6 @@
                                         </buttonCell>
                                         <connections>
                                             <action selector="controlsButtons:" target="Lmw-yC-7qh" id="SSM-dZ-d4N"/>
-                                            <binding destination="Lmw-yC-7qh" name="title" keyPath="slice.mode" id="694-CW-uTz"/>
                                         </connections>
                                     </button>
                                     <button identifier="XRIT" verticalHuggingPriority="750" tag="3" translatesAutoresizingMaskIntoConstraints="NO" id="6Ea-s9-S9F">

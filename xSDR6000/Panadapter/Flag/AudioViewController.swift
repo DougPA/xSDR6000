@@ -67,7 +67,7 @@ final class AudioViewController: NSViewController {
   ///
   @IBAction func agcModeButton(_ sender: NSPopUpButton) {
   
-    _slice.mode = sender.titleOfSelectedItem!
+    _slice.agcMode = sender.titleOfSelectedItem!
   }
  /// Respond to one of the sliders
   ///

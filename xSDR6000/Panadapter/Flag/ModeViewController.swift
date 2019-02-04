@@ -191,7 +191,7 @@ final class ModeViewController       : NSViewController {
   private func addObservations() {
     
     _observations = [
-      _slice.observe(\.mode, options: [.initial, .new], changeHandler: changeHandler(_:_:)),
+      _slice.observe(\.mode, options: [.initial, .new], changeHandler: sliceChange(_:_:)),
     ]
   }
   /// Process observations
@@ -200,9 +200,7 @@ final class ModeViewController       : NSViewController {
   ///   - object:                   the object being observed
   ///   - change:                   the change
   ///
-  private func changeHandler(_ object: Any, _ change: Any) {
-    
-    let slice = object as! xLib6000.Slice
+  private func sliceChange(_ slice: xLib6000.Slice, _ change: Any) {
     
     let filterTitles = filterStrings(for: slice.mode)
 
