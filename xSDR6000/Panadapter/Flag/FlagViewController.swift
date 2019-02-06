@@ -27,6 +27,7 @@ final class FlagViewController       : NSViewController, NSTextFieldDelegate {
   // ----------------------------------------------------------------------------
   // MARK: - Internal properties
 
+  var flagTopConstraint                     : NSLayoutConstraint?
   var flagHeightConstraint                  : NSLayoutConstraint?
   var flagWidthConstraint                   : NSLayoutConstraint?
   var flagXPositionConstraint               : NSLayoutConstraint?
@@ -125,41 +126,40 @@ final class FlagViewController       : NSViewController, NSTextFieldDelegate {
   ///
   /// - Parameters:
   ///   - flagVc:                 a FlagViewController
-  ///   - view:                   the parent View
+  ///   - parent:                 the parent View
   ///   - flagPosition:           the Flag's x-position
   ///   - flagHeight:             the Flag's height
   ///   - flagWidth:              the Flag's width
   ///
-  class func addFlag(_ flagVc: FlagViewController, to view: NSView, flagPosition: CGFloat, flagHeight: CGFloat, flagWidth: CGFloat) {
+  class func addFlag(_ flagVc: FlagViewController, to parent: NSView, flagPosition: CGFloat, flagHeight: CGFloat, flagWidth: CGFloat) {
     
-    // add the views
-    view.addSubview(flagVc.view)
-    view.addSubview(flagVc.controlsVc!.view)
+    // add the Flag & Controls views
+    parent.addSubview(flagVc.view)
+    parent.addSubview(flagVc.controlsVc!.view)
         
-    // Flag View constraints: height, width & top of the Flag (constants)
+    // Flag View constraints: height, width & top of the Flag
     flagVc.flagHeightConstraint = flagVc.view.heightAnchor.constraint(equalToConstant: flagHeight)
     flagVc.flagWidthConstraint = flagVc.view.widthAnchor.constraint(equalToConstant: flagWidth)
-    let top = flagVc.view.topAnchor.constraint(equalTo: view.topAnchor)
+    flagVc.flagTopConstraint = flagVc.view.topAnchor.constraint(equalTo: parent.topAnchor)
     
     // Flag View constraints: position (will be changed as Flag moves)
-    flagVc.flagXPositionConstraint = flagVc.view.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: flagPosition)
+    flagVc.flagXPositionConstraint = flagVc.view.leadingAnchor.constraint(equalTo: parent.leadingAnchor, constant: flagPosition)
     
-    // activate Flag constraints
-    let constraints = [flagVc.flagHeightConstraint!, flagVc.flagWidthConstraint!, flagVc.flagXPositionConstraint!, top]
-    NSLayoutConstraint.activate(constraints)
+    // activate Flag View constraints
+    NSLayoutConstraint.activate([flagVc.flagHeightConstraint!,
+                                 flagVc.flagWidthConstraint!,
+                                 flagVc.flagXPositionConstraint!,
+                                 flagVc.flagTopConstraint!])
     
-    // Controls View constraints: height, leading, trailing & top of the Controls (constants)
-    flagVc.controlsHeightConstraint = flagVc.controlsVc!.view.heightAnchor.constraint(equalToConstant: ControlsViewController.kControlsHeight)
-    let leadingConstraint = flagVc.controlsVc!.view.leadingAnchor.constraint(equalTo: flagVc.view.leadingAnchor)
-    let trailingConstraint = flagVc.controlsVc!.view.trailingAnchor.constraint(equalTo: flagVc.view.trailingAnchor)
-    let topConstraint = flagVc.controlsVc!.view.topAnchor.constraint(equalTo: flagVc.view.bottomAnchor)
-    let heightConstraint = flagVc.controlsVc!.view.heightAnchor.constraint(equalToConstant: FlagViewController.kLargeFlagHeight)
-//    let widthConstraint = flagVc.controlsVc!.view.widthAnchor.constraint(equalToConstant: FlagViewController.kLargeFlagWidth)
+    // Controls View constraints: leading, trailing & top of the Controls
+    flagVc.controlsVc!.leadingConstraint = flagVc.controlsVc!.view.leadingAnchor.constraint(equalTo: flagVc.view.leadingAnchor)
+    flagVc.controlsVc!.trailingConstraint = flagVc.controlsVc!.view.trailingAnchor.constraint(equalTo: flagVc.view.trailingAnchor)
+    flagVc.controlsVc!.topConstraint = flagVc.controlsVc!.view.topAnchor.constraint(equalTo: flagVc.view.bottomAnchor)
     
-    // activate Controls constraints
-//    let controlsConstraints: [NSLayoutConstraint] = [flagVc.controlsHeightConstraint!, leadingConstraint, trailingConstraint, topConstraint, heightConstraint, widthConstraint]
-    let controlsConstraints: [NSLayoutConstraint] = [flagVc.controlsHeightConstraint!, leadingConstraint, trailingConstraint, topConstraint, heightConstraint]
-    NSLayoutConstraint.activate(controlsConstraints)
+    // activate Controls View constraints
+    NSLayoutConstraint.activate([flagVc.controlsVc!.leadingConstraint!,
+                                 flagVc.controlsVc!.trailingConstraint!,
+                                 flagVc.controlsVc!.topConstraint!])
   }
   
   // ----------------------------------------------------------------------------
@@ -382,11 +382,11 @@ final class FlagViewController       : NSViewController, NSTextFieldDelegate {
 
       // select the desired tab
       controlsVc?.selectedTabViewItemIndex = sender.tag
-      
+
+      if _vc is SideViewController { (_vc as! SideViewController).setRxHeight(2 * FlagViewController.kLargeFlagHeight) }
+
       // unhide the controls
       controlsVc!.view.isHidden = false
-    
-      if _vc is SideViewController { (_vc as! SideViewController).setRxHeight(2 * FlagViewController.kLargeFlagHeight) }
       
     } else {
       

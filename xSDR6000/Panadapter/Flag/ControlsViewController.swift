@@ -17,6 +17,13 @@ final class ControlsViewController: NSTabViewController {
 
   static let kControlsHeight                : CGFloat = 90  
   static let kBackgroundColor               = NSColor.black.withAlphaComponent(0.3).cgColor
+  
+  // ----------------------------------------------------------------------------
+  // MARK: - Internal properties
+  
+  var leadingConstraint                     : NSLayoutConstraint?
+  var trailingConstraint                    : NSLayoutConstraint?
+  var topConstraint                         : NSLayoutConstraint?
 
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
@@ -48,10 +55,7 @@ final class ControlsViewController: NSTabViewController {
   override func tabView(_ tabView: NSTabView, willSelect tabViewItem: NSTabViewItem?) {
     
     // give it a reference to the Slice
-    tabViewItem?.viewController?.representedObject = _slice
-    
-//    // set Background color of the TabViewItem view
-//    tabViewItem?.view?.layer?.backgroundColor = NSColor(red: 0.3, green: 0.3, blue: 0.3, alpha: 0.9).cgColor
+    tabViewItem?.viewController?.representedObject = _slice    
   }
 
   // ----------------------------------------------------------------------------
@@ -60,11 +64,10 @@ final class ControlsViewController: NSTabViewController {
   /// Configure needed parameters
   ///
   /// - Parameters:
-  ///   - panadapter:               a Panadapter reference
+  ///   - slice:                    a Slice reference
   ///   - slice:                    a Slice reference
   ///
   func configure(slice: xLib6000.Slice?) {
-//    self.panadapter = panadapter
     _slice = slice!
     
     tabViewItems[0].viewController!.representedObject = _slice
