@@ -140,7 +140,7 @@ final class SideViewController              : NSViewController {
                                to: _rxContainer,
                                flagPosition: 0,
                                flagHeight: FlagViewController.kLargeFlagHeight,
-                               flagWidth: FlagViewController.kLargeFlagWidth)
+                               flagWidth: FlagViewController.kLargeFlagWidth + 36)
     
     // if selected, make it visible (i.e. height > 0)
     _rxContainerHeight.constant = (Defaults[.sideRxOpen] ? kRxHeightOpen : kHeightClosed)
