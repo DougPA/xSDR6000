@@ -123,8 +123,10 @@ final class PanafallViewController          : NSSplitViewController, NSGestureRe
         if theEvent.modifierFlags.contains(.shift) {
           // step value when the Shift key is down
           step /= 10
+        } else if theEvent.modifierFlags.contains(.option) {
+          // step value when the Option key is down
+          step /= 100
         }
-        
         var incr = 0
         // is scrolling "natural" or "classic" (as set in macOS System Preferences)
         if theEvent.isDirectionInvertedFromDevice {
@@ -277,9 +279,25 @@ final class PanafallViewController          : NSSplitViewController, NSGestureRe
   private func adjustSliceFrequency(_ slice: xLib6000.Slice, incr: Int) {
     var isTooClose = false
 
-    // adjust the slice frequency
-    slice.frequency += incr
+    // is the existing frequency a multiple of the incr?
+    if slice.frequency % incr == 0 {
+      // YES, adjust the slice frequency by the incr value
+      slice.frequency += incr
 
+    } else {
+      // NO, adjust to the nearest multiple of the incr
+      var normalizedFreq = Double(slice.frequency) / Double(incr)
+      if incr > 0 {
+        // moving higher, adjust the slice frequency
+        normalizedFreq.round(.toNearestOrAwayFromZero)
+        
+      } else {
+        // moving lower, adjust the slice frequency
+        normalizedFreq.round(.towardZero)
+      }
+      slice.frequency = Int(normalizedFreq * Double(incr))
+    }
+    // decide whether to move the panadapter center
     let center = ((slice.frequency + slice.filterHigh) + (slice.frequency + slice.filterLow))/2
     // moving which way?
     if incr > 0 {
@@ -290,10 +308,8 @@ final class PanafallViewController          : NSSplitViewController, NSGestureRe
       // DOWN, too close to the low end?
       isTooClose = center + incr < _start + Int(PanafallViewController.kEdgeTolerance * CGFloat(_bandwidth))
     }
-
     // is the new freq too close to an edge?
     if isTooClose  {
-
       // YES, adjust the panafall center frequency (scroll the Panafall)
       _panadapter!.center += incr
 
