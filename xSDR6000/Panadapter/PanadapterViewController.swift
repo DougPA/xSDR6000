@@ -500,9 +500,9 @@ final class PanadapterViewController        : NSViewController, NSGestureRecogni
   ///   - object:                       the object holding the properties
   ///   - change:                       the change
   ///
-  private func defaultsObserver(_ object: UserDefaults, _ change: Any) {
+  private func defaultsObserver(_ defaults: UserDefaults, _ change: Any) {
 
-    _panadapterRenderer.updateColor(spectrumColor: Defaults[.spectrum], fillLevel: Defaults[.spectrumFillLevel], fillColor: Defaults[.spectrum])
+    _panadapterRenderer.updateColor(spectrumColor: defaults[.spectrum], fillLevel: defaults[.spectrumFillLevel], fillColor: defaults[.spectrum])
 
     // Panadapter background color
     _panadapterView.clearColor = Defaults[.spectrumBackground].metalClearColor
