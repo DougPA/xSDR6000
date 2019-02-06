@@ -828,7 +828,7 @@
                                     <nil key="toolTip"/>
                                     <size key="minSize" width="47" height="25"/>
                                     <size key="maxSize" width="80" height="32"/>
-                                    <button key="view" verticalHuggingPriority="750" tag="8" id="Jch-IC-yYb">
+                                    <button key="view" toolTip="Rx Audio to Mac" verticalHuggingPriority="750" tag="8" id="Jch-IC-yYb">
                                         <rect key="frame" x="0.0" y="14" width="80" height="28"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="roundTextured" title="Mac Audio" bezelStyle="texturedRounded" alignment="center" lineBreakMode="truncatingTail" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="MyA-4v-4Q1">
@@ -850,7 +850,7 @@
                                         <rect key="frame" x="0.0" y="14" width="104" height="19"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <subviews>
-                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ss6-7M-DK0">
+                                            <textField toolTip="Voltage" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ss6-7M-DK0">
                                                 <rect key="frame" x="0.0" y="1" width="52" height="19"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" borderStyle="border" alignment="center" drawsBackground="YES" id="uEU-Zi-vP8">
@@ -859,7 +859,7 @@
                                                     <color key="backgroundColor" name="controlHighlightColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
                                             </textField>
-                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8dx-Bg-ocC">
+                                            <textField toolTip="PA Temp" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8dx-Bg-ocC">
                                                 <rect key="frame" x="50" y="1" width="54" height="19"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" borderStyle="border" alignment="center" drawsBackground="YES" id="piH-Kq-rNe">
@@ -879,7 +879,7 @@
                                     <nil key="toolTip"/>
                                     <size key="minSize" width="21" height="21"/>
                                     <size key="maxSize" width="21" height="21"/>
-                                    <button key="view" verticalHuggingPriority="750" tag="3" id="Bvj-ys-C6i">
+                                    <button key="view" toolTip="Mute Lineout" verticalHuggingPriority="750" tag="3" id="Bvj-ys-C6i">
                                         <rect key="frame" x="28" y="14" width="21" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSStatusAvailable" imagePosition="overlaps" alignment="center" alternateImage="NSStatusUnavailable" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" id="66T-fb-IQ2">
@@ -895,7 +895,7 @@
                                     <nil key="toolTip"/>
                                     <size key="minSize" width="21" height="21"/>
                                     <size key="maxSize" width="21" height="21"/>
-                                    <button key="view" verticalHuggingPriority="750" tag="5" id="UGS-Cq-w2K">
+                                    <button key="view" toolTip="Mute Headphones" verticalHuggingPriority="750" tag="5" id="UGS-Cq-w2K">
                                         <rect key="frame" x="38" y="14" width="21" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSStatusAvailable" imagePosition="overlaps" alignment="center" alternateImage="NSStatusUnavailable" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" id="QVM-6g-KBJ">
@@ -907,7 +907,7 @@
                                         </connections>
                                     </button>
                                 </toolbarItem>
-                                <toolbarItem implicitItemIdentifier="DEEDC29B-D1E9-4A60-BBE3-577FC2873C04" explicitItemIdentifier="fdxEnabled" label="FDX On/Off" paletteLabel="FDX On/Off" toolTip="Markers On/Off" tag="2" id="bSr-nw-2sZ">
+                                <toolbarItem implicitItemIdentifier="DEEDC29B-D1E9-4A60-BBE3-577FC2873C04" explicitItemIdentifier="fdxEnabled" label="FDX On/Off" paletteLabel="FDX On/Off" toolTip="FDX On/Off" tag="2" id="bSr-nw-2sZ">
                                     <size key="minSize" width="47" height="25"/>
                                     <size key="maxSize" width="62" height="32"/>
                                     <button key="view" verticalHuggingPriority="750" tag="2" id="lSI-pj-GOM">

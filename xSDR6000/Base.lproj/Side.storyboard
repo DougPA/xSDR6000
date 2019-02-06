@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="sri-rJ-Lo4">
     <dependencies>
+        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -1485,7 +1486,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="311" height="1050"/>
                                 <clipView key="contentView" identifier="Clip view" id="k0h-jX-gWp">
                                     <rect key="frame" x="0.0" y="0.0" width="311" height="1050"/>
-                                    <autoresizingMask key="autoresizingMask"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <view identifier="Inside view" translatesAutoresizingMaskIntoConstraints="NO" id="WdK-Jx-DB2" userLabel="Inside View">
                                             <rect key="frame" x="0.0" y="0.0" width="311" height="1050"/>
@@ -1531,9 +1532,9 @@
                                                     </connections>
                                                 </containerView>
                                                 <containerView identifier="Rx Container View" wantsLayer="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wNm-qC-krW" userLabel="Rx View container">
-                                                    <rect key="frame" x="18" y="870" width="275" height="180"/>
+                                                    <rect key="frame" x="0.0" y="870" width="311" height="180"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="275" id="dxo-0a-apt"/>
+                                                        <constraint firstAttribute="width" constant="311" id="dxo-0a-apt"/>
                                                         <constraint firstAttribute="height" constant="180" id="tAj-GH-gY5"/>
                                                     </constraints>
                                                 </containerView>
@@ -1552,10 +1553,10 @@
                                                 <constraint firstAttribute="trailing" secondItem="mKQ-NT-mCo" secondAttribute="trailing" id="hth-cF-zEt"/>
                                                 <constraint firstItem="eBz-RL-KvA" firstAttribute="top" secondItem="eED-TT-H8j" secondAttribute="bottom" id="iQS-Lb-t8q"/>
                                                 <constraint firstAttribute="trailing" secondItem="eED-TT-H8j" secondAttribute="trailing" id="m0B-K4-nv4"/>
-                                                <constraint firstAttribute="trailing" secondItem="wNm-qC-krW" secondAttribute="trailing" constant="18" id="mbz-uz-zLT"/>
+                                                <constraint firstAttribute="trailing" secondItem="wNm-qC-krW" secondAttribute="trailing" id="mbz-uz-zLT"/>
                                                 <constraint firstItem="eED-TT-H8j" firstAttribute="leading" secondItem="WdK-Jx-DB2" secondAttribute="leading" id="sU7-Wq-r9U"/>
                                                 <constraint firstAttribute="trailing" secondItem="eBz-RL-KvA" secondAttribute="trailing" id="sbW-I6-xNT"/>
-                                                <constraint firstItem="wNm-qC-krW" firstAttribute="leading" secondItem="WdK-Jx-DB2" secondAttribute="leading" constant="18" id="yyA-62-uvV"/>
+                                                <constraint firstItem="wNm-qC-krW" firstAttribute="leading" secondItem="WdK-Jx-DB2" secondAttribute="leading" id="yyA-62-uvV"/>
                                             </constraints>
                                         </view>
                                     </subviews>
