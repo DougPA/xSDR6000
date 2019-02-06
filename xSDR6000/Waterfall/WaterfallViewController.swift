@@ -202,6 +202,7 @@ final class WaterfallViewController               : NSViewController, NSGestureR
       _waterfall!.observe(\.blackLevel, options: [.initial, .new], changeHandler: waterfallObserverLevels),
       _waterfall!.observe(\.colorGain, options: [.initial, .new], changeHandler: waterfallObserverLevels),
       _waterfall!.observe(\.gradientIndex, options: [.initial, .new], changeHandler: waterfallObserverGradient),
+
       Defaults.observe(\.spectrumBackground, options: [.initial, .new], changeHandler: defaultsObserver)
     ]
   }
@@ -228,7 +229,7 @@ final class WaterfallViewController               : NSViewController, NSGestureR
   private func panadapterUpdate(_ object: Panadapter, _ change: Any) {
 
       // update the Waterfall
-      self._waterfallRenderer.update()
+      _waterfallRenderer.update()
   }
   /// Respond to Panadapter observations
   ///
@@ -239,7 +240,7 @@ final class WaterfallViewController               : NSViewController, NSGestureR
   private func panadapterBandchange(_ object: Panadapter, _ change: Any) {
     
     // force the Waterfall to restart
-    self._waterfallRenderer.bandChange()
+    _waterfallRenderer.bandChange()
   }
   /// Respond to Waterfall observations
   ///
@@ -247,10 +248,10 @@ final class WaterfallViewController               : NSViewController, NSGestureR
   ///   - object:                       the object holding the properties
   ///   - change:                       the change
   ///
-  private func waterfallObserverLevels(_ object: Waterfall, _ change: Any) {
+  private func waterfallObserverLevels(_ waterfall: Waterfall, _ change: Any) {
 
       // update the levels
-      self._waterfallRenderer.updateConstants(autoBlack: self._waterfall!.autoBlackEnabled, blackLevel: self._waterfall!.blackLevel, colorGain: self._waterfall!.colorGain)
+      _waterfallRenderer.updateConstants(autoBlack: waterfall.autoBlackEnabled, blackLevel: waterfall.blackLevel, colorGain: waterfall.colorGain)
     }
   /// Respond to Waterfall observations
   ///
@@ -258,10 +259,10 @@ final class WaterfallViewController               : NSViewController, NSGestureR
   ///   - object:                       the object holding the properties
   ///   - change:                       the change
   ///
-  private func waterfallObserverGradient(_ object: Waterfall, _ change: Any) {
+  private func waterfallObserverGradient(_ waterfall: Waterfall, _ change: Any) {
 
       // reload the Gradient
-      self._waterfallRenderer.setGradient(self.loadGradient(index: self._waterfall!.gradientIndex) )
+      _waterfallRenderer.setGradient(loadGradient(index: waterfall.gradientIndex) )
   }
   /// Respond to Defaults observations
   ///
@@ -269,11 +270,11 @@ final class WaterfallViewController               : NSViewController, NSGestureR
   ///   - object:                       the object holding the properties
   ///   - change:                       the change
   ///
-  private func defaultsObserver(_ object: UserDefaults, _ change: Any) {
+  private func defaultsObserver(_ defaults: UserDefaults, _ change: Any) {
 
       // reset the spectrum background color
-      let color = Defaults[.spectrumBackground]
-      self._waterfallView.clearColor = MTLClearColor(red: Double(color.redComponent),
+      let color = defaults[.spectrumBackground]
+      _waterfallView.clearColor = MTLClearColor(red: Double(color.redComponent),
                                                      green: Double(color.greenComponent),
                                                      blue: Double(color.blueComponent),
                                                      alpha: Double(color.alphaComponent) )
