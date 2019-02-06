@@ -1,5 +1,11 @@
 xSDR6000 Change Log
 
+v2.0.10 - 06-Feb-2019
+
+Made click-tune and scrollwheel always go to nearest step value
+Added Shift & Option modifier keys for step/10 and step/100 tuning
+Corrections to Flag & FlagControls autolayout
+
 v2.0.9 - 03-Feb-2019
 
 Corrected agcMode control that caused a crash
