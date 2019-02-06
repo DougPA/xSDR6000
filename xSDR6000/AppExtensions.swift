@@ -598,6 +598,8 @@ func defaults(from file: String) {
 // ----------------------------------------------------------------------------
 // MARK: - DEBUG FUNCTIONS
 
+
+#if DEBUG
 /// Print a Responder Chain on the console
 ///
 /// - Parameter view:               a view at the root of the chain
@@ -631,7 +633,7 @@ func responderChain(for rootView: NSView) {
 ///
 func viewHierarchy(for rootView: NSView) {
   var currentView :NSView?
-
+  
   DispatchQueue.main.async {
     currentView = rootView as NSView
     
@@ -650,3 +652,18 @@ func viewHierarchy(for rootView: NSView) {
     Swift.print("")
   }
 }
+/// Print a list of a view's constraints
+///
+/// - Parameters:
+///   - name:                     the name of the view
+///   - view:                     the view
+///
+func listConstraints(for name: String, view: NSView) {
+  
+  Swift.print("\(name), frame = \(view.frame), isHidden = \(view.isHidden)")
+  for constraint in view.constraints {
+    Swift.print("\t\(constraint)")
+  }
+  Swift.print("")
+}
+#endif
