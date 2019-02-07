@@ -130,9 +130,11 @@
                                         <buttonCell key="cell" type="smallSquare" title="+" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="X9n-I1-EBD">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="systemBlack" size="18"/>
+                                            <string key="keyEquivalent">=</string>
+                                            <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                                         </buttonCell>
                                         <connections>
-                                            <action selector="zoomPlus:" target="euw-tc-dP2" id="L39-AQ-u1T"/>
+                                            <action selector="zoomPlus:" target="euw-tc-dP2" id="tOY-w6-4iz"/>
                                         </connections>
                                     </button>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="5gd-Hj-A35">
@@ -140,9 +142,11 @@
                                         <buttonCell key="cell" type="smallSquare" title="-" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="IMZ-zB-9lG">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="systemBlack" size="18"/>
+                                            <string key="keyEquivalent">-</string>
+                                            <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                                         </buttonCell>
                                         <connections>
-                                            <action selector="zoomMinus:" target="euw-tc-dP2" id="N1k-aX-hrl"/>
+                                            <action selector="zoomMinus:" target="euw-tc-dP2" id="uGp-D8-vMt"/>
                                         </connections>
                                     </button>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="z3L-Qa-zLq">
@@ -227,7 +231,7 @@
                 </splitViewController>
                 <customObject id="Aag-md-jQQ" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="848" y="754"/>
+            <point key="canvasLocation" x="898" y="751"/>
         </scene>
         <!--PanadapterVC-->
         <scene sceneID="Xfj-eF-lNV">
@@ -270,7 +274,7 @@
                     </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="588.5" y="1155"/>
+            <point key="canvasLocation" x="648" y="1155"/>
         </scene>
         <!--Waterfall VC-->
         <scene sceneID="2cg-6a-4c4">
@@ -307,7 +311,7 @@
                 </viewController>
                 <customObject id="SdX-9Q-Jea" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1098" y="1155"/>
+            <point key="canvasLocation" x="1142" y="1155"/>
         </scene>
         <!--DAX-->
         <scene sceneID="rq0-JD-FNj">
@@ -350,7 +354,7 @@
                 <customObject id="ou9-Sf-u0B" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
                 <userDefaultsController id="BPQ-x3-geH"/>
             </objects>
-            <point key="canvasLocation" x="1496" y="909"/>
+            <point key="canvasLocation" x="1818" y="260"/>
         </scene>
         <!--Antenna-->
         <scene sceneID="TrX-ib-eyb">
@@ -444,7 +448,7 @@
                 </viewController>
                 <customObject id="51z-iy-sxc" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1474" y="215"/>
+            <point key="canvasLocation" x="1796" y="102"/>
         </scene>
         <!--Band-->
         <scene sceneID="Ndh-9L-ZDw">
@@ -737,7 +741,7 @@
                 </viewController>
                 <customObject id="4uy-Eh-Vd0" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1469" y="-223.5"/>
+            <point key="canvasLocation" x="1469" y="-71"/>
         </scene>
         <!--Display-->
         <scene sceneID="hjl-De-oN3">
@@ -1024,7 +1028,7 @@
                 <customObject id="TnM-x8-VlE" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
                 <userDefaultsController representsSharedInstance="YES" id="2bC-R8-ESr"/>
             </objects>
-            <point key="canvasLocation" x="1508.5" y="524"/>
+            <point key="canvasLocation" x="1509" y="459"/>
         </scene>
     </scenes>
     <resources>

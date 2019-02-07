@@ -140,7 +140,7 @@ final class PanafallButtonViewController    : NSViewController {
   ///
   /// - Parameter sender:           the sender
   ///
-  @IBAction func zoomPlus(_ sender: NSButton) {
+  @IBAction func zoomPlus(_ sender: Any) {
     
     // are we near the minimum?
     if _bandwidth / 2 > panadapter!.minBw {
@@ -158,7 +158,7 @@ final class PanafallButtonViewController    : NSViewController {
   ///
   /// - Parameter sender:           the sender
   ///
-  @IBAction func zoomMinus(_ sender: NSButton) {
+  @IBAction func zoomMinus(_ sender: Any) {
     // are we near the maximum?
     if _bandwidth * 2 > panadapter!.maxBw {
       

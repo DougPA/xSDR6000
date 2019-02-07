@@ -112,6 +112,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     _radioPickerStoryboard = NSStoryboard(name: kRadioPickerStoryboardName, bundle: nil)
     _sideStoryboard = NSStoryboard(name: kSideStoryboardName, bundle: nil)
 
+    //
     splitViewItems[1].isCollapsed = true
     
     // add notification subscriptions
@@ -140,17 +141,29 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
 
   override func validateUserInterfaceItem(_ item: NSValidatedUserInterfaceItem) -> Bool {
     
+    // activate the menu selections
     switch item.action {
     case #selector(openProfiles(_:)):
+      // xSDR6000->Profiles
       return _api.activeRadio != nil
     
     case #selector(openPreferences(_:)):
+      // xSDR6000->Preferences
       return _api.activeRadio != nil
     
     case #selector(sideButton(_:)):
+      // Side button
       return _api.activeRadio != nil
 
-    default:
+    case #selector(tnfButton(_:)):
+      // Side button
+      return _api.activeRadio != nil
+      
+    case #selector(markerButton(_:)):
+      // Side button
+      return _api.activeRadio != nil
+      
+   default:
       return true
     }
   }
@@ -253,20 +266,30 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   ///
   /// - Parameter sender:         the Button
   ///
-  @IBAction func markersButton(_ sender: NSButton) {
+  @IBAction func markerButton(_ sender: Any) {
     
-    // enable / disable Markers
-    Defaults[.markersEnabled] = sender.boolState
+    if let button = sender as? NSButton {
+      // enable / disable Markers
+      Defaults[.markersEnabled] = button.boolState
+    
+    } else if let _ = sender as? NSMenuItem {
+      Defaults[.markersEnabled].toggle()
+    }
   }
   /// Respond to the Tnf button
   ///
   /// - Parameter sender:         the Button
   ///
-  @IBAction func tnfButton(_ sender: NSButton) {
+  @IBAction func tnfButton(_ sender: Any) {
     
-    // enable / disable Tnf's
-    _api.radio?.tnfsEnabled = sender.boolState
-    Defaults[.tnfsEnabled] = sender.boolState
+    if let button = sender as? NSButton {
+      // enable / disable Tnf's
+      _api.radio!.tnfsEnabled = button.boolState
+    
+    } else if let _ = sender as? NSMenuItem {
+       _api.radio?.tnfsEnabled.toggle()
+    }
+    Defaults[.tnfsEnabled] = _api.radio!.tnfsEnabled
   }
   /// Respond to the Full Duplex button
   ///
