@@ -1,5 +1,12 @@
 xSDR6000 Change Log
 
+v2.0.11 - 07-Feb-2019
+
+Corrected click & drag handling in Flag & Panadapter
+Changed step tuning to make shift = 100, option = 10 & shift + option = 1
+Implemented SPLIT
+In XRIT Flag OPTION key toggles between "Tuning Step" and "Split Step" entry
+
 v2.0.10 - 06-Feb-2019
 
 Made click-tune and scrollwheel always go to nearest step value

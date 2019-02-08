@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import SwiftyUserDefaults
 import xLib6000
 
 final class XritViewController: NSViewController {
@@ -26,11 +27,14 @@ final class XritViewController: NSViewController {
   
   @IBOutlet private weak var _stepTextField : NSTextField!
   @IBOutlet private weak var _stepStepper   : NSStepper!
+ 
+  @IBOutlet private weak var _stepLabel     : NSTextField!
   
   private var _slice                        : xLib6000.Slice {
     return representedObject as! xLib6000.Slice }
   
   private var _observations                 = [NSKeyValueObservation]()
+  private var _splitStepMode                = false
   
   // ----------------------------------------------------------------------------
   // MARK: - Overridden methods
@@ -39,6 +43,27 @@ final class XritViewController: NSViewController {
     super.viewDidLoad()
     
     view.translatesAutoresizingMaskIntoConstraints = false
+    
+    NSEvent.addLocalMonitorForEvents(matching: .flagsChanged) {
+      
+      if $0.modifierFlags.contains(NSEvent.ModifierFlags.option) {
+        self._splitStepMode.toggle()
+
+        DispatchQueue.main.async {
+          if self._splitStepMode {
+            self._stepLabel.stringValue = "Split step"
+            self._stepTextField.integerValue = Defaults[.splitDistance]
+            self._stepStepper.integerValue = Defaults[.splitDistance]
+          
+          } else {
+            self._stepLabel.stringValue = "Tuning step"
+            self._stepTextField.integerValue = self._slice.step
+            self._stepStepper.integerValue = self._slice.step
+          }
+        }
+      }
+      return $0
+    }
     
     // start observing
     addObservations()
@@ -84,7 +109,11 @@ final class XritViewController: NSViewController {
     case "xitStepper":
       _slice.xitOffset = sender.integerValue
     case "stepStepper":
-      _slice.step = sender.integerValue
+      if _splitStepMode {
+        Defaults[.splitDistance] = sender.integerValue
+      } else {
+        _slice.step = sender.integerValue
+      }
     default:
       fatalError()
     }
@@ -101,7 +130,11 @@ final class XritViewController: NSViewController {
     case "xitOffset":
       _slice.ritOffset = sender.integerValue
     case "step":
-      _slice.step = sender.integerValue
+      if _splitStepMode {
+        Defaults[.splitDistance] = sender.integerValue
+      } else {
+        _slice.step = sender.integerValue
+      }
     default:
       fatalError()
     }
@@ -119,7 +152,9 @@ final class XritViewController: NSViewController {
       _slice.observe(\.xitEnabled, options: [.initial, .new], changeHandler: changeHandler(_:_:)),
       _slice.observe(\.ritOffset, options: [.initial, .new], changeHandler: changeHandler(_:_:)),
       _slice.observe(\.xitOffset, options: [.initial, .new], changeHandler: changeHandler(_:_:)),
-      _slice.observe(\.step, options: [.initial, .new], changeHandler: changeHandler(_:_:)),
+
+      _slice.observe(\.step, options: [.initial, .new], changeHandler: stepHandler(_:_:)),
+      Defaults.observe(\.splitDistance, options: [.initial, .new], changeHandler: stepHandler(_:_:))
     ]
   }
   /// Process observations
@@ -142,6 +177,28 @@ final class XritViewController: NSViewController {
 
       self?._stepTextField.integerValue = slice.step
       self?._stepStepper.integerValue = slice.step
+    }
+  }
+  /// Process observations
+  ///
+  /// - Parameters:
+  ///   - defaults:                 the Defaults being observed
+  ///   - change:                   the change
+  ///
+  private func stepHandler(_ object: Any, _ change: Any) {
+    var value = 0
+
+    Swift.print("\(object)")
+
+    if let slice = object as? xLib6000.Slice {
+      value = slice.step
+    
+    } else if let defaults = object as? UserDefaults {
+      value = defaults[.splitDistance]
+    }
+    DispatchQueue.main.async { [weak self] in
+
+      self?._stepTextField.integerValue = value
     }
   }
 }

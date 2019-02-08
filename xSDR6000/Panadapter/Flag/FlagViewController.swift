@@ -7,13 +7,14 @@
 //
 
 import Cocoa
+import SwiftyUserDefaults
 import xLib6000
 
 // --------------------------------------------------------------------------------
 // MARK: - Flag View Controller class implementation
 // --------------------------------------------------------------------------------
 
-final class FlagViewController       : NSViewController, NSTextFieldDelegate {
+final class FlagViewController       : NSViewController, NSTextFieldDelegate, NSGestureRecognizerDelegate {
   
   static let kSliceLetters : [String]       = ["A", "B", "C", "D", "E", "F", "G", "H"]
   static let kFlagOffset                    : CGFloat = 7.5
@@ -35,6 +36,11 @@ final class FlagViewController       : NSViewController, NSTextFieldDelegate {
   var smallFlagDisplayed                    = false
   var isOnLeft                              = true
   var controlsVc                            : ControlsViewController?
+  var splitId                               = ""
+  var isaSplit                              = false {
+    didSet {DispatchQueue.main.async { self._splitButton.isEnabled = !self.isaSplit }}
+  }
+
   @objc dynamic var slice                   : xLib6000.Slice?
 
   // ----------------------------------------------------------------------------
@@ -50,8 +56,7 @@ final class FlagViewController       : NSViewController, NSTextFieldDelegate {
   @IBOutlet private weak var _nrButton      : NSButton!
   @IBOutlet private weak var _anfButton     : NSButton!
   @IBOutlet private weak var _qskButton     : NSButton!
-  
-  
+  @IBOutlet private weak var _splitButton   : NSButton!
   
   @IBOutlet private var _frequencyField     : NSTextField!
   @IBOutlet private var _sMeter             : LevelIndicator!
@@ -75,12 +80,10 @@ final class FlagViewController       : NSViewController, NSTextFieldDelegate {
   
   private var _observations                 = [NSKeyValueObservation]()
   
-  private var _doubleClick                  : NSClickGestureRecognizer!
   private var _previousFrequency            = 0
   private var _beginEditing                 = false
   private var _darkMode                     = false
 
-  private let kLeftButton                   = 0x01                          // masks for Gesture Recognizers
   private let kFlagPixelOffset              : CGFloat = 15.0/2.0
 
   private let kSplitCaption                 = "SPLIT"
@@ -92,6 +95,8 @@ final class FlagViewController       : NSViewController, NSTextFieldDelegate {
   private let kTxCaption                    = "TX"
   private let kTxOnAttr                     = [NSAttributedString.Key.foregroundColor : NSColor.systemRed]
   private let kTxOffAttr                    = [NSAttributedString.Key.foregroundColor : NSColor.lightGray]
+  
+  private let kSplitDistance                = 5_000
   
   // ----------------------------------------------------------------------------
   // MARK: - Class methods
@@ -174,12 +179,6 @@ final class FlagViewController       : NSViewController, NSTextFieldDelegate {
     _rxAntPopUp.addItems(withTitles: slice!.rxAntList)
     _txAntPopUp.addItems(withTitles: slice!.txAntList)
     
-    // setup Left Double Click recognizer
-    _doubleClick = NSClickGestureRecognizer(target: self, action: #selector(leftDoubleClick(_:)))
-    _doubleClick.buttonMask = kLeftButton
-    _doubleClick.numberOfClicksRequired = 2
-    _frequencyField.addGestureRecognizer(_doubleClick)
-
     _frequencyField.delegate = self
     
     _sMeter.legends = [            // to skip a legend pass "" as the format
@@ -349,14 +348,21 @@ final class FlagViewController       : NSViewController, NSTextFieldDelegate {
 
     slice?.txEnabled = !sender.boolState
   }
-  /// DescriptionRespond to the SPLIT button
+  /// Respond to the SPLIT button
   ///
   /// - Parameter sender:             the button
   ///
   @IBAction func splitButton(_ sender: NSButton) {
     sender.attributedTitle = NSAttributedString(string: kSplitCaption, attributes: sender.boolState ? kSplitOnAttr : kSplitOffAttr)
+
+    if sender.boolState {
+      // Create a split
+      Slice.create(panadapter: _panadapter!, frequency: slice!.frequency + Defaults[.splitDistance], callback: splitCreated)
     
-    notImplemented(sender.title).beginSheetModal(for: NSApp.mainWindow!, completionHandler: { response in } )
+    } else {
+      // Remove the Split
+      Slice.removeSlice(id: splitId)
+    }
   }
   /// Respond to the Close button
   ///
@@ -434,6 +440,21 @@ final class FlagViewController       : NSViewController, NSTextFieldDelegate {
   // ----------------------------------------------------------------------------
   // MARK: - Private methods
   
+  /// Receive the Reply to a Split Create action
+  ///
+  /// - Parameters:
+  ///   - command:                    the command sent
+  ///   - seqNum:                     it's sequence number
+  ///   - responseValue:              the response
+  ///   - reply:                      the reply (if any)
+  ///
+  private func splitCreated(_ command: String, _ seqNum: String, _ responseValue: String, _ reply: String) {
+    
+    // if success, save the Split's Id
+    if responseValue == Api.kNoError {
+      splitId = reply
+    }
+  }
   /// Find the S-Meter for this Slice (if any)
   ///
   private func findSMeter(for slice: xLib6000.Slice) {
@@ -441,15 +462,6 @@ final class FlagViewController       : NSViewController, NSTextFieldDelegate {
     if let item = slice.meters.first(where: { $0.value.name == Api.MeterShortName.signalPassband.rawValue} ) {
       addMeterObservation( item.value)
     }
-  }
-  
-  /// Respond to Left Double Click gesture
-  ///
-  /// - Parameter gr: the GestureRecognizer
-  ///
-  @objc private func leftDoubleClick(_ gr: NSClickGestureRecognizer) {
-
-    _frequencyField.selectText(self)
   }
   /// Change a Slice frequency while maintaining its position in the Panadapter display
   ///

@@ -68,44 +68,6 @@ final class PanafallViewController          : NSSplitViewController, NSGestureRe
     // save the divider position
     splitView.autosaveName = "Panadapter \(_panadapter?.id.hex ?? "0x99999999")"
   }
-  /// Detect single left mouse button click
-  ///
-  /// - Parameter event:                the event
-  ///
-  override func mouseDown(with event: NSEvent) {
-    
-    if event.type == .leftMouseDown && event.clickCount == 1 {
-      
-      // get the coordinates and convert to this View
-      let location = event.locationInWindow
-      // calculate the frequency
-      let mouseFrequency = Int(location.x * _hzPerUnit) + _start
-      
-      // is the Frequency inside a Slice?
-      if let slice = xLib6000.Slice.find(with: _panadapter!.id, byFrequency: mouseFrequency, minWidth: Int( CGFloat(_bandwidth) * kSliceFindWidth )) {
-        
-        // YES, mouse is in a Slice, make it active
-        slice.active = true
-        
-      } else if let slice = Slice.findActive(with: _panadapter!.id) {
-        
-        // YES, force it to the nearest step value
-        let delta = (mouseFrequency % slice.step)
-        if delta >= slice.step / 2 {
-          
-          // move it to the step value above the click
-          slice.frequency = mouseFrequency + (slice.step - delta)
-          
-        } else {
-          
-          // move it to the step value below the click
-          slice.frequency = mouseFrequency - delta
-        }
-      }
-    }
-    // redraw the Slices
-    _panadapterViewController?.redrawSlices()
-  }
   /// Process scroll wheel events to change the Active Slice frequency
   ///
   /// - Parameter theEvent: a Scroll Wheel event
@@ -120,12 +82,15 @@ final class PanafallViewController          : NSSplitViewController, NSGestureRe
         
         // use the Slice's step value, unless the Shift key is down
         var step = slice.step
-        if theEvent.modifierFlags.contains(.shift) {
+        if theEvent.modifierFlags.contains(.shift) && !theEvent.modifierFlags.contains(.option) {
           // step value when the Shift key is down
-          step /= 10
-        } else if theEvent.modifierFlags.contains(.option) {
+          step = 100
+        } else if theEvent.modifierFlags.contains(.option) && !theEvent.modifierFlags.contains(.shift) {
           // step value when the Option key is down
-          step /= 100
+          step = 10
+        } else if theEvent.modifierFlags.contains(.option)  && theEvent.modifierFlags.contains(.shift) {
+          // step value when the Option key is down
+          step = 1
         }
         var incr = 0
         // is scrolling "natural" or "classic" (as set in macOS System Preferences)

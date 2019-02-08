@@ -57,6 +57,7 @@ extension DefaultsKeys {
   static let sidePcwOpen                  = DefaultsKey<Bool>("sidePcwOpen")
   static let sidePhneOpen                 = DefaultsKey<Bool>("sidePhneOpen")
   static let sideEqOpen                   = DefaultsKey<Bool>("sideEqOpen")
+  static let splitDistance                = DefaultsKey<Int>("splitDistance")
   static let supportingApps               = DefaultsKey<[Any]?>("supportingApps")
 
   
@@ -159,6 +160,10 @@ extension  UserDefaults {
   @objc dynamic var spectrumFillLevel : Int {
     get { return Defaults[.spectrumFillLevel] }
     set { Defaults[.spectrumFillLevel] = newValue } }
+  
+  @objc dynamic var splitDistance : Int {
+    get { return Defaults[.splitDistance] }
+    set { Defaults[.splitDistance] = newValue } }
   
   @objc dynamic var supportingApps : [Any]? {
     get { return Defaults[.supportingApps] }

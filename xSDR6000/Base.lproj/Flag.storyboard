@@ -405,6 +405,7 @@
                         <outlet property="_rxAntPopUp" destination="Zp6-Oe-dIV" id="DjF-eS-snY"/>
                         <outlet property="_sLevel" destination="FXy-WX-GDY" id="h46-eM-OCU"/>
                         <outlet property="_sMeter" destination="Kkb-rb-ggc" id="zgp-Ca-fgU"/>
+                        <outlet property="_splitButton" destination="WX7-HX-umE" id="WXo-OT-Pqi"/>
                         <outlet property="_txAntPopUp" destination="9Hl-BA-XFJ" id="3d2-Cq-82f"/>
                         <outlet property="_txButton" destination="f1H-1i-UGn" id="wuL-PN-lGd"/>
                         <outlet property="_xritButton" destination="6Ea-s9-S9F" id="Fo5-jc-9N5"/>
@@ -1309,7 +1310,7 @@
                                         <constraints>
                                             <constraint firstAttribute="width" constant="30" id="Iex-VW-Xsg"/>
                                         </constraints>
-                                        <stepperCell key="cell" continuous="YES" alignment="left" increment="10" minValue="-1000" maxValue="1000" id="k4m-RH-uwB"/>
+                                        <stepperCell key="cell" continuous="YES" alignment="left" increment="10" minValue="-50000" maxValue="50000" id="k4m-RH-uwB"/>
                                         <connections>
                                             <action selector="steppers:" target="pG7-fD-vJI" id="Syl-Rs-ktG"/>
                                         </connections>
@@ -1344,6 +1345,7 @@
                         <outlet property="_ritStepper" destination="bii-Xv-Dji" id="xrJ-Cx-sZg"/>
                         <outlet property="_ritTextField" destination="k8h-Pb-iPa" id="Va6-bQ-FFo"/>
                         <outlet property="_ritZeroButton" destination="d6a-mT-vca" id="fVB-6E-5P6"/>
+                        <outlet property="_stepLabel" destination="eIE-ep-Cig" id="QYV-Av-4Iq"/>
                         <outlet property="_stepStepper" destination="DZy-Ia-RTD" id="Rre-To-2nu"/>
                         <outlet property="_stepTextField" destination="Vmt-Es-bhC" id="j8T-cY-11N"/>
                         <outlet property="_xitButton" destination="azr-wr-eVx" id="RFg-rv-0L1"/>

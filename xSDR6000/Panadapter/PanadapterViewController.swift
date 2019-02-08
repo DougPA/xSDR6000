@@ -108,12 +108,14 @@ final class PanadapterViewController        : NSViewController, NSGestureRecogni
     // Click, LEFT in panadapter
     _clickLeft = NSClickGestureRecognizer(target: self, action: #selector(clickLeft(_:)))
     _clickLeft.buttonMask = kLeftButton
+    _clickLeft.numberOfClicksRequired = 1
     _clickLeft.delegate = self
-    _panadapterView.addGestureRecognizer(_clickLeft)
+    _dbLegendView.addGestureRecognizer(_clickLeft)
 
     // Click, RIGHT in panadapter
     _clickRight = NSClickGestureRecognizer(target: self, action: #selector(clickRight(_:)))
     _clickRight.buttonMask = kRightButton
+    _clickRight.numberOfClicksRequired = 1
     _clickRight.delegate = self
     _dbLegendView.addGestureRecognizer(_clickRight)
 
@@ -292,14 +294,15 @@ final class PanadapterViewController        : NSViewController, NSGestureRecogni
   func gestureRecognizer(_ gr: NSGestureRecognizer, shouldAttemptToRecognizeWith event: NSEvent) -> Bool {
 
     // is it a right click?
-    if gr.action == #selector(PanadapterViewController.clickRight(_:)) {
+    if gr.action == #selector(clickRight(_:)) {
 
-      // YES, if not over the legend, push it up the responder chain
-      return view.convert(event.locationInWindow, from: nil).x >= view.frame.width - kDbLegendWidth
+      // Right-Click, process it here if over the legend, otherwise push it up the responder chain
+      let processHere = view.convert(event.locationInWindow, from: nil).x >= view.frame.width - kDbLegendWidth
+      return processHere
 
     } else {
 
-      // NO, process it
+      // NOT Right-CLick, process it here
       return true
     }
   }
@@ -325,13 +328,31 @@ final class PanadapterViewController        : NSViewController, NSGestureRecogni
     // calculate the frequency
     let clickFrequency = (mouseLocation.x * _hzPerUnit) + CGFloat(_start)
 
-    // activate the Slice at the clickFrequency (if any)
-    if activateSlice(at: clickFrequency) {
+    // is there a Slice at the clickFrequency?
+    
+    // is there a Slice at the indicated freq?
+    if let slice = hitTestSlice(at: clickFrequency, thisPanOnly: true) {
 
-      // redraw if a Slice was activated
+      activateSlice(slice)
+    
+    } else if let slice = Slice.findActive(with: _panadapter!.id) {
+        
+        // YES, force it to the nearest step value
+        let delta = Int(clickFrequency) % slice.step
+        if delta >= slice.step / 2 {
+          
+          // move it to the step value above the click
+          slice.frequency = Int(clickFrequency) + (slice.step - delta)
+          
+        } else {
+          
+          // move it to the step value below the click
+          slice.frequency = Int(clickFrequency) - delta
+        }
+      }
+      // redraw
       redrawSlices()
     }
-  }
   // Position Slice flags
   //
   func positionFlags() {
@@ -361,12 +382,23 @@ final class PanadapterViewController        : NSViewController, NSGestureRecogni
         flagVc.flagXPositionConstraint?.isActive = false
         flagVc.flagXPositionConstraint?.constant = flagPosition
         flagVc.flagXPositionConstraint?.isActive = true
+        
+        // enable/disable the Split button on the Flag (a Split can't create another Split)
+        flagVc.isaSplit = self.splitCheck(flagVc.slice!.id)
       }
       // make the current State the previous one
       previous = current
     }
   }
 
+  func splitCheck(_ sliceId: SliceId) -> Bool {
+    
+    for flag in _flags {
+      if flag.value.splitId == sliceId { return true }
+    }
+    return false
+  }
+  
   // ----------------------------------------------------------------------------
   // MARK: - Private methods
   
@@ -400,19 +432,13 @@ final class PanadapterViewController        : NSViewController, NSGestureRecogni
   ///
   /// - Parameter freq:       the target frequency
   ///
-  private func activateSlice(at freq: CGFloat) -> Bool {
-    
-    // is there a Slice at the indicated freq?
-    guard let slice = hitTestSlice(at: freq, thisPanOnly: false) else { return false }
+  private func activateSlice(_ slice: xLib6000.Slice) {
 
-    // YES, make the active Slice (if any) inactive
+    // make the active Slice (if any) inactive
     _radio!.slices.first(where: { $0.value.active} )?.value.active = false
 
     // make the "hit" Slice active
     slice.active = true
-
-    // return true if slice was found
-    return true
   }
   /// Find the Tnf at or near a frequency (if any)
   ///
