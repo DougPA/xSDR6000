@@ -27,11 +27,10 @@ final class PCWViewController                     : NSViewController {
   @IBOutlet private weak var _monLevel                : NSSlider!
   @IBOutlet private weak var _saveButton              : NSButton!
   
-  private var _radio                        : Radio?
-
-  private let kCodecOutput                  = Api.MeterShortName.codecOutput.rawValue
+  private var _radio                        : Radio? { return Api.sharedInstance.radio }
+  private var _observations                 = [NSKeyValueObservation]()
+  
   private let kMicrophoneAverage            = Api.MeterShortName.microphoneAverage.rawValue
-  private let kMicrophoneOutput             = Api.MeterShortName.microphoneOutput.rawValue
   private let kMicrophonePeak               = Api.MeterShortName.microphonePeak.rawValue
   private let kCompression                  = Api.MeterShortName.postClipper.rawValue
 
@@ -46,11 +45,8 @@ final class PCWViewController                     : NSViewController {
     // setup the MicLevel & Compression graphs
     setupBarGraphs()
     
-    // disable all controls
-    setControlState(false)
-    
-    // begin receiving notifications
-    addNotifications()
+    // start observing properties
+    addObservations()
   }
 
   // ----------------------------------------------------------------------------
@@ -79,13 +75,13 @@ final class PCWViewController                     : NSViewController {
     
     switch sender.identifier!.rawValue {
     case "Acc":
-      _radio!.transmit?.micAccEnabled = sender.boolState
+      _radio!.transmit!.micAccEnabled = sender.boolState
     case "DaxMic":
-       _radio!.transmit?.daxEnabled = sender.boolState
+       _radio!.transmit!.daxEnabled = sender.boolState
     case "Mon":
-       _radio!.transmit?.txMonitorEnabled = sender.boolState
+       _radio!.transmit!.txMonitorEnabled = sender.boolState
     case "Proc":
-      _radio!.transmit?.speechProcessorEnabled = sender.boolState
+      _radio!.transmit!.speechProcessorEnabled = sender.boolState
     case "Save":
       showDialog(sender)
     default:
@@ -100,13 +96,13 @@ final class PCWViewController                     : NSViewController {
   
     switch sender.identifier!.rawValue {
     case "MicLevel":
-     _radio!.transmit?.micLevel = sender.integerValue
+     _radio!.transmit!.micLevel = sender.integerValue
     
     case "SpeechProcessorLevel":
-      _radio!.transmit?.speechProcessorLevel = sender.integerValue
+      _radio!.transmit!.speechProcessorLevel = sender.integerValue
       
     case "TxMonitorGainSb":
-      _radio!.transmit?.txMonitorGainSb = sender.integerValue
+      _radio!.transmit!.txMonitorGainSb = sender.integerValue
     
     default:
       fatalError()
@@ -184,66 +180,36 @@ final class PCWViewController                     : NSViewController {
       } )
     }
   }
-  /// Enable / Disable all controls
-  ///
-  /// - Parameter state:              true = enable
-  ///
-  private func setControlState(_ state: Bool) {
-    
-    DispatchQueue.main.async { [unowned self] in
-      // Popups
-      self._micProfilePopUp.isEnabled = state
-      self._micSelectionPopUp.isEnabled = state
-      
-      // Sliders
-      self._micLevelSlider.isEnabled = state
-      self._processorLevelSlider.isEnabled = state
-      self._monLevel.isEnabled = state
-
-      // Buttons
-      self._accButton.isEnabled = state
-      self._procButton.isEnabled = state
-      self._daxButton.isEnabled = state
-      self._monButton.isEnabled = state
-    }
-  }
 
   // ----------------------------------------------------------------------------
   // MARK: - Observation methods
   
-  private var _observations                 = [NSKeyValueObservation]()
-  
   /// Add observations
   ///
-  private func addObservations(_ radio: Radio) {
+  private func addObservations() {
 
-    _radio = radio
+    if let transmit = _radio!.transmit {
+      
+      _observations.append( transmit.observe(\.micSelection, options: [.initial, .new], changeHandler: transmitChange) )
+      _observations.append( transmit.observe(\.micLevel, options: [.initial, .new], changeHandler: transmitChange) )
+      _observations.append( transmit.observe(\.micAccEnabled, options: [.initial, .new], changeHandler: transmitChange) )
+      _observations.append( transmit.observe(\.companderEnabled, options: [.initial, .new], changeHandler: transmitChange) )
+      _observations.append( transmit.observe(\.companderLevel, options: [.initial, .new], changeHandler: transmitChange) )
+      _observations.append( transmit.observe(\.daxEnabled, options: [.initial, .new], changeHandler: transmitChange) )
+      _observations.append( transmit.observe(\.txMonitorEnabled, options: [.initial, .new], changeHandler: transmitChange) )
+      _observations.append( transmit.observe(\.txMonitorGainSb, options: [.initial, .new], changeHandler: transmitChange) )
+      _observations.append( transmit.observe(\.speechProcessorEnabled, options: [.initial, .new], changeHandler: transmitChange) )
+      _observations.append( transmit.observe(\.speechProcessorLevel, options: [.initial, .new], changeHandler: transmitChange) )
 
-    // Transmit observations
-    _observations.append( radio.transmit!.observe(\.micSelection, options: [.initial, .new], changeHandler: transmitChange) )
-    _observations.append( radio.transmit!.observe(\.micLevel, options: [.initial, .new], changeHandler: transmitChange) )
-    _observations.append( radio.transmit!.observe(\.micAccEnabled, options: [.initial, .new], changeHandler: transmitChange) )
-    _observations.append( radio.transmit!.observe(\.companderEnabled, options: [.initial, .new], changeHandler: transmitChange) )
-    _observations.append( radio.transmit!.observe(\.companderLevel, options: [.initial, .new], changeHandler: transmitChange) )
-    _observations.append( radio.transmit!.observe(\.daxEnabled, options: [.initial, .new], changeHandler: transmitChange) )
-    _observations.append( radio.transmit!.observe(\.txMonitorEnabled, options: [.initial, .new], changeHandler: transmitChange) )
-    _observations.append( radio.transmit!.observe(\.txMonitorGainSb, options: [.initial, .new], changeHandler: transmitChange) )
-    _observations.append( radio.transmit!.observe(\.speechProcessorEnabled, options: [.initial, .new], changeHandler: transmitChange) )
-    _observations.append( radio.transmit!.observe(\.speechProcessorLevel, options: [.initial, .new], changeHandler: transmitChange) )
-  }
-  /// Invalidate observations (optionally remove)
-  ///
-  /// - Parameters:
-  ///   - observations:                 an array of NSKeyValueObservation
-  ///   - remove:                       remove all enabled
-  ///
-  func invalidateObservations(remove: Bool = true) {
-    
-    // invalidate each observation
-    _observations.forEach { $0.invalidate() }
-    
-    // if specified, remove the tokens
-    if remove { _observations.removeAll() }
+//      _observations.append(_radio!.profiles[Profile.kMic]!.observe(\.list, options: [.initial, .new], changeHandler: profileChange) )
+//      _observations.append(_radio!.profiles[Profile.kMic]!.observe(\.selection, options: [.initial, .new], changeHandler: profileChange) )
+
+      _radio!.meters.forEach({
+        if $0.value.name == kMicrophoneAverage || $0.value.name == kMicrophonePeak || $0.value.name == kCompression {
+          _observations.append( $0.value.observe(\.value, options: [.initial, .new], changeHandler: meterChange) )
+        }
+      })
+    }
   }
   /// Update profile value
   ///
@@ -251,23 +217,23 @@ final class PCWViewController                     : NSViewController {
   ///
   private func profileChange(_ profile: Profile, _ change: Any) {
     
-    DispatchQueue.main.async { [unowned self] in
+    DispatchQueue.main.async { [weak self] in
       // reload the Mic Profiles
-      self._micProfilePopUp.removeAllItems()
-      self._micProfilePopUp.addItems(withTitles: profile.list)
-      self._micProfilePopUp.selectItem(withTitle: profile.selection)
+      self?._micProfilePopUp.removeAllItems()
+      self?._micProfilePopUp.addItems(withTitles: profile.list)
+      self?._micProfilePopUp.selectItem(withTitle: profile.selection)
 
       if profile.selection != "" {
         if profile.selection.first == "*" {
           
           // a selection has been modified (begins with *)
-          self._saveButton.title = "Save"
-          self._saveButton.isEnabled = true
+          self?._saveButton.title = "Save"
+          self?._saveButton.isEnabled = true
         } else {
           
           // a normal selection has been made
-          self._saveButton.title = "Del"
-          self._saveButton.isEnabled = true
+          self?._saveButton.title = "Del"
+          self?._saveButton.isEnabled = true
         }
       }
     }
@@ -278,22 +244,22 @@ final class PCWViewController                     : NSViewController {
   ///
   private func transmitChange(_ transmit: Transmit, _ change: Any) {
     
-    DispatchQueue.main.async { [unowned self] in
+    DispatchQueue.main.async { [weak self] in
       // reload the Mic Sources
-      self._micSelectionPopUp.removeAllItems()
-      self._micSelectionPopUp.addItems(withTitles: self._radio!.micList)
-      self._micSelectionPopUp.selectItem(withTitle: transmit.micSelection)
+      self?._micSelectionPopUp.removeAllItems()
+      self?._micSelectionPopUp.addItems(withTitles: self!._radio!.micList)
+      self?._micSelectionPopUp.selectItem(withTitle: transmit.micSelection)
       
       // set the Slider values
-      self._micLevelSlider.integerValue = transmit.micLevel
-      self._processorLevelSlider.integerValue = transmit.speechProcessorLevel
-      self._monLevel.integerValue = transmit.txMonitorGainSb
+      self?._micLevelSlider.integerValue = transmit.micLevel
+      self?._processorLevelSlider.integerValue = transmit.speechProcessorLevel
+      self?._monLevel.integerValue = transmit.txMonitorGainSb
       
       // set the Button states
-      self._accButton.boolState = transmit.micAccEnabled
-      self._procButton.boolState = transmit.speechProcessorEnabled
-      self._daxButton.boolState = transmit.daxEnabled
-      self._monButton.boolState = transmit.txMonitorEnabled
+      self?._accButton.boolState = transmit.micAccEnabled
+      self?._procButton.boolState = transmit.speechProcessorEnabled
+      self?._daxButton.boolState = transmit.daxEnabled
+      self?._monButton.boolState = transmit.txMonitorEnabled
     }
   }
   /// Respond to changes in a Meter
@@ -311,93 +277,20 @@ final class PCWViewController                     : NSViewController {
       let value = _radio?.interlock.state == "TRANSMITTING" ||
         _radio!.transmit.metInRxEnabled ? CGFloat(meter.value) : -50
 
-      DispatchQueue.main.async { self._micLevelIndicator.level = value }
+      DispatchQueue.main.async { [weak self] in self?._micLevelIndicator.level = value }
       
     case kMicrophonePeak:
       let value = _radio?.interlock.state == "TRANSMITTING" ||
         _radio!.transmit.metInRxEnabled ? CGFloat(meter.value) : -50
-      DispatchQueue.main.async { self._micLevelIndicator.peak = value }
+      DispatchQueue.main.async {  [weak self] in self?._micLevelIndicator.peak = value }
       
     case kCompression:
       let value = _radio?.interlock.state == "TRANSMITTING" ||
         _radio!.transmit.metInRxEnabled ? CGFloat(meter.value) : 10
-      DispatchQueue.main.async { self._compressionIndicator.level = value }
+      DispatchQueue.main.async {  [weak self] in self?._compressionIndicator.level = value }
       
     default:
       fatalError()
-    }
-  }
-
-  // ----------------------------------------------------------------------------
-  // MARK: - Notification Methods
-  
-  /// Add subscriptions to Notifications
-  ///
-  private func addNotifications() {
-    
-    NC.makeObserver(self, with: #selector(radioHasBeenAdded(_:)), of: .radioHasBeenAdded)
-    
-    NC.makeObserver(self, with: #selector(radioWillBeRemoved(_:)), of: .radioWillBeRemoved)
-
-    NC.makeObserver(self, with: #selector(profileHasBeenAdded(_:)), of: .profileHasBeenAdded)
-
-    NC.makeObserver(self, with: #selector(meterHasBeenAdded(_:)), of: .meterHasBeenAdded)
-  }
-  /// Process .radioHasBeenAdded Notification
-  ///
-  /// - Parameter note:             a Notification instance
-  ///
-  @objc private func radioHasBeenAdded(_ note: Notification) {
-    
-    if let radio = note.object as? Radio {
-     
-      // begin observing parameters
-      addObservations(radio)
-      
-      // enable all controls
-      setControlState(true)
-    }
-  }
-  /// Process .radioWillBeRemoved Notification
-  ///
-  /// - Parameter note:             a Notification instance
-  ///
-  @objc private func radioWillBeRemoved(_ note: Notification) {
-    
-    // disable all controls
-    setControlState(false)
-    
-    // invalidate & remove observations
-    invalidateObservations()
-    
-    _radio = nil
-    _micProfilePopUp.removeAllItems()
-    _micSelectionPopUp.removeAllItems()
-  }
-  /// Process .profileHasBeenAdded Notification
-  ///
-  /// - Parameter note:           a Notification instance
-  ///
-  @objc private func profileHasBeenAdded(_ note: Notification) {
-    
-    let profile = note.object as! Profile
-    if profile.id == Profile.kMic {
-      
-      // add Profile observations
-      _observations.append(_radio!.profiles[Profile.kMic]!.observe(\.list, options: [.initial, .new], changeHandler: profileChange) )
-      _observations.append(_radio!.profiles[Profile.kMic]!.observe(\.selection, options: [.initial, .new], changeHandler: profileChange) )
-    }
-  }  /// Process .meterHasBeenAdded Notification
-  ///
-  /// - Parameter note:             a Notification instance
-  ///
-  @objc private func meterHasBeenAdded(_ note: Notification) {
-    
-    let meter = note.object as! Meter
-    
-    // observe MicLevel, MicPeak & Compression
-    if meter.name == kMicrophoneAverage || meter.name == kMicrophonePeak || meter.name == kCompression {     
-      _observations.append( meter.observe(\.value, options: [.initial, .new], changeHandler: meterChange) )
     }
   }
 }

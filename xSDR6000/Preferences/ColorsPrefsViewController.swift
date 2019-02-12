@@ -45,6 +45,41 @@ final class ColorsPrefsViewController            : NSViewController {
   // ----------------------------------------------------------------------------
   // MARK: - Action methods
   
+  @IBAction func singleResetButtons(_ sender: NSButton) {
+    
+    // reset the respective color
+    switch sender.identifier!.rawValue {
+    case "DbLegendReset":
+      Defaults.remove(.dbLegend)
+    case "FrequencyLegendReset":
+      Defaults.remove(.frequencyLegend)
+    case "GridLineReset":
+      Defaults.remove(.gridLine)
+    case "MarkerReset":
+      Defaults.remove(.marker)
+    case "MarkerEdgeReset":
+      Defaults.remove(.markerEdge)
+    case "MarkerSegmentReset":
+      Defaults.remove(.markerSegment)
+    case "SliceActiveReset":
+      Defaults.remove(.sliceActive)
+    case "SliceFilterReset":
+      Defaults.remove(.sliceFilter)
+    case "SliceInactiveReset":
+      Defaults.remove(.sliceInactive)
+    case "SpectrumBackgroundReset":
+      Defaults.remove(.spectrumBackground)
+    case "SpectrumReset":
+      Defaults.remove(.spectrum)
+    case "TnfActiveReset":
+      Defaults.remove(.tnfActive)
+    case "TnfInactiveReset":
+      Defaults.remove(.tnfInactive)
+    default:
+      fatalError()
+    }
+  }
+
   /// Respond to one of the colorwells
   ///
   /// - Parameter sender:         the colorwell

@@ -39,6 +39,7 @@ extension DefaultsKeys {
   static let cwxViewOpen                  = DefaultsKey<Bool>("cwxViewOpen")
   static let defaultRadio                 = DefaultsKey<[String: Any]>("defaultRadio")
   static let eqRxSelected                 = DefaultsKey<Bool>("eqRxSelected")
+  static let flagBorderEnabled            = DefaultsKey<Bool>("flagBorderEnabled")
   static let fullDuplexEnabled            = DefaultsKey<Bool>("fullDuplexEnabled")
   static let lowBandwidthEnabled          = DefaultsKey<Bool>("lowBandwidthEnabled")
   static let macAudioEnabled              = DefaultsKey<Bool>("macAudioEnabled")

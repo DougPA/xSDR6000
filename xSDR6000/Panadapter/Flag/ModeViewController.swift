@@ -63,6 +63,10 @@ final class ModeViewController       : NSViewController {
     
     view.translatesAutoresizingMaskIntoConstraints = false
     
+    if Defaults[.flagBorderEnabled] {
+      view.layer?.borderColor = NSColor.darkGray.cgColor
+      view.layer?.borderWidth = 0.5
+    }
     // populate the choices
     _modePopUp.addItems(withTitles: Slice.Mode.allCases.map {$0.rawValue} )
     

@@ -453,7 +453,7 @@
         <scene sceneID="k5s-at-puA">
             <objects>
                 <viewController identifier="AUDvc" storyboardIdentifier="AUD" id="My9-cI-9u7" userLabel="audVC" customClass="AudioViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" autoresizesSubviews="NO" wantsLayer="YES" id="LkQ-yf-PwG">
+                    <view key="view" autoresizesSubviews="NO" wantsLayer="YES" appearanceType="darkAqua" id="LkQ-yf-PwG">
                         <rect key="frame" x="0.0" y="0.0" width="275" height="90"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
@@ -518,7 +518,7 @@
                                         </constraints>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="L" id="fFb-j2-PeE">
                                             <font key="font" metaFont="system" size="16"/>
-                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="textColor" red="0.93733837547160936" green="1" blue="0.95883132491610412" alpha="0.84705882352941175" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
@@ -539,7 +539,7 @@
                                         </constraints>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="R" id="xvx-da-6lX">
                                             <font key="font" metaFont="system" size="16"/>
-                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="textColor" red="0.96907737643482272" green="1" blue="0.97851569576526853" alpha="0.84705882352941175" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
@@ -639,7 +639,7 @@
         <scene sceneID="v6z-wA-6gD">
             <objects>
                 <viewController identifier="DSPvc" storyboardIdentifier="DSP" id="Xq5-Es-VCO" userLabel="dspVC" customClass="DspViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" autoresizesSubviews="NO" id="fJQ-hb-hVs">
+                    <view key="view" autoresizesSubviews="NO" wantsLayer="YES" appearanceType="darkAqua" id="fJQ-hb-hVs">
                         <rect key="frame" x="0.0" y="0.0" width="276" height="90"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
@@ -866,7 +866,7 @@
         <scene sceneID="kHj-z6-cr7">
             <objects>
                 <viewController title="modeVC" identifier="MODEvc" storyboardIdentifier="MODE" id="jnR-au-HBU" userLabel="modeVC" customClass="ModeViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" autoresizesSubviews="NO" wantsLayer="YES" id="f3R-2d-cJB">
+                    <view key="view" autoresizesSubviews="NO" wantsLayer="YES" appearanceType="darkAqua" id="f3R-2d-cJB">
                         <rect key="frame" x="0.0" y="0.0" width="273" height="90"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
@@ -1146,7 +1146,7 @@
         <scene sceneID="MGs-5q-XWg">
             <objects>
                 <viewController identifier="XRITvc" storyboardIdentifier="XRIT" id="pG7-fD-vJI" userLabel="xritVC" customClass="XritViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" autoresizesSubviews="NO" wantsLayer="YES" id="vZI-Mq-qLU">
+                    <view key="view" autoresizesSubviews="NO" wantsLayer="YES" appearanceType="darkAqua" id="vZI-Mq-qLU">
                         <rect key="frame" x="0.0" y="0.0" width="263" height="90"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
@@ -1287,7 +1287,7 @@
                                         <rect key="frame" x="-2" y="6" width="75" height="17"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" title="Tuning step" id="ay5-gl-jO7">
                                             <font key="font" metaFont="system"/>
-                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="textColor" red="0.95714451410042378" green="1" blue="0.97158727799532796" alpha="0.84705882352941175" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
@@ -1362,7 +1362,7 @@
         <scene sceneID="04g-g8-NSs">
             <objects>
                 <viewController title="daxVC" identifier="DAXvc" storyboardIdentifier="DAX" id="qHG-cG-Dd3" userLabel="daxVC" customClass="DaxViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" identifier="DaxView" wantsLayer="YES" id="XNf-ih-hpv">
+                    <view key="view" identifier="DaxView" wantsLayer="YES" appearanceType="darkAqua" id="XNf-ih-hpv">
                         <rect key="frame" x="0.0" y="0.0" width="301" height="90"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
@@ -1373,7 +1373,7 @@
                                         <rect key="frame" x="-2" y="2" width="81" height="17"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Dax Channel" id="L2Q-30-tS6">
                                             <font key="font" metaFont="system"/>
-                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="textColor" red="0.98016216641586029" green="1" blue="0.97272897072551479" alpha="0.84705882352941175" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>

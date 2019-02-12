@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import SwiftyUserDefaults
 import xLib6000
 
 final class AudioViewController: NSViewController {
@@ -36,7 +37,12 @@ final class AudioViewController: NSViewController {
     
     view.translatesAutoresizingMaskIntoConstraints = false
     
-    // populate the choices
+    if Defaults[.flagBorderEnabled] {
+      view.layer?.borderColor = NSColor.darkGray.cgColor
+      view.layer?.borderWidth = 0.5
+    }
+
+  // populate the choices
     _agcModePopUp.addItems(withTitles: Slice.AgcMode.allCases.map {$0.rawValue} )
 
     // start observing

@@ -52,12 +52,7 @@ final class TXPrefsViewController                 : NSViewController {
         
     view.translatesAutoresizingMaskIntoConstraints = false
     
-//    // check for an active radio
-//    if let radio = Api.sharedInstance.radio { _radio = radio ; enableControls(true) }
-//
-//    // start receiving notifications
-//    addNotifications()
-    
+    // begin observing properties
     addObservations()
   }
   
@@ -164,48 +159,6 @@ final class TXPrefsViewController                 : NSViewController {
       fatalError()
     }
   }
-  
-  // ----------------------------------------------------------------------------
-  // MARK: - Private methods
-  
-  /// Enable / Disable controls
-  ///
-  /// - Parameter status:             true = enable
-  ///
-//  private func enableControls(_ state: Bool = true) {
-//
-//    if state {
-//      _txProfilePopUp.removeAllItems()
-//      _txProfilePopUp.addItems(withTitles: _txProfile!.list)
-//
-//      addObservations()
-//    } else {
-//
-//      removeObservations()
-//    }
-//    DispatchQueue.main.async { [weak self] in
-//      self?._accTxCheckbox.isEnabled = state
-//      self?._rcaTx1Checkbox.isEnabled = state
-//      self?._rcaTx2Checkbox.isEnabled = state
-//      self?._rcaTx3Checkbox.isEnabled = state
-//      self?._txInhibitCheckbox.isEnabled = state
-//      self?._hardWareAlcCheckbox.isEnabled = state
-//      self?._showTxInWaterfallCheckbox.isEnabled = state
-//
-//      self?._accTxTextField.isEnabled = state
-//      self?._rcaTx1TextField.isEnabled = state
-//      self?._rcaTx2TextField.isEnabled = state
-//      self?._rcaTx3TextField.isEnabled = state
-//      self?._txDelayTextField.isEnabled = state
-//      self?._txTimeoutTextField.isEnabled = state
-//
-//      self?._txProfilePopUp.isEnabled = state
-//      self?._rcaInterlockPopup.isEnabled = state
-//      self?._accInterlockPopup.isEnabled = state
-//
-//      self?._maxPowerSlider.isEnabled = state
-//    }
-//  }
 
   // ----------------------------------------------------------------------------
   // MARK: - Observation methods
@@ -236,16 +189,6 @@ final class TXPrefsViewController                 : NSViewController {
       _txProfile!.observe(\.selection, options: [.initial, .new], changeHandler: profileHandler(_:_:))
     ]
   }
-  /// Remove observations
-  ///
-//  func removeObservations() {
-//
-//    // invalidate each observation
-//    _observations.forEach { $0.invalidate() }
-//
-//    // remove the tokens
-//    _observations.removeAll()
-//  }
   /// Process observations
   ///
   /// - Parameters:
@@ -303,47 +246,13 @@ final class TXPrefsViewController                 : NSViewController {
   ///
   private func transmitHandler(_ transmit: Transmit, _ change: Any) {
 
-    DispatchQueue.main.async { [unowned self] in
-      self._txInhibitCheckbox.boolState = transmit.inhibit
-      self._showTxInWaterfallCheckbox.boolState = transmit.txInWaterfallEnabled
-      self._hardWareAlcCheckbox.boolState = transmit.hwAlcEnabled
+    DispatchQueue.main.async { [weak self] in
+      self?._txInhibitCheckbox.boolState = transmit.inhibit
+      self?._showTxInWaterfallCheckbox.boolState = transmit.txInWaterfallEnabled
+      self?._hardWareAlcCheckbox.boolState = transmit.hwAlcEnabled
 
-      self._maxPowerSlider.integerValue = transmit.maxPowerLevel
-      self._maxPowerTextField.integerValue = transmit.maxPowerLevel
+      self?._maxPowerSlider.integerValue = transmit.maxPowerLevel
+      self?._maxPowerTextField.integerValue = transmit.maxPowerLevel
     }
   }
-
-  // ----------------------------------------------------------------------------
-  // MARK: - Notification Methods
-  
-  /// Add subscriptions to Notifications
-  ///
-//  private func addNotifications() {
-//
-//    NC.makeObserver(self, with: #selector(radioHasBeenAdded(_:)), of: .radioHasBeenAdded)
-//
-//    NC.makeObserver(self, with: #selector(radioWillBeRemoved(_:)), of: .radioWillBeRemoved)
-//  }
-  /// Process .radioHasBeenAdded Notification
-  ///
-  /// - Parameter note:             a Notification instance
-  ///
-//  @objc private func radioHasBeenAdded(_ note: Notification) {
-//
-//    _radio = note.object as? Radio
-//
-//    // enable controls
-//    enableControls()
-//  }
-  /// Process .radioWillBeRemoved Notification
-  ///
-  /// - Parameter note:             a Notification instance
-  ///
-//  @objc private func radioWillBeRemoved(_ note: Notification) {
-//    
-//    // disable controls
-//    enableControls(false)
-//    
-//    _radio = nil
-//  }
 }

@@ -1,5 +1,24 @@
 xSDR6000 Change Log
 
+v2.0.12 - 12-Feb-2019
+
+The app is now codesigned & the embedded frameworks are also codesigned
+Added a help window (displays xSDR6000.pdf), minimal at this point
+Added CW Side view
+Added a default "flagBorderEnabled" which, when true, adds a small border around the Flag
+Changed the way the Side, Profiles & Preferences are instantiated
+Enable Side button only when a radio is connected
+Changed the "Supported Apps" interval from milliseconds to seconds
+Corrected the action of the +Tnf button in the left (PanafallButtonViewController)
+Added the Tnf's frequency & width to the right-click menu in a Tnf
+Corrections to the Preferences->PhoneCw (Mic Bias, Mic Boost & MeterInRx)
+Corrections to the Preferences->Filter (all fields)
+Now blank the Voltage/Temp monitor when no radio connected
+Added ability to reset individual component colors (Preferences->Colors)
+Corrections to Flag field colors to work in both Light & Dark modes
+Added NextSlice to Radio Menu (Command-N), activate next slice within a panadapter
+Made it easier to click a Slice (added a variable minimum width to HitTestSlice)
+
 v2.0.11 - 07-Feb-2019
 
 Corrected click & drag handling in Flag & Panadapter

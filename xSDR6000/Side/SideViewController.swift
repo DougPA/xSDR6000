@@ -32,17 +32,19 @@ final class SideViewController              : NSViewController {
   @IBOutlet private weak var _rxContainerHeight     : NSLayoutConstraint!
   @IBOutlet private weak var _txContainerHeight     : NSLayoutConstraint!
   @IBOutlet private weak var _pcwContainerHeight    : NSLayoutConstraint!
+  @IBOutlet private weak var _cwContainerHeight     : NSLayoutConstraint!
   @IBOutlet private weak var _phneContainerHeight   : NSLayoutConstraint!
   @IBOutlet private weak var _eqContainerHeight     : NSLayoutConstraint!
   
   private var _rxViewLoaded                 = false
   private var _flagVc                       : FlagViewController?
-  private var _observations                 = [NSKeyValueObservation]()
+  private var _observations                 : [NSKeyValueObservation]?
   
   private let kSideViewWidth                : CGFloat = 311
   private let kRxHeightOpen                 : CGFloat = 90
   private let kTxHeightOpen                 : CGFloat = 210
-  private let kPcwHeightOpen                : CGFloat = 240
+  private let kPcwHeightOpen                : CGFloat = 235
+  private let kCwHeightOpen                 : CGFloat = 235
   private let kPhneHeightOpen               : CGFloat = 210
   private let kEqHeightOpen                 : CGFloat = 210
   private let kHeightClosed                 : CGFloat = 0
@@ -61,6 +63,14 @@ final class SideViewController              : NSViewController {
     widthConstraint.identifier = "Side width constraint"
     widthConstraint.isActive = true
 
+    // is there an Active Slice?
+    if let slice = Slice.findActive(), let pan = Api.sharedInstance.radio!.panadapters[slice.panadapterId] {
+      // YES, add a Flag
+      sideFlag(slice: slice, pan: pan, viewController: self)
+
+      addObservations()
+    }
+      
     // set the button states
     _rxButton.state = Defaults[.sideRxOpen].state
     _txButton.state = Defaults[.sideTxOpen].state
@@ -68,14 +78,15 @@ final class SideViewController              : NSViewController {
     _phneButton.state = Defaults[.sidePhneOpen].state
     _eqButton.state = Defaults[.sideEqOpen].state
     
+    // open the Pcw / Cw views as appropriate
+    pcwStatus()
+    
     // unhide the selected views
     _rxContainerHeight.constant = ( Defaults[.sideRxOpen] ? kRxHeightOpen : kHeightClosed )
     _txContainerHeight.constant = ( Defaults[.sideTxOpen] ? kTxHeightOpen : kHeightClosed )
-    _pcwContainerHeight.constant = ( Defaults[.sidePcwOpen] ? kPcwHeightOpen : kHeightClosed )
     _phneContainerHeight.constant = ( Defaults[.sidePhneOpen] ? kPhneHeightOpen : kHeightClosed )
     _eqContainerHeight.constant = ( Defaults[.sideEqOpen] ? kEqHeightOpen : kHeightClosed )
-
-    _scrollView.needsLayout = true
+//    _scrollView.needsLayout = true
   }
   override func viewDidLayout() {
 
@@ -93,19 +104,23 @@ final class SideViewController              : NSViewController {
   @IBAction func sideButtons(_ sender: NSButton) {
     
     switch sender.identifier!.rawValue {
-    case "RX":
+    case "RxButton":
       Defaults[.sideRxOpen] = sender.boolState
       _rxContainerHeight.constant = (sender.boolState ? kRxHeightOpen : kHeightClosed)
-    case "TX":
+    case "TxButton":
       Defaults[.sideTxOpen] = sender.boolState
       _txContainerHeight.constant = (sender.boolState ? kTxHeightOpen : kHeightClosed)
-    case "PCW":
+    case "PcwButton":
       Defaults[.sidePcwOpen] = sender.boolState
-      _pcwContainerHeight.constant = (sender.boolState ? kPcwHeightOpen : kHeightClosed)
-    case "PHNE":
+      if _flagVc!.slice!.mode == Slice.Mode.CW.rawValue {
+        _cwContainerHeight.constant = (sender.boolState ? kCwHeightOpen : kHeightClosed)
+      } else {
+        _pcwContainerHeight.constant = (sender.boolState ? kPcwHeightOpen : kHeightClosed)
+      }
+    case "PhneButton":
       Defaults[.sidePhneOpen] = sender.boolState
       _phneContainerHeight.constant = (sender.boolState ? kPhneHeightOpen : kHeightClosed)
-    case "EQ":
+    case "EqButton":
       Defaults[.sideEqOpen] = sender.boolState
       _eqContainerHeight.constant = (sender.boolState ? kEqHeightOpen : kHeightClosed)
     default:
@@ -123,6 +138,35 @@ final class SideViewController              : NSViewController {
   // ----------------------------------------------------------------------------
   // MARK: - Private methods
 
+  private func pcwStatus() {
+    
+    // Is PCW open?
+    if Defaults[.sidePcwOpen] {
+      // YES, get the active Slice )if any)
+      // YES, get the active Slice )if any)
+      if _flagVc != nil {
+        
+        // CW or non-CW?
+        if _flagVc!.slice!.mode == Slice.Mode.CW.rawValue {
+          // CW
+          _pcwContainerHeight.constant = kHeightClosed
+          _cwContainerHeight.constant = kCwHeightOpen
+        } else {
+          // non-CW
+          _pcwContainerHeight.constant = kPcwHeightOpen
+          _cwContainerHeight.constant = kHeightClosed
+        }
+      } else {
+        // no active Slice
+        _pcwContainerHeight.constant = kHeightClosed
+        _cwContainerHeight.constant = kHeightClosed
+      }
+    } else {
+      // no flag
+      _pcwContainerHeight.constant = kHeightClosed
+      _cwContainerHeight.constant = kHeightClosed
+    }
+  }
   /// Add a Flag to the Side view
   ///
   /// - Parameters:
@@ -158,6 +202,41 @@ final class SideViewController              : NSViewController {
   }
 
   // ----------------------------------------------------------------------------
+  // MARK: - Observation methods
+  
+  /// Add observations
+  ///
+  private func addObservations() {
+    
+    _observations = [
+      _flagVc!.slice!.observe(\.mode, options: [.initial, .new], changeHandler: modChange)
+    ]
+  }
+  /// Update profile value
+  ///
+  /// - Parameter eq:               the Slice
+  ///
+  private func modChange(_ slice: xLib6000.Slice, _ change: Any) {
+    
+    DispatchQueue.main.async { [weak self] in
+      // adjust the PCW view
+      self?.pcwStatus()
+    }
+  }
+  /// Remove observations
+  ///
+  func removeObservations() {
+
+    if _observations != nil {
+      // invalidate each observation
+      _observations!.forEach { $0.invalidate() }
+      
+      // remove the tokens
+      _observations!.removeAll()
+    }
+  }
+
+  // ----------------------------------------------------------------------------
   // MARK: - Notification Methods
   
   /// Add subsciptions to Notifications
@@ -185,6 +264,9 @@ final class SideViewController              : NSViewController {
     
     let slice = note.object as! xLib6000.Slice
 
+    // stop observing the previous Slice
+    removeObservations()
+    
     // find the Panadapter of this Slice
     let pan = Api.sharedInstance.radio!.panadapters[slice.panadapterId]!
     
@@ -192,17 +274,32 @@ final class SideViewController              : NSViewController {
     if _rxViewLoaded  {
       
       // YES, update it
-      DispatchQueue.main.async {
-        self._flagVc!.updateFlag(slice: slice, panadapter: pan)
+      DispatchQueue.main.async { [weak self] in
+        self?._flagVc!.updateFlag(slice: slice, panadapter: pan)
+        
+        // adjust the PCW view
+        self?.adjustAndObserve()
       }
 
     } else {
       // NO, load it
       _rxViewLoaded = true
      
-      DispatchQueue.main.async {
-        self.sideFlag(slice: slice, pan: pan, viewController: self)
+      DispatchQueue.main.async { [weak self] in
+        self?.sideFlag(slice: slice, pan: pan, viewController: self!)
+        
+        // adjust the PCW view
+        self?.adjustAndObserve()
       }
     }
   }
+  private func adjustAndObserve() {
+    
+    // adjust the PCW view
+    pcwStatus()
+    
+    // start observing the new Slice
+    addObservations()
+  }
 }
+	

@@ -35,13 +35,9 @@ final class DisplayViewController                     : NSViewController, NSPopo
 
   @IBOutlet private weak var _gradientPopUp           : NSPopUpButton!
   
-  private var _panafallButtonVC                       : PanafallButtonViewController {
-    return representedObject as! PanafallButtonViewController }
-  private var _panadapter                             : Panadapter? {
-    return _panafallButtonVC.panadapter }
-  private var _waterfall                              : Waterfall? {
-    return _panafallButtonVC.waterfall }
-
+  private var _panadapter                             : Panadapter?
+  private var _waterfall                              : Waterfall?
+  
   private var _observations                           = [NSKeyValueObservation]()
   private var _isDetached                             = false
 
@@ -51,7 +47,7 @@ final class DisplayViewController                     : NSViewController, NSPopo
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    _gradientPopUp.addItems(withTitles: _panafallButtonVC.gradientNames)
+    _gradientPopUp.addItems(withTitles: WaterfallViewController.gradientNames)
     
     // start observing
     addObservations()
@@ -65,6 +61,14 @@ final class DisplayViewController                     : NSViewController, NSPopo
   func popoverShouldDetach(_ popover: NSPopover) -> Bool {
     _isDetached = true
     return true
+  }
+  
+  // ----------------------------------------------------------------------------
+  // MARK: - Internal methods
+  
+  func configure(panadapter: Panadapter, waterfall: Waterfall) {
+    _panadapter = panadapter
+    _waterfall = waterfall
   }
   
   // ----------------------------------------------------------------------------

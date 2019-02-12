@@ -55,6 +55,10 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   private var _voltageMeterAvailable        = false
   private var _temperatureMeterAvailable    = false
   private var _versions                     : (api: String, app: String)?
+  private var _sideViewController           : SideViewController?
+  private var _profilesWindowController     : NSWindowController?
+  private var _preferencesWindowController  : NSWindowController?
+  
 //  private var _activity                     : NSObjectProtocol?
 
   private var _opus                         : Opus?
@@ -65,12 +69,17 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   private let kVoltageTemperature           = "VoltageTemp"                 // Identifier of toolbar VoltageTemperature toolbarItem
 
   private let kPreferencesStoryboardName    = "Preferences"
-  private let kProfilesStoryboardName       = "Profiles"
-  private let kRadioPickerStoryboardName    = "RadioPicker"
-  private let kSideStoryboardName           = "Side"
   private let kPreferencesIdentifier        = "Preferences"
+
+  private let kProfilesStoryboardName       = "Profiles"
   private let kProfilesIdentifier           = "Profiles"
+
+  private let kRadioPickerStoryboardName    = "RadioPicker"
   private let kRadioPickerIdentifier        = "RadioPicker"
+
+  private let kSideStoryboardName           = "Side"
+  private let kSideIdentifier               = "Side"
+
   private let kPcwIdentifier                = "PCW"
   private let kPhoneIdentifier              = "Phone"
   private let kRxIdentifier                 = "Rx"
@@ -84,6 +93,11 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   private let kLocalTab                     = 0
   private let kRemoteTab                    = 1
   
+  private enum WindowState {
+    case open
+    case close
+  }
+
   // ----------------------------------------------------------------------------
   // MARK: - Overriden methods
   
@@ -113,7 +127,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     _sideStoryboard = NSStoryboard(name: kSideStoryboardName, bundle: nil)
 
     //
-    splitViewItems[1].isCollapsed = true
+//    splitViewItems[1].isCollapsed = true
     
     // add notification subscriptions
     addNotifications()
@@ -160,6 +174,10 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
       return _api.activeRadio != nil
       
     case #selector(markerButton(_:)):
+      // Side button
+      return _api.activeRadio != nil
+      
+    case #selector(nextSlice(_:)):
       // Side button
       return _api.activeRadio != nil
       
@@ -246,9 +264,11 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   ///
   @IBAction func sideButton(_ sender: NSButton) {
     
-    // open / collapse the Side view
-    splitViewItems[1].isCollapsed = !sender.boolState
-    Defaults[.sideViewOpen] = sender.boolState    
+    // update the default value
+    Defaults[.sideViewOpen] = sender.boolState
+    
+    // Open / Close the side view
+    sideView(sender.boolState ? .open : .close)
   }
   /// Respond to the Cwx button
   ///
@@ -326,34 +346,41 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
       self.presentAsSheet(radioPickerTabViewController!)
     }
   }
-  /// Respond to the Preferences menu
+  /// Respond to the Preferences menu (Command-,)
   ///
   /// - Parameter sender:         the MenuItem
   ///
   @IBAction func openPreferences(_ sender: NSMenuItem) {
     
-    // get an instance of the Profiles
-    let preferencesWindowController = _preferencesStoryboard!.instantiateController(withIdentifier: kPreferencesIdentifier) as? NSWindowController
-    
-    DispatchQueue.main.async {
-      
-      // show the Preferences window
-      preferencesWindowController?.showWindow(self)
-    }
+    // open the Preferences window (if not already open)
+    preferencesWindow(.open)
   }
-  /// Respond to the Profiles menu
+  /// Respond to the Profiles menu (Command-P)
   ///
   /// - Parameter sender:         the MenuItem
   ///
   @IBAction func openProfiles(_ sender: NSMenuItem) {
   
-    // get an instance of the Profiles
-    let profilesWindowController = _profilesStoryboard!.instantiateController(withIdentifier: kProfilesIdentifier) as? NSWindowController
+    // open the Profiles window (if not already open)
+    profilesWindow(.open)
+  }
+  /// Respond to Radio->Next Slice (Option-Tab)
+  ///
+  /// - Parameter sender:         the Menu item
+  ///
+  @IBAction func nextSlice(_ sender: AnyObject) {
     
-    DispatchQueue.main.async {
+   Swift.print("nextSlice")
+    
+    if let slice = Slice.findActive() {
+      let slicesOnThisPan = Api.sharedInstance.radio!.slices.values.sorted { $0.frequency < $1.frequency }
+      var index = slicesOnThisPan.firstIndex(of: slice)!
       
-      // show the Profiles window
-     profilesWindowController?.showWindow(self)
+      index = index + 1
+      index = index % slicesOnThisPan.count
+      
+      slice.active = false
+      slicesOnThisPan[index].active = true
     }
   }
   /// Respond to the xSDR6000 Quit menu
@@ -367,7 +394,98 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   
   // ----------------------------------------------------------------------------
   // MARK: - Private methods
+  
+  /// Open or Close the Preferences window
+  ///
+  /// - Parameter state:              the desired state
+  ///
+  private func preferencesWindow(_ state: WindowState) {
     
+    if state == .open {
+      // OPENING, is there an existing instance?
+      if _preferencesWindowController == nil {
+        // NO, get an instance of the Profiles
+        _preferencesWindowController = _preferencesStoryboard!.instantiateController(withIdentifier: kPreferencesIdentifier) as? NSWindowController
+        
+        DispatchQueue.main.async { [weak self] in
+          // show the Profiles window
+          self?._preferencesWindowController?.showWindow(self!)
+        }
+      }
+      
+    } else {
+      // CLOSING, is there an instance?
+      if _preferencesWindowController != nil {
+        // YES, close it
+        DispatchQueue.main.async { [weak self] in
+          self?._preferencesWindowController?.close()
+          self?._preferencesWindowController = nil
+        }
+      }
+    }
+  }
+ /// Open or Close the Profiles window
+  ///
+  /// - Parameter state:              the desired state
+  ///
+  private func profilesWindow(_ state: WindowState) {
+  
+    if state == .open {
+      // OPENING, is there an existing instance?
+      if _profilesWindowController == nil {
+        // NO, get an instance of the Profiles
+        _profilesWindowController = _profilesStoryboard!.instantiateController(withIdentifier: kProfilesIdentifier) as? NSWindowController
+        
+        DispatchQueue.main.async { [weak self] in
+          // show the Profiles window
+          self?._profilesWindowController?.showWindow(self!)
+        }
+      }
+    
+    } else {
+      // CLOSING, is there an instance?
+      if _profilesWindowController != nil {
+        // YES, close it
+        DispatchQueue.main.async { [weak self] in
+          self?._profilesWindowController?.close()
+          self?._profilesWindowController = nil
+        }
+      }
+    }
+  }
+  /// Open or Close the Side view
+  ///
+  /// - Parameter state:              the desired state
+  ///
+  private func sideView(_ state: WindowState) {
+        
+    if state == .open {
+      // OPENING, is there an existing instance?
+      if _sideViewController == nil {
+        // NO, get an instance of the Side view
+        _sideViewController = _sideStoryboard!.instantiateController(withIdentifier: kSideIdentifier) as? SideViewController
+        
+        DispatchQueue.main.async { [weak self] in
+          // add it to the split view
+          self?.addChild(self!._sideViewController!)
+        }
+      }
+    } else {
+      
+      // CLOSING, is there an instance?
+      if _sideViewController != nil {
+        // YES, close it
+        DispatchQueue.main.async { [weak self] in
+          // collapse it first
+          self?.splitViewItems[1].isCollapsed = true
+          
+          // remove it from the split view
+          self?.removeChild(at: 1)
+          self?._sideViewController = nil
+        }
+      }
+    }
+  }
   private func scheduleSupportingApps() {
     
     (Defaults[.supportingApps] as? [Dictionary<String, Any>])?.forEach({
@@ -385,7 +503,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
         let parameters = $0[InfoPrefsViewController.kParameters] as! String
         
         // schedule the launch
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .milliseconds( delay )) {
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds( delay )) {
           
           // TODO: Add Parameters
           NSWorkspace.shared.launchApplication(appName)
@@ -413,52 +531,57 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   }
   /// Set the toolbar controls
   ///
-  func updateToolbar(_ enabled: Bool) {
+  func updateToolbar(_ enable: Bool, sideAlso: Bool = false) {
     
     DispatchQueue.main.async { [unowned self] in
       
       // enable / disable the toolbar items
       let toolbar = self.view.window!.toolbar
       for item in toolbar!.items {
-        item.isEnabled = enabled
-      }
-      // if active, set the values of the toolbar items
-      if enabled {
         
-        for item in toolbar!.items {
-          
-          switch item.itemIdentifier.rawValue {
-          case "tnfsEnabled":
-            (item.view as! NSButton).boolState = Defaults[.tnfsEnabled]
-          case "markersEnabled":
-            (item.view as! NSButton).boolState = Defaults[.markersEnabled]
-          case "lineoutGain":
-            (item.view as! NSSlider).integerValue = self._api.radio!.lineoutGain
-          case "headphoneGain":
-            (item.view as! NSSlider).integerValue = self._api.radio!.headphoneGain
-          case "sideEnabled":
-            (item.view as! NSButton).boolState = Defaults[.sideViewOpen]
-          case "macAudioEnabled":
-            (item.view as! NSButton).boolState = Defaults[.macAudioEnabled]
-          case "lineoutMute":
-            (item.view as! NSButton).boolState = self._api.radio!.lineoutMute
-          case "headphoneMute":
-            (item.view as! NSButton).boolState = self._api.radio!.headphoneMute
-          case "fdxEnabled":
-            (item.view as! NSButton).boolState = Defaults[.fullDuplexEnabled]
-          case "cwxEnabled":
-            // (item.view as! NSButton).boolState = Defaults[.cwxEnabled]
-            break
-          case "addPan", "VoltageTemp":
-            break
-          case "NSToolbarFlexibleSpaceItem", "NSToolbarSpaceItem":
-            break
-          default:
-            Swift.print("\(item.itemIdentifier.rawValue)")
-            fatalError()
+        switch item.itemIdentifier.rawValue {
+        case "tnfsEnabled":
+          item.isEnabled = enable
+          if enable { (item.view as! NSButton).boolState = Defaults[.tnfsEnabled] }
+        case "markersEnabled":
+          item.isEnabled = enable
+          if enable { (item.view as! NSButton).boolState = Defaults[.markersEnabled] }
+        case "lineoutGain":
+          item.isEnabled = enable
+          if enable { (item.view as! NSSlider).integerValue = self._api.radio!.lineoutGain }
+        case "headphoneGain":
+          item.isEnabled = enable
+          if enable { (item.view as! NSSlider).integerValue = self._api.radio!.headphoneGain }
+        case "macAudioEnabled":
+          item.isEnabled = enable
+          if enable { (item.view as! NSButton).boolState = Defaults[.macAudioEnabled] }
+        case "lineoutMute":
+          item.isEnabled = enable
+          if enable { (item.view as! NSButton).boolState = self._api.radio!.lineoutMute }
+        case "headphoneMute":
+          item.isEnabled = enable
+          if enable { (item.view as! NSButton).boolState = self._api.radio!.headphoneMute }
+        case "fdxEnabled":
+          item.isEnabled = enable
+          if enable { (item.view as! NSButton).boolState = Defaults[.fullDuplexEnabled] }
+        case "cwxEnabled":
+//          item.isEnabled = enabled
+//          if enabled { (item.view as! NSButton).boolState = Defaults[.cwxEnabled] }
+          break
+        case "sideEnabled" :
+          if sideAlso {
+            item.isEnabled = enable
+            if enable { (item.view as! NSButton).boolState = Defaults[.sideViewOpen] }
           }
+
+        case "addPan", "VoltageTemp" :
+          break
+        case "NSToolbarFlexibleSpaceItem", "NSToolbarSpaceItem":
+          break
+        default:
+          Swift.print("\(item.itemIdentifier.rawValue)")
+          fatalError()
         }
-        self.splitViewItems[1].isCollapsed = !Defaults[.sideViewOpen]
       }
     }
   }
@@ -557,14 +680,16 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     updateWindowTitle(radio)
     
     // update the toolbar items
-    updateToolbar(true)
+    updateToolbar(true, sideAlso: true)
     
-    // show/hide the Side view
-    DispatchQueue.main.async { [unowned self] in
-      self.splitViewItems[1].isCollapsed = !Defaults[.sideViewOpen]
+    // delay the opening of the side view (allows Slice(s) to be instantiated, if any)
+    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds( 1 )) { [weak self] in
+
+      // FIXME: Is this a hack?
+      
+      // show/hide the Side view
+      self?.sideView( Defaults[.sideViewOpen] ? .open : .close)
     }
-    
-    
   }
   /// Process .radioWillBeRemoved Notification
   ///
@@ -584,12 +709,6 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
 
     // remove all objects on Radio
     radio.removeAll()
-    
-    if Defaults[.sideViewOpen] {
-      DispatchQueue.main.async { [unowned self] in
-        self.splitViewItems[1].isCollapsed = true
-      }
-    }
   }
   /// Process .radioHasBeenRemoved Notification
   ///
@@ -634,7 +753,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     switch reason {
       
     case .normal:
-//      closeRadio()
+      closeRadio()
       return
       
     case .error(let errorMessage):
@@ -700,6 +819,22 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   /// Stop the active Radio
   ///
   func closeRadio() {
+    // close the Side view (if open)
+    sideView(.close)
+    
+    // close the Profiles window (if open)
+    profilesWindow(.close)
+    
+    // close the Preferences window (if open)
+    preferencesWindow(.close)
+    
+    // turn off the Parameter Monitor
+    DispatchQueue.main.async { [unowned self] in
+      // turn off the Voltage/Temperature monitor
+      let toolbar = self.view.window!.toolbar!
+      let monitor = toolbar.items.findElement({  $0.itemIdentifier.rawValue == "VoltageTemp"} ) as! ParameterMonitor
+      monitor.deactivate()
+    }
     
     // perform an orderly shutdown of all the components
     _api.shutdown(reason: .normal)

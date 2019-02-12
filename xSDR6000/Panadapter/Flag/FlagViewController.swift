@@ -175,6 +175,10 @@ final class FlagViewController       : NSViewController, NSTextFieldDelegate, NS
     
     view.translatesAutoresizingMaskIntoConstraints = false
 
+    if Defaults[.flagBorderEnabled] {
+      view.layer?.borderColor = NSColor.darkGray.cgColor
+      view.layer?.borderWidth = 0.5
+    }
     // populate the choices
     _rxAntPopUp.addItems(withTitles: slice!.rxAntList)
     _txAntPopUp.addItems(withTitles: slice!.txAntList)

@@ -43,28 +43,17 @@ final class PanafallButtonViewController    : NSViewController {
   static let kTimeout                       = 10
   
   // ----------------------------------------------------------------------------
-  // MARK: - Internal properties
-  
-  // KVO-properties for popovers
-  @objc dynamic weak var panadapter         : Panadapter?
-  @objc dynamic weak var waterfall          : Waterfall?
-  @objc dynamic var fillLevel               : Int {
-    get { return Defaults[.spectrumFillLevel] }
-    set { Defaults[.spectrumFillLevel] = newValue } }
-  @objc dynamic var gradientNames           : [String] {
-    return WaterfallViewController.gradientNames }
-  
-  // ----------------------------------------------------------------------------
   // MARK: - Private properties
 
-  @IBOutlet private weak var buttonView             : PanafallButtonView!
+  @IBOutlet private weak var buttonView     : PanafallButtonView!
   
-  private var _bandwidth                    : Int { return panadapter!.bandwidth }
+  private weak var _panadapter              : Panadapter?
+  private weak var _waterfall               : Waterfall?
+  private var _bandwidth                    : Int { return _panadapter!.bandwidth }
   private var _popover                      : NSPopover?
   
   private let kPanafallEmbedIdentifier      = "PanafallEmbed"
   private let kBandPopoverIdentifier        = "BandPopover"
-  private let kBandPopoverNewIdentifier     = "BandPopoverNew"
   private let kAntennaPopoverIdentifier     = "AntennaPopover"
   private let kDisplayPopoverIdentifier     = "DisplayPopover"
   private let kDaxPopoverIdentifier         = "DaxPopover"
@@ -96,25 +85,25 @@ final class PanafallButtonViewController    : NSViewController {
       let panafallViewController = segue.destinationController as? PanafallViewController
       
       // pass needed parameters
-      panafallViewController!.configure(panadapter: panadapter)
+      panafallViewController!.configure(panadapter: _panadapter)
       
       // save a reference to the panadapterViewController & waterfallViewController
       let panadapterViewController = panafallViewController!.splitViewItems[kPanadapterSplitViewItem].viewController as? PanadapterViewController
       let waterfallViewController = panafallViewController!.splitViewItems[kWaterfallSplitViewItem].viewController as? WaterfallViewController
       
       // pass needed parameters
-      panadapterViewController!.configure(panadapter: panadapter)
-      waterfallViewController!.configure(panadapter: panadapter)
+      panadapterViewController!.configure(panadapter: _panadapter)
+      waterfallViewController!.configure(panadapter: _panadapter)
       
     case kDisplayPopoverIdentifier:
       
-      // pass the Popovers a reference to this controller
-      (segue.destinationController as! NSViewController).representedObject = self
+      // pass needed parameters
+      (segue.destinationController as! DisplayViewController).configure(panadapter: _panadapter!, waterfall: _waterfall!)
       
-    case kAntennaPopoverIdentifier, kBandPopoverIdentifier, kBandPopoverNewIdentifier, kDaxPopoverIdentifier:
+    case kAntennaPopoverIdentifier, kBandPopoverIdentifier, kDaxPopoverIdentifier:
       
       // pass the Popovers a reference to the panadapter
-      (segue.destinationController as! NSViewController).representedObject = panadapter
+      (segue.destinationController as! NSViewController).representedObject = _panadapter
       
     default:
       break
@@ -129,8 +118,8 @@ final class PanafallButtonViewController    : NSViewController {
   /// - Parameter panadapter:               a Panadapter reference
   ///
   func configure(panadapter: Panadapter?, waterfall: Waterfall?) {
-    self.panadapter = panadapter
-    self.waterfall = waterfall
+    self._panadapter = panadapter
+    self._waterfall = waterfall
   }
   
   // ----------------------------------------------------------------------------
@@ -143,15 +132,15 @@ final class PanafallButtonViewController    : NSViewController {
   @IBAction func zoomPlus(_ sender: Any) {
     
     // are we near the minimum?
-    if _bandwidth / 2 > panadapter!.minBw {
+    if _bandwidth / 2 > _panadapter!.minBw {
       
       // NO, make the bandwidth half of its current value
-      panadapter!.bandwidth = _bandwidth / 2
+      _panadapter!.bandwidth = _bandwidth / 2
       
     } else {
       
       // YES, make the bandwidth the minimum value
-      panadapter!.bandwidth = panadapter!.minBw
+      _panadapter!.bandwidth = _panadapter!.minBw
     }
   }
   /// Zoom - (increase the bandwidth)
@@ -160,15 +149,15 @@ final class PanafallButtonViewController    : NSViewController {
   ///
   @IBAction func zoomMinus(_ sender: Any) {
     // are we near the maximum?
-    if _bandwidth * 2 > panadapter!.maxBw {
+    if _bandwidth * 2 > _panadapter!.maxBw {
       
       // YES, make the bandwidth maximum value
-      panadapter!.bandwidth = panadapter!.maxBw
+      _panadapter!.bandwidth = _panadapter!.maxBw
       
     } else {
       
       // NO, make the bandwidth twice its current value
-      panadapter!.bandwidth = _bandwidth * 2
+      _panadapter!.bandwidth = _bandwidth * 2
     }
   }
   /// Zoom to Segment
@@ -176,14 +165,14 @@ final class PanafallButtonViewController    : NSViewController {
   /// - Parameter sender:           the sender
   ///
   @IBAction func zoomSegment(_ sender: NSButton) {
-    panadapter!.segmentZoomEnabled = !panadapter!.segmentZoomEnabled
+    _panadapter!.segmentZoomEnabled = !_panadapter!.segmentZoomEnabled
   }
   /// Zoom to Band
   ///
   /// - Parameter sender:           the sender
   ///
   @IBAction func zoomBand(_ sender: NSButton) {
-    panadapter!.bandZoomEnabled = !panadapter!.bandZoomEnabled
+    _panadapter!.bandZoomEnabled = !_panadapter!.bandZoomEnabled
   }
   
   /// Close this Panafall
@@ -195,7 +184,7 @@ final class PanafallButtonViewController    : NSViewController {
     buttonView.removeTrackingArea()
     
     // tell the Radio to remove this Panafall
-    panadapter!.remove()
+    _panadapter!.remove()
   }
   /// Create a new Slice (if possible)
   ///
@@ -204,15 +193,24 @@ final class PanafallButtonViewController    : NSViewController {
   @IBAction func rx(_ sender: NSButton) {
     
     // tell the Radio (hardware) to add a Slice on this Panadapter
-    xLib6000.Slice.create(panadapter: panadapter!)
+    xLib6000.Slice.create(panadapter: _panadapter!)
   }
   /// Create a new Tnf
   ///
   /// - Parameter sender:           the sender
   ///
   @IBAction func tnf(_ sender: NSButton) {
+    var freq = 0
     
+    if let slice = Slice.findActive(with: _panadapter!.id) {
+      // put the Tnf in the center of the active Slice
+      freq = slice.frequency + (slice.filterHigh - slice.filterLow) / 2
+
+    } else {
+      // put the Tnf in the center of the Panadapter
+      freq = _panadapter!.center
+    }
     // tell the Radio (hardware) to add a Tnf on this Panadapter
-    Tnf.create(frequency: "")
+    Tnf.create(frequency: freq.hzToMhz)
   }
 }

@@ -39,12 +39,7 @@ final class NetworkPrefsViewController: NSViewController {
     
     view.translatesAutoresizingMaskIntoConstraints = false
     
-//    // check for an active radio
-//    if let radio = Api.sharedInstance.radio { _radio = radio ; enableControls(true) }
-//
-//    // start receiving notifications
-//    addNotifications()
-
+    // begin observing properties
     addObservations()
   }
 
@@ -77,33 +72,6 @@ final class NetworkPrefsViewController: NSViewController {
     // no action required
     // required for DHCP / STATIC buttons to function as "Radio Buttons"
   }
-  
-  // ----------------------------------------------------------------------------
-  // MARK: - Private  methods
-  
-  /// Enable / Disable controls
-  ///
-  /// - Parameter status:             true = enable
-  ///
-//  private func enableControls(_ state: Bool = true) {
-//
-//    if state {
-//      addObservations()
-//    } else {
-//      removeObservations()
-//    }
-//    DispatchQueue.main.async { [weak self] in
-//      self?._staticRadioButton.isEnabled = state
-//      self?._dhcpRadioButton.isEnabled = state
-//
-//      self?._staticIpAddressTextField.isEnabled = state
-//      self?._staticMaskTextField.isEnabled = state
-//      self?._staticGatewayTextField.isEnabled = state
-//      self?._enforcePrivateIpCheckbox.isEnabled = state
-//
-//      self?._applyButton.isEnabled = state
-//    }
-//  }
 
   /// Change between DHCP and Static
   ///
@@ -180,38 +148,4 @@ final class NetworkPrefsViewController: NSViewController {
       }
     }
   }
-
-  // ----------------------------------------------------------------------------
-  // MARK: - Notification Methods
-  
-  /// Add subscriptions to Notifications
-  ///
-//  private func addNotifications() {
-//
-//    NC.makeObserver(self, with: #selector(radioHasBeenAdded(_:)), of: .radioHasBeenAdded)
-//
-//    NC.makeObserver(self, with: #selector(radioWillBeRemoved(_:)), of: .radioWillBeRemoved)
-//  }
-  /// Process .radioHasBeenAdded Notification
-  ///
-  /// - Parameter note:             a Notification instance
-  ///
-//  @objc private func radioHasBeenAdded(_ note: Notification) {
-//
-//    _radio = note.object as? Radio
-//
-//    // enable controls
-//    enableControls()
-//  }
-  /// Process .radioWillBeRemoved Notification
-  ///
-  /// - Parameter note:             a Notification instance
-  ///
-//  @objc private func radioWillBeRemoved(_ note: Notification) {
-//
-//    // disable controls
-//    enableControls(false)
-//
-//    _radio = nil
-//  }
 }

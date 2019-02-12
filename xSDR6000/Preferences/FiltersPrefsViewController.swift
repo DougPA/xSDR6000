@@ -32,38 +32,47 @@ final class FiltersPrefsViewController: NSViewController {
     
     view.translatesAutoresizingMaskIntoConstraints = false
     
-//    // check for an active radio
-//    if let radio = Api.sharedInstance.radio { _radio = radio ; setControlStatus(true) }
-//
-//    // start receiving notifications
-//    addNotifications()
-    
+    // begin observing properties
     addObservations()
   }
-  
+
   // ----------------------------------------------------------------------------
-  // MARK: - Private methods
+  // MARK: - Action methods
   
-  /// Enable / Disable controls
+  /// Respond to one of the sliders
   ///
-  /// - Parameter status:             true = enable
+  /// - Parameter sender:             the slider
   ///
-//  private func setControlStatus(_ status: Bool) {
-//
-//    if status {
-//      addObservations()
-//    } else {
-//      removeObservations()
-//    }
-//    DispatchQueue.main.async { [weak self] in
-//      self?._voiceSlider.isEnabled = status
-//      self?._cwSlider.isEnabled = status
-//      self?._digitalSlider.isEnabled = status
-//      self?._voiceAutoCheckbox.isEnabled = status
-//      self?._cwAutoCheckbox.isEnabled = status
-//      self?._digitalAutoCheckbox.isEnabled = status
-//    }
-//  }
+  @IBAction func sliders(_ sender: NSSlider) {
+    
+    switch sender.identifier?.rawValue {
+    case "VoiceSlider":
+      _radio!.filterVoiceLevel = sender.integerValue
+    case "CwSlider":
+      _radio!.filterCwLevel = sender.integerValue
+    case "DigitalSlider":
+      _radio!.filterDigitalLevel = sender.integerValue
+    default:
+      fatalError()
+    }
+  }
+  /// Respond to one of the checkboxes
+  ///
+  /// - Parameter sender:             the checkbox
+  ///
+  @IBAction func checkBoxes(_ sender: NSButton) {
+    
+    switch sender.identifier?.rawValue {
+    case "VoiceAuto":
+      _radio!.filterVoiceAutoEnabled = sender.boolState
+    case "CwAuto":
+      _radio!.filterCwAutoEnabled = sender.boolState
+    case "DigitalAuto":
+      _radio!.filterDigitalAutoEnabled = sender.boolState
+    default:
+      fatalError()
+    }
+  }
 
   // ----------------------------------------------------------------------------
   // MARK: - Observation methods
@@ -81,16 +90,6 @@ final class FiltersPrefsViewController: NSViewController {
       _radio!.observe(\.filterDigitalAutoEnabled, options: [.initial, .new], changeHandler: changeHandler(_:_:))
     ]
   }
-  /// Remove observations
-  ///
-//  func removeObservations() {
-//
-//    // invalidate each observation
-//    _observations.forEach { $0.invalidate() }
-//
-//    // remove the tokens
-//    _observations.removeAll()
-//  }
   /// Process observations
   ///
   /// - Parameters:
@@ -108,38 +107,4 @@ final class FiltersPrefsViewController: NSViewController {
       self?._digitalAutoCheckbox.boolState = radio.filterDigitalAutoEnabled
     }
   }
-
-  // ----------------------------------------------------------------------------
-  // MARK: - Notification Methods
-  
-  /// Add subscriptions to Notifications
-  ///
-//  private func addNotifications() {
-//
-//    NC.makeObserver(self, with: #selector(radioHasBeenAdded(_:)), of: .radioHasBeenAdded)
-//
-//    NC.makeObserver(self, with: #selector(radioWillBeRemoved(_:)), of: .radioWillBeRemoved)
-//  }
-  /// Process .radioHasBeenAdded Notification
-  ///
-  /// - Parameter note:             a Notification instance
-  ///
-//  @objc private func radioHasBeenAdded(_ note: Notification) {
-//
-//    _radio = note.object as? Radio
-//
-//    // enable controls
-//    setControlStatus(true)
-//  }
-  /// Process .radioWillBeRemoved Notification
-  ///
-  /// - Parameter note:             a Notification instance
-  ///
-//  @objc private func radioWillBeRemoved(_ note: Notification) {
-//    
-//    // disable controls
-//    setControlStatus(false)
-//
-//    _radio = nil
-//  }
 }

@@ -31,6 +31,8 @@ final class EqViewController                : NSViewController {
   @IBOutlet private weak var slider6        : NSSlider!
   @IBOutlet private weak var slider7        : NSSlider!
   
+  private var _radio                        : Radio? { return Api.sharedInstance.radio }
+  
   private var _equalizerRx                  : Equalizer!                    // Rx Equalizer
   private var _equalizerTx                  : Equalizer!                    // Tx Equalizer
   private var _eq                           : Equalizer!                    // Current Equalizer
@@ -42,13 +44,16 @@ final class EqViewController                : NSViewController {
     super.viewDidLoad()
     
     view.translatesAutoresizingMaskIntoConstraints = false
-//    view.layer?.backgroundColor = NSColor.lightGray.cgColor
     
-    // disable all controls
-    setControlState(false)
-    
-    // begin receiving notifications
-    addNotifications()
+    // get a reference to each equalizer
+    _equalizerRx = _radio!.equalizers[.rxsc]!
+    _equalizerTx = _radio!.equalizers[.txsc]!
+
+    // save a reference to the selected Equalizer
+    _eq = (Defaults[.eqRxSelected] ? _equalizerRx : _equalizerTx)
+
+    // begin observing parameters
+    addObservations()
   }
   
   // ----------------------------------------------------------------------------
@@ -110,32 +115,6 @@ final class EqViewController                : NSViewController {
       fatalError()
     }
   }
-  
-  // ----------------------------------------------------------------------------
-  // MARK: - Private methods
-  
-  /// Enable / Disable all controls
-  ///
-  /// - Parameter state:              true = enable
-  ///
-  private func setControlState(_ state: Bool) {
-    
-    DispatchQueue.main.async { [unowned self] in
-      // Buttons
-      self.rxButton.isEnabled = state
-      self.txButton.isEnabled = state
-      self.onButton.isEnabled = state
-      // Sliders
-      self.slider0.isEnabled = state
-      self.slider1.isEnabled = state
-      self.slider2.isEnabled = state
-      self.slider3.isEnabled = state
-      self.slider4.isEnabled = state
-      self.slider5.isEnabled = state
-      self.slider6.isEnabled = state
-      self.slider7.isEnabled = state
-    }
-  }
 
   // ----------------------------------------------------------------------------
   // MARK: - Observation methods
@@ -170,20 +149,6 @@ final class EqViewController                : NSViewController {
       _observations.append( tx.observe(\.eqEnabled, options: [.initial, .new], changeHandler: eqChange) )
     }
   }
-  /// Invalidate observations (optionally remove)
-  ///
-  /// - Parameters:
-  ///   - observations:                 an array of NSKeyValueObservation
-  ///   - remove:                       remove all enabled
-  ///
-  func invalidateObservations(remove: Bool = true) {
-    
-    // invalidate each observation
-    _observations.forEach { $0.invalidate() }
-    
-    // if specified, remove the tokens
-    if remove { _observations.removeAll() }
-  }
   /// Respond to changes in parameters
   ///
   /// - Parameters:
@@ -215,54 +180,5 @@ final class EqViewController                : NSViewController {
         self.slider7.integerValue = eq.level8000Hz
       }
     }
-  }
-  
-  // ----------------------------------------------------------------------------
-  // MARK: - Notification Methods
-  
-  /// Add subscriptions to Notifications
-  ///
-  private func addNotifications() {
-    
-    NC.makeObserver(self, with: #selector(radioHasBeenAdded(_:)), of: .radioHasBeenAdded)
-    
-    NC.makeObserver(self, with: #selector(radioWillBeRemoved(_:)), of: .radioWillBeRemoved)
-  }
-  /// Process .radioHasBeenAdded Notification
-  ///
-  /// - Parameter note: a Notification instance
-  ///
-  @objc private func radioHasBeenAdded(_ note: Notification) {
-  
-    if let radio = note.object as? Radio {
-      // get a reference to each equalizer
-      _equalizerRx = radio.equalizers[.rxsc]
-      _equalizerTx = radio.equalizers[.txsc]
-      
-      // begin observing parameters
-      addObservations()
-      
-      // save a reference to the selected Equalizer
-      _eq = (Defaults[.eqRxSelected] ? _equalizerRx : _equalizerTx)!
-      
-      // enable all controls
-      setControlState(true)
-    }
-  }
-  /// Process .radioWillBeRemoved Notification
-  ///
-  /// - Parameter note: a Notification instance
-  ///
-  @objc private func radioWillBeRemoved(_ note: Notification) {
-  
-    // disable all controls
-    setControlState(false)
-
-    // invalidate & remove observations
-    invalidateObservations()
-    
-    _equalizerRx = nil
-    _equalizerTx = nil
-    _eq = nil
   }
 }

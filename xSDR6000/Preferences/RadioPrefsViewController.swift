@@ -39,6 +39,7 @@ final class RadioPrefsViewController: NSViewController {
     
     view.translatesAutoresizingMaskIntoConstraints = false
     
+    // begin observing properties
     addObservations()
   }
   
@@ -77,6 +78,8 @@ final class RadioPrefsViewController: NSViewController {
     case "RemoteOn":
       _radio?.remoteOnEnabled = sender.boolState
       
+      // TODO:
+      
 //    case "FlexControl":
 //      _radio?.flexControlEnabled = sender.boolState
       
@@ -84,39 +87,6 @@ final class RadioPrefsViewController: NSViewController {
       fatalError()
     }
   }
-
-  // ----------------------------------------------------------------------------
-  // MARK: - Private methods
-  
-  /// Enable / Disable controls
-  ///
-  /// - Parameter status:             true = enable
-  ///
-//  private func enableControls(_ state: Bool = true) {
-//
-//    if state {
-//
-//      addObservations()
-//    } else {
-//
-//      removeObservations()
-//    }
-//    DispatchQueue.main.async { [weak self] in
-//      self?._serialNumberTextField.isEnabled = state
-//      self?._hwVersionTextField.isEnabled = state
-//      self?._optionsTextField.isEnabled = state
-//      self?._modelTextField.isEnabled = state
-//      self?._callsignTextField.isEnabled = state
-//      self?._nicknameTextField.isEnabled = state
-//
-//      self?._remoteOnEnabledCheckbox.isEnabled = state
-//      //      self._flexControlEnabledCheckbox = radio.flex
-//
-//      self?._modelRadioButton.isEnabled = state
-//      self?._callsignRadioButton.isEnabled = state
-//      self?._nicknameRadioButton.isEnabled = state
-//    }
-//  }
   
   // ----------------------------------------------------------------------------
   // MARK: - Observation methods
@@ -136,16 +106,6 @@ final class RadioPrefsViewController: NSViewController {
 //      _radio!.observe(\.flexControlEnabled, options: [.initial, .new], changeHandler: radioHandler(_:_:)),
       _radio!.observe(\.radioScreenSaver, options: [.initial, .new], changeHandler: radioHandler(_:_:))
     ]
-  }
-  /// Remove observations
-  ///
-  func removeObservations() {
-    
-    // invalidate each observation
-    _observations.forEach { $0.invalidate() }
-    
-    // remove the tokens
-    _observations.removeAll()
   }
   /// Process observations
   ///
@@ -171,38 +131,4 @@ final class RadioPrefsViewController: NSViewController {
       self?._nicknameRadioButton.boolState = (radio.radioScreenSaver == "nickname")
     }
   }
-
-  // ----------------------------------------------------------------------------
-  // MARK: - Notification Methods
-  
-  /// Add subscriptions to Notifications
-  ///
-//  private func addNotifications() {
-//
-//    NC.makeObserver(self, with: #selector(radioHasBeenAdded(_:)), of: .radioHasBeenAdded)
-//
-//    NC.makeObserver(self, with: #selector(radioWillBeRemoved(_:)), of: .radioWillBeRemoved)
-//  }
-  /// Process .radioHasBeenAdded Notification
-  ///
-  /// - Parameter note:             a Notification instance
-  ///
-//  @objc private func radioHasBeenAdded(_ note: Notification) {
-//
-//    _radio = note.object as? Radio
-//
-//    // enable controls
-//    enableControls()
-//  }
-  /// Process .radioWillBeRemoved Notification
-  ///
-  /// - Parameter note:             a Notification instance
-  ///
-//  @objc private func radioWillBeRemoved(_ note: Notification) {
-//
-//    // disable controls
-//    enableControls(false)
-//
-//    _radio = nil
-//  }
 }

@@ -127,6 +127,7 @@ final class PanafallViewController          : NSSplitViewController, NSGestureRe
   ///
   @objc private func rightClick(_ gr: NSClickGestureRecognizer) {
     var item: NSMenuItem!
+    var index = 0
     
     // get the "click" coordinates and convert to this View
     let mouseLocation = gr.location(in: splitView)
@@ -142,14 +143,14 @@ final class PanafallViewController          : NSSplitViewController, NSGestureRe
     if let slice = slice {
       
       // YES, mouse is in a Slice
-      item = menu.insertItem(withTitle: kRemoveSlice, action: #selector(contextMenu(_:)), keyEquivalent: "", at: 0)
+      item = menu.insertItem(withTitle: kRemoveSlice, action: #selector(contextMenu(_:)), keyEquivalent: "", at: index)
       item.representedObject = slice
       item.target = self
       
     } else {
       
       // NO, mouse is not in a Slice
-      item = menu.insertItem(withTitle: kCreateSlice, action: #selector(contextMenu(_:)), keyEquivalent: "", at: 0)
+      item = menu.insertItem(withTitle: kCreateSlice, action: #selector(contextMenu(_:)), keyEquivalent: "", at: index)
       item.representedObject = NSNumber(value: mouseFrequency)
       item.target = self
     }
@@ -157,29 +158,47 @@ final class PanafallViewController          : NSSplitViewController, NSGestureRe
     // is the Frequency inside a Tnf?
     let tnf = Tnf.findBy(frequency: mouseFrequency, minWidth: Int( CGFloat(_bandwidth) * kTnfFindWidth ))
     if let tnf = tnf {
-      
       // YES, mouse is in a TNF
-      item = menu.insertItem(withTitle: kRemoveTnf, action: #selector(contextMenu(_:)), keyEquivalent: "", at: 1)
+      index += 1
+      menu.insertItem(NSMenuItem.separator(), at: index)
+
+      index += 1
+      item = menu.insertItem(withTitle: tnf.frequency.hzToMhz + " MHz", action: #selector(noAction(_:)), keyEquivalent: "", at: index)
+
+      index += 1
+      item = menu.insertItem(withTitle: "Width: \(tnf.width) Hz", action: #selector(noAction(_:)), keyEquivalent: "", at: index)
+
+      index += 1
+      menu.insertItem(NSMenuItem.separator(), at: 4)
+      
+      index += 1
+      item = menu.insertItem(withTitle: kRemoveTnf, action: #selector(contextMenu(_:)), keyEquivalent: "", at: index)
       item.representedObject = tnf
       item.target = self
       
+      index += 1
       menu.insertItem(NSMenuItem.separator(), at: 2)
-      item = menu.insertItem(withTitle: kPermanentTnf, action: #selector(contextMenu(_:)), keyEquivalent: "", at: 3)
+
+      index += 1
+      item = menu.insertItem(withTitle: kPermanentTnf, action: #selector(contextMenu(_:)), keyEquivalent: "", at: index)
       item.state = tnf.permanent ? NSControl.StateValue.on : NSControl.StateValue.off
       item.representedObject = tnf
       item.target = self
       
-      item = menu.insertItem(withTitle: kNormalTnf, action: #selector(contextMenu(_:)), keyEquivalent: "", at: 4)
+      index += 1
+      item = menu.insertItem(withTitle: kNormalTnf, action: #selector(contextMenu(_:)), keyEquivalent: "", at: index)
       item.state = (tnf.depth == Tnf.Depth.normal.rawValue) ? NSControl.StateValue.on : NSControl.StateValue.off
       item.representedObject = tnf
       item.target = self
       
-      item = menu.insertItem(withTitle: kDeepTnf, action: #selector(contextMenu(_:)), keyEquivalent: "", at: 5)
+      index += 1
+      item = menu.insertItem(withTitle: kDeepTnf, action: #selector(contextMenu(_:)), keyEquivalent: "", at: index)
       item.state = (tnf.depth == Tnf.Depth.deep.rawValue) ? NSControl.StateValue.on : NSControl.StateValue.off
       item.representedObject = tnf
       item.target = self
       
-      item = menu.insertItem(withTitle: kVeryDeepTnf, action: #selector(contextMenu(_:)), keyEquivalent: "", at: 6)
+      index += 1
+      item = menu.insertItem(withTitle: kVeryDeepTnf, action: #selector(contextMenu(_:)), keyEquivalent: "", at: index)
       item.state = (tnf.depth == Tnf.Depth.veryDeep.rawValue) ? NSControl.StateValue.on : NSControl.StateValue.off
       item.representedObject = tnf
       item.target = self
@@ -187,7 +206,8 @@ final class PanafallViewController          : NSSplitViewController, NSGestureRe
     } else {
       
       // NO, mouse is not in a TNF
-      item = menu.insertItem(withTitle: kCreateTnf, action: #selector(contextMenu(_:)), keyEquivalent: "", at: 1)
+      index += 1
+      item = menu.insertItem(withTitle: kCreateTnf, action: #selector(contextMenu(_:)), keyEquivalent: "", at: index)
       item.representedObject = NSNumber(value: Float(mouseFrequency))
       item.target = self
     }
@@ -234,6 +254,12 @@ final class PanafallViewController          : NSSplitViewController, NSGestureRe
     default:
       break
     }
+  }
+  /// Perform the appropriate action
+  ///
+  /// - Parameter sender: a MenuItem
+  ///
+  @objc private func noAction(_ sender: NSMenuItem) {
   }
   /// Incr/decr the Slice frequency (scroll panafall at edges)
   ///

@@ -30,7 +30,6 @@ final class PCWPrefsViewController                : NSViewController {
   private var _transmit                     : Transmit? { return _radio!.transmit }
   private var _observations                 = [NSKeyValueObservation]()
   
-
   // ----------------------------------------------------------------------------
   // MARK: - Overridden methods
   
@@ -39,18 +38,30 @@ final class PCWPrefsViewController                : NSViewController {
     
     view.translatesAutoresizingMaskIntoConstraints = false
     
-//    // check for an active radio
-//    if let radio = Api.sharedInstance.radio { _radio = radio ; setControlStatus(true) }
-//
-//    // start receiving notifications
-//    addNotifications()
-    
+    // begin observing properties
     addObservations()
   }
 
   // ----------------------------------------------------------------------------
   // MARK: - Action methods
   
+  /// Respond to the Iambic radio buttons
+  ///
+  /// - Parameter sender:             the button
+  ///
+  @IBAction func micCheckBoxes(_ sender: NSButton) {
+
+    switch sender.identifier?.rawValue {
+    case "MicBias":
+      _transmit!.micBiasEnabled = sender.boolState
+    case "MicBoost":
+      _transmit!.micBoostEnabled = sender.boolState
+    case "MetInRx":
+      _transmit!.metInRxEnabled = sender.boolState
+    default:
+      fatalError()
+    }
+  }
   /// Respond to the Iambic radio buttons
   ///
   /// - Parameter sender:             the button
@@ -81,38 +92,6 @@ final class PCWPrefsViewController                : NSViewController {
       fatalError()
     }
   }
-  
-  // ----------------------------------------------------------------------------
-  // MARK: - Private methods
-  
-  /// Enable / Disable controls
-  ///
-  /// - Parameter status:             true = enable
-  ///
-//  private func setControlStatus(_ status: Bool) {
-//
-//    if status {
-//      addObservations()
-//    } else {
-//      removeObservations()
-//    }
-//    DispatchQueue.main.async { [weak self] in
-//      self?._iambicCheckbox.isEnabled = status
-//      self?._swapPaddlesCheckbox.isEnabled = status
-//      self?._cwxSyncCheckbox.isEnabled = status
-//
-//      self?._micBiasCheckbox.isEnabled = status
-//      self?._metInRxCheckbox.isEnabled = status
-//      self?._micBoostCheckbox.isEnabled = status
-//
-//      self?._cwLowerRadioButton.isEnabled = status
-//      self?._cwUpperRadioButton.isEnabled = status
-//      self?._iambicARadioButton.isEnabled = status
-//      self?._iambicBRadioButton.isEnabled = status
-//
-//      self?._rttyMarkTextField.isEnabled = status
-//    }
-//  }
 
   // ----------------------------------------------------------------------------
   // MARK: - Observation methods
@@ -132,16 +111,6 @@ final class PCWPrefsViewController                : NSViewController {
       _radio!.observe(\.rttyMark, options: [.initial, .new], changeHandler: radioHandler(_:_:))
     ]
   }
-  /// Remove observations
-  ///
-//  func removeObservations() {
-//
-//    // invalidate each observation
-//    _observations.forEach { $0.invalidate() }
-//
-//    // remove the tokens
-//    _observations.removeAll()
-//  }
   /// Process observations
   ///
   /// - Parameters:
@@ -189,38 +158,4 @@ final class PCWPrefsViewController                : NSViewController {
       self._rttyMarkTextField.integerValue = radio.rttyMark
     }
   }
-
-  // ----------------------------------------------------------------------------
-  // MARK: - Notification Methods
-  
-  /// Add subscriptions to Notifications
-  ///
-//  private func addNotifications() {
-//
-//    NC.makeObserver(self, with: #selector(radioHasBeenAdded(_:)), of: .radioHasBeenAdded)
-//
-//    NC.makeObserver(self, with: #selector(radioWillBeRemoved(_:)), of: .radioWillBeRemoved)
-//  }
-  /// Process .radioHasBeenAdded Notification
-  ///
-  /// - Parameter note:             a Notification instance
-  ///
-//  @objc private func radioHasBeenAdded(_ note: Notification) {
-//
-//    _radio = note.object as? Radio
-//
-//    // enable controls
-//    setControlStatus(true)
-//  }
-  /// Process .radioWillBeRemoved Notification
-  ///
-  /// - Parameter note:             a Notification instance
-  ///
-//  @objc private func radioWillBeRemoved(_ note: Notification) {
-//
-//    // disable controls
-//    setControlStatus(false)
-//
-//    _radio = nil
-//  }
 }

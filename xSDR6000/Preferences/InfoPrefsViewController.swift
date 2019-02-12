@@ -54,14 +54,15 @@ final class InfoPrefsViewController: NSViewController, NSTableViewDelegate, NSTa
     // populate the App table
     _tableView.delegate = self
     _tableView.reloadData()
-//
-//    // start observing
-//    addObservations()
   }
   
   // ----------------------------------------------------------------------------
   // MARK: - Action methods
   
+  /// Respond to the Add button
+  ///
+  /// - Parameter sender:             the button
+  ///
   @IBAction func addButtton(_ sender: NSButton) {
     
     // open a dialog
@@ -69,6 +70,8 @@ final class InfoPrefsViewController: NSViewController, NSTableViewDelegate, NSTa
     panel.canChooseDirectories = false
     panel.allowedFileTypes = ["app"]
     panel.allowsOtherFileTypes = false
+    panel.allowsMultipleSelection = false
+    panel.directoryURL = FileManager.default.urls(for: .allApplicationsDirectory, in: .systemDomainMask).first!
     panel.beginSheetModal(for: view.window!, completionHandler: {(response) in
       // if something chosen
       if response == NSApplication.ModalResponse.OK {
@@ -93,7 +96,10 @@ final class InfoPrefsViewController: NSViewController, NSTableViewDelegate, NSTa
       }
     })
   }
-  
+  /// Respond to the Delete button
+  ///
+  /// - Parameter sender:             the button
+  ///
   @IBAction func deleteButton(_ sender: NSButton) {
     
     // a row must be selected
@@ -107,7 +113,10 @@ final class InfoPrefsViewController: NSViewController, NSTableViewDelegate, NSTa
       save(_array)
     }
   }
-  
+  /// Respond to one of the check boxes
+  ///
+  /// - Parameter sender:             the button
+  ///
   @IBAction func checkBoxes(_ sender: NSButton) {
     
     let row = _tableView.row(for: sender)
@@ -116,7 +125,10 @@ final class InfoPrefsViewController: NSViewController, NSTableViewDelegate, NSTa
     _array[row][sender.identifier!.rawValue] = sender.boolState
     save(_array)
   }
-  
+  /// Respond to one of the text fields
+  ///
+  /// - Parameter sender:             the text field
+  ///
   @IBAction func textFields(_ sender: NSTextField) {
     
     let row = _tableView.row(for: sender)

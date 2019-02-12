@@ -30,9 +30,8 @@ final class PhoneViewController                   : NSViewController {
   @IBOutlet private weak var _txFilterHigh        : NSTextField!
   @IBOutlet private weak var _txFilterHighStepper : NSStepper!
   
-  private var _transmit                     : Transmit?
-  
-  private let kFilterStep                   = 10
+  private var _radio                        : Radio? { return Api.sharedInstance.radio }
+  private var _observations                 = [NSKeyValueObservation]()
   
   // ----------------------------------------------------------------------------
   // MARK: - Overriden methods
@@ -41,13 +40,9 @@ final class PhoneViewController                   : NSViewController {
     super.viewDidLoad()
     
     view.translatesAutoresizingMaskIntoConstraints = false
-//    view.layer?.backgroundColor = NSColor.lightGray.cgColor
     
-    // disable all controls
-    setControlState(false)
-    
-    // begin receiving notifications
-    addNotifications()
+    // start observing properties
+    addObservations()
   }
   
   // ----------------------------------------------------------------------------
@@ -61,15 +56,15 @@ final class PhoneViewController                   : NSViewController {
     
     switch sender.identifier!.rawValue {
     case "Dexp":
-      _transmit?.companderEnabled = sender.boolState
+      _radio!.transmit!.companderEnabled = sender.boolState
     case "Vox":
-      _transmit?.voxEnabled = sender.boolState
+      _radio!.transmit!.voxEnabled = sender.boolState
     case "MicBias":
-      _transmit?.micBiasEnabled = sender.boolState
+      _radio!.transmit!.micBiasEnabled = sender.boolState
     case "MicBoost":
-      _transmit?.micBoostEnabled = sender.boolState
+      _radio!.transmit!.micBoostEnabled = sender.boolState
     case "MeterInRx":
-      _transmit?.metInRxEnabled = sender.boolState
+      _radio!.transmit!.metInRxEnabled = sender.boolState
     default:
       fatalError()
     }
@@ -82,9 +77,9 @@ final class PhoneViewController                   : NSViewController {
 
     switch sender.identifier!.rawValue {
     case "TxHigh":
-      _transmit?.txFilterHigh = sender.integerValue
+      _radio!.transmit!.txFilterHigh = sender.integerValue
     case "TxLow":
-      _transmit?.txFilterLow = sender.integerValue
+      _radio!.transmit!.txFilterLow = sender.integerValue
     default:
       fatalError()
     }
@@ -97,54 +92,22 @@ final class PhoneViewController                   : NSViewController {
 
     switch sender.identifier!.rawValue {
     case "TxHighStepper":
-      _transmit?.txFilterHigh = sender.integerValue
+      _radio!.transmit!.txFilterHigh = sender.integerValue
     case "TxLowStepper":
-      _transmit?.txFilterLow = sender.integerValue
+      _radio!.transmit!.txFilterLow = sender.integerValue
     default:
       fatalError()
-    }
-  }
-  
-  // ----------------------------------------------------------------------------
-  // MARK: - Private methods
-  
-  /// Enable / Disable all controls
-  ///
-  /// - Parameter state:              true = enable
-  ///
-  private func setControlState(_ state: Bool) {
-    
-    DispatchQueue.main.async { [unowned self] in
-      // Buttons
-      self._voxButton.isEnabled = state
-      self._dexpButton.isEnabled = state
-      self._biasButton.isEnabled = state
-      self._20dbButton.isEnabled = state
-      // Sliders
-      self._carrierSlider.isEnabled = state
-      self._voxLevelSlider.isEnabled = state
-      self._voxDelaySlider.isEnabled = state
-      self._dexpSlider.isEnabled = state
-      // TextFields
-      self._txFilterLow.isEnabled = state
-      self._txFilterHigh.isEnabled = state
-      // Steppers
-      self._txFilterLowStepper.isEnabled = state
-      self._txFilterHighStepper.isEnabled = state
     }
   }
 
   // ----------------------------------------------------------------------------
   // MARK: - Observation methods
   
-  private var _observations                 = [NSKeyValueObservation]()
-  
   /// Add observations of parameters
   ///
-  private func addObservations(_ radio: Radio) {
+  private func addObservations() {
     
-    if let transmit = radio.transmit {
-      _transmit = transmit
+    if let transmit = _radio!.transmit {
       
       _observations.append( transmit.observe(\.carrierLevel, options: [.initial, .new], changeHandler: transmitChange) )
       _observations.append( transmit.observe(\.companderEnabled, options: [.initial, .new], changeHandler: transmitChange) )
@@ -159,21 +122,7 @@ final class PhoneViewController                   : NSViewController {
       _observations.append( transmit.observe(\.voxLevel, options: [.initial, .new], changeHandler: transmitChange) )
     }
   }
-  /// Invalidate observations (optionally remove)
-  ///
-  /// - Parameters:
-  ///   - observations:                 an array of NSKeyValueObservation
-  ///   - remove:                       remove all enabled
-  ///
-  func invalidateObservations(remove: Bool = true) {
-    
-    // invalidate each observation
-    _observations.forEach { $0.invalidate() }
-    
-    // if specified, remove the tokens
-    if remove { _observations.removeAll() }
-  }
-  /// Respond to changes in parameters
+ /// Respond to changes in parameters
   ///
   /// - Parameters:
   ///   - object:                       a Transmit
@@ -185,66 +134,27 @@ final class PhoneViewController                   : NSViewController {
   ///
   private func transmitChange(_ transmit: Transmit, change: Any) {
     
-    DispatchQueue.main.async { [unowned self] in
+    DispatchQueue.main.async { [weak self] in
       // Buttons
-      self._biasButton.state = transmit.micBiasEnabled.state
-      self._dexpButton.state = transmit.companderEnabled.state
-      self._metInRxButton.state = transmit.metInRxEnabled.state
-      self._voxButton.state = transmit.voxEnabled.state
-      self._20dbButton.state = transmit.micBoostEnabled.state
+      self?._biasButton.state = transmit.micBiasEnabled.state
+      self?._dexpButton.state = transmit.companderEnabled.state
+      self?._metInRxButton.state = transmit.metInRxEnabled.state
+      self?._voxButton.state = transmit.voxEnabled.state
+      self?._20dbButton.state = transmit.micBoostEnabled.state
       
       // Sliders
-      self._carrierSlider.integerValue = transmit.carrierLevel
-      self._dexpSlider.integerValue = transmit.companderLevel
-      self._voxDelaySlider.integerValue = transmit.voxDelay
-      self._voxLevelSlider.integerValue = transmit.voxLevel
+      self?._carrierSlider.integerValue = transmit.carrierLevel
+      self?._dexpSlider.integerValue = transmit.companderLevel
+      self?._voxDelaySlider.integerValue = transmit.voxDelay
+      self?._voxLevelSlider.integerValue = transmit.voxLevel
       
       // Textfields
-      self._txFilterHigh.integerValue = transmit.txFilterHigh
-      self._txFilterLow.integerValue = transmit.txFilterLow
+      self?._txFilterHigh.integerValue = transmit.txFilterHigh
+      self?._txFilterLow.integerValue = transmit.txFilterLow
 
       // Steppers
-      self._txFilterHighStepper.integerValue = transmit.txFilterHigh
-      self._txFilterLowStepper.integerValue = transmit.txFilterLow
+      self?._txFilterHighStepper.integerValue = transmit.txFilterHigh
+      self?._txFilterLowStepper.integerValue = transmit.txFilterLow
     }
-  }
-
-  // ----------------------------------------------------------------------------
-  // MARK: - Notification Methods
-  
-  /// Add subscriptions to Notifications
-  ///
-  private func addNotifications() {
-    
-    NC.makeObserver(self, with: #selector(radioHasBeenAdded(_:)), of: .radioHasBeenAdded)
-    
-    NC.makeObserver(self, with: #selector(radioWillBeRemoved(_:)), of: .radioWillBeRemoved)
-  }
-  /// Process .radioHasBeenAdded Notification
-  ///
-  /// - Parameter note: a Notification instance
-  ///
-  @objc private func radioHasBeenAdded(_ note: Notification) {
-    
-    if let radio = note.object as? Radio {
-      
-      // begin observing parameters
-      addObservations(radio)
-
-      // enable all controls
-      setControlState(true)
-    }
-  }
-  /// Process .radioWillBeRemoved Notification
-  ///
-  /// - Parameter note: a Notification instance
-  ///
-  @objc private func radioWillBeRemoved(_ note: Notification) {
-    
-    // disable all controls
-    setControlState(false)
-    
-    // invalidate & remove observations
-    invalidateObservations()
   }
 }

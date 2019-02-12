@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import SwiftyUserDefaults
 import xLib6000
 
 final class DaxViewController: NSViewController {
@@ -29,6 +30,10 @@ final class DaxViewController: NSViewController {
     
     view.translatesAutoresizingMaskIntoConstraints = false
     
+    if Defaults[.flagBorderEnabled] {
+      view.layer?.borderColor = NSColor.darkGray.cgColor
+      view.layer?.borderWidth = 0.5
+    }
     // populate the choices
     _daxPopUp.addItems(withTitles: Api.daxChannels)
     

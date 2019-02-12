@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import SwiftyUserDefaults
 import xLib6000
 
 final class DspViewController: NSViewController {
@@ -41,6 +42,10 @@ final class DspViewController: NSViewController {
 
     view.translatesAutoresizingMaskIntoConstraints = false
     
+    if Defaults[.flagBorderEnabled] {
+      view.layer?.borderColor = NSColor.darkGray.cgColor
+      view.layer?.borderWidth = 0.5
+    }
     // start observing
     addObservations()
   }

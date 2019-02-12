@@ -86,7 +86,24 @@ class ParameterMonitor: NSToolbarItem {
       }
     }
   }
-
+  /// Deactivate this Parameter Monitor
+  ///
+  func deactivate() {
+    
+    removeObservations()
+    
+    DispatchQueue.main.async { [weak self] in
+      
+      // set the background color
+      self?.topField.backgroundColor = NSColor.systemGreen.withAlphaComponent(0.5)
+      self?.bottomField.backgroundColor = NSColor.systemGreen.withAlphaComponent(0.5)
+      
+      // set the field value
+      self?.topField.stringValue = "----"
+      self?.bottomField.stringValue = "----"
+    }
+  }
+  
   // ----------------------------------------------------------------------------
   // MARK: - Private methods
   
@@ -140,5 +157,15 @@ class ParameterMonitor: NSToolbarItem {
       // set the field value
       field.stringValue = String(format: self.formatString + " \(units)" , meter.value)
     }
+  }
+  /// Remove observations
+  ///
+  func removeObservations() {
+    
+    // invalidate each observation
+    _observations.forEach { $0.invalidate() }
+    
+    // remove the tokens
+    _observations.removeAll()
   }
 }

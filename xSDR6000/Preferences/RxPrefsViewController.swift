@@ -34,47 +34,60 @@ final class RxPrefsViewController: NSViewController {
     
     view.translatesAutoresizingMaskIntoConstraints = false
     
-//    // check for an active radio
-//    if let radio = Api.sharedInstance.radio{ _radio = radio ; setControlStatus(true) }
-//
-//    // start receiving notifications
-//    addNotifications()
+    // begin observing properties
     addObservations()
   }
 
   // ----------------------------------------------------------------------------
   // MARK: - Action  methods
   
+  /// Respond to the Calibrate buttons
+  ///
+  /// - Parameter sender:             the button
+  ///
   @IBAction func calibrate(_ sender: NSButton) {
 
     _radio?.startCalibration = true
   }
-  
-  // ----------------------------------------------------------------------------
-  // MARK: - Private methods
-  
-  /// Enable / Disable controls
+  /// Respond to one of the check boxes
   ///
-  /// - Parameter status:             true = enable
+  /// - Parameter sender:             the button
   ///
-//  private func setControlStatus(_ status: Bool) {
-//
-//    if status {
-//      addObservations()
-//    } else {
-//      removeObservations()
-//    }
-//    DispatchQueue.main.async { [weak self] in
-//      self?._calibrateButton.isEnabled = status
-//      self?._calFreqTextField.isEnabled = status
-//      self?._calOffsetTextField.isEnabled = status
-//      self?._snapTuneCheckbox.isEnabled = status
-//      //    self?._singleClickCheckbox.isEnabled = status
-//      //    self?._startSliceMinCheckbox.isEnabled = status
-//      self?._muteLocalAudioCheckbox.isEnabled = status
-//      self?._binauralAudioCheckbox.isEnabled = status
-//    }
-//  }
+  @IBAction func checkBoxes(_ sender: NSButton) {
+    
+    switch sender.identifier?.rawValue {
+    case "SnapTune":
+      // TODO:
+      break
+    case "ClickTune":
+      // TODO:
+      break
+    case "StartMinized":
+      // TODO:
+      break
+    case "MuteLocalAudio":
+      _radio!.muteLocalAudio = sender.boolState
+    case "BinauralAudio":
+      _radio!.binauralRxEnabled = sender.boolState
+    default:
+      fatalError()
+    }
+  }
+  /// Respond to one of text fields
+  ///
+  /// - Parameter sender:             the textfield
+  ///
+  @IBAction func textFields(_ sender: NSTextField) {
+    
+    switch sender.identifier?.rawValue {
+    case "CalFreq":
+      _radio!.calFreq = sender.integerValue
+    case "Offset":
+      _radio!.freqErrorPpb = sender.integerValue
+   default:
+      fatalError()
+    }
+  }
 
   // ----------------------------------------------------------------------------
   // MARK: - Observation methods
@@ -91,16 +104,6 @@ final class RxPrefsViewController: NSViewController {
       _radio!.observe(\.binauralRxEnabled, options: [.initial, .new], changeHandler: changeHandler(_:_:))
     ]
   }
-  /// Remove observations
-  ///
-//  func removeObservations() {
-//
-//    // invalidate each observation
-//    _observations.forEach { $0.invalidate() }
-//
-//    // remove the tokens
-//    _observations.removeAll()
-//  }
   /// Process observations
   ///
   /// - Parameters:
@@ -117,41 +120,4 @@ final class RxPrefsViewController: NSViewController {
       self?._binauralAudioCheckbox.boolState = radio.binauralRxEnabled
     }
   }
-
-  // ----------------------------------------------------------------------------
-  // MARK: - Notification Methods
-  
-  /// Add subscriptions to Notifications
-  ///
-//  private func addNotifications() {
-//
-//    NC.makeObserver(self, with: #selector(radioHasBeenAdded(_:)), of: .radioHasBeenAdded)
-//
-//    NC.makeObserver(self, with: #selector(radioWillBeRemoved(_:)), of: .radioWillBeRemoved)
-//  }
-  /// Process .radioHasBeenAdded Notification
-  ///
-  /// - Parameter note:             a Notification instance
-  ///
-//  @objc private func radioHasBeenAdded(_ note: Notification) {
-//
-//    if let radio = note.object as? Radio {
-//
-//      _radio = radio
-//
-//      // enable all controls
-//      setControlStatus(true)
-//    }
-//  }
-  /// Process .radioWillBeRemoved Notification
-  ///
-  /// - Parameter note:             a Notification instance
-  ///
-//  @objc private func radioWillBeRemoved(_ note: Notification) {
-//
-//    // disable all controls
-//    setControlStatus(false)
-//
-//    _radio = nil
-//  }
 }

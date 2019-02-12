@@ -408,25 +408,29 @@ final class PanadapterViewController        : NSViewController, NSGestureRecogni
   /// - Returns:              a slice or nil
   ///
   private func hitTestSlice(at freq: CGFloat, thisPanOnly: Bool = true) -> xLib6000.Slice? {
-    var slice: xLib6000.Slice?
+    var hitSlice: xLib6000.Slice?
 
-    for (_, s) in _radio!.slices {
+    // calculate a minimum width for hit testing
+    let effectiveWidth = Int( CGFloat(_bandwidth) * 0.01)
+    
+    for (_, slice) in _radio!.slices {
       
       // only Slices on this Panadapter?
-      if thisPanOnly && s.panadapterId != _panadapter!.id {
+      if thisPanOnly && slice.panadapterId != _panadapter!.id {
         
         // YES, skip this Slice
         continue
       }
-      // is the Slice within the Panadapter bandwidth?
-      if s.frequency + s.filterLow <= Int(freq) && s.frequency + s.filterHigh >= Int(freq) {
+      // is the Slice within the halfWidth?
+      let halfWidth = max(effectiveWidth, (slice.filterHigh - slice.filterLow)/2)
+      if slice.frequency - halfWidth <= Int(freq) && slice.frequency + halfWidth >= Int(freq) {
         
         // YES, save it and break out
-        slice = s
+        hitSlice = slice
         break
       }
     }
-    return slice
+    return hitSlice
   }
   /// Make a Slice active
   ///

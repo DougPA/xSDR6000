@@ -44,6 +44,10 @@ final class XritViewController: NSViewController {
     
     view.translatesAutoresizingMaskIntoConstraints = false
     
+    if Defaults[.flagBorderEnabled] {
+      view.layer?.borderColor = NSColor.darkGray.cgColor
+      view.layer?.borderWidth = 0.5
+    }
     NSEvent.addLocalMonitorForEvents(matching: .flagsChanged) {
       
       if $0.modifierFlags.contains(NSEvent.ModifierFlags.option) {
@@ -187,8 +191,6 @@ final class XritViewController: NSViewController {
   ///
   private func stepHandler(_ object: Any, _ change: Any) {
     var value = 0
-
-    Swift.print("\(object)")
 
     if let slice = object as? xLib6000.Slice {
       value = slice.step

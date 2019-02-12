@@ -6,6 +6,19 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--xSDR6000 Help-->
+        <scene sceneID="Tyz-zX-qCE">
+            <objects>
+                <viewController title="xSDR6000 Help" id="vtv-T3-87a" customClass="HelpViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="wen-gs-TpI" customClass="PDFView">
+                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </view>
+                </viewController>
+                <customObject id="qFp-QP-0Vu" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="745" y="-299"/>
+        </scene>
         <!--Main Menu-->
         <scene sceneID="JPo-4y-FX3">
             <objects>
@@ -97,6 +110,12 @@
                                                 <action selector="sideButton:" target="Ady-hI-5gd" id="1c0-tU-CNn"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="8R9-UA-qh3"/>
+                                        <menuItem title="Next Slice" keyEquivalent="n" id="ySd-8C-EZg">
+                                            <connections>
+                                                <action selector="nextSlice:" target="Ady-hI-5gd" id="t38-cj-2bf"/>
+                                            </connections>
+                                        </menuItem>
                                     </items>
                                 </menu>
                             </menuItem>
@@ -151,6 +170,7 @@
                                         <menuItem title="xSDR6000 Help" keyEquivalent="?" id="FKE-Sm-Kum">
                                             <connections>
                                                 <action selector="showHelp:" target="Ady-hI-5gd" id="oby-fm-8ks"/>
+                                                <segue destination="vtv-T3-87a" kind="show" id="GRh-VZ-KTo"/>
                                             </connections>
                                         </menuItem>
                                     </items>
@@ -426,7 +446,6 @@
                 <splitViewController identifier="Radio View Controller" id="2ro-LE-ZBU" userLabel="Radio view controller" customClass="RadioViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
                     <splitViewItems>
                         <splitViewItem id="0W5-iK-sGW" userLabel="Panafalls split item"/>
-                        <splitViewItem id="99V-vb-QuP"/>
                     </splitViewItems>
                     <splitView key="splitView" identifier="Radio Split View" misplaced="YES" dividerStyle="thin" vertical="YES" id="oU9-Vu-xiy" userLabel="Radio split view">
                         <rect key="frame" x="0.0" y="0.0" width="958" height="300"/>
@@ -441,7 +460,6 @@
                     <connections>
                         <outlet property="splitView" destination="oU9-Vu-xiy" id="oE0-D8-B5p"/>
                         <segue destination="uMM-BY-Dcg" kind="relationship" relationship="splitItems" id="pWq-XP-uqr"/>
-                        <segue destination="UhY-pg-oRs" kind="relationship" relationship="splitItems" id="3Tb-a9-KOi"/>
                     </connections>
                 </splitViewController>
                 <customObject id="mdj-KA-Ifz" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
@@ -469,14 +487,6 @@
                 <customObject id="LJk-F1-rPo" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1373" y="606"/>
-        </scene>
-        <!--Side-->
-        <scene sceneID="O5U-fx-AFD">
-            <objects>
-                <controllerPlaceholder storyboardName="Side" id="UhY-pg-oRs" sceneMemberID="viewController"/>
-                <customObject id="vrd-p3-kI5" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="930" y="903"/>
         </scene>
     </scenes>
     <resources>
