@@ -1,5 +1,10 @@
 xLib6000 Change Log
 
+v2.3.8 12-Feb-2019
+
+Profile.swift - corrections to list
+ProfileCommands.swift - corrections to list
+
 v2.3.7 07-Feb-2019
 
 SliceCommands.swift - added class removeSlice(id:)
