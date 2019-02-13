@@ -52,6 +52,11 @@ final class TxViewController                      : NSViewController {
   // ----------------------------------------------------------------------------
   // MARK: - Action methods
   
+  @IBAction func profile(_ sender: NSPopUpButton) {
+
+    _radio!.profiles[Profile.kTx]!.selection = sender.titleOfSelectedItem!
+  }
+  
   @IBAction func buttons(_ sender: NSButton) {
 
     switch sender.identifier!.rawValue {
@@ -176,8 +181,8 @@ final class TxViewController                      : NSViewController {
     _observations.append( _radio!.transmit.observe(\.rfPower, options: [.initial, .new], changeHandler: transmitChange) )
 
     // Tx Profile parameters
-//    _observations.append( _radio!.profiles[Profile.kTx]!.observe(\.list, options: [.initial, .new], changeHandler: profileChange) )
-//    _observations.append( _radio!.profiles[Profile.kTx]!.observe(\.selection, options: [.initial, .new], changeHandler: profileChange) )
+    _observations.append( _radio!.profiles[Profile.kTx]!.observe(\.list, options: [.initial, .new], changeHandler: profileChange) )
+    _observations.append( _radio!.profiles[Profile.kTx]!.observe(\.selection, options: [.initial, .new], changeHandler: profileChange) )
 
     // Meter parameters
     _radio!.meters.forEach({
@@ -208,6 +213,8 @@ final class TxViewController                      : NSViewController {
       self?._txProfile.removeAllItems()
       self?._txProfile.addItems(withTitles: profile.list)
       self?._txProfile.selectItem(withTitle: profile.selection)
+      
+      Swift.print("sel = \(profile.selection), list = \(profile.list)")
     }
   }
   /// Update all control values

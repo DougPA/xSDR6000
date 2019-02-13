@@ -570,6 +570,9 @@
                                             <font key="font" metaFont="menu"/>
                                             <menu key="menu" id="Qcf-cr-SJc"/>
                                         </popUpButtonCell>
+                                        <connections>
+                                            <action selector="profile:" target="jqe-kd-5d6" id="dfV-pV-2mn"/>
+                                        </connections>
                                     </popUpButton>
                                     <button toolTip="Save / Delete TX profile" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yql-JB-chW">
                                         <rect key="frame" x="120" y="2" width="39" height="17"/>

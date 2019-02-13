@@ -201,8 +201,8 @@ final class PCWViewController                     : NSViewController {
       _observations.append( transmit.observe(\.speechProcessorEnabled, options: [.initial, .new], changeHandler: transmitChange) )
       _observations.append( transmit.observe(\.speechProcessorLevel, options: [.initial, .new], changeHandler: transmitChange) )
 
-//      _observations.append(_radio!.profiles[Profile.kMic]!.observe(\.list, options: [.initial, .new], changeHandler: profileChange) )
-//      _observations.append(_radio!.profiles[Profile.kMic]!.observe(\.selection, options: [.initial, .new], changeHandler: profileChange) )
+      _observations.append(_radio!.profiles[Profile.kMic]!.observe(\.list, options: [.initial, .new], changeHandler: profileChange) )
+      _observations.append(_radio!.profiles[Profile.kMic]!.observe(\.selection, options: [.initial, .new], changeHandler: profileChange) )
 
       _radio!.meters.forEach({
         if $0.value.name == kMicrophoneAverage || $0.value.name == kMicrophonePeak || $0.value.name == kCompression {
