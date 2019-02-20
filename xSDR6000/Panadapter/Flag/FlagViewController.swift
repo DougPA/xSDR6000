@@ -649,7 +649,7 @@ final class FlagViewController       : NSViewController, NSTextFieldDelegate, NS
   @objc private func sliceMeterHasBeenAdded(_ note: Notification) {
     
     // does the Notification contain a Meter object for this Slice?
-    if let meter = note.object as? Meter, meter.number == slice?.id {
+    if let meter = note.object as? Meter, meter.group == slice?.id {
 
     // which meter?
       switch meter.name {
