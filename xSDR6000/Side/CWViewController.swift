@@ -147,8 +147,14 @@ final class CWViewController                          : NSViewController {
     _observations.append( transmit.observe(\.cwPitch, options: [.initial, .new], changeHandler: cwChange) )
     _observations.append( transmit.observe(\.cwSidetoneEnabled, options: [.initial, .new], changeHandler: cwChange) )
     _observations.append( transmit.observe(\.cwSpeed, options: [.initial, .new], changeHandler: cwChange) )
+
     _observations.append( transmit.observe(\.txMonitorGainCw, options: [.initial, .new], changeHandler: cwChange) )
     _observations.append( transmit.observe(\.txMonitorPanCw, options: [.initial, .new], changeHandler: cwChange) )
+
+    // Cw Meter parameters
+    (_radio!.meters.values.filter { $0.name == kAlcLevel }).forEach({
+      _observations.append( $0.observe(\.value, options: [.initial, .new], changeHandler: meterChange) )
+    })
   }
   /// Update all control values
   ///
