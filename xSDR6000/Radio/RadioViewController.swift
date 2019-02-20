@@ -58,6 +58,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   private var _sideViewController           : SideViewController?
   private var _profilesWindowController     : NSWindowController?
   private var _preferencesWindowController  : NSWindowController?
+  private var _tcpPingFirstResponseReceived = false
   
 //  private var _activity                     : NSObjectProtocol?
 
@@ -156,40 +157,15 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   override func validateUserInterfaceItem(_ item: NSValidatedUserInterfaceItem) -> Bool {
     
     // activate the menu selections
-    switch item.action {
-    case #selector(openProfiles(_:)):
-      // xSDR6000->Profiles
-      return _api.activeRadio != nil
-    
-    case #selector(openPreferences(_:)):
-      // xSDR6000->Preferences
-      return _api.activeRadio != nil
-    
-    case #selector(sideButton(_:)):
-      // Side button
-      return _api.activeRadio != nil
-
-    case #selector(tnfButton(_:)):
-      // Side button
-      return _api.activeRadio != nil
-      
-    case #selector(markerButton(_:)):
-      // Side button
-      return _api.activeRadio != nil
-      
-    case #selector(nextSlice(_:)):
-      // Side button
-      return _api.activeRadio != nil
-      
-   default:
-      return true
-    }
+    return _tcpPingFirstResponseReceived
   }
 
   // ----------------------------------------------------------------------------
   // MARK: - Action methods
   
   @IBAction func quitRadio(_ sender: Any) {
+    
+    _tcpPingFirstResponseReceived = false
     
     // perform an orderly shutdown of all the components
     _api.shutdown(reason: .normal)
@@ -472,11 +448,11 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
       }
     } else {
       
-      // CLOSING, is there an instance?
-      if _sideViewController != nil {
-        // YES, close it
-        DispatchQueue.main.async { [weak self] in
-          // collapse it first
+      DispatchQueue.main.async { [weak self] in
+        // CLOSING, is there an instance?
+        if self?._sideViewController != nil {
+          
+          // YES, collapse it first
           self?.splitViewItems[1].isCollapsed = true
           
           // remove it from the split view
@@ -633,10 +609,12 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     NC.makeObserver(self, with: #selector(tcpDidDisconnect(_:)), of: .tcpDidDisconnect)
 
     NC.makeObserver(self, with: #selector(updateRequired(_:)), of: .updateRequired)
+
+    NC.makeObserver(self, with: #selector(tcpPingFirstResponse(_:)), of: .tcpPingFirstResponse)
   }
   /// Process .meterHasBeenAdded Notification
   ///
-  /// - Parameter note: a Notification instance
+  /// - Parameter note:         a Notification instance
   ///
   @objc private func meterHasBeenAdded(_ note: Notification) {
     
@@ -664,7 +642,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   }
   /// Process .radioHasBeenAdded Notification
   ///
-  /// - Parameter note: a Notification instance
+  /// - Parameter note:         a Notification instance
   ///
   @objc private func radioHasBeenAdded(_ note: Notification) {
     
@@ -682,18 +660,18 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     // update the toolbar items
     updateToolbar(true, sideAlso: true)
     
-    // delay the opening of the side view (allows Slice(s) to be instantiated, if any)
-    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds( 1 )) { [weak self] in
-
-      // FIXME: Is this a hack?
-      
-      // show/hide the Side view
-      self?.sideView( Defaults[.sideViewOpen] ? .open : .close)
-    }
+//    // delay the opening of the side view (allows Slice(s) to be instantiated, if any)
+//    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds( 1 )) { [weak self] in
+//
+//      // FIXME: Is this a hack?
+//
+//      // show/hide the Side view
+//      self?.sideView( Defaults[.sideViewOpen] ? .open : .close)
+//    }
   }
   /// Process .radioWillBeRemoved Notification
   ///
-  /// - Parameter note:     a Notification instance
+  /// - Parameter note:         a Notification instance
   ///
   @objc private func radioWillBeRemoved(_ note: Notification) {
     
@@ -712,7 +690,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   }
   /// Process .radioHasBeenRemoved Notification
   ///
-  /// - Parameter note:     a Notification instance
+  /// - Parameter note:         a Notification instance
   ///
   @objc private func radioHasBeenRemoved(_ note: Notification) {
     
@@ -725,7 +703,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   }
   /// Process .opusHasBeenAdded Notification
   ///
-  /// - Parameter note: a Notification instance
+  /// - Parameter note:         a Notification instance
   ///
   @objc private func opusRxHasBeenAdded(_ note: Notification) {
 
@@ -741,7 +719,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   }
   /// Process .tcpDidDisconnect Notification
   ///
-  /// - Parameter note: a Notification instance
+  /// - Parameter note:         a Notification instance
   ///
   @objc private func tcpDidDisconnect(_ note: Notification) {
   
@@ -772,7 +750,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   }
   /// Process .updateRequired Notification
   ///
-  /// - Parameter note:     a Notification instance
+  /// - Parameter note:         a Notification instance
   ///
   @objc private func updateRequired(_ note: Notification) {
     
@@ -789,6 +767,24 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
       "Use SmartSDR to perform an update"
       alert.addButton(withTitle: "Ok")
       alert.beginSheetModal(for: self.view.window!, completionHandler: { (response) in })
+    }
+  }
+  /// Process .tcpPingFirstResponse Notification
+  ///
+  /// - Parameter note:         a Notification instance
+  ///
+  @objc private func tcpPingFirstResponse(_ note: Notification) {
+    
+    // receipt of the first Ping response indicates the Radio is fully initialized
+    _tcpPingFirstResponseReceived = true
+    
+    // delay the opening of the side view (allows Slice(s) to be instantiated, if any)
+    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds( 1 )) { [weak self] in
+      
+      // FIXME: Is this a hack?
+      
+      // show/hide the Side view
+      self?.sideView( Defaults[.sideViewOpen] ? .open : .close)
     }
   }
 
