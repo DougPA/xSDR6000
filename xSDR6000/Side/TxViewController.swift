@@ -184,11 +184,9 @@ final class TxViewController                      : NSViewController {
     _observations.append( _radio!.profiles[Profile.kTx]!.observe(\.list, options: [.initial, .new], changeHandler: profileChange) )
     _observations.append( _radio!.profiles[Profile.kTx]!.observe(\.selection, options: [.initial, .new], changeHandler: profileChange) )
 
-    // Meter parameters
-    _radio!.meters.forEach({
-      if $0.value.name == kPowerForward || $0.value.name == kSwr {        
-        _observations.append( $0.value.observe(\.value, options: [.initial, .new], changeHandler: meterChange) )
-      }
+    // Tx Meter parameters
+    (_radio!.meters.values.filter { $0.name == kPowerForward || $0.name == kSwr }).forEach({
+      _observations.append( $0.observe(\.value, options: [.initial, .new], changeHandler: meterChange) )
     })
   }
   /// Update all Atu control values
@@ -213,8 +211,6 @@ final class TxViewController                      : NSViewController {
       self?._txProfile.removeAllItems()
       self?._txProfile.addItems(withTitles: profile.list)
       self?._txProfile.selectItem(withTitle: profile.selection)
-      
-      Swift.print("sel = \(profile.selection), list = \(profile.list)")
     }
   }
   /// Update all control values
@@ -260,78 +256,4 @@ final class TxViewController                      : NSViewController {
       fatalError()
     }
   }
-  
-  // ----------------------------------------------------------------------------
-  // MARK: - Notification Methods
-  
-  /// Add subscriptions to Notifications
-  ///
-  private func addNotifications() {
-
-//    NC.makeObserver(self, with: #selector(radioHasBeenAdded(_:)), of: .radioHasBeenAdded)
-//
-//    NC.makeObserver(self, with: #selector(radioWillBeRemoved(_:)), of: .radioWillBeRemoved)
-
-    NC.makeObserver(self, with: #selector(profileHasBeenAdded(_:)), of: .profileHasBeenAdded)
-
-//    NC.makeObserver(self, with: #selector(meterHasBeenAdded(_:)), of: .meterHasBeenAdded)
-  }
-  /// Process .radioHasBeenAdded Notification
-  ///
-  /// - Parameter note:           a Notification instance
-  ///
-//  @objc private func radioHasBeenAdded(_ note: Notification) {
-//
-//    if let radio = note.object as? Radio {
-//
-//      _radio = radio
-//
-//      // begin observing parameters
-//      addObservations(radio)
-//
-//      // enable all controls
-//      setControlState(true)
-//    }
-//  }
-  /// Process .radioWillBeRemoved Notification
-  ///
-  /// - Parameter note:           a Notification instance
-  ///
-//  @objc private func radioWillBeRemoved(_ note: Notification) {
-//
-//    // disable all controls
-//    setControlState(false)
-//
-//    // invalidate & remove observations
-//    invalidateObservations()
-//
-//    _radio = nil
-//  }
-  /// Process .profileHasBeenAdded Notification
-  ///
-  /// - Parameter note:           a Notification instance
-  ///
-  @objc private func profileHasBeenAdded(_ note: Notification) {
-
-    let profile = note.object as! Profile
-    if profile.id == Profile.kTx {
-
-      // add Mic Profile observations
-      _observations.append( _radio!.profiles[Profile.kTx]!.observe(\.list, options: [.initial, .new], changeHandler: profileChange) )
-      _observations.append( _radio!.profiles[Profile.kTx]!.observe(\.selection, options: [.initial, .new], changeHandler: profileChange) )
-    }
-  }
-  /// Process .meterHasBeenAdded Notification
-  ///
-  /// - Parameter note:           a Notification instance
-  ///
-//  @objc private func meterHasBeenAdded(_ note: Notification) {
-//
-//    let meter = note.object as! Meter
-//
-//    // Add observations for RfPower & SWR
-//    if meter.name == kPowerForward || meter.name == kSwr {
-//      _observations.append( meter.observe(\.value, options: [.initial, .new], changeHandler: meterChange))
-//    }
-//  }
 }

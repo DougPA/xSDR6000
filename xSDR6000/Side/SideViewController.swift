@@ -86,7 +86,6 @@ final class SideViewController              : NSViewController {
     _txContainerHeight.constant = ( Defaults[.sideTxOpen] ? kTxHeightOpen : kHeightClosed )
     _phneContainerHeight.constant = ( Defaults[.sidePhneOpen] ? kPhneHeightOpen : kHeightClosed )
     _eqContainerHeight.constant = ( Defaults[.sideEqOpen] ? kEqHeightOpen : kHeightClosed )
-//    _scrollView.needsLayout = true
   }
   override func viewDidLayout() {
 
