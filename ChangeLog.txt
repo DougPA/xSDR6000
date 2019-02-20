@@ -1,5 +1,13 @@
 xSDR6000 Change Log
 
+v2.0.14 19-Feb-2019
+
+Added use of "tcpFirstPingResponse" notification to signal that Radio is fully initialized
+Added "kAlcLevel" meter observation (for use in Cw Side panel)
+Correction to sideView()
+Updated xSDR6000.pdf
+
+
 v2.0.13 - 12-Feb-2019
 
 Corrected Tx Profile handling
