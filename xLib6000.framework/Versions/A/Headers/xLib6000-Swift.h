@@ -427,7 +427,7 @@ SWIFT_CLASS("_TtC8xLib60005Meter")
 @property (nonatomic) float high;
 @property (nonatomic) float low;
 @property (nonatomic, copy) NSString * _Nonnull name;
-@property (nonatomic, copy) NSString * _Nonnull number;
+@property (nonatomic, copy) NSString * _Nonnull group;
 @property (nonatomic) float peak;
 @property (nonatomic, copy) NSString * _Nonnull source;
 @property (nonatomic, copy) NSString * _Nonnull units;

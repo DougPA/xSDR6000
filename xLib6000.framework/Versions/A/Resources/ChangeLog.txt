@@ -1,9 +1,29 @@
 xLib6000 Change Log
 
+v2.3.10
+
+Notifications.swift - add SliceMeterWillBeRemoved, added tcpPingFirstResponse
+Meter.swift - added code to send SliceMeterWillBeRemoved
+Pinger.swift - added code to send tcpPingFirstResponse notification
+
+
+
+
+v2.3.9 19-Feb-2019
+
+Meter.swift - renamed meter property "number" to "group"
+Meter.swift - renamed meter property "id" to "number"
+Meter.swift - renamed meter typealias "MeterId" to "MeterNumber"
+Radio.swift - changed usage of "MeterId" to "MeterNumber"
+Slice.swift - changed usage of "meter.id" to "meter.number", "MeterId" to "MeterNumber"
+MeterCommands.swift - changed usage of "meter.id" to "meter.number", "MeterId" to "MeterNumber"
+
+
 v2.3.8 12-Feb-2019
 
 Profile.swift - corrections to list
 ProfileCommands.swift - corrections to list
+
 
 v2.3.7 07-Feb-2019
 
@@ -29,10 +49,12 @@ Notifications.swift - added updateRequired
 Api.swift - in checkFirmware() added notification .updateRequired
 added KnownIssues.md
 
+
 v2.3.4
 
 Notifications.swift - added sliceBecameActive
 Slice.swift - in "internal var _active: Bool" added post of sliceBecameActive
+
 
 v2.3.3
 
