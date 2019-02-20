@@ -190,6 +190,7 @@ final class PCWViewController                     : NSViewController {
 
     if let transmit = _radio!.transmit {
       
+      // Transmit parameters
       _observations.append( transmit.observe(\.micSelection, options: [.initial, .new], changeHandler: transmitChange) )
       _observations.append( transmit.observe(\.micLevel, options: [.initial, .new], changeHandler: transmitChange) )
       _observations.append( transmit.observe(\.micAccEnabled, options: [.initial, .new], changeHandler: transmitChange) )
@@ -201,13 +202,13 @@ final class PCWViewController                     : NSViewController {
       _observations.append( transmit.observe(\.speechProcessorEnabled, options: [.initial, .new], changeHandler: transmitChange) )
       _observations.append( transmit.observe(\.speechProcessorLevel, options: [.initial, .new], changeHandler: transmitChange) )
 
+      // Mic Profile parameters
       _observations.append(_radio!.profiles[Profile.kMic]!.observe(\.list, options: [.initial, .new], changeHandler: profileChange) )
       _observations.append(_radio!.profiles[Profile.kMic]!.observe(\.selection, options: [.initial, .new], changeHandler: profileChange) )
 
-      _radio!.meters.forEach({
-        if $0.value.name == kMicrophoneAverage || $0.value.name == kMicrophonePeak || $0.value.name == kCompression {
-          _observations.append( $0.value.observe(\.value, options: [.initial, .new], changeHandler: meterChange) )
-        }
+      // Pcw Meter parameters
+      (_radio!.meters.values.filter { $0.name == kMicrophoneAverage || $0.name == kMicrophonePeak  || $0.name == kCompression }).forEach({
+        _observations.append( $0.observe(\.value, options: [.initial, .new], changeHandler: meterChange) )
       })
     }
   }
@@ -285,8 +286,7 @@ final class PCWViewController                     : NSViewController {
       DispatchQueue.main.async {  [weak self] in self?._micLevelIndicator.peak = value }
       
     case kCompression:
-      let value = _radio?.interlock.state == "TRANSMITTING" ||
-        _radio!.transmit.metInRxEnabled ? CGFloat(meter.value) : 10
+      let value = _radio?.interlock.state == "TRANSMITTING" && meter.value > -30.0 ? CGFloat(meter.value) : 10
       DispatchQueue.main.async {  [weak self] in self?._compressionIndicator.level = value }
       
     default:
