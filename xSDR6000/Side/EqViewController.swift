@@ -126,6 +126,8 @@ final class EqViewController                : NSViewController {
   private func addObservations() {
     
     if let rx = _equalizerRx {
+      
+      // Rx Equalizer parameters
       _observations.append( rx.observe(\.level63Hz, options: [.initial, .new], changeHandler: eqChange) )
       _observations.append( rx.observe(\.level125Hz, options: [.initial, .new], changeHandler: eqChange) )
       _observations.append( rx.observe(\.level250Hz, options: [.initial, .new], changeHandler: eqChange) )
@@ -138,6 +140,8 @@ final class EqViewController                : NSViewController {
     }
     
     if let tx = _equalizerTx {
+
+      // Tx Equalizer parameters
       _observations.append( tx.observe(\.level63Hz, options: [.initial, .new], changeHandler: eqChange) )
       _observations.append( tx.observe(\.level125Hz, options: [.initial, .new], changeHandler: eqChange) )
       _observations.append( tx.observe(\.level250Hz, options: [.initial, .new], changeHandler: eqChange) )

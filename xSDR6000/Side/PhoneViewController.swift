@@ -109,6 +109,7 @@ final class PhoneViewController                   : NSViewController {
     
     if let transmit = _radio!.transmit {
       
+      // Transmit parameters
       _observations.append( transmit.observe(\.carrierLevel, options: [.initial, .new], changeHandler: transmitChange) )
       _observations.append( transmit.observe(\.companderEnabled, options: [.initial, .new], changeHandler: transmitChange) )
       _observations.append( transmit.observe(\.companderLevel, options: [.initial, .new], changeHandler: transmitChange) )
