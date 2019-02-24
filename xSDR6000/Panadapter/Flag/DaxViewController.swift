@@ -28,6 +28,10 @@ final class DaxViewController: NSViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    #if DEBUG
+    Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
+    #endif
+    
     view.translatesAutoresizingMaskIntoConstraints = false
     
     if Defaults[.flagBorderEnabled] {
@@ -47,6 +51,11 @@ final class DaxViewController: NSViewController {
     // set the background color of the Flag
     view.layer?.backgroundColor = ControlsViewController.kBackgroundColor
   }
+  #if DEBUG
+  deinit {
+    Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
+  }
+  #endif
 
   // ----------------------------------------------------------------------------
   // MARK: - Action methods
@@ -68,7 +77,8 @@ final class DaxViewController: NSViewController {
   private func addObservations() {
     
     _observations = [
-      _slice.observe(\.daxChannel, options: [.initial, .new], changeHandler: changeHandler(_:_:)),
+      _slice.observe(\.daxChannel, options: [.initial, .new]) { [weak self] (slice, change) in
+        self?.changeHandler(slice, change) }
     ]
   }
   /// Process observations

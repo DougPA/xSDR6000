@@ -50,22 +50,34 @@ public final class DbLegendView             : NSView {
   
   private let kFormat                       = " %4.0f"
   
-
   // ----------------------------------------------------------------------------
   // MARK: - Overridden methods
-  
+
+  public override func awakeFromNib() {
+    super.awakeFromNib()
+    
+    #if DEBUG
+    Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
+    #endif
+  }
+
   public override func draw(_ dirtyRect: NSRect) {
     super.draw(dirtyRect)
     
 //    compositingFilter = CIFilter(name: "CIDifferenceBlendMode")
-
+    
     // set the background color
     layer?.backgroundColor = NSColor.clear.cgColor
     
     // draw the Db legend and horizontal grid lines
     drawLegend(dirtyRect)
   }
-  
+  #if DEBUG
+  deinit {
+    Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
+  }
+  #endif
+
   // ----------------------------------------------------------------------------
   // MARK: - Internal methods
   

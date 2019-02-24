@@ -35,6 +35,10 @@ final class AudioViewController: NSViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    #if DEBUG
+    Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
+    #endif
+    
     view.translatesAutoresizingMaskIntoConstraints = false
     
     if Defaults[.flagBorderEnabled] {
@@ -55,6 +59,11 @@ final class AudioViewController: NSViewController {
     // set the background color of the Flag
     view.layer?.backgroundColor = ControlsViewController.kBackgroundColor
   }
+  #if DEBUG
+  deinit {
+    Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
+  }
+  #endif
 
   // ----------------------------------------------------------------------------
   // MARK: - Action methods
@@ -101,11 +110,20 @@ final class AudioViewController: NSViewController {
   private func addObservations() {
     
     _observations = [
-      _slice.observe(\.audioGain, options: [.initial, .new], changeHandler: changeHandler(_:_:)),
-      _slice.observe(\.audioPan, options: [.initial, .new], changeHandler: changeHandler(_:_:)),
-      _slice.observe(\.agcThreshold, options: [.initial, .new], changeHandler: changeHandler(_:_:)),
-      _slice.observe(\.audioMute, options: [.initial, .new], changeHandler: changeHandler(_:_:)),
-      _slice.observe(\.agcMode, options: [.initial, .new], changeHandler: changeHandler(_:_:)),
+      _slice.observe(\.audioGain, options: [.initial, .new]) { [weak self] (slice, change) in
+        self?.changeHandler(slice, change) },
+      
+      _slice.observe(\.audioPan, options: [.initial, .new]) { [weak self] (slice, change) in
+        self?.changeHandler(slice, change) },
+      
+      _slice.observe(\.agcThreshold, options: [.initial, .new]) { [weak self] (slice, change) in
+        self?.changeHandler(slice, change) },
+      
+      _slice.observe(\.audioMute, options: [.initial, .new]) { [weak self] (slice, change) in
+        self?.changeHandler(slice, change) },
+      
+      _slice.observe(\.agcMode, options: [.initial, .new]) { [weak self] (slice, change) in
+        self?.changeHandler(slice, change) },
     ]
   }
   /// Process observations
@@ -115,18 +133,18 @@ final class AudioViewController: NSViewController {
   ///   - change:                   the change
   ///
   private func changeHandler(_ slice: xLib6000.Slice, _ change: Any) {
-    
+
     DispatchQueue.main.async { [weak self] in
       self?._audioMuteButton.boolState = slice.audioMute
-      
+
       self?._audioGainSlider.integerValue = slice.audioGain
       self?._audioGainTextField.integerValue = slice.audioGain
-      
+
       self?._audioPanSlider.integerValue = slice.audioPan
-      
+
       self?._agcThresholdSlider.integerValue = slice.agcThreshold
       self?._agcThresholdTextField.integerValue = slice.agcThreshold
-      
+
       self?._agcModePopUp.selectItem(withTitle: slice.agcMode)
     }
   }

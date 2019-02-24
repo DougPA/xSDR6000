@@ -68,7 +68,7 @@ final class LANRadioPickerViewController    : NSViewController, NSTableViewDeleg
   private var _api                          = Api.sharedInstance
   private let _log                          = OSLog(subsystem: Api.kDomainId + "." + kClientName, category: "LANRadioPickerVC")
   private var _selectedRadio                : RadioParameters?            // Radio in selected row
-  private var _parentVc                     : NSViewController!
+  private weak var _parentVc                : NSViewController!
   
   private weak var _delegate                : RadioPickerDelegate? {
     return representedObject as? RadioPickerDelegate
@@ -88,9 +88,12 @@ final class LANRadioPickerViewController    : NSViewController, NSTableViewDeleg
   /// the View has loaded
   ///
   override func viewDidLoad() {
-    
     super.viewDidLoad()
 
+    #if DEBUG
+    Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
+    #endif
+    
     // allow the User to double-click the desired Radio
     _radioTableView.doubleAction = #selector(LANRadioPickerViewController.selectButton(_:))
     
@@ -101,6 +104,11 @@ final class LANRadioPickerViewController    : NSViewController, NSTableViewDeleg
     
     addNotifications()
   }
+  #if DEBUG
+  deinit {
+    Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
+  }
+  #endif
 
   // ----------------------------------------------------------------------------
   // MARK: - Action methods
@@ -154,7 +162,6 @@ final class LANRadioPickerViewController    : NSViewController, NSTableViewDeleg
   ///
   @IBAction func closeButton(_ sender: AnyObject) {
 
-    // close this view & controller
     _parentVc.dismiss(sender)
   }
   /// Respond to the Select button
@@ -199,11 +206,11 @@ final class LANRadioPickerViewController    : NSViewController, NSTableViewDeleg
         // ignore if not confirmed by the user
         alert.beginSheetModal(for: view.window!, completionHandler: { (response) in
           // close the connected Radio if the YES button pressed
-          if response == NSApplication.ModalResponse.alertFirstButtonReturn { self.openRadio() }
+          if response == NSApplication.ModalResponse.alertFirstButtonReturn { self.openRadio(self._selectedRadio) }
         })
       } else {
         // NO, just open it
-        openRadio()
+        openRadio(_selectedRadio)
       }
 
     } else {
@@ -216,16 +223,16 @@ final class LANRadioPickerViewController    : NSViewController, NSTableViewDeleg
   }
   /// Open a Radio & close the Picker
   ///
-  private func openRadio() {
+  private func openRadio(_ radioParams: RadioParameters?) {
     
     // RadioPicker sheet will close & Radio will be opened
     
     // tell the delegate to connect to the selected Radio
-    let _ = _delegate?.openRadio(_selectedRadio, isWan: false, wanHandle: "")
+    let _ = _delegate?.openRadio(radioParams, isWan: false, wanHandle: "")
     
-    DispatchQueue.main.async { [unowned self] in
-      self.closeButton(self)
-    }
+//    DispatchQueue.main.async { [unowned self] in
+//      self.closeButton(self)
+//    }
   }
   
   // ----------------------------------------------------------------------------

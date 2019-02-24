@@ -37,11 +37,20 @@ final class NetworkPrefsViewController: NSViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    #if DEBUG
+    Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
+    #endif
+    
     view.translatesAutoresizingMaskIntoConstraints = false
     
     // begin observing properties
     addObservations()
   }
+  #if DEBUG
+  deinit {
+    Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
+  }
+  #endif
 
   // ----------------------------------------------------------------------------
   // MARK: - Action  methods
@@ -103,49 +112,78 @@ final class NetworkPrefsViewController: NSViewController {
   private func addObservations() {
     
     _observations = [
-      _radio!.observe(\.ipAddress, options: [.initial, .new], changeHandler: radioHandler(_:_:)),
-      _radio!.observe(\.macAddress, options: [.initial, .new], changeHandler: radioHandler(_:_:)),
-      _radio!.observe(\.netmask, options: [.initial, .new], changeHandler: radioHandler(_:_:)),
-      _radio!.observe(\.enforcePrivateIpEnabled, options: [.initial, .new], changeHandler: radioHandler(_:_:)),
+      _radio!.observe(\.ipAddress, options: [.initial, .new]) { [weak self] (radio, change) in
+        self?._ipAddressTextField.stringValue = radio.ipAddress },
+      
+      _radio!.observe(\.macAddress, options: [.initial, .new]) { [weak self] (radio, change) in
+        self?._macAddressTextField.stringValue = radio.macAddress },
+      
+      _radio!.observe(\.netmask, options: [.initial, .new]) { [weak self] (radio, change) in
+        self?._netMaskTextField.stringValue = radio.netmask },
+      
+      _radio!.observe(\.enforcePrivateIpEnabled, options: [.initial, .new]) { [weak self] (radio, change) in
+        self?._enforcePrivateIpCheckbox.boolState = radio.enforcePrivateIpEnabled },
+      
 
-      _radio!.observe(\.staticIp, options: [.initial, .new], changeHandler: radioHandler(_:_:)),
-      _radio!.observe(\.staticNetmask, options: [.initial, .new], changeHandler: radioHandler(_:_:)),
-      _radio!.observe(\.staticGateway, options: [.initial, .new], changeHandler: radioHandler(_:_:))
+      _radio!.observe(\.staticIp, options: [.initial, .new]) { [weak self] (radio, change) in
+        self?._staticIpAddressTextField.stringValue = radio.staticIp
+        if radio.staticIp == "" && radio.staticNetmask == "" && radio.staticGateway == "" {
+          self?._dhcpRadioButton.boolState = true
+        } else {
+          self?._staticRadioButton.boolState = true
+        }
+      },
+      
+      _radio!.observe(\.staticNetmask, options: [.initial, .new]) { [weak self] (radio, change) in
+        if radio.staticIp == "" && radio.staticNetmask == "" && radio.staticGateway == "" {
+          self?._dhcpRadioButton.boolState = true
+        } else {
+          self?._staticRadioButton.boolState = true
+        }
+        self?._staticMaskTextField.stringValue = radio.staticNetmask },
+      
+      _radio!.observe(\.staticGateway, options: [.initial, .new]) { [weak self] (radio, change) in
+        if radio.staticIp == "" && radio.staticNetmask == "" && radio.staticGateway == "" {
+          self?._dhcpRadioButton.boolState = true
+        } else {
+          self?._staticRadioButton.boolState = true
+        }
+        self?._staticGatewayTextField.stringValue = radio.staticGateway }
     ]
   }
   /// Remove observations
   ///
-  func removeObservations() {
-    
-    // invalidate each observation
-    _observations.forEach { $0.invalidate() }
-    
-    // remove the tokens
-    _observations.removeAll()
-  }
+//  func removeObservations() {
+//
+//    // invalidate each observation
+//    _observations.forEach { $0.invalidate() }
+//
+//    // remove the tokens
+//    _observations.removeAll()
+//  }
   /// Process observations
   ///
   /// - Parameters:
   ///   - profile:                  the Radio being observed
   ///   - change:                   the change
   ///
-  private func radioHandler(_ radio: Radio, _ change: Any) {
-    
-    DispatchQueue.main.async { [weak self] in
-      self?._ipAddressTextField.stringValue = radio.ipAddress
-      self?._macAddressTextField.stringValue = radio.macAddress
-      self?._netMaskTextField.stringValue = radio.netmask
-      self?._staticIpAddressTextField.stringValue = radio.staticIp
-      self?._staticMaskTextField.stringValue = radio.staticNetmask
-      self?._staticGatewayTextField.stringValue = radio.staticGateway
-
-      self?._enforcePrivateIpCheckbox.boolState = radio.enforcePrivateIpEnabled
-      
-      if radio.staticIp == "" && radio.staticNetmask == "" && radio.staticGateway == "" {
-        self?._dhcpRadioButton.boolState = true
-      } else {
-        self?._staticRadioButton.boolState = true
-      }
-    }
-  }
+//  private func radioHandler(_ radio: Radio, _ change: Any) {
+//    
+//    DispatchQueue.main.async { [weak self] in
+//      self?._ipAddressTextField.stringValue = radio.ipAddress
+//      self?._macAddressTextField.stringValue = radio.macAddress
+//      self?._netMaskTextField.stringValue = radio.netmask
+//      self?._staticIpAddressTextField.stringValue = radio.staticIp
+//      self?._staticMaskTextField.stringValue = radio.staticNetmask
+//      self?._staticGatewayTextField.stringValue = radio.staticGateway
+//
+//      self?._enforcePrivateIpCheckbox.boolState = radio.enforcePrivateIpEnabled
+//      
+//      if radio.staticIp == "" && radio.staticNetmask == "" && radio.staticGateway == "" {
+//        self?._dhcpRadioButton.boolState = true
+//      } else {
+//        self?._staticRadioButton.boolState = true
+//      }
+//    }
+//  }
 }

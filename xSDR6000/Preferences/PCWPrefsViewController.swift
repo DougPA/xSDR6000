@@ -36,11 +36,20 @@ final class PCWPrefsViewController                : NSViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    #if DEBUG
+    Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
+    #endif
+    
     view.translatesAutoresizingMaskIntoConstraints = false
     
     // begin observing properties
     addObservations()
   }
+  #if DEBUG
+  deinit {
+    Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
+  }
+  #endif
 
   // ----------------------------------------------------------------------------
   // MARK: - Action methods
@@ -101,14 +110,47 @@ final class PCWPrefsViewController                : NSViewController {
   private func addObservations() {
 
     _observations = [
-      _transmit!.observe(\.micBiasEnabled, options: [.initial, .new], changeHandler: transmitHandler(_:_:)),
-      _transmit!.observe(\.metInRxEnabled, options: [.initial, .new], changeHandler: transmitHandler(_:_:)),
-      _transmit!.observe(\.micBoostEnabled, options: [.initial, .new], changeHandler: transmitHandler(_:_:)),
-      _transmit!.observe(\.cwIambicEnabled, options: [.initial, .new], changeHandler: transmitHandler(_:_:)),
-      _transmit!.observe(\.cwIambicMode, options: [.initial, .new], changeHandler: transmitHandler(_:_:)),
-      _transmit!.observe(\.cwlEnabled, options: [.initial, .new], changeHandler: transmitHandler(_:_:)),
-      _transmit!.observe(\.cwSwapPaddles, options: [.initial, .new], changeHandler: transmitHandler(_:_:)),
-      _radio!.observe(\.rttyMark, options: [.initial, .new], changeHandler: radioHandler(_:_:))
+      _transmit!.observe(\.micBiasEnabled, options: [.initial, .new]) { [weak self] (transmit, change) in
+        self?._micBiasCheckbox.boolState = transmit.micBiasEnabled },
+      
+      _transmit!.observe(\.metInRxEnabled, options: [.initial, .new]) { [weak self] (transmit, change) in
+        self?._metInRxCheckbox.boolState = transmit.metInRxEnabled },
+      
+      _transmit!.observe(\.micBoostEnabled, options: [.initial, .new]) { [weak self] (transmit, change) in
+        self?._micBoostCheckbox.boolState = transmit.micBoostEnabled },
+      
+      _transmit!.observe(\.cwIambicEnabled, options: [.initial, .new]) { [weak self] (transmit, change) in
+        self?._iambicCheckbox.boolState = transmit.cwIambicEnabled },
+      
+      _transmit!.observe(\.cwIambicMode, options: [.initial, .new]) { [weak self] (transmit, change) in
+        // Iambic A/B
+        if self?._transmit!.cwIambicMode == 0 {
+          // A Mode
+          self?._iambicARadioButton.boolState = true
+          
+        } else {
+          // B Mode
+          self?._iambicBRadioButton.boolState = true
+        }
+      },
+      
+      _transmit!.observe(\.cwlEnabled, options: [.initial, .new]) { [weak self] (transmit, change) in
+        // CW Upper/Lower sideband
+        if self?._transmit!.cwlEnabled ?? false {
+          // Lower
+          self?._cwLowerRadioButton.boolState = true
+          
+        } else {
+          // Upper
+          self?._cwUpperRadioButton.boolState = true
+        }
+      },
+      
+      _transmit!.observe(\.cwSwapPaddles, options: [.initial, .new]) { [weak self] (transmit, change) in
+        self?._swapPaddlesCheckbox.boolState = transmit.cwSwapPaddles },
+      
+      _radio!.observe(\.rttyMark, options: [.initial, .new]) { [weak self] (radio, change) in
+        self?._rttyMarkTextField.integerValue = radio.rttyMark }
     ]
   }
   /// Process observations
@@ -117,45 +159,45 @@ final class PCWPrefsViewController                : NSViewController {
   ///   - transmit:                 the Transmit being observed
   ///   - change:                   the change
   ///
-  private func transmitHandler(_ transmit: Transmit, _ change: Any) {
-    
-    DispatchQueue.main.async { [weak self] in
-      self?._micBiasCheckbox.boolState = transmit.micBiasEnabled
-      self?._metInRxCheckbox.boolState = transmit.metInRxEnabled
-      self?._micBoostCheckbox.boolState = transmit.micBoostEnabled
-      self?._iambicCheckbox.boolState = transmit.cwIambicEnabled
-      self?._swapPaddlesCheckbox.boolState = transmit.cwSwapPaddles
-      
-      // Iambic A/B
-      if self?._transmit!.cwIambicMode == 0 {
-        // A Mode
-        self?._iambicARadioButton.boolState = true
-        
-      } else {
-        // B Mode
-        self?._iambicBRadioButton.boolState = true
-      }
-      // CW Upper/Lower sideband
-      if self?._transmit!.cwlEnabled ?? false {
-        // Lower
-        self?._cwLowerRadioButton.boolState = true
-        
-      } else {
-        // Upper
-        self?._cwUpperRadioButton.boolState = true
-      }
-    }
-  }
+//  private func transmitHandler(_ transmit: Transmit, _ change: Any) {
+//
+//    DispatchQueue.main.async { [weak self] in
+//      self?._micBiasCheckbox.boolState = transmit.micBiasEnabled
+//      self?._metInRxCheckbox.boolState = transmit.metInRxEnabled
+//      self?._micBoostCheckbox.boolState = transmit.micBoostEnabled
+//      self?._iambicCheckbox.boolState = transmit.cwIambicEnabled
+//      self?._swapPaddlesCheckbox.boolState = transmit.cwSwapPaddles
+//
+//      // Iambic A/B
+//      if self?._transmit!.cwIambicMode == 0 {
+//        // A Mode
+//        self?._iambicARadioButton.boolState = true
+//
+//      } else {
+//        // B Mode
+//        self?._iambicBRadioButton.boolState = true
+//      }
+//      // CW Upper/Lower sideband
+//      if self?._transmit!.cwlEnabled ?? false {
+//        // Lower
+//        self?._cwLowerRadioButton.boolState = true
+//
+//      } else {
+//        // Upper
+//        self?._cwUpperRadioButton.boolState = true
+//      }
+//    }
+//  }
   /// Process observations
   ///
   /// - Parameters:
   ///   - radio:                    the Radio being observed
   ///   - change:                   the change
   ///
-  private func radioHandler(_ radio: Radio, _ change: Any) {
-    
-    DispatchQueue.main.async { [unowned self] in
-      self._rttyMarkTextField.integerValue = radio.rttyMark
-    }
-  }
+//  private func radioHandler(_ radio: Radio, _ change: Any) {
+//
+//    DispatchQueue.main.async { [unowned self] in
+//      self._rttyMarkTextField.integerValue = radio.rttyMark
+//    }
+//  }
 }

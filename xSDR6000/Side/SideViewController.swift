@@ -55,6 +55,10 @@ final class SideViewController              : NSViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    #if DEBUG
+    Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
+    #endif
+
     view.translatesAutoresizingMaskIntoConstraints = false
     
     addNotifications()
@@ -92,7 +96,12 @@ final class SideViewController              : NSViewController {
     // position the scroll view at the top
     positionAtTop(_scrollView)
   }
-  
+  #if DEBUG
+  deinit {
+    Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
+  }
+  #endif
+
   // ----------------------------------------------------------------------------
   // MARK: - Action methods
   

@@ -29,10 +29,13 @@ final class ProfileViewController: NSViewController, NSTableViewDelegate, NSTabl
 
   // ----------------------------------------------------------------------------
   // MARK: - Overridden methods
-  
-  
+    
   override func viewDidLoad() {
     super.viewDidLoad()
+    
+    #if DEBUG
+    Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
+    #endif
     
     view.translatesAutoresizingMaskIntoConstraints = false
     
@@ -53,6 +56,9 @@ final class ProfileViewController: NSViewController, NSTableViewDelegate, NSTabl
     
     view.window!.setFrameUsingName(_autosaveName)
     view.window!.level = .floating
+
+    // select the previously selected segment
+    loadProfile(type: Defaults[.profilesTabId])    
   }
 
   override func viewWillDisappear() {
@@ -60,9 +66,12 @@ final class ProfileViewController: NSViewController, NSTableViewDelegate, NSTabl
     
     view.window!.saveFrame(usingName: _autosaveName)
   }
-
   deinit {
     os_log("Profiles window closed", log: self._log, type: .info)
+
+    #if DEBUG
+    Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
+    #endif
   }
 
   // ----------------------------------------------------------------------------
@@ -208,8 +217,11 @@ final class ProfileViewController: NSViewController, NSTableViewDelegate, NSTabl
   private func addObservations() {
     
     _observations = [
-     _radio!.profiles[_currentType]!.observe(\.list, options: [.initial, .new], changeHandler: profileChange(_:_:)),
-     _radio!.profiles[_currentType]!.observe(\.selection, options: [.initial, .new], changeHandler: profileChange(_:_:))
+      _radio!.profiles[_currentType]!.observe(\.list, options: [.initial, .new]) { [weak self] (profile, change) in
+        self?._array = profile.list },
+      
+      _radio!.profiles[_currentType]!.observe(\.selection, options: [.initial, .new]) { [weak self] (profile, change) in
+        self?._currentSelection = profile.selection }
     ]
   }
   /// Process observations
@@ -218,14 +230,14 @@ final class ProfileViewController: NSViewController, NSTableViewDelegate, NSTabl
   ///   - profile:                  the Profile being observed
   ///   - change:                   the change
   ///
-  private func profileChange(_ profile: Profile, _ change: Any) {
-  
-    // populate the table
-    _array = _radio!.profiles[_currentType]!.list
-    _currentSelection = _radio!.profiles[_currentType]!.selection
-    
-    reloadTable()
-  }
+//  private func profileChange(_ profile: Profile, _ change: Any) {
+//
+//    // populate the table
+//    _array = _radio!.profiles[_currentType]!.list
+//    _currentSelection = _radio!.profiles[_currentType]!.selection
+//
+//    reloadTable()
+//  }
   
   // ----------------------------------------------------------------------------
   // MARK: - NSTableView DataSource methods

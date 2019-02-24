@@ -36,12 +36,21 @@ final class ColorsPrefsViewController            : NSViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    #if DEBUG
+    Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
+    #endif
+    
     view.translatesAutoresizingMaskIntoConstraints = false
     
     // start observing
     addObservations()
   }
-  
+  #if DEBUG
+  deinit {
+    Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
+  }
+  #endif
+
   // ----------------------------------------------------------------------------
   // MARK: - Action methods
   
@@ -148,19 +157,44 @@ final class ColorsPrefsViewController            : NSViewController {
   private func addObservations() {
     
     _observations = [
-      Defaults.observe(\.dbLegend, options: [.initial, .new], changeHandler: changeHandler(_:_:)),
-      Defaults.observe(\.frequencyLegend, options: [.initial, .new], changeHandler: changeHandler(_:_:)),
-      Defaults.observe(\.gridLine, options: [.initial, .new], changeHandler: changeHandler(_:_:)),
-      Defaults.observe(\.marker, options: [.initial, .new], changeHandler: changeHandler(_:_:)),
-      Defaults.observe(\.markerEdge, options: [.initial, .new], changeHandler: changeHandler(_:_:)),
-      Defaults.observe(\.markerSegment, options: [.initial, .new], changeHandler: changeHandler(_:_:)),
-      Defaults.observe(\.sliceActive, options: [.initial, .new], changeHandler: changeHandler(_:_:)),
-      Defaults.observe(\.sliceFilter, options: [.initial, .new], changeHandler: changeHandler(_:_:)),
-      Defaults.observe(\.sliceInactive, options: [.initial, .new], changeHandler: changeHandler(_:_:)),
-      Defaults.observe(\.spectrum, options: [.initial, .new], changeHandler: changeHandler(_:_:)),
-      Defaults.observe(\.spectrumBackground, options: [.initial, .new], changeHandler: changeHandler(_:_:)),
-      Defaults.observe(\.tnfActive, options: [.initial, .new], changeHandler: changeHandler(_:_:)),
-      Defaults.observe(\.tnfInactive, options: [.initial, .new], changeHandler: changeHandler(_:_:))
+      Defaults.observe(\.dbLegend, options: [.initial, .new]) { [weak self] (defaults, change) in
+        self?._dbLegend.color = defaults[.dbLegend] },
+                       
+      Defaults.observe(\.frequencyLegend, options: [.initial, .new]) { [weak self] (defaults, change) in
+        self?._frequencyLegend.color = defaults[.frequencyLegend] },
+      
+      Defaults.observe(\.gridLine, options: [.initial, .new]) { [weak self] (defaults, change) in
+        self?._gridLine.color = Defaults[.gridLine] },
+      
+      Defaults.observe(\.marker, options: [.initial, .new]) { [weak self] (defaults, change) in
+        self?._marker.color = Defaults[.marker] },
+      
+      Defaults.observe(\.markerEdge, options: [.initial, .new]) { [weak self] (defaults, change) in
+        self?._markerEdge.color = Defaults[.markerEdge] },
+      
+      Defaults.observe(\.markerSegment, options: [.initial, .new]) { [weak self] (defaults, change) in
+        self?._markerSegment.color = Defaults[.markerSegment]},
+      
+      Defaults.observe(\.sliceActive, options: [.initial, .new]) { [weak self] (defaults, change) in
+        self?._sliceActive.color = Defaults[.sliceActive] },
+      
+      Defaults.observe(\.sliceFilter, options: [.initial, .new]) { [weak self] (defaults, change) in
+        self?._sliceFilter.color = Defaults[.sliceFilter] },
+      
+      Defaults.observe(\.sliceInactive, options: [.initial, .new]) { [weak self] (defaults, change) in
+        self?._sliceInactive.color = Defaults[.sliceInactive] },
+      
+      Defaults.observe(\.spectrum, options: [.initial, .new]) { [weak self] (defaults, change) in
+        self?._spectrum.color = Defaults[.spectrum] },
+      
+      Defaults.observe(\.spectrumBackground, options: [.initial, .new]) { [weak self] (defaults, change) in
+        self?._spectrumBackground.color = Defaults[.spectrumBackground] },
+      
+      Defaults.observe(\.tnfActive, options: [.initial, .new]) { [weak self] (defaults, change) in
+        self?._tnfActive.color = Defaults[.tnfActive]},
+      
+      Defaults.observe(\.tnfInactive, options: [.initial, .new]) { [weak self] (defaults, change) in
+        self?._tnfInactive.color = Defaults[.tnfInactive] }
     ]
   }
   /// Process observations
@@ -169,23 +203,23 @@ final class ColorsPrefsViewController            : NSViewController {
   ///   - defaults:                 the Defaults being observed
   ///   - change:                   the change
   ///
-  private func changeHandler(_ defaults: Any, _ change: Any) {
-
-    DispatchQueue.main.async { [weak self] in
-      self?._dbLegend.color = Defaults[.dbLegend]
-      self?._frequencyLegend.color = Defaults[.frequencyLegend]
-      self?._gridLine.color = Defaults[.gridLine]
-      self?._marker.color = Defaults[.marker]
-      self?._markerEdge.color = Defaults[.markerEdge]
-      self?._markerSegment.color = Defaults[.markerSegment]
-      self?._sliceActive.color = Defaults[.sliceActive]
-      self?._sliceFilter.color = Defaults[.sliceFilter]
-      self?._sliceInactive.color = Defaults[.sliceInactive]
-      self?._spectrum.color = Defaults[.spectrum]
-      self?._spectrumBackground.color = Defaults[.spectrumBackground]
-      self?._tnfActive.color = Defaults[.tnfActive]
-      self?._tnfInactive.color = Defaults[.tnfInactive]
-
-    }
-  }
+//  private func changeHandler(_ defaults: Any, _ change: Any) {
+//
+//    DispatchQueue.main.async { [weak self] in
+//      self?._dbLegend.color = Defaults[.dbLegend]
+//      self?._frequencyLegend.color = Defaults[.frequencyLegend]
+//      self?._gridLine.color = Defaults[.gridLine]
+//      self?._marker.color = Defaults[.marker]
+//      self?._markerEdge.color = Defaults[.markerEdge]
+//      self?._markerSegment.color = Defaults[.markerSegment]
+//      self?._sliceActive.color = Defaults[.sliceActive]
+//      self?._sliceFilter.color = Defaults[.sliceFilter]
+//      self?._sliceInactive.color = Defaults[.sliceInactive]
+//      self?._spectrum.color = Defaults[.spectrum]
+//      self?._spectrumBackground.color = Defaults[.spectrumBackground]
+//      self?._tnfActive.color = Defaults[.tnfActive]
+//      self?._tnfInactive.color = Defaults[.tnfInactive]
+//
+//    }
+//  }
 }

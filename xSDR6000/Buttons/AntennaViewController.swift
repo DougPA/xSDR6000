@@ -30,6 +30,10 @@ final class AntennaViewController           : NSViewController, NSPopoverDelegat
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    #if DEBUG
+    Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
+    #endif
+    
     _rxAntPopUp.addItems(withTitles: _panadapter.antList)
     
     // start observing
@@ -45,7 +49,12 @@ final class AntennaViewController           : NSViewController, NSPopoverDelegat
     _isDetached = true
     return true
   }
-  
+  #if DEBUG
+  deinit {
+    Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
+  }
+  #endif
+
   // ----------------------------------------------------------------------------
   // MARK: - Action methods
   

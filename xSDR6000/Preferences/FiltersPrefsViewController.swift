@@ -21,8 +21,8 @@ final class FiltersPrefsViewController: NSViewController {
   @IBOutlet private weak var _cwAutoCheckbox      : NSButton!
   @IBOutlet private weak var _digitalAutoCheckbox : NSButton!
   
-  private var _radio                        : Radio? { return Api.sharedInstance.radio }
-  private var _observations                 = [NSKeyValueObservation]()
+  private weak var _radio                         : Radio? { return Api.sharedInstance.radio }
+  private var _observations                  = [NSKeyValueObservation]()
   
   // ----------------------------------------------------------------------------
   // MARK: - Overridden methods
@@ -30,11 +30,20 @@ final class FiltersPrefsViewController: NSViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    #if DEBUG
+    Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
+    #endif
+    
     view.translatesAutoresizingMaskIntoConstraints = false
     
     // begin observing properties
     addObservations()
   }
+  #if DEBUG
+  deinit {
+    Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
+  }
+  #endif
 
   // ----------------------------------------------------------------------------
   // MARK: - Action methods
@@ -80,14 +89,24 @@ final class FiltersPrefsViewController: NSViewController {
   /// Add observations of various properties used by the view
   ///
   private func addObservations() {
-    
     _observations = [
-      _radio!.observe(\.filterVoiceLevel, options: [.initial, .new], changeHandler: changeHandler(_:_:)),
-      _radio!.observe(\.filterCwLevel, options: [.initial, .new], changeHandler: changeHandler(_:_:)),
-      _radio!.observe(\.filterDigitalLevel, options: [.initial, .new], changeHandler: changeHandler(_:_:)),
-      _radio!.observe(\.filterVoiceAutoEnabled, options: [.initial, .new], changeHandler: changeHandler(_:_:)),
-      _radio!.observe(\.filterCwAutoEnabled, options: [.initial, .new], changeHandler: changeHandler(_:_:)),
-      _radio!.observe(\.filterDigitalAutoEnabled, options: [.initial, .new], changeHandler: changeHandler(_:_:))
+      _radio!.observe(\.filterVoiceLevel, options: [.initial, .new]) { [weak self] (radio, change) in
+        self?._voiceSlider.integerValue = radio.filterVoiceLevel },
+      
+      _radio!.observe(\.filterCwLevel, options: [.initial, .new]) { [weak self] (radio, change) in
+        self?._cwSlider.integerValue = radio.filterCwLevel },
+     
+      _radio!.observe(\.filterDigitalLevel, options: [.initial, .new]) { [weak self] (radio, change) in
+        self?._digitalSlider.integerValue = radio.filterDigitalLevel },
+      
+      _radio!.observe(\.filterVoiceAutoEnabled, options: [.initial, .new]) { [weak self] (radio, change) in
+        self?._voiceAutoCheckbox.boolState = radio.filterVoiceAutoEnabled },
+      
+      _radio!.observe(\.filterCwAutoEnabled, options: [.initial, .new]) { [weak self] (radio, change) in
+        self?._cwAutoCheckbox.boolState = radio.filterCwAutoEnabled },
+      
+      _radio!.observe(\.filterDigitalAutoEnabled, options: [.initial, .new]) { [weak self] (radio, change) in
+        self?._digitalAutoCheckbox.boolState = radio.filterDigitalAutoEnabled }
     ]
   }
   /// Process observations
@@ -96,15 +115,15 @@ final class FiltersPrefsViewController: NSViewController {
   ///   - slice:                    the panadapter being observed
   ///   - change:                   the change
   ///
-  private func changeHandler(_ radio: Radio, _ change: Any) {
-    
-    DispatchQueue.main.async { [weak self] in
-      self?._voiceSlider.integerValue = radio.filterVoiceLevel
-      self?._cwSlider.integerValue = radio.filterCwLevel
-      self?._digitalSlider.integerValue = radio.filterDigitalLevel
-      self?._voiceAutoCheckbox.boolState = radio.filterVoiceAutoEnabled
-      self?._cwAutoCheckbox.boolState = radio.filterCwAutoEnabled
-      self?._digitalAutoCheckbox.boolState = radio.filterDigitalAutoEnabled
-    }
-  }
+//  private func changeHandler(_ radio: Radio, _ change: Any) {
+//
+//    DispatchQueue.main.async { [weak self] in
+//      self?._voiceSlider.integerValue = radio.filterVoiceLevel
+//      self?._cwSlider.integerValue = radio.filterCwLevel
+//      self?._digitalSlider.integerValue = radio.filterDigitalLevel
+//      self?._voiceAutoCheckbox.boolState = radio.filterVoiceAutoEnabled
+//      self?._cwAutoCheckbox.boolState = radio.filterCwAutoEnabled
+//      self?._digitalAutoCheckbox.boolState = radio.filterDigitalAutoEnabled
+//    }
+//  }
 }

@@ -32,11 +32,20 @@ final class RxPrefsViewController: NSViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    #if DEBUG
+    Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
+    #endif
+    
     view.translatesAutoresizingMaskIntoConstraints = false
     
     // begin observing properties
     addObservations()
   }
+  #if DEBUG
+  deinit {
+    Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
+  }
+  #endif
 
   // ----------------------------------------------------------------------------
   // MARK: - Action  methods
@@ -97,11 +106,20 @@ final class RxPrefsViewController: NSViewController {
   private func addObservations() {
     
     _observations = [
-      _radio!.observe(\.calFreq, options: [.initial, .new], changeHandler: changeHandler(_:_:)),
-      _radio!.observe(\.freqErrorPpb, options: [.initial, .new], changeHandler: changeHandler(_:_:)),
-      _radio!.observe(\.snapTuneEnabled, options: [.initial, .new], changeHandler: changeHandler(_:_:)),
-      _radio!.observe(\.muteLocalAudio, options: [.initial, .new], changeHandler: changeHandler(_:_:)),
-      _radio!.observe(\.binauralRxEnabled, options: [.initial, .new], changeHandler: changeHandler(_:_:))
+      _radio!.observe(\.calFreq, options: [.initial, .new]) { [weak self] (radio, change) in
+        self?._calFreqTextField.integerValue = radio.calFreq },
+      
+      _radio!.observe(\.freqErrorPpb, options: [.initial, .new]) { [weak self] (radio, change) in
+        self?._calOffsetTextField.integerValue = radio.freqErrorPpb },
+      
+      _radio!.observe(\.snapTuneEnabled, options: [.initial, .new]) { [weak self] (radio, change) in
+        self?._snapTuneCheckbox.boolState = radio.snapTuneEnabled },
+      
+      _radio!.observe(\.muteLocalAudio, options: [.initial, .new]) { [weak self] (radio, change) in
+        self?._muteLocalAudioCheckbox.boolState = radio.muteLocalAudio },
+      
+      _radio!.observe(\.binauralRxEnabled, options: [.initial, .new]) { [weak self] (radio, change) in
+        self?._binauralAudioCheckbox.boolState = radio.binauralRxEnabled },
     ]
   }
   /// Process observations
@@ -110,14 +128,14 @@ final class RxPrefsViewController: NSViewController {
   ///   - slice:                    the panadapter being observed
   ///   - change:                   the change
   ///
-  private func changeHandler(_ radio: Radio, _ change: Any) {
-
-    DispatchQueue.main.async { [weak self] in
-      self?._calFreqTextField.integerValue = radio.calFreq
-      self?._calOffsetTextField.integerValue = radio.freqErrorPpb
-      self?._snapTuneCheckbox.boolState = radio.snapTuneEnabled
-      self?._muteLocalAudioCheckbox.boolState = radio.muteLocalAudio
-      self?._binauralAudioCheckbox.boolState = radio.binauralRxEnabled
-    }
-  }
+//  private func changeHandler(_ radio: Radio, _ change: Any) {
+//
+//    DispatchQueue.main.async { [weak self] in
+//      self?._calFreqTextField.integerValue = radio.calFreq
+//      self?._calOffsetTextField.integerValue = radio.freqErrorPpb
+//      self?._snapTuneCheckbox.boolState = radio.snapTuneEnabled
+//      self?._muteLocalAudioCheckbox.boolState = radio.muteLocalAudio
+//      self?._binauralAudioCheckbox.boolState = radio.binauralRxEnabled
+//    }
+//  }
 }

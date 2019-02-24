@@ -48,13 +48,22 @@ final class PanafallsViewController               : NSSplitViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    #if DEBUG
+    Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
+    #endif
+
     // get the Storyboard containing a Panafall Button View Controller
     _sb = NSStoryboard(name: kPanafallStoryboard, bundle: nil)
 
     // add notification subscriptions
     addNotifications()
   }
-  
+  #if DEBUG
+  deinit {
+    Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
+  }
+  #endif
+
   // ----------------------------------------------------------------------------
   // MARK: - Notification Methods
   

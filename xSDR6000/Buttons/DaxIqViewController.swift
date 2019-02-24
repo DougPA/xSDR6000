@@ -28,6 +28,10 @@ final class DaxIqViewController             : NSViewController, NSPopoverDelegat
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    #if DEBUG
+    Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
+    #endif
+    
     _daxIqPopUp.addItems(withTitles: _panadapter.daxIqChoices)
     
     // start observing
@@ -43,6 +47,11 @@ final class DaxIqViewController             : NSViewController, NSPopoverDelegat
     _isDetached = true
     return true
   }
+  #if DEBUG
+  deinit {
+    Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
+  }
+  #endif
 
   // ----------------------------------------------------------------------------
   // MARK: - Action methods

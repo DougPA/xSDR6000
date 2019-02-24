@@ -40,6 +40,10 @@ final class DspViewController: NSViewController {
   override func viewDidLoad() {
         super.viewDidLoad()
 
+    #if DEBUG
+    Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
+    #endif
+    
     view.translatesAutoresizingMaskIntoConstraints = false
     
     if Defaults[.flagBorderEnabled] {
@@ -56,6 +60,11 @@ final class DspViewController: NSViewController {
     // set the background color of the Flag
     view.layer?.backgroundColor = ControlsViewController.kBackgroundColor
   }
+  #if DEBUG
+  deinit {
+    Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
+  }
+  #endif
 
   // ----------------------------------------------------------------------------
   // MARK: - Action methods
@@ -107,14 +116,29 @@ final class DspViewController: NSViewController {
   private func addObservations() {
     
     _observations = [
-      _slice.observe(\.wnbEnabled, options: [.initial, .new], changeHandler: changeHandler(_:_:)),
-      _slice.observe(\.nbEnabled, options: [.initial, .new], changeHandler: changeHandler(_:_:)),
-      _slice.observe(\.nrEnabled, options: [.initial, .new], changeHandler: changeHandler(_:_:)),
-      _slice.observe(\.anfEnabled, options: [.initial, .new], changeHandler: changeHandler(_:_:)),
-      _slice.observe(\.wnbLevel, options: [.initial, .new], changeHandler: changeHandler(_:_:)),
-      _slice.observe(\.nbLevel, options: [.initial, .new], changeHandler: changeHandler(_:_:)),
-      _slice.observe(\.nrLevel, options: [.initial, .new], changeHandler: changeHandler(_:_:)),
-      _slice.observe(\.anfLevel, options: [.initial, .new], changeHandler: changeHandler(_:_:)),
+      _slice.observe(\.wnbEnabled, options: [.initial, .new]) { [weak self] (slice, change) in
+        self?.changeHandler(slice, change) },
+        
+      _slice.observe(\.nbEnabled, options: [.initial, .new]) { [weak self] (slice, change) in
+        self?.changeHandler(slice, change)},
+      
+      _slice.observe(\.nrEnabled, options: [.initial, .new]) { [weak self] (slice, change) in
+        self?.changeHandler(slice, change) },
+      
+      _slice.observe(\.anfEnabled, options: [.initial, .new]) { [weak self] (slice, change) in
+        self?.changeHandler(slice, change) },
+      
+      _slice.observe(\.wnbLevel, options: [.initial, .new]) { [weak self] (slice, change) in
+        self?.changeHandler(slice, change) },
+      
+      _slice.observe(\.nbLevel, options: [.initial, .new]) { [weak self] (slice, change) in
+        self?.changeHandler(slice, change) },
+      
+      _slice.observe(\.nrLevel, options: [.initial, .new]) { [weak self] (slice, change) in
+        self?.changeHandler(slice, change) },
+      
+      _slice.observe(\.anfLevel, options: [.initial, .new]) { [weak self] (slice, change) in
+        self?.changeHandler(slice, change) },
     ]
   }
   /// Process observations
@@ -124,13 +148,13 @@ final class DspViewController: NSViewController {
   ///   - change:                   the change
   ///
   private func changeHandler(_ slice: xLib6000.Slice, _ change: Any) {
-    
+
     DispatchQueue.main.async { [weak self] in
       self?._wnbButton.boolState = slice.wnbEnabled
       self?._nbButton.boolState = slice.nbEnabled
       self?._nrButton.boolState = slice.nrEnabled
       self?._anfButton.boolState = slice.anfEnabled
-      
+
       self?._wnbSlider.integerValue = slice.wnbLevel
       self?._nbSlider.integerValue = slice.nbLevel
       self?._nrSlider.integerValue = slice.nrLevel

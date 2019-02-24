@@ -21,12 +21,16 @@ final class PreferencesTabViewController    : NSTabViewController {
   
   private let _autosaveName                 = "PreferencesWindow"
   private let _log                          = OSLog(subsystem: Api.kDomainId + "." + kClientName, category: "Preferences")
-
+  
   // ----------------------------------------------------------------------------
   // MARK: - Overridden methods
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    
+    #if DEBUG
+    Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
+    #endif
     
     view.translatesAutoresizingMaskIntoConstraints = false
     
@@ -62,43 +66,37 @@ final class PreferencesTabViewController    : NSTabViewController {
   override func tabView(_ tabView: NSTabView, willSelect tabViewItem: NSTabViewItem?) {
     super.tabView(tabView, willSelect: tabViewItem)
 
-//    let id = (tabViewItem!.identifier as! NSUserInterfaceItemIdentifier).rawValue
-//    // give the newly selected tab a reference to an object (if needed)
-//    switch id {
-//    case "Colors", "Info":
-//      tabViewItem?.viewController?.representedObject = Defaults
-//    default:
-//      break
-//    }
     // close the ColorPicker (if open)
     if NSColorPanel.shared.isVisible {
       NSColorPanel.shared.performClose(nil)
     }
   }
-
   deinit {
     os_log("Preferences window closed", log: self._log, type: .info)
+    #if DEBUG
+    Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
+    #endif
   }
-  
+
   // ----------------------------------------------------------------------------
   // MARK: - Action methods
   
-  /// Respond to the Quit menu item
-  ///
-  /// - Parameter sender:     the button
-  ///
-  @IBAction func quitRadio(_ sender: AnyObject) {
-    
-    dismiss(sender)
-    
-    // perform an orderly shutdown of all the components
-    Api.sharedInstance.shutdown(reason: .normal)
-    
-    DispatchQueue.main.async {
-      os_log("Application closed by user", log: self._log, type: .info)
-      
-      NSApp.terminate(self)
-    }
-  }
+//  /// Respond to the Quit menu item
+//  ///
+//  /// - Parameter sender:     the button
+//  ///
+//  @IBAction func quitRadio(_ sender: AnyObject) {
+//
+//    dismiss(sender)
+//
+//    // perform an orderly shutdown of all the components
+//    Api.sharedInstance.shutdown(reason: .normal)
+//
+//    DispatchQueue.main.async {
+//      os_log("Application closed by user", log: self._log, type: .info)
+//
+//      NSApp.terminate(self)
+//    }
+//  }
 }
 

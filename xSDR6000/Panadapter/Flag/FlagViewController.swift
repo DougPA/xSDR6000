@@ -67,7 +67,7 @@ final class FlagViewController       : NSViewController, NSTextFieldDelegate, NS
   @IBOutlet private var _modeButton         : NSButton!
   @IBOutlet private var _xritButton         : NSButton!
   @IBOutlet private var _daxButton          : NSButton!
-  @IBOutlet private weak var _txButton      : NSButton!
+  @IBOutlet private var _txButton           : NSButton!
   
   private weak var _panadapter              : Panadapter?
   private weak var _vc                      : NSViewController?
@@ -173,6 +173,10 @@ final class FlagViewController       : NSViewController, NSTextFieldDelegate, NS
   public override func viewDidLoad() {
     super.viewDidLoad()
     
+    #if DEBUG
+    Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
+    #endif
+    
     view.translatesAutoresizingMaskIntoConstraints = false
 
     if Defaults[.flagBorderEnabled] {
@@ -230,6 +234,11 @@ final class FlagViewController       : NSViewController, NSTextFieldDelegate, NS
       _beginEditing = false
     }
   }
+  #if DEBUG
+  deinit {
+    Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
+  }
+  #endif
 
   // ----------------------------------------------------------------------------
   // MARK: - Internal methods
@@ -487,27 +496,52 @@ final class FlagViewController       : NSViewController, NSTextFieldDelegate, NS
   ///
   private func addObservations(slice: xLib6000.Slice, panadapter: Panadapter ) {
     
-    _observations.append( slice.observe(\.active, options: [.initial, .new], changeHandler: sliceChange(_:_:)) )
-    _observations.append( slice.observe(\.mode, options: [.initial, .new], changeHandler: sliceChange(_:_:)) )
+    _observations = [
+      slice.observe(\.active, options: [.initial, .new]) { [weak self] (slice, change) in
+        self?.sliceChange(slice, change) },
 
-    _observations.append( slice.observe(\.txEnabled, options: [.initial, .new], changeHandler: txChange(_:_:)) )
-    
-    _observations.append( slice.observe(\.filterHigh, options: [.initial, .new], changeHandler: filterChange(_:_:)) )
-    _observations.append( slice.observe(\.filterLow, options: [.initial, .new], changeHandler: filterChange(_:_:)) )
-    
-    _observations.append( slice.observe(\.frequency, options: [.initial, .new], changeHandler: positionChange(_:_:)) )
-    _observations.append( panadapter.observe(\.center, options: [.initial, .new], changeHandler: positionChange(_:_:)) )
-    _observations.append( panadapter.observe(\.bandwidth, options: [.initial, .new], changeHandler: positionChange(_:_:)) )
+      slice.observe(\.mode, options: [.initial, .new]) { [weak self] (slice, change) in
+        self?.sliceChange(slice, change) },
 
-    _observations.append( slice.observe(\.nbEnabled, options: [.initial, .new], changeHandler: buttonsChange(_:_:)) )
-    _observations.append( slice.observe(\.nrEnabled, options: [.initial, .new], changeHandler: buttonsChange(_:_:)) )
-    _observations.append( slice.observe(\.anfEnabled, options: [.initial, .new], changeHandler: buttonsChange(_:_:)) )
-    _observations.append( slice.observe(\.qskEnabled, options: [.initial, .new], changeHandler: buttonsChange(_:_:)) )
-    _observations.append( slice.observe(\.locked, options: [.initial, .new], changeHandler: buttonsChange(_:_:)) )
-    
-    _observations.append( slice.observe(\.rxAnt, options: [.initial, .new], changeHandler: antennaChange(_:_:)) )
-    _observations.append( slice.observe(\.txAnt, options: [.initial, .new], changeHandler: antennaChange(_:_:)) )
-    
+      slice.observe(\.txEnabled, options: [.initial, .new]) { [weak self] (slice, change) in
+        self?.txChange(slice, change) },
+
+      slice.observe(\.filterHigh, options: [.initial, .new]) { [weak self] (slice, change) in
+        self?.filterChange(slice, change) },
+
+      slice.observe(\.filterLow, options: [.initial, .new]) { [weak self] (slice, change) in
+        self?.filterChange(slice, change) },
+
+      slice.observe(\.frequency, options: [.initial, .new]) { [weak self] (slice, change) in
+        self?.positionChange(slice, change) },
+
+      panadapter.observe(\.center, options: [.initial, .new]) { [weak self] (panadapter, change) in
+        self?.positionChange(panadapter, change) },
+
+      panadapter.observe(\.bandwidth, options: [.initial, .new]) { [weak self] (panadapter, change) in
+        self?.positionChange(panadapter, change) },
+
+      slice.observe(\.nbEnabled, options: [.initial, .new]) { [weak self] (slice, change) in
+        self?.buttonsChange(slice, change) },
+      
+      slice.observe(\.nrEnabled, options: [.initial, .new]) { [weak self] (slice, change) in
+        self?.buttonsChange(slice, change) },
+
+      slice.observe(\.anfEnabled, options: [.initial, .new]) { [weak self] (slice, change) in
+        self?.buttonsChange(slice, change) },
+
+      slice.observe(\.qskEnabled, options: [.initial, .new]) { [weak self] (slice, change) in
+        self?.buttonsChange(slice, change) },
+
+      slice.observe(\.locked, options: [.initial, .new]) { [weak self] (slice, change) in
+        self?.buttonsChange(slice, change) },
+
+      slice.observe(\.rxAnt, options: [.initial, .new]) { [weak self] (slice, change) in
+        self?.antennaChange(slice, change) },
+
+      slice.observe(\.txAnt, options: [.initial, .new]) { [weak self] (slice, change) in
+        self?.antennaChange(slice, change) }
+    ]
   }
   /// Add Observation of the S-Meter feed
   ///
@@ -517,7 +551,8 @@ final class FlagViewController       : NSViewController, NSTextFieldDelegate, NS
   func addMeterObservation(_ meter: Meter) {
     
     // add the observation
-    _observations.append( meter.observe(\.value, options: [.initial, .new], changeHandler: meterChange(_:_:)) )
+    _observations.append( meter.observe(\.value, options: [.initial, .new]) { [weak self] (meter, change) in
+      self?.meterChange(meter, change) })
   }
   /// Invalidate observations (optionally remove)
   ///
@@ -577,7 +612,7 @@ final class FlagViewController       : NSViewController, NSTextFieldDelegate, NS
   ///   - change:               the change
   ///
   private func buttonsChange(_ slice: xLib6000.Slice, _ change: Any) {
-    
+
     DispatchQueue.main.async {
       self._lockButton.boolState = slice.locked
       self._nbButton.boolState = slice.nbEnabled
@@ -593,7 +628,7 @@ final class FlagViewController       : NSViewController, NSTextFieldDelegate, NS
   ///   - change:               the change
   ///
   private func antennaChange(_ slice: xLib6000.Slice, _ change: Any) {
-    
+
     DispatchQueue.main.async {
       self._rxAntPopUp.selectItem(withTitle: slice.rxAnt)
       self._txAntPopUp.selectItem(withTitle: slice.txAnt)

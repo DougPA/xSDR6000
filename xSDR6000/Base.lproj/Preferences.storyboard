@@ -10,7 +10,7 @@
         <scene sceneID="EsG-he-Aa5">
             <objects>
                 <windowController storyboardIdentifier="Preferences" showSeguePresentationStyle="single" id="jcl-33-LeA" userLabel="Preferences Window" sceneMemberID="viewController">
-                    <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="Yh7-7p-tLp">
+                    <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="Yh7-7p-tLp">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="1439" y="749" width="600" height="400"/>
@@ -114,7 +114,7 @@
                                                 </constraints>
                                                 <buttonCell key="cell" type="inline" title="RESET" bezelStyle="inline" alignment="center" borderStyle="border" inset="2" id="FKw-cV-go0">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                    <font key="font" metaFont="systemBold" size="9"/>
+                                                    <font key="font" metaFont="miniSystemBold"/>
                                                 </buttonCell>
                                                 <connections>
                                                     <action selector="singleResetButtons:" target="3IL-Xb-5ey" id="Qb6-5E-nsI"/>
@@ -164,7 +164,7 @@
                                                 </constraints>
                                                 <buttonCell key="cell" type="inline" title="RESET" bezelStyle="inline" alignment="center" borderStyle="border" inset="2" id="1m7-1M-5W2">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                    <font key="font" metaFont="systemBold" size="9"/>
+                                                    <font key="font" metaFont="miniSystemBold"/>
                                                 </buttonCell>
                                                 <connections>
                                                     <action selector="singleResetButtons:" target="3IL-Xb-5ey" id="bj7-4r-OIw"/>
@@ -214,7 +214,7 @@
                                                 </constraints>
                                                 <buttonCell key="cell" type="inline" title="RESET" bezelStyle="inline" alignment="center" borderStyle="border" inset="2" id="mja-cw-lEc">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                    <font key="font" metaFont="systemBold" size="9"/>
+                                                    <font key="font" metaFont="miniSystemBold"/>
                                                 </buttonCell>
                                                 <connections>
                                                     <action selector="singleResetButtons:" target="3IL-Xb-5ey" id="C3Q-2E-BzK"/>
@@ -265,7 +265,7 @@
                                                 </constraints>
                                                 <buttonCell key="cell" type="inline" title="RESET" bezelStyle="inline" alignment="center" borderStyle="border" inset="2" id="tma-RY-4bD">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                    <font key="font" metaFont="systemBold" size="9"/>
+                                                    <font key="font" metaFont="miniSystemBold"/>
                                                 </buttonCell>
                                                 <connections>
                                                     <action selector="singleResetButtons:" target="3IL-Xb-5ey" id="amZ-Cs-dxU"/>
@@ -315,7 +315,7 @@
                                                 </constraints>
                                                 <buttonCell key="cell" type="inline" title="RESET" bezelStyle="inline" alignment="center" borderStyle="border" identifier="SpectrumBackgroundReset" inset="2" id="rLF-2H-fOp">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                    <font key="font" metaFont="systemBold" size="9"/>
+                                                    <font key="font" metaFont="miniSystemBold"/>
                                                 </buttonCell>
                                                 <connections>
                                                     <action selector="singleResetButtons:" target="3IL-Xb-5ey" id="tyY-IG-2rd"/>
@@ -436,7 +436,7 @@
                                                 </constraints>
                                                 <buttonCell key="cell" type="inline" title="RESET" bezelStyle="inline" alignment="center" borderStyle="border" inset="2" id="OZ6-IG-mXY">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                    <font key="font" metaFont="systemBold" size="9"/>
+                                                    <font key="font" metaFont="miniSystemBold"/>
                                                 </buttonCell>
                                                 <connections>
                                                     <action selector="singleResetButtons:" target="3IL-Xb-5ey" id="yaL-Ba-cIg"/>
@@ -460,7 +460,7 @@
                                                 </constraints>
                                                 <buttonCell key="cell" type="inline" title="RESET" bezelStyle="inline" alignment="center" borderStyle="border" inset="2" id="bVT-eE-8ST">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                    <font key="font" metaFont="systemBold" size="9"/>
+                                                    <font key="font" metaFont="miniSystemBold"/>
                                                 </buttonCell>
                                                 <connections>
                                                     <action selector="singleResetButtons:" target="3IL-Xb-5ey" id="wKm-we-TwD"/>
@@ -514,7 +514,7 @@
                                                 </constraints>
                                                 <buttonCell key="cell" type="inline" title="RESET" bezelStyle="inline" alignment="center" borderStyle="border" inset="2" id="2qW-nF-njp">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                    <font key="font" metaFont="systemBold" size="9"/>
+                                                    <font key="font" metaFont="miniSystemBold"/>
                                                 </buttonCell>
                                                 <connections>
                                                     <action selector="singleResetButtons:" target="3IL-Xb-5ey" id="YUq-W8-POu"/>
@@ -538,7 +538,7 @@
                                                 </constraints>
                                                 <buttonCell key="cell" type="inline" title="RESET" bezelStyle="inline" alignment="center" borderStyle="border" inset="2" id="dwo-9y-ZYm">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                    <font key="font" metaFont="systemBold" size="9"/>
+                                                    <font key="font" metaFont="miniSystemBold"/>
                                                 </buttonCell>
                                                 <connections>
                                                     <action selector="singleResetButtons:" target="3IL-Xb-5ey" id="trB-vx-LBJ"/>
@@ -592,7 +592,7 @@
                                                 </constraints>
                                                 <buttonCell key="cell" type="inline" title="RESET" bezelStyle="inline" alignment="center" borderStyle="border" inset="2" id="qmj-sj-cbu">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                    <font key="font" metaFont="systemBold" size="9"/>
+                                                    <font key="font" metaFont="miniSystemBold"/>
                                                 </buttonCell>
                                                 <connections>
                                                     <action selector="singleResetButtons:" target="3IL-Xb-5ey" id="NlL-Ah-l0q"/>
@@ -642,7 +642,7 @@
                                                 </constraints>
                                                 <buttonCell key="cell" type="inline" title="RESET" bezelStyle="inline" alignment="center" borderStyle="border" inset="2" id="7cP-qD-UBO">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                    <font key="font" metaFont="systemBold" size="9"/>
+                                                    <font key="font" metaFont="miniSystemBold"/>
                                                 </buttonCell>
                                                 <connections>
                                                     <action selector="singleResetButtons:" target="3IL-Xb-5ey" id="DGM-41-c0z"/>
@@ -692,7 +692,7 @@
                                                 </constraints>
                                                 <buttonCell key="cell" type="inline" title="RESET" bezelStyle="inline" alignment="center" borderStyle="border" inset="2" id="Qpv-PL-zEu">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                    <font key="font" metaFont="systemBold" size="9"/>
+                                                    <font key="font" metaFont="miniSystemBold"/>
                                                 </buttonCell>
                                                 <connections>
                                                     <action selector="singleResetButtons:" target="3IL-Xb-5ey" id="n7K-uA-ypg"/>
@@ -742,7 +742,7 @@
                                                 </constraints>
                                                 <buttonCell key="cell" type="inline" title="RESET" bezelStyle="inline" alignment="center" borderStyle="border" inset="2" id="t2E-kx-OSk">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                    <font key="font" metaFont="systemBold" size="9"/>
+                                                    <font key="font" metaFont="miniSystemBold"/>
                                                 </buttonCell>
                                                 <connections>
                                                     <action selector="singleResetButtons:" target="3IL-Xb-5ey" id="qqd-O6-wgZ"/>

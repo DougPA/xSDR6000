@@ -47,6 +47,10 @@ final class DisplayViewController                     : NSViewController, NSPopo
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    #if DEBUG
+    Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
+    #endif
+    
     _gradientPopUp.addItems(withTitles: WaterfallViewController.gradientNames)
     
     // start observing
@@ -70,7 +74,12 @@ final class DisplayViewController                     : NSViewController, NSPopo
     _panadapter = panadapter
     _waterfall = waterfall
   }
-  
+  #if DEBUG
+  deinit {
+    Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
+  }
+  #endif
+
   // ----------------------------------------------------------------------------
   // MARK: - Action methods
   

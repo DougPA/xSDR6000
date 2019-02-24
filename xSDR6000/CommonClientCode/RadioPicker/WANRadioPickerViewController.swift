@@ -94,6 +94,10 @@ final class WANRadioPickerViewController    : NSViewController, NSTableViewDeleg
     var idToken = ""
     var loggedIn = false
     
+    #if DEBUG
+    Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
+    #endif
+    
     // allow the User to double-click the desired Radio
     _radioTableView.doubleAction = #selector(WANRadioPickerViewController.selectButton(_:))
     
@@ -166,7 +170,12 @@ final class WANRadioPickerViewController    : NSViewController, NSTableViewDeleg
     // change the button title
     _loginButton.title = kLogoutTitle
   }
-  
+  #if DEBUG
+  deinit {
+    Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
+  }
+  #endif
+
   // ----------------------------------------------------------------------------
   // MARK: - Action methods
   

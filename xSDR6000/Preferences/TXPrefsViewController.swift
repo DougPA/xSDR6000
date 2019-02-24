@@ -50,12 +50,21 @@ final class TXPrefsViewController                 : NSViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
         
+    #if DEBUG
+    Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
+    #endif
+    
     view.translatesAutoresizingMaskIntoConstraints = false
     
     // begin observing properties
     addObservations()
   }
-  
+  #if DEBUG
+  deinit {
+    Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
+  }
+  #endif
+
   // ----------------------------------------------------------------------------
   // MARK: - Action methods
   
@@ -168,25 +177,69 @@ final class TXPrefsViewController                 : NSViewController {
   private func addObservations() {
 
     _observations = [
-      _interlock!.observe(\.accTxEnabled, options: [.initial, .new], changeHandler: interlockHandler(_:_:)),
-      _interlock!.observe(\.accTxDelay, options: [.initial, .new], changeHandler: interlockHandler(_:_:)),
-      _interlock!.observe(\.timeout, options: [.initial, .new], changeHandler: interlockHandler(_:_:)),
-      _interlock!.observe(\.tx1Enabled, options: [.initial, .new], changeHandler: interlockHandler(_:_:)),
-      _interlock!.observe(\.tx2Enabled, options: [.initial, .new], changeHandler: interlockHandler(_:_:)),
-      _interlock!.observe(\.tx3Enabled, options: [.initial, .new], changeHandler: interlockHandler(_:_:)),
-      _interlock!.observe(\.accTxDelay, options: [.initial, .new], changeHandler: interlockHandler(_:_:)),
-      _interlock!.observe(\.tx1Delay, options: [.initial, .new], changeHandler: interlockHandler(_:_:)),
-      _interlock!.observe(\.tx2Delay, options: [.initial, .new], changeHandler: interlockHandler(_:_:)),
-      _interlock!.observe(\.tx3Delay, options: [.initial, .new], changeHandler: interlockHandler(_:_:)),
-      _interlock!.observe(\.rcaTxReqEnabled, options: [.initial, .new], changeHandler: interlockHandler(_:_:)),
-      _interlock!.observe(\.accTxReqEnabled, options: [.initial, .new], changeHandler: interlockHandler(_:_:)),
+      _interlock!.observe(\.accTxEnabled, options: [.initial, .new]) { [weak self] (interlock, change) in
+        self?._accTxCheckbox.boolState = interlock.accTxEnabled },
       
-      _transmit!.observe(\.inhibit, options: [.initial, .new], changeHandler: transmitHandler(_:_:)),
-      _transmit!.observe(\.maxPowerLevel, options: [.initial, .new], changeHandler: transmitHandler(_:_:)),
-      _transmit!.observe(\.txInWaterfallEnabled, options: [.initial, .new], changeHandler: transmitHandler(_:_:)),
-      _transmit!.observe(\.hwAlcEnabled, options: [.initial, .new], changeHandler: transmitHandler(_:_:)),
+      _interlock!.observe(\.accTxDelay, options: [.initial, .new]) { [weak self] (interlock, change) in
+        self?._accTxTextField.integerValue = interlock.accTxDelay },
+      
+      _interlock!.observe(\.timeout, options: [.initial, .new]) { [weak self] (interlock, change) in
+        self?._txTimeoutTextField.integerValue = interlock.timeout },
+      
+      _interlock!.observe(\.tx1Enabled, options: [.initial, .new]) { [weak self] (interlock, change) in
+        self?._rcaTx1Checkbox.boolState = interlock.tx1Enabled },
+      
+      _interlock!.observe(\.tx2Enabled, options: [.initial, .new]) { [weak self] (interlock, change) in
+        self?._rcaTx2Checkbox.boolState = interlock.tx2Enabled },
 
-      _txProfile!.observe(\.selection, options: [.initial, .new], changeHandler: profileHandler(_:_:))
+      _interlock!.observe(\.tx3Enabled, options: [.initial, .new]) { [weak self] (interlock, change) in
+        self?._rcaTx3Checkbox.boolState = interlock.tx3Enabled },
+
+      _interlock!.observe(\.accTxDelay, options: [.initial, .new]) { [weak self] (interlock, change) in
+        self?._accTxTextField.integerValue = interlock.accTxDelay },
+
+      _interlock!.observe(\.tx1Delay, options: [.initial, .new]) { [weak self] (interlock, change) in
+        self?._rcaTx1TextField.integerValue = interlock.tx1Delay },
+
+      _interlock!.observe(\.tx2Delay, options: [.initial, .new]) { [weak self] (interlock, change) in
+        self?._rcaTx2TextField.integerValue = interlock.tx2Delay},
+
+      _interlock!.observe(\.tx3Delay, options: [.initial, .new]) { [weak self] (interlock, change) in
+        self?._rcaTx3TextField.integerValue = interlock.tx3Delay },
+      
+      _interlock!.observe(\.rcaTxReqEnabled, options: [.initial, .new]) { [weak self] (interlock, change) in
+        if interlock.rcaTxReqEnabled {
+          let selection = interlock.rcaTxReqPolarity ? "Active High" : "Active Low"
+          self?._rcaInterlockPopup.selectItem(withTitle: selection)
+        } else {
+          self?._rcaInterlockPopup.selectItem(withTitle: "Disabled")
+        }
+      },
+      
+      _interlock!.observe(\.accTxReqEnabled, options: [.initial, .new]) { [weak self] (interlock, change) in
+        if interlock.accTxReqEnabled {
+          let selection = interlock.accTxReqPolarity ? "Active High" : "Active Low"
+          self?._accInterlockPopup.selectItem(withTitle: selection)
+        } else {
+          self?._accInterlockPopup.selectItem(withTitle: "Disabled")
+        }
+      },
+      
+      _transmit!.observe(\.inhibit, options: [.initial, .new]) { [weak self] (transmit, change) in
+        self?._txInhibitCheckbox.boolState = transmit.inhibit },
+      
+      _transmit!.observe(\.maxPowerLevel, options: [.initial, .new]) { [weak self] (transmit, change) in
+        self?._maxPowerSlider.integerValue = transmit.maxPowerLevel
+        self?._maxPowerTextField.integerValue = transmit.maxPowerLevel },
+      
+      _transmit!.observe(\.txInWaterfallEnabled, options: [.initial, .new]) { [weak self] (transmit, change) in
+        self?._showTxInWaterfallCheckbox.boolState = transmit.txInWaterfallEnabled },
+      
+      _transmit!.observe(\.hwAlcEnabled, options: [.initial, .new]) { [weak self] (transmit, change) in
+        self?._hardWareAlcCheckbox.boolState = transmit.hwAlcEnabled },
+
+      _txProfile!.observe(\.selection, options: [.initial, .new]) { [weak self] (profile, change) in
+        self?._txProfilePopUp.selectItem(withTitle: profile.selection) }
     ]
   }
   /// Process observations
@@ -195,64 +248,64 @@ final class TXPrefsViewController                 : NSViewController {
   ///   - profile:                  the Profile being observed
   ///   - change:                   the change
   ///
-  private func profileHandler(_ profile: Profile, _ change: Any) {
-
-    DispatchQueue.main.async { [weak self] in
-      self?._txProfilePopUp.selectItem(withTitle: profile.selection)
-    }
-  }
+//  private func profileHandler(_ profile: Profile, _ change: Any) {
+//
+//    DispatchQueue.main.async { [weak self] in
+//      self?._txProfilePopUp.selectItem(withTitle: profile.selection)
+//    }
+//  }
   /// Process observations
   ///
   /// - Parameters:
   ///   - interlock:                the Interlock being observed
   ///   - change:                   the change
   ///
-  private func interlockHandler(_ interlock: Interlock, _ change: Any) {
-
-    DispatchQueue.main.async { [weak self] in
-      self?._accTxCheckbox.boolState = interlock.accTxEnabled
-      self?._rcaTx1Checkbox.boolState = interlock.tx1Enabled
-      self?._rcaTx2Checkbox.boolState = interlock.tx2Enabled
-      self?._rcaTx3Checkbox.boolState = interlock.tx3Enabled
-
-      self?._accTxTextField.integerValue = interlock.accTxDelay
-      self?._txDelayTextField.integerValue = interlock.txDelay
-      self?._rcaTx1TextField.integerValue = interlock.tx1Delay
-      self?._rcaTx2TextField.integerValue = interlock.tx2Delay
-      self?._rcaTx3TextField.integerValue = interlock.tx3Delay
-      self?._txTimeoutTextField.integerValue = interlock.timeout
-
-      if interlock.rcaTxReqEnabled {
-        let selection = interlock.rcaTxReqPolarity ? "Active High" : "Active Low"
-        self?._rcaInterlockPopup.selectItem(withTitle: selection)
-      } else {
-        self?._rcaInterlockPopup.selectItem(withTitle: "Disabled")
-      }
-
-      if interlock.accTxReqEnabled {
-        let selection = interlock.accTxReqPolarity ? "Active High" : "Active Low"
-        self?._accInterlockPopup.selectItem(withTitle: selection)
-      } else {
-        self?._accInterlockPopup.selectItem(withTitle: "Disabled")
-      }
-    }
-  }
-    
+//  private func interlockHandler(_ interlock: Interlock, _ change: Any) {
+//
+//    DispatchQueue.main.async { [weak self] in
+//      self?._accTxCheckbox.boolState = interlock.accTxEnabled
+//      self?._rcaTx1Checkbox.boolState = interlock.tx1Enabled
+//      self?._rcaTx2Checkbox.boolState = interlock.tx2Enabled
+//      self?._rcaTx3Checkbox.boolState = interlock.tx3Enabled
+//
+//      self?._accTxTextField.integerValue = interlock.accTxDelay
+//      self?._txDelayTextField.integerValue = interlock.txDelay
+//      self?._rcaTx1TextField.integerValue = interlock.tx1Delay
+//      self?._rcaTx2TextField.integerValue = interlock.tx2Delay
+//      self?._rcaTx3TextField.integerValue = interlock.tx3Delay
+//      self?._txTimeoutTextField.integerValue = interlock.timeout
+//
+//      if interlock.rcaTxReqEnabled {
+//        let selection = interlock.rcaTxReqPolarity ? "Active High" : "Active Low"
+//        self?._rcaInterlockPopup.selectItem(withTitle: selection)
+//      } else {
+//        self?._rcaInterlockPopup.selectItem(withTitle: "Disabled")
+//      }
+//
+//      if interlock.accTxReqEnabled {
+//        let selection = interlock.accTxReqPolarity ? "Active High" : "Active Low"
+//        self?._accInterlockPopup.selectItem(withTitle: selection)
+//      } else {
+//        self?._accInterlockPopup.selectItem(withTitle: "Disabled")
+//      }
+//    }
+//  }
+  
   /// Process observations
   ///
   /// - Parameters:
   ///   - transmit:                 the Transmit being observed
   ///   - change:                   the change
   ///
-  private func transmitHandler(_ transmit: Transmit, _ change: Any) {
-
-    DispatchQueue.main.async { [weak self] in
-      self?._txInhibitCheckbox.boolState = transmit.inhibit
-      self?._showTxInWaterfallCheckbox.boolState = transmit.txInWaterfallEnabled
-      self?._hardWareAlcCheckbox.boolState = transmit.hwAlcEnabled
-
-      self?._maxPowerSlider.integerValue = transmit.maxPowerLevel
-      self?._maxPowerTextField.integerValue = transmit.maxPowerLevel
-    }
-  }
+//  private func transmitHandler(_ transmit: Transmit, _ change: Any) {
+//
+//    DispatchQueue.main.async { [weak self] in
+//      self?._txInhibitCheckbox.boolState = transmit.inhibit
+//      self?._showTxInWaterfallCheckbox.boolState = transmit.txInWaterfallEnabled
+//      self?._hardWareAlcCheckbox.boolState = transmit.hwAlcEnabled
+//
+//      self?._maxPowerSlider.integerValue = transmit.maxPowerLevel
+//      self?._maxPowerTextField.integerValue = transmit.maxPowerLevel
+//    }
+//  }
 }

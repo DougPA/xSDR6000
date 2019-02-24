@@ -42,6 +42,10 @@ final class XritViewController: NSViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    #if DEBUG
+    Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
+    #endif
+    
     view.translatesAutoresizingMaskIntoConstraints = false
     
     if Defaults[.flagBorderEnabled] {
@@ -78,6 +82,11 @@ final class XritViewController: NSViewController {
     // set the background color of the Flag
     view.layer?.backgroundColor = ControlsViewController.kBackgroundColor
   }
+  #if DEBUG
+  deinit {
+    Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
+  }
+  #endif
 
   // ----------------------------------------------------------------------------
   // MARK: - Action methods
@@ -152,13 +161,23 @@ final class XritViewController: NSViewController {
   private func addObservations() {
     
     _observations = [
-      _slice.observe(\.ritEnabled, options: [.initial, .new], changeHandler: changeHandler(_:_:)),
-      _slice.observe(\.xitEnabled, options: [.initial, .new], changeHandler: changeHandler(_:_:)),
-      _slice.observe(\.ritOffset, options: [.initial, .new], changeHandler: changeHandler(_:_:)),
-      _slice.observe(\.xitOffset, options: [.initial, .new], changeHandler: changeHandler(_:_:)),
-
-      _slice.observe(\.step, options: [.initial, .new], changeHandler: stepHandler(_:_:)),
-      Defaults.observe(\.splitDistance, options: [.initial, .new], changeHandler: stepHandler(_:_:))
+      _slice.observe(\.ritEnabled, options: [.initial, .new]) { [weak self] (slice, change) in
+        self?.changeHandler(slice, change) },
+      
+      _slice.observe(\.xitEnabled, options: [.initial, .new]) { [weak self] (slice, change) in
+        self?.changeHandler(slice, change) },
+      
+      _slice.observe(\.ritOffset, options: [.initial, .new]) { [weak self] (slice, change) in
+        self?.changeHandler(slice, change) },
+      
+      _slice.observe(\.xitOffset, options: [.initial, .new]) { [weak self] (slice, change) in
+        self?.changeHandler(slice, change)},
+      
+      _slice.observe(\.step, options: [.initial, .new]) { [weak self] (slice, change) in
+        self?.stepHandler(slice, change) },
+      
+      Defaults.observe(\.splitDistance, options: [.initial, .new]) { [weak self] (defaults, change) in
+        self?.stepHandler(defaults, change) }
     ]
   }
   /// Process observations
@@ -168,7 +187,7 @@ final class XritViewController: NSViewController {
   ///   - change:                   the change
   ///
   private func changeHandler(_ slice: xLib6000.Slice, _ change: Any) {
-    
+
     DispatchQueue.main.async { [weak self] in
       self?._ritButton.boolState = slice.ritEnabled
       self?._xitButton.boolState = slice.xitEnabled
@@ -178,9 +197,6 @@ final class XritViewController: NSViewController {
 
       self?._xitTextField.integerValue = slice.xitOffset
       self?._xitStepper.integerValue = slice.xitOffset
-
-      self?._stepTextField.integerValue = slice.step
-      self?._stepStepper.integerValue = slice.step
     }
   }
   /// Process observations
@@ -194,13 +210,14 @@ final class XritViewController: NSViewController {
 
     if let slice = object as? xLib6000.Slice {
       value = slice.step
-    
+
     } else if let defaults = object as? UserDefaults {
       value = defaults[.splitDistance]
     }
     DispatchQueue.main.async { [weak self] in
 
       self?._stepTextField.integerValue = value
+      self?._stepStepper.integerValue = value
     }
   }
 }

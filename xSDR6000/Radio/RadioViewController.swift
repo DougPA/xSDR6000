@@ -38,7 +38,7 @@ protocol RadioPickerDelegate: class {
 // MARK: - Radio View Controller class implementation
 // --------------------------------------------------------------------------------
 
-final class RadioViewController             : NSSplitViewController, RadioPickerDelegate {
+final class RadioViewController             : NSSplitViewController, RadioPickerDelegate, NSWindowDelegate {
 
 //  @objc dynamic var radio                   = Api.sharedInstance.radio
   
@@ -56,6 +56,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   private var _temperatureMeterAvailable    = false
   private var _versions                     : (api: String, app: String)?
   private var _sideViewController           : SideViewController?
+  private var _radioPickerTabViewController : NSTabViewController?
   private var _profilesWindowController     : NSWindowController?
   private var _preferencesWindowController  : NSWindowController?
   private var _tcpPingFirstResponseReceived = false
@@ -106,6 +107,10 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   ///
   override func viewDidLoad() {
     super.viewDidLoad()
+
+    #if DEBUG
+    Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
+    #endif
     
     // FIXME: Is this necessary???
 //    _activity = ProcessInfo().beginActivity(options: ProcessInfo.ActivityOptions.latencyCritical, reason: "Good Reason")
@@ -159,6 +164,11 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     // activate the menu selections
     return _tcpPingFirstResponseReceived
   }
+  #if DEBUG
+  deinit {
+    Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
+  }
+  #endif
 
   // ----------------------------------------------------------------------------
   // MARK: - Action methods
@@ -316,7 +326,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     // select the last-used tab
     radioPickerTabViewController!.selectedTabViewItemIndex = ( Defaults[.remoteViewOpen] == false ? kLocalTab : kRemoteTab )
     
-    DispatchQueue.main.async {
+    DispatchQueue.main.async { [unowned self] in
       
       // show the RadioPicker sheet
       self.presentAsSheet(radioPickerTabViewController!)
@@ -380,11 +390,12 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     if state == .open {
       // OPENING, is there an existing instance?
       if _preferencesWindowController == nil {
-        // NO, get an instance of the Profiles
+        // NO, get one
         _preferencesWindowController = _preferencesStoryboard!.instantiateController(withIdentifier: kPreferencesIdentifier) as? NSWindowController
+        _preferencesWindowController?.window?.delegate = self
         
         DispatchQueue.main.async { [weak self] in
-          // show the Profiles window
+          // show the Preferences window
           self?._preferencesWindowController?.showWindow(self!)
         }
       }
@@ -394,13 +405,13 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
       if _preferencesWindowController != nil {
         // YES, close it
         DispatchQueue.main.async { [weak self] in
-          self?._preferencesWindowController?.close()
+          self?._preferencesWindowController?.window?.close()
           self?._preferencesWindowController = nil
         }
       }
     }
   }
- /// Open or Close the Profiles window
+  /// Open or Close the Profiles window
   ///
   /// - Parameter state:              the desired state
   ///
@@ -411,7 +422,8 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
       if _profilesWindowController == nil {
         // NO, get an instance of the Profiles
         _profilesWindowController = _profilesStoryboard!.instantiateController(withIdentifier: kProfilesIdentifier) as? NSWindowController
-        
+        _profilesWindowController?.window?.delegate = self
+
         DispatchQueue.main.async { [weak self] in
           // show the Profiles window
           self?._profilesWindowController?.showWindow(self!)
@@ -429,6 +441,30 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
       }
     }
   }
+  //
+  /// The Preferences or Profiles window is being closed
+  ///
+  ///   this is called as a result of clicking the window's close button
+  ///
+  /// - Parameter sender:             the window
+  /// - Returns:                      return true to allow
+  ///
+  func windowShouldClose(_ sender: NSWindow) -> Bool {
+    
+    // which window?
+    if _preferencesWindowController?.window == sender {
+      // Preferences
+      DispatchQueue.main.async { [weak self] in
+        self?._preferencesWindowController = nil
+      }
+    } else {
+      // Profiles
+      DispatchQueue.main.async { [weak self] in
+        self?._profilesWindowController = nil
+      }
+    }
+    return true
+  }
   /// Open or Close the Side view
   ///
   /// - Parameter state:              the desired state
@@ -444,6 +480,8 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
         DispatchQueue.main.async { [weak self] in
           // add it to the split view
           self?.addChild(self!._sideViewController!)
+          
+          os_log("Side view opened", log: self!._log, type: .info)
         }
       }
     } else {
@@ -458,6 +496,8 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
           // remove it from the split view
           self?.removeChild(at: 1)
           self?._sideViewController = nil
+
+          os_log("Side view closed", log: self!._log, type: .info)
         }
       }
     }
@@ -803,7 +843,12 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   ///
   func openRadio(_ radio: RadioParameters?, isWan: Bool = false, wanHandle: String = "") -> Bool {
     
-    // fail if no Radio selected
+    if let vc = _radioPickerTabViewController {
+      Swift.print("Should dismiss")
+      self._radioPickerTabViewController = nil
+    }
+
+    // exit if no Radio selected
     guard let selectedRadio = radio else { return false }
     
 //    _api.isWan = isWan

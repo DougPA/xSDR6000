@@ -84,6 +84,15 @@ public final class FrequencyLegendView      : NSView {
   // ----------------------------------------------------------------------------
   // MARK: - Overridden methods
   
+
+  public override func awakeFromNib() {
+    super.awakeFromNib()
+    
+    #if DEBUG
+    Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
+    #endif
+  }
+
   public override func draw(_ dirtyRect: NSRect) {
     super.draw(dirtyRect)
     
@@ -100,7 +109,12 @@ public final class FrequencyLegendView      : NSView {
       if Defaults[.markersEnabled] { drawBandMarkers() }
     }
   }
-  
+  #if DEBUG
+  deinit {
+    Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
+  }
+  #endif
+
   // ----------------------------------------------------------------------------
   // MARK: - Internal methods
   

@@ -64,6 +64,13 @@ final class PanafallButtonViewController    : NSViewController {
   // ----------------------------------------------------------------------------
   // MARK: - Overridden methods
   
+  override func viewDidLoad() {
+    super.viewDidLoad()
+
+    #if DEBUG
+    Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
+    #endif
+  }
   /// Prepare to execute a Segue
   ///
   /// - Parameters:
@@ -109,6 +116,11 @@ final class PanafallButtonViewController    : NSViewController {
       break
     }
   }
+  #if DEBUG
+  deinit {
+    Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
+  }
+  #endif
 
   // ----------------------------------------------------------------------------
   // MARK: - Internal methods

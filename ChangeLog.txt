@@ -1,5 +1,11 @@
 xSDR6000 Change Log
 
+v2.0.15 23-Feb-2019
+
+Reworked observations to use the "block-based" version in order to eliminate reference cycles
+Added DEBUG only viewDidLoad() and deinit print statements
+
+
 v2.0.14 19-Feb-2019
 
 Added use of "tcpFirstPingResponse" notification to signal that Radio is fully initialized

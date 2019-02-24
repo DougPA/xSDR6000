@@ -51,6 +51,10 @@ final class PanafallButtonView                : NSView {
   
   override func awakeFromNib() {
     
+    #if DEBUG
+    Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
+    #endif
+
     // hide the Button area
     buttonViewWidth.constant = 0
     
@@ -62,6 +66,9 @@ final class PanafallButtonView                : NSView {
     
     // remove the Tracking area (if any)
     removeTrackingArea()
+    #if DEBUG
+    Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
+    #endif
   }
   
   /// Mouse entered the Button area

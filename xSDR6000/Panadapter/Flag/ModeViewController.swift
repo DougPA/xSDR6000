@@ -61,6 +61,10 @@ final class ModeViewController       : NSViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    #if DEBUG
+    Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
+    #endif
+    
     view.translatesAutoresizingMaskIntoConstraints = false
     
     if Defaults[.flagBorderEnabled] {
@@ -86,6 +90,11 @@ final class ModeViewController       : NSViewController {
     // set the background color of the Flag
     view.layer?.backgroundColor = ControlsViewController.kBackgroundColor
   }
+  #if DEBUG
+  deinit {
+    Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
+  }
+  #endif
 
   // ----------------------------------------------------------------------------
   // MARK: - Action methods
@@ -195,7 +204,9 @@ final class ModeViewController       : NSViewController {
   private func addObservations() {
     
     _observations = [
-      _slice.observe(\.mode, options: [.initial, .new], changeHandler: sliceChange(_:_:)),
+      _slice.observe(\.mode, options: [.initial, .new]) { [weak self] (slice, change) in
+        self?.sliceChange(slice, change)
+      }
     ]
   }
   /// Process observations
@@ -205,7 +216,7 @@ final class ModeViewController       : NSViewController {
   ///   - change:                   the change
   ///
   private func sliceChange(_ slice: xLib6000.Slice, _ change: Any) {
-    
+
     let filterTitles = filterStrings(for: slice.mode)
 
     DispatchQueue.main.async { [unowned self] in

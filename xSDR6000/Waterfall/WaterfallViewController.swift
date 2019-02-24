@@ -71,6 +71,10 @@ final class WaterfallViewController               : NSViewController, NSGestureR
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    #if DEBUG
+    Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
+    #endif
+    
     // determine how the various views are blended on screen
     _waterfallView.compositingFilter = _filter
 
@@ -87,7 +91,12 @@ final class WaterfallViewController               : NSViewController, NSGestureR
     // make the Renderer the Stream Handler
     _waterfall?.delegate = _waterfallRenderer
   }
-  
+  #if DEBUG
+  deinit {
+    Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
+  }
+  #endif
+
   // ----------------------------------------------------------------------------
   // MARK: - Public methods
   

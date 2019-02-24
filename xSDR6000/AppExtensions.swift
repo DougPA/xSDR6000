@@ -1,5 +1,5 @@
 //
-//  ApExtensions.swift
+//  AppExtensions.swift
 //  xSDR6000
 //
 //  Created by Douglas Adams on 9/22/15.
@@ -13,12 +13,6 @@ import simd
 
 typealias NC = NotificationCenter
 typealias UD = UserDefaults
-
-// ----------------------------------------------------------------------------
-// MARK: - EXTENSIONS
-
-// ----------------------------------------------------------------------------
-// MARK: - SwiftyUserDefaults
 
 extension UserDefaults {
   
@@ -58,13 +52,11 @@ extension DefaultsKeys {
   static let sidePcwOpen                  = DefaultsKey<Bool>("sidePcwOpen")
   static let sidePhneOpen                 = DefaultsKey<Bool>("sidePhneOpen")
   static let sideEqOpen                   = DefaultsKey<Bool>("sideEqOpen")
-  static let splitDistance                = DefaultsKey<Int>("splitDistance")
-  static let supportingApps               = DefaultsKey<[Any]?>("supportingApps")
-
-  
   static let smartLinkAuth0Email          = DefaultsKey<String>("smartLinkAuth0Email")
   static let smartLinkToken               = DefaultsKey<String?>("smartLinkToken")
   static let smartLinkTokenExpiry         = DefaultsKey<Date?>("smartLinkTokenExpiry")
+  static let splitDistance                = DefaultsKey<Int>("splitDistance")
+  static let supportingApps               = DefaultsKey<[Any]?>("supportingApps")
   static let tnfsEnabled                  = DefaultsKey<Bool>("tnfsEnabled")
   static let spectrumFillLevel            = DefaultsKey<Int>("spectrumFillLevel")
   static let spectrumIsFilled             = DefaultsKey<Bool>("spectrumIsFilled")
@@ -195,9 +187,6 @@ extension  UserDefaults {
     set { Defaults[.versionRadio] = newValue } }
 }
 
-// ----------------------------------------------------------------------------
-// MARK: - Bool
-
 extension Bool {
 
   var state : NSControl.StateValue {
@@ -205,18 +194,14 @@ extension Bool {
   }
 }
 
-// ----------------------------------------------------------------------------
-// MARK: - NSButton
-
 extension NSButton {
+  /// Boolean equivalent of an NSButton state property
+  ///
   var boolState : Bool {
     get { return self.state == NSControl.StateValue.on ? true : false }
     set { self.state = (newValue == true ? NSControl.StateValue.on : NSControl.StateValue.off) }
   }
 }
-
-// ----------------------------------------------------------------------------
-// MARK: - FileManager
 
 extension FileManager {
   
@@ -240,9 +225,6 @@ extension FileManager {
     return appFolderUrl
   }
 }
-
-// ----------------------------------------------------------------------------
-// MARK: - NSBezierPath
 
 extension NSBezierPath {
   
@@ -381,9 +363,6 @@ extension NSBezierPath {
   }
 }
 
-// ----------------------------------------------------------------------------
-// MARK: - NSGradient
-
 extension NSGradient {
   
   // return a "basic" Gradient
@@ -482,9 +461,6 @@ extension NSGradient {
   }
 }
 
-// ----------------------------------------------------------------------------
-// MARK: - NSColor
-
 extension NSColor {
   
   // return a float4 version of an rgba NSColor
@@ -515,18 +491,12 @@ extension NSColor {
   }
 }
 
-// ----------------------------------------------------------------------------
-// MARK: - String
-
 extension String {
   
   var numbers: String {
     return String(describing: filter { String($0).rangeOfCharacter(from: CharacterSet(charactersIn: "0123456789")) != nil })
   }
 }
-
-// ----------------------------------------------------------------------------
-// MARK: - Float
 
 extension Float {
   

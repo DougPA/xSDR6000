@@ -87,6 +87,10 @@ final class PanadapterViewController        : NSViewController, NSGestureRecogni
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    #if DEBUG
+    Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
+    #endif
+    
     // determine how the various views are blended on screen
     _panadapterView.compositingFilter = kFilter
     _dbLegendView.compositingFilter = kFilter
@@ -140,7 +144,12 @@ final class PanadapterViewController        : NSViewController, NSGestureRecogni
     // make the Renderer the Stream Handler
     _panadapter?.delegate = _panadapterRenderer
   }
-  
+  #if DEBUG
+  deinit {
+    Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
+  }
+  #endif
+
   // ----------------------------------------------------------------------------
   // MARK: - Internal methods
   
