@@ -116,21 +116,31 @@ final class PhoneViewController                   : NSViewController {
   ///
   private func addObservations() {
     
-    if let transmit = _radio!.transmit {
-      
-      // Transmit parameters
-      _observations.append( transmit.observe(\.carrierLevel, options: [.initial, .new], changeHandler: transmitChange) )
-      _observations.append( transmit.observe(\.companderEnabled, options: [.initial, .new], changeHandler: transmitChange) )
-      _observations.append( transmit.observe(\.companderLevel, options: [.initial, .new], changeHandler: transmitChange) )
-      _observations.append( transmit.observe(\.metInRxEnabled, options: [.initial, .new], changeHandler: transmitChange) )
-      _observations.append( transmit.observe(\.micBiasEnabled, options: [.initial, .new], changeHandler: transmitChange) )
-      _observations.append( transmit.observe(\.micBoostEnabled, options: [.initial, .new], changeHandler: transmitChange) )
-      _observations.append( transmit.observe(\.txFilterHigh, options: [.initial, .new], changeHandler: transmitChange) )
-      _observations.append( transmit.observe(\.txFilterLow, options: [.initial, .new], changeHandler: transmitChange) )
-      _observations.append( transmit.observe(\.voxDelay, options: [.initial, .new], changeHandler: transmitChange) )
-      _observations.append( transmit.observe(\.voxEnabled, options: [.initial, .new], changeHandler: transmitChange) )
-      _observations.append( transmit.observe(\.voxLevel, options: [.initial, .new], changeHandler: transmitChange) )
-    }
+    // Transmit parameters
+    _observations = [
+      (_radio!.transmit).observe(\.carrierLevel, options: [.initial, .new]) { [weak self] (transmit, change) in
+        self?.transmitChange(transmit, change) },
+      (_radio!.transmit).observe(\.companderEnabled, options: [.initial, .new]) { [weak self] (transmit, change) in
+        self?.transmitChange(transmit, change) },
+      (_radio!.transmit).observe(\.companderLevel, options: [.initial, .new]) { [weak self] (transmit, change) in
+        self?.transmitChange(transmit, change) },
+      (_radio!.transmit).observe(\.metInRxEnabled, options: [.initial, .new]) { [weak self] (transmit, change) in
+        self?.transmitChange(transmit, change) },
+      (_radio!.transmit).observe(\.micBiasEnabled, options: [.initial, .new]) { [weak self] (transmit, change) in
+        self?.transmitChange(transmit, change) },
+      (_radio!.transmit).observe(\.micBoostEnabled, options: [.initial, .new]) { [weak self] (transmit, change) in
+        self?.transmitChange(transmit, change) },
+      (_radio!.transmit).observe(\.txFilterHigh, options: [.initial, .new]) { [weak self] (transmit, change) in
+        self?.transmitChange(transmit, change) },
+      (_radio!.transmit).observe(\.txFilterLow, options: [.initial, .new]) { [weak self] (transmit, change) in
+        self?.transmitChange(transmit, change) },
+      (_radio!.transmit).observe(\.voxDelay, options: [.initial, .new]) { [weak self] (transmit, change) in
+        self?.transmitChange(transmit, change) },
+      (_radio!.transmit).observe(\.voxEnabled, options: [.initial, .new]) { [weak self] (transmit, change) in
+        self?.transmitChange(transmit, change) },
+      (_radio!.transmit).observe(\.voxLevel, options: [.initial, .new]) { [weak self] (transmit, change) in
+        self?.transmitChange(transmit, change) }
+    ]
   }
  /// Respond to changes in parameters
   ///
@@ -142,7 +152,7 @@ final class PhoneViewController                   : NSViewController {
   ///
   /// - Parameter eq:               the Equalizer
   ///
-  private func transmitChange(_ transmit: Transmit, change: Any) {
+  private func transmitChange(_ transmit: Transmit, _ change: Any) {
     
     DispatchQueue.main.async { [weak self] in
       // Buttons

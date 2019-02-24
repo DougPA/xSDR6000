@@ -484,40 +484,76 @@ final class PanadapterViewController        : NSViewController, NSGestureRecogni
   private func createBaseObservations(_ observations: inout [NSKeyValueObservation]) {
 
     observations = [
-      Defaults.observe(\.dbLegend, options: [.initial, .new], changeHandler: redrawDbLegend),
+      Defaults.observe(\.dbLegend, options: [.initial, .new]) { [weak self] (object, change) in
+        self?.redrawDbLegend(object, change) },
       
-      Defaults.observe(\.marker, options: [.initial, .new], changeHandler: redrawFrequencyLegend),
-      Defaults.observe(\.dbLegendSpacing, options: [.initial, .new], changeHandler: redrawFrequencyLegend),
-      Defaults.observe(\.frequencyLegend, options: [.initial, .new], changeHandler: redrawFrequencyLegend),
-      Defaults.observe(\.sliceActive, options: [.initial, .new], changeHandler: redrawFrequencyLegend),
-      Defaults.observe(\.markersEnabled, options: [.initial, .new], changeHandler: redrawFrequencyLegend),
-      Defaults.observe(\.markerSegment, options: [.initial, .new], changeHandler: redrawFrequencyLegend),
-      Defaults.observe(\.markerEdge, options: [.initial, .new], changeHandler: redrawFrequencyLegend),
-      Defaults.observe(\.sliceFilter, options: [.initial, .new], changeHandler: redrawFrequencyLegend),
-      Defaults.observe(\.sliceInactive, options: [.initial, .new], changeHandler: redrawFrequencyLegend),
-      Defaults.observe(\.tnfActive, options: [.initial, .new], changeHandler: redrawFrequencyLegend),
-      Defaults.observe(\.tnfInactive, options: [.initial, .new], changeHandler: redrawFrequencyLegend),
-      Defaults.observe(\.gridLine, options: [.initial, .new], changeHandler: redrawFrequencyAndDbLegend),
-
-      _panadapter!.observe(\.bandwidth, options: [.initial, .new], changeHandler: redrawFrequencyLegend),
-      _panadapter!.observe(\.center, options: [.initial, .new], changeHandler: redrawFrequencyLegend),
+      Defaults.observe(\.marker, options: [.initial, .new]) { [weak self] (object, change) in
+        self?.redrawFrequencyLegend(object, change) },
       
-      _radio!.observe(\.tnfsEnabled, options: [.initial, .new], changeHandler: redrawFrequencyLegend),
+      Defaults.observe(\.dbLegendSpacing, options: [.initial, .new]) { [weak self] (object, change) in
+        self?.redrawFrequencyLegend(object, change) },
+      
+      Defaults.observe(\.frequencyLegend, options: [.initial, .new]) { [weak self] (object, change) in
+        self?.redrawFrequencyLegend(object, change) },
+      
+      Defaults.observe(\.sliceActive, options: [.initial, .new]) { [weak self] (object, change) in
+        self?.redrawFrequencyLegend(object, change) },
+      
+      Defaults.observe(\.markersEnabled, options: [.initial, .new]) { [weak self] (object, change) in
+        self?.redrawFrequencyLegend(object, change) },
+      
+      Defaults.observe(\.markerSegment, options: [.initial, .new]) { [weak self] (object, change) in
+        self?.redrawFrequencyLegend(object, change) },
+      
+      Defaults.observe(\.markerEdge, options: [.initial, .new]) { [weak self] (object, change) in
+        self?.redrawFrequencyLegend(object, change) },
+      
+      Defaults.observe(\.sliceFilter, options: [.initial, .new]) { [weak self] (object, change) in
+        self?.redrawFrequencyLegend(object, change) },
+      
+      Defaults.observe(\.sliceInactive, options: [.initial, .new]) { [weak self] (object, change) in
+        self?.redrawFrequencyLegend(object, change) },
+      
+      Defaults.observe(\.tnfActive, options: [.initial, .new]) { [weak self] (object, change) in
+        self?.redrawFrequencyLegend(object, change) },
+      
+      Defaults.observe(\.tnfInactive, options: [.initial, .new]) { [weak self] (object, change) in
+        self?.redrawFrequencyLegend(object, change) },
+      
+      Defaults.observe(\.gridLine, options: [.initial, .new]) { [weak self] (object, change) in
+        self?.redrawFrequencyAndDbLegend(object, change) },
 
-      Defaults.observe(\.spectrumFillLevel, options: [.initial, .new], changeHandler: defaultsObserver),
-      Defaults.observe(\.spectrum, options: [.initial, .new], changeHandler: defaultsObserver),
-      Defaults.observe(\.spectrumBackground, options: [.initial, .new], changeHandler: defaultsObserver),
-
+      _panadapter!.observe(\.bandwidth, options: [.initial, .new]) { [weak self] (object, change) in
+        self?.redrawFrequencyLegend(object, change) },
+      
+      _panadapter!.observe(\.center, options: [.initial, .new]) { [weak self] (object, change) in
+        self?.redrawFrequencyLegend(object, change) },
+      
+      _radio!.observe(\.tnfsEnabled, options: [.initial, .new]) { [weak self] (object, change) in
+        self?.redrawFrequencyLegend(object, change) },
+      
+      Defaults.observe(\.spectrumFillLevel, options: [.initial, .new]) { [weak self] (object, change) in
+        self?.defaultsObserver(object, change) },
+      
+      Defaults.observe(\.spectrum, options: [.initial, .new]) { [weak self] (object, change) in
+        self?.defaultsObserver(object, change) },
+      
+      Defaults.observe(\.spectrumBackground, options: [.initial, .new]) { [weak self] (object, change) in
+        self?.defaultsObserver(object, change) },
     ]
   }
   /// Add observations of Tnf's used by the Panadapter
   ///
   private func addTnfObservations(_ observations: inout [NSKeyValueObservation], tnf: Tnf ) {
 
-    observations.append( tnf.observe(\.frequency, options: [.initial, .new], changeHandler: redrawFrequencyLegend) )
-    observations.append( tnf.observe(\.depth, options: [.initial, .new], changeHandler: redrawFrequencyLegend) )
-    observations.append( tnf.observe(\.width, options: [.initial, .new], changeHandler: redrawFrequencyLegend) )
-    observations.append( tnf.observe(\.permanent, options: [.initial, .new], changeHandler: redrawFrequencyLegend) )
+    observations.append( tnf.observe(\.frequency, options: [.initial, .new]) { [weak self] (object, change) in
+      self?.redrawFrequencyLegend(object, change) })
+    observations.append( tnf.observe(\.depth, options: [.initial, .new]) { [weak self] (object, change) in
+      self?.redrawFrequencyLegend(object, change) })
+    observations.append( tnf.observe(\.width, options: [.initial, .new]) { [weak self] (object, change) in
+      self?.redrawFrequencyLegend(object, change) })
+    observations.append( tnf.observe(\.permanent, options: [.initial, .new]) { [weak self] (object, change) in
+      self?.redrawFrequencyLegend(object, change) })
   }
   /// Invalidate observations (optionally remove)
   ///

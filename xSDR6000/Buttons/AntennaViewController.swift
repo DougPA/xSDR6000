@@ -91,9 +91,14 @@ final class AntennaViewController           : NSViewController, NSPopoverDelegat
   private func addObservations() {
     
     _observations = [
-      _panadapter.observe(\.rxAnt, options: [.initial, .new], changeHandler: changeHandler(_:_:)),
-      _panadapter.observe(\.loopAEnabled, options: [.initial, .new], changeHandler: changeHandler(_:_:)),
-      _panadapter.observe(\.rfGain, options: [.initial, .new], changeHandler: changeHandler(_:_:)),
+      _panadapter.observe(\.rxAnt, options: [.initial, .new]) { [weak self] (object, change) in
+        self?.changeHandler(object, change) },
+      
+      _panadapter.observe(\.loopAEnabled, options: [.initial, .new]) { [weak self] (object, change) in
+        self?.changeHandler(object, change) },
+      
+      _panadapter.observe(\.rfGain, options: [.initial, .new]) { [weak self] (object, change) in
+        self?.changeHandler(object, change) }
     ]
   }
   /// Process observations

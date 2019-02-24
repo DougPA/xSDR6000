@@ -137,29 +137,47 @@ final class EqViewController                : NSViewController {
     if let rx = _equalizerRx {
       
       // Rx Equalizer parameters
-      _observations.append( rx.observe(\.level63Hz, options: [.initial, .new], changeHandler: eqChange) )
-      _observations.append( rx.observe(\.level125Hz, options: [.initial, .new], changeHandler: eqChange) )
-      _observations.append( rx.observe(\.level250Hz, options: [.initial, .new], changeHandler: eqChange) )
-      _observations.append( rx.observe(\.level500Hz, options: [.initial, .new], changeHandler: eqChange) )
-      _observations.append( rx.observe(\.level1000Hz, options: [.initial, .new], changeHandler: eqChange) )
-      _observations.append( rx.observe(\.level2000Hz, options: [.initial, .new], changeHandler: eqChange) )
-      _observations.append( rx.observe(\.level4000Hz, options: [.initial, .new], changeHandler: eqChange) )
-      _observations.append( rx.observe(\.level8000Hz, options: [.initial, .new], changeHandler: eqChange) )
-      _observations.append( rx.observe(\.eqEnabled, options: [.initial, .new], changeHandler: eqChange) )
+      _observations.append( rx.observe(\.level63Hz, options: [.initial, .new]) { [weak self] (eq, change) in
+        self?.eqChange(eq, change) })
+      _observations.append( rx.observe(\.level125Hz, options: [.initial, .new]) { [weak self] (eq, change) in
+        self?.eqChange(eq, change) })
+      _observations.append( rx.observe(\.level250Hz, options: [.initial, .new]) { [weak self] (eq, change) in
+        self?.eqChange(eq, change) })
+      _observations.append( rx.observe(\.level500Hz, options: [.initial, .new]) { [weak self] (eq, change) in
+        self?.eqChange(eq, change) })
+      _observations.append( rx.observe(\.level1000Hz, options: [.initial, .new]) { [weak self] (eq, change) in
+        self?.eqChange(eq, change) })
+      _observations.append( rx.observe(\.level2000Hz, options: [.initial, .new]) { [weak self] (eq, change) in
+        self?.eqChange(eq, change) })
+      _observations.append( rx.observe(\.level4000Hz, options: [.initial, .new]) { [weak self] (eq, change) in
+        self?.eqChange(eq, change) })
+      _observations.append( rx.observe(\.level8000Hz, options: [.initial, .new]) { [weak self] (eq, change) in
+        self?.eqChange(eq, change) })
+      _observations.append( rx.observe(\.eqEnabled, options: [.initial, .new]) { [weak self] (eq, change) in
+        self?.eqChange(eq, change) })
     }
     
     if let tx = _equalizerTx {
 
       // Tx Equalizer parameters
-      _observations.append( tx.observe(\.level63Hz, options: [.initial, .new], changeHandler: eqChange) )
-      _observations.append( tx.observe(\.level125Hz, options: [.initial, .new], changeHandler: eqChange) )
-      _observations.append( tx.observe(\.level250Hz, options: [.initial, .new], changeHandler: eqChange) )
-      _observations.append( tx.observe(\.level500Hz, options: [.initial, .new], changeHandler: eqChange) )
-      _observations.append( tx.observe(\.level1000Hz, options: [.initial, .new], changeHandler: eqChange) )
-      _observations.append( tx.observe(\.level2000Hz, options: [.initial, .new], changeHandler: eqChange) )
-      _observations.append( tx.observe(\.level4000Hz, options: [.initial, .new], changeHandler: eqChange) )
-      _observations.append( tx.observe(\.level8000Hz, options: [.initial, .new], changeHandler: eqChange) )
-      _observations.append( tx.observe(\.eqEnabled, options: [.initial, .new], changeHandler: eqChange) )
+      _observations.append( tx.observe(\.level63Hz, options: [.initial, .new]) { [weak self] (eq, change) in
+        self?.eqChange(eq, change) })
+      _observations.append( tx.observe(\.level125Hz, options: [.initial, .new]) { [weak self] (eq, change) in
+        self?.eqChange(eq, change) })
+      _observations.append( tx.observe(\.level250Hz, options: [.initial, .new]) { [weak self] (eq, change) in
+        self?.eqChange(eq, change) })
+      _observations.append( tx.observe(\.level500Hz, options: [.initial, .new]) { [weak self] (eq, change) in
+        self?.eqChange(eq, change) })
+      _observations.append( tx.observe(\.level1000Hz, options: [.initial, .new]) { [weak self] (eq, change) in
+        self?.eqChange(eq, change) })
+      _observations.append( tx.observe(\.level2000Hz, options: [.initial, .new]) { [weak self] (eq, change) in
+        self?.eqChange(eq, change) })
+      _observations.append( tx.observe(\.level4000Hz, options: [.initial, .new]) { [weak self] (eq, change) in
+        self?.eqChange(eq, change) })
+      _observations.append( tx.observe(\.level8000Hz, options: [.initial, .new]) { [weak self] (eq, change) in
+        self?.eqChange(eq, change) })
+      _observations.append( tx.observe(\.eqEnabled, options: [.initial, .new]) { [weak self] (eq, change) in
+        self?.eqChange(eq, change) })
     }
   }
   /// Respond to changes in parameters

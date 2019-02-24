@@ -138,17 +138,32 @@ final class DisplayViewController                     : NSViewController, NSPopo
   private func addObservations() {
     
     _observations = [
-      _panadapter!.observe(\.average, options: [.initial, .new], changeHandler: changeHandler(_:_:)),
-      _panadapter!.observe(\.fps, options: [.initial, .new], changeHandler: changeHandler(_:_:)),
-      _panadapter!.observe(\.weightedAverageEnabled, options: [.initial, .new], changeHandler: changeHandler(_:_:)),
+      _panadapter!.observe(\.average, options: [.initial, .new]) { [weak self] (object, change) in
+        self?.changeHandler(object, change) },
       
-      _waterfall!.observe(\.colorGain, options: [.initial, .new], changeHandler: changeHandler(_:_:)),
-      _waterfall!.observe(\.blackLevel, options: [.initial, .new], changeHandler: changeHandler(_:_:)),
-      _waterfall!.observe(\.lineDuration, options: [.initial, .new], changeHandler: changeHandler(_:_:)),
-      _waterfall!.observe(\.autoBlackEnabled, options: [.initial, .new], changeHandler: changeHandler(_:_:)),
-      _waterfall!.observe(\.gradientIndex, options: [.initial, .new], changeHandler: changeHandler(_:_:)),
+      _panadapter!.observe(\.fps, options: [.initial, .new]) { [weak self] (object, change) in
+        self?.changeHandler(object, change) },
       
-      Defaults.observe(\.spectrumFillLevel, options: [.initial, .new], changeHandler: defaultsHandler(_:_:)),
+      _panadapter!.observe(\.weightedAverageEnabled, options: [.initial, .new]) { [weak self] (object, change) in
+        self?.changeHandler(object, change) },
+      
+      _waterfall!.observe(\.colorGain, options: [.initial, .new]) { [weak self] (object, change) in
+        self?.changeHandler(object, change) },
+      
+      _waterfall!.observe(\.blackLevel, options: [.initial, .new]) { [weak self] (object, change) in
+        self?.changeHandler(object, change) },
+      
+      _waterfall!.observe(\.lineDuration, options: [.initial, .new]) { [weak self] (object, change) in
+        self?.changeHandler(object, change) },
+      
+      _waterfall!.observe(\.autoBlackEnabled, options: [.initial, .new]) { [weak self] (object, change) in
+        self?.changeHandler(object, change) },
+      
+      _waterfall!.observe(\.gradientIndex, options: [.initial, .new]) { [weak self] (object, change) in
+        self?.changeHandler(object, change) },
+      
+      Defaults.observe(\.spectrumFillLevel, options: [.initial, .new]) { [weak self] (object, change) in
+        self?.defaultsHandler(object, change) }
     ]
   }
   /// Process observations

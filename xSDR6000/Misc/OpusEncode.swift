@@ -291,8 +291,8 @@ public final class OpusEncode               : NSObject {
   private func createObservations(_ observations: inout [NSKeyValueObservation]) {
     
     observations = [
-      _opus.observe(\.txEnabled, options: [.initial, .new], changeHandler: opusTxAudio )
-      
+      _opus.observe(\.txEnabled, options: [.initial, .new]) { [weak self] (object, change) in
+        self?.opusTxAudio(object, change) }
     ]
   }
   /// Respond to changes in Opus txEnabled

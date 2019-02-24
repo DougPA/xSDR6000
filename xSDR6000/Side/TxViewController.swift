@@ -176,27 +176,38 @@ final class TxViewController                      : NSViewController {
   ///
   private func addObservations() {
     
-    // Atu parameters
-    _observations.append( _radio!.atu.observe(\.status, options: [.initial, .new], changeHandler: atuChange) )
-    _observations.append( _radio!.atu.observe(\.enabled, options: [.initial, .new], changeHandler: atuChange) )
-    _observations.append( _radio!.atu.observe(\.memoriesEnabled, options: [.initial, .new], changeHandler: atuChange) )
-    
-    // Radio parameters
-    _observations.append( _radio!.observe(\.mox, options: [.initial, .new], changeHandler: radioChange) )
-    
-    // Transmit parameters
-    _observations.append( _radio!.transmit.observe(\.tune, options: [.initial, .new], changeHandler: transmitChange) )
-    _observations.append( _radio!.transmit.observe(\.tunePower, options: [.initial, .new], changeHandler: transmitChange) )
-    _observations.append( _radio!.transmit.observe(\.rfPower, options: [.initial, .new], changeHandler: transmitChange) )
-
-    // Tx Profile parameters
-    _observations.append( _radio!.profiles[Profile.kTx]!.observe(\.list, options: [.initial, .new], changeHandler: profileChange) )
-    _observations.append( _radio!.profiles[Profile.kTx]!.observe(\.selection, options: [.initial, .new], changeHandler: profileChange) )
-
+    _observations = [
+      // Atu parameters
+      _radio!.atu.observe(\.status, options: [.initial, .new]) { [weak self] (atu, change) in
+        self?.atuChange(atu, change) },
+      _radio!.atu.observe(\.enabled, options: [.initial, .new]) { [weak self] (atu, change) in
+        self?.atuChange(atu, change) },
+      _radio!.atu.observe(\.memoriesEnabled, options: [.initial, .new]) { [weak self] (atu, change) in
+        self?.atuChange(atu, change) },
+      
+      // Radio parameters
+      _radio!.observe(\.mox, options: [.initial, .new]) { [weak self] (radio, change) in
+        self?.radioChange(radio, change) },
+      
+      // Transmit parameters
+      _radio!.transmit.observe(\.tune, options: [.initial, .new]) { [weak self] (transmit, change) in
+        self?.transmitChange(transmit, change) },
+      _radio!.transmit.observe(\.tunePower, options: [.initial, .new]) { [weak self] (transmit, change) in
+        self?.transmitChange(transmit, change) },
+      _radio!.transmit.observe(\.rfPower, options: [.initial, .new]) { [weak self] (transmit, change) in
+        self?.transmitChange(transmit, change) },
+      
+      // Tx Profile parameters
+      _radio!.profiles[Profile.kTx]!.observe(\.list, options: [.initial, .new]) { [weak self] (profile, change) in
+        self?.profileChange(profile, change) },
+      _radio!.profiles[Profile.kTx]!.observe(\.selection, options: [.initial, .new]) { [weak self] (profile, change) in
+        self?.profileChange(profile, change) },
+    ]
     // Tx Meter parameters
     (_radio!.meters.values.filter { $0.name == kPowerForward || $0.name == kSwr }).forEach({
-      _observations.append( $0.observe(\.value, options: [.initial, .new], changeHandler: meterChange) )
-    })
+      _observations.append( $0.observe(\.value, options: [.initial, .new]) { [weak self] (meter, change) in
+        self?.meterChange(meter, change) } )
+    } )
   }
   /// Update all Atu control values
   ///

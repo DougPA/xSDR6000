@@ -217,14 +217,18 @@ final class SideViewController              : NSViewController {
   private func addObservations() {
     
     _observations = [
-      _flagVc!.slice!.observe(\.mode, options: [.initial, .new], changeHandler: modChange)
+      _flagVc!.slice!.observe(\.mode, options: [.initial, .new]) { [weak self] (slice, change) in
+        self?.modeChange(slice, change) }
     ]
   }
-  /// Update profile value
+
+  /// The slice's mode changed
   ///
-  /// - Parameter eq:               the Slice
+  /// - Parameters:
+  ///   - slice:                  the Slice
+  ///   - change:                 the change
   ///
-  private func modChange(_ slice: xLib6000.Slice, _ change: Any) {
+  private func modeChange(_ slice: xLib6000.Slice, _ change: Any) {
     
     DispatchQueue.main.async { [weak self] in
       // adjust the PCW view

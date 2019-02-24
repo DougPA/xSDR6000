@@ -230,9 +230,9 @@ final class LANRadioPickerViewController    : NSViewController, NSTableViewDeleg
     // tell the delegate to connect to the selected Radio
     let _ = _delegate?.openRadio(radioParams, isWan: false, wanHandle: "")
     
-//    DispatchQueue.main.async { [unowned self] in
-//      self.closeButton(self)
-//    }
+    DispatchQueue.main.async { [unowned self] in
+      self.closeButton(self)
+    }
   }
   
   // ----------------------------------------------------------------------------

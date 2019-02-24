@@ -150,19 +150,27 @@ final class CWViewController                          : NSViewController {
     let transmit = _radio!.transmit!
     
     // Transmit observations
-    _observations.append( transmit.observe(\.cwBreakInDelay, options: [.initial, .new], changeHandler: cwChange) )
-    _observations.append( transmit.observe(\.cwBreakInEnabled, options: [.initial, .new], changeHandler: cwChange) )
-    _observations.append( transmit.observe(\.cwIambicEnabled, options: [.initial, .new], changeHandler: cwChange) )
-    _observations.append( transmit.observe(\.cwPitch, options: [.initial, .new], changeHandler: cwChange) )
-    _observations.append( transmit.observe(\.cwSidetoneEnabled, options: [.initial, .new], changeHandler: cwChange) )
-    _observations.append( transmit.observe(\.cwSpeed, options: [.initial, .new], changeHandler: cwChange) )
-
-    _observations.append( transmit.observe(\.txMonitorGainCw, options: [.initial, .new], changeHandler: cwChange) )
-    _observations.append( transmit.observe(\.txMonitorPanCw, options: [.initial, .new], changeHandler: cwChange) )
+    _observations.append( transmit.observe(\.cwBreakInDelay, options: [.initial, .new]) { [weak self] (transmit, change) in
+      self?.cwChange(transmit, change) })
+    _observations.append( transmit.observe(\.cwBreakInEnabled, options: [.initial, .new]) { [weak self] (transmit, change) in
+      self?.cwChange(transmit, change) })
+    _observations.append( transmit.observe(\.cwIambicEnabled, options: [.initial, .new]) { [weak self] (transmit, change) in
+      self?.cwChange(transmit, change) })
+    _observations.append( transmit.observe(\.cwPitch, options: [.initial, .new]) { [weak self] (transmit, change) in
+      self?.cwChange(transmit, change) })
+    _observations.append( transmit.observe(\.cwSidetoneEnabled, options: [.initial, .new]) { [weak self] (transmit, change) in
+      self?.cwChange(transmit, change) })
+    _observations.append( transmit.observe(\.cwSpeed, options: [.initial, .new]) { [weak self] (transmit, change) in
+      self?.cwChange(transmit, change) })
+    _observations.append( transmit.observe(\.txMonitorGainCw, options: [.initial, .new]) { [weak self] (transmit, change) in
+      self?.cwChange(transmit, change) })
+    _observations.append( transmit.observe(\.txMonitorPanCw, options: [.initial, .new]) { [weak self] (transmit, change) in
+      self?.cwChange(transmit, change) })
 
     // Cw Meter parameters
     (_radio!.meters.values.filter { $0.name == kAlcLevel }).forEach({
-      _observations.append( $0.observe(\.value, options: [.initial, .new], changeHandler: meterChange) )
+      _observations.append( $0.observe(\.value, options: [.initial, .new]) { [weak self] (meter, change) in
+        self?.meterChange(meter, change) })
     })
   }
   /// Update all control values

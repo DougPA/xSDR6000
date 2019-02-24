@@ -204,15 +204,29 @@ final class WaterfallViewController               : NSViewController, NSGestureR
   private func createBaseObservations(_ observations: inout [NSKeyValueObservation]) {
     
     observations = [
-      panadapter!.observe(\.band, options: [.initial, .new], changeHandler: panadapterBandchange),
-      panadapter!.observe(\.bandwidth, options: [.initial, .new], changeHandler: panadapterUpdate),
-      panadapter!.observe(\.center, options: [.initial, .new], changeHandler: panadapterUpdate),
-      _waterfall!.observe(\.autoBlackEnabled, options: [.initial, .new], changeHandler: waterfallObserverLevels),
-      _waterfall!.observe(\.blackLevel, options: [.initial, .new], changeHandler: waterfallObserverLevels),
-      _waterfall!.observe(\.colorGain, options: [.initial, .new], changeHandler: waterfallObserverLevels),
-      _waterfall!.observe(\.gradientIndex, options: [.initial, .new], changeHandler: waterfallObserverGradient),
+      panadapter!.observe(\.band, options: [.initial, .new]) { [weak self] (object, change) in
+        self?.panadapterUpdate(object, change) },
+      
+      panadapter!.observe(\.bandwidth, options: [.initial, .new]) { [weak self] (object, change) in
+        self?.panadapterUpdate(object, change)},
+      
+      panadapter!.observe(\.center, options: [.initial, .new]) { [weak self] (object, change) in
+        self?.panadapterUpdate(object, change) },
+      
+      _waterfall!.observe(\.autoBlackEnabled, options: [.initial, .new]) { [weak self] (object, change) in
+        self?.waterfallObserverLevels(object, change) },
+      
+      _waterfall!.observe(\.blackLevel, options: [.initial, .new]) { [weak self] (object, change) in
+        self?.waterfallObserverLevels(object, change) },
+      
+      _waterfall!.observe(\.colorGain, options: [.initial, .new]) { [weak self] (object, change) in
+        self?.waterfallObserverLevels(object, change) },
+      
+      _waterfall!.observe(\.gradientIndex, options: [.initial, .new]) { [weak self] (object, change) in
+        self?.waterfallObserverGradient(object, change) },
 
-      Defaults.observe(\.spectrumBackground, options: [.initial, .new], changeHandler: defaultsObserver)
+      Defaults.observe(\.spectrumBackground, options: [.initial, .new]) { [weak self] (object, change) in
+        self?.defaultsObserver(object, change) },
     ]
   }
   /// Invalidate observations (optionally remove)

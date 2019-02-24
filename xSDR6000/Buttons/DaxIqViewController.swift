@@ -73,7 +73,8 @@ final class DaxIqViewController             : NSViewController, NSPopoverDelegat
   private func addObservations() {
     
     _observations = [
-      _panadapter.observe(\.daxIqChannel, options: [.initial, .new], changeHandler: changeHandler(_:_:))
+      _panadapter.observe(\.daxIqChannel, options: [.initial, .new]) { [weak self] (object, change) in
+        self?.changeHandler(object, change) }
     ]
   }
   /// Process observations

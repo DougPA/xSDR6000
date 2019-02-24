@@ -197,29 +197,43 @@ final class PCWViewController                     : NSViewController {
   ///
   private func addObservations() {
 
-    if let transmit = _radio!.transmit {
-      
+    _observations = [
       // Transmit parameters
-      _observations.append( transmit.observe(\.micSelection, options: [.initial, .new], changeHandler: transmitChange) )
-      _observations.append( transmit.observe(\.micLevel, options: [.initial, .new], changeHandler: transmitChange) )
-      _observations.append( transmit.observe(\.micAccEnabled, options: [.initial, .new], changeHandler: transmitChange) )
-      _observations.append( transmit.observe(\.companderEnabled, options: [.initial, .new], changeHandler: transmitChange) )
-      _observations.append( transmit.observe(\.companderLevel, options: [.initial, .new], changeHandler: transmitChange) )
-      _observations.append( transmit.observe(\.daxEnabled, options: [.initial, .new], changeHandler: transmitChange) )
-      _observations.append( transmit.observe(\.txMonitorEnabled, options: [.initial, .new], changeHandler: transmitChange) )
-      _observations.append( transmit.observe(\.txMonitorGainSb, options: [.initial, .new], changeHandler: transmitChange) )
-      _observations.append( transmit.observe(\.speechProcessorEnabled, options: [.initial, .new], changeHandler: transmitChange) )
-      _observations.append( transmit.observe(\.speechProcessorLevel, options: [.initial, .new], changeHandler: transmitChange) )
-
+      _radio!.transmit.observe(\.micSelection, options: [.initial, .new]) { [weak self] (transmit, change) in
+        self?.transmitChange(transmit, change) },
+      _radio!.transmit.observe(\.micLevel, options: [.initial, .new]) { [weak self] (transmit, change) in
+        self?.transmitChange(transmit, change) },
+      _radio!.transmit.observe(\.micAccEnabled, options: [.initial, .new]) { [weak self] (transmit, change) in
+        self?.transmitChange(transmit, change) },
+      _radio!.transmit.observe(\.companderEnabled, options: [.initial, .new]) { [weak self] (transmit, change) in
+        self?.transmitChange(transmit, change) },
+      _radio!.transmit.observe(\.companderLevel, options: [.initial, .new]) { [weak self] (transmit, change) in
+        self?.transmitChange(transmit, change) },
+      _radio!.transmit.observe(\.daxEnabled, options: [.initial, .new]) { [weak self] (transmit, change) in
+        self?.transmitChange(transmit, change) },
+      _radio!.transmit.observe(\.txMonitorEnabled, options: [.initial, .new]) { [weak self] (transmit, change) in
+        self?.transmitChange(transmit, change) },
+      _radio!.transmit.observe(\.txMonitorGainSb, options: [.initial, .new]) { [weak self] (transmit, change) in
+        self?.transmitChange(transmit, change) },
+      _radio!.transmit.observe(\.speechProcessorEnabled, options: [.initial, .new]) { [weak self] (transmit, change) in
+        self?.transmitChange(transmit, change) },
+      _radio!.transmit.observe(\.speechProcessorLevel, options: [.initial, .new]) { [weak self] (transmit, change) in
+        self?.transmitChange(transmit, change) },
+      
       // Mic Profile parameters
-      _observations.append(_radio!.profiles[Profile.kMic]!.observe(\.list, options: [.initial, .new], changeHandler: profileChange) )
-      _observations.append(_radio!.profiles[Profile.kMic]!.observe(\.selection, options: [.initial, .new], changeHandler: profileChange) )
+      _radio!.profiles[Profile.kMic]!.observe(\.list, options: [.initial, .new]) { [weak self] (transmit, change) in
+        self?.profileChange(transmit, change) },
+      _radio!.profiles[Profile.kMic]!.observe(\.selection, options: [.initial, .new]) { [weak self] (transmit, change) in
+        self?.profileChange(transmit, change) }
+    ]
 
-      // Pcw Meter parameters
-      (_radio!.meters.values.filter { $0.name == kMicrophoneAverage || $0.name == kMicrophonePeak  || $0.name == kCompression }).forEach({
-        _observations.append( $0.observe(\.value, options: [.initial, .new], changeHandler: meterChange) )
-      })
-    }
+    // Pcw Meter parameters
+    (_radio!.meters.values.filter { $0.name == kMicrophoneAverage || $0.name == kMicrophonePeak  || $0.name == kCompression }).forEach(
+      {
+        _observations.append( $0.observe(\.value, options: [.initial, .new]) { [weak self] (meter, change) in
+          self?.meterChange(meter, change) })
+        }
+    )
   }
   /// Update profile value
   ///
