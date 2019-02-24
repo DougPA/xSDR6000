@@ -186,6 +186,13 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 #endif
 
 
+/// Amplifier Class implementation
+/// \code
+///  creates an Amplifier instance to be used by a Client to support the
+///  control of an external Amplifier. Amplifier objects are added, removed and
+///  updated by the incoming TCP messages.
+///
+/// \endcode
 SWIFT_CLASS("_TtC8xLib60009Amplifier")
 @interface Amplifier : NSObject
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
@@ -206,6 +213,13 @@ SWIFT_CLASS("_TtC8xLib60009Amplifier")
 
 @class Radio;
 
+/// API Class implementation
+/// \code
+///  manages the connections to the Radio (hardware), responsible for the
+///  creation / destruction of the Radio class (the object analog of the
+///  Radio hardware)
+///
+/// \endcode
 SWIFT_CLASS("_TtC8xLib60003Api")
 @interface Api : NSObject
 @property (nonatomic, strong) Radio * _Nullable radio;
@@ -220,6 +234,13 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, strong) Api * _Nonnull sharedI
 
 
 
+/// Atu Class implementation
+/// \code
+///  creates an Atu instance to be used by a Client to support the
+///  processing of the Antenna Tuning Unit (if installed). Atu objects are
+///  added, removed and updated by the incoming TCP messages.
+///
+/// \endcode
 SWIFT_CLASS("_TtC8xLib60003Atu")
 @interface Atu : NSObject
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
@@ -229,16 +250,24 @@ SWIFT_CLASS("_TtC8xLib60003Atu")
 
 @interface Atu (SWIFT_EXTENSION(xLib6000))
 @property (nonatomic) BOOL memoriesEnabled;
-@property (nonatomic, readonly) BOOL enabled;
 @end
 
 
 @interface Atu (SWIFT_EXTENSION(xLib6000))
 @property (nonatomic, readonly, copy) NSString * _Nonnull status;
 @property (nonatomic, readonly) BOOL usingMemories;
+@property (nonatomic, readonly) BOOL enabled;
 @end
 
 
+/// AudioStream Class implementation
+/// \code
+///  creates an AudioStream instance to be used by a Client to support the
+///  processing of a stream of Audio from the Radio to the client. AudioStream
+///  objects are added / removed by the incoming TCP messages. AudioStream
+///  objects periodically receive Audio in a UDP stream.
+///
+/// \endcode
 SWIFT_CLASS("_TtC8xLib600011AudioStream")
 @interface AudioStream : NSObject
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
@@ -262,6 +291,13 @@ SWIFT_CLASS("_TtC8xLib600011AudioStream")
 @end
 
 
+/// Cwx Class implementation
+/// \code
+///  creates a Cwx instance to be used by a Client to support the
+///  rendering of a Cwx. Cwx objects are added, removed and updated
+///  by the incoming TCP messages.
+///
+/// \endcode
 SWIFT_CLASS("_TtC8xLib60003Cwx")
 @interface Cwx : NSObject
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
@@ -278,6 +314,16 @@ SWIFT_CLASS("_TtC8xLib60003Cwx")
 @end
 
 
+/// Equalizer Class implementation
+/// \code
+///  creates an Equalizer instance to be used by a Client to support the
+///  rendering of an Equalizer. Equalizer objects are added, removed and
+///  updated by the incoming TCP messages.
+///
+///  Note: ignores the non-"sc" version of Equalizer messages
+///        The "sc" version is the standard for API Version 1.4 and greater
+///
+/// \endcode
 SWIFT_CLASS("_TtC8xLib60009Equalizer")
 @interface Equalizer : NSObject
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
@@ -300,6 +346,13 @@ SWIFT_CLASS("_TtC8xLib60009Equalizer")
 @end
 
 
+/// Gps Class implementation
+/// \code
+///  creates a Gps instance to be used by a Client to support the
+///  processing of the internal Gps (if installed). Gps objects are added,
+///  removed and updated by the incoming TCP messages.
+///
+/// \endcode
 SWIFT_CLASS("_TtC8xLib60003Gps")
 @interface Gps : NSObject
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
@@ -322,6 +375,13 @@ SWIFT_CLASS("_TtC8xLib60003Gps")
 @end
 
 
+/// Interlock Class implementation
+/// \code
+///  creates an Interlock instance to be used by a Client to support the
+///  processing of interlocks. Interlock objects are added, removed and
+///  updated by the incoming TCP messages.
+///
+/// \endcode
 SWIFT_CLASS("_TtC8xLib60009Interlock")
 @interface Interlock : NSObject
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
@@ -356,6 +416,14 @@ SWIFT_CLASS("_TtC8xLib60009Interlock")
 @end
 
 
+/// IqStream Class implementation
+/// \code
+///  creates an IqStream instance to be used by a Client to support the
+///  processing of a stream of IQ data from the Radio to the client. IqStream
+///  objects are added / removed by the incoming TCP messages. IqStream
+///  objects periodically receive IQ data in a UDP stream.
+///
+/// \endcode
 SWIFT_CLASS("_TtC8xLib60008IqStream")
 @interface IqStream : NSObject
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
@@ -380,6 +448,13 @@ SWIFT_CLASS("_TtC8xLib60008IqStream")
 @end
 
 
+/// Memory Class implementation
+/// \code
+///  creates a Memory instance to be used by a Client to support the
+///  processing of a Memory. Memory objects are added, removed and
+///  updated by the incoming TCP messages.
+///
+/// \endcode
 SWIFT_CLASS("_TtC8xLib60006Memory")
 @interface Memory : NSObject
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
@@ -412,6 +487,14 @@ SWIFT_CLASS("_TtC8xLib60006Memory")
 @end
 
 
+/// Meter Class implementation
+/// \code
+///  creates a Meter instance to be used by a Client to support the
+///  rendering of a Meter. Meter objects are added / removed by the
+///  incoming TCP messages. Meters are periodically updated by a UDP
+///  stream containing multiple Meters.
+///
+/// \endcode
 SWIFT_CLASS("_TtC8xLib60005Meter")
 @interface Meter : NSObject
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
@@ -435,6 +518,14 @@ SWIFT_CLASS("_TtC8xLib60005Meter")
 @end
 
 
+/// MicAudioStream Class implementation
+/// \code
+///  creates a MicAudioStream instance to be used by a Client to support the
+///  processing of a stream of Mic Audio from the Radio to the client. MicAudioStream
+///  objects are added / removed by the incoming TCP messages. MicAudioStream
+///  objects periodically receive Mic Audio in a UDP stream.
+///
+/// \endcode
 SWIFT_CLASS("_TtC8xLib600014MicAudioStream")
 @interface MicAudioStream : NSObject
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
@@ -454,6 +545,14 @@ SWIFT_CLASS("_TtC8xLib600014MicAudioStream")
 
 
 
+/// Opus Class implementation
+/// \code
+///  creates an Opus instance to be used by a Client to support the
+///  processing of a stream of Audio to/from the Radio. Opus
+///  objects are added / removed by the incoming TCP messages. Opus
+///  objects periodically receive/send Opus Audio in a UDP stream.
+///
+/// \endcode
 SWIFT_CLASS("_TtC8xLib60004Opus")
 @interface Opus : NSObject
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
@@ -475,6 +574,14 @@ SWIFT_CLASS("_TtC8xLib60004Opus")
 @end
 
 
+/// Panadapter implementation
+/// \code
+///  creates a Panadapter instance to be used by a Client to support the
+///  processing of a Panadapter. Panadapter objects are added / removed by the
+///  incoming TCP messages. Panadapter objects periodically receive Panadapter
+///  data in a UDP stream.
+///
+/// \endcode
 SWIFT_CLASS("_TtC8xLib600010Panadapter")
 @interface Panadapter : NSObject
 @property (nonatomic, readonly, copy) NSArray<NSString *> * _Nonnull daxIqChoices;
@@ -526,6 +633,13 @@ SWIFT_CLASS("_TtC8xLib600010Panadapter")
 @end
 
 
+/// Profile Class implementation
+/// \code
+///  creates a Profiles instance to be used by a Client to support the
+///  processing of the profiles. Profile objects are added, removed and
+///  updated by the incoming TCP messages.
+///
+/// \endcode
 SWIFT_CLASS("_TtC8xLib60007Profile")
 @interface Profile : NSObject
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
@@ -546,6 +660,12 @@ SWIFT_CLASS("_TtC8xLib60007Profile")
 @class Wan;
 @class Waveform;
 
+/// / Radio Class implementation
+/// \code
+///   as the object analog to the Radio (hardware), manages the use of all of
+///   the other model objects
+///
+/// \endcode
 SWIFT_CLASS("_TtC8xLib60005Radio")
 @interface Radio : NSObject
 @property (nonatomic, readonly, copy) NSString * _Nonnull version;
@@ -641,9 +761,16 @@ SWIFT_CLASS("_TtC8xLib60005Radio")
 
 @class GCDAsyncUdpSocket;
 
+/// RadioFactory implementation
+/// \code
+///  listens for the udp broadcasts announcing the presence of a Flex-6000
+///  Radio, reports changes to the list of available radios
+///
+/// \endcode
 SWIFT_CLASS("_TtC8xLib600012RadioFactory")
 @interface RadioFactory : NSObject <GCDAsyncUdpSocketDelegate>
 /// The Socket received data
+/// GCDAsyncUdpSocket delegate method, executes on the udpReceiveQ
 /// \param sock the GCDAsyncUdpSocket
 ///
 /// \param data the Data received
@@ -658,6 +785,13 @@ SWIFT_CLASS("_TtC8xLib600012RadioFactory")
 @end
 
 
+/// Slice Class implementation
+/// \code
+///  creates a Slice instance to be used by a Client to support the
+///  rendering of a Slice. Slice objects are added, removed and
+///  updated by the incoming TCP messages.
+///
+/// \endcode
 SWIFT_CLASS("_TtC8xLib60005Slice")
 @interface Slice : NSObject
 @property (nonatomic, copy) NSArray<NSString *> * _Nonnull agcNames;
@@ -748,6 +882,13 @@ SWIFT_CLASS("_TtC8xLib60005Slice")
 @end
 
 
+/// TNF Class implementation
+/// \code
+///  creates a Tnf instance to be used by a Client to support the
+///  rendering of a Tnf. Tnf objects are added, removed and
+///  updated by the incoming TCP messages.
+///
+/// \endcode
 SWIFT_CLASS("_TtC8xLib60003Tnf")
 @interface Tnf : NSObject
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
@@ -765,6 +906,13 @@ SWIFT_CLASS("_TtC8xLib60003Tnf")
 @end
 
 
+/// Transmit Class implementation
+/// \code
+///  creates a Transmit instance to be used by a Client to support the
+///  processing of the Transmit-related activities. Transmit objects are added,
+///  removed and updated by the incoming TCP messages.
+///
+/// \endcode
 SWIFT_CLASS("_TtC8xLib60008Transmit")
 @interface Transmit : NSObject
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
@@ -783,7 +931,6 @@ SWIFT_CLASS("_TtC8xLib60008Transmit")
 @property (nonatomic) NSInteger cwSpeed;
 @property (nonatomic) BOOL cwSwapPaddles;
 @property (nonatomic) BOOL cwSyncCwxEnabled;
-@property (nonatomic) NSInteger cwWeight;
 @property (nonatomic) BOOL micAccEnabled;
 @property (nonatomic) BOOL micBiasEnabled;
 @property (nonatomic) BOOL micBoostEnabled;
@@ -791,7 +938,6 @@ SWIFT_CLASS("_TtC8xLib60008Transmit")
 @property (nonatomic) NSInteger carrierLevel;
 @property (nonatomic) BOOL companderEnabled;
 @property (nonatomic) NSInteger companderLevel;
-@property (nonatomic) BOOL cwAutoSpaceEnabled;
 @property (nonatomic) BOOL daxEnabled;
 @property (nonatomic) BOOL hwAlcEnabled;
 @property (nonatomic) BOOL inhibit;
@@ -801,7 +947,6 @@ SWIFT_CLASS("_TtC8xLib60008Transmit")
 @property (nonatomic) NSInteger rfPower;
 @property (nonatomic) BOOL speechProcessorEnabled;
 @property (nonatomic) NSInteger speechProcessorLevel;
-@property (nonatomic) BOOL ssbPeakControlEnabled;
 @property (nonatomic) NSInteger tunePower;
 @property (nonatomic) NSInteger txFilterHigh;
 @property (nonatomic) NSInteger txFilterLow;
@@ -827,6 +972,14 @@ SWIFT_CLASS("_TtC8xLib60008Transmit")
 @end
 
 
+/// TxAudioStream Class implementation
+/// \code
+///  creates a TxAudioStream instance to be used by a Client to support the
+///  processing of a stream of Audio from the client to the Radio. TxAudioStream
+///  objects are added / removed by the incoming TCP messages. TxAudioStream
+///  objects periodically send Tx Audio in a UDP stream.
+///
+/// \endcode
 SWIFT_CLASS("_TtC8xLib600013TxAudioStream")
 @interface TxAudioStream : NSObject
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
@@ -847,6 +1000,13 @@ SWIFT_CLASS("_TtC8xLib600013TxAudioStream")
 @end
 
 
+/// USB Cable Class implementation
+/// \code
+///  creates a USB Cable instance to be used by a Client to support the
+///  processing of USB connections to the Radio (hardware). USB Cable objects
+///  are added, removed and updated by the incoming TCP messages.
+///
+/// \endcode
 SWIFT_CLASS("_TtC8xLib60008UsbCable")
 @interface UsbCable : NSObject
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
@@ -877,6 +1037,13 @@ SWIFT_CLASS("_TtC8xLib60008UsbCable")
 @end
 
 
+/// Wan Class implementation
+/// \code
+///  creates a Wan instance to be used by a Client to support the
+///  processing of the Wan-related activities. Wan objects are added,
+///  removed and updated by the incoming TCP messages.
+///
+/// \endcode
 SWIFT_CLASS("_TtC8xLib60003Wan")
 @interface Wan : NSObject
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
@@ -891,6 +1058,12 @@ SWIFT_CLASS("_TtC8xLib60003Wan")
 
 @class GCDAsyncSocket;
 
+/// WanServer Class implementation
+/// \code
+/// creates a WanServer instance to communicate with the SmartLink server
+/// to get access to a remote Flexradio
+///
+/// \endcode
 SWIFT_CLASS("_TtC8xLib60009WanServer")
 @interface WanServer : NSObject <GCDAsyncSocketDelegate>
 /// Called when the TCP/IP connection has been disconnected
@@ -940,6 +1113,14 @@ SWIFT_CLASS("_TtC8xLib60009WanServer")
 @end
 
 
+/// Waterfall Class implementation
+/// \code
+///  creates a Waterfall instance to be used by a Client to support the
+///  processing of a Waterfall. Waterfall objects are added / removed by the
+///  incoming TCP messages. Waterfall objects periodically receive Waterfall
+///  data in a UDP stream.
+///
+/// \endcode
 SWIFT_CLASS("_TtC8xLib60009Waterfall")
 @interface Waterfall : NSObject
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
@@ -962,6 +1143,13 @@ SWIFT_CLASS("_TtC8xLib60009Waterfall")
 @end
 
 
+/// Waveform Class implementation
+/// \code
+///  creates a Waveform instance to be used by a Client to support the
+///  processing of installed Waveform functions. Waveform objects are added,
+///  removed and updated by the incoming TCP messages.
+///
+/// \endcode
 SWIFT_CLASS("_TtC8xLib60008Waveform")
 @interface Waveform : NSObject
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
@@ -974,6 +1162,13 @@ SWIFT_CLASS("_TtC8xLib60008Waveform")
 @end
 
 
+/// Xvtr Class implementation
+/// \code
+///  creates an Xvtr instance to be used by a Client to support the
+///  processing of an Xvtr. Xvtr objects are added, removed and updated by
+///  the incoming TCP messages.
+///
+/// \endcode
 SWIFT_CLASS("_TtC8xLib60004Xvtr")
 @interface Xvtr : NSObject
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;

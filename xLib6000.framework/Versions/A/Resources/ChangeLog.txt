@@ -1,12 +1,16 @@
 xLib6000 Change Log
 
-v2.3.10
+v2.4.0 22-Feb-2019
+
+Reorganized all headings / comments to support use of Jazzy documentation creator
 
 Notifications.swift - add SliceMeterWillBeRemoved, added tcpPingFirstResponse
 Meter.swift - added code to send SliceMeterWillBeRemoved
 Pinger.swift - added code to send tcpPingFirstResponse notification
-
-
+Frames.swift - ADDED - moved all "frames" to this file
+Transmit.swift - removed unused property "cwWeight"
+Transmit.swift - removed unused property "ssbPeakControlEnabled"
+Transmit.swift - removed unused property "cwAutoSpaceEnabled"
 
 
 v2.3.9 19-Feb-2019
