@@ -99,8 +99,4 @@ final class ControlsViewController: NSTabViewController {
   @IBAction func zeroXit(_ sender: NSButton) {
     _slice?.xitOffset = 0
   }
-
-  // ----------------------------------------------------------------------------
-  // MARK: - Private methods
-  
 }
