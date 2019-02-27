@@ -541,9 +541,11 @@ extension WaterfallRenderer                 : StreamHandler {
   //  public var bins: [UInt16]                               // Array of bin values
   //
   
-  /// Process the UDP Stream Data for the Waterfall (arrives on the streamQ)
+  /// Process the UDP Stream Data for the Waterfall
   ///
-  /// - Parameter streamFrame:        a Panadapter frame
+  ///   StreamHandler protocol, executes on the streamQ
+  ///
+  /// - Parameter streamFrame:        a Waterfall frame
   ///
   public func streamHandler<T>(_ streamFrame: T) {
     
