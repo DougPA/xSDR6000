@@ -3,8 +3,8 @@
 
 ### Built on:
 
-*  macOS 10.14 (Deployment Target of macOS 10.12)
-*  Xcode 10
+*  macOS 10.14.3 (Deployment Target of macOS 10.12)
+*  Xcode 10.1 (10B61)
 *  Swift 4.2
 
 
