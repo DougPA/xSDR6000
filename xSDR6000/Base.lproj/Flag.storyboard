@@ -1225,7 +1225,7 @@
                                         <constraints>
                                             <constraint firstAttribute="width" constant="50" id="jcg-mP-A7L"/>
                                         </constraints>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="left" placeholderString="100" id="ibo-S8-CsG">
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" placeholderString="100" id="ibo-S8-CsG">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -1246,7 +1246,7 @@
                                     </stepper>
                                     <textField identifier="xitOffset" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="XKr-Rs-ZVI">
                                         <rect key="frame" x="122" y="1" width="50" height="22"/>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="left" placeholderString="100" id="x3g-91-F1m">
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" placeholderString="100" id="x3g-91-F1m">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -1280,11 +1280,14 @@
                                     <real value="3.4028234663852886e+38"/>
                                 </customSpacing>
                             </stackView>
-                            <stackView distribution="fill" orientation="horizontal" alignment="top" spacing="26" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jVG-Vf-2Xr" userLabel="Step Stack View">
-                                <rect key="frame" x="30" y="2" width="203" height="23"/>
+                            <stackView distribution="fill" orientation="horizontal" alignment="top" spacing="21" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jVG-Vf-2Xr" userLabel="Step Stack View">
+                                <rect key="frame" x="21" y="2" width="222" height="23"/>
                                 <subviews>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eIE-ep-Cig">
-                                        <rect key="frame" x="-2" y="6" width="75" height="17"/>
+                                        <rect key="frame" x="-2" y="6" width="104" height="17"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="100" id="2gC-t6-bkf"/>
+                                        </constraints>
                                         <textFieldCell key="cell" lineBreakMode="clipping" title="Tuning step" id="ay5-gl-jO7">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" red="0.95714451410042378" green="1" blue="0.97158727799532796" alpha="0.84705882352941175" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1292,11 +1295,11 @@
                                         </textFieldCell>
                                     </textField>
                                     <textField identifier="step" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Vmt-Es-bhC">
-                                        <rect key="frame" x="97" y="1" width="50" height="22"/>
+                                        <rect key="frame" x="121" y="1" width="50" height="22"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="50" id="InR-KB-F4v"/>
                                         </constraints>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="left" placeholderString="100" id="nNQ-aO-mGP">
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" placeholderString="100" id="nNQ-aO-mGP">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -1306,7 +1309,7 @@
                                         </connections>
                                     </textField>
                                     <stepper identifier="stepStepper" horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="DZy-Ia-RTD">
-                                        <rect key="frame" x="170" y="-2" width="36" height="27"/>
+                                        <rect key="frame" x="189" y="-2" width="36" height="27"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="30" id="Iex-VW-Xsg"/>
                                         </constraints>

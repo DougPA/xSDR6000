@@ -1,5 +1,12 @@
 xSDR6000 Change Log
 
+v2.0.16 28-Feb-2019
+
+Corrected reference cycle in XritViewController
+Adjusted layout of xRit tab, "Tuning Step" / "Split Step" in Flag storyboard
+Corrected Flag observations to correct missing S-Meter updating
+
+
 v2.0.15 23-Feb-2019
 
 Reworked observations to use the "block-based" version in order to eliminate reference cycles
@@ -18,6 +25,7 @@ v2.0.13 - 12-Feb-2019
 
 Corrected Tx Profile handling
 Corrected Mic Profile handling
+
 
 v2.0.12 - 12-Feb-2019
 
@@ -38,12 +46,14 @@ Corrections to Flag field colors to work in both Light & Dark modes
 Added NextSlice to Radio Menu (Command-N), activate next slice within a panadapter
 Made it easier to click a Slice (added a variable minimum width to HitTestSlice)
 
+
 v2.0.11 - 07-Feb-2019
 
 Corrected click & drag handling in Flag & Panadapter
 Changed step tuning to make shift = 100, option = 10 & shift + option = 1
 Implemented SPLIT
-In XRIT Flag OPTION key toggles between "Tuning Step" and "Split Step" entry
+In XRIT Flag, OPTION key toggles between "Tuning Step" and "Split Step" entry
+
 
 v2.0.10 - 06-Feb-2019
 
@@ -51,10 +61,12 @@ Made click-tune and scrollwheel always go to nearest step value
 Added Shift & Option modifier keys for step/10 and step/100 tuning
 Corrections to Flag & FlagControls autolayout
 
+
 v2.0.9 - 03-Feb-2019
 
 Corrected agcMode control that caused a crash
 Redraw when changing Slice.mode was missing, added it.
+
 
 v2.0.8 - 03-Feb-2019
 
@@ -70,16 +82,19 @@ Adjusted Defaults.plist colors to be suitable default values
 Added RESET button to Preferences->Colors
 Changed observations of Voltage & Temperature to make them appear sooner
 
+
 v2.0.7 - 30 Jan 2019
 
 Corrections to level indicators in the TX & PCW side views
 In the TX side view made the power & tune sliders respect the maxPowerLevel setting
 Correccted the speech processor level control in the PCW side view
 
+
 v2.0.6 - 29 Jan 2019
 
 Added receipt of .updateRequired notification and NSAlert to the user (in RadioViewController.swift)
 Added ability to launch selected apps at launch of this app ("supportedApps") - see Preferences>Info
+
 
 v2.0.5 - 24 Jan 2019
 

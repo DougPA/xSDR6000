@@ -9,6 +9,7 @@
 import Cocoa
 import SwiftyUserDefaults
 import xLib6000
+import os.log
 
 // --------------------------------------------------------------------------------
 // MARK: - Flag View Controller class implementation
@@ -83,6 +84,8 @@ final class FlagViewController       : NSViewController, NSTextFieldDelegate, NS
   private var _previousFrequency            = 0
   private var _beginEditing                 = false
   private var _darkMode                     = false
+
+  private let _log                          = OSLog(subsystem: Api.kDomainId + "." + kClientName, category: "FlagVC")
 
   private let kFlagPixelOffset              : CGFloat = 15.0/2.0
 
@@ -260,11 +263,11 @@ final class FlagViewController       : NSViewController, NSTextFieldDelegate, NS
     // pass values to the Controls view controller
     controlsVc.configure(slice: slice)
     
-    // find the S-Meter feed (if any, it may alreaady exist or it may come later as a sliceMeterAdded Notification)
-    findSMeter(for: slice)
-    
     // create observations of Slice & Panadapter properties
     addObservations(slice: slice, panadapter: _panadapter!)
+    
+    // find the S-Meter feed (if any, it may alreaady exist or it may come later as a sliceMeterAdded Notification)
+    findSMeter(for: slice)
     
     // start receiving Notifications
     addNotifications()
@@ -284,12 +287,12 @@ final class FlagViewController       : NSViewController, NSTextFieldDelegate, NS
     // remove the previous observations
     removeObservations()
     
+    // add observations of the new objects
+    addObservations(slice: slice, panadapter: panadapter)
+
     // find the s-meter feed for the new Slice
     findSMeter(for: slice)
     
-    // add observations of the new obkects
-    addObservations(slice: slice, panadapter: panadapter)
-
     // update the Slice Letter
     _alphaButton.attributedTitle = NSAttributedString(string: FlagViewController.kSliceLetters[Int(slice.id)!], attributes: kLetterAttr)
   }
@@ -473,6 +476,7 @@ final class FlagViewController       : NSViewController, NSTextFieldDelegate, NS
   private func findSMeter(for slice: xLib6000.Slice) {
     
     if let item = slice.meters.first(where: { $0.value.name == Api.MeterShortName.signalPassband.rawValue} ) {
+      
       addMeterObservation( item.value)
     }
   }
@@ -496,52 +500,50 @@ final class FlagViewController       : NSViewController, NSTextFieldDelegate, NS
   ///
   private func addObservations(slice: xLib6000.Slice, panadapter: Panadapter ) {
     
-    _observations = [
-      slice.observe(\.active, options: [.initial, .new]) { [weak self] (slice, change) in
-        self?.sliceChange(slice, change) },
-
-      slice.observe(\.mode, options: [.initial, .new]) { [weak self] (slice, change) in
-        self?.sliceChange(slice, change) },
-
-      slice.observe(\.txEnabled, options: [.initial, .new]) { [weak self] (slice, change) in
-        self?.txChange(slice, change) },
-
-      slice.observe(\.filterHigh, options: [.initial, .new]) { [weak self] (slice, change) in
-        self?.filterChange(slice, change) },
-
-      slice.observe(\.filterLow, options: [.initial, .new]) { [weak self] (slice, change) in
-        self?.filterChange(slice, change) },
-
-      slice.observe(\.frequency, options: [.initial, .new]) { [weak self] (slice, change) in
-        self?.positionChange(slice, change) },
-
-      panadapter.observe(\.center, options: [.initial, .new]) { [weak self] (panadapter, change) in
-        self?.positionChange(panadapter, change) },
-
-      panadapter.observe(\.bandwidth, options: [.initial, .new]) { [weak self] (panadapter, change) in
-        self?.positionChange(panadapter, change) },
-
-      slice.observe(\.nbEnabled, options: [.initial, .new]) { [weak self] (slice, change) in
-        self?.buttonsChange(slice, change) },
-      
-      slice.observe(\.nrEnabled, options: [.initial, .new]) { [weak self] (slice, change) in
-        self?.buttonsChange(slice, change) },
-
-      slice.observe(\.anfEnabled, options: [.initial, .new]) { [weak self] (slice, change) in
-        self?.buttonsChange(slice, change) },
-
-      slice.observe(\.qskEnabled, options: [.initial, .new]) { [weak self] (slice, change) in
-        self?.buttonsChange(slice, change) },
-
-      slice.observe(\.locked, options: [.initial, .new]) { [weak self] (slice, change) in
-        self?.buttonsChange(slice, change) },
-
-      slice.observe(\.rxAnt, options: [.initial, .new]) { [weak self] (slice, change) in
-        self?.antennaChange(slice, change) },
-
-      slice.observe(\.txAnt, options: [.initial, .new]) { [weak self] (slice, change) in
-        self?.antennaChange(slice, change) }
-    ]
+    _observations.append( slice.observe(\.active, options: [.initial, .new]) { [weak self] (slice, change) in
+      self?.sliceChange(slice, change) })
+    
+    _observations.append( slice.observe(\.mode, options: [.initial, .new]) { [weak self] (slice, change) in
+      self?.sliceChange(slice, change) })
+    
+    _observations.append(  slice.observe(\.txEnabled, options: [.initial, .new]) { [weak self] (slice, change) in
+      self?.txChange(slice, change) })
+    
+    _observations.append( slice.observe(\.filterHigh, options: [.initial, .new]) { [weak self] (slice, change) in
+      self?.filterChange(slice, change) })
+    
+    _observations.append( slice.observe(\.filterLow, options: [.initial, .new]) { [weak self] (slice, change) in
+      self?.filterChange(slice, change) })
+    
+    _observations.append( slice.observe(\.frequency, options: [.initial, .new]) { [weak self] (slice, change) in
+      self?.positionChange(slice, change) })
+    
+    _observations.append(  panadapter.observe(\.center, options: [.initial, .new]) { [weak self] (panadapter, change) in
+      self?.positionChange(panadapter, change) })
+    
+    _observations.append( panadapter.observe(\.bandwidth, options: [.initial, .new]) { [weak self] (panadapter, change) in
+      self?.positionChange(panadapter, change) })
+    
+    _observations.append( slice.observe(\.nbEnabled, options: [.initial, .new]) { [weak self] (slice, change) in
+      self?.buttonsChange(slice, change) })
+    
+    _observations.append( slice.observe(\.nrEnabled, options: [.initial, .new]) { [weak self] (slice, change) in
+      self?.buttonsChange(slice, change) })
+    
+    _observations.append( slice.observe(\.anfEnabled, options: [.initial, .new]) { [weak self] (slice, change) in
+      self?.buttonsChange(slice, change) })
+    
+    _observations.append( slice.observe(\.qskEnabled, options: [.initial, .new]) { [weak self] (slice, change) in
+      self?.buttonsChange(slice, change) })
+    
+    _observations.append( slice.observe(\.locked, options: [.initial, .new]) { [weak self] (slice, change) in
+      self?.buttonsChange(slice, change) })
+    
+    _observations.append( slice.observe(\.rxAnt, options: [.initial, .new]) { [weak self] (slice, change) in
+      self?.antennaChange(slice, change) })
+    
+    _observations.append( slice.observe(\.txAnt, options: [.initial, .new]) { [weak self] (slice, change) in
+      self?.antennaChange(slice, change) })
   }
   /// Add Observation of the S-Meter feed
   ///
@@ -549,6 +551,9 @@ final class FlagViewController       : NSViewController, NSTextFieldDelegate, NS
   ///     If not, the .sliceMeterHasBeenAdded notification will identify the S-Meter
   ///
   func addMeterObservation(_ meter: Meter) {
+    
+//    // YES, log the event
+//    os_log("Slice Meter found, name = %{public}@", log: _log, type: .info, meter.name)
     
     // add the observation
     _observations.append( meter.observe(\.value, options: [.initial, .new]) { [weak self] (meter, change) in
@@ -686,11 +691,12 @@ final class FlagViewController       : NSViewController, NSTextFieldDelegate, NS
     // does the Notification contain a Meter object for this Slice?
     if let meter = note.object as? Meter, meter.group == slice?.id {
 
-    // which meter?
+      // which meter?
       switch meter.name {
       
       // S-Meter
       case Api.MeterShortName.signalPassband.rawValue:
+        
         addMeterObservation( meter )
       
       default:
@@ -706,40 +712,43 @@ final class FlagViewController       : NSViewController, NSTextFieldDelegate, NS
   ///
   private func meterChange(_ object: Any, _ change: Any) {
     
-    DispatchQueue.main.async { [unowned self] in
+    DispatchQueue.main.async { [weak self] in
 
       let meter = object as! Meter
 
-      self._sMeter.level = CGFloat(meter.value)
+      // set the bargraph level
+      self?._sMeter.level = CGFloat(meter.value)
+      
+      // set the "S" level
       switch meter.value {
       case ..<(-121):
-        self._sLevel.stringValue = " S0"
+        self?._sLevel.stringValue = " S0"
       case (-121)..<(-115):
-        self._sLevel.stringValue = " S1"
+        self?._sLevel.stringValue = " S1"
       case (-115)..<(-109):
-        self._sLevel.stringValue = " S2"
+        self?._sLevel.stringValue = " S2"
       case (-109)..<(-103):
-        self._sLevel.stringValue = " S3"
+        self?._sLevel.stringValue = " S3"
       case (-103)..<(-97):
-        self._sLevel.stringValue = " S4"
+        self?._sLevel.stringValue = " S4"
       case (-103)..<(-97):
-        self._sLevel.stringValue = " S5"
+        self?._sLevel.stringValue = " S5"
       case (-97)..<(-91):
-        self._sLevel.stringValue = " S6"
+        self?._sLevel.stringValue = " S6"
       case (-91)..<(-85):
-        self._sLevel.stringValue = " S7"
+        self?._sLevel.stringValue = " S7"
       case (-85)..<(-79):
-        self._sLevel.stringValue = " S8"
+        self?._sLevel.stringValue = " S8"
       case (-79)..<(-73):
-        self._sLevel.stringValue = " S9"
+        self?._sLevel.stringValue = " S9"
       case (-73)..<(-63):
-        self._sLevel.stringValue = "+10"
+        self?._sLevel.stringValue = "+10"
       case (-63)..<(-53):
-        self._sLevel.stringValue = "+20"
+        self?._sLevel.stringValue = "+20"
       case (-53)..<(-43):
-        self._sLevel.stringValue = "+30"
+        self?._sLevel.stringValue = "+30"
       case (-43)...:
-        self._sLevel.stringValue = "+40"
+        self?._sLevel.stringValue = "+40"
       default:
         break
       }

@@ -348,7 +348,9 @@ extension PanadapterRenderer                : StreamHandler {
   //  var bins: [UInt16]
   //
   
-  /// Process the UDP Stream Data for the Panadapter (arrives on the streamQ)
+  /// Process the UDP Stream Data for the Panadapter
+  ///
+  ///   StreamHandler protocol, executes on the streamQ
   ///
   /// - Parameter streamFrame:        a Panadapter frame
   ///

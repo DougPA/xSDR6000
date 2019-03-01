@@ -142,10 +142,11 @@ public final class OpusDecode               : NSObject, StreamHandler {
   }
   // ----------------------------------------------------------------------------
   // MARK: - OpusStreamHandler protocol methods
-  //      called by Opus, executes on the streamQ
   //
   
-  /// Process an Opus Rx stream
+  /// Process the UDP Stream Data for Opus Rx
+  ///
+  ///   StreamHandler protocol, executes on the streamQ
   ///
   /// - Parameter frame:            an Opus Rx Frame
   ///

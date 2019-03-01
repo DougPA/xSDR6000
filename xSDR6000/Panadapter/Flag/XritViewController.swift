@@ -35,6 +35,7 @@ final class XritViewController: NSViewController {
   
   private var _observations                 = [NSKeyValueObservation]()
   private var _splitStepMode                = false
+  private var _monitor                      : Any?
   
   // ----------------------------------------------------------------------------
   // MARK: - Overridden methods
@@ -52,12 +53,12 @@ final class XritViewController: NSViewController {
       view.layer?.borderColor = NSColor.darkGray.cgColor
       view.layer?.borderWidth = 0.5
     }
-    NSEvent.addLocalMonitorForEvents(matching: .flagsChanged) {
+    _monitor = NSEvent.addLocalMonitorForEvents(matching: .flagsChanged) { [unowned self] in
       
       if $0.modifierFlags.contains(NSEvent.ModifierFlags.option) {
         self._splitStepMode.toggle()
 
-        DispatchQueue.main.async {
+        DispatchQueue.main.async { [unowned self] in
           if self._splitStepMode {
             self._stepLabel.stringValue = "Split step"
             self._stepTextField.integerValue = Defaults[.splitDistance]
@@ -82,6 +83,7 @@ final class XritViewController: NSViewController {
     // set the background color of the Flag
     view.layer?.backgroundColor = ControlsViewController.kBackgroundColor
   }
+  
   #if DEBUG
   deinit {
     Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")

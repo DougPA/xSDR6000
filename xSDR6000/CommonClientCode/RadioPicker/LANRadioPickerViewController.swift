@@ -251,9 +251,9 @@ final class LANRadioPickerViewController    : NSViewController, NSTableViewDeleg
   ///
   @objc private func radiosAvailable(_ note: Notification) {
     
-    DispatchQueue.main.async { [unowned self] in
+    DispatchQueue.main.async { [weak self] in
       
-      self._radioTableView.reloadData()
+      self?._radioTableView.reloadData()
     }
   }
   
