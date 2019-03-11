@@ -109,10 +109,10 @@ final class AntennaViewController           : NSViewController, NSPopoverDelegat
   ///
   private func changeHandler(_ panadapter: Panadapter, _ change: Any) {
     
-    DispatchQueue.main.async { [unowned self] in
-      self._rxAntPopUp.selectItem(withTitle: self._panadapter.rxAnt)
-      self._loopAButton.boolState = self._panadapter.loopAEnabled
-      self._rfGainSlider.integerValue = self._panadapter.rfGain
+    DispatchQueue.main.async { [weak self] in
+      self?._rxAntPopUp.selectItem(withTitle: panadapter.rxAnt)
+      self?._loopAButton.boolState = panadapter.loopAEnabled
+      self?._rfGainSlider.integerValue = panadapter.rfGain
     }
   }
 }

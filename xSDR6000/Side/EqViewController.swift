@@ -191,24 +191,24 @@ final class EqViewController                : NSViewController {
     // update the Equalizer if currently displayed
     if eq == _eq {
       
-      DispatchQueue.main.async { [unowned self] in
+      DispatchQueue.main.async { [weak self] in
         
         // enable the appropriate Equalizer
-        self.rxButton.boolState = Defaults[.eqRxSelected]
-        self.txButton.boolState = !Defaults[.eqRxSelected]
+        self?.rxButton.boolState = Defaults[.eqRxSelected]
+        self?.txButton.boolState = !Defaults[.eqRxSelected]
         
         // set the ON button state
-        self.onButton.boolState = eq.eqEnabled
+        self?.onButton.boolState = eq.eqEnabled
         
         // set the slider values
-        self.slider0.integerValue = eq.level63Hz
-        self.slider1.integerValue = eq.level125Hz
-        self.slider2.integerValue = eq.level250Hz
-        self.slider3.integerValue = eq.level500Hz
-        self.slider4.integerValue = eq.level1000Hz
-        self.slider5.integerValue = eq.level2000Hz
-        self.slider6.integerValue = eq.level4000Hz
-        self.slider7.integerValue = eq.level8000Hz
+        self?.slider0.integerValue = eq.level63Hz
+        self?.slider1.integerValue = eq.level125Hz
+        self?.slider2.integerValue = eq.level250Hz
+        self?.slider3.integerValue = eq.level500Hz
+        self?.slider4.integerValue = eq.level1000Hz
+        self?.slider5.integerValue = eq.level2000Hz
+        self?.slider6.integerValue = eq.level4000Hz
+        self?.slider7.integerValue = eq.level8000Hz
       }
     }
   }

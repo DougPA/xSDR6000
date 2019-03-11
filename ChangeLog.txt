@@ -1,10 +1,18 @@
 xSDR6000 Change Log
 
+v2.0.17
+
+Changed multiple [unowned self] to [weak self]
+Refactored LevelIndicator code
+Changed all LevelIndicator legend arrays to conform to new format
+
+
 v2.0.16 28-Feb-2019
 
 Corrected reference cycle in XritViewController
 Adjusted layout of xRit tab, "Tuning Step" / "Split Step" in Flag storyboard
 Corrected Flag observations to correct missing S-Meter updating
+Replaced meters collection on individual Slices with meters collection on Radio
 
 
 v2.0.15 23-Feb-2019

@@ -124,28 +124,24 @@ final class PCWViewController                     : NSViewController {
   /// Setup graph styles, legends and resting levels
   ///
   private func setupBarGraphs() {
-    _compressionIndicator.style = .standard
-    _micLevelIndicator.style = .standard
     
     _micLevelIndicator.legends = [
-      (0, "-40", 0),
-      (1, "-30", -0.5),
-      (3, "-10", -0.5),
-      (4, "0", -0.5),
-      (nil, "Level", -0.5)
+      (0, "-40dB", 0),
+      (2, "-30", 0.5),
+      (6, "-10", 0.5),
+      (8, "0", 0.5),
+      (nil, "Level", 0.0)
     ]
     _compressionIndicator.legends = [
-      (0, "-25", 0),
-      (1, "-20", -0.5),
-      (4, "-5", -0.5),
-      (5, "0", -1),
+      (0, "-25dB", 0),
+      (5, "0", 1),
       (nil, "Compression", 0)
     ]
     // move the bar graphs off scale
-    _micLevelIndicator.level = -250
-    _micLevelIndicator.peak = -250
-    _compressionIndicator.level = 20
-    _compressionIndicator.peak = 20
+    _micLevelIndicator.level = -40
+    _micLevelIndicator.peak = -40
+    _compressionIndicator.level = 0
+    _compressionIndicator.peak = 0
   }
   /// Show a Save / Delete dialog as a sheet
   ///
@@ -228,12 +224,11 @@ final class PCWViewController                     : NSViewController {
     ]
 
     // Pcw Meter parameters
-    (_radio!.meters.values.filter { $0.name == kMicrophoneAverage || $0.name == kMicrophonePeak  || $0.name == kCompression }).forEach(
-      {
-        _observations.append( $0.observe(\.value, options: [.initial, .new]) { [weak self] (meter, change) in
-          self?.meterChange(meter, change) })
-        }
-    )
+    _radio!.meters.values.filter { $0.name == kMicrophoneAverage || $0.name == kMicrophonePeak  || $0.name == kCompression }
+      .forEach({
+          _observations.append( $0.observe(\.value, options: [.initial, .new]) { [weak self] (meter, change) in
+            self?.meterChange(meter, change) })
+      })
   }
   /// Update profile value
   ///
@@ -300,16 +295,18 @@ final class PCWViewController                     : NSViewController {
     case kMicrophoneAverage:
       let value = _radio?.interlock.state == "TRANSMITTING" ||
         _radio!.transmit.metInRxEnabled ? CGFloat(meter.value) : -50
-
+      
       DispatchQueue.main.async { [weak self] in self?._micLevelIndicator.level = value }
       
     case kMicrophonePeak:
       let value = _radio?.interlock.state == "TRANSMITTING" ||
         _radio!.transmit.metInRxEnabled ? CGFloat(meter.value) : -50
+      
       DispatchQueue.main.async {  [weak self] in self?._micLevelIndicator.peak = value }
       
     case kCompression:
       let value = _radio?.interlock.state == "TRANSMITTING" && meter.value > -30.0 ? CGFloat(meter.value) : 10
+      
       DispatchQueue.main.async {  [weak self] in self?._compressionIndicator.level = value }
       
     default:

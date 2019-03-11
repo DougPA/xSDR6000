@@ -112,7 +112,7 @@ final class PanadapterViewController        : NSViewController, NSGestureRecogni
     // Click, LEFT in panadapter
     _clickLeft = NSClickGestureRecognizer(target: self, action: #selector(clickLeft(_:)))
     _clickLeft.buttonMask = kLeftButton
-    _clickLeft.numberOfClicksRequired = 1
+    _clickLeft.numberOfClicksRequired = 2
     _clickLeft.delegate = self
     _dbLegendView.addGestureRecognizer(_clickLeft)
 
@@ -689,8 +689,8 @@ final class PanadapterViewController        : NSViewController, NSGestureRecogni
       
       _frequencyLegendView.redraw()
       
-      DispatchQueue.main.async { [unowned self] in 
-        self.positionFlags()
+      DispatchQueue.main.async { [weak self] in
+        self?.positionFlags()
       }
     }
   }
@@ -798,7 +798,7 @@ final class PanadapterViewController        : NSViewController, NSGestureRecogni
     // remove it from the list of Flags
     _flags[slice.id] = nil
     
-    DispatchQueue.main.async {      
+    DispatchQueue.main.async {
       // remove the Flag from the view hierarchy
       flagVc?.controlsVc?.view.removeFromSuperview()
       flagVc?.view.removeFromSuperview()

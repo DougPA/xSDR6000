@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import os.log
 import xLib6000
 
 final class TxViewController                      : NSViewController {
@@ -29,6 +30,9 @@ final class TxViewController                      : NSViewController {
   
   private var _radio                        : Radio? { return Api.sharedInstance.radio }
   private var _observations                 = [NSKeyValueObservation]()
+  private var _profileObservations          = [NSKeyValueObservation]()
+  private var _meterObservations            = [NSKeyValueObservation]()
+  private let _log                          = OSLog(subsystem: Api.kDomainId + "." + kClientName, category: "TxVC")
 
   private let kPowerForward                 = Api.MeterShortName.powerForward.rawValue
   private let kSwr                          = Api.MeterShortName.swr.rawValue
@@ -105,22 +109,20 @@ final class TxViewController                      : NSViewController {
   /// Setup graph styles, legends and resting levels
   ///
   private func setupBarGraphs() {
-    _rfPowerIndicator.style = .standard
-    _swrIndicator.style = .standard
     
     _rfPowerIndicator.legends = [            // to skip a legend pass "" as the format
       (0, "0", 0),
-      (4, "40", -0.5),
-      (8, "80", -0.5),
-      (10, "100", -0.5),
-      (12, "120", -1),
+      (4, "40", 0.5),
+      (8, "80", 0.5),
+      (10, "100", 0.5),
+      (12, "120", 1),
       (nil, "RF Pwr", 0)
     ]
     _swrIndicator.legends = [
-      (0, "0", 0),
-      (2, "1.5", -0.5),
-      (6, "2.5", -0.5),
-      (8, "3", -1),
+      (0, "1", 0),
+      (2, "1.5", 0.5),
+      (6, "2.5", 0.5),
+      (8, "3", 1),
       (nil, "SWR", 0)
     ]
     // move the bar graphs off scale
@@ -196,18 +198,20 @@ final class TxViewController                      : NSViewController {
         self?.transmitChange(transmit, change) },
       _radio!.transmit.observe(\.rfPower, options: [.initial, .new]) { [weak self] (transmit, change) in
         self?.transmitChange(transmit, change) },
-      
+
       // Tx Profile parameters
       _radio!.profiles[Profile.kTx]!.observe(\.list, options: [.initial, .new]) { [weak self] (profile, change) in
         self?.profileChange(profile, change) },
       _radio!.profiles[Profile.kTx]!.observe(\.selection, options: [.initial, .new]) { [weak self] (profile, change) in
-        self?.profileChange(profile, change) },
+        self?.profileChange(profile, change) }
     ]
+
     // Tx Meter parameters
-    (_radio!.meters.values.filter { $0.name == kPowerForward || $0.name == kSwr }).forEach({
-      _observations.append( $0.observe(\.value, options: [.initial, .new]) { [weak self] (meter, change) in
-        self?.meterChange(meter, change) } )
-    } )
+    _radio!.meters.values.filter { $0.name == kPowerForward || $0.name == kSwr}
+      .forEach({
+        _meterObservations.append( $0.observe(\.value, options: [.initial, .new]) { [weak self] (meter, change) in
+          self?.meterChange(meter, change) })
+      })
   }
   /// Update all Atu control values
   ///
@@ -277,3 +281,4 @@ final class TxViewController                      : NSViewController {
     }
   }
 }
+

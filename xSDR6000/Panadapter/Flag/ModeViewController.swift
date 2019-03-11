@@ -219,17 +219,17 @@ final class ModeViewController       : NSViewController {
 
     let filterTitles = filterStrings(for: slice.mode)
 
-    DispatchQueue.main.async { [unowned self] in
-      self._filter0.title = filterTitles[0]
-      self._filter1.title = filterTitles[1]
-      self._filter2.title = filterTitles[2]
-      self._filter3.title = filterTitles[3]
-      self._filter4.title = filterTitles[4]
-      self._filter5.title = filterTitles[5]
-      self._filter6.title = filterTitles[6]
-      self._filter7.title = filterTitles[7]
-      self._filter8.title = filterTitles[8]
-      self._filter9.title = filterTitles[9]
+    DispatchQueue.main.async { [weak self] in
+      self?._filter0.title = filterTitles[0]
+      self?._filter1.title = filterTitles[1]
+      self?._filter2.title = filterTitles[2]
+      self?._filter3.title = filterTitles[3]
+      self?._filter4.title = filterTitles[4]
+      self?._filter5.title = filterTitles[5]
+      self?._filter6.title = filterTitles[6]
+      self?._filter7.title = filterTitles[7]
+      self?._filter8.title = filterTitles[8]
+      self?._filter9.title = filterTitles[9]
     }
   }
 }

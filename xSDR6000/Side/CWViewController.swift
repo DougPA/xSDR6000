@@ -131,11 +131,10 @@ final class CWViewController                          : NSViewController {
   /// Setup graph styles, legends and resting levels
   ///
   private func setupBarGraphs() {
-    _alcLevelIndicator.style = .standard
     
     _alcLevelIndicator.legends = [
       (0, "0", 0),
-      (5, "100", -1.0),
+      (5, "100", 1.0),
       (nil, "ALC", 0)
     ]
   }
@@ -168,10 +167,11 @@ final class CWViewController                          : NSViewController {
       self?.cwChange(transmit, change) })
 
     // Cw Meter parameters
-    (_radio!.meters.values.filter { $0.name == kAlcLevel }).forEach({
-      _observations.append( $0.observe(\.value, options: [.initial, .new]) { [weak self] (meter, change) in
-        self?.meterChange(meter, change) })
-    })
+    _radio!.meters.values.filter { $0.name == kAlcLevel }
+      .forEach({
+        _observations.append( $0.observe(\.value, options: [.initial, .new]) { [weak self] (meter, change) in
+          self?.meterChange(meter, change) })
+      })
   }
   /// Update all control values
   ///
@@ -179,19 +179,19 @@ final class CWViewController                          : NSViewController {
   ///
   private func cwChange(_ transmit: Transmit, _ change: Any) {
     
-    DispatchQueue.main.async { [unowned self] in
-      self._breakInButton.boolState = transmit.cwBreakInEnabled
-      self._delaySlider.integerValue = transmit.cwBreakInDelay
-      self._delayTextfield.integerValue = transmit.cwBreakInDelay
-      self._iambicButton.boolState = transmit.cwIambicEnabled
-      self._pitchStepper.integerValue = transmit.cwPitch
-      self._pitchTextfield.integerValue = transmit.cwPitch
-      self._sidetoneButton.boolState = transmit.cwSidetoneEnabled
-      self._sidetoneLevelSlider.integerValue = transmit.txMonitorGainCw
-      self._sidetonePanSlider.integerValue = transmit.txMonitorPanCw
-      self._sidetoneLevelTextfield.integerValue = transmit.txMonitorGainCw
-      self._speedSlider.integerValue = transmit.cwSpeed
-      self._speedTextfield.integerValue = transmit.cwSpeed
+    DispatchQueue.main.async { [weak self] in
+      self?._breakInButton.boolState = transmit.cwBreakInEnabled
+      self?._delaySlider.integerValue = transmit.cwBreakInDelay
+      self?._delayTextfield.integerValue = transmit.cwBreakInDelay
+      self?._iambicButton.boolState = transmit.cwIambicEnabled
+      self?._pitchStepper.integerValue = transmit.cwPitch
+      self?._pitchTextfield.integerValue = transmit.cwPitch
+      self?._sidetoneButton.boolState = transmit.cwSidetoneEnabled
+      self?._sidetoneLevelSlider.integerValue = transmit.txMonitorGainCw
+      self?._sidetonePanSlider.integerValue = transmit.txMonitorPanCw
+      self?._sidetoneLevelTextfield.integerValue = transmit.txMonitorGainCw
+      self?._speedSlider.integerValue = transmit.cwSpeed
+      self?._speedTextfield.integerValue = transmit.cwSpeed
     }
   }
   /// Respond to changes in a Meter
@@ -206,7 +206,7 @@ final class CWViewController                          : NSViewController {
     switch meter.name {
 
     case kAlcLevel:
-      DispatchQueue.main.async { self._alcLevelIndicator.level = CGFloat(meter.value) }
+      DispatchQueue.main.async { [weak self] in  self?._alcLevelIndicator.level = CGFloat(meter.value) }
     
     default:
       fatalError()

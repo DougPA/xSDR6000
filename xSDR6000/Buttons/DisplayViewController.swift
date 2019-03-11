@@ -174,34 +174,34 @@ final class DisplayViewController                     : NSViewController, NSPopo
   ///
   private func changeHandler(_ object: Any, _ change: Any) {
     
-    DispatchQueue.main.async { [unowned self] in
+    DispatchQueue.main.async { [weak self] in
       
       if let panadapter = object as? Panadapter {
-        self._averageSlider.integerValue = panadapter.average
-        self._averageTextField.integerValue = panadapter.average
+        self?._averageSlider.integerValue = panadapter.average
+        self?._averageTextField.integerValue = panadapter.average
         
-        self._framesSlider.integerValue = panadapter.fps
-        self._framesTextField.integerValue = panadapter.fps
+        self?._framesSlider.integerValue = panadapter.fps
+        self?._framesTextField.integerValue = panadapter.fps
         
-        self._framesSlider.integerValue = panadapter.fps
-        self._framesTextField.integerValue = panadapter.fps
+        self?._framesSlider.integerValue = panadapter.fps
+        self?._framesTextField.integerValue = panadapter.fps
 
-        self._weightedAverageCheckbox.boolState = panadapter.weightedAverageEnabled
+        self?._weightedAverageCheckbox.boolState = panadapter.weightedAverageEnabled
 
       } else if let waterfall = object as? Waterfall {
         
-        self._colorGainSlider.integerValue = waterfall.colorGain
-        self._colorGainTextField.integerValue = waterfall.colorGain
+        self?._colorGainSlider.integerValue = waterfall.colorGain
+        self?._colorGainTextField.integerValue = waterfall.colorGain
         
-        self._blackLevelSlider.integerValue = waterfall.blackLevel
-        self._blackLevelTextField.integerValue = waterfall.blackLevel
+        self?._blackLevelSlider.integerValue = waterfall.blackLevel
+        self?._blackLevelTextField.integerValue = waterfall.blackLevel
         
-        self._lineDurationSlider.integerValue = waterfall.lineDuration
-        self._lineDurationTextField.integerValue = waterfall.lineDuration
+        self?._lineDurationSlider.integerValue = waterfall.lineDuration
+        self?._lineDurationTextField.integerValue = waterfall.lineDuration
 
-        self._autoBlackCheckbox.boolState = waterfall.autoBlackEnabled
+        self?._autoBlackCheckbox.boolState = waterfall.autoBlackEnabled
         
-        self._gradientPopUp.selectItem(at: waterfall.gradientIndex)
+        self?._gradientPopUp.selectItem(at: waterfall.gradientIndex)
       }
     }
   }
@@ -213,10 +213,10 @@ final class DisplayViewController                     : NSViewController, NSPopo
   ///
   private func defaultsHandler(_ object: Any, _ change: Any) {
     
-    DispatchQueue.main.async { [unowned self] in
+    DispatchQueue.main.async { [weak self] in
       
-      self._fillSlider.integerValue = Defaults[.spectrumFillLevel]
-      self._fillTextField.integerValue = Defaults[.spectrumFillLevel]
+      self?._fillSlider.integerValue = Defaults[.spectrumFillLevel]
+      self?._fillTextField.integerValue = Defaults[.spectrumFillLevel]
     }
   }
 }

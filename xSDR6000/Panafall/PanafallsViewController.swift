@@ -116,12 +116,12 @@ final class PanafallsViewController               : NSSplitViewController {
     let panafallButtonVc = _sb!.instantiateController(withIdentifier: kPanafallButtonIdentifier) as! PanafallButtonViewController
     
     // interact with the UI
-    DispatchQueue.main.sync { [unowned self] in
+    DispatchQueue.main.sync { [weak self] in
     
       // pass needed parameters
       panafallButtonVc.configure(panadapter: panadapter, waterfall: waterfall)
     
-      self.addSplitViewItem(NSSplitViewItem(viewController: panafallButtonVc))
+      self?.addSplitViewItem(NSSplitViewItem(viewController: panafallButtonVc))
     }
   }
 }

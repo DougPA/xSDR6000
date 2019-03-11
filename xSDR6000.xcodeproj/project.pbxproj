@@ -97,7 +97,8 @@
 		9185B0DC208683C7004D4C40 /* Auth0ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9185B0D1208683C7004D4C40 /* Auth0ViewController.swift */; };
 		9185B0DD208683C7004D4C40 /* WANRadioPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9185B0D2208683C7004D4C40 /* WANRadioPickerViewController.swift */; };
 		9185B0DE208683C7004D4C40 /* LANRadioPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9185B0D3208683C7004D4C40 /* LANRadioPickerViewController.swift */; };
-		91D60771215149A300123D77 /* LevelIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D60770215149A300123D77 /* LevelIndicator.swift */; };
+		91DD552F223174EF007BC29A /* BarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DD552D223174EF007BC29A /* BarView.swift */; };
+		91DD553322317538007BC29A /* LevelIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DD553222317538007BC29A /* LevelIndicator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -217,7 +218,8 @@
 		9185B0D1208683C7004D4C40 /* Auth0ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Auth0ViewController.swift; sourceTree = "<group>"; };
 		9185B0D2208683C7004D4C40 /* WANRadioPickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WANRadioPickerViewController.swift; sourceTree = "<group>"; };
 		9185B0D3208683C7004D4C40 /* LANRadioPickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LANRadioPickerViewController.swift; sourceTree = "<group>"; };
-		91D60770215149A300123D77 /* LevelIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelIndicator.swift; sourceTree = "<group>"; };
+		91DD552D223174EF007BC29A /* BarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarView.swift; sourceTree = "<group>"; };
+		91DD553222317538007BC29A /* LevelIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelIndicator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -311,11 +313,11 @@
 		913F7EFA2066DC7900F35E9B /* Misc */ = {
 			isa = PBXGroup;
 			children = (
+				91DD55312231751E007BC29A /* LevelIndicator */,
 				916909C72113E40C00164044 /* AudioHelper.swift */,
 				913F7EFB2066DC7900F35E9B /* Band.swift */,
 				913F7EFD2066DC7900F35E9B /* BandSegments.plist */,
 				913F7EFC2066DC7900F35E9B /* Defaults.plist */,
-				91D60770215149A300123D77 /* LevelIndicator.swift */,
 				913F7EFF2066DC7900F35E9B /* OpusDecode.swift */,
 				916909C52113E2FB00164044 /* OpusEncode.swift */,
 				913F7F002066DC7900F35E9B /* ParameterMonitor.swift */,
@@ -511,6 +513,15 @@
 			path = RadioPicker;
 			sourceTree = "<group>";
 		};
+		91DD55312231751E007BC29A /* LevelIndicator */ = {
+			isa = PBXGroup;
+			children = (
+				91DD553222317538007BC29A /* LevelIndicator.swift */,
+				91DD552D223174EF007BC29A /* BarView.swift */,
+			);
+			path = LevelIndicator;
+			sourceTree = "<group>";
+		};
 		91FBA99F21A35E95006A1934 /* Gradients */ = {
 			isa = PBXGroup;
 			children = (
@@ -645,12 +656,13 @@
 				913F7F622066DC7A00F35E9B /* TimeLayer.swift in Sources */,
 				913FDDE721E3BF87006DFE27 /* AudioViewController.swift in Sources */,
 				9185B0DB208683C7004D4C40 /* URLSessionExtensions.swift in Sources */,
-				91D60771215149A300123D77 /* LevelIndicator.swift in Sources */,
+				91DD552F223174EF007BC29A /* BarView.swift in Sources */,
 				913F7F542066DC7A00F35E9B /* PanadapterRenderer.swift in Sources */,
 				916909C62113E2FC00164044 /* OpusEncode.swift in Sources */,
 				913F7F492066DC7A00F35E9B /* PreferencesTabViewController.swift in Sources */,
 				91463CF121E50AE300177843 /* ColorsPrefsViewController.swift in Sources */,
 				914BCB15220E0A9200BB50F4 /* HelpViewController.swift in Sources */,
+				91DD553322317538007BC29A /* LevelIndicator.swift in Sources */,
 				913FDDF121E44C70006DFE27 /* DaxIqViewController.swift in Sources */,
 				9143BDC522024A7000C2CCBD /* ProfileViewController.swift in Sources */,
 				913FDDE921E3D517006DFE27 /* XritViewController.swift in Sources */,

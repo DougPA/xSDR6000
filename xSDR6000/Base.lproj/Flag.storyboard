@@ -246,22 +246,26 @@
                                 </customSpacing>
                             </stackView>
                             <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uKl-h1-c2L" userLabel="S-Meter stack view">
-                                <rect key="frame" x="23" y="24" width="230" height="20"/>
+                                <rect key="frame" x="10" y="24" width="253" height="20"/>
                                 <subviews>
                                     <customView translatesAutoresizingMaskIntoConstraints="NO" id="Kkb-rb-ggc" customClass="LevelIndicator" customModule="xSDR6000" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="202" height="20"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="220" height="20"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="20" id="CXU-zx-zRp"/>
+                                            <constraint firstAttribute="width" constant="220" id="wDC-m6-BRO"/>
                                         </constraints>
                                         <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="_numberOfSegments">
-                                                <integer key="value" value="8"/>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="_style">
+                                                <integer key="value" value="1"/>
                                             </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="_leftValue">
-                                                <real key="value" value="-130"/>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="_segments">
+                                                <integer key="value" value="14"/>
                                             </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="_rightValue">
-                                                <real key="value" value="-33"/>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="_origin">
+                                                <real key="value" value="-127"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="_end">
+                                                <real key="value" value="-43"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="number" keyPath="_warningLevel">
                                                 <real key="value" value="-85"/>
@@ -269,12 +273,15 @@
                                             <userDefinedRuntimeAttribute type="number" keyPath="_criticalLevel">
                                                 <real key="value" value="-73"/>
                                             </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="_hasPeak" value="NO"/>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="_hasLevel" value="YES"/>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="_isFlipped" value="NO"/>
                                         </userDefinedRuntimeAttributes>
                                     </customView>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="FXy-WX-GDY" userLabel="S-Level label">
-                                        <rect key="frame" x="208" y="2" width="24" height="17"/>
+                                        <rect key="frame" x="226" y="2" width="29" height="17"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="20" id="NHE-bA-zKC"/>
+                                            <constraint firstAttribute="width" constant="25" id="NHE-bA-zKC"/>
                                         </constraints>
                                         <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" placeholderString="S9" id="PZJ-AE-Q6S">
                                             <font key="font" metaFont="system"/>
@@ -283,9 +290,6 @@
                                         </textFieldCell>
                                     </textField>
                                 </subviews>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="230" id="xGc-UY-q07"/>
-                                </constraints>
                                 <visibilityPriorities>
                                     <integer value="1000"/>
                                     <integer value="1000"/>
@@ -380,8 +384,8 @@
                             <constraint firstItem="V5N-wl-2dY" firstAttribute="top" secondItem="uKl-h1-c2L" secondAttribute="bottom" constant="2" id="AZ2-nQ-dds"/>
                             <constraint firstAttribute="trailing" secondItem="qui-El-IVB" secondAttribute="trailing" constant="3" id="B8S-2Y-rV0"/>
                             <constraint firstItem="jie-8p-irq" firstAttribute="top" secondItem="Ldc-rG-ght" secondAttribute="bottom" constant="2" id="ELX-vB-WGz"/>
+                            <constraint firstItem="uKl-h1-c2L" firstAttribute="leading" secondItem="gnm-lQ-RMP" secondAttribute="leading" constant="10" id="EQK-ZZ-LBf"/>
                             <constraint firstItem="qui-El-IVB" firstAttribute="leading" secondItem="jie-8p-irq" secondAttribute="trailing" constant="9" id="QX4-WZ-gPI"/>
-                            <constraint firstItem="uKl-h1-c2L" firstAttribute="centerX" secondItem="gnm-lQ-RMP" secondAttribute="centerX" id="XKL-9I-9zN"/>
                             <constraint firstItem="qui-El-IVB" firstAttribute="top" secondItem="gnm-lQ-RMP" secondAttribute="top" id="Yac-H5-mt3"/>
                             <constraint firstItem="qui-El-IVB" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="gnm-lQ-RMP" secondAttribute="leading" id="hqH-st-yFE"/>
                             <constraint firstItem="qui-El-IVB" firstAttribute="leading" secondItem="Ldc-rG-ght" secondAttribute="trailing" constant="9" id="kge-9Q-tLH"/>

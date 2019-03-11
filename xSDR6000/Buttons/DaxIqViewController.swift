@@ -85,8 +85,8 @@ final class DaxIqViewController             : NSViewController, NSPopoverDelegat
   ///
   private func changeHandler(_ panadapter: Panadapter, _ change: Any) {
     
-    DispatchQueue.main.async { [unowned self] in
-      self._daxIqPopUp.selectItem(at: panadapter.daxIqChannel)
+    DispatchQueue.main.async { [weak self] in
+      self?._daxIqPopUp.selectItem(at: panadapter.daxIqChannel)
     }
   }
 }

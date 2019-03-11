@@ -39,7 +39,7 @@ final class FlagViewController       : NSViewController, NSTextFieldDelegate, NS
   var controlsVc                            : ControlsViewController?
   var splitId                               = ""
   var isaSplit                              = false {
-    didSet {DispatchQueue.main.async { self._splitButton.isEnabled = !self.isaSplit }}
+    didSet {DispatchQueue.main.async { [weak self] in self?._splitButton.isEnabled = !self!.isaSplit }}
   }
 
   @objc dynamic var slice                   : xLib6000.Slice?
@@ -193,13 +193,13 @@ final class FlagViewController       : NSViewController, NSTextFieldDelegate, NS
     _frequencyField.delegate = self
     
     _sMeter.legends = [            // to skip a legend pass "" as the format
-        (1, "1", -0.5),
-        (2, "3", -0.5),
-        (3, "5", -0.5),
-        (4, "7", -0.5),
-        (5, "9", -0.5),
-        (6, "+20", -0.5),
-        (7, "+40", -0.5)
+        (1, "1", 0.5),
+        (3, "3", 0.5),
+        (5, "5", 0.5),
+        (7, "7", 0.5),
+        (9, "9", 0.5),
+        (11, "+20", 0.5),
+        (13, "+40", 0.5)
     ]
     _sMeter.font = NSFont(name: "Monaco", size: 10.0)
     
@@ -475,7 +475,10 @@ final class FlagViewController       : NSViewController, NSTextFieldDelegate, NS
   ///
   private func findSMeter(for slice: xLib6000.Slice) {
     
-    if let item = slice.meters.first(where: { $0.value.name == Api.MeterShortName.signalPassband.rawValue} ) {
+    if let item = Api.sharedInstance.radio!.meters.first(where: {
+      $0.value.source == "slc" &&
+      $0.value.group == slice.id &&
+      $0.value.name == Api.MeterShortName.signalPassband.rawValue} ) {
       
       addMeterObservation( item.value)
     }
@@ -552,8 +555,8 @@ final class FlagViewController       : NSViewController, NSTextFieldDelegate, NS
   ///
   func addMeterObservation(_ meter: Meter) {
     
-//    // YES, log the event
-//    os_log("Slice Meter found, name = %{public}@", log: _log, type: .info, meter.name)
+    // YES, log the event
+    os_log("Slice Meter found, name = %{public}@", log: _log, type: .info, meter.name)
     
     // add the observation
     _observations.append( meter.observe(\.value, options: [.initial, .new]) { [weak self] (meter, change) in
@@ -716,39 +719,62 @@ final class FlagViewController       : NSViewController, NSTextFieldDelegate, NS
 
       let meter = object as! Meter
 
+      var value = CGFloat(meter.value)
+      
+      // S-Units above S9 are scaled 
+      if value > -73 {
+        value = ((value + 73) * 0.6) - 73
+      }
+      
       // set the bargraph level
-      self?._sMeter.level = CGFloat(meter.value)
+      self?._sMeter.level = value
       
       // set the "S" level
-      switch meter.value {
+      switch value {
       case ..<(-121):
         self?._sLevel.stringValue = " S0"
+      
       case (-121)..<(-115):
         self?._sLevel.stringValue = " S1"
+     
       case (-115)..<(-109):
         self?._sLevel.stringValue = " S2"
+      
       case (-109)..<(-103):
         self?._sLevel.stringValue = " S3"
+      
       case (-103)..<(-97):
         self?._sLevel.stringValue = " S4"
+      
       case (-103)..<(-97):
         self?._sLevel.stringValue = " S5"
+      
       case (-97)..<(-91):
         self?._sLevel.stringValue = " S6"
+      
       case (-91)..<(-85):
         self?._sLevel.stringValue = " S7"
+      
       case (-85)..<(-79):
         self?._sLevel.stringValue = " S8"
+      
       case (-79)..<(-73):
         self?._sLevel.stringValue = " S9"
-      case (-73)..<(-63):
+      
+      case (-73)..<(-67):
         self?._sLevel.stringValue = "+10"
-      case (-63)..<(-53):
+     
+      case (-67)..<(-61):
         self?._sLevel.stringValue = "+20"
-      case (-53)..<(-43):
+      
+      case (-61)..<(-55):
         self?._sLevel.stringValue = "+30"
-      case (-43)...:
+      
+      case (-55)..<(-49):
         self?._sLevel.stringValue = "+40"
+      
+      case (-49)...:
+        self?._sLevel.stringValue = "+++"
       default:
         break
       }
