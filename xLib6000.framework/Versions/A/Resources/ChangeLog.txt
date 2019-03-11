@@ -1,15 +1,20 @@
 xLib6000 Change Log
 
-v2.4.2
+
+v2.4.3
+
+Changed all "import os" to "import os.log"
+
+
+
+
+
+
+
+v2.4.2 28-Feb-2019
 
 Protocols.swift - removed the MeterStreamHandler protocol
 Meter.swift - refactored the StreamHandler to use the generic form used by other streams
-
-
-
-
-
-
 
 
 v2.4.1

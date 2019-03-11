@@ -878,7 +878,6 @@ SWIFT_CLASS("_TtC8xLib60005Slice")
 @property (nonatomic, copy) NSArray<NSString *> * _Nonnull rxAntList;
 @property (nonatomic, copy) NSArray<NSString *> * _Nonnull txAntList;
 @property (nonatomic) BOOL wide;
-@property (nonatomic, copy) NSDictionary<NSString *, Meter *> * _Nonnull meters;
 @end
 
 

@@ -2,8 +2,8 @@
 ## Mac implementation of the FlexRadio (TM) series 6000 software defined radios API (FlexLib)
 
 ### Built on:
-*  macOS 10.14 (Deployment Target of macOS 10.12)
-*  Xcode 10.0 (10A255)
+*  macOS 10.14.3 (Deployment Target of macOS 10.12)
+*  Xcode 10.01(10B61)
 *  Swift 4.2
 
 *V2.x.x drops the use of a Log Delegate and replaces it with Apple's Unified Logging
