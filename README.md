@@ -34,6 +34,10 @@ If you require a Mac version of DAX and/or CAT, please see.
 
 * https://dl3lsm.blogspot.com
 
+If you require a Mac-based Voice Keyer , please see.
+(works with xSDR6000 on macOS or SmartSDR on Windows)
+
+* https://w6op.com
 
 ## Builds
 
