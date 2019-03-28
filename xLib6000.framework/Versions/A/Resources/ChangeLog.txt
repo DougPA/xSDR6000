@@ -1,5 +1,9 @@
 xLib6000 Change Log
 
+v2.5.0 27-Mar-2019
+
+Recompiled for Swift 5.0 - changes made as needed
+
 
 v2.4.3 10-Mar-2019
 
