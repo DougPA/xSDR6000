@@ -1,5 +1,18 @@
 xSDR6000 Change Log
 
+v2.1.0 27-Mar-2019
+
+Recompiled for Swift 5.0 - changes made as needed
+Incorporated xLib6000 & SwiftyUserDefaults recompiled for Swift 5.0
+
+
+v2.0.18
+
+Corrected Swap Padles & CWXSync in Phone/Cw Preferences panel
+Corrected Iambic & RttyMark in Phone/Cw Preferences panel
+Corrected Iambic Mode & CW Sideband in Phone/Cw Preferences panel
+
+
 v2.0.17
 
 Changed multiple [unowned self] to [weak self]

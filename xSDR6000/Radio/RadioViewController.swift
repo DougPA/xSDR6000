@@ -165,6 +165,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     // activate the menu selections
     return _tcpPingFirstResponseReceived
   }
+
   #if DEBUG
   deinit {
     Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
@@ -517,7 +518,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
         let delay = ($0[InfoPrefsViewController.kDelay] as! Bool) ? $0[InfoPrefsViewController.kInterval] as! Int : 0
         
         // get the Cmd Line parameters
-        let parameters = $0[InfoPrefsViewController.kParameters] as! String
+//        let parameters = $0[InfoPrefsViewController.kParameters] as! String
         
         // schedule the launch
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds( delay )) {

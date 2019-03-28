@@ -2588,7 +2588,7 @@
                                                         <font key="font" metaFont="system"/>
                                                     </buttonCell>
                                                     <connections>
-                                                        <action selector="micCheckBoxes:" target="FSt-EM-0Rk" id="moW-xu-LUO"/>
+                                                        <action selector="checkBoxes:" target="FSt-EM-0Rk" id="moW-xu-LUO"/>
                                                     </connections>
                                                 </button>
                                                 <button identifier="MicBoost" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ubb-3I-ZKM">
@@ -2598,7 +2598,7 @@
                                                         <font key="font" metaFont="system"/>
                                                     </buttonCell>
                                                     <connections>
-                                                        <action selector="micCheckBoxes:" target="FSt-EM-0Rk" id="CqB-Y5-7Zr"/>
+                                                        <action selector="checkBoxes:" target="FSt-EM-0Rk" id="CqB-Y5-7Zr"/>
                                                     </connections>
                                                 </button>
                                                 <button identifier="MetInRx" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sYU-Qe-BjN">
@@ -2608,7 +2608,7 @@
                                                         <font key="font" metaFont="system"/>
                                                     </buttonCell>
                                                     <connections>
-                                                        <action selector="micCheckBoxes:" target="FSt-EM-0Rk" id="yvh-Q9-pZD"/>
+                                                        <action selector="checkBoxes:" target="FSt-EM-0Rk" id="yvh-Q9-pZD"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -2642,6 +2642,9 @@
                                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                 <font key="font" metaFont="system"/>
                                                             </buttonCell>
+                                                            <connections>
+                                                                <action selector="checkBoxes:" target="FSt-EM-0Rk" id="rX8-tr-5F1"/>
+                                                            </connections>
                                                         </button>
                                                         <button identifier="IambicA" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6RQ-ox-OKd">
                                                             <rect key="frame" x="111" y="-1" width="31" height="18"/>
@@ -2650,7 +2653,7 @@
                                                                 <font key="font" metaFont="system"/>
                                                             </buttonCell>
                                                             <connections>
-                                                                <action selector="iambicMode:" target="FSt-EM-0Rk" id="mnG-di-d5c"/>
+                                                                <action selector="iambicMode:" target="FSt-EM-0Rk" id="Tc2-jp-Xqi"/>
                                                             </connections>
                                                         </button>
                                                         <button identifier="IambicB" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ebn-LF-VN4">
@@ -2660,15 +2663,18 @@
                                                                 <font key="font" metaFont="system"/>
                                                             </buttonCell>
                                                             <connections>
-                                                                <action selector="iambicMode:" target="FSt-EM-0Rk" id="HSl-EV-eiJ"/>
+                                                                <action selector="iambicMode:" target="FSt-EM-0Rk" id="hb4-d2-fUM"/>
                                                             </connections>
                                                         </button>
-                                                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9tZ-ar-c1j">
+                                                        <button identifier="SwapDotDash" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9tZ-ar-c1j">
                                                             <rect key="frame" x="274" y="0.0" width="116" height="18"/>
                                                             <buttonCell key="cell" type="check" title="Swap Dot/Dash" bezelStyle="regularSquare" imagePosition="left" inset="2" id="vb0-IK-Mws">
                                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                 <font key="font" metaFont="system"/>
                                                             </buttonCell>
+                                                            <connections>
+                                                                <action selector="checkBoxes:" target="FSt-EM-0Rk" id="iLw-eP-lBi"/>
+                                                            </connections>
                                                         </button>
                                                     </subviews>
                                                     <visibilityPriorities>
@@ -2706,7 +2712,7 @@
                                                                 <font key="font" metaFont="system"/>
                                                             </buttonCell>
                                                             <connections>
-                                                                <action selector="cwSideband:" target="FSt-EM-0Rk" id="Fd7-OX-rNY"/>
+                                                                <action selector="cwSideband:" target="FSt-EM-0Rk" id="4GG-SF-c7W"/>
                                                             </connections>
                                                         </button>
                                                         <button identifier="CwSidebandLower" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="N8v-Vu-Kwp">
@@ -2719,15 +2725,18 @@
                                                                 <font key="font" metaFont="system"/>
                                                             </buttonCell>
                                                             <connections>
-                                                                <action selector="cwSideband:" target="FSt-EM-0Rk" id="Dng-no-vL6"/>
+                                                                <action selector="cwSideband:" target="FSt-EM-0Rk" id="fEt-k2-Aji"/>
                                                             </connections>
                                                         </button>
-                                                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="G1G-FE-SLc">
+                                                        <button identifier="CWXSync" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="G1G-FE-SLc">
                                                             <rect key="frame" x="275" y="-2" width="86" height="18"/>
                                                             <buttonCell key="cell" type="check" title="CWX Sync" bezelStyle="regularSquare" imagePosition="left" inset="2" id="Qdg-VZ-ZT3">
                                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                 <font key="font" metaFont="system"/>
                                                             </buttonCell>
+                                                            <connections>
+                                                                <action selector="checkBoxes:" target="FSt-EM-0Rk" id="5as-lQ-t7a"/>
+                                                            </connections>
                                                         </button>
                                                     </subviews>
                                                     <visibilityPriorities>
@@ -2774,6 +2783,9 @@
                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
+                                                    <connections>
+                                                        <action selector="rttyMark:" target="FSt-EM-0Rk" id="fuj-Pp-sj2"/>
+                                                    </connections>
                                                 </textField>
                                             </subviews>
                                             <constraints>

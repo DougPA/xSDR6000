@@ -112,10 +112,10 @@ final class Auth0ViewController             : NSViewController, WKNavigationDele
     
     } else {
       // before 10.11
-      NSLayoutConstraint(item: myWebView, attribute: .leading, relatedBy: .equal, toItem: _customView, attribute: .leading, multiplier: 1.0, constant: 0.0).isActive = true
-      NSLayoutConstraint(item: myWebView, attribute: .trailing, relatedBy: .equal, toItem: _customView, attribute: .trailing, multiplier: 1.0, constant: 0.0).isActive = true
-      NSLayoutConstraint(item: myWebView, attribute: .top, relatedBy: .equal, toItem: _customView, attribute:.top, multiplier: 1.0, constant:0.0).isActive = true
-      NSLayoutConstraint(item: myWebView, attribute: .bottom, relatedBy: .equal, toItem: _customView, attribute:.bottom, multiplier: 1.0, constant:0.0).isActive = true
+      NSLayoutConstraint(item: myWebView as Any, attribute: .leading, relatedBy: .equal, toItem: _customView, attribute: .leading, multiplier: 1.0, constant: 0.0).isActive = true
+      NSLayoutConstraint(item: myWebView as Any, attribute: .trailing, relatedBy: .equal, toItem: _customView, attribute: .trailing, multiplier: 1.0, constant: 0.0).isActive = true
+      NSLayoutConstraint(item: myWebView as Any, attribute: .top, relatedBy: .equal, toItem: _customView, attribute:.top, multiplier: 1.0, constant:0.0).isActive = true
+      NSLayoutConstraint(item: myWebView as Any, attribute: .bottom, relatedBy: .equal, toItem: _customView, attribute:.bottom, multiplier: 1.0, constant:0.0).isActive = true
     }
     // load it
     if myWebView.load(request) == nil {

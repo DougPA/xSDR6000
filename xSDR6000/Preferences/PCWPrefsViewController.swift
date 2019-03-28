@@ -54,11 +54,11 @@ final class PCWPrefsViewController                : NSViewController {
   // ----------------------------------------------------------------------------
   // MARK: - Action methods
   
-  /// Respond to the Iambic radio buttons
+  /// Respond to the Checkboxes
   ///
   /// - Parameter sender:             the button
   ///
-  @IBAction func micCheckBoxes(_ sender: NSButton) {
+  @IBAction func checkBoxes(_ sender: NSButton) {
 
     switch sender.identifier?.rawValue {
     case "MicBias":
@@ -67,6 +67,12 @@ final class PCWPrefsViewController                : NSViewController {
       _transmit!.micBoostEnabled = sender.boolState
     case "MetInRx":
       _transmit!.metInRxEnabled = sender.boolState
+    case "SwapDotDash":
+      _transmit!.cwSwapPaddles = sender.boolState
+    case "CWXSync":
+      _transmit!.cwSyncCwxEnabled = sender.boolState
+    case "Iambic":
+      _transmit!.cwIambicEnabled = sender.boolState
     default:
       fatalError()
     }
@@ -102,6 +108,11 @@ final class PCWPrefsViewController                : NSViewController {
     }
   }
 
+  @IBAction func rttyMark(_ sender: NSTextField) {
+    
+    _radio?.rttyMark = sender.integerValue
+  }
+  
   // ----------------------------------------------------------------------------
   // MARK: - Observation methods
   

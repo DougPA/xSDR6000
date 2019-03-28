@@ -3,9 +3,9 @@
 
 ### Built on:
 
-*  macOS 10.14.3 (Deployment Target of macOS 10.12)
-*  Xcode 10.1 (10B61)
-*  Swift 4.2
+*  macOS 10.14.4 (Deployment Target of macOS 10.12)
+*  Xcode 10.2 (10E125)
+*  Swift 5.0
 
 
 **Supports SmartLink (TM).**  
@@ -38,6 +38,7 @@ If you require a Mac-based Voice Keyer , please see.
 (works with xSDR6000 on macOS or SmartSDR on Windows)
 
 * https://w6op.com
+
 
 ## Builds
 
