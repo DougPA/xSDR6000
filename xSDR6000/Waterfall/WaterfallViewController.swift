@@ -71,7 +71,7 @@ final class WaterfallViewController               : NSViewController, NSGestureR
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    #if DEBUG
+    #if XDEBUG
     Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
     #endif
     
@@ -91,7 +91,7 @@ final class WaterfallViewController               : NSViewController, NSGestureR
     // make the Renderer the Stream Handler
     _waterfall?.delegate = _waterfallRenderer
   }
-  #if DEBUG
+  #if XDEBUG
   deinit {
     Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
   }

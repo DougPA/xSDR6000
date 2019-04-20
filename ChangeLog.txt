@@ -1,5 +1,15 @@
 xSDR6000 Change Log
 
+v3.0.0 19-Apr-2019
+
+***** This is NOT a complete v3 implementation, more to follow ****
+
+incorporated xLib6000 v3.0.1
+Replaced RadioParameters class with DiscoveredRadio class throughout app
+ConnectedClientsViewController.swift - added, added to main storyboard , added to xSDR6000 menu
+RadioViewController.swift - added code to receive guiClientHasBeenAdded & guiClientWillBeRemoved
+
+
 v2.1.0 27-Mar-2019
 
 Recompiled for Swift 5.0 - changes made as needed

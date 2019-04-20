@@ -176,7 +176,7 @@ final class FlagViewController       : NSViewController, NSTextFieldDelegate, NS
   public override func viewDidLoad() {
     super.viewDidLoad()
     
-    #if DEBUG
+    #if XDEBUG
     Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
     #endif
     
@@ -203,8 +203,9 @@ final class FlagViewController       : NSViewController, NSTextFieldDelegate, NS
     ]
     _sMeter.font = NSFont(name: "Monaco", size: 10.0)
     
-    _alphaButton.attributedTitle = NSAttributedString(string: FlagViewController.kSliceLetters[Int(slice!.id)!],
-                                                      attributes: kLetterAttr)
+    // slice!.sliceLetter is V3 and later, earlier versions use the index calculation
+    let letter = slice!.sliceLetter == nil ? FlagViewController.kSliceLetters[Int(slice!.id)!] : slice!.sliceLetter!
+    _alphaButton.attributedTitle = NSAttributedString(string: letter, attributes: kLetterAttr)
   }
 
   override func viewWillAppear() {
@@ -237,7 +238,7 @@ final class FlagViewController       : NSViewController, NSTextFieldDelegate, NS
       _beginEditing = false
     }
   }
-  #if DEBUG
+  #if XDEBUG
   deinit {
     Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
   }

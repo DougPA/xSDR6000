@@ -27,7 +27,7 @@ protocol RadioPickerDelegate: class {
   ///   - handle:         remote handle
   /// - Returns:          success / failure
   ///
-  func openRadio(_ radio: RadioParameters?, isWan: Bool, wanHandle: String) -> Bool
+  func openRadio(_ radio: DiscoveredRadio?, isWan: Bool, wanHandle: String) -> Bool
   
   /// Close the active Radio
   ///
@@ -109,7 +109,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    #if DEBUG
+    #if XDEBUG
     Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
     #endif
     
@@ -166,7 +166,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     return _tcpPingFirstResponseReceived
   }
 
-  #if DEBUG
+  #if XDEBUG
   deinit {
     Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
   }
@@ -608,28 +608,28 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   ///
   /// - Returns:        a RadioParameters struct or nil
   ///
-  private func defaultRadioFound() -> RadioParameters? {
-    var defaultRadioParameters: RadioParameters?
+  private func defaultRadioFound() -> DiscoveredRadio? {
+    var defaultRadio: DiscoveredRadio?
     
     // see if there is a valid default Radio
-    let defaultRadio = RadioParameters( Defaults[.defaultRadio] )
-    if defaultRadio.publicIp != "" && defaultRadio.port != 0 {
+    let defaultSerialNumber = Defaults[.defaultRadioSerialNumber]
+    if defaultSerialNumber != "" {
       
       // allow time to hear the UDP broadcasts
       usleep(1_500_000)
       
       // has the default Radio been found?
-      if let radio = _api.availableRadios.first(where: { $0 == defaultRadio} ) {
+      if let radio = _api.discoveredRadios.first(where: { $0.serialNumber == defaultSerialNumber} ) {
         
         // YES, Save it in case something changed
-        Defaults[.defaultRadio] = radio.dict
+        Defaults[.defaultRadioSerialNumber] = defaultSerialNumber
 
         os_log("Default radio found, %{public}@ @ %{public}@", log: _log, type: .info, radio.nickname, radio.publicIp)
 
-        defaultRadioParameters = radio
+        defaultRadio = radio
       }
     }
-    return defaultRadioParameters
+    return defaultRadio
   }
   
   // ----------------------------------------------------------------------------
@@ -654,6 +654,10 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     NC.makeObserver(self, with: #selector(updateRequired(_:)), of: .updateRequired)
 
     NC.makeObserver(self, with: #selector(tcpPingFirstResponse(_:)), of: .tcpPingFirstResponse)
+    
+    NC.makeObserver(self, with: #selector(guiClientHasBeenAdded(_:)), of: .guiClientHasBeenAdded)
+    
+    NC.makeObserver(self, with: #selector(guiClientWillBeRemoved(_:)), of: .guiClientWillBeRemoved)
   }
   /// Process .meterHasBeenAdded Notification
   ///
@@ -822,7 +826,26 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
       self?.sideView( Defaults[.sideViewOpen] ? .open : .close)
     }
   }
+  /// Process .guiClientHasBeenAdded Notification
+  ///
+  /// - Parameter note:         a Notification instance
+  ///
+  @objc private func guiClientHasBeenAdded(_ note: Notification) {
 
+    let guiClient = note.object as! GuiClient
+    
+    os_log("Gui Client added: handle = %{public}@, station = %{public}@, program = %{public}@, client id = %{public}@", log: _log, type: .info, guiClient.handle.hex, guiClient.station, guiClient.program, guiClient.id?.uuidString ?? "")
+  }
+  /// Process .guiClientWillBeRemoved Notification
+  ///
+  /// - Parameter note:         a Notification instance
+  ///
+  @objc private func guiClientWillBeRemoved(_ note: Notification) {
+
+    let guiClient = note.object as! GuiClient
+    
+    os_log("Gui Client removed: Handle = %{public}@", log: _log, type: .info, guiClient.handle.hex)
+  }
   // ----------------------------------------------------------------------------
   // MARK: - RadioPicker delegate methods
   
@@ -836,7 +859,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   ///   - wanHandle:            Wan handle (if any)
   /// - Returns:                success / failure
   ///
-  func openRadio(_ radio: RadioParameters?, isWan: Bool = false, wanHandle: String = "") -> Bool {
+  func openRadio(_ radio: DiscoveredRadio?, isWan: Bool = false, wanHandle: String = "") -> Bool {
     
     if let _ = _radioPickerTabViewController {
       Swift.print("Should dismiss")

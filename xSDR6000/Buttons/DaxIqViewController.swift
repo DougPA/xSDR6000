@@ -28,7 +28,7 @@ final class DaxIqViewController             : NSViewController, NSPopoverDelegat
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    #if DEBUG
+    #if XDEBUG
     Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
     #endif
     
@@ -47,7 +47,7 @@ final class DaxIqViewController             : NSViewController, NSPopoverDelegat
     _isDetached = true
     return true
   }
-  #if DEBUG
+  #if XDEBUG
   deinit {
     Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
   }

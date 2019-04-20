@@ -87,7 +87,7 @@ final class PanadapterViewController        : NSViewController, NSGestureRecogni
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    #if DEBUG
+    #if XDEBUG
     Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
     #endif
     
@@ -144,7 +144,7 @@ final class PanadapterViewController        : NSViewController, NSGestureRecogni
     // make the Renderer the Stream Handler
     _panadapter?.delegate = _panadapterRenderer
   }
-  #if DEBUG
+  #if XDEBUG
   deinit {
     Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
   }

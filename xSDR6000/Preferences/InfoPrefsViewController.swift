@@ -42,7 +42,7 @@ final class InfoPrefsViewController: NSViewController, NSTableViewDelegate, NSTa
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    #if DEBUG
+    #if XDEBUG
     Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
     #endif
     
@@ -59,7 +59,7 @@ final class InfoPrefsViewController: NSViewController, NSTableViewDelegate, NSTa
     _tableView.delegate = self
     _tableView.reloadData()
   }
-  #if DEBUG
+  #if XDEBUG
   deinit {
     Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
   }

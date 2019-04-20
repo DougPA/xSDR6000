@@ -33,7 +33,7 @@ final class ProfileViewController: NSViewController, NSTableViewDelegate, NSTabl
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    #if DEBUG
+    #if XDEBUG
     Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
     #endif
     
@@ -69,7 +69,7 @@ final class ProfileViewController: NSViewController, NSTableViewDelegate, NSTabl
   deinit {
     os_log("Profiles window closed", log: self._log, type: .info)
 
-    #if DEBUG
+    #if XDEBUG
     Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
     #endif
   }

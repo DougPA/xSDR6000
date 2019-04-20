@@ -31,7 +31,7 @@ extension DefaultsKeys {
   
   // Radio level info
   static let cwxViewOpen                  = DefaultsKey<Bool>("cwxViewOpen")
-  static let defaultRadio                 = DefaultsKey<[String: Any]>("defaultRadio")
+  static let defaultRadioSerialNumber     = DefaultsKey<String>("defaultRadioSerialNumber")
   static let eqRxSelected                 = DefaultsKey<Bool>("eqRxSelected")
   static let flagBorderEnabled            = DefaultsKey<Bool>("flagBorderEnabled")
   static let fullDuplexEnabled            = DefaultsKey<Bool>("fullDuplexEnabled")
@@ -575,7 +575,7 @@ func defaults(from file: String) {
 // MARK: - DEBUG FUNCTIONS
 
 
-#if DEBUG
+#if XDEBUG
 /// Print a Responder Chain on the console
 ///
 /// - Parameter view:               a view at the root of the chain

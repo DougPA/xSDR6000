@@ -48,7 +48,7 @@ final class PanafallsViewController               : NSSplitViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    #if DEBUG
+    #if XDEBUG
     Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
     #endif
 
@@ -58,7 +58,7 @@ final class PanafallsViewController               : NSSplitViewController {
     // add notification subscriptions
     addNotifications()
   }
-  #if DEBUG
+  #if XDEBUG
   deinit {
     Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
   }
@@ -94,8 +94,11 @@ final class PanafallsViewController               : NSSplitViewController {
     // does the Notification contain a Panadapter?
     let panadapter = note.object as! Panadapter
     
-    // YES, log the event
-    os_log("Panadapter added: ID = %{public}@", log: _log, type: .info, panadapter.id.hex)
+    // is it for this Client?
+    if panadapter.clientHandle == Api.sharedInstance.connectionHandle {
+      // YES, log the event
+      os_log("Panadapter added: ID = %{public}@", log: _log, type: .info, panadapter.id.hex)
+    }
   }
   /// Process .waterfallHasBeenAdded Notification
   ///
@@ -107,21 +110,24 @@ final class PanafallsViewController               : NSSplitViewController {
     // does the Notification contain a Panadapter?
     let waterfall = note.object as! Waterfall
     
-    // YES, log the event
-    os_log("Waterfall added: ID = %{public}@", log: _log, type: .info, waterfall.id.hex)
-    
-    let panadapter = Api.sharedInstance.radio!.panadapters[waterfall.panadapterId]
-    
-    // create a Panafall Button View Controller
-    let panafallButtonVc = _sb!.instantiateController(withIdentifier: kPanafallButtonIdentifier) as! PanafallButtonViewController
-    
-    // interact with the UI
-    DispatchQueue.main.sync { [weak self] in
-    
-      // pass needed parameters
-      panafallButtonVc.configure(panadapter: panadapter, waterfall: waterfall)
-    
-      self?.addSplitViewItem(NSSplitViewItem(viewController: panafallButtonVc))
+    // is it for this Client?
+    if waterfall.clientHandle == Api.sharedInstance.connectionHandle {
+      // YES, log the event
+      os_log("Waterfall added: ID = %{public}@", log: _log, type: .info, waterfall.id.hex)
+      
+      let panadapter = Api.sharedInstance.radio!.panadapters[waterfall.panadapterId]
+      
+      // create a Panafall Button View Controller
+      let panafallButtonVc = _sb!.instantiateController(withIdentifier: kPanafallButtonIdentifier) as! PanafallButtonViewController
+      
+      // interact with the UI
+      DispatchQueue.main.sync { [weak self] in
+        
+        // pass needed parameters
+        panafallButtonVc.configure(panadapter: panadapter, waterfall: waterfall)
+        
+        self?.addSplitViewItem(NSSplitViewItem(viewController: panafallButtonVc))
+      }
     }
   }
 }
