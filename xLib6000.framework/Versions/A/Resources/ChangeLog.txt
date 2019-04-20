@@ -1,5 +1,40 @@
 xLib6000 Change Log
 
+v3.0.1 18-Apr-2019
+
+Replaced RadioParameters class with DiscoveredRadio class throughout library
+
+
+v3.0.0 17-Apr-2019
+
+***** This is NOT a complete v3 implementation, more to follow ****
+
+***** Hundreds of small changes to accomodate Version 3 *****
+
+RadioParameters.swift - added new v3 parameters
+Vita.swift - in class parseDiscovery(_:) added new v3 parameters
+Modified all "Unknown token" messages to display <token = value>
+Radio.swift - added RadioTokens daxIqCapacity & daxIqAvailable & code to process them
+Radio.swift - added properties localPtt, clientId, station & program & code to process them
+Radio.swift - added bandSettings collection and code to process it
+Radio.swift - added guiClients collection and code to process it
+Interlock.swift - added Token txClientHandle, added code to process it
+InterlockCommands.swift - added txClientHandle property & code to process it
+Api.swift - updated kApiFirmwareSupport to 3.0.18.x
+Api.swift - changes to the timing & content of the Primary, Secondary & Subscription command sets
+Api.swift - changed connectionHandle from String to UInt32?
+AppExtensions.swift - added new extension on String - handle
+UdpManager.swift - changed clientHandle from String to UInt32?
+Vita.swift - updated class parseDiscovery(_:) to v3
+Notifications.swift - added guiClientHasBeenAdded & guiClientWillBeRemoved
+RadioParameters.swift - updated to v3
+
+
+v2.5.1
+
+Vita.swift - in class parseDiscovery(_:), added printing of kv.value for unknown token
+
+
 v2.5.0 27-Mar-2019
 
 Recompiled for Swift 5.0 - changes made as needed
