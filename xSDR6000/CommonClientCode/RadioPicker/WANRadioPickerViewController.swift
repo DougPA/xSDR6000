@@ -49,11 +49,11 @@ final class WANRadioPickerViewController    : NSViewController, NSTableViewDeleg
   private var _api                          = Api.sharedInstance
   private let _log                          = OSLog(subsystem: Api.kDomainId + "." + kClientName, category: "WanRadioPickerVC")
   private var _auth0ViewController          : Auth0ViewController?
-  private var _availableRemoteRadios        = [RadioParameters]()           // Radios discovered
+  private var _availableRemoteRadios        = [DiscoveredRadio]()           // Radios discovered
   private weak var _delegate                : RadioPickerDelegate? {
     return representedObject as? RadioPickerDelegate
   }
-  private var _selectedRadio                : RadioParameters?              // Radio in selected row
+  private var _selectedRadio                : DiscoveredRadio?              // Radio in selected row
   private var _wanServer                    : WanServer?
   private var _parentVc                     : NSViewController!
 
@@ -94,7 +94,7 @@ final class WANRadioPickerViewController    : NSViewController, NSTableViewDeleg
     var idToken = ""
     var loggedIn = false
     
-    #if DEBUG
+    #if XDEBUG
     Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
     #endif
     
@@ -170,7 +170,7 @@ final class WANRadioPickerViewController    : NSViewController, NSTableViewDeleg
     // change the button title
     _loginButton.title = kLogoutTitle
   }
-  #if DEBUG
+  #if XDEBUG
   deinit {
     Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
   }
@@ -296,7 +296,7 @@ final class WANRadioPickerViewController    : NSViewController, NSTableViewDeleg
   ///
   /// - Parameter radio: Radio to connect to
   ///
-  private func getAuthentificationForRadio(_ radio: RadioParameters?) {
+  private func getAuthentificationForRadio(_ radio: DiscoveredRadio?) {
     
     if let radio = radio {
       
@@ -543,7 +543,7 @@ final class WANRadioPickerViewController    : NSViewController, NSTableViewDeleg
   
   /// Received radio list from server
   ///
-  func wanRadioListReceived(wanRadioList: [RadioParameters]) {
+  func wanRadioListReceived(wanRadioList: [DiscoveredRadio]) {
     
     // relaod to display the updated list
     _availableRemoteRadios = wanRadioList
@@ -738,22 +738,22 @@ final class WANRadioPickerViewController    : NSViewController, NSTableViewDeleg
   func tableView( _ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
     
     // get a view for the cell
-    let view = tableView.makeView(withIdentifier: tableColumn!.identifier, owner:self) as! NSTableCellView
+    let cellView = tableView.makeView(withIdentifier: tableColumn!.identifier, owner:self) as! NSTableCellView
     
-    // is it the Upnp field?
-    if tableColumn!.identifier.rawValue == kUpnpIdentifier {
-      
-      // YES
-      let upnpEnabled = _availableRemoteRadios[row].upnpSupported
-      view.textField!.stringValue = (upnpEnabled ? "YES" : "")
-      
-    } else {
-      
-      // NO, all other fields, set the stringValue of the cell's text field to the appropriate field
-      view.textField!.stringValue = _availableRemoteRadios[row].valueForName(tableColumn!.identifier.rawValue)
+    // set the stringValue of the cell's text field to the appropriate field
+    switch tableColumn!.identifier.rawValue {
+    case "model":
+      cellView.textField!.stringValue = _availableRemoteRadios[row].model
+    case "nickname":
+      cellView.textField!.stringValue = _availableRemoteRadios[row].nickname
+    case "status":
+      cellView.textField!.stringValue = _availableRemoteRadios[row].status
+    case "publicIp":
+      cellView.textField!.stringValue = _availableRemoteRadios[row].publicIp
+    default:
+      break
     }
-    view.toolTip = _availableRemoteRadios[row].description
-    return view
+    return cellView
   }
   /// Tableview selection change delegate method
   ///

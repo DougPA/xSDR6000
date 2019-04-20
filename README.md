@@ -1,4 +1,4 @@
-# xSDR6000
+# xSDR6000 v3
 ## Mac Client for the FlexRadio (TM) 6000 series software defined radios.
 
 ### Built on:
@@ -13,6 +13,15 @@
 
 
 ## Usage
+
+
+
+
+THIS IS MY INITIAL WORK ON v3 COMPATIBILITY, IT IS NOT A COMPLETE, WORKING v3 IMPLEMENTATION
+
+
+
+
 
 Provides functionality similar to the FlexRadio (TM) SmartSDR (TM) app.
 

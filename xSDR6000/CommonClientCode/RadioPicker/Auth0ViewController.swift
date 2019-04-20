@@ -74,7 +74,7 @@ final class Auth0ViewController             : NSViewController, WKNavigationDele
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    #if DEBUG
+    #if XDEBUG
     Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
     #endif
 
@@ -137,7 +137,7 @@ final class Auth0ViewController             : NSViewController, WKNavigationDele
     // save its position
     view.window!.saveFrame(usingName: kAutosaveName)
   }
-  #if DEBUG
+  #if XDEBUG
   deinit {
     Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
   }
