@@ -1,5 +1,28 @@
 xLib6000 Change Log
 
+v3.0.4
+
+renamed all Stream for v3, incorporated new logic
+
+
+
+
+v3.0.3 23-Apr-2019
+
+Removed all use of Unified Logging, restored previous logging approach
+Restore Log.swift file and usage throughout the lib
+
+
+v3.0.2 22-Apr-2019
+
+Api.swift - changed "private var _objectQ" to "public var objectQ"
+Api.swift - added guiClients collection and supporting code
+GuiClient.swift - added class parseDiscoveryClients(_:api:)
+Radio.swift - removed guiClients collection (moved to Api)
+Radio.swift - changes to ClientToken enum
+FlexErrors.swift - added "case 0" to flexErrorLevel(errorCode:) and flexErrorString(errorCode:)
+
+
 v3.0.1 18-Apr-2019
 
 Replaced RadioParameters class with DiscoveredRadio class throughout library

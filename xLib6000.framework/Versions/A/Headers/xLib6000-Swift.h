@@ -264,38 +264,6 @@ SWIFT_CLASS("_TtC8xLib60003Atu")
 @end
 
 
-/// AudioStream Class implementation
-/// \code
-///  creates an AudioStream instance to be used by a Client to support the
-///  processing of a stream of Audio from the Radio to the client. AudioStream
-///  objects are added / removed by the incoming TCP messages. AudioStream
-///  objects periodically receive Audio in a UDP stream. They are collected
-///  in the audioStreams collection on the Radio object.
-///
-/// \endcode
-SWIFT_CLASS("_TtC8xLib600011AudioStream")
-@interface AudioStream : NSObject
-- (nonnull instancetype)init SWIFT_UNAVAILABLE;
-+ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
-@end
-
-
-@interface AudioStream (SWIFT_EXTENSION(xLib6000))
-@property (nonatomic) NSInteger rxGain;
-@end
-
-@class Slice;
-
-@interface AudioStream (SWIFT_EXTENSION(xLib6000))
-@property (nonatomic) NSInteger daxChannel;
-@property (nonatomic) NSInteger daxClients;
-@property (nonatomic, readonly) BOOL inUse;
-@property (nonatomic, copy) NSString * _Nonnull ip;
-@property (nonatomic) NSInteger port;
-@property (nonatomic, strong) Slice * _Nullable slice;
-@end
-
-
 /// BandSetting Class implementation
 /// \code
 ///  creates a BandSetting instance to be used by a Client to support the
@@ -348,6 +316,116 @@ SWIFT_CLASS("_TtC8xLib60003Cwx")
 @property (nonatomic) NSInteger breakInDelay;
 @property (nonatomic) BOOL qskEnabled;
 @property (nonatomic) NSInteger wpm;
+@end
+
+
+/// DaxIqStream Class implementation
+/// \code
+///  creates an DaxIqStream instance to be used by a Client to support the
+///  processing of a stream of IQ data from the Radio to the client. DaxIqStream
+///  objects are added / removed by the incoming TCP messages. DaxIqStream
+///  objects periodically receive IQ data in a UDP stream. They are collected
+///  in the daxIqStreams collection on the Radio object.
+///
+/// \endcode
+SWIFT_CLASS("_TtC8xLib600011DaxIqStream")
+@interface DaxIqStream : NSObject
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+
+@interface DaxIqStream (SWIFT_EXTENSION(xLib6000))
+@property (nonatomic) NSInteger rate;
+@end
+
+
+@interface DaxIqStream (SWIFT_EXTENSION(xLib6000))
+@property (nonatomic, readonly) NSInteger channel;
+@property (nonatomic, readonly) uint32_t clientHandle;
+@property (nonatomic, readonly) uint32_t pan;
+@property (nonatomic, readonly) BOOL isActive;
+@end
+
+
+/// DaxMicAudioStream Class implementation
+/// \code
+///  creates a DaxMicAudioStream instance to be used by a Client to support the
+///  processing of a stream of Mic Audio from the Radio to the client. DaxMicAudioStream
+///  objects are added / removed by the incoming TCP messages. DaxMicAudioStream
+///  objects periodically receive Mic Audio in a UDP stream. They are collected
+///  in the daxMicAudioStreams collection on the Radio object.
+///
+/// \endcode
+SWIFT_CLASS("_TtC8xLib600017DaxMicAudioStream")
+@interface DaxMicAudioStream : NSObject
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+
+
+
+@interface DaxMicAudioStream (SWIFT_EXTENSION(xLib6000))
+@property (nonatomic) uint32_t clientHandle;
+@property (nonatomic) NSInteger micGain;
+@end
+
+
+/// DaxRxAudioStream Class implementation
+/// \code
+///  creates a DaxRxAudioStream instance to be used by a Client to support the
+///  processing of a stream of Audio from the Radio to the client. DaxRxAudioStream
+///  objects are added / removed by the incoming TCP messages. DaxRxAudioStream
+///  objects periodically receive Audio in a UDP stream. They are collected
+///  in the daxRxAudioStreams collection on the Radio object.
+///
+/// \endcode
+SWIFT_CLASS("_TtC8xLib600016DaxRxAudioStream")
+@interface DaxRxAudioStream : NSObject
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+
+@interface DaxRxAudioStream (SWIFT_EXTENSION(xLib6000))
+@property (nonatomic) NSInteger rxGain;
+@end
+
+@class Slice;
+
+@interface DaxRxAudioStream (SWIFT_EXTENSION(xLib6000))
+@property (nonatomic) uint32_t clientHandle;
+@property (nonatomic) NSInteger daxChannel;
+@property (nonatomic) NSInteger daxClients;
+@property (nonatomic, strong) Slice * _Nullable slice;
+@end
+
+
+/// DaxTxAudioStream Class implementation
+/// \code
+///  creates a DaxTxAudioStream instance to be used by a Client to support the
+///  processing of a stream of Audio from the client to the Radio. DaxTxAudioStream
+///  objects are added / removed by the incoming TCP messages. DaxTxAudioStream
+///  objects periodically send Tx Audio in a UDP stream. They are collected in
+///  the DaxTxAudioStreams collection on the Radio object.
+///
+/// \endcode
+SWIFT_CLASS("_TtC8xLib600016DaxTxAudioStream")
+@interface DaxTxAudioStream : NSObject
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+
+@interface DaxTxAudioStream (SWIFT_EXTENSION(xLib6000))
+@property (nonatomic) BOOL isTransmitChannel;
+@end
+
+
+@interface DaxTxAudioStream (SWIFT_EXTENSION(xLib6000))
+@property (nonatomic) NSInteger txGain;
+@property (nonatomic) uint32_t clientHandle;
 @end
 
 
@@ -429,7 +507,9 @@ SWIFT_CLASS("_TtC8xLib60009GuiClient")
 
 
 @interface GuiClient (SWIFT_EXTENSION(xLib6000))
+@property (nonatomic, readonly, copy) NSString * _Nonnull host;
 @property (nonatomic, readonly, copy) NSUUID * _Nullable id;
+@property (nonatomic, readonly, copy) NSString * _Nonnull ip;
 @property (nonatomic, readonly) BOOL localPttEnabled;
 @property (nonatomic, readonly, copy) NSString * _Nonnull program;
 @property (nonatomic, readonly, copy) NSString * _Nonnull station;
@@ -475,39 +555,6 @@ SWIFT_CLASS("_TtC8xLib60009Interlock")
 @property (nonatomic, readonly, copy) NSString * _Nonnull amplifier;
 @property (nonatomic, readonly, copy) NSString * _Nonnull state;
 @property (nonatomic, readonly) BOOL txAllowed;
-@end
-
-
-/// IqStream Class implementation
-/// \code
-///  creates an IqStream instance to be used by a Client to support the
-///  processing of a stream of IQ data from the Radio to the client. IqStream
-///  objects are added / removed by the incoming TCP messages. IqStream
-///  objects periodically receive IQ data in a UDP stream. They are collected
-///  in the iqStreams collection on the Radio object.
-///
-/// \endcode
-SWIFT_CLASS("_TtC8xLib60008IqStream")
-@interface IqStream : NSObject
-- (nonnull instancetype)init SWIFT_UNAVAILABLE;
-+ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
-@end
-
-
-@interface IqStream (SWIFT_EXTENSION(xLib6000))
-@property (nonatomic) NSInteger rate;
-@end
-
-
-@interface IqStream (SWIFT_EXTENSION(xLib6000))
-@property (nonatomic, readonly) NSInteger available;
-@property (nonatomic, readonly) NSInteger capacity;
-@property (nonatomic, readonly) NSInteger daxIqChannel;
-@property (nonatomic, readonly) BOOL inUse;
-@property (nonatomic, readonly, copy) NSString * _Nonnull ip;
-@property (nonatomic, readonly) NSInteger port;
-@property (nonatomic, readonly) uint32_t pan;
-@property (nonatomic, readonly) BOOL streaming;
 @end
 
 
@@ -580,32 +627,6 @@ SWIFT_CLASS("_TtC8xLib60005Meter")
 @property (nonatomic, copy) NSString * _Nonnull source;
 @property (nonatomic, copy) NSString * _Nonnull units;
 @property (nonatomic) float value;
-@end
-
-
-/// MicAudioStream Class implementation
-/// \code
-///  creates a MicAudioStream instance to be used by a Client to support the
-///  processing of a stream of Mic Audio from the Radio to the client. MicAudioStream
-///  objects are added / removed by the incoming TCP messages. MicAudioStream
-///  objects periodically receive Mic Audio in a UDP stream. They are collected
-///  in the micAudioStreams collection on the Radio object.
-///
-/// \endcode
-SWIFT_CLASS("_TtC8xLib600014MicAudioStream")
-@interface MicAudioStream : NSObject
-- (nonnull instancetype)init SWIFT_UNAVAILABLE;
-+ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
-@end
-
-
-
-
-@interface MicAudioStream (SWIFT_EXTENSION(xLib6000))
-@property (nonatomic, readonly) BOOL inUse;
-@property (nonatomic, copy) NSString * _Nonnull ip;
-@property (nonatomic) NSInteger port;
-@property (nonatomic) NSInteger micGain;
 @end
 
 
@@ -781,7 +802,7 @@ SWIFT_CLASS("_TtC8xLib60005Radio")
 @property (nonatomic) BOOL headphoneMute;
 @property (nonatomic) NSInteger lineoutGain;
 @property (nonatomic) BOOL lineoutMute;
-@property (nonatomic) BOOL localPtt;
+@property (nonatomic) BOOL localPttEnabled;
 @property (nonatomic) BOOL mox;
 @property (nonatomic) BOOL muteLocalAudio;
 @property (nonatomic, copy) NSString * _Nonnull nickname;
@@ -1049,35 +1070,6 @@ SWIFT_CLASS("_TtC8xLib60008Transmit")
 @property (nonatomic, readonly) BOOL txMonitorAvailable;
 @property (nonatomic, readonly) BOOL txRfPowerChanges;
 @property (nonatomic, readonly, copy) NSString * _Nonnull txSliceMode;
-@end
-
-
-/// TxAudioStream Class implementation
-/// \code
-///  creates a TxAudioStream instance to be used by a Client to support the
-///  processing of a stream of Audio from the client to the Radio. TxAudioStream
-///  objects are added / removed by the incoming TCP messages. TxAudioStream
-///  objects periodically send Tx Audio in a UDP stream. They are collected in
-///  the txAudioStreams collection on the Radio object.
-///
-/// \endcode
-SWIFT_CLASS("_TtC8xLib600013TxAudioStream")
-@interface TxAudioStream : NSObject
-- (nonnull instancetype)init SWIFT_UNAVAILABLE;
-+ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
-@end
-
-
-@interface TxAudioStream (SWIFT_EXTENSION(xLib6000))
-@property (nonatomic) BOOL transmit;
-@end
-
-
-@interface TxAudioStream (SWIFT_EXTENSION(xLib6000))
-@property (nonatomic, readonly) BOOL inUse;
-@property (nonatomic, copy) NSString * _Nonnull ip;
-@property (nonatomic) NSInteger port;
-@property (nonatomic) NSInteger txGain;
 @end
 
 
