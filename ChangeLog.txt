@@ -1,5 +1,12 @@
 xSDR6000 Change Log
 
+v3.0.1 25-Apr-2019
+
+incorporated xLib6000 v3.0.4 (stream updates for v3)
+ConnectedClientsViewController.swift - corrections
+Main.storyboard - corrected height of cells in "Connected Clients" table
+
+
 v3.0.0 19-Apr-2019
 
 ***** This is NOT a complete v3 implementation, more to follow ****

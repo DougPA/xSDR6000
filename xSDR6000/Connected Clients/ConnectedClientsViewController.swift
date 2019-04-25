@@ -16,7 +16,9 @@ class ConnectedClientsViewController            : NSViewController, NSTableViewD
   
   @IBOutlet private weak var _tableView         : NSTableView!
   
-  private var _clients                          = [GuiClient]()
+  private var _clients                          : [GuiClient] {
+    return Array(Api.sharedInstance.guiClients.values).sorted(by: { $0.handle < $1.handle} )
+  }
   
   // ----------------------------------------------------------------------------
   // MARK: - Overridden Methods
@@ -42,7 +44,6 @@ class ConnectedClientsViewController            : NSViewController, NSTableViewD
     NC.makeObserver(self, with: #selector(guiClientHasBeenAdded(_:)), of: .guiClientHasBeenAdded)
     
     NC.makeObserver(self, with: #selector(guiClientWillBeRemoved(_:)), of: .guiClientWillBeRemoved)
-    
   }
   /// Process guiClientHasBeenAdded or meterWillBeRemoved Notification
   ///
@@ -62,7 +63,7 @@ class ConnectedClientsViewController            : NSViewController, NSTableViewD
       self?._tableView.reloadData()
     }
   }
-  
+
   // ----------------------------------------------------------------------------
   // MARK: - NSTableView DataSource methods
   
@@ -73,9 +74,6 @@ class ConnectedClientsViewController            : NSViewController, NSTableViewD
   ///
   public func numberOfRows(in aTableView: NSTableView) -> Int {
     
-    if let radio = Api.sharedInstance.radio {
-      _clients = Array(radio.guiClients.values).sorted(by: { $0.handle < $1.handle} )
-    }
     return _clients.count
   }
   
