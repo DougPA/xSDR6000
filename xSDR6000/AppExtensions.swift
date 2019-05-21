@@ -575,7 +575,7 @@ func defaults(from file: String) {
 // MARK: - DEBUG FUNCTIONS
 
 
-#if DEBUG
+#if XDEBUG
 /// Print a Responder Chain on the console
 ///
 /// - Parameter view:               a view at the root of the chain

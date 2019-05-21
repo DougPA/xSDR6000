@@ -88,7 +88,7 @@ public final class FrequencyLegendView      : NSView {
   public override func awakeFromNib() {
     super.awakeFromNib()
     
-    #if DEBUG
+    #if XDEBUG
     Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
     #endif
   }
@@ -109,7 +109,7 @@ public final class FrequencyLegendView      : NSView {
       if Defaults[.markersEnabled] { drawBandMarkers() }
     }
   }
-  #if DEBUG
+  #if XDEBUG
   deinit {
     Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
   }

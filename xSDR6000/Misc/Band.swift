@@ -6,7 +6,6 @@
 //
 
 import Cocoa
-import os.log
 import xLib6000
 
 // ----------------------------------------------------------------------------
@@ -64,7 +63,7 @@ final public class Band {
   // MARK: - Private Properties
   
   //    private var _previousBandDict: [NSObject:AnyObject]?
-  private let _log                        = OSLog(subsystem: Api.kDomainId + "." + kClientName, category: "Band")
+  private let _log                        = Log.sharedInstance
   
   // constants
   private let kSoundLeavingBand           = "Basso"
@@ -293,7 +292,7 @@ final public class Band {
         try fileManager.createDirectory( at: appFolder, withIntermediateDirectories: false, attributes: nil)
       
       } catch let error as NSError {
-        os_log("Error creating App Support folder: %{public}@", log: _log, type: .default, error.localizedDescription)
+        _log.msg("Error creating App Support folder: \(error.localizedDescription)", level: .warning, function: #function, file: #file, line: #line)
       }
     }
     return appFolder

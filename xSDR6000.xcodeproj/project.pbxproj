@@ -99,6 +99,10 @@
 		9185B0DE208683C7004D4C40 /* LANRadioPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9185B0D3208683C7004D4C40 /* LANRadioPickerViewController.swift */; };
 		91DD552F223174EF007BC29A /* BarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DD552D223174EF007BC29A /* BarView.swift */; };
 		91DD553322317538007BC29A /* LevelIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DD553222317538007BC29A /* LevelIndicator.swift */; };
+		91F6D98822934F6800676FBB /* ObjcExceptionBridging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91F6D98622934F6700676FBB /* ObjcExceptionBridging.framework */; settings = {ATTRIBUTES = (Required, ); }; };
+		91F6D98922934F6800676FBB /* ObjcExceptionBridging.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 91F6D98622934F6700676FBB /* ObjcExceptionBridging.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		91F6D98A22934F6800676FBB /* XCGLogger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91F6D98722934F6800676FBB /* XCGLogger.framework */; settings = {ATTRIBUTES = (Required, ); }; };
+		91F6D98B22934F6800676FBB /* XCGLogger.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 91F6D98722934F6800676FBB /* XCGLogger.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -108,8 +112,10 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				91F6D98B22934F6800676FBB /* XCGLogger.framework in Embed Frameworks */,
 				91463CEF21E5052E00177843 /* SwiftyUserDefaults.framework in Embed Frameworks */,
 				913F7F872066E6F600F35E9B /* OpusOSX.framework in Embed Frameworks */,
+				91F6D98922934F6800676FBB /* ObjcExceptionBridging.framework in Embed Frameworks */,
 				91396424214702D5002C9D8B /* xLib6000.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -220,6 +226,8 @@
 		9185B0D3208683C7004D4C40 /* LANRadioPickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LANRadioPickerViewController.swift; sourceTree = "<group>"; };
 		91DD552D223174EF007BC29A /* BarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarView.swift; sourceTree = "<group>"; };
 		91DD553222317538007BC29A /* LevelIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelIndicator.swift; sourceTree = "<group>"; };
+		91F6D98622934F6700676FBB /* ObjcExceptionBridging.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ObjcExceptionBridging.framework; sourceTree = "<group>"; };
+		91F6D98722934F6800676FBB /* XCGLogger.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = XCGLogger.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -227,8 +235,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				91F6D98A22934F6800676FBB /* XCGLogger.framework in Frameworks */,
 				91463CEE21E5052E00177843 /* SwiftyUserDefaults.framework in Frameworks */,
 				913964252147031C002C9D8B /* xLib6000.framework in Frameworks */,
+				91F6D98822934F6800676FBB /* ObjcExceptionBridging.framework in Frameworks */,
 				913F7F862066E6F600F35E9B /* OpusOSX.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -239,12 +249,14 @@
 		913F7EB82066DBBE00F35E9B = {
 			isa = PBXGroup;
 			children = (
+				91F6D98622934F6700676FBB /* ObjcExceptionBridging.framework */,
+				913F7F7C2066E6F600F35E9B /* OpusOSX.framework */,
+				91463CED21E5052E00177843 /* SwiftyUserDefaults.framework */,
+				91F6D98722934F6800676FBB /* XCGLogger.framework */,
+				913F7F772066E6F500F35E9B /* xLib6000.framework */,
 				9143BD9821FA3F6500C2CCBD /* KnownIssues.md */,
 				9143BD9621FA3CC300C2CCBD /* ChangeLog.txt */,
-				91463CED21E5052E00177843 /* SwiftyUserDefaults.framework */,
 				913F7F782066E6F500F35E9B /* README.md */,
-				913F7F7C2066E6F600F35E9B /* OpusOSX.framework */,
-				913F7F772066E6F500F35E9B /* xLib6000.framework */,
 				913F7EC32066DBBE00F35E9B /* xSDR6000 */,
 				913F7EC22066DBBE00F35E9B /* Products */,
 				913F7F6A2066DD5900F35E9B /* Frameworks */,

@@ -116,11 +116,14 @@ public final class WaterfallRenderer: NSObject {
   ]
   
   private var _waterfallVerticesLength      = 0
-  
+  private var _previousCenter               = 0
+  private var _previousStart                = 0
+  private var _previousEnd                  = 0
+
   private var _metalView                    : MTKView!
   private var _device                       : MTLDevice!
-  private let _q                            = DispatchQueue(label: Api.kId + ".waterfallRenderQ", qos: .userInteractive)
-  
+  private let _workerQ                      = DispatchQueue(label: Api.kId + ".waterfallWorkerQ")
+
   private var _constantsBuffer              : MTLBuffer!
   
   private var _waterfallPipelineState       : MTLRenderPipelineState!       // render pipeline state
@@ -144,7 +147,6 @@ public final class WaterfallRenderer: NSObject {
     MTLSizeMake(WaterfallRenderer.kTextureWidth / self._threadGroupCount.width, WaterfallRenderer.kTextureHeight / self._threadGroupCount.height, 1)
   }()
   
-  private var _frameBoundarySemaphore       = DispatchSemaphore(value: WaterfallRenderer.kMaxTextures)
   private let _waterQ                       = DispatchQueue(label: ".waterQ", attributes: [.concurrent])
   
   // ----- Backing properties - SHOULD NOT BE ACCESSED DIRECTLY -----------------------------------
@@ -160,8 +162,8 @@ public final class WaterfallRenderer: NSObject {
   // ----- Backing properties - SHOULD NOT BE ACCESSED DIRECTLY -----------------------------------
   
   private var _constants                    : Constants {
-    get { return _q.sync { __constants } }
-    set { _q.sync(flags: .barrier) { __constants = newValue } }
+    get { return _waterQ.sync { __constants } }
+    set { _waterQ.sync(flags: .barrier) { __constants = newValue } }
   }
   private var _firstBinFreq: CGFloat {
     get { return _waterQ.sync { __firstBinFreq } }
@@ -205,7 +207,7 @@ public final class WaterfallRenderer: NSObject {
     
     super.init()
     
-//    _constants = Constants(blackLevel: 0, colorGain: 0.0, lineNumber: 0 )
+    _constants = Constants(blackLevel: 0, colorGain: 0.0, lineNumber: 0 )
 
     // set the Metal view Clear color
     clearColor(color)
@@ -328,9 +330,6 @@ public final class WaterfallRenderer: NSObject {
         Vertex(coord: float2( 1.0, -1.0), texCoord: float2( 1.0, 1.0)),         // v2 - bottom right
         Vertex(coord: float2( 1.0,  1.0), texCoord: float2( 1.0, 0.0))          // v3 - top    right
       ]
-
-      
-      
       // create a params instance
       let params = Params(vertices: vertices, intensities: intensityTexture, topLine: 0)
 
@@ -383,10 +382,8 @@ public final class WaterfallRenderer: NSObject {
       // YES, create and save the Compute Pipeline State object
       _computePipelineState = try! _device.makeComputePipelineState(function: kernelFunction)
       
-      let w = _computePipelineState.threadExecutionWidth
-      let h = _computePipelineState.maxTotalThreadsPerThreadgroup / w
-      _threadsPerThreadgroup = MTLSizeMake(w, h, 1)
-      
+      _threadsPerThreadgroup = MTLSizeMake(1, 1, 1)
+
       _threadsPerGrid = MTLSize(width: _parameters[0].intensities.width,
                                 height: _parameters[0].intensities.height,
                                 depth: 1)
@@ -443,8 +440,6 @@ extension WaterfallRenderer                 : MTKViewDelegate {
   ///
   public func draw(in view: MTKView) {
     
-    autoreleasepool {
-      
       // obtain a Command buffer & a Render Pass descriptor
       guard let cmdBuffer = self._commandQueue.makeCommandBuffer(),
         let descriptor = view.currentRenderPassDescriptor else { return }
@@ -514,14 +509,10 @@ extension WaterfallRenderer                 : MTKViewDelegate {
       
       // present the drawable to the screen
       cmdBuffer.present(_metalView.currentDrawable!)
-      
-      // signal on completion
-      cmdBuffer.addCompletedHandler() { _ in self._frameBoundarySemaphore.signal() }
-      
+    
       // push the command buffer to the GPU
       cmdBuffer.commit()
     }
-  }
 }
 
 // ----------------------------------------------------------------------------
@@ -551,9 +542,6 @@ extension WaterfallRenderer                 : StreamHandler {
     
     guard let streamFrame = streamFrame as? WaterfallFrame else { return }
 
-    // wait for an available Intensity Texture
-    _frameBoundarySemaphore.wait()
-    
     // calculate the Top Line for this frame
     let newTopLine = ( _parameters[_textureIndex].topLine == 0 ? WaterfallRenderer.kTextureHeight - 1 : _parameters[_textureIndex].topLine - 1 )
 
@@ -605,12 +593,14 @@ extension WaterfallRenderer                 : StreamHandler {
     updateLine(newTopLine)
     
     // copy the Intensities into the current texture
-    let binsPtr = UnsafeRawPointer(streamFrame.bins).bindMemory(to: UInt8.self, capacity: streamFrame.totalBinsInFrame * MemoryLayout<UInt16>.size)
-    let region = MTLRegionMake1D(0, streamFrame.totalBinsInFrame)
+    let binsPtr = UnsafeRawPointer(streamFrame.bins).bindMemory(to: UInt8.self, capacity: streamFrame.totalBins * MemoryLayout<UInt16>.size)
+    let region = MTLRegionMake1D(0, streamFrame.totalBins)
     _parameters[_textureIndex].intensities.replace(region: region, mipmapLevel: 0, withBytes: binsPtr, bytesPerRow: WaterfallRenderer.kTextureWidth * MemoryLayout<UInt16>.size)
     
-//    DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
-      self._metalView.draw()
-//    }
+    _workerQ.async { [unowned self] in
+      autoreleasepool {
+        self._metalView.draw()
+      }
+    }
   }
 }

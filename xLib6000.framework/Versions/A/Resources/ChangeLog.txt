@@ -1,5 +1,10 @@
 xLib6000 Change Log
 
+v2.5.1 20-May-2019
+
+Reverted to previous logging strategy (Log delegate, logging provided by the client)
+
+
 v2.5.0 27-Mar-2019
 
 Recompiled for Swift 5.0 - changes made as needed

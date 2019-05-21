@@ -7,7 +7,6 @@
 //
 
 import Cocoa
-import os.log
 import xLib6000
 
 final class TxViewController                      : NSViewController {
@@ -32,7 +31,7 @@ final class TxViewController                      : NSViewController {
   private var _observations                 = [NSKeyValueObservation]()
   private var _profileObservations          = [NSKeyValueObservation]()
   private var _meterObservations            = [NSKeyValueObservation]()
-  private let _log                          = OSLog(subsystem: Api.kDomainId + "." + kClientName, category: "TxVC")
+  private let _log                          = Log.sharedInstance
 
   private let kPowerForward                 = Api.MeterShortName.powerForward.rawValue
   private let kSwr                          = Api.MeterShortName.swr.rawValue
@@ -44,7 +43,7 @@ final class TxViewController                      : NSViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    #if DEBUG
+    #if XDEBUG
     Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
     #endif
     
@@ -56,7 +55,7 @@ final class TxViewController                      : NSViewController {
     // start observing properties
     addObservations()
   }
-  #if DEBUG
+  #if XDEBUG
   deinit {
     Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
   }

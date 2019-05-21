@@ -1,4 +1,4 @@
-# xSDR6000
+# xSDR6000 v2
 ## Mac Client for the FlexRadio (TM) 6000 series software defined radios.
 
 ### Built on:

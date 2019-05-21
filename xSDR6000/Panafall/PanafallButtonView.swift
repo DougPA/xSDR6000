@@ -51,7 +51,7 @@ final class PanafallButtonView                : NSView {
   
   override func awakeFromNib() {
     
-    #if DEBUG
+    #if XDEBUG
     Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
     #endif
 
@@ -66,7 +66,7 @@ final class PanafallButtonView                : NSView {
     
     // remove the Tracking area (if any)
     removeTrackingArea()
-    #if DEBUG
+    #if XDEBUG
     Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
     #endif
   }

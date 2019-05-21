@@ -7,7 +7,6 @@
 //
 
 import Cocoa
-import os.log
 import xLib6000
 
 // --------------------------------------------------------------------------------
@@ -34,7 +33,7 @@ final class PanafallsViewController               : NSSplitViewController {
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
   
-  private let _log                          = OSLog(subsystem: Api.kDomainId + "." + kClientName, category: "PanafallsVC")
+  private let _log                          = Log.sharedInstance
   private var _sb                           : NSStoryboard?
   
   private let kPanafallStoryboard           = "Panafall"
@@ -48,7 +47,7 @@ final class PanafallsViewController               : NSSplitViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    #if DEBUG
+    #if XDEBUG
     Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
     #endif
 
@@ -58,7 +57,7 @@ final class PanafallsViewController               : NSSplitViewController {
     // add notification subscriptions
     addNotifications()
   }
-  #if DEBUG
+  #if XDEBUG
   deinit {
     Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
   }
@@ -95,7 +94,7 @@ final class PanafallsViewController               : NSSplitViewController {
     let panadapter = note.object as! Panadapter
     
     // YES, log the event
-    os_log("Panadapter added: ID = %{public}@", log: _log, type: .info, panadapter.id.hex)
+    _log.msg("Panadapter added: Stream Id = \(panadapter.id.hex)", level: .info, function: #function, file: #file, line: #line)
   }
   /// Process .waterfallHasBeenAdded Notification
   ///
@@ -108,8 +107,8 @@ final class PanafallsViewController               : NSSplitViewController {
     let waterfall = note.object as! Waterfall
     
     // YES, log the event
-    os_log("Waterfall added: ID = %{public}@", log: _log, type: .info, waterfall.id.hex)
-    
+    _log.msg("Waterfall added: Stream Id = \(waterfall.id.hex)", level: .info, function: #function, file: #file, line: #line)
+
     let panadapter = Api.sharedInstance.radio!.panadapters[waterfall.panadapterId]
     
     // create a Panafall Button View Controller

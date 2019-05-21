@@ -1,5 +1,12 @@
 xSDR6000 Change Log
 
+v2.1.1 21-May-2019
+
+Reverted to use of XCGLogger
+Fixed crash when using Iris Integrated graphics
+Fixed Heap corruption in Metal code
+
+
 v2.1.0 27-Mar-2019
 
 Recompiled for Swift 5.0 - changes made as needed

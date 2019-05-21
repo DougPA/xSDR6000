@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -238,17 +238,17 @@
             <objects>
                 <customObject id="WaM-Xb-K61" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
                 <viewController identifier="Panadapter View Controller" storyboardIdentifier="Panadapter" id="ywe-lT-40r" userLabel="PanadapterVC" customClass="PanadapterViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
-                    <customView key="view" identifier="Panadapter Container view" wantsLayer="YES" id="RX6-ul-e3s" userLabel="Container">
+                    <customView key="view" identifier="Panadapter Container view" id="RX6-ul-e3s" userLabel="Container">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="150"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <subviews>
-                            <customView wantsLayer="YES" translatesAutoresizingMaskIntoConstraints="NO" id="y2v-1L-v1p" userLabel="Panadapter" customClass="MTKView">
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="y2v-1L-v1p" userLabel="Panadapter" customClass="MTKView">
                                 <rect key="frame" x="0.0" y="20" width="450" height="130"/>
                             </customView>
-                            <customView wantsLayer="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aqb-JC-LgJ" userLabel="Frequency Legend" customClass="FrequencyLegendView" customModule="xSDR6000" customModuleProvider="target">
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="aqb-JC-LgJ" userLabel="Frequency Legend" customClass="FrequencyLegendView" customModule="xSDR6000" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="450" height="150"/>
                             </customView>
-                            <customView wantsLayer="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OIy-Mo-UmM" userLabel="Db Legend" customClass="DbLegendView" customModule="xSDR6000" customModuleProvider="target">
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="OIy-Mo-UmM" userLabel="Db Legend" customClass="DbLegendView" customModule="xSDR6000" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="20" width="450" height="130"/>
                             </customView>
                         </subviews>
@@ -280,14 +280,14 @@
         <scene sceneID="2cg-6a-4c4">
             <objects>
                 <viewController storyboardIdentifier="Waterfall" id="3e5-8Z-HZ9" userLabel="Waterfall VC" customClass="WaterfallViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
-                    <customView key="view" wantsLayer="YES" id="0fV-ab-jgZ" userLabel="Container">
+                    <customView key="view" id="0fV-ab-jgZ" userLabel="Container">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="150"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <subviews>
-                            <customView wantsLayer="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5ci-ge-Lcj" userLabel="Waterfall" customClass="MTKView">
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="5ci-ge-Lcj" userLabel="Waterfall" customClass="MTKView">
                                 <rect key="frame" x="0.0" y="0.0" width="450" height="150"/>
                             </customView>
-                            <customView wantsLayer="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7Uh-48-nOz" userLabel="Time Legend">
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="7Uh-48-nOz" userLabel="Time Legend">
                                 <rect key="frame" x="410" y="0.0" width="40" height="150"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="40" id="DvT-Bl-iGL"/>
