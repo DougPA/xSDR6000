@@ -48,7 +48,7 @@ final class WaterfallViewController               : NSViewController, NSGestureR
   private var _waterfallRenderer            : WaterfallRenderer!
 
   private weak var _waterfall               : Waterfall? { return radio!.waterfalls[panadapter!.waterfallId] }
-  private let _log                          = OSLog(subsystem: Api.kDomainId + "." + kClientName, category: "WaterfallVC")
+  private let _log                          = Log.sharedInstance
   private var _center                       : Int { return panadapter!.center }
   private var _bandwidth                    : Int { return panadapter!.bandwidth }
   private var _start                        : Int { return _center - (_bandwidth/2) }
@@ -71,7 +71,7 @@ final class WaterfallViewController               : NSViewController, NSGestureR
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    #if DEBUG
+    #if XDEBUG
     Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
     #endif
     
@@ -91,7 +91,7 @@ final class WaterfallViewController               : NSViewController, NSGestureR
     // make the Renderer the Stream Handler
     _waterfall?.delegate = _waterfallRenderer
   }
-  #if DEBUG
+  #if XDEBUG
   deinit {
     Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
   }
@@ -324,8 +324,8 @@ final class WaterfallViewController               : NSViewController, NSGestureR
     let waterfall = note.object as! Waterfall
     
     // YES, log the event
-    os_log("Waterfall will be removed, ID = %{public}@", log: _log, type: .info, waterfall.id.hex)
-    
+    _log.msg("Waterfall will be removed, Stream Id = \(waterfall.id.hex)", level: .warning, function: #function, file: #file, line: #line)
+
     // stop processing waterfall data
     waterfall.delegate = nil
     

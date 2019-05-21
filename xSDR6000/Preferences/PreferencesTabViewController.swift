@@ -7,7 +7,6 @@
 //
 
 import Cocoa
-import os.log
 import xLib6000
 import SwiftyUserDefaults
 
@@ -20,7 +19,7 @@ final class PreferencesTabViewController    : NSTabViewController {
   // MARK: - Private properties
   
   private let _autosaveName                 = "PreferencesWindow"
-  private let _log                          = OSLog(subsystem: Api.kDomainId + "." + kClientName, category: "Preferences")
+  private let _log                          = Log.sharedInstance
   
   // ----------------------------------------------------------------------------
   // MARK: - Overridden methods
@@ -28,7 +27,7 @@ final class PreferencesTabViewController    : NSTabViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    #if DEBUG
+    #if XDEBUG
     Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
     #endif
     
@@ -37,7 +36,7 @@ final class PreferencesTabViewController    : NSTabViewController {
     // select the previously selelcted tab
     tabView.selectTabViewItem(withIdentifier: NSUserInterfaceItemIdentifier(Defaults[.preferencesTabId]) )
 
-    os_log("Preferences window opened", log: self._log, type: .info)
+    _log.msg("Preferences window opened", level: .info, function: #function, file: #file, line: #line)
   }
 
   override func viewWillAppear() {
@@ -72,8 +71,8 @@ final class PreferencesTabViewController    : NSTabViewController {
     }
   }
   deinit {
-    os_log("Preferences window closed", log: self._log, type: .info)
-    #if DEBUG
+    _log.msg("Preferences window closed", level: .info, function: #function, file: #file, line: #line)
+    #if XDEBUG
     Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
     #endif
   }
@@ -93,7 +92,7 @@ final class PreferencesTabViewController    : NSTabViewController {
 //    Api.sharedInstance.shutdown(reason: .normal)
 //
 //    DispatchQueue.main.async {
-//      os_log("Application closed by user", log: self._log, type: .info)
+//      _log.msg("Application closed by user", level: .info, function: #function, file: #file, line: #line)
 //
 //      NSApp.terminate(self)
 //    }

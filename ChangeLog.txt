@@ -1,5 +1,13 @@
 xSDR6000 Change Log
 
+
+v2.0.18 21-May-2019
+
+Reverted to use of XCGLogger
+Fixed crash when using Iris Integrated graphics
+Fixed Heap corruption in Metal code
+
+
 v2.0.17
 
 Changed multiple [unowned self] to [weak self]

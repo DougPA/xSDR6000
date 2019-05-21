@@ -33,7 +33,7 @@ public final class OpusEncode               : NSObject {
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
   
-  private let _log                          = OSLog(subsystem: Api.kDomainId + "." + kClientName, category: "OpusEncode")
+  private let _log                          = Log.sharedInstance
   private var _engine                       : AVAudioEngine?
   private var _mixer                        : AVAudioMixerNode?
   private var _opus                         : Opus!
@@ -315,23 +315,23 @@ public final class OpusEncode               : NSObject {
       // try to set it as the input device for the engine
       if setInputDevice(device.id) {
         
-        os_log("Opus Tx, Started: ID = %{public}@, Device = %{public}@", log: _log, type: .info, Opus.txStreamId.hex, device.name!)
+        _log.msg("Opus Tx, Started: Stream Id = \(Opus.txStreamId.hex) Device = \(device.name!)", level: .info, function: #function, file: #file, line: #line)
 
         // start capture using this input device
         startInput(device)
 
       } else {
         
-        os_log("Opus Tx, FAILED: Device = %{public}@", log: _log, type: .default, device.name!)
-        
+        _log.msg("Opus Tx, FAILED: Device = \(device.name!)", level: .warning, function: #function, file: #file, line: #line)
+
         _engine?.stop()
         _engine = nil
       }
       
     } else if !_opus.txEnabled && _engine != nil {
       
-      os_log("Opus Tx, Stopped", log: _log, type: .info)
-      
+      _log.msg("Opus Tx, Stopped", level: .info, function: #function, file: #file, line: #line)
+
       // stop Opus Tx Audio
       _engine?.inputNode.removeTap(onBus: kTapBus)
       _engine?.stop()

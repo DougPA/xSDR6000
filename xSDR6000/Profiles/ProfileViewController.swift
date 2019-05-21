@@ -8,7 +8,6 @@
 
 import Cocoa
 import xLib6000
-import os.log
 import SwiftyUserDefaults
 
 final class ProfileViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
@@ -25,7 +24,7 @@ final class ProfileViewController: NSViewController, NSTableViewDelegate, NSTabl
   private var _observations                     = [NSKeyValueObservation]()
 
   private let _autosaveName                     = "ProfilesWindow"
-  private let _log                              = OSLog(subsystem: Api.kDomainId + "." + kClientName, category: "Profiles")
+  private let _log                              = Log.sharedInstance
 
   // ----------------------------------------------------------------------------
   // MARK: - Overridden methods
@@ -33,7 +32,7 @@ final class ProfileViewController: NSViewController, NSTableViewDelegate, NSTabl
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    #if DEBUG
+    #if XDEBUG
     Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
     #endif
     
@@ -48,7 +47,7 @@ final class ProfileViewController: NSViewController, NSTableViewDelegate, NSTabl
     // start observations
     addObservations()
     
-    os_log("Profiles window opened", log: self._log, type: .info)
+    _log.msg("Profiles window opened", level: .info, function: #function, file: #file, line: #line)
   }
   
   override func viewWillAppear() {
@@ -67,9 +66,9 @@ final class ProfileViewController: NSViewController, NSTableViewDelegate, NSTabl
     view.window!.saveFrame(usingName: _autosaveName)
   }
   deinit {
-    os_log("Profiles window closed", log: self._log, type: .info)
+    _log.msg("Profiles window closed", level: .info, function: #function, file: #file, line: #line)
 
-    #if DEBUG
+    #if XDEBUG
     Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
     #endif
   }

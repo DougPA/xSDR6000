@@ -33,7 +33,7 @@ public final class OpusDecode               : NSObject, StreamHandler {
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
   
-  private let _log                          = OSLog(subsystem: Api.kDomainId + "." + kClientName, category: "OpusDecode")
+  private let _log                          = Log.sharedInstance
   private var _decoder                      : OpaquePointer!
   private var _engine                       = AVAudioEngine()
   private var _player                       = AVAudioPlayerNode()
@@ -168,7 +168,7 @@ public final class OpusDecode               : NSObject, StreamHandler {
                                           Int32(0))                       // FEC (none)
     // check for decode errors
     if framesDecoded < 0 {
-      os_log("%{public}@", log: _log, type: .error, opus_strerror(framesDecoded))
+      _log.msg("\(opus_strerror(framesDecoded))", level: .warning, function: #function, file: #file, line: #line)
     }
     
     // ----- Interleave Conversion -----

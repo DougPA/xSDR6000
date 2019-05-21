@@ -21,7 +21,7 @@ final class MainWindowController                  : NSWindowController {
   override func awakeFromNib() {
     windowFrameAutosaveName = "MainWindow"
   }
-  #if DEBUG
+  #if XDEBUG
   deinit {
     Swift.print("deinit - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
   }
