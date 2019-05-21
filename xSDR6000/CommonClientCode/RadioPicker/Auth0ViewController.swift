@@ -58,7 +58,7 @@ final class Auth0ViewController             : NSViewController, WKNavigationDele
   @IBOutlet private weak var _customView    : NSView!
   
   private let _api                          = Api.sharedInstance
-  private let _log                          = OSLog(subsystem: Api.kDomainId + "." + kClientName, category: "Auth0VC")
+  private let _log                          = Log.sharedInstance
   private var myWebView                     : WKWebView!
   private let myURL                         = URL(string: smartLinkURL)!
   private let kAutosaveName                 = "AuthViewWindow"
@@ -74,7 +74,7 @@ final class Auth0ViewController             : NSViewController, WKNavigationDele
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    #if DEBUG
+    #if XDEBUG
     Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
     #endif
 
@@ -112,15 +112,15 @@ final class Auth0ViewController             : NSViewController, WKNavigationDele
     
     } else {
       // before 10.11
-      NSLayoutConstraint(item: myWebView, attribute: .leading, relatedBy: .equal, toItem: _customView, attribute: .leading, multiplier: 1.0, constant: 0.0).isActive = true
-      NSLayoutConstraint(item: myWebView, attribute: .trailing, relatedBy: .equal, toItem: _customView, attribute: .trailing, multiplier: 1.0, constant: 0.0).isActive = true
-      NSLayoutConstraint(item: myWebView, attribute: .top, relatedBy: .equal, toItem: _customView, attribute:.top, multiplier: 1.0, constant:0.0).isActive = true
-      NSLayoutConstraint(item: myWebView, attribute: .bottom, relatedBy: .equal, toItem: _customView, attribute:.bottom, multiplier: 1.0, constant:0.0).isActive = true
+      NSLayoutConstraint(item: myWebView as Any, attribute: .leading, relatedBy: .equal, toItem: _customView, attribute: .leading, multiplier: 1.0, constant: 0.0).isActive = true
+      NSLayoutConstraint(item: myWebView as Any, attribute: .trailing, relatedBy: .equal, toItem: _customView, attribute: .trailing, multiplier: 1.0, constant: 0.0).isActive = true
+      NSLayoutConstraint(item: myWebView as Any, attribute: .top, relatedBy: .equal, toItem: _customView, attribute:.top, multiplier: 1.0, constant:0.0).isActive = true
+      NSLayoutConstraint(item: myWebView as Any, attribute: .bottom, relatedBy: .equal, toItem: _customView, attribute:.bottom, multiplier: 1.0, constant:0.0).isActive = true
     }
     // load it
     if myWebView.load(request) == nil {
       
-      os_log("Auth0 web view failed to load", log: _log, type: .error)
+      _log.msg("Auth0 web view failed to load", level: .error, function: #function, file: #file, line: #line)
     }
   }
   
@@ -137,7 +137,7 @@ final class Auth0ViewController             : NSViewController, WKNavigationDele
     // save its position
     view.window!.saveFrame(usingName: kAutosaveName)
   }
-  #if DEBUG
+  #if XDEBUG
   deinit {
     Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
   }
@@ -167,7 +167,7 @@ final class Auth0ViewController             : NSViewController, WKNavigationDele
   ///
   func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
     
-    os_log("Could not navigate to Auth0 page: %{public}@", log: _log, type: .error, error.localizedDescription)
+    _log.msg("Could not navigate to Auth0 page: \(error.localizedDescription)", level: .warning, function: #function, file: #file, line: #line)
   }
   /// Decides whether to allow or cancel a navigation
   ///

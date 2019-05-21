@@ -47,7 +47,7 @@ final class WANRadioPickerViewController    : NSViewController, NSTableViewDeleg
   @IBOutlet private weak var _testButton    : NSButton!
   
   private var _api                          = Api.sharedInstance
-  private let _log                          = OSLog(subsystem: Api.kDomainId + "." + kClientName, category: "WanRadioPickerVC")
+  private let _log                          = Log.sharedInstance
   private var _auth0ViewController          : Auth0ViewController?
   private var _availableRemoteRadios        = [RadioParameters]()           // Radios discovered
   private weak var _delegate                : RadioPickerDelegate? {
@@ -94,7 +94,7 @@ final class WANRadioPickerViewController    : NSViewController, NSTableViewDeleg
     var idToken = ""
     var loggedIn = false
     
-    #if DEBUG
+    #if XDEBUG
     Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
     #endif
     
@@ -161,7 +161,7 @@ final class WANRadioPickerViewController    : NSViewController, NSTableViewDeleg
     } catch let error as NSError {
       
       // log the error
-      os_log("Error decoding JWT token: %{public}@", log: _log, type: .error, error.localizedDescription)
+      _log.msg("Error decoding JWT token: \(error.localizedDescription)", level: .warning, function: #function, file: #file, line: #line)
     }
     
     // connect to the SmartLink server
@@ -170,7 +170,7 @@ final class WANRadioPickerViewController    : NSViewController, NSTableViewDeleg
     // change the button title
     _loginButton.title = kLogoutTitle
   }
-  #if DEBUG
+  #if XDEBUG
   deinit {
     Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
   }
@@ -190,9 +190,9 @@ final class WANRadioPickerViewController    : NSViewController, NSTableViewDeleg
     // perform an orderly shutdown of all the components
     _api.shutdown(reason: .normal)
     
-    DispatchQueue.main.async {
-      os_log("Application closed by user", log: self._log, type: .info)
-      
+    DispatchQueue.main.async { [weak self] in
+      self?._log.msg("Application closed by user", level: .info, function: #function, file: #file, line: #line)
+
       NSApp.terminate(self)
     }
   }
@@ -228,7 +228,7 @@ final class WANRadioPickerViewController    : NSViewController, NSTableViewDeleg
   
   @IBAction func testButton(_ sender: NSButton) {
 
-    os_log("SmartLInk Test initiated", log: _log, type: .info)
+    _log.msg("SmartLInk Test initiated", level: .info, function: #function, file: #file, line: #line)
 
     _testIndicator.boolState = false
 
@@ -379,7 +379,7 @@ final class WANRadioPickerViewController    : NSViewController, NSTableViewDeleg
     if !_wanServer!.connect(appName: kClientName, platform: kPlatform, token: token, ping: true) {
       
       // log the error
-      os_log("Error connecting to SmartLink Server", log: _log, type: .default)
+      _log.msg("Error connecting to SmartLink Server", level: .error, function: #function, file: #file, line: #line)
     }
   }
   /// Given a Refresh Token attempt to get a Token
@@ -409,7 +409,7 @@ final class WANRadioPickerViewController    : NSViewController, NSTableViewDeleg
     guard let data = responseData, error == nil else {
       
       // log the error
-      os_log("Error retrieving id token token: %{public}@", log: _log, type: .error, error?.localizedDescription ?? "")
+      _log.msg("Error retrieving id token token: \(error?.localizedDescription ?? "")", level: .warning, function: #function, file: #file, line: #line)
 
       return nil
     }
@@ -423,15 +423,15 @@ final class WANRadioPickerViewController    : NSViewController, NSTableViewDeleg
         // validate id token; see https://auth0.com/docs/tokens/id-token#validate-an-id-token
         if !isJWTValid(jwt) {
           // log the error
-          os_log("JWT token not valid", log: _log, type: .error)
-          
+          _log.msg("JWT token not valid", level: .error, function: #function, file: #file, line: #line)
+
           return nil
         }
         
       } catch let error as NSError {
         // log the error
-        os_log("Error decoding JWT token: %{public}@", log: _log, type: .error, error.localizedDescription)
-        
+        _log.msg("Error decoding JWT token: \(error.localizedDescription)", level: .error, function: #function, file: #file, line: #line)
+
         return nil
       }
       
@@ -578,13 +578,13 @@ final class WANRadioPickerViewController    : NSViewController, NSTableViewDeleg
         if !(self._delegate?.openRadio(self._selectedRadio, isWan: true, wanHandle: handle) ?? false ) {
 
           // log the event
-          os_log("Open remote radio FAILED: %{public}@ @ %{public}@", log: self._log, type: .error, self._selectedRadio!.nickname, self._selectedRadio!.publicIp)
+          self._log.msg("Open remote radio FAILED: \(self._selectedRadio!.nickname) @ \(self._selectedRadio!.publicIp)", level: .warning, function: #function, file: #file, line: #line)
         }
         
       } else {
         
         // log the error
-        os_log("Unexpected serial number mismatch in wanRadioConnectReady(), %{public}@ vs %{public}@", log: self._log, type: .error, self._selectedRadio!.serialNumber, serial)
+        self._log.msg("Unexpected serial number mismatch in wanRadioConnectReady(), \(self._selectedRadio!.serialNumber) vs \(serial)", level: .error, function: #function, file: #file, line: #line)
       }
     }
   }
@@ -608,7 +608,7 @@ final class WANRadioPickerViewController    : NSViewController, NSTableViewDeleg
                   results.upnpUdpPortWorking == true &&
                   results.natSupportsHolePunch  == false)
     // Log the result
-    os_log("SmartLink Test completed %{public}@", log: self._log, type: .info, (success ? "successfully" : "with errors") )
+    _log.msg("SmartLink Test completed \((success ? "successfully" : "with errors"))", level: .warning, function: #function, file: #file, line: #line)
 
     DispatchQueue.main.async {
       
@@ -663,7 +663,7 @@ final class WANRadioPickerViewController    : NSViewController, NSTableViewDeleg
       // validate id token; see https://auth0.com/docs/tokens/id-token#validate-an-id-token
       if !isJWTValid(jwt) {
         
-        os_log("JWT token not valid", log: _log, type: .error)
+        _log.msg("JWT token not valid", level: .error, function: #function, file: #file, line: #line)
 
         return
       }
@@ -692,7 +692,7 @@ final class WANRadioPickerViewController    : NSViewController, NSTableViewDeleg
     } catch let error as NSError {
       
       // log the error & exit
-      os_log("Error decoding JWT token: %{print}@", log: _log, type: .error, error.localizedDescription)
+      _log.msg("Error decoding JWT token: \(error.localizedDescription)", level: .warning, function: #function, file: #file, line: #line)
 
       return
     }

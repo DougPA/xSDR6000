@@ -66,7 +66,7 @@ final class LANRadioPickerViewController    : NSViewController, NSTableViewDeleg
   @IBOutlet private var _defaultButton      : NSButton!                   // Set as default
   
   private var _api                          = Api.sharedInstance
-  private let _log                          = OSLog(subsystem: Api.kDomainId + "." + kClientName, category: "LANRadioPickerVC")
+  private let _log                          = Log.sharedInstance
   private var _selectedRadio                : RadioParameters?            // Radio in selected row
   private weak var _parentVc                : NSViewController!
   
@@ -90,7 +90,7 @@ final class LANRadioPickerViewController    : NSViewController, NSTableViewDeleg
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    #if DEBUG
+    #if XDEBUG
     Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
     #endif
     
@@ -104,7 +104,7 @@ final class LANRadioPickerViewController    : NSViewController, NSTableViewDeleg
     
     addNotifications()
   }
-  #if DEBUG
+  #if XDEBUG
   deinit {
     Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
   }
@@ -124,8 +124,8 @@ final class LANRadioPickerViewController    : NSViewController, NSTableViewDeleg
     // perform an orderly shutdown of all the components
     _api.shutdown(reason: .normal)
     
-    DispatchQueue.main.async {
-      os_log("Application closed by user", log: self._log, type: .info)
+    DispatchQueue.main.async { [weak self] in 
+      self?._log.msg("Application closed by user", level: .info, function: #function, file: #file, line: #line)
 
       NSApp.terminate(self)
     }
