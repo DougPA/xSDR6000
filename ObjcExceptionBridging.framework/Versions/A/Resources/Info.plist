@@ -7,19 +7,17 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>
-	<string>SwiftyUserDefaults</string>
+	<string>ObjcExceptionBridging</string>
 	<key>CFBundleIdentifier</key>
-	<string>io.radex.SwiftyUserDefaults</string>
+	<string>com.cerebralgardens.xcglogger.objcexceptionbridging</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>SwiftyUserDefaults</string>
+	<string>ObjcExceptionBridging</string>
 	<key>CFBundlePackageType</key>
 	<string>FMWK</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
-	<key>CFBundleSignature</key>
-	<string>????</string>
+	<string>1.0.1</string>
 	<key>CFBundleSupportedPlatforms</key>
 	<array>
 		<string>MacOSX</string>
@@ -40,6 +38,8 @@
 	<string>1020</string>
 	<key>DTXcodeBuild</key>
 	<string>10E1001</string>
+	<key>NSHumanReadableCopyright</key>
+	<string>Copyright © 2016 Cerebral Gardens. All rights reserved.</string>
 	<key>UIDeviceFamily</key>
 	<array>
 		<integer>1</integer>
