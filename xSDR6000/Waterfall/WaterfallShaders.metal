@@ -22,7 +22,7 @@ struct Constants {                          // constant values
 //  Kernel function for conversion of intensity to color (gradient)
 //
 //  - Parameters:
-//    - inTexture:          2D, intensity values (UInt16)
+//    - inTexture:          1D, intensity values (UInt16)
 //    - outTexture:         2D, derived color value for intensity (bgra8Unorm)
 //    - gradientTexture:    1D, color gradient (bgra8Unorm)
 //    - gradientSampler:    1D, sampler for gradientTexture

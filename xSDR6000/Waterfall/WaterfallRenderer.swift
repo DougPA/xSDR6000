@@ -107,14 +107,7 @@ public final class WaterfallRenderer: NSObject {
   private var _bandwidth                    : Int { return panadapter!.bandwidth }
   private var _start                        : Int { return _center - (_bandwidth/2) }
   private var _end                          : Int  { return _center + (_bandwidth/2) }
-  
-  private var _waterfallVertices            : [Vertex] = [
-    Vertex(coord: float2(-1.0, -1.0), texCoord: float2( 0.0, 1.0)),         // v0 - bottom left
-    Vertex(coord: float2(-1.0,  1.0), texCoord: float2( 0.0, 0.0)),         // v1 - top    left
-    Vertex(coord: float2( 1.0, -1.0), texCoord: float2( 1.0, 1.0)),         // v2 - bottom right
-    Vertex(coord: float2( 1.0,  1.0), texCoord: float2( 1.0, 0.0))          // v3 - top    right
-  ]
-  
+    
   private var _waterfallVerticesLength      = 0
   private var _previousCenter               = 0
   private var _previousStart                = 0
@@ -132,7 +125,7 @@ public final class WaterfallRenderer: NSObject {
   
   private var _colorTexture                 : MTLTexture!                   //
   private var _gradientTexture              : MTLTexture!                   // color gradient
-  private var _parameters                   = [Params]()                    // draw parameters array
+  private var _buffer                       = [Params]()                    // draw parameters array
 
   private var _samplerState                 : MTLSamplerState!              // sampler for draw texture
   private var _commandQueue                 : MTLCommandQueue!              // Metal queue
@@ -181,7 +174,7 @@ public final class WaterfallRenderer: NSObject {
     get { return _waterQ.sync { __frameSize } }
     set { _waterQ.sync( flags: .barrier){ __frameSize = newValue } } }
   
-  private var _textureIndex: Int {
+  private var _bufferNumber: Int {
     get { return _waterQ.sync { __textureIndex } }
     set { _waterQ.sync( flags: .barrier){ __textureIndex = newValue } } }
   
@@ -334,9 +327,9 @@ public final class WaterfallRenderer: NSObject {
       let params = Params(vertices: vertices, intensities: intensityTexture, topLine: 0)
 
       // append it to the array of Draw Parameters
-      _parameters.append(params)
+      _buffer.append(params)
     }
-    _waterfallVerticesLength = MemoryLayout<Vertex>.stride * _parameters[0].vertices.count
+    _waterfallVerticesLength = MemoryLayout<Vertex>.stride * _buffer[0].vertices.count
 
     // get the Library (contains all compiled .metal files in this project)
     let library = _device.makeDefaultLibrary()
@@ -384,8 +377,8 @@ public final class WaterfallRenderer: NSObject {
       
       _threadsPerThreadgroup = MTLSizeMake(1, 1, 1)
 
-      _threadsPerGrid = MTLSize(width: _parameters[0].intensities.width,
-                                height: _parameters[0].intensities.height,
+      _threadsPerGrid = MTLSize(width: _buffer[0].intensities.width,
+                                height: _buffer[0].intensities.height,
                                 depth: 1)
     } else {
       
@@ -443,7 +436,9 @@ extension WaterfallRenderer                 : MTKViewDelegate {
       // obtain a Command buffer & a Render Pass descriptor
       guard let cmdBuffer = self._commandQueue.makeCommandBuffer(),
         let descriptor = view.currentRenderPassDescriptor else { return }
-      
+    
+      let currentBuffer = _buffer[_bufferNumber]
+    
       // create a Compute encoder
       let computeEncoder = cmdBuffer.makeComputeCommandEncoder()!
       
@@ -453,7 +448,7 @@ extension WaterfallRenderer                 : MTKViewDelegate {
       computeEncoder.setComputePipelineState(_computePipelineState)
       
       // choose and bind the input Texture
-      computeEncoder.setTexture(_parameters[_textureIndex].intensities, index: 0)
+      computeEncoder.setTexture(currentBuffer.intensities, index: 0)
       
       // bind the output Texture
       computeEncoder.setTexture(_colorTexture, index: 1)
@@ -491,7 +486,7 @@ extension WaterfallRenderer                 : MTKViewDelegate {
       renderEncoder.setRenderPipelineState(_waterfallPipelineState)
       
       // bind the vertices
-      renderEncoder.setVertexBytes(UnsafeRawPointer(_parameters[_textureIndex].vertices), length: _waterfallVerticesLength, index: 0)
+      renderEncoder.setVertexBytes(UnsafeRawPointer(currentBuffer.vertices), length: _waterfallVerticesLength, index: 0)
       
       // bind the Color texture
       renderEncoder.setFragmentTexture(_colorTexture, index: 0)
@@ -543,10 +538,10 @@ extension WaterfallRenderer                 : StreamHandler {
     guard let streamFrame = streamFrame as? WaterfallFrame else { return }
 
     // calculate the Top Line for this frame
-    let newTopLine = ( _parameters[_textureIndex].topLine == 0 ? WaterfallRenderer.kTextureHeight - 1 : _parameters[_textureIndex].topLine - 1 )
+    let newTopLine = ( _buffer[_bufferNumber].topLine == 0 ? WaterfallRenderer.kTextureHeight - 1 : _buffer[_bufferNumber].topLine - 1 )
 
     // set the index to the next Intensity Texture
-    _textureIndex = (_textureIndex + 1) % WaterfallRenderer.kMaxTextures
+    _bufferNumber = (_bufferNumber + 1) % WaterfallRenderer.kMaxTextures
     
     // recalc values initially or when center/bandwidth changes
     if streamFrame.binBandwidth != _binBandwidth || streamFrame.firstBinFreq != _firstBinFreq {
@@ -556,16 +551,16 @@ extension WaterfallRenderer                 : StreamHandler {
       let endingBin = Float( (CGFloat(_end) - streamFrame.firstBinFreq) / streamFrame.binBandwidth )
       
       // update all of the x vertices
-      for i in 0..<WaterfallRenderer.kMaxTextures {
+      for bufferNumber in 0..<WaterfallRenderer.kMaxTextures {
         // set the texture left edge (in clip space, i.e. 0.0 to 1.0)
         let leftSide = startingBin / Float(WaterfallRenderer.kTextureWidth - 1)
-        _parameters[i].vertices[0].texCoord.x = leftSide    // clip space value for bottom left x
-        _parameters[i].vertices[1].texCoord.x = leftSide    // clip space value for top left x
+        _buffer[bufferNumber].vertices[0].texCoord.x = leftSide    // clip space value for bottom left x
+        _buffer[bufferNumber].vertices[1].texCoord.x = leftSide    // clip space value for top left x
         
         // set the texture right edge (in clip space, i.e. 0.0 to 1.0)
         let rightSide = endingBin / Float(WaterfallRenderer.kTextureWidth - 1)
-        _parameters[i].vertices[2].texCoord.x = rightSide   // clip space value for bottom right x
-        _parameters[i].vertices[3].texCoord.x = rightSide   // clip space value for top right x
+        _buffer[bufferNumber].vertices[2].texCoord.x = rightSide   // clip space value for bottom right x
+        _buffer[bufferNumber].vertices[3].texCoord.x = rightSide   // clip space value for top right x
       }
     }
     // record the current values
@@ -574,28 +569,28 @@ extension WaterfallRenderer                 : StreamHandler {
     _firstBinFreq = streamFrame.firstBinFreq
     
     // set y coordinates of the top of the texture (in clip space, i.e. 0.0 to 1.0)
-    let topIndex = Float(_parameters[_textureIndex].topLine)            // index into texture
+    let topIndex = Float(_buffer[_bufferNumber].topLine)            // index into texture
     let topSide = topIndex / Float(WaterfallRenderer.kTextureHeight - 1)   // clip space value for index
-    _parameters[_textureIndex].vertices[3].texCoord.y = topSide         // clip space value for top right y
-    _parameters[_textureIndex].vertices[1].texCoord.y = topSide         // clip space value for top left y
+    _buffer[_bufferNumber].vertices[3].texCoord.y = topSide         // clip space value for top right y
+    _buffer[_bufferNumber].vertices[1].texCoord.y = topSide         // clip space value for top left y
 
     // set y coordinates of the bottom of the texture (in clip space, i.e. 0.0 to 1.0)
-    let bottomIndex = Float(_parameters[_textureIndex].topLine) + Float(_frameSize.height - 1)    // index into texture
+    let bottomIndex = Float(_buffer[_bufferNumber].topLine) + Float(_frameSize.height - 1)    // index into texture
     let bottomSide = bottomIndex / Float(WaterfallRenderer.kTextureHeight - 1) // clip space value for index
-    _parameters[_textureIndex].vertices[2].texCoord.y = bottomSide      // clip space value for bottom right y
-    _parameters[_textureIndex].vertices[0].texCoord.y = bottomSide      // clip space value for bottom left y
+    _buffer[_bufferNumber].vertices[2].texCoord.y = bottomSide      // clip space value for bottom right y
+    _buffer[_bufferNumber].vertices[0].texCoord.y = bottomSide      // clip space value for bottom left y
 
     // set the Waterfall constants
     updateConstants(autoBlack: _waterfall!.autoBlackEnabled, blackLevel: _waterfall!.blackLevel, colorGain: _waterfall!.colorGain)
     
     // set the Top Line
-    _parameters[_textureIndex].topLine = newTopLine
+    _buffer[_bufferNumber].topLine = newTopLine
     updateLine(newTopLine)
     
     // copy the Intensities into the current texture
     let binsPtr = UnsafeRawPointer(streamFrame.bins).bindMemory(to: UInt8.self, capacity: streamFrame.totalBins * MemoryLayout<UInt16>.size)
     let region = MTLRegionMake1D(0, streamFrame.totalBins)
-    _parameters[_textureIndex].intensities.replace(region: region, mipmapLevel: 0, withBytes: binsPtr, bytesPerRow: WaterfallRenderer.kTextureWidth * MemoryLayout<UInt16>.size)
+    _buffer[_bufferNumber].intensities.replace(region: region, mipmapLevel: 0, withBytes: binsPtr, bytesPerRow: WaterfallRenderer.kTextureWidth * MemoryLayout<UInt16>.size)
     
     _workerQ.async { [unowned self] in
       autoreleasepool {
