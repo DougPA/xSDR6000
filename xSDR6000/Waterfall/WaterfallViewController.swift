@@ -74,12 +74,16 @@ final class WaterfallViewController               : NSViewController, NSGestureR
     Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
     #endif
     
+    _waterfallView.isPaused = true
+    _waterfallView.enableSetNeedsDisplay = false
+
     // determine how the various views are blended on screen
     _waterfallView.compositingFilter = _filter
 
     // create the Renderer
-    _waterfallRenderer = WaterfallRenderer(view: _waterfallView, clearColor: Defaults[.spectrumBackground])
-    
+//    _waterfallRenderer = WaterfallRenderer(view: _waterfallView, clearColor: Defaults[.spectrumBackground])
+    _waterfallRenderer = WaterfallRenderer(view: _waterfallView, clearColor: NSColor.green)
+
     _waterfallRenderer.panadapter = panadapter
 
     // setup the gradient texture
@@ -251,7 +255,7 @@ final class WaterfallViewController               : NSViewController, NSGestureR
   private func panadapterUpdate(_ object: Panadapter, _ change: Any) {
 
       // update the Waterfall
-      _waterfallRenderer.update()
+//      _waterfallRenderer.update()
   }
   /// Respond to Panadapter observations
   ///
@@ -262,7 +266,7 @@ final class WaterfallViewController               : NSViewController, NSGestureR
   private func panadapterBandchange(_ object: Panadapter, _ change: Any) {
     
     // force the Waterfall to restart
-    _waterfallRenderer.bandChange()
+//    _waterfallRenderer.bandChange()
   }
   /// Respond to Waterfall observations
   ///
@@ -273,7 +277,7 @@ final class WaterfallViewController               : NSViewController, NSGestureR
   private func waterfallObserverLevels(_ waterfall: Waterfall, _ change: Any) {
 
       // update the levels
-      _waterfallRenderer.updateConstants(autoBlack: waterfall.autoBlackEnabled, blackLevel: waterfall.blackLevel, colorGain: waterfall.colorGain)
+    _waterfallRenderer.setConstants(size: view.frame.size, autoBlack: waterfall.autoBlackEnabled, blackLevel: waterfall.blackLevel, colorGain: waterfall.colorGain)
     }
   /// Respond to Waterfall observations
   ///
