@@ -662,7 +662,7 @@ final class PanadapterViewController        : NSViewController, NSGestureRecogni
     panadapter.delegate = nil
     
     // YES, log the event
-    _log.msg("Panadapter will be removed: Stream Id = \(panadapter.id.hex)", level: .warning, function: #function, file: #file, line: #line)
+    _log.msg("Panadapter will be removed: Stream Id = \(panadapter.id.hex)", level: .info, function: #function, file: #file, line: #line)
 
     // invalidate Base property observations
     invalidateObservations(&_baseObservations)
@@ -708,7 +708,7 @@ final class PanadapterViewController        : NSViewController, NSGestureRecogni
     if let panadapter = _panadapter, slice.panadapterId == panadapter.id  {
       
       // YES, log the event
-      _log.msg("Slice will be removed: Id = \(slice.id), pan =  \(panadapter.id.hex), freq =\(slice.frequency)", level: .warning, function: #function, file: #file, line: #line)
+      _log.msg("Slice will be removed: Id = \(slice.id), pan =  \(panadapter.id.hex), freq =\(slice.frequency)", level: .info, function: #function, file: #file, line: #line)
 
       // remove the Flag & Observations of this Slice
       removeFlag(for: slice)
