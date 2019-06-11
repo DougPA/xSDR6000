@@ -30,7 +30,9 @@ final class WaterfallViewController               : NSViewController, NSGestureR
     GradientType.Tritanopia.rawValue
   ]
   
-  
+  // arbitrary choice of a reasonable number of color gradations for the waterfall
+  private let kGradientSize                  = 256                           // number of colors in a gradient
+
   // ----------------------------------------------------------------------------
   // MARK: - Internal properties
   
@@ -57,6 +59,10 @@ final class WaterfallViewController               : NSViewController, NSGestureR
   // constants
   private let _filter                       = CIFilter(name: "CIDifferenceBlendMode")
 
+  private enum Colors {
+    static let clearColor = MTLClearColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
+  }
+  
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
   
@@ -73,22 +79,37 @@ final class WaterfallViewController               : NSViewController, NSGestureR
     #if XDEBUG
     Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
     #endif
-    
-    // determine how the various views are blended on screen
-    _waterfallView.compositingFilter = _filter
 
-    // create the Renderer
-    _waterfallRenderer = WaterfallRenderer(view: _waterfallView, clearColor: Defaults[.spectrumBackground])
+    _waterfallRenderer = WaterfallRenderer(view: _waterfallView, radio: Api.sharedInstance.radio!, panadapter: panadapter!)
     
-    _waterfallRenderer.panadapter = panadapter
+    _waterfallView.isPaused = true
+    _waterfallView.enableSetNeedsDisplay = false
+    
+    // setup
+    _waterfallRenderer.setConstants(size: view.frame.size)
+    _waterfallRenderer.setup(device: makeDevice(view: _waterfallView))
+    
+    _waterfallView.delegate = _waterfallRenderer
+    _waterfallView.clearColor = Colors.clearColor
+
+//    // determine how the various views are blended on screen
+//    _waterfallView.compositingFilter = _filter
+//
+//    _waterfallView.isPaused = true
+//    _waterfallView.enableSetNeedsDisplay = false
+//
+//    // create the Renderer
+//    _waterfallRenderer = WaterfallRenderer(view: _waterfallView, clearColor: Defaults[.spectrumBackground])
+//
+//    _waterfallRenderer.panadapter = panadapter
 
     // setup the gradient texture
     _waterfallRenderer.setGradient( loadGradient(index: _waterfall!.gradientIndex) )
-    
+
     setupObservations()
 
     // make the Renderer the Stream Handler
-    _waterfall?.delegate = _waterfallRenderer
+    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(3), execute: {  self._waterfall?.delegate = self._waterfallRenderer })
   }
   #if XDEBUG
   deinit {
@@ -123,18 +144,16 @@ final class WaterfallViewController               : NSViewController, NSGestureR
     
     return loadGradient(name: WaterfallViewController.gradientNames[i])
   }
-  /// Load the gradient from the named file
+  /// Load a gradient from the named file
   ///
-  func loadGradient(name: String) -> [UInt8] {
+  private func loadGradient(name: String) -> [UInt8] {
     var file: FileHandle?
-    
-    var gradientArray = [UInt8](repeating: 0, count: WaterfallRenderer.kGradientSize * MemoryLayout<Float>.size)
     
     if let texURL = Bundle.main.url(forResource: name, withExtension: "tex") {
       do {
         file = try FileHandle(forReadingFrom: texURL)
       } catch {
-        fatalError("Unable to read Gradient file -> \(name).tex")
+        fatalError("Texture file '\(name).tex' not found")
       }
       // Read all the data
       let data = file!.readDataToEndOfFile()
@@ -143,12 +162,13 @@ final class WaterfallViewController               : NSViewController, NSGestureR
       file!.closeFile()
       
       // copy the data into the gradientArray
-      data.copyBytes(to: &gradientArray[0], count: WaterfallRenderer.kGradientSize * MemoryLayout<Float>.size)
+      var array = [UInt8](repeating: 0, count: data.count)
+      data.copyBytes(to: &array[0], count: data.count)
       
-      return gradientArray
+      return array
     }
     // resource not found
-    fatalError("Unable to find Gradient file -> \(name).tex")
+    fatalError("Texture file '\(name).tex' not found")
   }
 //  /// Prevent the Right Click recognizer from responding when the mouse is not over the Legend
 //  ///
@@ -179,9 +199,23 @@ final class WaterfallViewController               : NSViewController, NSGestureR
 //    _timeLayer?.updateLegendSpacing(gestureRecognizer: gr, in: view)
 //  }
   
+
   // ----------------------------------------------------------------------------
   // MARK: - Private methods
   
+  /// Obtain the default Metal Device
+  ///
+  /// - Parameter view:         an MTKView
+  /// - Returns:                a MTLDevice
+  ///
+  private func makeDevice(view: MTKView) -> MTLDevice {
+    
+    guard let device = MTLCreateSystemDefaultDevice() else {
+      fatalError("Unable to obtain a Metal Device")
+    }
+    view.device = device
+    return device
+  }
   /// start observations & Notification
   ///
   private func setupObservations() {
@@ -251,7 +285,7 @@ final class WaterfallViewController               : NSViewController, NSGestureR
   private func panadapterUpdate(_ object: Panadapter, _ change: Any) {
 
       // update the Waterfall
-      _waterfallRenderer.update()
+//      _waterfallRenderer.update()
   }
   /// Respond to Panadapter observations
   ///
@@ -262,7 +296,7 @@ final class WaterfallViewController               : NSViewController, NSGestureR
   private func panadapterBandchange(_ object: Panadapter, _ change: Any) {
     
     // force the Waterfall to restart
-    _waterfallRenderer.bandChange()
+//    _waterfallRenderer.bandChange()
   }
   /// Respond to Waterfall observations
   ///
@@ -273,7 +307,7 @@ final class WaterfallViewController               : NSViewController, NSGestureR
   private func waterfallObserverLevels(_ waterfall: Waterfall, _ change: Any) {
 
       // update the levels
-      _waterfallRenderer.updateConstants(autoBlack: waterfall.autoBlackEnabled, blackLevel: waterfall.blackLevel, colorGain: waterfall.colorGain)
+    _waterfallRenderer.setLevels(autoBlack: waterfall.autoBlackEnabled, blackLevel: waterfall.blackLevel, colorGain: waterfall.colorGain)
     }
   /// Respond to Waterfall observations
   ///
