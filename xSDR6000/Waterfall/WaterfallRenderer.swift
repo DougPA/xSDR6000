@@ -169,7 +169,7 @@ public final class WaterfallRenderer: NSObject, MTKViewDelegate {
     
     // finalize rendering & push the command buffer to the GPU
     buffer.commit()
-    buffer.waitUntilCompleted()
+//    buffer.waitUntilCompleted()
   }
   
   // ----------------------------------------------------------------------------
@@ -351,11 +351,11 @@ extension WaterfallRenderer                 : StreamHandler {
     memcpy(_lineBuffer.contents().advanced(by: Int(_topLine) * MemoryLayout<Line>.stride), &firstBinFrequency, MemoryLayout<Float>.size)
     memcpy(_lineBuffer.contents().advanced(by: Int(_topLine) * MemoryLayout<Line>.stride + MemoryLayout<Float>.stride), &binBandWidth, MemoryLayout<Float>.size)
 
-//    _waterDrawQ.async { [unowned self] in
+    _waterDrawQ.async { [unowned self] in
       autoreleasepool {
-        _metalView.draw()
+       self._metalView.draw()
       }
-//    }
+    }
 
     if _constant.offsetY == _constant.numberOfLines - 1 {
       _constant.offsetY = 0
