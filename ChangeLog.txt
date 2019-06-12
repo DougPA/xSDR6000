@@ -1,5 +1,11 @@
 xSDR6000 Change Log
 
+v2.2.0 11-Jun-2019
+
+Rewrote Waterfall - simplified and made dragging right/left work correctly
+Incorporated xLib6000 v2.5.1
+
+
 v2.1.1 21-May-2019
 
 Reverted to use of XCGLogger
