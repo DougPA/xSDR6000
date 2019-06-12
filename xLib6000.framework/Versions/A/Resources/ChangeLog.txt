@@ -1,8 +1,13 @@
 xLib6000 Change Log
 
-v2.5.1 20-May-2019
+v2.5.1 11-Jun-2019
 
 Reverted to previous logging strategy (Log delegate, logging provided by the client)
+Radio.swift - eliminated use of GCD queue "streamQ"
+Panadapter.swift - renamed "expectedIndex" to "packetFrame"
+Waterfall.swift - renamed "expectedIndex" to "packetFrame"
+Frames.swift - refactored invalid frame detection and reporting
+FlexErrors.swift - changed flexErrorLevel(errorCode:) to return MessageLevel intead of String
 
 
 v2.5.0 27-Mar-2019
