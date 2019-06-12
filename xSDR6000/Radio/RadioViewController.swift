@@ -203,7 +203,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
 
     let opusRxStatus = sender.boolState ? "Started" : "Stopped"
     
-    _log.msg("Opus Rx - \(opusRxStatus)", level: .warning, function: #function, file: #file, line: #line)
+    _log.msg("Opus Rx - \(opusRxStatus)", level: .info, function: #function, file: #file, line: #line)
   }
   /// Respond to the Headphone Gain slider
   ///
@@ -647,7 +647,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
 
     NC.makeObserver(self, with: #selector(radioHasBeenRemoved(_:)), of: .radioHasBeenRemoved)
     
-//    NC.makeObserver(self, with: #selector(opusRxHasBeenAdded(_:)), of: .opusRxHasBeenAdded)
+    NC.makeObserver(self, with: #selector(opusRxHasBeenAdded(_:)), of: .opusRxHasBeenAdded)
 
     NC.makeObserver(self, with: #selector(tcpDidDisconnect(_:)), of: .tcpDidDisconnect)
 
