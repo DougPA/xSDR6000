@@ -1,5 +1,13 @@
 xSDR6000 Change Log
 
+v2.2.1 17-Jun-2019
+
+Corrected issue in RadioPickers where empty line selected
+Corrected MacAudio value usage in Defaults
+Minor corrections in Waterfall
+Corrected warning about incompatible firmware versions (Radio / Api)
+
+
 v2.2.0 11-Jun-2019
 
 Rewrote Waterfall - simplified and made dragging right/left work correctly

@@ -1,5 +1,17 @@
 xLib6000 Change Log
 
+
+v2.5.2
+
+Opus.swift - refactored vitaProcessor(_:)
+Api.swift - made udpReceiveQ higher priority (.userInteractive)
+Meter.swift - added additional information to log message for unknown units
+UdpManager.swift - put streamQ closer to source of UDP packets, made it higher priority (.userInteractive)
+Frames.swift - revised log messages in Panadapter & Waterfall frames
+
+
+
+
 v2.5.1 11-Jun-2019
 
 Reverted to previous logging strategy (Log delegate, logging provided by the client)
