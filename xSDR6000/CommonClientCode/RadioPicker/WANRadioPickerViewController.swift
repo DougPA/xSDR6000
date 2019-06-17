@@ -243,13 +243,15 @@ final class WANRadioPickerViewController    : NSViewController, NSTableViewDeleg
   ///
   private func openClose(lowBW: Bool = false) {
     
+    guard let selectedRadio = _selectedRadio else { return }
+    
     // Connect or Disconnect?
     if _selectButton.title == kConnectTitle {
       
       // CONNECT, RadioPicker sheet will close & Radio will be opened
       
       // is the selected radio in use, but not by this app?
-      if _selectedRadio!.status == "In_Use" && _api.activeRadio == nil {
+      if selectedRadio.status == "In_Use" && _api.activeRadio == nil {
         
         // YES, ask the user to confirm closing it
         let alert = NSAlert()

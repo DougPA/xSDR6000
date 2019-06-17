@@ -41,7 +41,7 @@ public final class OpusDecode               : NSObject, StreamHandler {
   private var _decoderOutput                =                               // interleaved buffer
     [Float](repeating: 0.0, count: Opus.frameCount * Opus.channelCount)
 
-  private let kNumberOfPlayerInputBuffers   = 3
+  private let kNumberOfPlayerInputBuffers   = 6
   private let kChannelLeft                  = 0
   private let kChannelRight                 = 1
   
@@ -150,6 +150,7 @@ public final class OpusDecode               : NSObject, StreamHandler {
   /// - Parameter frame:            an Opus Rx Frame
   ///
   public func streamHandler<T>(_ streamFrame: T) {
+    var numberOfFramesDecoded : Int32 = 0
     
     guard let frame = streamFrame as? OpusFrame else { return }
     
@@ -157,17 +158,27 @@ public final class OpusDecode               : NSObject, StreamHandler {
     
     // ----- Opus Decoding -----
     
-    // perform Opus decoding
     let destination = UnsafeMutablePointer<Float>(mutating: _decoderOutput)
-    let framesDecoded = opus_decode_float(_decoder,                       // a decoder
-                                          frame.samples,                  // source (Opus-encoded bytes)
-                                          Int32(frame.numberOfSamples),   // source, number of bytes
-                                          destination,                    // destination (interleaved .pcmFloat32)
-                                          Int32(Opus.frameCount),         // destination, frames per channel
-                                          Int32(0))                       // FEC (none)
-    // check for decode errors
-    if framesDecoded < 0 {
-      _log.msg("\(opus_strerror(framesDecoded))", level: .warning, function: #function, file: #file, line: #line)
+    if frame.numberOfSamples == 0 {
+      // perform Opus decoding
+      numberOfFramesDecoded = opus_decode_float(_decoder,                       // a decoder
+        nil,                            // source (Opus-encoded bytes)
+        Int32(0),                       // source, number of bytes
+        destination,                    // destination (interleaved .pcmFloat32)
+        Int32(Opus.frameCount),         // destination, frames per channel
+        Int32(0))                       // FEC (none)
+    } else {
+      // perform Opus decoding
+      numberOfFramesDecoded = opus_decode_float(_decoder,                       // a decoder
+        frame.samples,                  // source (Opus-encoded bytes)
+        Int32(frame.numberOfSamples),   // source, number of bytes
+        destination,                    // destination (interleaved .pcmFloat32)
+        Int32(Opus.frameCount),         // destination, frames per channel
+        Int32(0))                       // FEC (none)
+      // check for decode errors
+      if numberOfFramesDecoded < 0 {
+        _log.msg("\(opus_strerror(numberOfFramesDecoded))", level: .warning, function: #function, file: #file, line: #line)
+      }
     }
     
     // ----- Interleave Conversion -----
@@ -184,7 +195,7 @@ public final class OpusDecode               : NSObject, StreamHandler {
                 Opus.channelCount,            // source stride
                 &currentPlayerInputBuffer,    // destination  (non-interleaved)
                 1,                            // destination stride
-                vDSP_Length(framesDecoded))   // # of frames
+                vDSP_Length(numberOfFramesDecoded))   // # of frames
     }
 
     // ----- Output -----

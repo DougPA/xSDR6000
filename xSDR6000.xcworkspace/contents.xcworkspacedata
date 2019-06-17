@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "group:../xLib6000 v2/xLib6000.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:xSDR6000.xcodeproj">
+   </FileRef>
+</Workspace>

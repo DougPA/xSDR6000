@@ -62,8 +62,8 @@ public final class PanadapterRenderer       : NSObject {
   private var _fillLevel                    = 1
   
 //  private var _frameBoundarySemaphore       = DispatchSemaphore(value: kNumberSpectrumBuffers)
-  private let _panQ                         = DispatchQueue(label: ".panQ", attributes: [.concurrent])
-  private let _workerQ                      = DispatchQueue(label: Api.kId + ".panWorkerQ")
+  private let _panQ                         = DispatchQueue(label: Api.kId + ".panQ", attributes: [.concurrent])
+  private let _panDrawQ                      = DispatchQueue(label: Api.kId + ".panDrawQ")
 
   // ----- Backing properties - SHOULD NOT BE ACCESSED DIRECTLY -----------------------------------
   //
@@ -233,53 +233,50 @@ extension PanadapterRenderer                : MTKViewDelegate {
   ///
   public func draw(in view: MTKView) {
     
-    autoreleasepool {
+    // obtain a Command buffer & a Render Pass descriptor
+    guard let cmdBuffer = self._commandQueue.makeCommandBuffer(),
+      let descriptor = view.currentRenderPassDescriptor else { return }
+    
+    // Create a render encoder
+    let encoder = cmdBuffer.makeRenderCommandEncoder(descriptor: descriptor)!
+    
+    encoder.pushDebugGroup("Fill")
+    
+    // set the Spectrum pipeline state
+    encoder.setRenderPipelineState(_pipelineState)
+    
+    // bind the active Spectrum buffer
+    encoder.setVertexBuffer(_spectrumBuffers[_currentFrameIndex], offset: 0, index: kSpectrumBufferIndex)
+    
+    // bind the Constants
+    encoder.setVertexBytes(&_constants, length: MemoryLayout.size(ofValue: _constants), index: kConstantsBufferIndex)
+    
+    // is the Panadapter "filled"?
+    if self._fillLevel > 1 {
       
-      // obtain a Command buffer & a Render Pass descriptor
-      guard let cmdBuffer = self._commandQueue.makeCommandBuffer(),
-        let descriptor = view.currentRenderPassDescriptor else { return }
+      // YES, bind the Fill Color
+      encoder.setVertexBytes(&_colorArray[kFillColor], length: MemoryLayout.size(ofValue: _colorArray[kFillColor]), index: kColorBufferIndex)
       
-      // Create a render encoder
-      let encoder = cmdBuffer.makeRenderCommandEncoder(descriptor: descriptor)!
-      
-      encoder.pushDebugGroup("Fill")
-      
-      // set the Spectrum pipeline state
-      encoder.setRenderPipelineState(_pipelineState)
-      
-      // bind the active Spectrum buffer
-      encoder.setVertexBuffer(_spectrumBuffers[_currentFrameIndex], offset: 0, index: kSpectrumBufferIndex)
-      
-      // bind the Constants
-      encoder.setVertexBytes(&_constants, length: MemoryLayout.size(ofValue: _constants), index: kConstantsBufferIndex)
-      
-      // is the Panadapter "filled"?
-      if self._fillLevel > 1 {
-        
-        // YES, bind the Fill Color
-        encoder.setVertexBytes(&_colorArray[kFillColor], length: MemoryLayout.size(ofValue: _colorArray[kFillColor]), index: kColorBufferIndex)
-        
-        // Draw filled
-        encoder.drawIndexedPrimitives(type: .triangleStrip, indexCount: Int(_numberOfBins * 2), indexType: .uint16, indexBuffer: _spectrumIndicesBuffer, indexBufferOffset: 0)
-      }
-      encoder.popDebugGroup()
-      encoder.pushDebugGroup("Line")
-      
-      // bind the Line Color
-      encoder.setVertexBytes(&_colorArray[kLineColor], length: MemoryLayout.size(ofValue: _colorArray[kLineColor]), index: kColorBufferIndex)
-      
-      // Draw as a Line
-      encoder.drawPrimitives(type: .lineStrip, vertexStart: 0, vertexCount: Int(_numberOfBins))
-      
-      // finish using this encoder
-      encoder.endEncoding()
-      
-      // present the drawable to the screen
-      cmdBuffer.present(_metalView.currentDrawable!)
-      
-      // push the command buffer to the GPU
-      cmdBuffer.commit()
+      // Draw filled
+      encoder.drawIndexedPrimitives(type: .triangleStrip, indexCount: Int(_numberOfBins * 2), indexType: .uint16, indexBuffer: _spectrumIndicesBuffer, indexBufferOffset: 0)
     }
+    encoder.popDebugGroup()
+    encoder.pushDebugGroup("Line")
+    
+    // bind the Line Color
+    encoder.setVertexBytes(&_colorArray[kLineColor], length: MemoryLayout.size(ofValue: _colorArray[kLineColor]), index: kColorBufferIndex)
+    
+    // Draw as a Line
+    encoder.drawPrimitives(type: .lineStrip, vertexStart: 0, vertexCount: Int(_numberOfBins))
+    
+    // finish using this encoder
+    encoder.endEncoding()
+    
+    // present the drawable to the screen
+    cmdBuffer.present(_metalView.currentDrawable!)
+    
+    // push the command buffer to the GPU
+    cmdBuffer.commit()
   }
 }
 
@@ -323,7 +320,7 @@ extension PanadapterRenderer                : StreamHandler {
     
 //    Swift.print("\(streamFrame.totalBins)")
     
-    _workerQ.async { [unowned self] in
+    _panDrawQ.async { [unowned self] in
       autoreleasepool {
         self._metalView.draw()
       }

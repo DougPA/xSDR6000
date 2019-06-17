@@ -1,0 +1,3183 @@
+{
+  "warnings": [
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppDelegate.swift",
+      "line": 11,
+      "symbol": "kClientName",
+      "symbol_kind": "source.lang.swift.decl.var.global",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppDelegate.swift",
+      "line": 14,
+      "symbol": "AppDelegate",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppDelegate.swift",
+      "line": 16,
+      "symbol": "AppDelegate.applicationShouldTerminateAfterLastWindowClosed(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 14,
+      "symbol": "NC",
+      "symbol_kind": "source.lang.swift.decl.typealias",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 15,
+      "symbol": "UD",
+      "symbol_kind": "source.lang.swift.decl.typealias",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 25,
+      "symbol": "UserDefaults.subscript(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.subscript",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 39,
+      "symbol": "DefaultsKeys.cwxViewOpen",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 40,
+      "symbol": "DefaultsKeys.defaultRadio",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 41,
+      "symbol": "DefaultsKeys.eqRxSelected",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 42,
+      "symbol": "DefaultsKeys.flagBorderEnabled",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 43,
+      "symbol": "DefaultsKeys.fullDuplexEnabled",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 44,
+      "symbol": "DefaultsKeys.lowBandwidthEnabled",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 45,
+      "symbol": "DefaultsKeys.macAudioEnabled",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 46,
+      "symbol": "DefaultsKeys.markersEnabled",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 47,
+      "symbol": "DefaultsKeys.preferencesTabId",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 48,
+      "symbol": "DefaultsKeys.profilesTabId",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 49,
+      "symbol": "DefaultsKeys.quickMode0",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 50,
+      "symbol": "DefaultsKeys.quickMode1",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 51,
+      "symbol": "DefaultsKeys.quickMode2",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 52,
+      "symbol": "DefaultsKeys.quickMode3",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 53,
+      "symbol": "DefaultsKeys.radioModel",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 54,
+      "symbol": "DefaultsKeys.remoteViewOpen",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 55,
+      "symbol": "DefaultsKeys.sideViewOpen",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 56,
+      "symbol": "DefaultsKeys.sideRxOpen",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 57,
+      "symbol": "DefaultsKeys.sideTxOpen",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 58,
+      "symbol": "DefaultsKeys.sidePcwOpen",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 59,
+      "symbol": "DefaultsKeys.sidePhneOpen",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 60,
+      "symbol": "DefaultsKeys.sideEqOpen",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 61,
+      "symbol": "DefaultsKeys.splitDistance",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 62,
+      "symbol": "DefaultsKeys.supportingApps",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 65,
+      "symbol": "DefaultsKeys.smartLinkAuth0Email",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 66,
+      "symbol": "DefaultsKeys.smartLinkToken",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 67,
+      "symbol": "DefaultsKeys.smartLinkTokenExpiry",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 68,
+      "symbol": "DefaultsKeys.tnfsEnabled",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 69,
+      "symbol": "DefaultsKeys.spectrumFillLevel",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 70,
+      "symbol": "DefaultsKeys.spectrumIsFilled",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 71,
+      "symbol": "DefaultsKeys.versionApi",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 72,
+      "symbol": "DefaultsKeys.versionGui",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 73,
+      "symbol": "DefaultsKeys.versionRadio",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 76,
+      "symbol": "DefaultsKeys.dbLegend",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 77,
+      "symbol": "DefaultsKeys.frequencyLegend",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 78,
+      "symbol": "DefaultsKeys.gridLine",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 79,
+      "symbol": "DefaultsKeys.marker",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 80,
+      "symbol": "DefaultsKeys.markerEdge",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 81,
+      "symbol": "DefaultsKeys.markerSegment",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 82,
+      "symbol": "DefaultsKeys.sliceActive",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 83,
+      "symbol": "DefaultsKeys.sliceFilter",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 84,
+      "symbol": "DefaultsKeys.sliceInactive",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 85,
+      "symbol": "DefaultsKeys.spectrum",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 86,
+      "symbol": "DefaultsKeys.spectrumBackground",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 87,
+      "symbol": "DefaultsKeys.spectrumFill",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 88,
+      "symbol": "DefaultsKeys.tnfActive",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 89,
+      "symbol": "DefaultsKeys.tnfInactive",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 92,
+      "symbol": "DefaultsKeys.dbLegendSpacing",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 93,
+      "symbol": "DefaultsKeys.dbLegendSpacings",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 94,
+      "symbol": "DefaultsKeys.timeLegendSpacing",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 95,
+      "symbol": "DefaultsKeys.timeLegendSpacings",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 101,
+      "symbol": "UserDefaults.dbLegend",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 105,
+      "symbol": "UserDefaults.dbLegendSpacing",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 109,
+      "symbol": "UserDefaults.cwxViewOpen",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 113,
+      "symbol": "UserDefaults.frequencyLegend",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 117,
+      "symbol": "UserDefaults.fullDuplexEnabled",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 121,
+      "symbol": "UserDefaults.gridLine",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 125,
+      "symbol": "UserDefaults.marker",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 129,
+      "symbol": "UserDefaults.markerSegment",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 133,
+      "symbol": "UserDefaults.markerEdge",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 137,
+      "symbol": "UserDefaults.markersEnabled",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 141,
+      "symbol": "UserDefaults.sliceActive",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 145,
+      "symbol": "UserDefaults.sliceFilter",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 149,
+      "symbol": "UserDefaults.sliceInactive",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 153,
+      "symbol": "UserDefaults.spectrum",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 157,
+      "symbol": "UserDefaults.spectrumBackground",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 161,
+      "symbol": "UserDefaults.spectrumFillLevel",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 165,
+      "symbol": "UserDefaults.splitDistance",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 169,
+      "symbol": "UserDefaults.supportingApps",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 173,
+      "symbol": "UserDefaults.tnfActive",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 177,
+      "symbol": "UserDefaults.tnfInactive",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 181,
+      "symbol": "UserDefaults.tnfsEnabled",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 185,
+      "symbol": "UserDefaults.versionApi",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 189,
+      "symbol": "UserDefaults.versionGui",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 193,
+      "symbol": "UserDefaults.versionRadio",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 203,
+      "symbol": "Bool.state",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 389,
+      "symbol": "NSGradient.basic",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 406,
+      "symbol": "NSGradient.dark",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 421,
+      "symbol": "NSGradient.deuteranopia",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 438,
+      "symbol": "NSGradient.grayscale",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 450,
+      "symbol": "NSGradient.purple",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 467,
+      "symbol": "NSGradient.tritanopia",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 490,
+      "symbol": "NSColor.float4Color",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 496,
+      "symbol": "NSColor.bgra8Unorm",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 509,
+      "symbol": "NSColor.metalClearColor",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 522,
+      "symbol": "String.numbers",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 533,
+      "symbol": "Float.powerFromDbm",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/AppExtensions.swift",
+      "line": 541,
+      "symbol": "notImplemented(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.free",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Buttons/AntennaViewController.swift",
+      "line": 12,
+      "symbol": "AntennaViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Buttons/AntennaViewController.swift",
+      "line": 30,
+      "symbol": "AntennaViewController.viewDidLoad()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Buttons/AntennaViewController.swift",
+      "line": 44,
+      "symbol": "AntennaViewController.popoverShouldDetach(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Buttons/BandButtonViewController.swift",
+      "line": 12,
+      "symbol": "BandButtonViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Buttons/BandButtonViewController.swift",
+      "line": 73,
+      "symbol": "BandButtonViewController.viewDidLoad()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Buttons/BandButtonViewController.swift",
+      "line": 100,
+      "symbol": "BandButtonViewController.popoverShouldDetach(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Buttons/BandButtonViewController.swift",
+      "line": 108,
+      "symbol": "BandButtonViewController.buttonPush(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Buttons/DaxIqViewController.swift",
+      "line": 12,
+      "symbol": "DaxIqViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Buttons/DaxIqViewController.swift",
+      "line": 28,
+      "symbol": "DaxIqViewController.viewDidLoad()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Buttons/DaxIqViewController.swift",
+      "line": 42,
+      "symbol": "DaxIqViewController.popoverShouldDetach(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Buttons/DisplayViewController.swift",
+      "line": 13,
+      "symbol": "DisplayViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Buttons/DisplayViewController.swift",
+      "line": 47,
+      "symbol": "DisplayViewController.viewDidLoad()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Buttons/DisplayViewController.swift",
+      "line": 61,
+      "symbol": "DisplayViewController.popoverShouldDetach(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Buttons/DisplayViewController.swift",
+      "line": 69,
+      "symbol": "DisplayViewController.configure(panadapter:waterfall:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/CommonClientCode/Extensions/DataExtensions.swift",
+      "line": 12,
+      "symbol": "Data.init(base64URLEncoded:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/CommonClientCode/Extensions/DataExtensions.swift",
+      "line": 22,
+      "symbol": "Data.base64URLEncodedString()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/CommonClientCode/Extensions/DictionaryExtensions.swift",
+      "line": 12,
+      "symbol": "Dictionary.join(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/CommonClientCode/Extensions/DictionaryExtensions.swift",
+      "line": 26,
+      "symbol": "Dictionary.urlEncodedQuery",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/CommonClientCode/Extensions/DictionaryExtensions.swift",
+      "line": 39,
+      "symbol": "Dictionary.merge(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/CommonClientCode/Extensions/DictionaryExtensions.swift",
+      "line": 49,
+      "symbol": "Dictionary.map(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/CommonClientCode/Extensions/DictionaryExtensions.swift",
+      "line": 61,
+      "symbol": "+=(_:_:)",
+      "symbol_kind": "source.lang.swift.decl.function.free",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/CommonClientCode/Extensions/DictionaryExtensions.swift",
+      "line": 62,
+      "symbol": "+(_:_:)",
+      "symbol_kind": "source.lang.swift.decl.function.free",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/CommonClientCode/Extensions/DictionaryExtensions.swift",
+      "line": 63,
+      "symbol": "+=(_:_:)",
+      "symbol_kind": "source.lang.swift.decl.function.free",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/CommonClientCode/Extensions/StringExtensions.swift",
+      "line": 14,
+      "symbol": "String.len",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/CommonClientCode/Extensions/StringExtensions.swift",
+      "line": 21,
+      "symbol": "String.subscript(_:_:)",
+      "symbol_kind": "source.lang.swift.decl.function.subscript",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/CommonClientCode/Extensions/StringExtensions.swift",
+      "line": 51,
+      "symbol": "String.subscript(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.subscript",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/CommonClientCode/Extensions/StringExtensions.swift",
+      "line": 57,
+      "symbol": "String.subscript(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.subscript",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/CommonClientCode/Extensions/StringExtensions.swift",
+      "line": 67,
+      "symbol": "String.parametersFromQueryString",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/CommonClientCode/Extensions/StringExtensions.swift",
+      "line": 78,
+      "symbol": "String.urlQueryEncoded",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/CommonClientCode/Extensions/StringExtensions.swift",
+      "line": 134,
+      "symbol": "String.safeStringByRemovingPercentEncoding",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/CommonClientCode/Extensions/StringExtensions.swift",
+      "line": 138,
+      "symbol": "String.droppedLast",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/CommonClientCode/Extensions/StringExtensions.swift",
+      "line": 143,
+      "symbol": "String.dropLast()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/CommonClientCode/Extensions/StringExtensions.swift",
+      "line": 147,
+      "symbol": "String.substring(to:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/CommonClientCode/Extensions/StringExtensions.swift",
+      "line": 152,
+      "symbol": "String.substring(from:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/CommonClientCode/Extensions/StringExtensions.swift",
+      "line": 160,
+      "symbol": "String.Encoding.charset",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/CommonClientCode/Extensions/URLSessionExtensions.swift",
+      "line": 13,
+      "symbol": "URLSession.synchronousDataTask(with:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/CommonClientCode/Extensions/URLSessionExtensions.swift",
+      "line": 34,
+      "symbol": "URLSession.synchronousDataTask(with:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/CommonClientCode/Misc/JWTDecode/Errors.swift",
+      "line": 33,
+      "symbol": "DecodeError.invalidBase64Url(_:)",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/CommonClientCode/Misc/JWTDecode/Errors.swift",
+      "line": 34,
+      "symbol": "DecodeError.invalidJSON(_:)",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/CommonClientCode/Misc/JWTDecode/Errors.swift",
+      "line": 35,
+      "symbol": "DecodeError.invalidPartCount(_:_:)",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/CommonClientCode/Misc/JWTDecode/Errors.swift",
+      "line": 37,
+      "symbol": "DecodeError.localizedDescription",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/CommonClientCode/Misc/JWTDecode/JWTDecode.swift",
+      "line": 39,
+      "symbol": "DecodedJWT",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/CommonClientCode/Misc/JWTDecode/JWTDecode.swift",
+      "line": 46,
+      "symbol": "DecodedJWT.init(jwt:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/CommonClientCode/Misc/Keychain.swift",
+      "line": 13,
+      "symbol": "Keychain",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/CommonClientCode/Misc/Keychain.swift",
+      "line": 15,
+      "symbol": "Keychain.set(_:account:data:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/CommonClientCode/Misc/Keychain.swift",
+      "line": 52,
+      "symbol": "Keychain.get(_:account:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/CommonClientCode/Misc/Keychain.swift",
+      "line": 76,
+      "symbol": "Keychain.delete(_:account:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/CommonClientCode/RadioPicker/Auth0ViewController.swift",
+      "line": 22,
+      "symbol": "Auth0ControllerDelegate",
+      "symbol_kind": "source.lang.swift.decl.protocol",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/CommonClientCode/RadioPicker/Auth0ViewController.swift",
+      "line": 37,
+      "symbol": "Auth0ViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/CommonClientCode/RadioPicker/Auth0ViewController.swift",
+      "line": 39,
+      "symbol": "Auth0ViewController.kAuth0Domain",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/CommonClientCode/RadioPicker/Auth0ViewController.swift",
+      "line": 40,
+      "symbol": "Auth0ViewController.kClientId",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/CommonClientCode/RadioPicker/Auth0ViewController.swift",
+      "line": 41,
+      "symbol": "Auth0ViewController.kRedirect",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/CommonClientCode/RadioPicker/Auth0ViewController.swift",
+      "line": 42,
+      "symbol": "Auth0ViewController.kResponseType",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/CommonClientCode/RadioPicker/Auth0ViewController.swift",
+      "line": 43,
+      "symbol": "Auth0ViewController.kScope",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/CommonClientCode/RadioPicker/Auth0ViewController.swift",
+      "line": 44,
+      "symbol": "Auth0ViewController.kState",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/CommonClientCode/RadioPicker/Auth0ViewController.swift",
+      "line": 46,
+      "symbol": "Auth0ViewController.smartLinkURL",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/CommonClientCode/RadioPicker/Auth0ViewController.swift",
+      "line": 74,
+      "symbol": "Auth0ViewController.viewDidLoad()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/CommonClientCode/RadioPicker/Auth0ViewController.swift",
+      "line": 123,
+      "symbol": "Auth0ViewController.viewWillAppear()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/CommonClientCode/RadioPicker/Auth0ViewController.swift",
+      "line": 130,
+      "symbol": "Auth0ViewController.viewWillDisappear()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/CommonClientCode/RadioPicker/LANRadioPickerViewController.swift",
+      "line": 23,
+      "symbol": "LANRadioPickerDelegate",
+      "symbol_kind": "source.lang.swift.decl.protocol",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/CommonClientCode/RadioPicker/LANRadioPickerViewController.swift",
+      "line": 56,
+      "symbol": "LANRadioPickerViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/CommonClientCode/RadioPicker/WANRadioPickerViewController.swift",
+      "line": 14,
+      "symbol": "Token",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/CommonClientCode/RadioPicker/WANRadioPickerViewController.swift",
+      "line": 16,
+      "symbol": "Token.value",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/CommonClientCode/RadioPicker/WANRadioPickerViewController.swift",
+      "line": 17,
+      "symbol": "Token.expiresAt",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/CommonClientCode/RadioPicker/WANRadioPickerViewController.swift",
+      "line": 19,
+      "symbol": "Token.isValidAtDate(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/CommonClientCode/RadioPicker/WANRadioPickerViewController.swift",
+      "line": 28,
+      "symbol": "WANRadioPickerDelegate",
+      "symbol_kind": "source.lang.swift.decl.protocol",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/CommonClientCode/RadioPicker/WANRadioPickerViewController.swift",
+      "line": 30,
+      "symbol": "WANRadioPickerDelegate.token",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/CommonClientCode/RadioPicker/WANRadioPickerViewController.swift",
+      "line": 33,
+      "symbol": "WANRadioPickerViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/CommonClientCode/RadioPicker/WANRadioPickerViewController.swift",
+      "line": 35,
+      "symbol": "WANRadioPickerViewController.kServiceName",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/CommonClientCode/RadioPicker/WANRadioPickerViewController.swift",
+      "line": 220,
+      "symbol": "WANRadioPickerViewController.testButton(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Help/HelpViewController.swift",
+      "line": 16,
+      "symbol": "HelpViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Help/HelpViewController.swift",
+      "line": 26,
+      "symbol": "HelpViewController.viewDidLoad()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Help/HelpViewController.swift",
+      "line": 40,
+      "symbol": "HelpViewController.viewWillAppear()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Help/HelpViewController.swift",
+      "line": 48,
+      "symbol": "HelpViewController.viewWillDisappear()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Misc/AudioHelper.swift",
+      "line": 18,
+      "symbol": "AudioHelper",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Misc/AudioHelper.swift",
+      "line": 23,
+      "symbol": "AudioHelper.Direction",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Misc/AudioHelper.swift",
+      "line": 24,
+      "symbol": "AudioHelper.Direction.input",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Misc/AudioHelper.swift",
+      "line": 25,
+      "symbol": "AudioHelper.Direction.output",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Misc/AudioHelper.swift",
+      "line": 28,
+      "symbol": "AudioHelper.inputDevices",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Misc/AudioHelper.swift",
+      "line": 29,
+      "symbol": "AudioHelper.inputDeviceNames",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Misc/AudioHelper.swift",
+      "line": 31,
+      "symbol": "AudioHelper.outputDevices",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Misc/AudioHelper.swift",
+      "line": 32,
+      "symbol": "AudioHelper.outputDeviceNames",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Misc/AudioHelper.swift",
+      "line": 145,
+      "symbol": "AHAudioDevice",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Misc/AudioHelper.swift",
+      "line": 150,
+      "symbol": "AHAudioDevice.id",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Misc/AudioHelper.swift",
+      "line": 151,
+      "symbol": "AHAudioDevice.direction",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Misc/AudioHelper.swift",
+      "line": 153,
+      "symbol": "AHAudioDevice.asbd",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Misc/AudioHelper.swift",
+      "line": 154,
+      "symbol": "AHAudioDevice.isDefault",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Misc/AudioHelper.swift",
+      "line": 155,
+      "symbol": "AHAudioDevice.name",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Misc/AudioHelper.swift",
+      "line": 156,
+      "symbol": "AHAudioDevice.uniqueID",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Misc/AudioHelper.swift",
+      "line": 161,
+      "symbol": "AHAudioDevice.init(id:direction:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Misc/Band.swift",
+      "line": 16,
+      "symbol": "Band",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Misc/Band.swift",
+      "line": 18,
+      "symbol": "Band.BandName",
+      "symbol_kind": "source.lang.swift.decl.typealias",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Misc/Band.swift",
+      "line": 19,
+      "symbol": "Band.BandExtent",
+      "symbol_kind": "source.lang.swift.decl.typealias",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Misc/Band.swift",
+      "line": 24,
+      "symbol": "Band.segments",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Misc/Band.swift",
+      "line": 25,
+      "symbol": "Band.bands",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Misc/Band.swift",
+      "line": 26,
+      "symbol": "Band.sortedBands",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Misc/Band.swift",
+      "line": 52,
+      "symbol": "Band.Segment",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Misc/Band.swift",
+      "line": 53,
+      "symbol": "Band.Segment.name",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Misc/Band.swift",
+      "line": 54,
+      "symbol": "Band.Segment.title",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Misc/Band.swift",
+      "line": 55,
+      "symbol": "Band.Segment.start",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Misc/Band.swift",
+      "line": 56,
+      "symbol": "Band.Segment.end",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Misc/Band.swift",
+      "line": 57,
+      "symbol": "Band.Segment.startIsEdge",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Misc/Band.swift",
+      "line": 58,
+      "symbol": "Band.Segment.endIsEdge",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Misc/Band.swift",
+      "line": 59,
+      "symbol": "Band.Segment.useMarkers",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Misc/Band.swift",
+      "line": 60,
+      "symbol": "Band.Segment.enabled",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Misc/Band.swift",
+      "line": 89,
+      "symbol": "Band.sharedInstance",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Misc/LevelIndicator.swift",
+      "line": 11,
+      "symbol": "LegendTuple",
+      "symbol_kind": "source.lang.swift.decl.typealias",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Misc/LevelIndicator.swift",
+      "line": 13,
+      "symbol": "LevelIndicator",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Misc/LevelIndicator.swift",
+      "line": 15,
+      "symbol": "LevelIndicator.IndicatorStyle",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Misc/LevelIndicator.swift",
+      "line": 16,
+      "symbol": "LevelIndicator.IndicatorStyle.standard",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Misc/LevelIndicator.swift",
+      "line": 17,
+      "symbol": "LevelIndicator.IndicatorStyle.sMeter",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Misc/LevelIndicator.swift",
+      "line": 21,
+      "symbol": "LevelIndicator.level",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Misc/LevelIndicator.swift",
+      "line": 22,
+      "symbol": "LevelIndicator.peak",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Misc/LevelIndicator.swift",
+      "line": 23,
+      "symbol": "LevelIndicator.font",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Misc/LevelIndicator.swift",
+      "line": 24,
+      "symbol": "LevelIndicator.legends",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Misc/LevelIndicator.swift",
+      "line": 25,
+      "symbol": "LevelIndicator.style",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Misc/LevelIndicator.swift",
+      "line": 31,
+      "symbol": "LevelIndicator._numberOfSegments",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Misc/LevelIndicator.swift",
+      "line": 32,
+      "symbol": "LevelIndicator._leftValue",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Misc/LevelIndicator.swift",
+      "line": 33,
+      "symbol": "LevelIndicator._rightValue",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Misc/LevelIndicator.swift",
+      "line": 34,
+      "symbol": "LevelIndicator._warningLevel",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Misc/LevelIndicator.swift",
+      "line": 35,
+      "symbol": "LevelIndicator._criticalLevel",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Misc/LevelIndicator.swift",
+      "line": 36,
+      "symbol": "LevelIndicator._isFlipped",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Misc/LevelIndicator.swift",
+      "line": 39,
+      "symbol": "LevelIndicator._frameColor",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Misc/LevelIndicator.swift",
+      "line": 40,
+      "symbol": "LevelIndicator._backgroundColor",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Misc/LevelIndicator.swift",
+      "line": 41,
+      "symbol": "LevelIndicator._normalColor",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Misc/LevelIndicator.swift",
+      "line": 42,
+      "symbol": "LevelIndicator._warningColor",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Misc/LevelIndicator.swift",
+      "line": 43,
+      "symbol": "LevelIndicator._criticalColor",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Misc/LevelIndicator.swift",
+      "line": 76,
+      "symbol": "LevelIndicator.init(coder:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Misc/LevelIndicator.swift",
+      "line": 86,
+      "symbol": "LevelIndicator.viewWillDraw()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Misc/LevelIndicator.swift",
+      "line": 150,
+      "symbol": "LevelIndicator.draw(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Misc/OpusDecode.swift",
+      "line": 31,
+      "symbol": "OpusDecode",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Misc/OpusDecode.swift",
+      "line": 52,
+      "symbol": "OpusDecode.init()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Misc/OpusDecode.swift",
+      "line": 70,
+      "symbol": "OpusDecode.deinit",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Misc/OpusEncode.swift",
+      "line": 31,
+      "symbol": "OpusEncode",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Misc/OpusEncode.swift",
+      "line": 74,
+      "symbol": "OpusEncode.init(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Misc/OpusEncode.swift",
+      "line": 92,
+      "symbol": "OpusEncode.deinit",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Misc/ParameterMonitor.swift",
+      "line": 31,
+      "symbol": "ParameterMonitor",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Misc/ParameterMonitor.swift",
+      "line": 36,
+      "symbol": "ParameterMonitor.formatString",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Misc/ParameterMonitor.swift",
+      "line": 56,
+      "symbol": "ParameterMonitor.init(itemIdentifier:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/DbLegendView.swift",
+      "line": 31,
+      "symbol": "DbLegendView",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/DbLegendView.swift",
+      "line": 38,
+      "symbol": "DbLegendView.width",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/DbLegendView.swift",
+      "line": 39,
+      "symbol": "DbLegendView.font",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/DbLegendView.swift",
+      "line": 57,
+      "symbol": "DbLegendView.draw(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/Flag/AudioViewController.swift",
+      "line": 13,
+      "symbol": "AudioViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/Flag/AudioViewController.swift",
+      "line": 35,
+      "symbol": "AudioViewController.viewDidLoad()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/Flag/AudioViewController.swift",
+      "line": 52,
+      "symbol": "AudioViewController.viewWillAppear()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/Flag/ControlsViewController.swift",
+      "line": 16,
+      "symbol": "ControlsViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/Flag/ControlsViewController.swift",
+      "line": 18,
+      "symbol": "ControlsViewController.kControlsHeight",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/Flag/ControlsViewController.swift",
+      "line": 19,
+      "symbol": "ControlsViewController.kBackgroundColor",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/Flag/ControlsViewController.swift",
+      "line": 24,
+      "symbol": "ControlsViewController.leadingConstraint",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/Flag/ControlsViewController.swift",
+      "line": 25,
+      "symbol": "ControlsViewController.trailingConstraint",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/Flag/ControlsViewController.swift",
+      "line": 26,
+      "symbol": "ControlsViewController.topConstraint",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/Flag/ControlsViewController.swift",
+      "line": 36,
+      "symbol": "ControlsViewController.viewDidLoad()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/Flag/ControlsViewController.swift",
+      "line": 44,
+      "symbol": "ControlsViewController.viewWillAppear()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/Flag/DaxViewController.swift",
+      "line": 13,
+      "symbol": "DaxViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/Flag/DaxViewController.swift",
+      "line": 28,
+      "symbol": "DaxViewController.viewDidLoad()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/Flag/DaxViewController.swift",
+      "line": 44,
+      "symbol": "DaxViewController.viewWillAppear()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/Flag/DspViewController.swift",
+      "line": 13,
+      "symbol": "DspViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/Flag/DspViewController.swift",
+      "line": 40,
+      "symbol": "DspViewController.viewDidLoad()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/Flag/DspViewController.swift",
+      "line": 53,
+      "symbol": "DspViewController.viewWillAppear()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/Flag/FlagViewController.swift",
+      "line": 17,
+      "symbol": "FlagViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/Flag/FlagViewController.swift",
+      "line": 19,
+      "symbol": "FlagViewController.kSliceLetters",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/Flag/FlagViewController.swift",
+      "line": 20,
+      "symbol": "FlagViewController.kFlagOffset",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/Flag/FlagViewController.swift",
+      "line": 21,
+      "symbol": "FlagViewController.kFlagMinimumSeparation",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/Flag/FlagViewController.swift",
+      "line": 22,
+      "symbol": "FlagViewController.kLargeFlagWidth",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/Flag/FlagViewController.swift",
+      "line": 23,
+      "symbol": "FlagViewController.kLargeFlagHeight",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/Flag/FlagViewController.swift",
+      "line": 24,
+      "symbol": "FlagViewController.kSmallFlagWidth",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/Flag/FlagViewController.swift",
+      "line": 25,
+      "symbol": "FlagViewController.kSmallFlagHeight",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/Flag/FlagViewController.swift",
+      "line": 26,
+      "symbol": "FlagViewController.kFlagBorder",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/Flag/FlagViewController.swift",
+      "line": 31,
+      "symbol": "FlagViewController.flagTopConstraint",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/Flag/FlagViewController.swift",
+      "line": 32,
+      "symbol": "FlagViewController.flagHeightConstraint",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/Flag/FlagViewController.swift",
+      "line": 33,
+      "symbol": "FlagViewController.flagWidthConstraint",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/Flag/FlagViewController.swift",
+      "line": 34,
+      "symbol": "FlagViewController.flagXPositionConstraint",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/Flag/FlagViewController.swift",
+      "line": 35,
+      "symbol": "FlagViewController.controlsHeightConstraint",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/Flag/FlagViewController.swift",
+      "line": 36,
+      "symbol": "FlagViewController.smallFlagDisplayed",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/Flag/FlagViewController.swift",
+      "line": 37,
+      "symbol": "FlagViewController.isOnLeft",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/Flag/FlagViewController.swift",
+      "line": 38,
+      "symbol": "FlagViewController.controlsVc",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/Flag/FlagViewController.swift",
+      "line": 39,
+      "symbol": "FlagViewController.splitId",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/Flag/FlagViewController.swift",
+      "line": 40,
+      "symbol": "FlagViewController.isaSplit",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/Flag/FlagViewController.swift",
+      "line": 44,
+      "symbol": "FlagViewController.slice",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/Flag/FlagViewController.swift",
+      "line": 173,
+      "symbol": "FlagViewController.viewDidLoad()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/Flag/FlagViewController.swift",
+      "line": 203,
+      "symbol": "FlagViewController.viewWillAppear()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/Flag/FlagViewController.swift",
+      "line": 216,
+      "symbol": "FlagViewController.controlTextDidBeginEditing(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/Flag/FlagViewController.swift",
+      "line": 225,
+      "symbol": "FlagViewController.controlTextDidEndEditing(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/Flag/FlagViewController.swift",
+      "line": 718,
+      "symbol": "FrequencyFormatter",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/Flag/FlagViewController.swift",
+      "line": 723,
+      "symbol": "FrequencyFormatter.init()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/Flag/FlagViewController.swift",
+      "line": 728,
+      "symbol": "FrequencyFormatter.init(coder:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/Flag/FlagViewController.swift",
+      "line": 732,
+      "symbol": "FrequencyFormatter.getObjectValue(_:for:range:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/Flag/FlagViewController.swift",
+      "line": 746,
+      "symbol": "FrequencyFormatter.string(for:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/Flag/ModeViewController.swift",
+      "line": 17,
+      "symbol": "ModeViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/Flag/ModeViewController.swift",
+      "line": 19,
+      "symbol": "ModeViewController.filterValues",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/Flag/ModeViewController.swift",
+      "line": 61,
+      "symbol": "ModeViewController.viewDidLoad()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/Flag/ModeViewController.swift",
+      "line": 83,
+      "symbol": "ModeViewController.viewWillAppear()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/Flag/XritViewController.swift",
+      "line": 13,
+      "symbol": "XritViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/Flag/XritViewController.swift",
+      "line": 42,
+      "symbol": "XritViewController.viewDidLoad()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/Flag/XritViewController.swift",
+      "line": 75,
+      "symbol": "XritViewController.viewWillAppear()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/FrequencyLegendView.swift",
+      "line": 31,
+      "symbol": "FrequencyLegendView",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/FrequencyLegendView.swift",
+      "line": 33,
+      "symbol": "FrequencyLegendView.BandwidthParamTuple",
+      "symbol_kind": "source.lang.swift.decl.typealias",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/FrequencyLegendView.swift",
+      "line": 38,
+      "symbol": "FrequencyLegendView.radio",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/FrequencyLegendView.swift",
+      "line": 40,
+      "symbol": "FrequencyLegendView.legendHeight",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/FrequencyLegendView.swift",
+      "line": 41,
+      "symbol": "FrequencyLegendView.font",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/FrequencyLegendView.swift",
+      "line": 42,
+      "symbol": "FrequencyLegendView.markerHeight",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/FrequencyLegendView.swift",
+      "line": 43,
+      "symbol": "FrequencyLegendView.shadingPosition",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/FrequencyLegendView.swift",
+      "line": 87,
+      "symbol": "FrequencyLegendView.draw(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/FrequencyLegendView.swift",
+      "line": 420,
+      "symbol": "FrequencyLegendView.drawSlices(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/PanadapterRenderer.swift",
+      "line": null,
+      "symbol": "PanadapterRenderer",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/PanadapterRenderer.swift",
+      "line": null,
+      "symbol": "PanadapterRenderer",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/PanadapterRenderer.swift",
+      "line": 13,
+      "symbol": "PanadapterRenderer",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/PanadapterRenderer.swift",
+      "line": 24,
+      "symbol": "PanadapterRenderer.kMaxIntensities",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/PanadapterRenderer.swift",
+      "line": 25,
+      "symbol": "PanadapterRenderer.kTextureAsset",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/PanadapterRenderer.swift",
+      "line": 103,
+      "symbol": "PanadapterRenderer.init(view:clearColor:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/PanadapterRenderer.swift",
+      "line": 129,
+      "symbol": "PanadapterRenderer.updateConstants(size:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/PanadapterRenderer.swift",
+      "line": 139,
+      "symbol": "PanadapterRenderer.updateColor(spectrumColor:fillLevel:fillColor:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/PanadapterViewController.swift",
+      "line": 19,
+      "symbol": "PanadapterViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/PanadapterViewController.swift",
+      "line": 24,
+      "symbol": "PanadapterViewController.DragType",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/PanadapterViewController.swift",
+      "line": 25,
+      "symbol": "PanadapterViewController.DragType.dbm",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/PanadapterViewController.swift",
+      "line": 26,
+      "symbol": "PanadapterViewController.DragType.frequency",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/PanadapterViewController.swift",
+      "line": 27,
+      "symbol": "PanadapterViewController.DragType.slice",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/PanadapterViewController.swift",
+      "line": 28,
+      "symbol": "PanadapterViewController.DragType.spectrum",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/PanadapterViewController.swift",
+      "line": 29,
+      "symbol": "PanadapterViewController.DragType.tnf",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/PanadapterViewController.swift",
+      "line": 32,
+      "symbol": "PanadapterViewController.Dragable",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/PanadapterViewController.swift",
+      "line": 33,
+      "symbol": "PanadapterViewController.Dragable.type",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/PanadapterViewController.swift",
+      "line": 34,
+      "symbol": "PanadapterViewController.Dragable.original",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/PanadapterViewController.swift",
+      "line": 35,
+      "symbol": "PanadapterViewController.Dragable.previous",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/PanadapterViewController.swift",
+      "line": 36,
+      "symbol": "PanadapterViewController.Dragable.current",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/PanadapterViewController.swift",
+      "line": 37,
+      "symbol": "PanadapterViewController.Dragable.percent",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/PanadapterViewController.swift",
+      "line": 38,
+      "symbol": "PanadapterViewController.Dragable.frequency",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/PanadapterViewController.swift",
+      "line": 39,
+      "symbol": "PanadapterViewController.Dragable.cursor",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/PanadapterViewController.swift",
+      "line": 40,
+      "symbol": "PanadapterViewController.Dragable.object",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/PanadapterViewController.swift",
+      "line": 167,
+      "symbol": "PanadapterViewController.redrawFrequencyLegend()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/PanadapterViewController.swift",
+      "line": 171,
+      "symbol": "PanadapterViewController.redrawDbLegend()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/PanadapterViewController.swift",
+      "line": 174,
+      "symbol": "PanadapterViewController.redrawTnfs()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/PanadapterViewController.swift",
+      "line": 177,
+      "symbol": "PanadapterViewController.redrawSlices()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/PanadapterViewController.swift",
+      "line": 358,
+      "symbol": "PanadapterViewController.positionFlags()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panadapter/PanadapterViewController.swift",
+      "line": 394,
+      "symbol": "PanadapterViewController.splitCheck(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panafall/PanafallButtonView.swift",
+      "line": 37,
+      "symbol": "PanafallButtonView",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panafall/PanafallButtonView.swift",
+      "line": 52,
+      "symbol": "PanafallButtonView.awakeFromNib()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panafall/PanafallButtonView.swift",
+      "line": 61,
+      "symbol": "PanafallButtonView.deinit",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panafall/PanafallButtonViewController.swift",
+      "line": 41,
+      "symbol": "PanafallButtonViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panafall/PanafallButtonViewController.swift",
+      "line": 43,
+      "symbol": "PanafallButtonViewController.kTimeout",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panafall/PanafallViewController.swift",
+      "line": 16,
+      "symbol": "PanafallViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panafall/PanafallViewController.swift",
+      "line": 18,
+      "symbol": "PanafallViewController.kEdgeTolerance",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Panafall/PanafallsViewController.swift",
+      "line": 32,
+      "symbol": "PanafallsViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Preferences/ColorsPrefsViewController.swift",
+      "line": 12,
+      "symbol": "ColorsPrefsViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Preferences/ColorsPrefsViewController.swift",
+      "line": 36,
+      "symbol": "ColorsPrefsViewController.viewDidLoad()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Preferences/ColorsPrefsViewController.swift",
+      "line": 48,
+      "symbol": "ColorsPrefsViewController.singleResetButtons(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Preferences/FiltersPrefsViewController.swift",
+      "line": 12,
+      "symbol": "FiltersPrefsViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Preferences/FiltersPrefsViewController.swift",
+      "line": 30,
+      "symbol": "FiltersPrefsViewController.viewDidLoad()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Preferences/GpsPrefsViewController.swift",
+      "line": 11,
+      "symbol": "GpsPrefsViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Preferences/GpsPrefsViewController.swift",
+      "line": 16,
+      "symbol": "GpsPrefsViewController.viewDidLoad()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Preferences/InfoPrefsViewController.swift",
+      "line": 12,
+      "symbol": "InfoPrefsViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Preferences/InfoPrefsViewController.swift",
+      "line": 14,
+      "symbol": "InfoPrefsViewController.kAppName",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Preferences/InfoPrefsViewController.swift",
+      "line": 15,
+      "symbol": "InfoPrefsViewController.kEnabled",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Preferences/InfoPrefsViewController.swift",
+      "line": 16,
+      "symbol": "InfoPrefsViewController.kDelay",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Preferences/InfoPrefsViewController.swift",
+      "line": 17,
+      "symbol": "InfoPrefsViewController.kInterval",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Preferences/InfoPrefsViewController.swift",
+      "line": 18,
+      "symbol": "InfoPrefsViewController.kParameters",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Preferences/InfoPrefsViewController.swift",
+      "line": 42,
+      "symbol": "InfoPrefsViewController.viewDidLoad()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Preferences/NetworkPrefsViewController.swift",
+      "line": 12,
+      "symbol": "NetworkPrefsViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Preferences/NetworkPrefsViewController.swift",
+      "line": 37,
+      "symbol": "NetworkPrefsViewController.viewDidLoad()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Preferences/NetworkPrefsViewController.swift",
+      "line": 49,
+      "symbol": "NetworkPrefsViewController.apply(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Preferences/NetworkPrefsViewController.swift",
+      "line": 71,
+      "symbol": "NetworkPrefsViewController.networkTabDhcpStatic(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Preferences/PCWPrefsViewController.swift",
+      "line": 12,
+      "symbol": "PCWPrefsViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Preferences/PCWPrefsViewController.swift",
+      "line": 36,
+      "symbol": "PCWPrefsViewController.viewDidLoad()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Preferences/PreferencesTabViewController.swift",
+      "line": 17,
+      "symbol": "PreferencesTabViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Preferences/PreferencesTabViewController.swift",
+      "line": 28,
+      "symbol": "PreferencesTabViewController.viewDidLoad()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Preferences/PreferencesTabViewController.swift",
+      "line": 39,
+      "symbol": "PreferencesTabViewController.viewWillAppear()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Preferences/PreferencesTabViewController.swift",
+      "line": 49,
+      "symbol": "PreferencesTabViewController.viewWillDisappear()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Preferences/PreferencesTabViewController.swift",
+      "line": 62,
+      "symbol": "PreferencesTabViewController.tabView(_:willSelect:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Preferences/PreferencesTabViewController.swift",
+      "line": 79,
+      "symbol": "PreferencesTabViewController.deinit",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Preferences/RadioPrefsViewController.swift",
+      "line": 12,
+      "symbol": "RadioPrefsViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Preferences/RadioPrefsViewController.swift",
+      "line": 37,
+      "symbol": "RadioPrefsViewController.viewDidLoad()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Preferences/RadioPrefsViewController.swift",
+      "line": 49,
+      "symbol": "RadioPrefsViewController.regionChange(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Preferences/RadioPrefsViewController.swift",
+      "line": 56,
+      "symbol": "RadioPrefsViewController.screensaver(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Preferences/RadioPrefsViewController.swift",
+      "line": 61,
+      "symbol": "RadioPrefsViewController.textFields(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Preferences/RadioPrefsViewController.swift",
+      "line": 75,
+      "symbol": "RadioPrefsViewController.checkboxes(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Preferences/RxPrefsViewController.swift",
+      "line": 12,
+      "symbol": "RxPrefsViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Preferences/RxPrefsViewController.swift",
+      "line": 32,
+      "symbol": "RxPrefsViewController.viewDidLoad()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Preferences/TXPrefsViewController.swift",
+      "line": 12,
+      "symbol": "TXPrefsViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Preferences/TXPrefsViewController.swift",
+      "line": 14,
+      "symbol": "TXPrefsViewController.txProfile",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Preferences/TXPrefsViewController.swift",
+      "line": 50,
+      "symbol": "TXPrefsViewController.viewDidLoad()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Preferences/XvtrPrefsViewController.swift",
+      "line": 11,
+      "symbol": "XvtrPrefsViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Preferences/XvtrPrefsViewController.swift",
+      "line": 16,
+      "symbol": "XvtrPrefsViewController.viewDidLoad()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Profiles/ProfileViewController.swift",
+      "line": 14,
+      "symbol": "ProfileViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Profiles/ProfileViewController.swift",
+      "line": 34,
+      "symbol": "ProfileViewController.viewDidLoad()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Profiles/ProfileViewController.swift",
+      "line": 51,
+      "symbol": "ProfileViewController.viewWillAppear()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Profiles/ProfileViewController.swift",
+      "line": 58,
+      "symbol": "ProfileViewController.viewWillDisappear()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Profiles/ProfileViewController.swift",
+      "line": 64,
+      "symbol": "ProfileViewController.deinit",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Radio/MainWindowController.swift",
+      "line": 16,
+      "symbol": "MainWindowController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Radio/MainWindowController.swift",
+      "line": 21,
+      "symbol": "MainWindowController.awakeFromNib()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Radio/RadioViewController.swift",
+      "line": 18,
+      "symbol": "RadioPickerDelegate",
+      "symbol_kind": "source.lang.swift.decl.protocol",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Radio/RadioViewController.swift",
+      "line": 20,
+      "symbol": "RadioPickerDelegate.token",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Radio/RadioViewController.swift",
+      "line": 41,
+      "symbol": "RadioViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Radio/RadioViewController.swift",
+      "line": 157,
+      "symbol": "RadioViewController.validateUserInterfaceItem(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Radio/RadioViewController.swift",
+      "line": 166,
+      "symbol": "RadioViewController.quitRadio(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Radio/RadioViewController.swift",
+      "line": 794,
+      "symbol": "RadioViewController.token",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Side/CWViewController.swift",
+      "line": 12,
+      "symbol": "CWViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Side/CWViewController.swift",
+      "line": 40,
+      "symbol": "CWViewController.viewDidLoad()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Side/EqViewController.swift",
+      "line": 17,
+      "symbol": "EqViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Side/EqViewController.swift",
+      "line": 43,
+      "symbol": "EqViewController.viewDidLoad()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Side/PCWViewController.swift",
+      "line": 12,
+      "symbol": "PCWViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Side/PCWViewController.swift",
+      "line": 40,
+      "symbol": "PCWViewController.viewDidLoad()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Side/PCWViewController.swift",
+      "line": 299,
+      "symbol": "ProfileFormatter",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Side/PCWViewController.swift",
+      "line": 300,
+      "symbol": "ProfileFormatter.unexpectedChars",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Side/PCWViewController.swift",
+      "line": 302,
+      "symbol": "ProfileFormatter.init()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Side/PCWViewController.swift",
+      "line": 313,
+      "symbol": "ProfileFormatter.init(coder:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Side/PCWViewController.swift",
+      "line": 317,
+      "symbol": "ProfileFormatter.string(for:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Side/PCWViewController.swift",
+      "line": 322,
+      "symbol": "ProfileFormatter.getObjectValue(_:for:errorDescription:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Side/PCWViewController.swift",
+      "line": 327,
+      "symbol": "ProfileFormatter.isPartialStringValid(_:newEditingString:errorDescription:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Side/PhoneViewController.swift",
+      "line": 12,
+      "symbol": "PhoneViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Side/PhoneViewController.swift",
+      "line": 39,
+      "symbol": "PhoneViewController.viewDidLoad()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Side/SideViewController.swift",
+      "line": 17,
+      "symbol": "SideViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Side/SideViewController.swift",
+      "line": 55,
+      "symbol": "SideViewController.viewDidLoad()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Side/SideViewController.swift",
+      "line": 90,
+      "symbol": "SideViewController.viewDidLayout()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Side/SideViewController.swift",
+      "line": 133,
+      "symbol": "SideViewController.setRxHeight(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Side/TxViewController.swift",
+      "line": 12,
+      "symbol": "TxViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Side/TxViewController.swift",
+      "line": 40,
+      "symbol": "TxViewController.viewDidLoad()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Side/TxViewController.swift",
+      "line": 55,
+      "symbol": "TxViewController.profile(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Side/TxViewController.swift",
+      "line": 60,
+      "symbol": "TxViewController.buttons(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Side/TxViewController.swift",
+      "line": 78,
+      "symbol": "TxViewController.sliders(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Waterfall/Gradients/TimeLayer.swift",
+      "line": 13,
+      "symbol": "TimeLayer",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Waterfall/Gradients/TimeLayer.swift",
+      "line": 18,
+      "symbol": "TimeLayer.radio",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Waterfall/Gradients/TimeLayer.swift",
+      "line": 19,
+      "symbol": "TimeLayer.panadapter",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Waterfall/Gradients/TimeLayer.swift",
+      "line": 21,
+      "symbol": "TimeLayer.font",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Waterfall/Gradients/TimeLayer.swift",
+      "line": 33,
+      "symbol": "TimeLayer.updateLegendSpacing(gestureRecognizer:in:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Waterfall/WaterfallRenderer.swift",
+      "line": null,
+      "symbol": "WaterfallRenderer",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Waterfall/WaterfallRenderer.swift",
+      "line": null,
+      "symbol": "WaterfallRenderer",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Waterfall/WaterfallRenderer.swift",
+      "line": 13,
+      "symbol": "WaterfallRenderer",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Waterfall/WaterfallRenderer.swift",
+      "line": 67,
+      "symbol": "WaterfallRenderer.kTextureWidth",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Waterfall/WaterfallRenderer.swift",
+      "line": 68,
+      "symbol": "WaterfallRenderer.kTextureHeight",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Waterfall/WaterfallRenderer.swift",
+      "line": 69,
+      "symbol": "WaterfallRenderer.kMaxTextures",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Waterfall/WaterfallRenderer.swift",
+      "line": 72,
+      "symbol": "WaterfallRenderer.kGradientSize",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Waterfall/WaterfallRenderer.swift",
+      "line": 77,
+      "symbol": "WaterfallRenderer.metalView",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Waterfall/WaterfallRenderer.swift",
+      "line": 78,
+      "symbol": "WaterfallRenderer.updateNeeded",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Waterfall/WaterfallRenderer.swift",
+      "line": 80,
+      "symbol": "WaterfallRenderer.Vertex",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Waterfall/WaterfallRenderer.swift",
+      "line": 81,
+      "symbol": "WaterfallRenderer.Vertex.coord",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Waterfall/WaterfallRenderer.swift",
+      "line": 82,
+      "symbol": "WaterfallRenderer.Vertex.texCoord",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Waterfall/WaterfallRenderer.swift",
+      "line": 85,
+      "symbol": "WaterfallRenderer.Constants",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Waterfall/WaterfallRenderer.swift",
+      "line": 86,
+      "symbol": "WaterfallRenderer.Constants.blackLevel",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Waterfall/WaterfallRenderer.swift",
+      "line": 87,
+      "symbol": "WaterfallRenderer.Constants.colorGain",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Waterfall/WaterfallRenderer.swift",
+      "line": 88,
+      "symbol": "WaterfallRenderer.Constants.lineNumber",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Waterfall/WaterfallRenderer.swift",
+      "line": 91,
+      "symbol": "WaterfallRenderer.Params",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Waterfall/WaterfallRenderer.swift",
+      "line": 92,
+      "symbol": "WaterfallRenderer.Params.vertices",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Waterfall/WaterfallRenderer.swift",
+      "line": 93,
+      "symbol": "WaterfallRenderer.Params.intensities",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Waterfall/WaterfallRenderer.swift",
+      "line": 94,
+      "symbol": "WaterfallRenderer.Params.topLine",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Waterfall/WaterfallRenderer.swift",
+      "line": 99,
+      "symbol": "WaterfallRenderer.radio",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Waterfall/WaterfallRenderer.swift",
+      "line": 100,
+      "symbol": "WaterfallRenderer.panadapter",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Waterfall/WaterfallRenderer.swift",
+      "line": 142,
+      "symbol": "WaterfallRenderer._threadGroupCount",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Waterfall/WaterfallRenderer.swift",
+      "line": 143,
+      "symbol": "WaterfallRenderer._threadGroups",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Waterfall/WaterfallRenderer.swift",
+      "line": 194,
+      "symbol": "WaterfallRenderer.init(view:clearColor:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Waterfall/WaterfallViewController.swift",
+      "line": 15,
+      "symbol": "WaterfallViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Waterfall/WaterfallViewController.swift",
+      "line": 17,
+      "symbol": "WaterfallViewController.GradientType",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Waterfall/WaterfallViewController.swift",
+      "line": 18,
+      "symbol": "WaterfallViewController.GradientType.Basic",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Waterfall/WaterfallViewController.swift",
+      "line": 19,
+      "symbol": "WaterfallViewController.GradientType.Dark",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Waterfall/WaterfallViewController.swift",
+      "line": 20,
+      "symbol": "WaterfallViewController.GradientType.Deuteranopia",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Waterfall/WaterfallViewController.swift",
+      "line": 21,
+      "symbol": "WaterfallViewController.GradientType.Grayscale",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Waterfall/WaterfallViewController.swift",
+      "line": 22,
+      "symbol": "WaterfallViewController.GradientType.Purple",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Waterfall/WaterfallViewController.swift",
+      "line": 23,
+      "symbol": "WaterfallViewController.GradientType.Tritanopia",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Waterfall/WaterfallViewController.swift",
+      "line": 25,
+      "symbol": "WaterfallViewController.gradientNames",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Waterfall/WaterfallViewController.swift",
+      "line": 38,
+      "symbol": "WaterfallViewController.panadapter",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2/xSDR6000/Waterfall/WaterfallViewController.swift",
+      "line": 40,
+      "symbol": "WaterfallViewController.radio",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    }
+  ],
+  "source_directory": "/Users/Doug/Dropbox/Code (Current)/xSDR6000 v2"
+}

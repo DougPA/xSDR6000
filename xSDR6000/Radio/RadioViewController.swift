@@ -115,7 +115,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     _log.delegate = (NSApp.delegate as? AppDelegate)
     
     // FIXME: Is this necessary???
-    _activity = ProcessInfo().beginActivity(options: ProcessInfo.ActivityOptions.latencyCritical, reason: "Good Reason")
+    _activity = ProcessInfo().beginActivity(options: [.latencyCritical, .idleSystemSleepDisabled], reason: "Good Reason")
     
     // setup & register Defaults
     defaults(from: "Defaults.plist")
@@ -198,12 +198,15 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   ///
   @IBAction func opusRxAudio(_ sender: NSButton) {
     
+    // update the default value
+    Defaults[.macAudioEnabled] = sender.boolState
+
     // enable / disable Remote Audio
     _opus?.rxEnabled = sender.boolState
 
     let opusRxStatus = sender.boolState ? "Started" : "Stopped"
     
-    _log.msg("Opus Rx - \(opusRxStatus)", level: .warning, function: #function, file: #file, line: #line)
+    _log.msg("Opus Rx - \(opusRxStatus)", level: .info, function: #function, file: #file, line: #line)
   }
   /// Respond to the Headphone Gain slider
   ///
@@ -647,11 +650,11 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
 
     NC.makeObserver(self, with: #selector(radioHasBeenRemoved(_:)), of: .radioHasBeenRemoved)
     
-//    NC.makeObserver(self, with: #selector(opusRxHasBeenAdded(_:)), of: .opusRxHasBeenAdded)
+    NC.makeObserver(self, with: #selector(opusRxHasBeenAdded(_:)), of: .opusRxHasBeenAdded)
 
     NC.makeObserver(self, with: #selector(tcpDidDisconnect(_:)), of: .tcpDidDisconnect)
 
-    NC.makeObserver(self, with: #selector(updateRequired(_:)), of: .updateRequired)
+    NC.makeObserver(self, with: #selector(radioFirmwareDowngradeRequired(_:)), of: .radioFirmwareDowngradeRequired)
 
     NC.makeObserver(self, with: #selector(tcpPingFirstResponse(_:)), of: .tcpPingFirstResponse)
   }
@@ -745,7 +748,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     _log.msg("Opus Rx added: Stream Id = \(opus.id.hex)", level: .info, function: #function, file: #file, line: #line)
 
     _opusDecode = OpusDecode()
-    _opusEncode = OpusEncode(opus)
+//    _opusEncode = OpusEncode(opus)
     opus.delegate = _opusDecode
   }
   /// Process .tcpDidDisconnect Notification
@@ -779,11 +782,11 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
       self.closeRadio()
     }
   }
-  /// Process .updateRequired Notification
+  /// Process .radioFirmwareDowngradeRequired Notification
   ///
   /// - Parameter note:         a Notification instance
   ///
-  @objc private func updateRequired(_ note: Notification) {
+  @objc private func radioFirmwareDowngradeRequired(_ note: Notification) {
     
     let versions = (note.object as! String).split(separator: ",")
     
@@ -792,10 +795,15 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     DispatchQueue.main.async {
       let alert = NSAlert()
       alert.alertStyle = .warning
-      alert.messageText = "Version update needed."
-      alert.informativeText = "Radio:\tv\(versions[1])\n" +
-        "API:\t\tv\(versions[0])\n" + "\n" +
-      "Use SmartSDR to perform an update"
+      alert.messageText = "The Radio's firmware version is not supported by this version of xSDR6000."
+      alert.informativeText = """
+      Radio:\t\tv\(versions[1])
+      xSDR6000:\tv\(versions[0])
+      
+      Use SmartSDR to DOWNGRADE the Radio firmware
+      \t\t\tOR
+      Install a newer version of xSDR6000
+      """
       alert.addButton(withTitle: "Ok")
       alert.beginSheetModal(for: self.view.window!, completionHandler: { (response) in })
     }
@@ -870,9 +878,8 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
         let monitor = toolbar.items.findElement({  $0.itemIdentifier.rawValue == "VoltageTemp"} ) as! ParameterMonitor
         monitor.deactivate()
       }
+      // perform an orderly shutdown of all the components
+      self?._api.shutdown(reason: .normal)
     }
-    
-    // perform an orderly shutdown of all the components
-    _api.shutdown(reason: .normal)
   }
 }
