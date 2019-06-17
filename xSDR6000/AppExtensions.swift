@@ -114,6 +114,10 @@ extension  UserDefaults {
     get { return Defaults[.gridLine] }
     set { Defaults[.gridLine] = newValue } }
   
+  @objc dynamic var macAudioEnabled : Bool {
+    get { return Defaults[.macAudioEnabled] }
+    set { Defaults[.macAudioEnabled] = newValue } }
+  
   @objc dynamic var marker : NSColor {
     get { return Defaults[.marker] }
     set { Defaults[.marker] = newValue } }

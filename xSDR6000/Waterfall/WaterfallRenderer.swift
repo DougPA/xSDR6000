@@ -152,7 +152,7 @@ public final class WaterfallRenderer: NSObject, MTKViewDelegate {
     encoder.setFragmentSamplerState(_gradientSamplerState, index: 0)
     
     // Draw the line(s)
-    for i in 0..<Int(view.frame.size.height) {
+    for i in 0..<Int(_constant.numberOfLines) {
       // move to the next set of Intensities
       encoder.setVertexBufferOffset(i * MemoryLayout<Intensity>.stride * kMaxIntensities, index: 0)
       // move to the next set of Line params
@@ -187,7 +187,7 @@ public final class WaterfallRenderer: NSObject, MTKViewDelegate {
 
     _topLine = 0
     
-    Swift.print("constants = \(_constant)")
+//    Swift.print("constants = \(_constant)")
   }
   
   func setLevels(autoBlack: Bool, blackLevel: Int, colorGain: Int) {

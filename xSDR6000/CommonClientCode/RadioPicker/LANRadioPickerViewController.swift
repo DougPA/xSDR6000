@@ -189,10 +189,12 @@ final class LANRadioPickerViewController    : NSViewController, NSTableViewDeleg
   ///
   private func openClose() {
     
+    guard let selectedRadio = _selectedRadio else { return }
+    
     if _selectButton.title == kConnectTitle {
       
       // if the selected radio in use?
-      if _selectedRadio!.status == "In_Use" && _api.activeRadio == nil {
+      if selectedRadio.status == "In_Use" && _api.activeRadio == nil {
 
         // YES, ask the user to confirm closing it
         let alert = NSAlert()
@@ -205,11 +207,11 @@ final class LANRadioPickerViewController    : NSViewController, NSTableViewDeleg
         // ignore if not confirmed by the user
         alert.beginSheetModal(for: view.window!, completionHandler: { (response) in
           // close the connected Radio if the YES button pressed
-          if response == NSApplication.ModalResponse.alertFirstButtonReturn { self.openRadio(self._selectedRadio) }
+          if response == NSApplication.ModalResponse.alertFirstButtonReturn { self.openRadio(selectedRadio) }
         })
       } else {
         // NO, just open it
-        openRadio(_selectedRadio)
+        openRadio(selectedRadio)
       }
 
     } else {
