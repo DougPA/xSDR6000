@@ -805,7 +805,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
       Install a newer version of xSDR6000
       """
       alert.addButton(withTitle: "Ok")
-      alert.beginSheetModal(for: self.view.window!, completionHandler: { (response) in })
+      alert.beginSheetModal(for: self.view.window!, completionHandler: { (response) in  NSApp.terminate(self) })
     }
   }
   /// Process .tcpPingFirstResponse Notification

@@ -92,17 +92,6 @@ final class WaterfallViewController               : NSViewController, NSGestureR
     _waterfallView.delegate = _waterfallRenderer
     _waterfallView.clearColor = Colors.clearColor
 
-//    // determine how the various views are blended on screen
-//    _waterfallView.compositingFilter = _filter
-//
-//    _waterfallView.isPaused = true
-//    _waterfallView.enableSetNeedsDisplay = false
-//
-//    // create the Renderer
-//    _waterfallRenderer = WaterfallRenderer(view: _waterfallView, clearColor: Defaults[.spectrumBackground])
-//
-//    _waterfallRenderer.panadapter = panadapter
-
     // setup the gradient texture
     _waterfallRenderer.setGradient( loadGradient(index: _waterfall!.gradientIndex) )
 
@@ -238,22 +227,22 @@ final class WaterfallViewController               : NSViewController, NSGestureR
     
     observations = [
       panadapter!.observe(\.band, options: [.initial, .new]) { [weak self] (object, change) in
-        self?.panadapterUpdate(object, change) },
+        self?.panadapterBandChange(object, change) },
+
+//      panadapter!.observe(\.bandwidth, options: [.initial, .new]) { [weak self] (object, change) in
+//        self?.panadapterUpdate(object, change)},
+//
+//      panadapter!.observe(\.center, options: [.initial, .new]) { [weak self] (object, change) in
+//        self?.panadapterUpdate(object, change) },
       
-      panadapter!.observe(\.bandwidth, options: [.initial, .new]) { [weak self] (object, change) in
-        self?.panadapterUpdate(object, change)},
-      
-      panadapter!.observe(\.center, options: [.initial, .new]) { [weak self] (object, change) in
-        self?.panadapterUpdate(object, change) },
-      
-      _waterfall!.observe(\.autoBlackEnabled, options: [.initial, .new]) { [weak self] (object, change) in
-        self?.waterfallObserverLevels(object, change) },
-      
-      _waterfall!.observe(\.blackLevel, options: [.initial, .new]) { [weak self] (object, change) in
-        self?.waterfallObserverLevels(object, change) },
-      
-      _waterfall!.observe(\.colorGain, options: [.initial, .new]) { [weak self] (object, change) in
-        self?.waterfallObserverLevels(object, change) },
+//      _waterfall!.observe(\.autoBlackEnabled, options: [.initial, .new]) { [weak self] (object, change) in
+//        self?.waterfallObserverLevels(object, change) },
+//
+//      _waterfall!.observe(\.blackLevel, options: [.initial, .new]) { [weak self] (object, change) in
+//        self?.waterfallObserverLevels(object, change) },
+//
+//      _waterfall!.observe(\.colorGain, options: [.initial, .new]) { [weak self] (object, change) in
+//        self?.waterfallObserverLevels(object, change) },
       
       _waterfall!.observe(\.gradientIndex, options: [.initial, .new]) { [weak self] (object, change) in
         self?.waterfallObserverGradient(object, change) },
@@ -282,21 +271,21 @@ final class WaterfallViewController               : NSViewController, NSGestureR
   ///   - object:                       the object holding the properties
   ///   - change:                       the change
   ///
-  private func panadapterUpdate(_ object: Panadapter, _ change: Any) {
-
+//  private func panadapterUpdate(_ object: Panadapter, _ change: Any) {
+//
       // update the Waterfall
 //      _waterfallRenderer.update()
-  }
+//  }
   /// Respond to Panadapter observations
   ///
   /// - Parameters:
   ///   - object:                       the object holding the properties
   ///   - change:                       the change
   ///
-  private func panadapterBandchange(_ object: Panadapter, _ change: Any) {
-    
+  private func panadapterBandChange(_ object: Panadapter, _ change: Any) {
+
     // force the Waterfall to restart
-//    _waterfallRenderer.bandChange()
+    _waterfallRenderer.restart()
   }
   /// Respond to Waterfall observations
   ///
@@ -304,11 +293,13 @@ final class WaterfallViewController               : NSViewController, NSGestureR
   ///   - object:                       the object holding the properties
   ///   - change:                       the change
   ///
-  private func waterfallObserverLevels(_ waterfall: Waterfall, _ change: Any) {
-
-      // update the levels
-    _waterfallRenderer.setLevels(autoBlack: waterfall.autoBlackEnabled, blackLevel: waterfall.blackLevel, colorGain: waterfall.colorGain)
-    }
+//  private func waterfallObserverLevels(_ waterfall: Waterfall, _ change: Any) {
+//
+//      // update the levels
+//    _waterfallRenderer.setLevels(autoBlack: waterfall.autoBlackEnabled, blackLevel: waterfall.blackLevel, colorGain: waterfall.colorGain)
+  
+//    Swift.print("Observer: colorGain = \(waterfall.colorGain), autoBlack = \(waterfall.autoBlackEnabled), blackLevel = \(waterfall.blackLevel)")
+//    }
   /// Respond to Waterfall observations
   ///
   /// - Parameters:

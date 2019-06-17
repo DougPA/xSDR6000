@@ -51,9 +51,9 @@ public final class WaterfallRenderer: NSObject, MTKViewDelegate {
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
 
-  var radio: Radio?                         = Api.sharedInstance.radio
-  weak var panadapter                       : Panadapter?
-  private weak var _waterfall               : Waterfall? { return radio!.waterfalls[panadapter!.waterfallId] }
+//  var radio: Radio?                         = Api.sharedInstance.radio
+//  weak var panadapter                       : Panadapter?
+//  private weak var _waterfall               : Waterfall? { return radio!.waterfalls[panadapter!.waterfallId] }
   
   private weak var _radio                   : Radio?
   private weak var _panadapter              : Panadapter?
@@ -69,7 +69,6 @@ public final class WaterfallRenderer: NSObject, MTKViewDelegate {
   private var _line                         = Line()
   private var _constant                     = Constant()
   private var _device                       : MTLDevice!
-  private var _commandQueue                 : MTLCommandQueue!              // Metal queue
   private var _sizeOfLine                   = 0
   private var _sizeOfIntensities            = 0
 
@@ -77,9 +76,8 @@ public final class WaterfallRenderer: NSObject, MTKViewDelegate {
   private var _pipelineState                : MTLRenderPipelineState!       // render pipeline state
   private var _gradientSamplerState         : MTLSamplerState!              // sampler for gradient
   private var _gradientTexture              : MTLTexture!                   // color gradient
-  private var _intensityBuffer              : MTLBuffer!
   private var _lineBuffer                   : MTLBuffer!
-  private var _pipelineState                : MTLRenderPipelineState!       // render pipeline state
+  private var _activeLines                  : UInt16 = 0
   
   private let _waterQ                       = DispatchQueue(label: Api.kId + ".waterQ", attributes: [.concurrent])
   private var _waterDrawQ                   = DispatchQueue(label: Api.kId + ".waterDrawQ")
@@ -106,7 +104,6 @@ public final class WaterfallRenderer: NSObject, MTKViewDelegate {
   
   private var _numberOfVertices             = 0
 //  private var _numberOfLines                = 0
-  private var _sizeOfLine                   = 0
 //  private var _sizeOfVertices               = 0
   private var _topLine                      : UInt16 = 0
   private var _first                        = true
@@ -124,12 +121,6 @@ public final class WaterfallRenderer: NSObject, MTKViewDelegate {
     _panadapter = panadapter
     
     super.init()
-
-    Swift.print("mtkview height = \(view.frame.height)")
-    
-    _metalView = view
-    setConstants(size: view.frame.size)
-    setup(view: view, clearColor: color)
   }
 
   // ----------------------------------------------------------------------------
@@ -173,7 +164,7 @@ public final class WaterfallRenderer: NSObject, MTKViewDelegate {
     encoder.setFragmentSamplerState(_gradientSamplerState, index: 0)
     
     // Draw the line(s)
-    for i in 0..<Int(_constant.numberOfLines) {
+    for i in Int(_constant.numberOfLines - _activeLines)..<Int(_constant.numberOfLines) {
       // move to the next set of Intensities
       encoder.setVertexBufferOffset(i * MemoryLayout<Intensity>.stride * kMaxIntensities, index: 0)
       // move to the next set of Line params
@@ -198,30 +189,16 @@ public final class WaterfallRenderer: NSObject, MTKViewDelegate {
   
   func setConstants(size: CGSize) {
     
-//    _numberOfVertices = kMaxIntensities
-    _constant.blackLevel = UInt16((Float(_waterfall?.blackLevel ?? 10) / 100.0) * Float(UInt16.max))
-    _constant.colorGain = UInt16(_waterfall?.colorGain ?? 20)
-    _constant.offsetY = 0
     _constant.numberOfLines = UInt16(size.height)
     _constant.startingFrequency = Float(_start)
     _constant.endingFrequency = Float(_end)
 
     _topLine = 0
-    
-//    Swift.print("constants = \(_constant)")
+    _constant.offsetY = 0
   }
-  
-  func setLevels(autoBlack: Bool, blackLevel: Int, colorGain: Int) {
-
-    _constant.blackLevel = autoBlack ? UInt16(_autoBlackLevel) : UInt16( (Float(blackLevel) / 100.0) * Float(UInt16.max) )
-    _constant.colorGain = UInt16(colorGain)
-  }
-  
   /// Setup persistent objects & state
   ///
   func setup(device: MTLDevice) {
-    
-//    makeTestData()
     
     _device = device
     
@@ -236,13 +213,14 @@ public final class WaterfallRenderer: NSObject, MTKViewDelegate {
     makeCommandQueue(device: device)
   }
   
+  func restart() {
+    _constant.offsetY = 0
+    _topLine = 0
+    _activeLines = 0
+  }
+  
   // ----------------------------------------------------------------------------
   // MARK: - Private methods
-  
-//  private func addBufferLine(line: Int) {
-//
-//    memcpy(_intensityBuffer.contents().advanced(by: line * MemoryLayout<Intensity>.stride * _numberOfVertices), &intensityTestData, MemoryLayout<Intensity>.size * _numberOfVertices)
-//  }
   
   
   private func makeIntensityBuffer(device: MTLDevice) {
@@ -314,14 +292,6 @@ public final class WaterfallRenderer: NSObject, MTKViewDelegate {
     _gradientTexture!.replace(region: region, mipmapLevel: 0, withBytes: array, bytesPerRow: kGradientSize * MemoryLayout<Float>.size)
     
   }
-  
-//  private func makeTestData() {
-//
-//    let incr = Int( (1.0 / Float(_numberOfVertices) ) * Float(UInt16.max))
-//    for i in 0..<_numberOfVertices {
-//      intensityTestData.append(Intensity(i: UInt16(i * incr) ))
-//    }
-//  }
 }
 
 // ----------------------------------------------------------------------------
@@ -350,29 +320,25 @@ extension WaterfallRenderer                 : StreamHandler {
   public func streamHandler<T>(_ streamFrame: T) {
     
     guard let streamFrame = streamFrame as? WaterfallFrame else { return }
-
-    _autoBlackLevel = streamFrame.autoBlackLevel
     
-    // copy the Intensities into the Intensity buffer
-    let binsPtr = UnsafeRawPointer(streamFrame.bins).bindMemory(to: UInt8.self, capacity: streamFrame.totalBins * MemoryLayout<UInt16>.size)
-    memcpy(_intensityBuffer.contents().advanced(by: Int(_topLine) * MemoryLayout<Intensity>.stride * kMaxIntensities), binsPtr, streamFrame.numberOfBins * MemoryLayout<UInt16>.size)
-
-    addTestLine(line: Int(_topLine))
-    
-    var bufferValue : UInt16 = 0
-    memcpy(&bufferValue, _intensityBuffer.contents().advanced(by: Int(_topLine) * _sizeOfLine) , MemoryLayout<UInt16>.size)
-    Swift.print("\(intensityTestData[200]), \(bufferValue)")
+    _activeLines = _activeLines < _constant.numberOfLines ? _activeLines + 1 : _constant.numberOfLines
     
     // update the Top Line
     if _topLine == 0 {
       _topLine = UInt16(_constant.numberOfLines - 1)
     } else {
       _topLine -= 1
-    }    
-    // update the Waterfall's Starting & Ending frequency
+    }
+    // copy the Intensities into the Intensity buffer
+    let binsPtr = UnsafeRawPointer(streamFrame.bins).bindMemory(to: UInt8.self, capacity: streamFrame.totalBins * MemoryLayout<UInt16>.size)
+    memcpy(_intensityBuffer.contents().advanced(by: Int(_topLine) * MemoryLayout<Intensity>.stride * kMaxIntensities), binsPtr, streamFrame.numberOfBins * MemoryLayout<UInt16>.size)
+
+    // update the constants
     _constant.startingFrequency = Float(_start)
     _constant.endingFrequency = Float(_end)
-    
+    _constant.blackLevel = _waterfall!.autoBlackEnabled ? UInt16(streamFrame.autoBlackLevel) : UInt16( (Float(_waterfall!.blackLevel) / 100.0) * Float(UInt16.max) )
+    _constant.colorGain = UInt16(_waterfall!.colorGain)
+
     // copy the First Bin Frequency & Bin Bandwidth for this line
     var firstBinFrequency = Float(streamFrame.firstBinFreq)
     var binBandWidth = Float(streamFrame.binBandwidth)
@@ -391,21 +357,4 @@ extension WaterfallRenderer                 : StreamHandler {
       _constant.offsetY += 1
     }
   }
-  private func makeTestData() {
-    
-    intensityTestData = [Intensity](repeating: Intensity(i: 0), count: 3360)
-    
-    let seed : UInt16 = UInt16.max / UInt16(3360)
-    for i in 0..<3360 {
-
-//      intensityTestData[i] = Intensity(i: seed * UInt16(i))
-      intensityTestData[i] = Intensity(i: UInt16.max / 2)    }
-  }
-
-  private func addTestLine(line: Int) {
-  
-    let binsPtr = UnsafeRawPointer(intensityTestData).bindMemory(to: UInt8.self, capacity: 3360 * MemoryLayout<UInt16>.size)
-    memcpy(_intensityBuffer.contents().advanced(by: Int(line) * _sizeOfLine), binsPtr, 3360 * MemoryLayout<UInt16>.size)
-  }
-
 }
