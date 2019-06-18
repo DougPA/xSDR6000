@@ -1,16 +1,23 @@
 xLib6000 Change Log
 
+v2.4.9.20190617
 
-v2.5.2
+Changed version numbering to coincide with Flex version numbers
+  Vmajor.Minor.build.date
+  date (YYYYMMDD) will be updated whenever a new instance is pushed to the GitHub repo
 
+AppExtensions.swift - added Version struct & accompannying functions, added hexDump() func
 Opus.swift - refactored vitaProcessor(_:)
 Api.swift - made udpReceiveQ higher priority (.userInteractive)
+Api.swift - refactored checkFirmware() to use Version struct
+Api.swift - renamed _apiState to apiState and made it public
 Meter.swift - added additional information to log message for unknown units
 UdpManager.swift - put streamQ closer to source of UDP packets, made it higher priority (.userInteractive)
-Frames.swift - revised log messages in Panadapter & Waterfall frames
-
-
-
+Frames.swift - revised log messages in Panadapter & Waterfall frames, refactored OpusFrame
+AppExtensions.swift - added Version struct, added hexDump() func
+Opus.swift - refactored vitaProcessor(_:)
+Vita.swift - changed desc() to use hexDump()
+Notifications.swift - removed "updateRequired", added "radioFirmwareDowngradeRequired"
 
 v2.5.1 11-Jun-2019
 
