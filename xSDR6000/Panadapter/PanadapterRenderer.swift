@@ -63,12 +63,13 @@ public final class PanadapterRenderer       : NSObject {
   
   private var _frameBoundarySemaphore       = DispatchSemaphore(value: kNumberSpectrumBuffers)
   private let _panQ                         = DispatchQueue(label: ".panQ", attributes: [.concurrent])
-  
+  private let _panDrawQ                      = DispatchQueue(label: Api.kId + ".panDrawQ")
+
   // ----- Backing properties - SHOULD NOT BE ACCESSED DIRECTLY -----------------------------------
   //
   private var __constants                   = Constants()
   private var __currentFrameIndex           = 0
-  private var __numberOfBins                : Int = PanadapterRenderer.kMaxIntensities
+  private var __numberOfBins                = UInt32(PanadapterRenderer.kMaxIntensities)
   //
   // ----- Backing properties - SHOULD NOT BE ACCESSED DIRECTLY -----------------------------------
   
@@ -80,7 +81,7 @@ public final class PanadapterRenderer       : NSObject {
     get { return _panQ.sync { __currentFrameIndex } }
     set { _panQ.sync( flags: .barrier){ __currentFrameIndex = newValue } } }
   
-  private var _numberOfBins: Int {
+  private var _numberOfBins: UInt32 {
     get { return _panQ.sync { __numberOfBins } }
     set { _panQ.sync( flags: .barrier){ __numberOfBins = newValue } } }
   
@@ -307,7 +308,7 @@ extension PanadapterRenderer                : MTKViewDelegate {
         encoder.setVertexBytes(&_colorArray[kFillColor], length: MemoryLayout.size(ofValue: _colorArray[kFillColor]), index: kColorBufferIndex)
         
         // Draw filled
-        encoder.drawIndexedPrimitives(type: .triangleStrip, indexCount: _numberOfBins * 2, indexType: .uint16, indexBuffer: _spectrumIndicesBuffer, indexBufferOffset: 0)
+        encoder.drawIndexedPrimitives(type: .triangleStrip, indexCount: Int(_numberOfBins * 2), indexType: .uint16, indexBuffer: _spectrumIndicesBuffer, indexBufferOffset: 0)
       }
       encoder.popDebugGroup()
       encoder.pushDebugGroup("Line")
@@ -316,7 +317,7 @@ extension PanadapterRenderer                : MTKViewDelegate {
       encoder.setVertexBytes(&_colorArray[kLineColor], length: MemoryLayout.size(ofValue: _colorArray[kLineColor]), index: kColorBufferIndex)
       
       // Draw as a Line
-      encoder.drawPrimitives(type: .lineStrip, vertexStart: 0, vertexCount: _numberOfBins)
+      encoder.drawPrimitives(type: .lineStrip, vertexStart: 0, vertexCount: Int(_numberOfBins))
       
       // finish using this encoder
       encoder.endEncoding()
@@ -358,19 +359,25 @@ extension PanadapterRenderer                : StreamHandler {
     
     guard let streamFrame = streamFrame as? PanadapterFrame else { return }
     
-    _frameBoundarySemaphore.wait()
+    //    Swift.print("\(streamFrame.frameIndex)")
+    
+    //    _frameBoundarySemaphore.wait()
     
     // move to using the next spectrumBuffer
     _currentFrameIndex = (_currentFrameIndex + 1) % PanadapterRenderer.kNumberSpectrumBuffers
     
-    // totalBinsInFrame is the number of horizontal pixels in the spectrum waveform
-    _numberOfBins = streamFrame.totalBinsInFrame
+    // totalBins is the number of horizontal pixels in the spectrum waveform
+    _numberOfBins = UInt32(streamFrame.totalBins)
     
     // put the Intensities into the current Spectrum Buffer
-    _spectrumBuffers[_currentFrameIndex].contents().copyMemory(from: streamFrame.bins, byteCount: streamFrame.totalBinsInFrame * MemoryLayout<ushort>.stride)
+    _spectrumBuffers[_currentFrameIndex].contents().copyMemory(from: streamFrame.bins, byteCount: streamFrame.totalBins * MemoryLayout<ushort>.stride)
     
-//    DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
-      self._metalView.draw()
-//    }
+    //    Swift.print("\(streamFrame.totalBins)")
+    
+    _panDrawQ.async { [unowned self] in
+      autoreleasepool {
+        self._metalView.draw()
+      }
+    }
   }
 }

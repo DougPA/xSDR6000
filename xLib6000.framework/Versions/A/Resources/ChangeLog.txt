@@ -1,10 +1,14 @@
 xLib6000 Change Log
 
-v3.0.4
+v2.5.1.20190617
+
+Changed version numbering to coincide with Flex version numbers
+  major.Minor.build.date
+  date (YYYYMMDD) will be updated whenever a new instance is pushed to the GitHub repo
 
 renamed all Stream for v3, incorporated new logic
-
-
+Api.swift - made _apiState public (renamed to apiState)
+Reconciled diffs with v2.4.9.20190617
 
 
 v3.0.3 23-Apr-2019

@@ -1,5 +1,15 @@
 xSDR6000 Change Log
 
+v2.5.1.20190617
+
+
+Changed version numbering to coincide with Flex version numbers
+major.Minor.build.date
+date (YYYYMMDD) will be updated whenever a new instance is pushed to the GitHub repo
+
+Reconciled diffs with v2.4.9.20190617
+
+
 v3.0.1 25-Apr-2019
 
 incorporated xLib6000 v3.0.4 (stream updates for v3)

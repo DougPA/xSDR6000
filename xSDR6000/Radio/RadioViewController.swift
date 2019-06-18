@@ -651,7 +651,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
 
     NC.makeObserver(self, with: #selector(tcpDidDisconnect(_:)), of: .tcpDidDisconnect)
 
-    NC.makeObserver(self, with: #selector(updateRequired(_:)), of: .updateRequired)
+    NC.makeObserver(self, with: #selector(radioFirmwareDowngradeRequired(_:)), of: .radioFirmwareDowngradeRequired)
 
     NC.makeObserver(self, with: #selector(tcpPingFirstResponse(_:)), of: .tcpPingFirstResponse)
     
@@ -784,11 +784,11 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
       self.closeRadio()
     }
   }
-  /// Process .updateRequired Notification
+  /// Process .radioFirmwareDowngradeRequired Notification
   ///
   /// - Parameter note:         a Notification instance
   ///
-  @objc private func updateRequired(_ note: Notification) {
+  @objc private func radioFirmwareDowngradeRequired(_ note: Notification) {
     
     let versions = (note.object as! String).split(separator: ",")
     
@@ -797,12 +797,17 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     DispatchQueue.main.async {
       let alert = NSAlert()
       alert.alertStyle = .warning
-      alert.messageText = "Version update needed."
-      alert.informativeText = "Radio:\tv\(versions[1])\n" +
-        "API:\t\tv\(versions[0])\n" + "\n" +
-      "Use SmartSDR to perform an update"
+      alert.messageText = "The Radio's firmware version is not supported by this version of xSDR6000."
+      alert.informativeText = """
+      Radio:\t\tv\(versions[1])
+      xSDR6000:\tv\(versions[0])
+      
+      Use SmartSDR to DOWNGRADE the Radio firmware
+      \t\t\tOR
+      Install a newer version of xSDR6000
+      """
       alert.addButton(withTitle: "Ok")
-      alert.beginSheetModal(for: self.view.window!, completionHandler: { (response) in })
+      alert.beginSheetModal(for: self.view.window!, completionHandler: { (response) in  NSApp.terminate(self) })
     }
   }
   /// Process .tcpPingFirstResponse Notification
