@@ -3,14 +3,11 @@
 
 ### Built on:
 
-*  macOS 10.14.4 (Deployment Target of macOS 10.12)
-*  Xcode 10.2 (10E125)
+*  macOS 10.14.5 (Deployment Target of macOS 10.12)
+*  Xcode 10.2.1 (10E1001)
 *  Swift 5.0
 
-
-**Supports SmartLink (TM).**  
-**REQUIRES a Mac that supports Metal**  
-
+Works with all Version 2 Radios with Version 2.9.4 or less
 
 ## Usage
 

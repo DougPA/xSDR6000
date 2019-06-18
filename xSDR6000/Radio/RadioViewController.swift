@@ -66,7 +66,6 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   private var _opusDecode                   : OpusDecode?
   private var _opusEncode                   : OpusEncode?
 
-  private let kGuiFirmwareSupport           = "2.3.7.x"                     // Radio firmware supported by this App
   private let kVoltageTemperature           = "VoltageTemp"                 // Identifier of toolbar VoltageTemperature toolbarItem
 
   private let kPreferencesStoryboardName    = "Preferences"
@@ -123,10 +122,10 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     // schedule the start of other apps (if any)
     scheduleSupportingApps()
     
-    // get the versions
-    _versions = versionInfo(framework: Api.kBundleIdentifier)
-    Defaults[.versionApi] = _versions!.api
-    Defaults[.versionGui] = _versions!.app
+//    // get the versions
+//    _versions = versionInfo(framework: Api.kBundleIdentifier)
+//    Defaults[.versionApi] = _versions!.api
+//    Defaults[.versionGui] = _versions!.app
 
     // get the Storyboards
     _preferencesStoryboard = NSStoryboard(name: kPreferencesStoryboardName, bundle: nil)

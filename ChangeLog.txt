@@ -1,5 +1,22 @@
 xSDR6000 Change Log
 
+v2.4.9.20190617
+
+Changed version numbering to coincide with Flex version numbers
+  major.Minor.build.date
+  date (YYYYMMDD) will be updated whenever a new instance is pushed to the GitHub repo
+
+
+README.md - updated
+AppDelegate.swift - added static appVersion property
+AppExtensions.swift - eliminated versionInfo(framework:) & versionApi & versionGui defaults
+Info.plist - changed bundle version to 2.9.4
+RadioViewController.swift - eliminated use of Defaults[.versionApi] & Defaults[.versionGui]
+RadioViewController.swift - eliminated kGuiFirmwareSupport property
+InfoPrefsViewController.swift - eliminated use of Defaults[.versionApi] & Defaults[.versionGui]
+Defaults.plist - eliminated use of versionApi & versionGui
+
+
 v2.2.1 17-Jun-2019
 
 Corrected issue in RadioPickers where empty line selected

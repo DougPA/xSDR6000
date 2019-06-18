@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import xLib6000
 import SwiftyUserDefaults
 
 final class InfoPrefsViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
@@ -49,8 +50,8 @@ final class InfoPrefsViewController: NSViewController, NSTableViewDelegate, NSTa
     view.translatesAutoresizingMaskIntoConstraints = false
     
     // populate the version fields
-    _versionGuiTextField.stringValue = Defaults[.versionGui]
-    _versionApiTextField.stringValue = Defaults[.versionApi]
+    _versionGuiTextField.stringValue = AppDelegate.appVersion.string
+    _versionApiTextField.stringValue = Api.sharedInstance.apiVersion.string
 
     // load the array
     _array = Defaults[.supportingApps] as! [Dictionary<String, Any>]

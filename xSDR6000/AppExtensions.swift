@@ -60,8 +60,6 @@ extension DefaultsKeys {
   static let tnfsEnabled                  = DefaultsKey<Bool>("tnfsEnabled")
   static let spectrumFillLevel            = DefaultsKey<Int>("spectrumFillLevel")
   static let spectrumIsFilled             = DefaultsKey<Bool>("spectrumIsFilled")
-  static let versionApi                   = DefaultsKey<String>("versionApi")
-  static let versionGui                   = DefaultsKey<String>("versionGui")
   static let versionRadio                 = DefaultsKey<String>("versionRadio")
 
   // Colors common to all Panafalls
@@ -178,14 +176,6 @@ extension  UserDefaults {
     get { return Defaults[.tnfsEnabled] }
     set { Defaults[.tnfsEnabled] = newValue } }
   
-  @objc dynamic var versionApi : String {
-    get { return Defaults[.versionApi] }
-    set { Defaults[.versionApi] = newValue } }
-  
-  @objc dynamic var versionGui : String {
-    get { return Defaults[.versionGui] }
-    set { Defaults[.versionGui] = newValue } }
-
   @objc dynamic var versionRadio : String {
     get { return Defaults[.versionRadio] }
     set { Defaults[.versionRadio] = newValue } }
@@ -524,23 +514,23 @@ func notImplemented(_ featureName: String) -> NSAlert {
 
 /// Find versions for this app and the specified framework
 ///
-func versionInfo(framework: String) -> (String, String) {
-  let kVersionKey             = "CFBundleShortVersionString"  // CF constants
-  let kBuildKey               = "CFBundleVersion"
-  
-  // get the version of the framework
-  let frameworkBundle = Bundle(identifier: framework)!
-  var version = frameworkBundle.object(forInfoDictionaryKey: kVersionKey)!
-  var build = frameworkBundle.object(forInfoDictionaryKey: kBuildKey)!
-  let apiVersion = "\(version).\(build)"
-  
-  // get the version of this app
-  version = Bundle.main.object(forInfoDictionaryKey: kVersionKey)!
-  build = Bundle.main.object(forInfoDictionaryKey: kBuildKey)!
-  let appVersion = "\(version).\(build)"
-  
-  return (apiVersion, appVersion)
-}
+//func versionInfo(framework: String) -> (String, String) {
+//  let kVersionKey             = "CFBundleShortVersionString"  // CF constants
+//  let kBuildKey               = "CFBundleVersion"
+//  
+//  // get the version of the framework
+//  let frameworkBundle = Bundle(identifier: framework)!
+//  var version = frameworkBundle.object(forInfoDictionaryKey: kVersionKey)!
+//  var build = frameworkBundle.object(forInfoDictionaryKey: kBuildKey)!
+//  let apiVersion = "\(version).\(build)"
+//  
+//  // get the version of this app
+//  version = Bundle.main.object(forInfoDictionaryKey: kVersionKey)!
+//  build = Bundle.main.object(forInfoDictionaryKey: kBuildKey)!
+//  let appVersion = "\(version).\(build)"
+//  
+//  return (apiVersion, appVersion)
+//}
 
 /// Setup & Register User Defaults from a file
 ///

@@ -16,6 +16,8 @@ let kClientName = "xSDR6000"
 @NSApplicationMain
 final class AppDelegate                     : NSObject, NSApplicationDelegate , LogHandler {
   
+  static let appVersion                     = Version("2.4.9.20190617" )
+
   // Name of the base Log file
   static let kLogFile                       = "xSDR6000.log"
   
