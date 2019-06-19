@@ -1,5 +1,14 @@
 xLib6000 Change Log
 
+v2.5.1.20190618
+
+Log.swift - removed LogHandler protocol definition
+Protocols.swift - added corrected LogHandler protocol definition
+Api.swift - revised checkFirmware() to only show "shortString" for apiVersion
+Api.swift - added clientStation clientName & clientID to connect(_:clientStation:clientName:clientId:isGui:isWan:wanHandle:primaryCmdTypes:secondaryCmdTypes:subscriptionCmdTypes:)
+APi.swift - added .clientStation & changed the order of commands in .allPrimary
+
+
 v2.5.1.20190617
 
 Changed version numbering to coincide with Flex version numbers

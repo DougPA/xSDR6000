@@ -8,7 +8,7 @@
 
 
 
-*All new work is in the v3 Branch of this repo 
+*Works with all Radios with Version 2.5.1 or more ( i.e. >=2.5.1.x and 3.x.x )
 
 ## Usage
 
