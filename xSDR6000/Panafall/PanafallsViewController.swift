@@ -7,34 +7,15 @@
 //
 
 import Cocoa
-import os.log
-import xLib6000
 
-// --------------------------------------------------------------------------------
-//  Created by RadioViewController
-//  Removed by Application termination
-//
-//  **** Notifications received ****
-//      .panadapterHasBeenAdded -> log only
-//      .waterfallHasBeenAdded -> create Panafall view hierarchy
-//
-//  **** Action Methods ****
-//      None
-//
-//  **** Observations ****
-//      None
-//
-//  **** View Bindings ****
-//      None
-//
-// --------------------------------------------------------------------------------
+import xLib6000
 
 final class PanafallsViewController               : NSSplitViewController {
   
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
   
-  private let _log                          = OSLog(subsystem: Api.kDomainId + "." + kClientName, category: "PanafallsVC")
+  private let _log                          = (NSApp.delegate as! AppDelegate)
   private var _sb                           : NSStoryboard?
   
   private let kPanafallStoryboard           = "Panafall"
@@ -97,7 +78,7 @@ final class PanafallsViewController               : NSSplitViewController {
     // is it for this Client?
     if panadapter.clientHandle == Api.sharedInstance.connectionHandle {
       // YES, log the event
-      os_log("Panadapter added: ID = %{public}@", log: _log, type: .info, panadapter.id.hex)
+      _log.msg("Panadapter added: ID = \(panadapter.id.hex)", level: .info, function: #function, file: #file, line: #line)
     }
   }
   /// Process .waterfallHasBeenAdded Notification
@@ -113,7 +94,7 @@ final class PanafallsViewController               : NSSplitViewController {
     // is it for this Client?
     if waterfall.clientHandle == Api.sharedInstance.connectionHandle {
       // YES, log the event
-      os_log("Waterfall added: ID = %{public}@", log: _log, type: .info, waterfall.id.hex)
+      _log.msg("Waterfall added: ID = \(waterfall.id.hex)", level: .info, function: #function, file: #file, line: #line)
       
       let panadapter = Api.sharedInstance.radio!.panadapters[waterfall.panadapterId]
       

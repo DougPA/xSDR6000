@@ -11,30 +11,6 @@ import xLib6000
 import SwiftyUserDefaults
 
 // --------------------------------------------------------------------------------
-//  Created by PanafallsViewController
-//  Removed by WaterfallViewController
-//
-//  **** Notifications received ****
-//      None
-//
-//  **** Action Methods ****
-//      Zoom plus -> reduce bandwidth
-//      Zoom minus -> increase bandwidth
-//      Zoom segment -> bandwidth = segment
-//      Zoom band -> bandwidth = band
-//      Remove panafall
-//      Slice add
-//      Tnf add
-//
-//  **** Observations ****
-//      None
-//
-//  **** View Bindings ****
-//      None
-//
-// --------------------------------------------------------------------------------
-
-// --------------------------------------------------------------------------------
 // MARK: - Panafall Button View Controller class implementation
 // --------------------------------------------------------------------------------
 

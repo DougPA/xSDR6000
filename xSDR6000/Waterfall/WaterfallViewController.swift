@@ -49,7 +49,7 @@ final class WaterfallViewController               : NSViewController, NSGestureR
   private var _waterfallRenderer            : WaterfallRenderer!
   
   private weak var _waterfall               : Waterfall? { return radio!.waterfalls[panadapter!.waterfallId] }
-  private let _log                          = Log.sharedInstance
+  private let _log                          = (NSApp.delegate as! AppDelegate)
   private var _center                       : Int { return panadapter!.center }
   private var _bandwidth                    : Int { return panadapter!.bandwidth }
   private var _start                        : Int { return _center - (_bandwidth/2) }
@@ -142,7 +142,7 @@ final class WaterfallViewController               : NSViewController, NSGestureR
       do {
         file = try FileHandle(forReadingFrom: texURL)
       } catch {
-        fatalError("Texture file '\(name).tex' not found")
+        fatalError("Gradient file '\(name).tex' not found")
       }
       // Read all the data
       let data = file!.readDataToEndOfFile()
@@ -157,7 +157,7 @@ final class WaterfallViewController               : NSViewController, NSGestureR
       return array
     }
     // resource not found
-    fatalError("Texture file '\(name).tex' not found")
+    fatalError("Gradient file '\(name).tex' not found")
   }
   //  /// Prevent the Right Click recognizer from responding when the mouse is not over the Legend
   //  ///

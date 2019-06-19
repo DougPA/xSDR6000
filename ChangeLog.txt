@@ -1,7 +1,25 @@
 xSDR6000 Change Log
 
-v2.5.1.20190617
+v2.5.1.20190619
 
+Added XCGLogger.framework & ObjcExceptionBridging.framework
+AppDelegate.swift - added code to support use of XCGLogger
+AppDelegate.swift - changed kClientName to kAppName and made it a static
+Defaults.plist - added clientId key
+AppExtensions.swift - added clientId Defaults key
+RadioViewController.swift - added generation & storage of a Client Id (UUID)
+RadioViewController.swift - updated title() to use new Versions struct
+RadioViewController.swift - incorporated new connect func signature w/clientId,clientName & clientStation
+RadioViewController.swift - removed LogHandler protocol method (logging now done through AppDelegate)
+Preferences.storyboard - added RadioVersion to info panel
+InfoPrefsViewController.swift - added RadioVersion code
+
+v2.5.1.20190618
+
+RadioViewController.swift - corrected radioFirmwareDowngradeRequired(_:) dialog
+Removed all references to os_log, added _log to all 
+
+v2.5.1.20190617
 
 Changed version numbering to coincide with Flex version numbers
 major.Minor.build.date

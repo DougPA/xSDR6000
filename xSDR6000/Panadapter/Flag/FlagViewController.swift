@@ -9,7 +9,6 @@
 import Cocoa
 import SwiftyUserDefaults
 import xLib6000
-import os.log
 
 // --------------------------------------------------------------------------------
 // MARK: - Flag View Controller class implementation
@@ -85,7 +84,7 @@ final class FlagViewController       : NSViewController, NSTextFieldDelegate, NS
   private var _beginEditing                 = false
   private var _darkMode                     = false
 
-  private let _log                          = OSLog(subsystem: Api.kDomainId + "." + kClientName, category: "FlagVC")
+  private let _log                          = (NSApp.delegate as! AppDelegate)
 
   private let kFlagPixelOffset              : CGFloat = 15.0/2.0
 
@@ -557,7 +556,7 @@ final class FlagViewController       : NSViewController, NSTextFieldDelegate, NS
   func addMeterObservation(_ meter: Meter) {
     
     // YES, log the event
-    os_log("Slice Meter found, name = %{public}@", log: _log, type: .info, meter.name)
+    _log.msg("Slice Meter found, name = \(meter.name)", level: .info, function: #function, file: #file, line: #line)
     
     // add the observation
     _observations.append( meter.observe(\.value, options: [.initial, .new]) { [weak self] (meter, change) in
