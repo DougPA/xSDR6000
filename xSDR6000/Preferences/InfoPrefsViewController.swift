@@ -50,8 +50,8 @@ final class InfoPrefsViewController: NSViewController, NSTableViewDelegate, NSTa
     view.translatesAutoresizingMaskIntoConstraints = false
     
     // populate the version fields
-    _versionGuiTextField.stringValue = AppDelegate.appVersion.string
-    _versionApiTextField.stringValue = Api.sharedInstance.apiVersion.string
+    _versionGuiTextField.stringValue = AppDelegate.kAppVersion.string
+    _versionApiTextField.stringValue = Api.kVersion.string
 
     // load the array
     _array = Defaults[.supportingApps] as! [Dictionary<String, Any>]

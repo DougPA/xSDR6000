@@ -1,5 +1,17 @@
 xSDR6000 Change Log
 
+v2.4.9.20190620
+
+AppDelegate.swift - reconciled with v3 version
+Corrected _log usage throughout
+Preferences.storyboard - made preferences windon non-resizable
+
+
+v2.4.9.20190618
+
+RadioViewController.swift - corrected radioFirmwareDowngradeRequired(_:) dialog
+
+
 v2.4.9.20190617
 
 Changed version numbering to coincide with Flex version numbers

@@ -44,7 +44,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
   
-  private let _log                          = Log.sharedInstance
+  private let _log                          = NSApp.delegate as! AppDelegate
   private var _api                          = Api.sharedInstance
   private var _mainWindowController         : MainWindowController?
   private var _preferencesStoryboard        : NSStoryboard?
@@ -111,8 +111,8 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
     #endif
     
-    _log.delegate = (NSApp.delegate as? AppDelegate)
-    
+    Log.sharedInstance.delegate = _log
+
     // FIXME: Is this necessary???
     _activity = ProcessInfo().beginActivity(options: [.latencyCritical, .idleSystemSleepDisabled], reason: "Good Reason")
     
@@ -787,7 +787,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   ///
   @objc private func radioFirmwareDowngradeRequired(_ note: Notification) {
     
-    let versions = (note.object as! String).split(separator: ",")
+    let versions = note.object as! [Version]
     
     // the API & Radio versions are not compatible
     // alert if other than normal
@@ -796,8 +796,8 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
       alert.alertStyle = .warning
       alert.messageText = "The Radio's firmware version is not supported by this version of xSDR6000."
       alert.informativeText = """
-      Radio:\t\tv\(versions[1])
-      xSDR6000:\tv\(versions[0])
+      Radio:\t\tv\(versions[1].string)
+      xSDR6000:\tv\(versions[0].shortString)
       
       Use SmartSDR to DOWNGRADE the Radio firmware
       \t\t\tOR

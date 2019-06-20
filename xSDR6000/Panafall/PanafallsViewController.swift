@@ -33,7 +33,7 @@ final class PanafallsViewController               : NSSplitViewController {
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
   
-  private let _log                          = Log.sharedInstance
+  private let _log                          = NSApp.delegate as! AppDelegate
   private var _sb                           : NSStoryboard?
   
   private let kPanafallStoryboard           = "Panafall"

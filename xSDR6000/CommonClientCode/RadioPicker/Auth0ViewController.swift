@@ -57,7 +57,7 @@ final class Auth0ViewController             : NSViewController, WKNavigationDele
   @IBOutlet private weak var _customView    : NSView!
   
   private let _api                          = Api.sharedInstance
-  private let _log                          = Log.sharedInstance
+  private let _log                          = NSApp.delegate as! AppDelegate
   private var myWebView                     : WKWebView!
   private let myURL                         = URL(string: smartLinkURL)!
   private let kAutosaveName                 = "AuthViewWindow"

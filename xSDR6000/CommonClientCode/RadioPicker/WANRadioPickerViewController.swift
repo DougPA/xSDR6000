@@ -46,7 +46,7 @@ final class WANRadioPickerViewController    : NSViewController, NSTableViewDeleg
   @IBOutlet private weak var _testButton    : NSButton!
   
   private var _api                          = Api.sharedInstance
-  private let _log                          = Log.sharedInstance
+  private let _log                          = NSApp.delegate as! AppDelegate
   private var _auth0ViewController          : Auth0ViewController?
   private var _availableRemoteRadios        = [RadioParameters]()           // Radios discovered
   private weak var _delegate                : RadioPickerDelegate? {

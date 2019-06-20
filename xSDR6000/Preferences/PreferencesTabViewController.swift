@@ -19,7 +19,7 @@ final class PreferencesTabViewController    : NSTabViewController {
   // MARK: - Private properties
   
   private let _autosaveName                 = "PreferencesWindow"
-  private let _log                          = Log.sharedInstance
+  private let _log                          = NSApp.delegate as! AppDelegate
   
   // ----------------------------------------------------------------------------
   // MARK: - Overridden methods

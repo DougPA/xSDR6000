@@ -32,7 +32,7 @@ public final class OpusDecode               : NSObject, StreamHandler {
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
   
-  private let _log                          = Log.sharedInstance
+  private let _log                          = NSApp.delegate as! AppDelegate
   private var _decoder                      : OpaquePointer!
   private var _engine                       = AVAudioEngine()
   private var _player                       = AVAudioPlayerNode()

@@ -31,7 +31,7 @@ final class TxViewController                      : NSViewController {
   private var _observations                 = [NSKeyValueObservation]()
   private var _profileObservations          = [NSKeyValueObservation]()
   private var _meterObservations            = [NSKeyValueObservation]()
-  private let _log                          = Log.sharedInstance
+  private let _log                          = NSApp.delegate as! AppDelegate
 
   private let kPowerForward                 = Api.MeterShortName.powerForward.rawValue
   private let kSwr                          = Api.MeterShortName.swr.rawValue

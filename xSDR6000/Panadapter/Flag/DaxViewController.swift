@@ -39,7 +39,7 @@ final class DaxViewController: NSViewController {
       view.layer?.borderWidth = 0.5
     }
     // populate the choices
-    _daxPopUp.addItems(withTitles: Api.daxChannels)
+    _daxPopUp.addItems(withTitles: Api.kDaxChannels)
     
     // start observing
     addObservations()

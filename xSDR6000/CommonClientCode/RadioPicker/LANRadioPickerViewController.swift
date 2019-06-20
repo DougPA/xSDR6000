@@ -65,7 +65,7 @@ final class LANRadioPickerViewController    : NSViewController, NSTableViewDeleg
   @IBOutlet private var _defaultButton      : NSButton!                   // Set as default
   
   private var _api                          = Api.sharedInstance
-  private let _log                          = Log.sharedInstance
+  private let _log                          = NSApp.delegate as! AppDelegate
   private var _selectedRadio                : RadioParameters?            // Radio in selected row
   private weak var _parentVc                : NSViewController!
   
