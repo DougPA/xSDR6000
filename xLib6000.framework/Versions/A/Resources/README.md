@@ -6,7 +6,7 @@
 *  Xcode 10.2.1 (10E1001)
 *  Swift 5.0
 
-Works with all Version 2 Radios with Version 2.9.4 or less
+*Works with all Version 2 Radios with Version 2.9.4 or less
 
 ## Usage
 

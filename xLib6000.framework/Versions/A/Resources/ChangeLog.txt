@@ -1,5 +1,17 @@
 xLib6000 Change Log
 
+v2.4.9.20190620
+
+reconcile Api.swift differences with v2.5.1.20190618
+
+
+v2.4.9.20190618
+
+Log.swift - removed LogHandler protocol definition
+Protocols.swift - added corrected LogHandler protocol definition
+Api.swift - revised checkFirmware() to only show "shortString" for apiVersion
+
+
 v2.4.9.20190617
 
 Changed version numbering to coincide with Flex version numbers
