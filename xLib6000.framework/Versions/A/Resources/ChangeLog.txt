@@ -1,8 +1,10 @@
 xLib6000 Change Log
 
-v2.4.9.20190620
+v2.4.9.2019_06_21
 
+Api.swift - changed static kFrameworkName to kName
 reconcile Api.swift differences with v2.5.1.20190618
+Added underscores to version for readability
 
 
 v2.4.9.20190618
