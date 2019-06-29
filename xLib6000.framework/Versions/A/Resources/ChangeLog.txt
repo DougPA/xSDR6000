@@ -1,5 +1,12 @@
 xLib6000 Change Log
 
+v2.5.1.2019_06_20
+
+Api.swift - removed Level enum (it was unused)
+reconcile Api.swift differences with v2.4.9.20190618
+APi.swift - changed static kFrameworkName to kName
+
+
 v2.5.1.20190618
 
 Log.swift - removed LogHandler protocol definition
