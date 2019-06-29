@@ -1,5 +1,14 @@
 xSDR6000 Change Log
 
+v2.4.9.2019_06_29
+
+Refactored OpusDecode.swift & renamae to OpusPlayer.swift
+Added TPCircularBuffer files (5) in the RingBUffer folder
+Preferences.storyboard - layout corrections
+OpusDecode.swift - added Ring buffer and code to utilize it
+AppDelegate.swift added underscores to version for readability
+
+
 v2.4.9.20190620
 
 AppDelegate.swift - reconciled with v3 version

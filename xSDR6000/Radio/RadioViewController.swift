@@ -63,7 +63,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   private var _activity                     : NSObjectProtocol?
 
   private var _opus                         : Opus?
-  private var _opusDecode                   : OpusDecode?
+  private var _opusDecode                   : OpusPlayer?
   private var _opusEncode                   : OpusEncode?
 
   private let kVoltageTemperature           = "VoltageTemp"                 // Identifier of toolbar VoltageTemperature toolbarItem
@@ -204,8 +204,9 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     _opus?.rxEnabled = sender.boolState
 
     let opusRxStatus = sender.boolState ? "Started" : "Stopped"
-    
     _log.msg("Opus Rx - \(opusRxStatus)", level: .info, function: #function, file: #file, line: #line)
+    
+    sender.boolState ? _opusDecode?.startOpusRx() : _opusDecode?.stopOpusRx()
   }
   /// Respond to the Headphone Gain slider
   ///
@@ -744,9 +745,9 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     let opus = note.object as! Opus
     _opus = opus
     
-    _log.msg("Opus Rx added: Stream Id = \(opus.id.hex)", level: .info, function: #function, file: #file, line: #line)
+    _log.msg("Opus Rx Stream added: StreamId = \(opus.id.hex)", level: .info, function: #function, file: #file, line: #line)
 
-    _opusDecode = OpusDecode()
+    _opusDecode = OpusPlayer()
 //    _opusEncode = OpusEncode(opus)
     opus.delegate = _opusDecode
   }
