@@ -63,7 +63,7 @@ public final class PanadapterRenderer       : NSObject {
   
   private var _frameBoundarySemaphore       = DispatchSemaphore(value: kNumberSpectrumBuffers)
   private let _panQ                         = DispatchQueue(label: ".panQ", attributes: [.concurrent])
-  private let _panDrawQ                      = DispatchQueue(label: Api.kId + ".panDrawQ")
+  private let _panDrawQ                      = DispatchQueue(label: Api.kName + ".panDrawQ")
 
   // ----- Backing properties - SHOULD NOT BE ACCESSED DIRECTLY -----------------------------------
   //

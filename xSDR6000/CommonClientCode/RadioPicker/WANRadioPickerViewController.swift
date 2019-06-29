@@ -79,7 +79,7 @@ final class WANRadioPickerViewController    : NSViewController, NSTableViewDeleg
   private let kLogoutTitle                  = "Log Out"
   private let kPlatform                     = "macOS"
   private let kScope                        = "openid email given_name family_name picture"
-  private let kService                      = AppDelegate.kAppName + kServiceName
+  private let kService                      = AppDelegate.kName + kServiceName
   private let kUpnpIdentifier               = "upnpSupported"
   
   // ----------------------------------------------------------------------------
@@ -375,7 +375,7 @@ final class WANRadioPickerViewController    : NSViewController, NSTableViewDeleg
 
     // connect with pinger to avoid the SmartLink server to disconnect if we take too long (>30s)
     // to select and connect to a radio
-    if !_wanServer!.connect(appName: AppDelegate.kAppName, platform: kPlatform, token: token, ping: true) {
+    if !_wanServer!.connect(appName: AppDelegate.kName, platform: kPlatform, token: token, ping: true) {
       
       // log the error
       _log.msg("Error connecting to SmartLink Server", level: .warning, function: #function, file: #file, line: #line)

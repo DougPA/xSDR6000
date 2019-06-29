@@ -1,10 +1,10 @@
 xSDR6000 Change Log
 
-v2.5.1.20190619
+v2.5.1.2019_06_19
 
 Added XCGLogger.framework & ObjcExceptionBridging.framework
 AppDelegate.swift - added code to support use of XCGLogger
-AppDelegate.swift - changed kClientName to kAppName and made it a static
+AppDelegate.swift - changed kClientName to kName and made it a static
 Defaults.plist - added clientId key
 AppExtensions.swift - added clientId Defaults key
 RadioViewController.swift - added generation & storage of a Client Id (UUID)
@@ -13,6 +13,8 @@ RadioViewController.swift - incorporated new connect func signature w/clientId,c
 RadioViewController.swift - removed LogHandler protocol method (logging now done through AppDelegate)
 Preferences.storyboard - added RadioVersion to info panel
 InfoPrefsViewController.swift - added RadioVersion code
+AppDelegate.swift added underscores to version for readability
+
 
 v2.5.1.20190618
 

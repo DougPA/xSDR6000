@@ -901,7 +901,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     
     // attempt to connect to it
     let station = (Host.current().localizedName ?? "Mac").replacingSpaces(with: "_")
-    return _api.connect(selectedRadio, clientStation: station, clientName: AppDelegate.kAppName, clientId: _clientId, isGui: true, isWan: isWan, wanHandle: wanHandle)
+    return _api.connect(selectedRadio, clientStation: station, clientName: AppDelegate.kName, clientId: _clientId, isGui: true, isWan: isWan, wanHandle: wanHandle)
   }
   /// Stop the active Radio
   ///
