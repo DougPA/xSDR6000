@@ -1,5 +1,11 @@
 xSDR6000 Change Log
 
+v2.5.1.2019_07_03
+
+Corrections and edits throughout to make v2.4.9 & v2.5.1 as similar as possible
+xLib6000.framework - updated to v2.5.1.2019_07_03
+
+
 v2.5.1.2019_06_19
 
 Added XCGLogger.framework & ObjcExceptionBridging.framework

@@ -24,7 +24,7 @@ protocol LANRadioPickerDelegate: class {
   /// Open the specified Radio
   ///
   /// - Parameters:
-  ///   - radio:          a RadioParameters struct
+  ///   - radio:          a DiscoveredRadio struct
   ///   - remote:         remote / local
   ///   - handle:         remote handle
   /// - Returns:          success / failure

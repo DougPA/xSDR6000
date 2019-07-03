@@ -21,7 +21,7 @@ protocol RadioPickerDelegate: class {
   /// Open the specified Radio
   ///
   /// - Parameters:
-  ///   - radio:          a RadioParameters struct
+  ///   - radio:          a DiscoveredRadio struct
   ///   - remote:         remote / local
   ///   - handle:         remote handle
   /// - Returns:          success / failure
@@ -628,7 +628,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   }
   /// Check if there is a Default Radio
   ///
-  /// - Returns:        a RadioParameters struct or nil
+  /// - Returns:        a DiscoveredRadio struct or nil
   ///
   private func defaultRadioFound() -> DiscoveredRadio? {
     var defaultRadio: DiscoveredRadio?
@@ -769,7 +769,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     let opus = note.object as! Opus
     _opus = opus
     
-    _log.msg("Opus Rx added: ID = \(opus.id.hex)", level: .info, function: #function, file: #file, line: #line)
+    _log.msg("Opus Rx added: ID = \(opus.streamId.hex)", level: .info, function: #function, file: #file, line: #line)
     
     _opusDecode = OpusDecode()
     _opusEncode = OpusEncode(opus)
@@ -881,7 +881,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   /// Connect the selected Radio
   ///
   /// - Parameters:
-  ///   - radio:                the RadioParameters
+  ///   - radio:                the DiscoveredRadio
   ///   - isWan:                Local / Wan
   ///   - wanHandle:            Wan handle (if any)
   /// - Returns:                success / failure

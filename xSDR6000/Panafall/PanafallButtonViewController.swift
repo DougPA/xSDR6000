@@ -190,7 +190,7 @@ final class PanafallButtonViewController    : NSViewController {
   @IBAction func tnf(_ sender: NSButton) {
     var freq = 0
     
-    if let slice = Slice.findActive(with: _panadapter!.id) {
+    if let slice = Slice.findActive(with: _panadapter!.streamId) {
       // put the Tnf in the center of the active Slice
       freq = slice.frequency + (slice.filterHigh - slice.filterLow) / 2
 

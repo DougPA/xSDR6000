@@ -16,7 +16,7 @@ final class AppDelegate                     : NSObject, NSApplicationDelegate , 
   
   // App parameters
   static let kName                          = "xSDR6000"
-  static let kVersion                       = Version("2.5.1.2019_06_19" )
+  static let kVersion                       = Version("2.5.1.2019_07_03" )
   
   // Log parameters
   static let kLoggerName                    = AppDelegate.kName

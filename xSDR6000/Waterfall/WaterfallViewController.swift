@@ -348,7 +348,7 @@ final class WaterfallViewController               : NSViewController, NSGestureR
     let waterfall = note.object as! Waterfall
     
     // YES, log the event
-    _log.msg("Waterfall will be removed, Stream Id = \(waterfall.id.hex)", level: .info, function: #function, file: #file, line: #line)
+    _log.msg("Waterfall will be removed, Stream Id = \(waterfall.streamId.hex)", level: .info, function: #function, file: #file, line: #line)
     
     // stop processing waterfall data
     waterfall.delegate = nil

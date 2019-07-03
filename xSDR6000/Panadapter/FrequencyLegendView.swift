@@ -434,7 +434,7 @@ public final class FrequencyLegendView      : NSView {
   func drawSlices(_ pan: Panadapter) {
     
     // for Slices on this Panadapter
-    radio!.slices.filter { $0.value.panadapterId == pan.id }.forEach {
+    radio!.slices.filter { $0.value.panadapterId == pan.streamId }.forEach {
       
       drawFilterOutline($0.value)
       
