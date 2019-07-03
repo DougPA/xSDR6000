@@ -1,5 +1,13 @@
 xLib6000 Change Log
 
+v2.4.9.2019_07_02
+
+Frames.swift - comments
+Opus.swift - refactored missing frames logic
+Opus.swift - added statc "elementSize"
+Multiple = changed the severity level of some log message
+
+
 v2.4.9.2019_06_21
 
 Api.swift - changed static kFrameworkName to kName
