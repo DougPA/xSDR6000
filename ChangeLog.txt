@@ -1,5 +1,14 @@
 xSDR6000 Change Log
 
+v2.4.9.2019_07_02
+
+AppDelegate.swift - added ability to use commandline args for log level (-logDebug, -logInfo, -logWarning, -logError) unrecognized or no arg == -logWarning
+Preferences.storyboard - made version fields on Info panel larger
+RadioViewController.swift - rename OpusDecode to OpusPlayer, corrected start and stop of Opus
+WaterfallRenderer.swift - fixed race involving _constant
+OpusPlayer.swift - refactor to use AVAudioConverter when running on macOS 10.13+
+
+
 v2.4.9.2019_06_29
 
 Refactored OpusDecode.swift & renamae to OpusPlayer.swift

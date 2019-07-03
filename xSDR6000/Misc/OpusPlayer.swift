@@ -11,6 +11,8 @@ import xLib6000
 import OpusOSX
 import Accelerate
 import AudioToolbox
+import AVFoundation
+
 
 //  DATA FLOW
 //
@@ -27,32 +29,64 @@ import AudioToolbox
 // --------------------------------------------------------------------------------
 
 public final class OpusPlayer                       : NSObject, StreamHandler {
-
-  static let frequency          : Float64 = 440.0
   
-  static let sampleRate         : Float64 = 24_000
-  static let numberOfFrames     = 240                           // number of Frames in each buffer
-  static let elementSize        = MemoryLayout<Float>.size      // size of an element in the buffer (in Bytes)
-  static let numberOfChannels   = 2                             // number of channels in each AudioBufferList
-  static let bufferSize         = numberOfFrames * elementSize  // size of a buffer (in Bytes)
-  static let ringBufferCapacity = 10                            // number of AudioBufferLists in the Ring buffer
-  static let ringBufferOverage  = 2_048                         // allowance for Ring buffer metadata (in Bytes)
-  static let ringBufferSize     = (OpusPlayer.bufferSize * OpusPlayer.numberOfChannels * OpusPlayer.ringBufferCapacity) + OpusPlayer.ringBufferOverage
+  // ----------------------------------------------------------------------------
+  // MARK: - Static properties
+  
+  static let bufferSize         = Opus.frameCount * Opus.elementSize  // size of a buffer (in Bytes)
+  static let ringBufferCapacity = 20                                  // number of AudioBufferLists in the Ring buffer
+  static let ringBufferOverage  = 2_048                               // allowance for Ring buffer metadata (in Bytes)
+  static let ringBufferSize     = (OpusPlayer.bufferSize * Opus.channelCount * OpusPlayer.ringBufferCapacity) + OpusPlayer.ringBufferOverage
+
+  // Opus sample rate, format, 2 channels for compressed Opus data
+  static var opusASBD = AudioStreamBasicDescription(mSampleRate: Opus.sampleRate,
+                                                    mFormatID: kAudioFormatOpus,
+                                                    mFormatFlags: 0,
+                                                    mBytesPerPacket: 0,
+                                                    mFramesPerPacket: UInt32(Opus.frameCount),
+                                                    mBytesPerFrame: 0,
+                                                    mChannelsPerFrame: UInt32(Opus.channelCount),
+                                                    mBitsPerChannel: 0,
+                                                    mReserved: 0)
+  // Opus sample rate, PCM, Float32, 2 channel, interleaved
+  static var decoderOutputASBD = AudioStreamBasicDescription(mSampleRate: Opus.sampleRate,
+                                                             mFormatID: kAudioFormatLinearPCM,
+                                                             mFormatFlags: kAudioFormatFlagIsFloat,
+                                                             mBytesPerPacket: UInt32(Opus.elementSize * Opus.channelCount),
+                                                             mFramesPerPacket: 1,
+                                                             mBytesPerFrame: UInt32(Opus.elementSize * Opus.channelCount),
+                                                             mChannelsPerFrame: UInt32(Opus.channelCount),
+                                                             mBitsPerChannel: UInt32(Opus.elementSize * 8) ,
+                                                             mReserved: 0)
+//  // convert from Opus compressed -> PCM Float32, 2 channel, interleaved
+//  static var converter = AVAudioConverter(from: AVAudioFormat(streamDescription: &OpusPlayer.opusASBD)!,
+//                                          to: AVAudioFormat(streamDescription: &OpusPlayer.decoderOutputASBD)!)
 
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
   
   private let _log                                  = NSApp.delegate as! AppDelegate
 
-  private var _asbd                                 = AudioStreamBasicDescription()
-  private var _decoder                              : OpaquePointer!
-  private var _decoderOutputBuffer                  = [Float](repeating: 0.0, count: OpusPlayer.numberOfFrames * OpusPlayer.numberOfChannels)
-  private var _decoderOutputBufferList              : AudioBufferList!
-  private var _decoderOutputBufferListPtr           : UnsafeMutableAudioBufferListPointer!
-  private var _isPlaying                            = false
   private var _outputUnit                           : AudioUnit?
   private var _ringBuffer                           = TPCircularBuffer()
+  
+  private var _q                                    = DispatchQueue(label: AppDelegate.kAppName + "OpusPlayerObjectQ", qos: .userInteractive, attributes: [.concurrent])
 
+  private var __outputActive                        = false
+  private var _outputActive                         : Bool {
+    get { return _q.sync { __outputActive } }
+    set { _q.sync(flags: .barrier) { __outputActive = newValue } } }
+  
+  // OSX 10.13+
+  private var _inputBuffer                          = AVAudioCompressedBuffer()
+  private var _outputBuffer                         = AVAudioPCMBuffer()
+  private var _converter                            : AVAudioConverter?
+
+  // OSX pre 10.13
+  private var _decoder                              : OpaquePointer!
+  private var _decoderOutputBuffer                  = [Float](repeating: 0.0, count: Opus.frameCount * Opus.channelCount)
+  private var _decoderOutputBufferList              : AudioBufferList!
+  private var _decoderOutputBufferListPtr           : UnsafeMutableAudioBufferListPointer!
 
   // ----------------------------------------------------------------------------
   // MARK: - Initialization
@@ -61,13 +95,12 @@ public final class OpusPlayer                       : NSObject, StreamHandler {
 
     super.init()
 
-    createBuffers()
+    setupConversion()
     
-    createDecoder()
+//    createDecoder()
     
     setupOutputUnit()
   }
-  
   deinit {
     guard let outputUnit = _outputUnit else { return }
     AudioUnitUninitialize(outputUnit)
@@ -77,63 +110,72 @@ public final class OpusPlayer                       : NSObject, StreamHandler {
   // ----------------------------------------------------------------------------
   // MARK: - Public methods
   
-  public func startOpusRx() {
+  public func start() {
     
     guard let outputUnit = _outputUnit else { fatalError("Output unit is null") }
+    TPCircularBufferClear(&_ringBuffer)
     
+    let availableFrames = TPCircularBufferGetAvailableSpace(&_ringBuffer, &OpusPlayer.decoderOutputASBD)
+    _log.msg("\(availableFrames) Ring buffer frames available at start", level: .debug, function: #function, file: #file, line: #line)
+    
+    // register render callback
+    var input: AURenderCallbackStruct = AURenderCallbackStruct(inputProc: RenderProc, inputProcRefCon: Unmanaged.passUnretained(self).toOpaque())
+    AudioUnitSetProperty(outputUnit,
+                         kAudioUnitProperty_SetRenderCallback,
+                         kAudioUnitScope_Input,
+                         0,
+                         &input,
+                         UInt32(MemoryLayout.size(ofValue: input)))
+    guard AudioUnitInitialize(outputUnit) == noErr else { fatalError("Output unit not initialized") }
+
     // start playing
     guard AudioOutputUnitStart(outputUnit) == noErr else { fatalError("Output unit failed to start") }
-    _isPlaying = true
+    _outputActive = true
   }
   
-  public func stopOpusRx() {
+  public func stop() {
     
-    // shutdown
-    _isPlaying = false
-    
+    _outputActive = false
+
     guard let outputUnit = _outputUnit else { return }
     
     AudioOutputUnitStop(outputUnit)
+    
+    let availableFrames = TPCircularBufferGetAvailableSpace(&_ringBuffer, &OpusPlayer.decoderOutputASBD)
+    _log.msg("\(availableFrames) Ring buffer frames available at stop", level: .debug, function: #function, file: #file, line: #line)
   }
 
   // ----------------------------------------------------------------------------
   // MARK: - Private methods
   
-  /// Create buffers
+  /// Setup buffers and Converters
   ///
-  private func createBuffers() {
+  private func setupConversion() {
     
-    // set the appropriate properties (PCM Float32 interleaved)
-    memset(&_asbd, 0, MemoryLayout<AudioStreamBasicDescription>.size)
-    _asbd.mSampleRate = OpusPlayer.sampleRate                                                   // sample rate
-    _asbd.mFormatID = kAudioFormatLinearPCM                                                     // format
-    _asbd.mFormatFlags = kAudioFormatFlagIsFloat                                                // elements are Floats
-    _asbd.mBitsPerChannel = UInt32(OpusPlayer.elementSize * 8)                                  // bits in each Frame of a Channel
-    _asbd.mChannelsPerFrame = 2                                                                 // number of channels in a Frame
-    _asbd.mFramesPerPacket = 1                                                                  // number of Frames in a Packet
-    _asbd.mBytesPerFrame = UInt32(OpusPlayer.elementSize * OpusPlayer.numberOfChannels)         // number of bytes in a Frame
-    _asbd.mBytesPerPacket = _asbd.mBytesPerFrame * _asbd.mFramesPerPacket                       // number of bytes in a Packet
-    
-    // setup the Decoder Output buffer
-    _decoderOutputBufferListPtr = AudioBufferList.allocate(maximumBuffers: 1)
-    _decoderOutputBufferListPtr[0] = AudioBuffer(mNumberChannels: 2, mDataByteSize: UInt32(OpusPlayer.bufferSize * OpusPlayer.numberOfChannels), mData: &_decoderOutputBuffer)
-    
+    if #available(OSX 10.13, *) {
+      // setup the Converter Input & Output buffers
+      _inputBuffer = AVAudioCompressedBuffer(format: AVAudioFormat(streamDescription: &OpusPlayer.opusASBD)!, packetCapacity: 1, maximumPacketSize: Opus.frameCount)
+      _outputBuffer = AVAudioPCMBuffer(pcmFormat: AVAudioFormat(streamDescription: &OpusPlayer.decoderOutputASBD)!, frameCapacity: UInt32(Opus.frameCount))!
+
+      // convert from Opus compressed -> PCM Float32, 2 channel, interleaved
+      _converter = AVAudioConverter(from: AVAudioFormat(streamDescription: &OpusPlayer.opusASBD)!,
+                                              to: AVAudioFormat(streamDescription: &OpusPlayer.decoderOutputASBD)!)
+    } else {
+      // setup the Decoder Output buffer
+      _decoderOutputBufferListPtr = AudioBufferList.allocate(maximumBuffers: 1)
+      _decoderOutputBufferListPtr[0] = AudioBuffer(mNumberChannels: 2, mDataByteSize: UInt32(OpusPlayer.bufferSize * Opus.channelCount), mData: &_decoderOutputBuffer)
+
+      // create the Opus decoder
+      var opusError : Int32 = 0
+      _decoder = opus_decoder_create(Int32(Opus.sampleRate),
+                                     Int32(Opus.channelCount),
+                                     &opusError)
+
+      if opusError != 0 { fatalError("Unable to create OpusDecoder, error = \(opusError)") }
+    }
     // create the Ring buffer (actual size will be adjusted to fit virtual memory page size)
     guard _TPCircularBufferInit( &_ringBuffer, UInt32(OpusPlayer.ringBufferSize), MemoryLayout<TPCircularBuffer>.stride ) else { fatalError("Ring Buffer not created") }
   }
-  /// Create an Opus decoder
-  ///
-  private func createDecoder() {
-    
-    // create the Opus decoder
-    var opusError : Int32 = 0
-    _decoder = opus_decoder_create(Int32(Opus.sampleRate),
-                                   Int32(Opus.channelCount),
-                                   &opusError)
-    if opusError != 0 { fatalError("Unable to create OpusDecoder, error = \(opusError)") }
-  }
-  // --------------------------------------------------------------------------------------------
-  //
   /// Setup the Output Unit
   ///
   func setupOutputUnit()
@@ -153,7 +195,7 @@ public final class OpusPlayer                       : NSObject, StreamHandler {
     
     
     // set the output unit's Input sample rate
-    var inputSampleRate = OpusPlayer.sampleRate
+    var inputSampleRate = Opus.sampleRate
     AudioUnitSetProperty(outputUnit,
                          kAudioUnitProperty_SampleRate,
                          kAudioUnitScope_Input,
@@ -162,28 +204,15 @@ public final class OpusPlayer                       : NSObject, StreamHandler {
                          UInt32(MemoryLayout<Float64>.size))
     
     // set the output unit's Input stream format (PCM Float32 interleaved)
-    var inputStreamFormat = _asbd
+    var inputStreamFormat = OpusPlayer.decoderOutputASBD
     AudioUnitSetProperty(outputUnit,
                          kAudioUnitProperty_StreamFormat,
                          kAudioUnitScope_Input,
                          0,
                          &inputStreamFormat,
                          UInt32(MemoryLayout<AudioStreamBasicDescription>.size))
-    
-    // register render callback
-    var input: AURenderCallbackStruct = AURenderCallbackStruct(inputProc: RenderProc, inputProcRefCon: Unmanaged.passUnretained(self).toOpaque())
-    AudioUnitSetProperty(outputUnit,
-                         kAudioUnitProperty_SetRenderCallback,
-                         kAudioUnitScope_Input,
-                         0,
-                         &input,
-                         UInt32(MemoryLayout.size(ofValue: input)))
-    guard AudioUnitInitialize(outputUnit) == noErr else { fatalError("Output unit not initialized") }
   }
-
-  // --------------------------------------------------------------------------------------------
-  //
-  /// Render proc
+  /// AudioUnit Render proc
   ///
   ///   returns PCM Float32 interleaved data
   ///
@@ -204,16 +233,19 @@ public final class OpusPlayer                       : NSObject, StreamHandler {
 
     // retrieve the requested number of frames
     var lengthInFrames = inNumberFrames
-    TPCircularBufferDequeueBufferListFrames(&player._ringBuffer, &lengthInFrames, ioData, nil, &player._asbd)
+    TPCircularBufferDequeueBufferListFrames(&player._ringBuffer, &lengthInFrames, ioData, nil, &OpusPlayer.decoderOutputASBD)
 
     // assumes no error
     return noErr
   }
 
   // ----------------------------------------------------------------------------
-  // MARK: - OpusStreamHandler protocol methods
+  // MARK: - Stream Handler protocol methods
   //
-  
+
+  // ----------------------------------------------------------------------------
+  // MARK: - Public methods
+
   /// Process the UDP Stream Data for Opus Rx
   ///
   ///   StreamHandler protocol, executes on the streamQ
@@ -221,31 +253,72 @@ public final class OpusPlayer                       : NSObject, StreamHandler {
   /// - Parameter frame:            an Opus Rx Frame
   ///
   public func streamHandler<T>(_ streamFrame: T) {
-    var numberOfFramesDecoded : Int32 = 0
     
     guard let frame = streamFrame as? OpusFrame else { return }
     
-    guard _isPlaying else { return }
+    guard _outputActive else { return }
 
-    // ----- Opus Decoding -----
+    if #available(OSX 10.13, *) {
+      // OSX 10.13 and higher
 
-    // Incoming Stream -> _inputBuffer (PCM Float32 interleaved)
+      // create an AVAudioCompressedBuffer for input to the converter
+      _inputBuffer = AVAudioCompressedBuffer(format: AVAudioFormat(streamDescription: &OpusPlayer.opusASBD)!, packetCapacity: 1, maximumPacketSize: Opus.frameCount)
 
-    // perform Opus decoding
-    numberOfFramesDecoded = opus_decode_float(_decoder,                       // a decoder
-      frame.samples,                      // source (Opus-encoded bytes)
-      Int32(frame.numberOfSamples),       // source, number of bytes
-      &_decoderOutputBuffer,                      // destination (PCM FLoat32 interleaved)
-      Int32(OpusPlayer.numberOfFrames),   // destination, number of frames per channel
-      0)                                  // FEC (none)
+      // create an AVAudioPCMBuffer buffer for output from the converter
+      _outputBuffer = AVAudioPCMBuffer(pcmFormat: AVAudioFormat(streamDescription: &OpusPlayer.decoderOutputASBD)!, frameCapacity: UInt32(Opus.frameCount))!
+      _outputBuffer.frameLength = _outputBuffer.frameCapacity
 
-    // check for decode errors
-    if numberOfFramesDecoded < 0 {
-      _log.msg("\(String(cString: opus_strerror(numberOfFramesDecoded)))", level: .error, function: #function, file: #file, line: #line)
+      if frame.numberOfSamples != 0 {
+        // Valid packet: copy the data and save the count
+        memcpy(_inputBuffer.data, frame.samples, frame.numberOfSamples)
+        _inputBuffer.byteLength = UInt32(frame.numberOfSamples)
+        _inputBuffer.packetCount = AVAudioPacketCount(1)
+        _inputBuffer.packetDescriptions![0].mDataByteSize = _inputBuffer.byteLength
+      } else {
+        // Missed packet:
+        _inputBuffer.byteLength = UInt32(frame.numberOfSamples)
+        _inputBuffer.packetCount = AVAudioPacketCount(1)
+        _inputBuffer.packetDescriptions![0].mDataByteSize = _inputBuffer.byteLength
+      }
+      // Convert from the inputBuffer (Opus) to the outputBuffer (PCM Float32, interleaved)
+      var error: NSError?
+      let _ = (_converter!.convert(to: _outputBuffer, error: &error, withInputFrom: { (packetCount, outputStatus) -> AVAudioBuffer? in
+        outputStatus.pointee = .haveData
+        return self._inputBuffer
+      }))
+
+      // check for decode errors
+      if error != nil {
+        _log.msg("Opus conversion error: \(error!)", level: .error, function: #function, file: #file, line: #line)
+      }
+      // copy the frame's buffer to the Ring buffer & make it available
+      if !TPCircularBufferCopyAudioBufferList(&_ringBuffer, &_outputBuffer.mutableAudioBufferList.pointee, nil, UInt32(Opus.frameCount), &OpusPlayer.decoderOutputASBD) {
+        // something bad happened
+        let availableFrames = TPCircularBufferGetAvailableSpace(&_ringBuffer, &OpusPlayer.decoderOutputASBD)
+        _log.msg("Failed to write to the Ring Buffer: \(availableFrames) frames available", level: .error, function: #function, file: #file, line: #line)
+      }
+
+    } else {
+      // Pre OSX 10.13
+
+      // Convert from the frame.samples array (Opus) to the outputBuffer (PCM Float32, interleaved)
+      let numberOfFramesDecoded = opus_decode_float(
+        _decoder,                           // a decoder
+        frame.samples,                      // source (Opus-encoded bytes)
+        Int32(frame.numberOfSamples),       // source, number of bytes
+        &_decoderOutputBuffer,              // destination (PCM FLoat32 interleaved)
+        Int32(Opus.frameCount),             // destination, number of frames per channel
+        0 )                                 // FEC (none)
+  
+      // check for decode errors
+      if numberOfFramesDecoded < 0 {
+        _log.msg("\(String(cString: opus_strerror(numberOfFramesDecoded)))", level: .error, function: #function, file: #file, line: #line)
+      }
+  
+      // copy the frame's buffer to the Ring buffer & make it available
+      let success = TPCircularBufferCopyAudioBufferList(&_ringBuffer, _decoderOutputBufferListPtr!.unsafeMutablePointer, nil, UInt32(Opus.frameCount), &OpusPlayer.decoderOutputASBD)
+      if !success { _log.msg("Failed to write to the Ring Buffer", level: .error, function: #function, file: #file, line: #line) }
     }
-
-    // copy the Input buffer to the Ring buffer & make it available
-    let success = TPCircularBufferCopyAudioBufferList(&_ringBuffer, _decoderOutputBufferListPtr!.unsafeMutablePointer, nil, UInt32(OpusPlayer.numberOfFrames), &_asbd)
-    if !success { _log.msg("Failed to write to the Ring Buffer", level: .error, function: #function, file: #file, line: #line) }
   }
 }
+

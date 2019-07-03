@@ -63,7 +63,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   private var _activity                     : NSObjectProtocol?
 
   private var _opus                         : Opus?
-  private var _opusDecode                   : OpusPlayer?
+  private var _opusPlayer                   : OpusPlayer?
   private var _opusEncode                   : OpusEncode?
 
   private let kVoltageTemperature           = "VoltageTemp"                 // Identifier of toolbar VoltageTemperature toolbarItem
@@ -110,32 +110,24 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     #if XDEBUG
     Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
     #endif
-    
+
+    // setup & register Defaults
+    defaults(from: "Defaults.plist")
+
     Log.sharedInstance.delegate = _log
 
     // FIXME: Is this necessary???
     _activity = ProcessInfo().beginActivity(options: [.latencyCritical, .idleSystemSleepDisabled], reason: "Good Reason")
-    
-    // setup & register Defaults
-    defaults(from: "Defaults.plist")
-    
+        
     // schedule the start of other apps (if any)
     scheduleSupportingApps()
     
-//    // get the versions
-//    _versions = versionInfo(framework: Api.kBundleIdentifier)
-//    Defaults[.versionApi] = _versions!.api
-//    Defaults[.versionGui] = _versions!.app
-
     // get the Storyboards
     _preferencesStoryboard = NSStoryboard(name: kPreferencesStoryboardName, bundle: nil)
     _profilesStoryboard = NSStoryboard(name: kProfilesStoryboardName, bundle: nil)
     _radioPickerStoryboard = NSStoryboard(name: kRadioPickerStoryboardName, bundle: nil)
     _sideStoryboard = NSStoryboard(name: kSideStoryboardName, bundle: nil)
 
-    //
-//    splitViewItems[1].isCollapsed = true
-    
     // add notification subscriptions
     addNotifications()
     
@@ -206,7 +198,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     let opusRxStatus = sender.boolState ? "Started" : "Stopped"
     _log.msg("Opus Rx - \(opusRxStatus)", level: .info, function: #function, file: #file, line: #line)
     
-    sender.boolState ? _opusDecode?.startOpusRx() : _opusDecode?.stopOpusRx()
+    sender.boolState ? _opusPlayer?.start() : _opusPlayer?.stop()
   }
   /// Respond to the Headphone Gain slider
   ///
@@ -619,7 +611,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     if defaultRadio.publicIp != "" && defaultRadio.port != 0 {
       
       // allow time to hear the UDP broadcasts
-      usleep(1_500_000)
+      usleep(2_000_000)
       
       // has the default Radio been found?
       if let radio = _api.availableRadios.first(where: { $0 == defaultRadio} ) {
@@ -720,6 +712,8 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     // update the toolbar items
     enableToolbarItems(false)
 
+    if Defaults[.macAudioEnabled] { self._opusPlayer?.stop() }
+
     // remove all objects on Radio
     radio.removeAll()
   }
@@ -747,9 +741,13 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     
     _log.msg("Opus Rx Stream added: StreamId = \(opus.id.hex)", level: .info, function: #function, file: #file, line: #line)
 
-    _opusDecode = OpusPlayer()
-//    _opusEncode = OpusEncode(opus)
-    opus.delegate = _opusDecode
+    //    _opusEncode = OpusEncode(opus)
+
+    _opusPlayer = OpusPlayer()
+    opus.delegate = _opusPlayer
+    
+    // start the player (if enabled)
+    if Defaults[.macAudioEnabled] { self._opusPlayer?.start() }
   }
   /// Process .tcpDidDisconnect Notification
   ///

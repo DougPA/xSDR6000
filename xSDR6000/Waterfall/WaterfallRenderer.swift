@@ -67,7 +67,7 @@ public final class WaterfallRenderer: NSObject, MTKViewDelegate {
   private var _metalView                    : MTKView!
   private var _commandQueue                 : MTLCommandQueue!              // Metal queue
   private var _line                         = Line()
-  private var _constant                     = Constant()
+//  private var _constant                     = Constant()
   private var _device                       : MTLDevice!
   private var _sizeOfLine                   = 0
   private var _sizeOfIntensities            = 0
@@ -79,7 +79,7 @@ public final class WaterfallRenderer: NSObject, MTKViewDelegate {
   private var _lineBuffer                   : MTLBuffer!
   private var _activeLines                  : UInt16 = 0
   
-  private let _waterQ                       = DispatchQueue(label: AppDelegate.kAppName + ".waterQ", attributes: [.concurrent])
+  private let _q                            = DispatchQueue(label: AppDelegate.kAppName + ".waterQ", attributes: [.concurrent])
   private var _waterDrawQ                   = DispatchQueue(label: AppDelegate.kAppName + ".waterDrawQ")
 
   private var _autoBlackLevel               : UInt32 = 0
@@ -103,14 +103,17 @@ public final class WaterfallRenderer: NSObject, MTKViewDelegate {
   static let kStartingBin                   = (kNumberOfBins -  kFrameWidth)  / 2 // first bin on screen
   
   private var _numberOfVertices             = 0
-//  private var _numberOfLines                = 0
-//  private var _sizeOfVertices               = 0
   private var _topLine                      : UInt16 = 0
   private var _first                        = true
   
   private var intensityTestData             = [Intensity]()
   
+  private var __constant                    = Constant()
+  private var _constant                     : Constant {
+    get { return _q.sync { __constant } }
+    set { _q.sync(flags: .barrier) { __constant = newValue } } }
   
+
   // ----------------------------------------------------------------------------
   // MARK: - Initialization
   
