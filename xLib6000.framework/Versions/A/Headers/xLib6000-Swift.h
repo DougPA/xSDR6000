@@ -193,7 +193,8 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 /// \code
 ///  creates an Amplifier instance to be used by a Client to support the
 ///  control of an external Amplifier. Amplifier objects are added, removed and
-///  updated by the incoming TCP messages.
+///  updated by the incoming TCP messages. They are collected in the amplifiers
+///  collection on the Radio object.
 ///
 /// \endcode
 SWIFT_CLASS("_TtC8xLib60009Amplifier")
@@ -321,7 +322,8 @@ SWIFT_CLASS("_TtC8xLib60003Cwx")
 /// \code
 ///  creates an Equalizer instance to be used by a Client to support the
 ///  rendering of an Equalizer. Equalizer objects are added, removed and
-///  updated by the incoming TCP messages.
+///  updated by the incoming TCP messages. They are collected in the equalizers
+///  collection on the Radio object.
 ///
 ///  Note: ignores the non-"sc" version of Equalizer messages
 ///        The "sc" version is the standard for API Version 1.4 and greater
@@ -455,7 +457,8 @@ SWIFT_CLASS("_TtC8xLib60008IqStream")
 /// \code
 ///  creates a Memory instance to be used by a Client to support the
 ///  processing of a Memory. Memory objects are added, removed and
-///  updated by the incoming TCP messages.
+///  updated by the incoming TCP messages. They are collected in the
+///  memories collection on the Radio object.
 ///
 /// \endcode
 SWIFT_CLASS("_TtC8xLib60006Memory")
@@ -495,7 +498,8 @@ SWIFT_CLASS("_TtC8xLib60006Memory")
 ///  creates a Meter instance to be used by a Client to support the
 ///  rendering of a Meter. Meter objects are added / removed by the
 ///  incoming TCP messages. Meters are periodically updated by a UDP
-///  stream containing multiple Meters.
+///  stream containing multiple Meters. They are collected in the
+///  meters collection on the Radio object.
 ///
 /// \endcode
 SWIFT_CLASS("_TtC8xLib60005Meter")
@@ -554,6 +558,7 @@ SWIFT_CLASS("_TtC8xLib600014MicAudioStream")
 ///  processing of a stream of Audio to/from the Radio. Opus
 ///  objects are added / removed by the incoming TCP messages. Opus
 ///  objects periodically receive/send Opus Audio in a UDP stream.
+///  They are collected in the opusStreams collection on the Radio object.
 ///
 /// \endcode
 SWIFT_CLASS("_TtC8xLib60004Opus")
@@ -582,7 +587,8 @@ SWIFT_CLASS("_TtC8xLib60004Opus")
 ///  creates a Panadapter instance to be used by a Client to support the
 ///  processing of a Panadapter. Panadapter objects are added / removed by the
 ///  incoming TCP messages. Panadapter objects periodically receive Panadapter
-///  data in a UDP stream.
+///  data in a UDP stream. They are collected in the panadapters
+///  collection on the Radio object.
 ///
 /// \endcode
 SWIFT_CLASS("_TtC8xLib600010Panadapter")
@@ -640,7 +646,8 @@ SWIFT_CLASS("_TtC8xLib600010Panadapter")
 /// \code
 ///  creates a Profiles instance to be used by a Client to support the
 ///  processing of the profiles. Profile objects are added, removed and
-///  updated by the incoming TCP messages.
+///  updated by the incoming TCP messages. They are collected in the profiles
+///  collection on the Radio object.
 ///
 /// \endcode
 SWIFT_CLASS("_TtC8xLib60007Profile")
@@ -694,37 +701,37 @@ SWIFT_CLASS("_TtC8xLib60005Radio")
 @property (nonatomic) BOOL apfEnabled;
 @property (nonatomic) NSInteger apfQFactor;
 @property (nonatomic) NSInteger apfGain;
-@property (nonatomic) NSInteger headphoneGain;
-@property (nonatomic) BOOL headphoneMute;
-@property (nonatomic) NSInteger lineoutGain;
-@property (nonatomic) BOOL lineoutMute;
+@property (nonatomic) NSInteger backlight;
 @property (nonatomic) BOOL bandPersistenceEnabled;
 @property (nonatomic) BOOL binauralRxEnabled;
 @property (nonatomic) NSInteger calFreq;
-@property (nonatomic) BOOL enforcePrivateIpEnabled;
-@property (nonatomic) NSInteger freqErrorPpb;
-@property (nonatomic) BOOL frontSpeakerMute;
-@property (nonatomic) BOOL fullDuplexEnabled;
-@property (nonatomic) BOOL remoteOnEnabled;
-@property (nonatomic) NSInteger rttyMark;
-@property (nonatomic) BOOL snapTuneEnabled;
-@property (nonatomic) BOOL tnfsEnabled;
-@property (nonatomic) NSInteger backlight;
-@property (nonatomic) BOOL startCalibration;
 @property (nonatomic, copy) NSString * _Nonnull callsign;
-@property (nonatomic) BOOL muteLocalAudio;
-@property (nonatomic, copy) NSString * _Nonnull nickname;
-@property (nonatomic, copy) NSString * _Nonnull radioScreenSaver;
+@property (nonatomic) BOOL enforcePrivateIpEnabled;
 @property (nonatomic) BOOL filterCwAutoEnabled;
 @property (nonatomic) BOOL filterDigitalAutoEnabled;
 @property (nonatomic) BOOL filterVoiceAutoEnabled;
 @property (nonatomic) NSInteger filterCwLevel;
 @property (nonatomic) NSInteger filterDigitalLevel;
 @property (nonatomic) NSInteger filterVoiceLevel;
+@property (nonatomic) NSInteger freqErrorPpb;
+@property (nonatomic) BOOL frontSpeakerMute;
+@property (nonatomic) BOOL fullDuplexEnabled;
+@property (nonatomic) NSInteger headphoneGain;
+@property (nonatomic) BOOL headphoneMute;
+@property (nonatomic) NSInteger lineoutGain;
+@property (nonatomic) BOOL lineoutMute;
+@property (nonatomic) BOOL mox;
+@property (nonatomic) BOOL muteLocalAudio;
+@property (nonatomic, copy) NSString * _Nonnull nickname;
+@property (nonatomic, copy) NSString * _Nonnull radioScreenSaver;
+@property (nonatomic) BOOL remoteOnEnabled;
+@property (nonatomic) NSInteger rttyMark;
+@property (nonatomic) BOOL snapTuneEnabled;
+@property (nonatomic) BOOL startCalibration;
 @property (nonatomic, copy) NSString * _Nonnull staticGateway;
 @property (nonatomic, copy) NSString * _Nonnull staticIp;
 @property (nonatomic, copy) NSString * _Nonnull staticNetmask;
-@property (nonatomic) BOOL mox;
+@property (nonatomic) BOOL tnfsEnabled;
 @end
 
 
@@ -792,7 +799,8 @@ SWIFT_CLASS("_TtC8xLib600012RadioFactory")
 /// \code
 ///  creates a Slice instance to be used by a Client to support the
 ///  rendering of a Slice. Slice objects are added, removed and
-///  updated by the incoming TCP messages.
+///  updated by the incoming TCP messages. They are collected in the
+///  slices collection on the Radio object.
 ///
 /// \endcode
 SWIFT_CLASS("_TtC8xLib60005Slice")
@@ -805,12 +813,6 @@ SWIFT_CLASS("_TtC8xLib60005Slice")
 
 
 @interface Slice (SWIFT_EXTENSION(xLib6000))
-@property (nonatomic) NSInteger audioGain;
-@property (nonatomic) BOOL audioMute;
-@property (nonatomic) NSInteger audioPan;
-@property (nonatomic) NSInteger filterHigh;
-@property (nonatomic) NSInteger filterLow;
-@property (nonatomic) BOOL locked;
 @property (nonatomic) BOOL active;
 @property (nonatomic, copy) NSString * _Nonnull agcMode;
 @property (nonatomic) NSInteger agcOffLevel;
@@ -819,16 +821,23 @@ SWIFT_CLASS("_TtC8xLib60005Slice")
 @property (nonatomic) NSInteger anfLevel;
 @property (nonatomic) BOOL apfEnabled;
 @property (nonatomic) NSInteger apfLevel;
+@property (nonatomic) NSInteger audioGain;
+@property (nonatomic) BOOL audioMute;
+@property (nonatomic) NSInteger audioPan;
 @property (nonatomic) NSInteger daxChannel;
 @property (nonatomic) BOOL dfmPreDeEmphasisEnabled;
 @property (nonatomic) NSInteger digitalLowerOffset;
 @property (nonatomic) NSInteger digitalUpperOffset;
 @property (nonatomic) BOOL diversityEnabled;
+@property (nonatomic) NSInteger filterHigh;
+@property (nonatomic) NSInteger filterLow;
 @property (nonatomic) NSInteger fmDeviation;
 @property (nonatomic) float fmRepeaterOffset;
 @property (nonatomic) BOOL fmToneBurstEnabled;
 @property (nonatomic) float fmToneFreq;
 @property (nonatomic, copy) NSString * _Nonnull fmToneMode;
+@property (nonatomic) NSInteger frequency;
+@property (nonatomic) BOOL locked;
 @property (nonatomic) BOOL loopAEnabled;
 @property (nonatomic) BOOL loopBEnabled;
 @property (nonatomic, copy) NSString * _Nonnull mode;
@@ -856,7 +865,6 @@ SWIFT_CLASS("_TtC8xLib60005Slice")
 @property (nonatomic) NSInteger wnbLevel;
 @property (nonatomic) BOOL xitEnabled;
 @property (nonatomic) NSInteger xitOffset;
-@property (nonatomic) NSInteger frequency;
 @end
 
 
@@ -888,7 +896,8 @@ SWIFT_CLASS("_TtC8xLib60005Slice")
 /// \code
 ///  creates a Tnf instance to be used by a Client to support the
 ///  rendering of a Tnf. Tnf objects are added, removed and
-///  updated by the incoming TCP messages.
+///  updated by the incoming TCP messages. They are collected in the
+///  tnfs collection on the Radio object.
 ///
 /// \endcode
 SWIFT_CLASS("_TtC8xLib60003Tnf")
@@ -1006,7 +1015,8 @@ SWIFT_CLASS("_TtC8xLib600013TxAudioStream")
 /// \code
 ///  creates a USB Cable instance to be used by a Client to support the
 ///  processing of USB connections to the Radio (hardware). USB Cable objects
-///  are added, removed and updated by the incoming TCP messages.
+///  are added, removed and updated by the incoming TCP messages. They are
+///  collected in the usbCables collection on the Radio object.
 ///
 /// \endcode
 SWIFT_CLASS("_TtC8xLib60008UsbCable")
@@ -1117,7 +1127,8 @@ SWIFT_CLASS("_TtC8xLib60009WanServer")
 ///  creates a Waterfall instance to be used by a Client to support the
 ///  processing of a Waterfall. Waterfall objects are added / removed by the
 ///  incoming TCP messages. Waterfall objects periodically receive Waterfall
-///  data in a UDP stream.
+///  data in a UDP stream. They are collected in the waterfalls collection
+///  on the Radio object.
 ///
 /// \endcode
 SWIFT_CLASS("_TtC8xLib60009Waterfall")
@@ -1165,7 +1176,8 @@ SWIFT_CLASS("_TtC8xLib60008Waveform")
 /// \code
 ///  creates an Xvtr instance to be used by a Client to support the
 ///  processing of an Xvtr. Xvtr objects are added, removed and updated by
-///  the incoming TCP messages.
+///  the incoming TCP messages. They are collected in the xvtrs
+///  collection on the Radio object.
 ///
 /// \endcode
 SWIFT_CLASS("_TtC8xLib60004Xvtr")

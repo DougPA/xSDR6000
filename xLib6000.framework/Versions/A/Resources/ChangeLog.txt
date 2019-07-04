@@ -1,5 +1,11 @@
 xLib6000 Change Log
 
+v2.4.9.2019_07_03
+
+Corrections and edits throughout to make v2.4.9 & v2.5.1 as similar as possible
+Changed all "id" to "streamId"
+
+
 v2.4.9.2019_07_02
 
 Frames.swift - comments
