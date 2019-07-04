@@ -70,7 +70,7 @@ final class PanafallViewController          : NSSplitViewController, NSGestureRe
     splitView.addGestureRecognizer(_rightClick)
     
     // save the divider position
-    splitView.autosaveName = "Panadapter \(_panadapter?.id.hex ?? "0x99999999")"
+    splitView.autosaveName = "Panadapter \(_panadapter?.streamId.hex ?? "0x99999999")"
   }
   /// Process scroll wheel events to change the Active Slice frequency
   ///
@@ -82,7 +82,7 @@ final class PanafallViewController          : NSSplitViewController, NSGestureRe
     if theEvent.deltaY != 0 {
       
       // find the Active Slice
-      if let slice = Slice.findActive(with: _panadapter!.id) {
+      if let slice = Slice.findActive(with: _panadapter!.streamId) {
         
         // use the Slice's step value, unless the Shift key is down
         var step = slice.step
@@ -148,7 +148,7 @@ final class PanafallViewController          : NSSplitViewController, NSGestureRe
     let mouseFrequency = Int(mouseLocation.x * _hzPerUnit) + _start
     
     // is the Frequency inside a Slice?
-    let slice = xLib6000.Slice.find(with: _panadapter!.id, byFrequency: mouseFrequency, minWidth: Int( CGFloat(_bandwidth) * kSliceFindWidth ))
+    let slice = xLib6000.Slice.find(with: _panadapter!.streamId, byFrequency: mouseFrequency, minWidth: Int( CGFloat(_bandwidth) * kSliceFindWidth ))
     if let slice = slice {
       
       // YES, mouse is in a Slice

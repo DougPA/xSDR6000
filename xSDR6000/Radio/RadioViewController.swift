@@ -739,7 +739,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     let opus = note.object as! Opus
     _opus = opus
     
-    _log.msg("Opus Rx Stream added: StreamId = \(opus.id.hex)", level: .info, function: #function, file: #file, line: #line)
+    _log.msg("Opus Rx Stream added: StreamId = \(opus.streamId.hex)", level: .info, function: #function, file: #file, line: #line)
 
     //    _opusEncode = OpusEncode(opus)
 

@@ -345,7 +345,7 @@ final class PanadapterViewController        : NSViewController, NSGestureRecogni
 
       activateSlice(slice)
     
-    } else if let slice = Slice.findActive(with: _panadapter!.id) {
+    } else if let slice = Slice.findActive(with: _panadapter!.streamId) {
         
         // YES, force it to the nearest step value
         let delta = Int(clickFrequency) % slice.step
@@ -426,7 +426,7 @@ final class PanadapterViewController        : NSViewController, NSGestureRecogni
     for (_, slice) in _radio!.slices {
       
       // only Slices on this Panadapter?
-      if thisPanOnly && slice.panadapterId != _panadapter!.id {
+      if thisPanOnly && slice.panadapterId != _panadapter!.streamId {
         
         // YES, skip this Slice
         continue
@@ -662,7 +662,7 @@ final class PanadapterViewController        : NSViewController, NSGestureRecogni
     panadapter.delegate = nil
     
     // YES, log the event
-    _log.msg("Panadapter will be removed: Stream Id = \(panadapter.id.hex)", level: .info, function: #function, file: #file, line: #line)
+    _log.msg("Panadapter will be removed: Stream Id = \(panadapter.streamId.hex)", level: .info, function: #function, file: #file, line: #line)
 
     // invalidate Base property observations
     invalidateObservations(&_baseObservations)
@@ -677,10 +677,10 @@ final class PanadapterViewController        : NSViewController, NSGestureRecogni
     let slice = note.object as! xLib6000.Slice
     
     // YES, is the slice on this Panadapter?
-    if let panadapter = _panadapter, slice.panadapterId == panadapter.id {
+    if let panadapter = _panadapter, slice.panadapterId == panadapter.streamId {
       
       // YES, log the event
-      _log.msg("Slice added: Id = \(slice.id), pan = \(panadapter.id.hex), freq = \(slice.frequency)", level: .info, function: #function, file: #file, line: #line)
+      _log.msg("Slice added: Id = \(slice.id), pan = \(panadapter.streamId.hex), freq = \(slice.frequency)", level: .info, function: #function, file: #file, line: #line)
 
       // observe removal of this Slice
       NC.makeObserver(self, with: #selector(sliceWillBeRemoved(_:)), of: .sliceWillBeRemoved, object: slice)
@@ -705,10 +705,10 @@ final class PanadapterViewController        : NSViewController, NSGestureRecogni
     let slice = note.object as! xLib6000.Slice
     
     // YES, is the slice on this Panadapter?
-    if let panadapter = _panadapter, slice.panadapterId == panadapter.id  {
+    if let panadapter = _panadapter, slice.panadapterId == panadapter.streamId  {
       
       // YES, log the event
-      _log.msg("Slice will be removed: Id = \(slice.id), pan =  \(panadapter.id.hex), freq =\(slice.frequency)", level: .info, function: #function, file: #file, line: #line)
+      _log.msg("Slice will be removed: Id = \(slice.id), pan =  \(panadapter.streamId.hex), freq =\(slice.frequency)", level: .info, function: #function, file: #file, line: #line)
 
       // remove the Flag & Observations of this Slice
       removeFlag(for: slice)

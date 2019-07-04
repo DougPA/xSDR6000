@@ -94,7 +94,7 @@ final class PanafallsViewController               : NSSplitViewController {
     let panadapter = note.object as! Panadapter
     
     // YES, log the event
-    _log.msg("Panadapter added: Stream Id = \(panadapter.id.hex)", level: .info, function: #function, file: #file, line: #line)
+    _log.msg("Panadapter added: Stream Id = \(panadapter.streamId.hex)", level: .info, function: #function, file: #file, line: #line)
   }
   /// Process .waterfallHasBeenAdded Notification
   ///
@@ -107,7 +107,7 @@ final class PanafallsViewController               : NSSplitViewController {
     let waterfall = note.object as! Waterfall
     
     // YES, log the event
-    _log.msg("Waterfall added: Stream Id = \(waterfall.id.hex)", level: .info, function: #function, file: #file, line: #line)
+    _log.msg("Waterfall added: Stream Id = \(waterfall.streamId.hex)", level: .info, function: #function, file: #file, line: #line)
 
     let panadapter = Api.sharedInstance.radio!.panadapters[waterfall.panadapterId]
     
