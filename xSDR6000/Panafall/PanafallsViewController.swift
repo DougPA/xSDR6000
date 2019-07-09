@@ -7,16 +7,16 @@
 //
 
 import Cocoa
-
 import xLib6000
 
-final class PanafallsViewController               : NSSplitViewController {
+final class PanafallsViewController         : NSSplitViewController {
   
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
   
-  private let _log                          = (NSApp.delegate as! AppDelegate)
+  private let _log                          = NSApp.delegate as! AppDelegate
   private var _sb                           : NSStoryboard?
+  private var _api                          = Api.sharedInstance
   
   private let kPanafallStoryboard           = "Panafall"
   private let kPanafallButtonIdentifier     = "Button"
@@ -75,9 +75,9 @@ final class PanafallsViewController               : NSSplitViewController {
     // does the Notification contain a Panadapter?
     let panadapter = note.object as! Panadapter
     
-    // is it for this Client?
-    if panadapter.clientHandle == Api.sharedInstance.connectionHandle {
-      // YES, log the event
+    // In V3, check is it for this Client
+    if (_api.radioVersion.isV3 && panadapter.clientHandle == _api.connectionHandle) || _api.radioVersion.isV3 == false {
+      // log the event
       _log.msg("Panadapter added: ID = \(panadapter.streamId.hex)", level: .info, function: #function, file: #file, line: #line)
     }
   }
@@ -91,12 +91,12 @@ final class PanafallsViewController               : NSSplitViewController {
     // does the Notification contain a Panadapter?
     let waterfall = note.object as! Waterfall
     
-    // is it for this Client?
-    if waterfall.clientHandle == Api.sharedInstance.connectionHandle {
-      // YES, log the event
+    // In V3, check is it for this Client
+    if (_api.radioVersion.isV3 && waterfall.clientHandle == _api.connectionHandle) || _api.radioVersion.isV3 == false {
+      // log the event
       _log.msg("Waterfall added: ID = \(waterfall.streamId.hex)", level: .info, function: #function, file: #file, line: #line)
       
-      let panadapter = Api.sharedInstance.radio!.panadapters[waterfall.panadapterId]
+      let panadapter = _api.radio!.panadapters[waterfall.panadapterId]
       
       // create a Panafall Button View Controller
       let panafallButtonVc = _sb!.instantiateController(withIdentifier: kPanafallButtonIdentifier) as! PanafallButtonViewController

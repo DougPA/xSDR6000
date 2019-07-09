@@ -32,12 +32,12 @@ final class WaterfallViewController               : NSViewController, NSGestureR
   
   // arbitrary choice of a reasonable number of color gradations for the waterfall
   private let kGradientSize                  = 256                           // number of colors in a gradient
-  
+
   // ----------------------------------------------------------------------------
   // MARK: - Internal properties
   
   @objc dynamic weak var panadapter         : Panadapter?
-  
+
   var radio: Radio?                         = Api.sharedInstance.radio
   
   // ----------------------------------------------------------------------------
@@ -47,9 +47,9 @@ final class WaterfallViewController               : NSViewController, NSGestureR
   @IBOutlet private weak var _timeView      : NSView!
   
   private var _waterfallRenderer            : WaterfallRenderer!
-  
+
   private weak var _waterfall               : Waterfall? { return radio!.waterfalls[panadapter!.waterfallId] }
-  private let _log                          = (NSApp.delegate as! AppDelegate)
+  private let _log                          = NSApp.delegate as! AppDelegate
   private var _center                       : Int { return panadapter!.center }
   private var _bandwidth                    : Int { return panadapter!.bandwidth }
   private var _start                        : Int { return _center - (_bandwidth/2) }
@@ -58,15 +58,13 @@ final class WaterfallViewController               : NSViewController, NSGestureR
   
   // constants
   private let _filter                       = CIFilter(name: "CIDifferenceBlendMode")
-  
+
   private enum Colors {
     static let clearColor = MTLClearColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
   }
   
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
-  
-  
   
   // ----------------------------------------------------------------------------
   // MARK: - Overridden methods
@@ -79,7 +77,7 @@ final class WaterfallViewController               : NSViewController, NSGestureR
     #if XDEBUG
     Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
     #endif
-    
+
     _waterfallRenderer = WaterfallRenderer(view: _waterfallView, radio: Api.sharedInstance.radio!, panadapter: panadapter!)
     
     _waterfallView.isPaused = true
@@ -91,12 +89,12 @@ final class WaterfallViewController               : NSViewController, NSGestureR
     
     _waterfallView.delegate = _waterfallRenderer
     _waterfallView.clearColor = Colors.clearColor
-    
+
     // setup the gradient texture
     _waterfallRenderer.setGradient( loadGradient(index: _waterfall!.gradientIndex) )
-    
+
     setupObservations()
-    
+
     // make the Renderer the Stream Handler
     DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(3), execute: {  self._waterfall?.delegate = self._waterfallRenderer })
   }
@@ -105,15 +103,15 @@ final class WaterfallViewController               : NSViewController, NSGestureR
     Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
   }
   #endif
-  
+
   // ----------------------------------------------------------------------------
   // MARK: - Public methods
   
   // force a redraw of a layer
   
-  //  public func redrawTimeLegend() {
-  //    _timeLayer?.redraw()
-  //  }
+//  public func redrawTimeLegend() {
+//    _timeLayer?.redraw()
+//  }
   
   // ----------------------------------------------------------------------------
   // MARK: - Internal methods
@@ -159,36 +157,35 @@ final class WaterfallViewController               : NSViewController, NSGestureR
     // resource not found
     fatalError("Gradient file '\(name).tex' not found")
   }
-  //  /// Prevent the Right Click recognizer from responding when the mouse is not over the Legend
-  //  ///
-  //  /// - Parameters:
-  //  ///   - gr:             the Gesture Recognizer
-  //  ///   - event:          the Event
-  //  /// - Returns:          True = allow, false = ignore
-  //  ///
-  //  func gestureRecognizer(_ gr: NSGestureRecognizer, shouldAttemptToRecognizeWith event: NSEvent) -> Bool {
-  //
-  //    // is it a right click?
-  //    if gr.action == #selector(WaterfallViewController.clickRight(_:)) {
-  //      // YES, if not over the legend, push it up the responder chain
-  //      return view.convert(event.locationInWindow, from: nil).x >= view.frame.width - _waterfallView!.timeLegendWidth
-  //    } else {
-  //      // not right click, process it
-  //      return true
-  //    }
-  //  }
-  //  /// respond to Right Click gesture
-  //  ///     NOTE: will only receive events in time legend, see previous method
-  //  ///
-  //  /// - Parameter gr:     the Click Gesture Recognizer
-  //  ///
-  //  @objc func clickRight(_ gr: NSClickGestureRecognizer) {
-  //
-  //    // update the time Legend
-  //    _timeLayer?.updateLegendSpacing(gestureRecognizer: gr, in: view)
-  //  }
-  
-  
+//  /// Prevent the Right Click recognizer from responding when the mouse is not over the Legend
+//  ///
+//  /// - Parameters:
+//  ///   - gr:             the Gesture Recognizer
+//  ///   - event:          the Event
+//  /// - Returns:          True = allow, false = ignore
+//  ///
+//  func gestureRecognizer(_ gr: NSGestureRecognizer, shouldAttemptToRecognizeWith event: NSEvent) -> Bool {
+//
+//    // is it a right click?
+//    if gr.action == #selector(WaterfallViewController.clickRight(_:)) {
+//      // YES, if not over the legend, push it up the responder chain
+//      return view.convert(event.locationInWindow, from: nil).x >= view.frame.width - _waterfallView!.timeLegendWidth
+//    } else {
+//      // not right click, process it
+//      return true
+//    }
+//  }
+//  /// respond to Right Click gesture
+//  ///     NOTE: will only receive events in time legend, see previous method
+//  ///
+//  /// - Parameter gr:     the Click Gesture Recognizer
+//  ///
+//  @objc func clickRight(_ gr: NSClickGestureRecognizer) {
+//
+//    // update the time Legend
+//    _timeLayer?.updateLegendSpacing(gestureRecognizer: gr, in: view)
+//  }
+
   // ----------------------------------------------------------------------------
   // MARK: - Private methods
   
@@ -208,17 +205,17 @@ final class WaterfallViewController               : NSViewController, NSGestureR
   /// start observations & Notification
   ///
   private func setupObservations() {
-    
+
     // begin observations (panadapter, waterfall & Defaults)
     createBaseObservations(&_baseObservations)
     
     // add notification subscriptions
     addNotifications()
   }
-  
+
   // ----------------------------------------------------------------------------
   // MARK: - NEW Observation methods
-  
+
   private var _baseObservations        = [NSKeyValueObservation]()
   
   /// Add observations of various properties
@@ -228,25 +225,25 @@ final class WaterfallViewController               : NSViewController, NSGestureR
     observations = [
       panadapter!.observe(\.band, options: [.initial, .new]) { [weak self] (object, change) in
         self?.panadapterBandChange(object, change) },
+
+//      panadapter!.observe(\.bandwidth, options: [.initial, .new]) { [weak self] (object, change) in
+//        self?.panadapterUpdate(object, change)},
+//
+//      panadapter!.observe(\.center, options: [.initial, .new]) { [weak self] (object, change) in
+//        self?.panadapterUpdate(object, change) },
       
-      //      panadapter!.observe(\.bandwidth, options: [.initial, .new]) { [weak self] (object, change) in
-      //        self?.panadapterUpdate(object, change)},
-      //
-      //      panadapter!.observe(\.center, options: [.initial, .new]) { [weak self] (object, change) in
-      //        self?.panadapterUpdate(object, change) },
-      
-      //      _waterfall!.observe(\.autoBlackEnabled, options: [.initial, .new]) { [weak self] (object, change) in
-      //        self?.waterfallObserverLevels(object, change) },
-      //
-      //      _waterfall!.observe(\.blackLevel, options: [.initial, .new]) { [weak self] (object, change) in
-      //        self?.waterfallObserverLevels(object, change) },
-      //
-      //      _waterfall!.observe(\.colorGain, options: [.initial, .new]) { [weak self] (object, change) in
-      //        self?.waterfallObserverLevels(object, change) },
+//      _waterfall!.observe(\.autoBlackEnabled, options: [.initial, .new]) { [weak self] (object, change) in
+//        self?.waterfallObserverLevels(object, change) },
+//
+//      _waterfall!.observe(\.blackLevel, options: [.initial, .new]) { [weak self] (object, change) in
+//        self?.waterfallObserverLevels(object, change) },
+//
+//      _waterfall!.observe(\.colorGain, options: [.initial, .new]) { [weak self] (object, change) in
+//        self?.waterfallObserverLevels(object, change) },
       
       _waterfall!.observe(\.gradientIndex, options: [.initial, .new]) { [weak self] (object, change) in
         self?.waterfallObserverGradient(object, change) },
-      
+
       Defaults.observe(\.spectrumBackground, options: [.initial, .new]) { [weak self] (object, change) in
         self?.defaultsObserver(object, change) },
     ]
@@ -261,7 +258,7 @@ final class WaterfallViewController               : NSViewController, NSGestureR
     
     // invalidate each observation
     observations.forEach {$0.invalidate()}
-    
+
     // if specified, remove the tokens
     if remove { observations.removeAll() }
   }
@@ -271,11 +268,11 @@ final class WaterfallViewController               : NSViewController, NSGestureR
   ///   - object:                       the object holding the properties
   ///   - change:                       the change
   ///
-  //  private func panadapterUpdate(_ object: Panadapter, _ change: Any) {
-  //
-  // update the Waterfall
-  //      _waterfallRenderer.update()
-  //  }
+//  private func panadapterUpdate(_ object: Panadapter, _ change: Any) {
+//
+      // update the Waterfall
+//      _waterfallRenderer.update()
+//  }
   /// Respond to Panadapter observations
   ///
   /// - Parameters:
@@ -283,7 +280,7 @@ final class WaterfallViewController               : NSViewController, NSGestureR
   ///   - change:                       the change
   ///
   private func panadapterBandChange(_ object: Panadapter, _ change: Any) {
-    
+
     // force the Waterfall to restart
     _waterfallRenderer.restart()
   }
@@ -293,13 +290,13 @@ final class WaterfallViewController               : NSViewController, NSGestureR
   ///   - object:                       the object holding the properties
   ///   - change:                       the change
   ///
-  //  private func waterfallObserverLevels(_ waterfall: Waterfall, _ change: Any) {
-  //
-  //      // update the levels
-  //    _waterfallRenderer.setLevels(autoBlack: waterfall.autoBlackEnabled, blackLevel: waterfall.blackLevel, colorGain: waterfall.colorGain)
+//  private func waterfallObserverLevels(_ waterfall: Waterfall, _ change: Any) {
+//
+//      // update the levels
+//    _waterfallRenderer.setLevels(autoBlack: waterfall.autoBlackEnabled, blackLevel: waterfall.blackLevel, colorGain: waterfall.colorGain)
   
-  //    Swift.print("Observer: colorGain = \(waterfall.colorGain), autoBlack = \(waterfall.autoBlackEnabled), blackLevel = \(waterfall.blackLevel)")
-  //    }
+//    Swift.print("Observer: colorGain = \(waterfall.colorGain), autoBlack = \(waterfall.autoBlackEnabled), blackLevel = \(waterfall.blackLevel)")
+//    }
   /// Respond to Waterfall observations
   ///
   /// - Parameters:
@@ -307,7 +304,7 @@ final class WaterfallViewController               : NSViewController, NSGestureR
   ///   - change:                       the change
   ///
   private func waterfallObserverGradient(_ waterfall: Waterfall, _ change: Any) {
-    
+
     // reload the Gradient
     _waterfallRenderer.setGradient(loadGradient(index: waterfall.gradientIndex) )
   }
@@ -334,7 +331,7 @@ final class WaterfallViewController               : NSViewController, NSGestureR
   ///     (as of 10.11, subscriptions are automatically removed on deinit when using the Selector-based approach)
   ///
   private func addNotifications() {
-    
+
     // only receive removal Notifications sent by this Waterfall
     NC.makeObserver(self, with: #selector(waterfallWillBeRemoved(_:)), of: .waterfallWillBeRemoved, object: _waterfall!)
   }
@@ -343,13 +340,13 @@ final class WaterfallViewController               : NSViewController, NSGestureR
   /// - Parameter note:         a Notification instance
   ///
   @objc private func waterfallWillBeRemoved(_ note: Notification) {
-    
+
     // does the Notification contain a Panadapter object?
     let waterfall = note.object as! Waterfall
     
     // YES, log the event
     _log.msg("Waterfall will be removed, Stream Id = \(waterfall.streamId.hex)", level: .info, function: #function, file: #file, line: #line)
-    
+
     // stop processing waterfall data
     waterfall.delegate = nil
     
@@ -358,7 +355,7 @@ final class WaterfallViewController               : NSViewController, NSGestureR
     
     // remove the UI components of the Panafall
     DispatchQueue.main.async { [weak self] in
-      
+
       // remove the entire PanafallButtonViewController hierarchy
       let panafallButtonVc = self?.parent!.parent!
       panafallButtonVc?.removeFromParent()

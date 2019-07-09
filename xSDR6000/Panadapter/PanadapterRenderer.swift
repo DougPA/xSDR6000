@@ -22,7 +22,6 @@ public final class PanadapterRenderer       : NSObject {
   // MARK: - Static properties
   
   static let kMaxIntensities                = 3_072                         // max number of intensity values (bins)
-  static let kTextureAsset                  = "1x16"                        // name of the texture asset
   
   // ----------------------------------------------------------------------------
   // MARK: - Shader structs
@@ -52,7 +51,7 @@ public final class PanadapterRenderer       : NSObject {
   private var _spectrumIndices              = [UInt16](repeating: 0, count: PanadapterRenderer.kMaxIntensities * 2)
   private var _spectrumIndicesBuffer        : MTLBuffer!
   
-  private var _maxNumberOfBins              : Int = PanadapterRenderer.kMaxIntensities
+  private var _maxNumberOfBins              = PanadapterRenderer.kMaxIntensities
   
   private var _colorArray                   = [Color](repeating: Color(spectrumColor: NSColor.yellow.float4Color), count: 2)
   
@@ -61,9 +60,8 @@ public final class PanadapterRenderer       : NSObject {
   
   private var _fillLevel                    = 1
   
-  private var _frameBoundarySemaphore       = DispatchSemaphore(value: kNumberSpectrumBuffers)
-  private let _panQ                         = DispatchQueue(label: ".panQ", attributes: [.concurrent])
-  private let _panDrawQ                      = DispatchQueue(label: Api.kName + ".panDrawQ")
+  private let _panQ                         = DispatchQueue(label: AppDelegate.kName + ".panQ", attributes: [.concurrent])
+  private let _panDrawQ                     = DispatchQueue(label: AppDelegate.kName + ".panDrawQ")
 
   // ----- Backing properties - SHOULD NOT BE ACCESSED DIRECTLY -----------------------------------
   //
@@ -205,60 +203,6 @@ public final class PanadapterRenderer       : NSObject {
     _commandQueue = _device.makeCommandQueue()
     _commandQueue.label = "Panadapter"    
   }
-  
-  // ----------------------------------------------------------------------------
-  // MARK: - Class methods
-  
-  /// Create a Texture from an image in the Assets.xcassets
-  ///
-  /// - Parameters:
-  ///   - name:       name of the asset
-  ///   - device:     a Metal Device
-  /// - Returns:      a MTLTexture
-  /// - Throws:       Texture loader error
-  ///
-  class func texture(forDevice device: MTLDevice, asset name: String) throws -> MTLTexture {
-    
-    // get a Texture loader
-    let textureLoader = MTKTextureLoader(device: device)
-    
-    // identify the asset containing the image
-    let asset = NSDataAsset.init(name: name)
-    
-    if let data = asset?.data {
-      
-      // if found, create the texture
-      return try textureLoader.newTexture(data: data)
-    } else {
-      
-      // image not found
-      fatalError("Could not load image \(name) from an asset catalog in the main bundle")
-    }
-  }
-  /// Create a Sampler State
-  ///
-  /// - Parameters:
-  ///   - device:         a MTLDevice
-  ///   - addressMode:    the desired Sampler address mode
-  ///   - filter:         the desired Sampler filtering
-  /// - Returns:          a MTLSamplerState
-  ///
-  class func samplerState(forDevice device: MTLDevice,
-                          addressMode: MTLSamplerAddressMode,
-                          filter: MTLSamplerMinMagFilter) -> MTLSamplerState {
-    
-    // create a Sampler Descriptor
-    let samplerDescriptor = MTLSamplerDescriptor()
-    
-    // set its parameters
-    samplerDescriptor.sAddressMode = addressMode
-    samplerDescriptor.tAddressMode = addressMode
-    samplerDescriptor.minFilter = filter
-    samplerDescriptor.magFilter = filter
-    
-    // return the Sampler State
-    return device.makeSamplerState(descriptor: samplerDescriptor)!
-  }
 }
 
 // ----------------------------------------------------------------------------
@@ -281,56 +225,50 @@ extension PanadapterRenderer                : MTKViewDelegate {
   ///
   public func draw(in view: MTKView) {
     
-    autoreleasepool {
+    // obtain a Command buffer & a Render Pass descriptor
+    guard let cmdBuffer = self._commandQueue.makeCommandBuffer(),
+      let descriptor = view.currentRenderPassDescriptor else { return }
+    
+    // Create a render encoder
+    let encoder = cmdBuffer.makeRenderCommandEncoder(descriptor: descriptor)!
+    
+    encoder.pushDebugGroup("Fill")
+    
+    // set the Spectrum pipeline state
+    encoder.setRenderPipelineState(_pipelineState)
+    
+    // bind the active Spectrum buffer
+    encoder.setVertexBuffer(_spectrumBuffers[_currentFrameIndex], offset: 0, index: kSpectrumBufferIndex)
+    
+    // bind the Constants
+    encoder.setVertexBytes(&_constants, length: MemoryLayout.size(ofValue: _constants), index: kConstantsBufferIndex)
+    
+    // is the Panadapter "filled"?
+    if self._fillLevel > 1 {
       
-      // obtain a Command buffer & a Render Pass descriptor
-      guard let cmdBuffer = self._commandQueue.makeCommandBuffer(),
-        let descriptor = view.currentRenderPassDescriptor else { return }
+      // YES, bind the Fill Color
+      encoder.setVertexBytes(&_colorArray[kFillColor], length: MemoryLayout.size(ofValue: _colorArray[kFillColor]), index: kColorBufferIndex)
       
-      // Create a render encoder
-      let encoder = cmdBuffer.makeRenderCommandEncoder(descriptor: descriptor)!
-      
-      encoder.pushDebugGroup("Fill")
-      
-      // set the Spectrum pipeline state
-      encoder.setRenderPipelineState(_pipelineState)
-      
-      // bind the active Spectrum buffer
-      encoder.setVertexBuffer(_spectrumBuffers[_currentFrameIndex], offset: 0, index: kSpectrumBufferIndex)
-      
-      // bind the Constants
-      encoder.setVertexBytes(&_constants, length: MemoryLayout.size(ofValue: _constants), index: kConstantsBufferIndex)
-      
-      // is the Panadapter "filled"?
-      if self._fillLevel > 1 {
-        
-        // YES, bind the Fill Color
-        encoder.setVertexBytes(&_colorArray[kFillColor], length: MemoryLayout.size(ofValue: _colorArray[kFillColor]), index: kColorBufferIndex)
-        
-        // Draw filled
-        encoder.drawIndexedPrimitives(type: .triangleStrip, indexCount: Int(_numberOfBins * 2), indexType: .uint16, indexBuffer: _spectrumIndicesBuffer, indexBufferOffset: 0)
-      }
-      encoder.popDebugGroup()
-      encoder.pushDebugGroup("Line")
-      
-      // bind the Line Color
-      encoder.setVertexBytes(&_colorArray[kLineColor], length: MemoryLayout.size(ofValue: _colorArray[kLineColor]), index: kColorBufferIndex)
-      
-      // Draw as a Line
-      encoder.drawPrimitives(type: .lineStrip, vertexStart: 0, vertexCount: Int(_numberOfBins))
-      
-      // finish using this encoder
-      encoder.endEncoding()
-      
-      // present the drawable to the screen
-      cmdBuffer.present(_metalView.currentDrawable!)
-      
-      // signal on completion
-      cmdBuffer.addCompletedHandler() { _ in self._frameBoundarySemaphore.signal() }
-      
-      // push the command buffer to the GPU
-      cmdBuffer.commit()
+      // Draw filled
+      encoder.drawIndexedPrimitives(type: .triangleStrip, indexCount: Int(_numberOfBins * 2), indexType: .uint16, indexBuffer: _spectrumIndicesBuffer, indexBufferOffset: 0)
     }
+    encoder.popDebugGroup()
+    encoder.pushDebugGroup("Line")
+    
+    // bind the Line Color
+    encoder.setVertexBytes(&_colorArray[kLineColor], length: MemoryLayout.size(ofValue: _colorArray[kLineColor]), index: kColorBufferIndex)
+    
+    // Draw as a Line
+    encoder.drawPrimitives(type: .lineStrip, vertexStart: 0, vertexCount: Int(_numberOfBins))
+    
+    // finish using this encoder
+    encoder.endEncoding()
+    
+    // present the drawable to the screen
+    cmdBuffer.present(_metalView.currentDrawable!)
+    
+    // push the command buffer to the GPU
+    cmdBuffer.commit()
   }
 }
 
@@ -359,10 +297,6 @@ extension PanadapterRenderer                : StreamHandler {
     
     guard let streamFrame = streamFrame as? PanadapterFrame else { return }
     
-    //    Swift.print("\(streamFrame.frameIndex)")
-    
-    //    _frameBoundarySemaphore.wait()
-    
     // move to using the next spectrumBuffer
     _currentFrameIndex = (_currentFrameIndex + 1) % PanadapterRenderer.kNumberSpectrumBuffers
     
@@ -371,8 +305,6 @@ extension PanadapterRenderer                : StreamHandler {
     
     // put the Intensities into the current Spectrum Buffer
     _spectrumBuffers[_currentFrameIndex].contents().copyMemory(from: streamFrame.bins, byteCount: streamFrame.totalBins * MemoryLayout<ushort>.stride)
-    
-    //    Swift.print("\(streamFrame.totalBins)")
     
     _panDrawQ.async { [unowned self] in
       autoreleasepool {

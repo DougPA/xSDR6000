@@ -31,7 +31,6 @@
 		913F7F422066DC7A00F35E9B /* Band.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7EFB2066DC7900F35E9B /* Band.swift */; };
 		913F7F432066DC7A00F35E9B /* Defaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 913F7EFC2066DC7900F35E9B /* Defaults.plist */; };
 		913F7F442066DC7A00F35E9B /* BandSegments.plist in Resources */ = {isa = PBXBuildFile; fileRef = 913F7EFD2066DC7900F35E9B /* BandSegments.plist */; };
-		913F7F462066DC7A00F35E9B /* OpusDecode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7EFF2066DC7900F35E9B /* OpusDecode.swift */; };
 		913F7F472066DC7A00F35E9B /* ParameterMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7F002066DC7900F35E9B /* ParameterMonitor.swift */; };
 		913F7F492066DC7A00F35E9B /* PreferencesTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7F032066DC7900F35E9B /* PreferencesTabViewController.swift */; };
 		913F7F4A2066DC7A00F35E9B /* BandButtonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F7F052066DC7900F35E9B /* BandButtonViewController.swift */; };
@@ -85,6 +84,9 @@
 		914BCB15220E0A9200BB50F4 /* HelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914BCB14220E0A9200BB50F4 /* HelpViewController.swift */; };
 		914BCB17220E0ADC00BB50F4 /* xSDR6000.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 914BCB16220E0ADC00BB50F4 /* xSDR6000.pdf */; };
 		914BCB19220F383400BB50F4 /* CWViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914BCB18220F383400BB50F4 /* CWViewController.swift */; };
+		9151821522D3CB4D00DAD08E /* TPCircularBuffer+AudioBufferList.c in Sources */ = {isa = PBXBuildFile; fileRef = 9151821122D3CB4C00DAD08E /* TPCircularBuffer+AudioBufferList.c */; };
+		9151821622D3CB4D00DAD08E /* TPCircularBuffer.c in Sources */ = {isa = PBXBuildFile; fileRef = 9151821422D3CB4D00DAD08E /* TPCircularBuffer.c */; };
+		9151821822D3D0CE00DAD08E /* OpusPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9151821722D3D0CE00DAD08E /* OpusPlayer.swift */; };
 		916909C62113E2FC00164044 /* OpusEncode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916909C52113E2FB00164044 /* OpusEncode.swift */; };
 		916909C82113E40C00164044 /* AudioHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916909C72113E40C00164044 /* AudioHelper.swift */; };
 		91794983212EFB0F00D9750A /* RingBuffer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9179497F212EFB0E00D9750A /* RingBuffer.mm */; };
@@ -147,7 +149,6 @@
 		913F7EFB2066DC7900F35E9B /* Band.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Band.swift; sourceTree = "<group>"; };
 		913F7EFC2066DC7900F35E9B /* Defaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Defaults.plist; sourceTree = "<group>"; };
 		913F7EFD2066DC7900F35E9B /* BandSegments.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = BandSegments.plist; sourceTree = "<group>"; };
-		913F7EFF2066DC7900F35E9B /* OpusDecode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpusDecode.swift; sourceTree = "<group>"; };
 		913F7F002066DC7900F35E9B /* ParameterMonitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParameterMonitor.swift; sourceTree = "<group>"; };
 		913F7F032066DC7900F35E9B /* PreferencesTabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesTabViewController.swift; sourceTree = "<group>"; };
 		913F7F052066DC7900F35E9B /* BandButtonViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BandButtonViewController.swift; sourceTree = "<group>"; };
@@ -205,6 +206,11 @@
 		914BCB14220E0A9200BB50F4 /* HelpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelpViewController.swift; sourceTree = "<group>"; };
 		914BCB16220E0ADC00BB50F4 /* xSDR6000.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = xSDR6000.pdf; sourceTree = "<group>"; };
 		914BCB18220F383400BB50F4 /* CWViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CWViewController.swift; sourceTree = "<group>"; };
+		9151821122D3CB4C00DAD08E /* TPCircularBuffer+AudioBufferList.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "TPCircularBuffer+AudioBufferList.c"; sourceTree = "<group>"; };
+		9151821222D3CB4C00DAD08E /* TPCircularBuffer+AudioBufferList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TPCircularBuffer+AudioBufferList.h"; sourceTree = "<group>"; };
+		9151821322D3CB4D00DAD08E /* TPCircularBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPCircularBuffer.h; sourceTree = "<group>"; };
+		9151821422D3CB4D00DAD08E /* TPCircularBuffer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = TPCircularBuffer.c; sourceTree = "<group>"; };
+		9151821722D3D0CE00DAD08E /* OpusPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpusPlayer.swift; sourceTree = "<group>"; };
 		916909C52113E2FB00164044 /* OpusEncode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpusEncode.swift; sourceTree = "<group>"; };
 		916909C72113E40C00164044 /* AudioHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioHelper.swift; sourceTree = "<group>"; };
 		9179497C212EFB0E00D9750A /* CAAtomic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAtomic.h; sourceTree = "<group>"; };
@@ -336,13 +342,13 @@
 		913F7EFA2066DC7900F35E9B /* Misc */ = {
 			isa = PBXGroup;
 			children = (
-				91DD55312231751E007BC29A /* LevelIndicator */,
 				916909C72113E40C00164044 /* AudioHelper.swift */,
 				913F7EFB2066DC7900F35E9B /* Band.swift */,
 				913F7EFD2066DC7900F35E9B /* BandSegments.plist */,
 				913F7EFC2066DC7900F35E9B /* Defaults.plist */,
-				913F7EFF2066DC7900F35E9B /* OpusDecode.swift */,
+				91DD55312231751E007BC29A /* LevelIndicator */,
 				916909C52113E2FB00164044 /* OpusEncode.swift */,
+				9151821722D3D0CE00DAD08E /* OpusPlayer.swift */,
 				913F7F002066DC7900F35E9B /* ParameterMonitor.swift */,
 				9179497B212EFB0E00D9750A /* RingBuffer */,
 			);
@@ -462,12 +468,16 @@
 			isa = PBXGroup;
 			children = (
 				9179497C212EFB0E00D9750A /* CAAtomic.h */,
-				9179497D212EFB0E00D9750A /* CABitOperations.h */,
-				9179497E212EFB0E00D9750A /* CARingBuffer.h */,
-				9179497F212EFB0E00D9750A /* RingBuffer.mm */,
 				91794980212EFB0E00D9750A /* CAAutoDisposer.h */,
+				9179497D212EFB0E00D9750A /* CABitOperations.h */,
 				91794981212EFB0E00D9750A /* CARingBuffer.cpp */,
+				9179497E212EFB0E00D9750A /* CARingBuffer.h */,
 				91794982212EFB0E00D9750A /* RingBuffer.h */,
+				9179497F212EFB0E00D9750A /* RingBuffer.mm */,
+				9151821422D3CB4D00DAD08E /* TPCircularBuffer.c */,
+				9151821322D3CB4D00DAD08E /* TPCircularBuffer.h */,
+				9151821122D3CB4C00DAD08E /* TPCircularBuffer+AudioBufferList.c */,
+				9151821222D3CB4C00DAD08E /* TPCircularBuffer+AudioBufferList.h */,
 			);
 			path = RingBuffer;
 			sourceTree = "<group>";
@@ -661,7 +671,6 @@
 				913F7F4F2066DC7A00F35E9B /* FlagViewController.swift in Sources */,
 				913F7F472066DC7A00F35E9B /* ParameterMonitor.swift in Sources */,
 				913615B421C0B178005EA591 /* PCWPrefsViewController.swift in Sources */,
-				913F7F462066DC7A00F35E9B /* OpusDecode.swift in Sources */,
 				913F7F5A2066DC7A00F35E9B /* EqViewController.swift in Sources */,
 				913F7F4A2066DC7A00F35E9B /* BandButtonViewController.swift in Sources */,
 				9185B0D7208683C7004D4C40 /* Errors.swift in Sources */,
@@ -682,6 +691,7 @@
 				91DD552F223174EF007BC29A /* BarView.swift in Sources */,
 				913F7F542066DC7A00F35E9B /* PanadapterRenderer.swift in Sources */,
 				916909C62113E2FC00164044 /* OpusEncode.swift in Sources */,
+				9151821622D3CB4D00DAD08E /* TPCircularBuffer.c in Sources */,
 				913F7F492066DC7A00F35E9B /* PreferencesTabViewController.swift in Sources */,
 				91463CF121E50AE300177843 /* ColorsPrefsViewController.swift in Sources */,
 				914BCB15220E0A9200BB50F4 /* HelpViewController.swift in Sources */,
@@ -689,6 +699,7 @@
 				913FDDF121E44C70006DFE27 /* DaxIqViewController.swift in Sources */,
 				9143BDC522024A7000C2CCBD /* ProfileViewController.swift in Sources */,
 				913FDDE921E3D517006DFE27 /* XritViewController.swift in Sources */,
+				9151821522D3CB4D00DAD08E /* TPCircularBuffer+AudioBufferList.c in Sources */,
 				913F7F532066DC7A00F35E9B /* FrequencyLegendView.swift in Sources */,
 				91463CF521E52A0800177843 /* GpsPrefsViewController.swift in Sources */,
 				9148CEA921CBE28100306FC0 /* RxPrefsViewController.swift in Sources */,
@@ -719,6 +730,7 @@
 				913F7F682066DC7A00F35E9B /* WaterfallViewController.swift in Sources */,
 				913F7F4E2066DC7A00F35E9B /* RadioViewController.swift in Sources */,
 				913FDDEB21E3E8DA006DFE27 /* DaxViewController.swift in Sources */,
+				9151821822D3D0CE00DAD08E /* OpusPlayer.swift in Sources */,
 				913615B621C18465005EA591 /* TXPrefsViewController.swift in Sources */,
 				913FDDED21E4045A006DFE27 /* AntennaViewController.swift in Sources */,
 				9185B0D4208683C7004D4C40 /* Keychain.swift in Sources */,

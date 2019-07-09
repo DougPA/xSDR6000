@@ -1539,10 +1539,10 @@
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="7" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oel-ej-srH">
-                                            <rect key="frame" x="20" y="14" width="320" height="74"/>
+                                            <rect key="frame" x="20" y="14" width="370" height="74"/>
                                             <subviews>
                                                 <stackView distribution="fill" orientation="horizontal" alignment="centerY" spacing="113" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VeH-7T-bIF">
-                                                    <rect key="frame" x="0.0" y="54" width="320" height="20"/>
+                                                    <rect key="frame" x="0.0" y="54" width="370" height="20"/>
                                                     <subviews>
                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yan-Ej-svz" userLabel="API Version label">
                                                             <rect key="frame" x="-2" y="2" width="111" height="17"/>
@@ -1553,9 +1553,9 @@
                                                             </textFieldCell>
                                                         </textField>
                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YKg-wi-WTR" userLabel="API Version">
-                                                            <rect key="frame" x="220" y="0.0" width="100" height="20"/>
+                                                            <rect key="frame" x="220" y="0.0" width="150" height="20"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="width" constant="100" id="9Oy-QD-muU"/>
+                                                                <constraint firstAttribute="width" constant="150" id="9Oy-QD-muU"/>
                                                             </constraints>
                                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" placeholderString="1.2.3.4" id="FVb-gM-nBW">
                                                                 <font key="font" metaFont="system"/>
@@ -1577,7 +1577,7 @@
                                                     </customSpacing>
                                                 </stackView>
                                                 <stackView distribution="fill" orientation="horizontal" alignment="centerY" spacing="106" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gSF-go-o7s">
-                                                    <rect key="frame" x="0.0" y="27" width="320" height="20"/>
+                                                    <rect key="frame" x="0.0" y="27" width="370" height="20"/>
                                                     <subviews>
                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="D94-eN-xbF" userLabel="GUI Version label">
                                                             <rect key="frame" x="-2" y="2" width="118" height="17"/>
@@ -1588,9 +1588,9 @@
                                                             </textFieldCell>
                                                         </textField>
                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2A3-Re-Kfm" userLabel="Gui Version">
-                                                            <rect key="frame" x="220" y="0.0" width="100" height="20"/>
+                                                            <rect key="frame" x="220" y="0.0" width="150" height="20"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="width" constant="100" id="hG4-Ei-3Mr"/>
+                                                                <constraint firstAttribute="width" constant="150" id="hG4-Ei-3Mr"/>
                                                             </constraints>
                                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" placeholderString="1.2.3" id="o8w-Ok-gAx">
                                                                 <font key="font" metaFont="system"/>
@@ -1612,7 +1612,7 @@
                                                     </customSpacing>
                                                 </stackView>
                                                 <stackView distribution="fill" orientation="horizontal" alignment="centerY" spacing="136" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jvq-OL-gPy">
-                                                    <rect key="frame" x="0.0" y="0.0" width="319" height="20"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="369" height="20"/>
                                                     <subviews>
                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Eac-Xm-U8t" userLabel="Radio Version label">
                                                             <rect key="frame" x="-2" y="2" width="87" height="17"/>
@@ -1623,9 +1623,9 @@
                                                             </textFieldCell>
                                                         </textField>
                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GU1-ns-15D" userLabel="Gui Version">
-                                                            <rect key="frame" x="219" y="0.0" width="100" height="20"/>
+                                                            <rect key="frame" x="219" y="0.0" width="150" height="20"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="width" constant="100" id="54o-Yj-w6K"/>
+                                                                <constraint firstAttribute="width" constant="150" id="54o-Yj-w6K"/>
                                                             </constraints>
                                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" placeholderString="1.2.3" id="yOY-zT-Bdp">
                                                                 <font key="font" metaFont="system"/>

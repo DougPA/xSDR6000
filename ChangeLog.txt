@@ -1,5 +1,12 @@
 xSDR6000 Change Log
 
+v2.5.1.2019_07_08
+
+Corrections and edits throughout to make v2.4.9 & v2.5.1 as similar as possible
+RadioViewController.swift - renamed radioFirmwareDowngradeRequired(_:) to radioDowngradeRequired(_:)
+RadioViewController.swift - added radioUpgradeRequired(_:)
+
+
 v2.5.1.2019_07_03
 
 Corrections and edits throughout to make v2.4.9 & v2.5.1 as similar as possible

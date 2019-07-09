@@ -64,7 +64,7 @@ vertex VertexOutput waterfall_vertex(const device Intensity* intensities [[ buff
   startingBin = (c.startingFrequency - l.firstBinFrequency) / l.binBandwidth;
   endingBin = (c.endingFrequency - l.firstBinFrequency) / l.binBandwidth;
   deltaX = 1.0 / (endingBin - startingBin);
-  
+
   // calculate the x coordinate & normalize to clip space
   xCoord = ((float(vertexId - startingBin) * deltaX) * 2) - 1 ;
   

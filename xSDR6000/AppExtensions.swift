@@ -20,11 +20,6 @@ extension UserDefaults {
     get { return unarchive(key)! }
     set { archive(key, newValue) }
   }
-  
-//  public subscript(key: DefaultsKey<CGFloat>) -> CGFloat {
-//    get { return CGFloat(numberForKey(key._key)?.doubleValue ?? 0.0) }
-//    set { set(key, Double(newValue)) }
-//  }
 }
 
 extension DefaultsKeys {
@@ -61,8 +56,6 @@ extension DefaultsKeys {
   static let tnfsEnabled                  = DefaultsKey<Bool>("tnfsEnabled")
   static let spectrumFillLevel            = DefaultsKey<Int>("spectrumFillLevel")
   static let spectrumIsFilled             = DefaultsKey<Bool>("spectrumIsFilled")
-//  static let versionApi                   = DefaultsKey<String>("versionApi")
-//  static let versionGui                   = DefaultsKey<String>("versionGui")
   static let versionRadio                 = DefaultsKey<String>("versionRadio")
 
   // Colors common to all Panafalls
@@ -114,6 +107,10 @@ extension  UserDefaults {
   @objc dynamic var gridLine : NSColor {
     get { return Defaults[.gridLine] }
     set { Defaults[.gridLine] = newValue } }
+  
+  @objc dynamic var macAudioEnabled : Bool {
+    get { return Defaults[.macAudioEnabled] }
+    set { Defaults[.macAudioEnabled] = newValue } }
   
   @objc dynamic var marker : NSColor {
     get { return Defaults[.marker] }
@@ -175,14 +172,6 @@ extension  UserDefaults {
     get { return Defaults[.tnfsEnabled] }
     set { Defaults[.tnfsEnabled] = newValue } }
   
-//  @objc dynamic var versionApi : String {
-//    get { return Defaults[.versionApi] }
-//    set { Defaults[.versionApi] = newValue } }
-//  
-//  @objc dynamic var versionGui : String {
-//    get { return Defaults[.versionGui] }
-//    set { Defaults[.versionGui] = newValue } }
-//
   @objc dynamic var versionRadio : String {
     get { return Defaults[.versionRadio] }
     set { Defaults[.versionRadio] = newValue } }
