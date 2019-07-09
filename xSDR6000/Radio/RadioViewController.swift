@@ -59,7 +59,8 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   private var _profilesWindowController     : NSWindowController?
   private var _preferencesWindowController  : NSWindowController?
   private var _tcpPingFirstResponseReceived = false
-  
+  private var _clientId                     : UUID!
+
   private var _activity                     : NSObjectProtocol?
 
   private var _opus                         : Opus?
@@ -114,11 +115,15 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     // setup & register Defaults
     defaults(from: "Defaults.plist")
 
+    // give the Api access to our logger
     Log.sharedInstance.delegate = _log
 
     // FIXME: Is this necessary???
     _activity = ProcessInfo().beginActivity(options: [.latencyCritical, .idleSystemSleepDisabled], reason: "Good Reason")
-        
+
+    // get/create a Client Id
+    _clientId = clientId()
+    
     // schedule the start of other apps (if any)
     scheduleSupportingApps()
     
@@ -157,6 +162,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     // activate the menu selections
     return _tcpPingFirstResponseReceived
   }
+
   #if XDEBUG
   deinit {
     Swift.print("\(#function) - \(URL(fileURLWithPath: #file).lastPathComponent.dropLast(6))")
@@ -173,8 +179,8 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     // perform an orderly shutdown of all the components
     _api.shutdown(reason: .normal)
     
-    DispatchQueue.main.async { [weak self] in
-      self?._log.msg("Application closed by user", level: .info, function: #function, file: #file, line: #line)
+    _log.msg("Application closed by user", level: .info, function: #function, file: #file, line: #line)
+    DispatchQueue.main.async {
 
       // close the app
       NSApp.terminate(sender)
@@ -378,6 +384,24 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   // ----------------------------------------------------------------------------
   // MARK: - Private methods
   
+  /// Produce a Client Id (UUID)
+  ///
+  /// - Returns:                a UUID
+  ///
+  private func clientId() -> UUID {
+    var uuid : UUID
+    if let string = Defaults[.clientId] {
+      // use the stored string to create a UUID (if possible) else create a new UUID
+      uuid = UUID(uuidString: string) ?? UUID()
+    } else {
+      // none stored, create a new UUID
+      uuid = UUID()
+      Defaults[.clientId] = uuid.uuidString
+    }
+    // store the string for later use
+    Defaults[.clientId] = uuid.uuidString
+    return uuid
+  }
   /// Open or Close the Preferences window
   ///
   /// - Parameter state:              the desired state
@@ -474,11 +498,10 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
         // NO, get an instance of the Side view
         _sideViewController = _sideStoryboard!.instantiateController(withIdentifier: kSideIdentifier) as? SideViewController
         
+        _log.msg("Side view opened", level: .info, function: #function, file: #file, line: #line)
         DispatchQueue.main.async { [weak self] in
           // add it to the split view
           self?.addChild(self!._sideViewController!)
-          
-          self?._log.msg("Side view opened", level: .info, function: #function, file: #file, line: #line)
         }
       }
     } else {
@@ -516,12 +539,11 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
 //        let parameters = $0[InfoPrefsViewController.kParameters] as! String
         
         // schedule the launch
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds( delay )) { [weak self] in
+        _log.msg("\(appName) launched with delay of \(delay)", level: .info, function: #function, file: #file, line: #line)
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds( delay )) {
           
           // TODO: Add Parameters
           NSWorkspace.shared.launchApplication(appName)
-
-          self?._log.msg("\(appName) launched with delay of \(delay)", level: .info, function: #function, file: #file, line: #line)
         }
       }
     })
@@ -646,9 +668,15 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
 
     NC.makeObserver(self, with: #selector(tcpDidDisconnect(_:)), of: .tcpDidDisconnect)
 
-    NC.makeObserver(self, with: #selector(radioFirmwareDowngradeRequired(_:)), of: .radioFirmwareDowngradeRequired)
+    NC.makeObserver(self, with: #selector(radioDowngradeRequired(_:)), of: .radioDowngradeRequired)
 
+    NC.makeObserver(self, with: #selector(radioUpgradeRequired(_:)), of: .radioUpgradeRequired)
+    
     NC.makeObserver(self, with: #selector(tcpPingFirstResponse(_:)), of: .tcpPingFirstResponse)
+
+    NC.makeObserver(self, with: #selector(guiClientHasBeenAdded(_:)), of: .guiClientHasBeenAdded)
+    
+    NC.makeObserver(self, with: #selector(guiClientWillBeRemoved(_:)), of: .guiClientWillBeRemoved)
   }
   /// Process .meterHasBeenAdded Notification
   ///
@@ -741,8 +769,6 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     
     _log.msg("Opus Rx Stream added: StreamId = \(opus.streamId.hex)", level: .info, function: #function, file: #file, line: #line)
 
-    //    _opusEncode = OpusEncode(opus)
-
     _opusPlayer = OpusPlayer()
     opus.delegate = _opusPlayer
     
@@ -780,11 +806,11 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
       self.closeRadio()
     }
   }
-  /// Process .radioFirmwareDowngradeRequired Notification
+  /// Process .radioDowngradeRequired Notification
   ///
   /// - Parameter note:         a Notification instance
   ///
-  @objc private func radioFirmwareDowngradeRequired(_ note: Notification) {
+  @objc private func radioDowngradeRequired(_ note: Notification) {
     
     let versions = note.object as! [Version]
     
@@ -793,14 +819,39 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     DispatchQueue.main.async {
       let alert = NSAlert()
       alert.alertStyle = .warning
-      alert.messageText = "The Radio's firmware version is not supported by this version of xSDR6000."
+      alert.messageText = "The Radio's version is not supported by this version of \(AppDelegate.kName)."
       alert.informativeText = """
       Radio:\t\tv\(versions[1].string)
       xSDR6000:\tv\(versions[0].shortString)
       
-      Use SmartSDR to DOWNGRADE the Radio firmware
+      Use SmartSDR to DOWNGRADE the Radio
       \t\t\tOR
-      Install a newer version of xSDR6000
+      Install a newer version of \(AppDelegate.kName)
+      """
+      alert.addButton(withTitle: "Ok")
+      alert.beginSheetModal(for: self.view.window!, completionHandler: { (response) in  NSApp.terminate(self) })
+    }
+  }
+  /// Process .radioUpgradeRequired Notification
+  ///
+  /// - Parameter note:         a Notification instance
+  ///
+  @objc private func radioUpgradeRequired(_ note: Notification) {
+    
+    let versions = note.object as! [Version]
+    
+    // the API version is later than the Radio version
+    DispatchQueue.main.async {
+      let alert = NSAlert()
+      alert.alertStyle = .warning
+      alert.messageText = "The Radio's version is not supported by this version of \(AppDelegate.kName)."
+      alert.informativeText = """
+      Radio:\t\tv\(versions[1].string)
+      xSDR6000:\tv\(versions[0].shortString)
+      
+      Use SmartSDR to UPGRADE the Radio
+      \t\t\tOR
+      Install an older version of \(AppDelegate.kName)
       """
       alert.addButton(withTitle: "Ok")
       alert.beginSheetModal(for: self.view.window!, completionHandler: { (response) in  NSApp.terminate(self) })
@@ -826,6 +877,26 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
       // show/hide the Side view
       self?.sideView( Defaults[.sideViewOpen] ? .open : .close)
     }
+  }
+  /// Process .guiClientHasBeenAdded Notification
+  ///
+  /// - Parameter note:         a Notification instance
+  ///
+  @objc private func guiClientHasBeenAdded(_ note: Notification) {
+
+    let guiClient = note.object as! GuiClient
+    
+    _log.msg("Gui Client added: handle = \(guiClient.handle.hex), station = \(guiClient.station), program = \(guiClient.program), client id = \(guiClient.id?.uuidString ?? "")", level: .info, function: #function, file: #file, line: #line)
+  }
+  /// Process .guiClientWillBeRemoved Notification
+  ///
+  /// - Parameter note:         a Notification instance
+  ///
+  @objc private func guiClientWillBeRemoved(_ note: Notification) {
+
+    let guiClient = note.object as! GuiClient
+    
+    _log.msg("Gui Client removed: Handle = \(guiClient.handle.hex)", level: .info, function: #function, file: #file, line: #line)
   }
 
   // ----------------------------------------------------------------------------
@@ -853,9 +924,10 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     
 //    _api.isWan = isWan
 //    _api.wanConnectionHandle = wanHandle
-    
+
     // attempt to connect to it
-    return _api.connect(selectedRadio, clientName: kClientName, isGui: true, isWan: isWan, wanHandle: wanHandle)
+    let station = (Host.current().localizedName ?? "Mac").replacingSpaces(with: "_")
+    return _api.connect(selectedRadio, clientStation: station, clientName: AppDelegate.kName, clientId: _clientId, isGui: true, isWan: isWan, wanHandle: wanHandle)
   }
   /// Stop the active Radio
   ///
@@ -876,8 +948,8 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
         let monitor = toolbar.items.findElement({  $0.itemIdentifier.rawValue == "VoltageTemp"} ) as! ParameterMonitor
         monitor.deactivate()
       }
-      // perform an orderly shutdown of all the components
-      self?._api.shutdown(reason: .normal)
     }
+    // perform an orderly shutdown of all the components
+    _api.shutdown(reason: .normal)
   }
 }

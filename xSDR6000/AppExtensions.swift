@@ -20,17 +20,14 @@ extension UserDefaults {
     get { return unarchive(key)! }
     set { archive(key, newValue) }
   }
-  
-//  public subscript(key: DefaultsKey<CGFloat>) -> CGFloat {
-//    get { return CGFloat(numberForKey(key._key)?.doubleValue ?? 0.0) }
-//    set { set(key, Double(newValue)) }
-//  }
 }
 
 extension DefaultsKeys {
   
   // Radio level info
   static let cwxViewOpen                  = DefaultsKey<Bool>("cwxViewOpen")
+  static let clientId                     = DefaultsKey<String?>("clientId")
+  static let defaultRadioSerialNumber     = DefaultsKey<String>("defaultRadioSerialNumber")
   static let defaultRadio                 = DefaultsKey<[String: Any]>("defaultRadio")
   static let eqRxSelected                 = DefaultsKey<Bool>("eqRxSelected")
   static let flagBorderEnabled            = DefaultsKey<Bool>("flagBorderEnabled")

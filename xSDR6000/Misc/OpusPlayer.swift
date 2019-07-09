@@ -70,7 +70,7 @@ public final class OpusPlayer                       : NSObject, StreamHandler {
   private var _outputUnit                           : AudioUnit?
   private var _ringBuffer                           = TPCircularBuffer()
   
-  private var _q                                    = DispatchQueue(label: AppDelegate.kAppName + "OpusPlayerObjectQ", qos: .userInteractive, attributes: [.concurrent])
+  private var _q                                    = DispatchQueue(label: AppDelegate.kName + "OpusPlayerObjectQ", qos: .userInteractive, attributes: [.concurrent])
 
   private var __outputActive                        = false
   private var _outputActive                         : Bool {
@@ -292,11 +292,13 @@ public final class OpusPlayer                       : NSObject, StreamHandler {
         _log.msg("Opus conversion error: \(error!)", level: .error, function: #function, file: #file, line: #line)
       }
       // copy the frame's buffer to the Ring buffer & make it available
-      if !TPCircularBufferCopyAudioBufferList(&_ringBuffer, &_outputBuffer.mutableAudioBufferList.pointee, nil, UInt32(Opus.frameCount), &OpusPlayer.decoderOutputASBD) {
-        // something bad happened
-        let availableFrames = TPCircularBufferGetAvailableSpace(&_ringBuffer, &OpusPlayer.decoderOutputASBD)
-        _log.msg("Failed to write to the Ring Buffer: \(availableFrames) frames available", level: .error, function: #function, file: #file, line: #line)
-      }
+      TPCircularBufferCopyAudioBufferList(&_ringBuffer, &_outputBuffer.mutableAudioBufferList.pointee, nil, UInt32(Opus.frameCount), &OpusPlayer.decoderOutputASBD)
+
+      //      if !TPCircularBufferCopyAudioBufferList(&_ringBuffer, &_outputBuffer.mutableAudioBufferList.pointee, nil, UInt32(Opus.frameCount), &OpusPlayer.decoderOutputASBD) {
+//        // something bad happened
+//        let availableFrames = TPCircularBufferGetAvailableSpace(&_ringBuffer, &OpusPlayer.decoderOutputASBD)
+//        _log.msg("Failed to write to the Ring Buffer: \(availableFrames) frames available", level: .error, function: #function, file: #file, line: #line)
+//      }
 
     } else {
       // Pre OSX 10.13
@@ -316,8 +318,9 @@ public final class OpusPlayer                       : NSObject, StreamHandler {
       }
   
       // copy the frame's buffer to the Ring buffer & make it available
-      let success = TPCircularBufferCopyAudioBufferList(&_ringBuffer, _decoderOutputBufferListPtr!.unsafeMutablePointer, nil, UInt32(Opus.frameCount), &OpusPlayer.decoderOutputASBD)
-      if !success { _log.msg("Failed to write to the Ring Buffer", level: .error, function: #function, file: #file, line: #line) }
+      TPCircularBufferCopyAudioBufferList(&_ringBuffer, _decoderOutputBufferListPtr!.unsafeMutablePointer, nil, UInt32(Opus.frameCount), &OpusPlayer.decoderOutputASBD)
+//      let success = TPCircularBufferCopyAudioBufferList(&_ringBuffer, _decoderOutputBufferListPtr!.unsafeMutablePointer, nil, UInt32(Opus.frameCount), &OpusPlayer.decoderOutputASBD)
+//      if !success { _log.msg("Failed to write to the Ring Buffer", level: .error, function: #function, file: #file, line: #line) }
     }
   }
 }

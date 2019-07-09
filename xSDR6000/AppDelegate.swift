@@ -11,8 +11,6 @@ import xLib6000
 import XCGLogger
 import SwiftyUserDefaults
 
-let kClientName = "xSDR6000"
-
 @NSApplicationMain
 final class AppDelegate                     : NSObject, NSApplicationDelegate , LogHandler {
   
@@ -20,11 +18,11 @@ final class AppDelegate                     : NSObject, NSApplicationDelegate , 
   // MARK: - Static properties
   
   // App parameters
-  static let kAppName                       = "xSDR6000"
-  static let kAppVersion                    = Version("2.4.9.2019_07_03" )
+  static let kName                          = "xSDR6000"
+  static let kVersion                       = Version("2.4.9.2019_07_08" )
   
   // Log parameters
-  static let kLoggerName                    = AppDelegate.kAppName
+  static let kLoggerName                    = AppDelegate.kName
   static let kLogFile                       = AppDelegate.kLoggerName + ".log"
   static let kMaxLogFiles                   : UInt8 = 5
   static let kMaxFileSize                   : UInt64 = 1_048_576                     // 2^20

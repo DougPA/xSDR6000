@@ -9,32 +9,14 @@
 import Cocoa
 import xLib6000
 
-// --------------------------------------------------------------------------------
-//  Created by RadioViewController
-//  Removed by Application termination
-//
-//  **** Notifications received ****
-//      .panadapterHasBeenAdded -> log only
-//      .waterfallHasBeenAdded -> create Panafall view hierarchy
-//
-//  **** Action Methods ****
-//      None
-//
-//  **** Observations ****
-//      None
-//
-//  **** View Bindings ****
-//      None
-//
-// --------------------------------------------------------------------------------
-
-final class PanafallsViewController               : NSSplitViewController {
+final class PanafallsViewController         : NSSplitViewController {
   
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
   
   private let _log                          = NSApp.delegate as! AppDelegate
   private var _sb                           : NSStoryboard?
+  private var _api                          = Api.sharedInstance
   
   private let kPanafallStoryboard           = "Panafall"
   private let kPanafallButtonIdentifier     = "Button"
@@ -93,8 +75,11 @@ final class PanafallsViewController               : NSSplitViewController {
     // does the Notification contain a Panadapter?
     let panadapter = note.object as! Panadapter
     
-    // YES, log the event
-    _log.msg("Panadapter added: Stream Id = \(panadapter.streamId.hex)", level: .info, function: #function, file: #file, line: #line)
+    // In V3, check is it for this Client
+    if (_api.radioVersion.isV3 && panadapter.clientHandle == _api.connectionHandle) || _api.radioVersion.isV3 == false {
+      // log the event
+      _log.msg("Panadapter added: ID = \(panadapter.streamId.hex)", level: .info, function: #function, file: #file, line: #line)
+    }
   }
   /// Process .waterfallHasBeenAdded Notification
   ///
@@ -106,21 +91,24 @@ final class PanafallsViewController               : NSSplitViewController {
     // does the Notification contain a Panadapter?
     let waterfall = note.object as! Waterfall
     
-    // YES, log the event
-    _log.msg("Waterfall added: Stream Id = \(waterfall.streamId.hex)", level: .info, function: #function, file: #file, line: #line)
-
-    let panadapter = Api.sharedInstance.radio!.panadapters[waterfall.panadapterId]
-    
-    // create a Panafall Button View Controller
-    let panafallButtonVc = _sb!.instantiateController(withIdentifier: kPanafallButtonIdentifier) as! PanafallButtonViewController
-    
-    // interact with the UI
-    DispatchQueue.main.sync { [weak self] in
-    
-      // pass needed parameters
-      panafallButtonVc.configure(panadapter: panadapter, waterfall: waterfall)
-    
-      self?.addSplitViewItem(NSSplitViewItem(viewController: panafallButtonVc))
+    // In V3, check is it for this Client
+    if (_api.radioVersion.isV3 && waterfall.clientHandle == _api.connectionHandle) || _api.radioVersion.isV3 == false {
+      // log the event
+      _log.msg("Waterfall added: ID = \(waterfall.streamId.hex)", level: .info, function: #function, file: #file, line: #line)
+      
+      let panadapter = _api.radio!.panadapters[waterfall.panadapterId]
+      
+      // create a Panafall Button View Controller
+      let panafallButtonVc = _sb!.instantiateController(withIdentifier: kPanafallButtonIdentifier) as! PanafallButtonViewController
+      
+      // interact with the UI
+      DispatchQueue.main.sync { [weak self] in
+        
+        // pass needed parameters
+        panafallButtonVc.configure(panadapter: panadapter, waterfall: waterfall)
+        
+        self?.addSplitViewItem(NSSplitViewItem(viewController: panafallButtonVc))
+      }
     }
   }
 }

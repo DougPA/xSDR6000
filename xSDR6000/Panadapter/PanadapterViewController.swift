@@ -103,9 +103,7 @@ final class PanadapterViewController        : NSViewController, NSGestureRecogni
     _panadapter?.yPixels = view.frame.height
     
     // update the Constant values with the new size
-//    _panadapterRenderer.updateConstants(size: view.frame.size)
-    
-//    Swift.print("view.frame.size = \(view.frame.size)")
+    _panadapterRenderer.updateConstants(size: view.frame.size)
 
     // get the list of possible Db level spacings
     _dbLegendSpacings = Defaults[.dbLegendSpacings]
@@ -708,7 +706,7 @@ final class PanadapterViewController        : NSViewController, NSGestureRecogni
     if let panadapter = _panadapter, slice.panadapterId == panadapter.streamId  {
       
       // YES, log the event
-      _log.msg("Slice will be removed: Id = \(slice.id), pan =  \(panadapter.streamId.hex), freq =\(slice.frequency)", level: .info, function: #function, file: #file, line: #line)
+      _log.msg("Slice will be removed: Id = \(slice.id), pan =  \(panadapter.streamId.hex), freq = \(slice.frequency)", level: .info, function: #function, file: #file, line: #line)
 
       // remove the Flag & Observations of this Slice
       removeFlag(for: slice)

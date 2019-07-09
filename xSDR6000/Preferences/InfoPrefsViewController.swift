@@ -23,6 +23,7 @@ final class InfoPrefsViewController: NSViewController, NSTableViewDelegate, NSTa
 
   @IBOutlet private weak var _versionGuiTextField   : NSTextField!
   @IBOutlet private weak var _versionApiTextField   : NSTextField!
+  @IBOutlet private weak var _versionRadioTextField : NSTextField!
   
   @IBOutlet private weak var _tableView             : NSTableView!     // table of Apps
   @IBOutlet private weak var _deleteButton          : NSButton!
@@ -50,8 +51,9 @@ final class InfoPrefsViewController: NSViewController, NSTableViewDelegate, NSTa
     view.translatesAutoresizingMaskIntoConstraints = false
     
     // populate the version fields
-    _versionGuiTextField.stringValue = AppDelegate.kAppVersion.string
     _versionApiTextField.stringValue = Api.kVersion.string
+    _versionGuiTextField.stringValue = AppDelegate.kVersion.string
+    _versionRadioTextField.stringValue = Api.sharedInstance.radioVersion.string
 
     // load the array
     _array = Defaults[.supportingApps] as! [Dictionary<String, Any>]

@@ -66,8 +66,6 @@ final class WaterfallViewController               : NSViewController, NSGestureR
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
   
-
-
   // ----------------------------------------------------------------------------
   // MARK: - Overridden methods
   
@@ -142,7 +140,7 @@ final class WaterfallViewController               : NSViewController, NSGestureR
       do {
         file = try FileHandle(forReadingFrom: texURL)
       } catch {
-        fatalError("Texture file '\(name).tex' not found")
+        fatalError("Gradient file '\(name).tex' not found")
       }
       // Read all the data
       let data = file!.readDataToEndOfFile()
@@ -157,7 +155,7 @@ final class WaterfallViewController               : NSViewController, NSGestureR
       return array
     }
     // resource not found
-    fatalError("Texture file '\(name).tex' not found")
+    fatalError("Gradient file '\(name).tex' not found")
   }
 //  /// Prevent the Right Click recognizer from responding when the mouse is not over the Legend
 //  ///
@@ -187,7 +185,6 @@ final class WaterfallViewController               : NSViewController, NSGestureR
 //    // update the time Legend
 //    _timeLayer?.updateLegendSpacing(gestureRecognizer: gr, in: view)
 //  }
-  
 
   // ----------------------------------------------------------------------------
   // MARK: - Private methods
@@ -260,7 +257,7 @@ final class WaterfallViewController               : NSViewController, NSGestureR
   func invalidateObservations(_ observations: inout [NSKeyValueObservation], remove: Bool = true) {
     
     // invalidate each observation
-    observations.forEach {$0.invalidate()} 
+    observations.forEach {$0.invalidate()}
 
     // if specified, remove the tokens
     if remove { observations.removeAll() }
@@ -308,8 +305,8 @@ final class WaterfallViewController               : NSViewController, NSGestureR
   ///
   private func waterfallObserverGradient(_ waterfall: Waterfall, _ change: Any) {
 
-      // reload the Gradient
-      _waterfallRenderer.setGradient(loadGradient(index: waterfall.gradientIndex) )
+    // reload the Gradient
+    _waterfallRenderer.setGradient(loadGradient(index: waterfall.gradientIndex) )
   }
   /// Respond to Defaults observations
   ///
@@ -318,13 +315,13 @@ final class WaterfallViewController               : NSViewController, NSGestureR
   ///   - change:                       the change
   ///
   private func defaultsObserver(_ defaults: UserDefaults, _ change: Any) {
-
-      // reset the spectrum background color
-      let color = defaults[.spectrumBackground]
-      _waterfallView.clearColor = MTLClearColor(red: Double(color.redComponent),
-                                                     green: Double(color.greenComponent),
-                                                     blue: Double(color.blueComponent),
-                                                     alpha: Double(color.alphaComponent) )
+    
+    // reset the spectrum background color
+    let color = defaults[.spectrumBackground]
+    _waterfallView.clearColor = MTLClearColor(red: Double(color.redComponent),
+                                              green: Double(color.greenComponent),
+                                              blue: Double(color.blueComponent),
+                                              alpha: Double(color.alphaComponent) )
   }
   
   // ----------------------------------------------------------------------------
@@ -358,7 +355,7 @@ final class WaterfallViewController               : NSViewController, NSGestureR
     
     // remove the UI components of the Panafall
     DispatchQueue.main.async { [weak self] in
-    
+
       // remove the entire PanafallButtonViewController hierarchy
       let panafallButtonVc = self?.parent!.parent!
       panafallButtonVc?.removeFromParent()

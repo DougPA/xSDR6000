@@ -51,10 +51,6 @@ public final class WaterfallRenderer: NSObject, MTKViewDelegate {
   // ----------------------------------------------------------------------------
   // MARK: - Private properties
 
-//  var radio: Radio?                         = Api.sharedInstance.radio
-//  weak var panadapter                       : Panadapter?
-//  private weak var _waterfall               : Waterfall? { return radio!.waterfalls[panadapter!.waterfallId] }
-  
   private weak var _radio                   : Radio?
   private weak var _panadapter              : Panadapter?
   private weak var _waterfall               : Waterfall? { return _radio!.waterfalls[_panadapter!.waterfallId] }
@@ -67,7 +63,6 @@ public final class WaterfallRenderer: NSObject, MTKViewDelegate {
   private var _metalView                    : MTKView!
   private var _commandQueue                 : MTLCommandQueue!              // Metal queue
   private var _line                         = Line()
-//  private var _constant                     = Constant()
   private var _device                       : MTLDevice!
   private var _sizeOfLine                   = 0
   private var _sizeOfIntensities            = 0
@@ -79,8 +74,8 @@ public final class WaterfallRenderer: NSObject, MTKViewDelegate {
   private var _lineBuffer                   : MTLBuffer!
   private var _activeLines                  : UInt16 = 0
   
-  private let _q                            = DispatchQueue(label: AppDelegate.kAppName + ".waterQ", attributes: [.concurrent])
-  private var _waterDrawQ                   = DispatchQueue(label: AppDelegate.kAppName + ".waterDrawQ")
+  private let _waterQ                       = DispatchQueue(label: AppDelegate.kName + ".waterQ", attributes: [.concurrent])
+  private var _waterDrawQ                   = DispatchQueue(label: AppDelegate.kName + ".waterDrawQ")
 
   private var _autoBlackLevel               : UInt32 = 0
   
@@ -110,9 +105,8 @@ public final class WaterfallRenderer: NSObject, MTKViewDelegate {
   
   private var __constant                    = Constant()
   private var _constant                     : Constant {
-    get { return _q.sync { __constant } }
-    set { _q.sync(flags: .barrier) { __constant = newValue } } }
-  
+    get { return _waterQ.sync { __constant } }
+    set { _waterQ.sync(flags: .barrier) { __constant = newValue } } }
 
   // ----------------------------------------------------------------------------
   // MARK: - Initialization
@@ -184,7 +178,6 @@ public final class WaterfallRenderer: NSObject, MTKViewDelegate {
     
     // finalize rendering & push the command buffer to the GPU
     buffer.commit()
-//    buffer.waitUntilCompleted()
   }
   
   // ----------------------------------------------------------------------------
@@ -350,7 +343,7 @@ extension WaterfallRenderer                 : StreamHandler {
 
     _waterDrawQ.async { [unowned self] in
       autoreleasepool {
-       self._metalView.draw()
+        self._metalView.draw()
       }
     }
 

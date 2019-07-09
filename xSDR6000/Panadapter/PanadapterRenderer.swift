@@ -22,7 +22,6 @@ public final class PanadapterRenderer       : NSObject {
   // MARK: - Static properties
   
   static let kMaxIntensities                = 3_072                         // max number of intensity values (bins)
-//  static let kTextureAsset                  = "1x16"                        // name of the texture asset
   
   // ----------------------------------------------------------------------------
   // MARK: - Shader structs
@@ -61,9 +60,8 @@ public final class PanadapterRenderer       : NSObject {
   
   private var _fillLevel                    = 1
   
-//  private var _frameBoundarySemaphore       = DispatchSemaphore(value: kNumberSpectrumBuffers)
-  private let _panQ                         = DispatchQueue(label: AppDelegate.kAppName + ".panQ", attributes: [.concurrent])
-  private let _panDrawQ                      = DispatchQueue(label: AppDelegate.kAppName + ".panDrawQ")
+  private let _panQ                         = DispatchQueue(label: AppDelegate.kName + ".panQ", attributes: [.concurrent])
+  private let _panDrawQ                     = DispatchQueue(label: AppDelegate.kName + ".panDrawQ")
 
   // ----- Backing properties - SHOULD NOT BE ACCESSED DIRECTLY -----------------------------------
   //
@@ -135,10 +133,6 @@ public final class PanadapterRenderer       : NSObject {
     _constants.delta = Float(1.0 / (size.width - 1.0))
     _constants.height = Float(size.height)
     _constants.maxNumberOfBins = UInt32(_maxNumberOfBins)
-
-//    Swift.print("delta = \(_constants.delta), height = \(_constants.height), maxBins = \(_constants.maxNumberOfBins)")
-//
-//    Swift.print("constants size = \(MemoryLayout.size(ofValue:_constants)), stride = \(MemoryLayout.stride(ofValue:_constants))")
   }
   
   func updateColor(spectrumColor: NSColor, fillLevel: Int, fillColor: NSColor) {
@@ -157,8 +151,6 @@ public final class PanadapterRenderer       : NSObject {
     // update the array
     _colorArray[kFillColor].spectrumColor = adjFillColor.float4Color
     _colorArray[kLineColor].spectrumColor = spectrumColor.float4Color
-
-//    Swift.print("colors size = \(MemoryLayout.size(ofValue: _colorArray)), stride = \(MemoryLayout.stride(ofValue: _colorArray))")
   }
   /// Set the Metal view clear color
   ///
@@ -305,10 +297,6 @@ extension PanadapterRenderer                : StreamHandler {
     
     guard let streamFrame = streamFrame as? PanadapterFrame else { return }
     
-//    Swift.print("\(streamFrame.frameIndex)")
-
-//    _frameBoundarySemaphore.wait()
-    
     // move to using the next spectrumBuffer
     _currentFrameIndex = (_currentFrameIndex + 1) % PanadapterRenderer.kNumberSpectrumBuffers
     
@@ -317,8 +305,6 @@ extension PanadapterRenderer                : StreamHandler {
     
     // put the Intensities into the current Spectrum Buffer
     _spectrumBuffers[_currentFrameIndex].contents().copyMemory(from: streamFrame.bins, byteCount: streamFrame.totalBins * MemoryLayout<ushort>.stride)
-    
-//    Swift.print("\(streamFrame.totalBins)")
     
     _panDrawQ.async { [unowned self] in
       autoreleasepool {

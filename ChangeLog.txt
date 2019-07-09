@@ -1,5 +1,17 @@
 xSDR6000 Change Log
 
+v2.4.9.2019_07_08
+
+Corrections and edits throughout to make v2.4.9 & v2.5.1 as similar as possible
+RadioViewController.swift - renamed radioFirmwareDowngradeRequired(_:) to radioDowngradeRequired(_:)
+RadioViewController.swift - added radioUpgradeRequired(_:)
+OpusPlayer.swift - removed check for ring buffer in streamHandler(_:)
+AppDelegate.swift - changed kAppName to kName & kAppVersion to kVersion
+AppDelegate.swift - deleted kClientName, changed refs to AppDelegate.kName
+InfoPrefsViewController.swift - added radio version to text fields
+Preferences.storyboard - added Radio version field to Info Tab
+
+
 v2.4.9.2019_07_03
 
 Corrections and edits throughout to make v2.4.9 & v2.5.1 as similar as possible

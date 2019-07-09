@@ -6,7 +6,6 @@
 //  Copyright © 2017 Douglas Adams. All rights reserved.
 //
 
-
 #include <metal_stdlib>
 using namespace metal;
 
