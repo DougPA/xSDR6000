@@ -35,14 +35,14 @@ public final class OpusEncode               : NSObject {
   private let _log                          = (NSApp.delegate as! AppDelegate)
   private var _engine                       : AVAudioEngine?
   private var _mixer                        : AVAudioMixerNode?
-  private var _opus                         : Opus!
+  private var _remoteTxAudioStream          : RemoteTxAudioStream!
   private var _encoder                      : OpaquePointer!
   
   private var _audioConverter               : AVAudioConverter!
   
   private var _tapInputBlock                : AVAudioNodeTapBlock!
   private var _tapBufferSize                : AVAudioFrameCount = 0
-  private var _encoderOutput                = [UInt8](repeating: 0, count: Opus.frameCount)
+  private var _encoderOutput                = [UInt8](repeating: 0, count: RemoteTxAudioStream.frameCount)
   
   private var _ringBuffer                   = RingBuffer()
   private var _bufferInput                  : AVAudioPCMBuffer!
@@ -60,18 +60,18 @@ public final class OpusEncode               : NSObject {
 
 
   private let kConverterOutputFormat        = AVAudioFormat(commonFormat: .pcmFormatFloat32,
-                                                            sampleRate: Opus.sampleRate,
-                                                            channels: AVAudioChannelCount(Opus.channelCount),
-                                                            interleaved: Opus.isInterleaved)!
-  private let kConverterOutputFrameCount    = Int(Opus.sampleRate / 10)
+                                                            sampleRate: RemoteTxAudioStream.sampleRate,
+                                                            channels: AVAudioChannelCount(RemoteTxAudioStream.channelCount),
+                                                            interleaved: RemoteTxAudioStream.isInterleaved)!
+  private let kConverterOutputFrameCount    = Int(RemoteTxAudioStream.sampleRate / 10)
   private let kRingBufferSlots              = 3
   private let kTapBus                       = 0
 
   // ----------------------------------------------------------------------------
   // MARK: - Initialization
   
-  public init(_ opus: Opus) {
-    _opus = opus
+  public init(_ remoteTxAudioStream: RemoteTxAudioStream) {
+    _remoteTxAudioStream = remoteTxAudioStream
     
     super.init()
     
@@ -157,7 +157,7 @@ public final class OpusEncode               : NSObject {
         for _ in 0..<10 {
           
           let fetchError = self._ringBuffer!.fetch(self._bufferOutput.mutableAudioBufferList,
-                                                   nFrame: UInt32(Opus.frameCount),
+                                                   nFrame: UInt32(RemoteTxAudioStream.frameCount),
                                                    frameNumnber: frameNumber)
           if fetchError != 0 { Swift.print("Fetch error = \(String(describing: fetchError))") }
           
@@ -171,17 +171,17 @@ public final class OpusEncode               : NSObject {
           // perform Opus encoding
           let encodedFrames = opus_encode_float(self._encoder,                            // an encoder
                                                 self._bufferOutput.floatChannelData![0],  // source (interleaved .pcmFloat32)
-                                                Int32(Opus.frameCount),                   // source, frames per channel
+                                                Int32(RemoteTxAudioStream.frameCount),    // source, frames per channel
                                                 &self._encoderOutput,                     // destination (Opus-encoded bytes)
-                                                Int32(Opus.frameCount))                   // destination, max size (bytes)
+                                                Int32(RemoteTxAudioStream.frameCount))    // destination, max size (bytes)
           // check for encode errors
           if encodedFrames < 0 { Swift.print("Encoder error - " + String(cString: opus_strerror(encodedFrames))) }
           
           // send the encoded audio to the Radio
-          self._opus!.sendTxAudio(buffer: self._encoderOutput, samples: Int(encodedFrames))
+          self._remoteTxAudioStream!.sendRemoteTxAudioStream(buffer: self._encoderOutput, samples: Int(encodedFrames))
           
           // bump the frame number
-          frameNumber += Int64( Opus.frameCount )
+          frameNumber += Int64( RemoteTxAudioStream.frameCount )
         }
       }
     }
@@ -212,7 +212,7 @@ public final class OpusEncode               : NSObject {
   private func createBuffers() {
     
     // create the Ring buffer
-    _ringBuffer!.allocate(UInt32(Opus.channelCount),
+    _ringBuffer!.allocate(UInt32(RemoteTxAudioStream.channelCount),
                           bytesPerFrame: UInt32(MemoryLayout<Float>.size * Int(kConverterOutputFormat.channelCount)),
                           capacityFrames: UInt32(kConverterOutputFrameCount * kRingBufferSlots))
     
@@ -223,7 +223,7 @@ public final class OpusEncode               : NSObject {
     
     // create a buffer for output from the ring buffer
     _bufferOutput = AVAudioPCMBuffer(pcmFormat: kConverterOutputFormat,
-                                     frameCapacity: AVAudioFrameCount(Opus.frameCount))!
+                                     frameCapacity: AVAudioFrameCount(RemoteTxAudioStream.frameCount))!
     _bufferOutput.frameLength = _bufferOutput.frameCapacity
     
   }
@@ -233,9 +233,9 @@ public final class OpusEncode               : NSObject {
     
     // create the Opus encoder
     var opusError : Int32 = 0
-    _encoder = opus_encoder_create(Int32(Opus.sampleRate),
-                                   Int32(Opus.channelCount),
-                                   Int32(Opus.application),
+    _encoder = opus_encoder_create(Int32(RemoteTxAudioStream.sampleRate),
+                                   Int32(RemoteTxAudioStream.channelCount),
+                                   Int32(RemoteTxAudioStream.application),
                                    &opusError)
     if opusError != OPUS_OK { fatalError("Unable to create OpusEncoder, error = \(opusError)") }
     
@@ -273,8 +273,8 @@ public final class OpusEncode               : NSObject {
   private func clearBuffers() {
     
     // clear the buffers
-    memset(_bufferInput.floatChannelData![0], 0, Int(_bufferInput.frameLength) * MemoryLayout<Float>.size * Opus.channelCount)
-    memset(_bufferOutput.floatChannelData![0], 0, Int(_bufferOutput.frameLength) * MemoryLayout<Float>.size * Opus.channelCount)
+    memset(_bufferInput.floatChannelData![0], 0, Int(_bufferInput.frameLength) * MemoryLayout<Float>.size * RemoteTxAudioStream.channelCount)
+    memset(_bufferOutput.floatChannelData![0], 0, Int(_bufferOutput.frameLength) * MemoryLayout<Float>.size * RemoteTxAudioStream.channelCount)
     
     // FIXME: Clear the ring buffer?
     
@@ -289,10 +289,10 @@ public final class OpusEncode               : NSObject {
   ///
   private func createObservations(_ observations: inout [NSKeyValueObservation]) {
     
-    observations = [
-      _opus.observe(\.txEnabled, options: [.initial, .new]) { [weak self] (object, change) in
-        self?.opusTxAudio(object, change) }
-    ]
+//    observations = [
+//      _remoteTxAudioStream.observe(\.txEnabled, options: [.initial, .new]) { [weak self] (object, change) in
+//        self?.opusTxAudio(object, change) }
+//    ]
   }
   /// Respond to changes in Opus txEnabled
   ///
@@ -302,39 +302,40 @@ public final class OpusEncode               : NSObject {
   ///
   private func opusTxAudio(_ object: Any, _ change: Any) {
     
-    if _opus.txEnabled && _engine == nil {
-      
-      // get the default input device
-      let device = AudioHelper.inputDevices.filter { $0.isDefault }.first!
-
-      // start Opus Tx Audio
-      _engine = AVAudioEngine()
-      clearBuffers()
-
-      // try to set it as the input device for the engine
-      if setInputDevice(device.id) {
-        
-        _log.msg("Opus Tx, Started: ID = \(Opus.txStreamId.hex), Device = \(device.name!)", level: .info, function: #function, file: #file, line: #line)
-
-        // start capture using this input device
-        startInput(device)
-
-      } else {
-        
-        _log.msg("Opus Tx, FAILED: Device = \(device.name!)", level: .warning, function: #function, file: #file, line: #line)
-        
-        _engine?.stop()
-        _engine = nil
-      }
-      
-    } else if !_opus.txEnabled && _engine != nil {
-      
-      _log.msg("Opus Tx, Stopped", level: .info, function: #function, file: #file, line: #line)
-      
-      // stop Opus Tx Audio
-      _engine?.inputNode.removeTap(onBus: kTapBus)
-      _engine?.stop()
-      _engine = nil
-    }
+//    if _remoteTxAudioStream.txEnabled && _engine == nil {
+//
+//      // get the default input device
+//      let device = AudioHelper.inputDevices.filter { $0.isDefault }.first!
+//
+//      // start Opus Tx Audio
+//      _engine = AVAudioEngine()
+//      clearBuffers()
+//
+//      // try to set it as the input device for the engine
+//      if setInputDevice(device.id) {
+//
+//        _log.msg("RemoteTxAudioStream started: Stream Id = \(RemoteTxAudioStream.streamId.hex), Device = \(device.name!)", level: .info, function: #function, file: #file, line: #line)
+//
+//        // start capture using this input device
+//        startInput(device)
+//
+//      } else {
+//
+//        _log.msg("RemoteTxAudioStream FAILED: Device = \(device.name!)", level: .warning, function: #function, file: #file, line: #line)
+//
+//        _engine?.stop()
+//        _engine = nil
+//      }
+//
+//    } else if !_remoteTxAudioStream.txEnabled && _engine != nil {
+//
+//      _log.msg("RemoteTxAudioStream stopped", level: .info, function: #function, file: #file, line: #line)
+//
+//      // stop Opus Tx Audio
+//      _engine?.inputNode.removeTap(onBus: kTapBus)
+//      _engine?.stop()
+//      _engine = nil
+//    }
+//  }
   }
 }

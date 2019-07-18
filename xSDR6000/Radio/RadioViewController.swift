@@ -63,7 +63,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
 
   private var _activity                     : NSObjectProtocol?
 
-  private var _opus                         : Opus?
+  private var _remoteRxAudioStream          : RemoteRxAudioStream?
   private var _opusPlayer                   : OpusPlayer?
   private var _opusEncode                   : OpusEncode?
 
@@ -198,13 +198,14 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     // update the default value
     Defaults[.macAudioEnabled] = sender.boolState
 
-    // enable / disable Remote Audio
-    _opus?.rxEnabled = sender.boolState
-
-    let opusRxStatus = sender.boolState ? "Started" : "Stopped"
-    _log.msg("Opus Rx - \(opusRxStatus)", level: .info, function: #function, file: #file, line: #line)
-    
-    sender.boolState ? _opusPlayer?.start() : _opusPlayer?.stop()
+    // create / remove the RemoteRxAudioStream
+    if sender.boolState {
+      // create the Stream
+      RemoteRxAudioStream.create(compression: RemoteRxAudioStream.kOpus)
+    } else {
+      // remove the Stream (if any)
+      _remoteRxAudioStream?.remove()
+    }
   }
   /// Respond to the Headphone Gain slider
   ///
@@ -659,24 +660,18 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     NC.makeObserver(self, with: #selector(meterHasBeenAdded(_:)), of: .meterHasBeenAdded)
     
     NC.makeObserver(self, with: #selector(radioHasBeenAdded(_:)), of: .radioHasBeenAdded)
-
     NC.makeObserver(self, with: #selector(radioWillBeRemoved(_:)), of: .radioWillBeRemoved)
-
     NC.makeObserver(self, with: #selector(radioHasBeenRemoved(_:)), of: .radioHasBeenRemoved)
     
-    NC.makeObserver(self, with: #selector(opusRxHasBeenAdded(_:)), of: .opusRxHasBeenAdded)
+    NC.makeObserver(self, with: #selector(remoteRxAudioStreamHasBeenAdded(_:)), of: .remoteRxAudioStreamHasBeenAdded)
+    NC.makeObserver(self, with: #selector(remoteRxAudioStreamWillBeRemoved(_:)), of: .remoteRxAudioStreamWillBeRemoved)
 
     NC.makeObserver(self, with: #selector(tcpDidDisconnect(_:)), of: .tcpDidDisconnect)
 
     NC.makeObserver(self, with: #selector(radioDowngradeRequired(_:)), of: .radioDowngradeRequired)
-
     NC.makeObserver(self, with: #selector(radioUpgradeRequired(_:)), of: .radioUpgradeRequired)
     
     NC.makeObserver(self, with: #selector(tcpPingFirstResponse(_:)), of: .tcpPingFirstResponse)
-
-    NC.makeObserver(self, with: #selector(guiClientHasBeenAdded(_:)), of: .guiClientHasBeenAdded)
-    
-    NC.makeObserver(self, with: #selector(guiClientWillBeRemoved(_:)), of: .guiClientWillBeRemoved)
   }
   /// Process .meterHasBeenAdded Notification
   ///
@@ -757,23 +752,37 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     // update the window title
     updateWindowTitle()
   }
-  /// Process .opusHasBeenAdded Notification
+  /// Process .remoteRxAudioStreamHasBeenAdded Notification
   ///
   /// - Parameter note:         a Notification instance
   ///
-  @objc private func opusRxHasBeenAdded(_ note: Notification) {
+  @objc private func remoteRxAudioStreamHasBeenAdded(_ note: Notification) {
 
-    // the Opus class has been initialized
-    let opus = note.object as! Opus
-    _opus = opus
+    // the RemoteRxAudioStream class has been initialized
+    if let remoteRxAudioStream = note.object as? RemoteRxAudioStream {
+      _remoteRxAudioStream = remoteRxAudioStream
     
-    _log.msg("Opus Rx Stream added: StreamId = \(opus.streamId.hex)", level: .info, function: #function, file: #file, line: #line)
+      _log.msg("RemoteRxAudioStream added: StreamId = \(remoteRxAudioStream.streamId.hex)", level: .info, function: #function, file: #file, line: #line)
 
-    _opusPlayer = OpusPlayer()
-    opus.delegate = _opusPlayer
+      _opusPlayer = OpusPlayer()
+      remoteRxAudioStream.delegate = _opusPlayer
+      _opusPlayer?.start()
+    }
+  }
+  /// Process .remoteRxAudioStreamWillBeRemoved Notification
+  ///
+  /// - Parameter note:         a Notification instance
+  ///
+  @objc private func remoteRxAudioStreamWillBeRemoved(_ note: Notification) {
     
-    // start the player (if enabled)
-    if Defaults[.macAudioEnabled] { self._opusPlayer?.start() }
+    // the RemoteRxAudioStream is being removed
+    if let remoteRxAudioStream = note.object as? RemoteRxAudioStream {
+      
+      _log.msg("RemoteRxAudioStream will be removed: StreamId = \(remoteRxAudioStream.streamId.hex)", level: .info, function: #function, file: #file, line: #line)
+
+      _opusPlayer?.stop()
+      remoteRxAudioStream.delegate = nil
+    }
   }
   /// Process .tcpDidDisconnect Notification
   ///
@@ -878,26 +887,6 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
       self?.sideView( Defaults[.sideViewOpen] ? .open : .close)
     }
   }
-  /// Process .guiClientHasBeenAdded Notification
-  ///
-  /// - Parameter note:         a Notification instance
-  ///
-  @objc private func guiClientHasBeenAdded(_ note: Notification) {
-
-    let guiClient = note.object as! GuiClient
-    
-    _log.msg("Gui Client added: handle = \(guiClient.handle.hex), station = \(guiClient.station), program = \(guiClient.program), client id = \(guiClient.id?.uuidString ?? "")", level: .info, function: #function, file: #file, line: #line)
-  }
-  /// Process .guiClientWillBeRemoved Notification
-  ///
-  /// - Parameter note:         a Notification instance
-  ///
-  @objc private func guiClientWillBeRemoved(_ note: Notification) {
-
-    let guiClient = note.object as! GuiClient
-    
-    _log.msg("Gui Client removed: Handle = \(guiClient.handle.hex)", level: .info, function: #function, file: #file, line: #line)
-  }
 
   // ----------------------------------------------------------------------------
   // MARK: - RadioPicker delegate methods
@@ -927,7 +916,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
 
     // attempt to connect to it
     let station = (Host.current().localizedName ?? "Mac").replacingSpaces(with: "_")
-    return _api.connect(selectedRadio, clientStation: station, clientName: AppDelegate.kName, clientId: _clientId, isGui: true, isWan: isWan, wanHandle: wanHandle)
+    return _api.connect(selectedRadio, clientStation: station, clientProgram: AppDelegate.kName, clientId: _clientId, isGui: true, isWan: isWan, wanHandle: wanHandle)
   }
   /// Stop the active Radio
   ///

@@ -1,4 +1,9 @@
-xSDR6000 Change Log
+xSDR6000 V3 Change Log
+
+v2.5.1.2019_07_17
+
+xLib6000.framework - updated to v2.5.1.2019_07_17
+
 
 v2.5.1.2019_07_08
 

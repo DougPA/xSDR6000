@@ -16,9 +16,8 @@ class ConnectedClientsViewController            : NSViewController, NSTableViewD
   
   @IBOutlet private weak var _tableView         : NSTableView!
   
-  private var _clients                          : [GuiClient] {
-    return Array(Api.sharedInstance.guiClients.values).sorted(by: { $0.handle < $1.handle} )
-  }
+  private let _log                              = NSApp.delegate as! AppDelegate
+  private var _guiClients                       = [GuiClient]()
   
   // ----------------------------------------------------------------------------
   // MARK: - Overridden Methods
@@ -32,7 +31,7 @@ class ConnectedClientsViewController            : NSViewController, NSTableViewD
   override func viewWillAppear() {
     view.window!.level = .floating
   }
-  
+
   // ----------------------------------------------------------------------------
   // MARK: - Notification Methods
   
@@ -42,28 +41,56 @@ class ConnectedClientsViewController            : NSViewController, NSTableViewD
   private func addNotifications() {
     
     NC.makeObserver(self, with: #selector(guiClientHasBeenAdded(_:)), of: .guiClientHasBeenAdded)
-    
-    NC.makeObserver(self, with: #selector(guiClientWillBeRemoved(_:)), of: .guiClientWillBeRemoved)
+    NC.makeObserver(self, with: #selector(guiClientHasBeenUpdated(_:)), of: .guiClientHasBeenUpdated)
+    NC.makeObserver(self, with: #selector(guiClientHasBeenRemoved(_:)), of: .guiClientHasBeenRemoved)
   }
-  /// Process guiClientHasBeenAdded or meterWillBeRemoved Notification
+  /// Process guiClientHasBeenAdded Notification
   ///
   /// - Parameter note:       a Notification instance
   ///
   @objc private func guiClientHasBeenAdded(_ note: Notification) {
-    DispatchQueue.main.async { [weak self] in
-      self?._tableView.reloadData()
+    
+    if let guiClient = note.object as? GuiClient {
+      _guiClients.append(guiClient)
+      
+      DispatchQueue.main.async { [weak self] in
+        self?._tableView.reloadData()
+      }
     }
   }
-  /// Process guiClientWillBeRemoved Notification
+  /// Process guiClientHasBeenUpdated Notification
   ///
   /// - Parameter note:       a Notification instance
   ///
-  @objc private func guiClientWillBeRemoved(_ note: Notification) {
-    DispatchQueue.main.async { [weak self] in
-      self?._tableView.reloadData()
+  @objc private func guiClientHasBeenUpdated(_ note: Notification) {
+    
+    if let guiClient = note.object as? GuiClient {
+      if let index = _guiClients.firstIndex(of: guiClient) {
+        _guiClients[index] = guiClient
+        
+        DispatchQueue.main.async { [weak self] in
+          self?._tableView.reloadData()
+        }
+      }
     }
   }
-
+  /// Process guiClientHasBeenRemoved Notification
+  ///
+  /// - Parameter note:       a Notification instance
+  ///
+  @objc private func guiClientHasBeenRemoved(_ note: Notification) {
+    
+    if let guiClient = note.object as? GuiClient {
+      if let index = _guiClients.firstIndex(of: guiClient) {
+        _guiClients.remove(at: index)
+        
+        DispatchQueue.main.async { [weak self] in
+          self?._tableView.reloadData()
+        }
+      }
+    }
+  }
+  
   // ----------------------------------------------------------------------------
   // MARK: - NSTableView DataSource methods
   
@@ -74,7 +101,7 @@ class ConnectedClientsViewController            : NSViewController, NSTableViewD
   ///
   public func numberOfRows(in aTableView: NSTableView) -> Int {
     
-    return _clients.count
+    return _guiClients.count
   }
   
   // ----------------------------------------------------------------------------
@@ -92,20 +119,25 @@ class ConnectedClientsViewController            : NSViewController, NSTableViewD
     
     // get a view for the cell
     let view = tableView.makeView(withIdentifier: tableColumn!.identifier, owner:self) as! NSTableCellView
+    //    view.toolTip =
+    //    """
+    //    Host:\t\t\(_guiClients[row].host)
+    //    Ip:\t\t\(_guiClients[row].ip)
+    //    """
     
     // set the text
     switch tableColumn!.identifier.rawValue {
       
     case "Handle":
-      view.textField!.stringValue = _clients[row].handle.hex
+      view.textField!.stringValue = _guiClients[row].handle.hex
     case "Station":
-      view.textField!.stringValue = _clients[row].station
+      view.textField!.stringValue = _guiClients[row].station
     case "Program":
-      view.textField!.stringValue = _clients[row].program
-    case "Id":
-      view.textField!.stringValue = _clients[row].id?.uuidString ?? "Non-Gui"
+      view.textField!.stringValue = _guiClients[row].program
+    case "ClientId":
+      view.textField!.stringValue = _guiClients[row].clientId?.uuidString ?? ""
     default:
-      fatalError("Invalid column id - \(tableColumn!.identifier.rawValue)")
+      _log.msg("Unknown table column: \(tableColumn!.identifier.rawValue)", level: .error, function: #function, file: #file, line: #line)
     }
     return view
   }

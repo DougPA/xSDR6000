@@ -495,10 +495,10 @@
             </objects>
             <point key="canvasLocation" x="1373" y="606"/>
         </scene>
-        <!--Connected Clients-->
+        <!--Gui Clients-->
         <scene sceneID="u2r-l6-96H">
             <objects>
-                <viewController title="Connected Clients" storyboardIdentifier="GuiClients" showSeguePresentationStyle="single" id="lmj-cL-szb" customClass="ConnectedClientsViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Gui Clients" storyboardIdentifier="GuiClients" showSeguePresentationStyle="single" id="lmj-cL-szb" customClass="ConnectedClientsViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="w2j-GK-7py">
                         <rect key="frame" x="0.0" y="0.0" width="922" height="352"/>
                         <autoresizingMask key="autoresizingMask"/>
