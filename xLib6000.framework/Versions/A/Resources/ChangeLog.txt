@@ -1,5 +1,12 @@
 xLib6000 V3 Change Log
 
+v2.5.1.2019_07_??
+
+AppExtensions.swift - refactored isForThisClient(_:) to parse properties looking for the client handle
+All Streams - modified to use changed isForThisClient(_:)
+
+
+
 v2.5.1.2019_07_17
 
 RadioFactory.swift - removed debug print statement
