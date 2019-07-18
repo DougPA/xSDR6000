@@ -491,31 +491,6 @@ SWIFT_CLASS("_TtC8xLib60003Gps")
 @end
 
 
-/// GuiClient Class implementation
-/// \code
-///  creates a GuiClient instance to be used by a Client to support the
-///  processing of the connected Gui Clients. GuiClient objects are added, removed and
-///  updated by the incoming TCP messages. They are collected in the guiClients
-///  collection on the Radio object.
-///
-/// \endcode
-SWIFT_CLASS("_TtC8xLib60009GuiClient")
-@interface GuiClient : NSObject
-- (nonnull instancetype)init SWIFT_UNAVAILABLE;
-+ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
-@end
-
-
-@interface GuiClient (SWIFT_EXTENSION(xLib6000))
-@property (nonatomic, readonly, copy) NSString * _Nonnull host;
-@property (nonatomic, readonly, copy) NSUUID * _Nullable id;
-@property (nonatomic, readonly, copy) NSString * _Nonnull ip;
-@property (nonatomic, readonly) BOOL localPttEnabled;
-@property (nonatomic, readonly, copy) NSString * _Nonnull program;
-@property (nonatomic, readonly, copy) NSString * _Nonnull station;
-@end
-
-
 /// Interlock Class implementation
 /// \code
 ///  creates an Interlock instance to be used by a Client to support the
@@ -630,36 +605,6 @@ SWIFT_CLASS("_TtC8xLib60005Meter")
 @end
 
 
-
-
-/// Opus Class implementation
-/// \code
-///  creates an Opus instance to be used by a Client to support the
-///  processing of a stream of Audio to/from the Radio. Opus
-///  objects are added / removed by the incoming TCP messages. Opus
-///  objects periodically receive/send Opus Audio in a UDP stream.
-///  They are collected in the opusStreams collection on the Radio object.
-///
-/// \endcode
-SWIFT_CLASS("_TtC8xLib60004Opus")
-@interface Opus : NSObject
-- (nonnull instancetype)init SWIFT_UNAVAILABLE;
-+ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
-@end
-
-
-@interface Opus (SWIFT_EXTENSION(xLib6000))
-@property (nonatomic) BOOL rxEnabled;
-@property (nonatomic) BOOL txEnabled;
-@end
-
-
-@interface Opus (SWIFT_EXTENSION(xLib6000))
-@property (nonatomic) uint32_t clientHandle;
-@property (nonatomic, copy) NSString * _Nonnull ip;
-@property (nonatomic) NSInteger port;
-@property (nonatomic) BOOL rxStopped;
-@end
 
 
 /// Panadapter implementation
@@ -877,6 +822,56 @@ SWIFT_CLASS("_TtC8xLib600012RadioFactory")
 - (void)udpSocket:(GCDAsyncUdpSocket * _Nonnull)sock didReceiveData:(NSData * _Nonnull)data fromAddress:(NSData * _Nonnull)address withFilterContext:(id _Nullable)filterContext;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+
+/// RemoteRxAudioStream Class implementation
+/// \code
+///  creates an RemoteRxAudioStream instance to be used by a Client to support the
+///  processing of a stream of Audio from the Radio. RemoteRxAudioStream objects
+///  are added / removed by the incoming TCP messages. RemoteRxAudioStream objects
+///  periodically receive Audio in a UDP stream. They are collected in the
+///  RemoteRxAudioStreams collection on the Radio object.
+///
+/// \endcode
+SWIFT_CLASS("_TtC8xLib600019RemoteRxAudioStream")
+@interface RemoteRxAudioStream : NSObject
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+
+
+
+@interface RemoteRxAudioStream (SWIFT_EXTENSION(xLib6000))
+@property (nonatomic) uint32_t clientHandle;
+@property (nonatomic, copy) NSString * _Nonnull compression;
+@property (nonatomic, copy) NSString * _Nonnull ip;
+@end
+
+
+/// RemoteTxAudioStream Class implementation
+/// \code
+///  creates a RemoteTxAudioStream instance to be used by a Client to support the
+///  processing of a stream of Audio to the Radio. RemoteTxAudioStream objects
+///  are added / removed by the incoming TCP messages. RemoteTxAudioStream objects
+///  periodically send Audio in a UDP stream. They are collected in the
+///  RemoteTxAudioStreams collection on the Radio object.
+///
+/// \endcode
+SWIFT_CLASS("_TtC8xLib600019RemoteTxAudioStream")
+@interface RemoteTxAudioStream : NSObject
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+
+
+
+@interface RemoteTxAudioStream (SWIFT_EXTENSION(xLib6000))
+@property (nonatomic) uint32_t clientHandle;
+@property (nonatomic, copy) NSString * _Nonnull compression;
+@property (nonatomic, copy) NSString * _Nonnull ip;
 @end
 
 

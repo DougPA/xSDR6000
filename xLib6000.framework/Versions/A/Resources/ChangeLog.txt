@@ -1,4 +1,62 @@
-xLib6000 Change Log
+xLib6000 V3 Change Log
+
+v2.5.1.2019_07_17
+
+RadioFactory.swift - removed debug print statement
+Radio.swift - in parseStatus(_:) added remote_audio_rx and tx cases (not fully implemented)
+Radio.swift - in parseStatus(_:) replaced fatalError() with _log.msg(....)
+Opus.swift - removed
+OpusCommands.swift - removed
+RemoteRxAudioStream.swift - added
+RemoteRxAudioStreamCommands.swift - added
+RemoteTxAudioStream.swift - added
+RemoteTxAudioStreamCommands.swift - added
+DaxRxAudioStream.swift - removed func isStatusForThisClient(_:)
+AppExtensions.swift - added func isForThisClient(_:) to replace isStatusForThisClient(_:)
+ALL Streams - changed the way streams are removed
+Notifications.swift - added remoteRxAudioStreamHasBeenAdded & remoteRxAudioStreamWillBeRemoved
+Notifications.swift - added remoteTxAudioStreamHasBeenAdded & remoteTxAudioStreamWillBeRemoved
+
+
+v2.5.1.2019_07_15
+
+Api.swift - made clientName, clientId, clientStation, isGui, lowBw "public private(set)"
+Api.swift - removed public var guiClients
+RadioFactory.swift - refactored udpSocket(_:didReceive:fromAddress:withFilterContext:)
+Radio.swift - refactored parseClient(_:radio:queue:inUse:)
+Radio.swift - in parseStatus(_:) corrected .client and .stream cases
+Various - changed use of "!" to "== false" for clarity
+RadioCommands.swift - changes to match refactor of parseClient(_:radio:queue:inUse:)
+Vita.swift - added class parseGuiClients(handles:programs:stations:) and its usage
+Vita.swift - added class GuiClient
+
+
+v2.5.1.2019_07_08
+
+Corrections and edits throughout to make v2.4.9 & v2.5.1 as similar as possible
+*Stream.swift - corrections to all streams & stream commands
+Meter.swift - in streamHandler(_:) modified error msg for unknown units
+
+
+v2.5.1.2019_07_07
+
+AppExtensions.swift - added vars isV3, isV2 & isV1 to the Version struct
+Api.swift - in setupCommands(_:) (changes as per DL3LSM)
+Api.swift - in enum Command (changes as per DL3LSM)
+Api.swift - in clientConnected() (changes as per DL3LSM)
+Radio.swift - in parseStatus(_:) (changes as per DL3LSM)
+Radio.swift - added var _clientInitialized (changes as per DL3LSM)
+Panadapter.swift - moved PanadapterFrame class to this file
+Frames.swift - removed PanadapterFrame clas from this file
+Notifications.swift - changed radioFirmwareDowngradeRequired to radioDowngradeRequired
+Notifications.swift - added radioUpgradeRequired
+Api.swift - refactored checkFirmware()
+
+
+v2.5.1.2019_07_03
+
+Corrections and edits throughout to make v2.4.9 & v2.5.1 as similar as possible
+
 
 v2.5.1.2019_06_20
 
@@ -231,7 +289,7 @@ Waterfall.swift - renamed streamActive to isStreaming
 Opus.swift - added public var isStreaming
 Panadapter.swift - added detection of out-of-sequence packets
 Waterfall.swift - added detection of out-of-sequence packets
-Meter.swift - in parseProperties(_:) added '&& number != "" && units != ""' to if !_initialized
+Meter.swift - in parseProperties(_:) added '&& number != "" && units != ""' to if _initialized == false
 TcpManager.swift - correction to connect(radioParameters:isWan:)
 Api.swift - in tcpState(connected:host:port:error:) added guard for udp.bind success
 Api.swift - corrections to shutdown / disconnect processing
