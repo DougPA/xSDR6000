@@ -1,12 +1,9 @@
 xSDR6000 V3 Change Log
 
-v2.5.1.2019_07_??
+v2.5.1.2019_07_25
 
-xLib6000.framework - updated to v2.5.1.2019_07_??
-
-
-
-
+xLib6000.framework - updated to v2.5.1.2019_07_25
+Added use of Profile.Group throughout
 
 
 v2.5.1.2019_07_17

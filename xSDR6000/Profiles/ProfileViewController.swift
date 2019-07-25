@@ -140,14 +140,14 @@ final class ProfileViewController: NSViewController, NSTableViewDelegate, NSTabl
     _currentType = type
     
     switch type {
-    case Profile.kGlobal:
+    case Profile.Group.global.rawValue:
       tag = 0
-    case Profile.kTx:
+    case Profile.Group.tx.rawValue:
       tag = 1
-    case Profile.kMic:
+    case Profile.Group.mic.rawValue:
       tag = 2
     default:
-      fatalError()
+      _log.msg("Unknown profile group: \(type)", level: .error, function: #function, file: #file, line: #line)
     }
     // select the desired segment
     _segmentedControl.selectSegment(withTag: tag)
@@ -162,13 +162,13 @@ final class ProfileViewController: NSViewController, NSTableViewDelegate, NSTabl
     
     switch tag {
     case 0:
-      _currentType = Profile.kGlobal
+      _currentType = Profile.Group.global.rawValue
     case 1:
-      _currentType = Profile.kTx
+      _currentType = Profile.Group.tx.rawValue
     case 2:
-      _currentType = Profile.kMic
+      _currentType = Profile.Group.mic.rawValue
     default:
-      fatalError()
+      _log.msg("Unknown profile tag: \(tag)", level: .error, function: #function, file: #file, line: #line)
     }
     setupProfile(_currentType)
   }

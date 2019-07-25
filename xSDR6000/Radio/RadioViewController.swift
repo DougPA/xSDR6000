@@ -201,10 +201,10 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     // create / remove the RemoteRxAudioStream
     if sender.boolState {
       // create the Stream
-      RemoteRxAudioStream.create(compression: RemoteRxAudioStream.kOpus)
+      let _ = RemoteRxAudioStream.create(compression: RemoteRxAudioStream.kOpus)
     } else {
       // remove the Stream (if any)
-      _remoteRxAudioStream?.remove()
+      let _ = _remoteRxAudioStream?.remove()
     }
   }
   /// Respond to the Headphone Gain slider

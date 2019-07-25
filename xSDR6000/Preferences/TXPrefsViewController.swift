@@ -41,7 +41,7 @@ final class TXPrefsViewController                 : NSViewController {
   private var _radio                        : Radio? { return Api.sharedInstance.radio }
   private var _interlock                    : Interlock? { return _radio!.interlock }
   private var _transmit                     : Transmit? { return _radio!.transmit }
-  private var _txProfile                    : Profile? { return _radio!.profiles[Profile.kTx] }
+  private var _txProfile                    : Profile? { return _radio!.profiles[Profile.Group.tx.rawValue] }
   private var _observations                 = [NSKeyValueObservation]()
 
   // ----------------------------------------------------------------------------

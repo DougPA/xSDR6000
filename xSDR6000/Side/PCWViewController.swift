@@ -69,7 +69,7 @@ final class PCWViewController                     : NSViewController {
     
     switch sender.identifier!.rawValue {
     case "MicProfile":
-      _radio!.profiles["mic"]?.selection = sender.selectedItem!.title
+      _radio!.profiles[Profile.Group.mic.rawValue]?.selection = sender.selectedItem!.title
     case "MicSelection":
       _radio!.transmit?.micSelection = sender.selectedItem!.title
     default:
@@ -161,14 +161,14 @@ final class PCWViewController                     : NSViewController {
     // ask the user to confirm
     if sender.title == "Save" {
       // Save a Profile
-      alert.messageText = "Save Mic Profile \(_radio!.profiles["mic"]!.selection) as:"
+      alert.messageText = "Save Mic Profile \(_radio!.profiles[Profile.Group.mic.rawValue]!.selection) as:"
       alert.addButton(withTitle: "Save")
       
       alert.beginSheetModal(for: NSApp.mainWindow!, completionHandler: { (response) in
         if response == NSApplication.ModalResponse.alertFirstButtonReturn { return }
         if acc.stringValue != "" {
           // save profile
-          Profile.save(Profile.kMic + "_list", name: acc.stringValue)
+          Profile.save("mic_list", name: acc.stringValue)
         }
       } )
     
@@ -181,7 +181,7 @@ final class PCWViewController                     : NSViewController {
         if response == NSApplication.ModalResponse.alertFirstButtonReturn { return }
         
         // delete profile
-        Profile.delete(Profile.kMic + "_list", name: acc.stringValue)
+        Profile.delete("mic_list", name: acc.stringValue)
       } )
     }
   }
@@ -217,9 +217,9 @@ final class PCWViewController                     : NSViewController {
         self?.transmitChange(transmit, change) },
       
       // Mic Profile parameters
-      _radio!.profiles[Profile.kMic]!.observe(\.list, options: [.initial, .new]) { [weak self] (transmit, change) in
+      _radio!.profiles[Profile.Group.mic.rawValue]!.observe(\.list, options: [.initial, .new]) { [weak self] (transmit, change) in
         self?.profileChange(transmit, change) },
-      _radio!.profiles[Profile.kMic]!.observe(\.selection, options: [.initial, .new]) { [weak self] (transmit, change) in
+      _radio!.profiles[Profile.Group.mic.rawValue]!.observe(\.selection, options: [.initial, .new]) { [weak self] (transmit, change) in
         self?.profileChange(transmit, change) }
     ]
 

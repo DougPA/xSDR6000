@@ -65,7 +65,7 @@ final class TxViewController                      : NSViewController {
   
   @IBAction func profile(_ sender: NSPopUpButton) {
 
-    _radio!.profiles[Profile.kTx]!.selection = sender.titleOfSelectedItem!
+    _radio!.profiles[Profile.Group.tx.rawValue]!.selection = sender.titleOfSelectedItem!
   }
   
   @IBAction func buttons(_ sender: NSButton) {
@@ -136,7 +136,7 @@ final class TxViewController                      : NSViewController {
   private func showDialog(_ sender: NSButton) {
     let alert = NSAlert()
     let acc = NSTextField(frame: NSMakeRect(0, 0, 233, 25))
-    acc.stringValue = _radio!.profiles["mic"]!.selection
+    acc.stringValue = _radio!.profiles[Profile.Group.mic.rawValue]!.selection
     acc.isEditable = true
     acc.drawsBackground = true
     alert.accessoryView = acc
@@ -152,7 +152,7 @@ final class TxViewController                      : NSViewController {
         if response == NSApplication.ModalResponse.alertFirstButtonReturn { return }
         
         // save profile
-        Profile.save(Profile.kTx + "_list", name: acc.stringValue)
+        Profile.save("tx_list", name: acc.stringValue)
       } )
       
     } else {
@@ -164,7 +164,7 @@ final class TxViewController                      : NSViewController {
         if response == NSApplication.ModalResponse.alertFirstButtonReturn { return }
         
         // delete profile
-        Profile.delete(Profile.kTx + "_list", name: acc.stringValue)
+        Profile.delete("tx_list", name: acc.stringValue)
         self._txProfile.selectItem(at: 0)
       } )
     }
@@ -198,9 +198,9 @@ final class TxViewController                      : NSViewController {
         self?.transmitChange(transmit, change) },
 
       // Tx Profile parameters
-      _radio!.profiles[Profile.kTx]!.observe(\.list, options: [.initial, .new]) { [weak self] (profile, change) in
+      _radio!.profiles[Profile.Group.tx.rawValue]!.observe(\.list, options: [.initial, .new]) { [weak self] (profile, change) in
         self?.profileChange(profile, change) },
-      _radio!.profiles[Profile.kTx]!.observe(\.selection, options: [.initial, .new]) { [weak self] (profile, change) in
+      _radio!.profiles[Profile.Group.tx.rawValue]!.observe(\.selection, options: [.initial, .new]) { [weak self] (profile, change) in
         self?.profileChange(profile, change) }
     ]
 
