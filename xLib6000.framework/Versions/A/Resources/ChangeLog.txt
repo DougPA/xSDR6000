@@ -1,5 +1,21 @@
 xLib6000 V3 Change Log
 
+v2.5.1.2019_07_30
+
+Turned off code signing
+Api.swift - corrected clientGui case for NOT isGui in setupCommands(_:)
+Api.swift - corrected issue where "client ip" command sent twice
+Api.swift - corrected clientGui case to not use a replyHandler
+Radio.swift - corrected findGuiClientByHandle(_:)
+Notifications.swift - renamed "radiosAvailable" to "discoveredRadios"
+RadioFactory.swift - rename file & class to Discovery
+Discovery.swift - converted Discovery class to a Singleton
+Api.swift - removed discoveredRadios var (use Discovery singleton)
+Api.swift - added initialization of Discovery in init()
+RadioCommands.swift - added sending of "client bind client_id=\(clientId)" on boundClientId
+GuiClient.swift - changed clientId var from UUID? to String?
+
+
 v2.5.1.2019_07_25
 
 AppExtensions.swift - refactored isForThisClient(_:) to parse properties looking for the client handle

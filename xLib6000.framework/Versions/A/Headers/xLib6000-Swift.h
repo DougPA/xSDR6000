@@ -428,6 +428,35 @@ SWIFT_CLASS("_TtC8xLib600016DaxTxAudioStream")
 @property (nonatomic) uint32_t clientHandle;
 @end
 
+@class GCDAsyncUdpSocket;
+
+/// Discovery implementation
+/// \code
+///  listens for the udp broadcasts announcing the presence of a Flex-6000
+///  Radio, reports changes to the list of available radios
+///
+/// \endcode
+SWIFT_CLASS("_TtC8xLib60009Discovery")
+@interface Discovery : NSObject <GCDAsyncUdpSocketDelegate>
+/// Provide access to the API singleton
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, strong) Discovery * _Nonnull sharedInstance;)
++ (Discovery * _Nonnull)sharedInstance SWIFT_WARN_UNUSED_RESULT;
++ (void)setSharedInstance:(Discovery * _Nonnull)value;
+/// The Socket received data
+/// GCDAsyncUdpSocket delegate method, executes on the udpReceiveQ
+/// \param sock the GCDAsyncUdpSocket
+///
+/// \param data the Data received
+///
+/// \param address the Address of the sender
+///
+/// \param filterContext the FilterContext
+///
+- (void)udpSocket:(GCDAsyncUdpSocket * _Nonnull)sock didReceiveData:(NSData * _Nonnull)data fromAddress:(NSData * _Nonnull)address withFilterContext:(id _Nullable)filterContext;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
 
 /// Equalizer Class implementation
 /// \code
@@ -730,9 +759,9 @@ SWIFT_CLASS("_TtC8xLib60005Radio")
 @property (nonatomic) NSInteger backlight;
 @property (nonatomic) BOOL bandPersistenceEnabled;
 @property (nonatomic) BOOL binauralRxEnabled;
+@property (nonatomic, copy) NSUUID * _Nullable boundClientId;
 @property (nonatomic) NSInteger calFreq;
 @property (nonatomic, copy) NSString * _Nonnull callsign;
-@property (nonatomic, copy) NSUUID * _Nullable boundClientId;
 @property (nonatomic) BOOL enforcePrivateIpEnabled;
 @property (nonatomic) BOOL filterCwAutoEnabled;
 @property (nonatomic) BOOL filterDigitalAutoEnabled;
@@ -797,31 +826,6 @@ SWIFT_CLASS("_TtC8xLib60005Radio")
 @property (nonatomic, readonly, copy) NSString * _Nonnull state;
 @property (nonatomic, readonly, copy) NSString * _Nonnull softwareVersion;
 @property (nonatomic, readonly) BOOL tcxoPresent;
-@end
-
-@class GCDAsyncUdpSocket;
-
-/// RadioFactory implementation
-/// \code
-///  listens for the udp broadcasts announcing the presence of a Flex-6000
-///  Radio, reports changes to the list of available radios
-///
-/// \endcode
-SWIFT_CLASS("_TtC8xLib600012RadioFactory")
-@interface RadioFactory : NSObject <GCDAsyncUdpSocketDelegate>
-/// The Socket received data
-/// GCDAsyncUdpSocket delegate method, executes on the udpReceiveQ
-/// \param sock the GCDAsyncUdpSocket
-///
-/// \param data the Data received
-///
-/// \param address the Address of the sender
-///
-/// \param filterContext the FilterContext
-///
-- (void)udpSocket:(GCDAsyncUdpSocket * _Nonnull)sock didReceiveData:(NSData * _Nonnull)data fromAddress:(NSData * _Nonnull)address withFilterContext:(id _Nullable)filterContext;
-- (nonnull instancetype)init SWIFT_UNAVAILABLE;
-+ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
 

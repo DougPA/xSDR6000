@@ -1,23 +1,32 @@
 # xLib6000 v3
-## Mac implementation of the FlexRadio (TM) series 6000 software defined radios API (FlexLib)
+
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
+
+
+## Mac implementation of the FlexRadio (TM) series 6000 API (FlexLib)
 
 ### Built on:
-*  macOS 10.14.4 (Deployment Target of macOS 10.12)
-*  Xcode 10.2(10E1001)
-*  Swift 5.0
+*  ![MacOS](https://img.shields.io/badge/macOS-10.14.6-orange.svg?style=flat)
+*  ![Xcode](https://img.shields.io/badge/Xcode-10.13(10G8)-orange.svg?style=flat)
+*  ![Swift](https://img.shields.io/badge/Swift-5.0-orange.svg?style=flat)
 
 
-
-*Works with all Radios with Version 2.5.1 or more ( i.e. >=2.5.1.x and 3.x.x )
 
 ## Usage
 
+![Flex](https://img.shields.io/badge/Flex_Version-v2.5.x-blue.svg)
 
 
+## This is my initial work on the v3 API, it is not fully tested and is only compatible with Flex v2.5.x Radios. 
 
-THIS IS MY INITIAL WORK ON v3 COMPATIBILITY, IT IS NOT A COMPLETE, WORKING v3 IMPLEMENTATION
+Please see the v2 Branch of this repo for a version that is compatible with pre-v2.5.x Radios.
+A Future version of this library will support all Radio versions.
 
-
+Flex Radios can have one of four different version groups:
+*  v1.x.x, the v1 API
+*  v2.0.x thru v2.4.9, the v2 API <<-- supported by the v2 branch
+*  v2.5.1 to less than v3.0.0, the v3 API without MultiFlex <<-- supported by this branch
+*  v3.x.x, the v3 API with MultiFlex
 
 
 
@@ -27,22 +36,26 @@ differences between the Windows and macOS environments and system services.
 The "xLib6000 Overview.pdf" file in the Documentation folder contains an overview of the structure of this framework  
 and an explanation of the Tcp and Udp data flows.  
 
-If you want to learn more about the 6000 series API, please take a look at the xAPITester project. It uses this framework.
+The following apps are all built on this framework:
 
-* https://github.com/DougPA/xAPITester
+If you want to learn more about the 6000 series API using a simple app, please click the following:
 
-For an example of a SmartSDR-like client for the Mac, please take a look at the xSDR6000 project. It uses this framework.
+[![xAPITester](https://img.shields.io/badge/K3TZR-xAPITester-informational)]( https://github.com/DougPA/xAPITester)
 
-* https://github.com/DougPA/xSDR6000
 
-If you require a Mac version of DAX and/or CAT, please see.
+For an example of a SmartSDR-like client for the Mac, please click the following:
 
-* https://dl3lsm.blogspot.com
+[![xSDR6000](https://img.shields.io/badge/K3TZR-xSDR6000-informational)]( https://github.com/DougPA/xSDR6000)
+
+
+If you require a Mac version of DAX and/or CAT, please click the following:
+
+[![DL3LSM](https://img.shields.io/badge/DL3LSM-xDAX,_xCAT-informational)](https://dl3lsm.blogspot.com)
 
 
 ## Builds
 
-A compiled RELEASE build executable is contained in the GitHub Release if you would rather not build from sources.  
+Periodically I will create a compiled RELEASE build and place it in the GitHub Release.  
 
 If you require a DEBUG build you will have to build from sources.   
 
@@ -54,9 +67,9 @@ douglas.adams@me.com
 
 ## Credits
 
-Version 7.6.3 of CocoaAsyncSocket is embedded in this project as source code. It can be found on GitHub at:  
+[![CocoaAsyncSocket](https://img.shields.io/badge/CocoaAsyncSocket-v7.6.3-informational)](https://github.com/robbiehanson/CocoaAsyncSocket)
 
-* https://github.com/robbiehanson/CocoaAsyncSocket
+ CocoaAsyncSocket is embedded in this project as source code. It provides TCP and UDP connectivity.
 
 
 ## Known Issues
