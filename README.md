@@ -7,9 +7,9 @@
 ## Mac Client for the FlexRadio (TM) 6000 series software defined radios.
 
 ### Built on:
-*  ![MacOS](https://img.shields.io/badge/macOS-10.14.6-orange.svg?style=flat)
-*  ![Xcode](https://img.shields.io/badge/Xcode-10.13(10G8)-orange.svg?style=flat)
-*  ![Swift](https://img.shields.io/badge/Swift-5.0-orange.svg?style=flat)
+*  [![MacOS](https://img.shields.io/badge/macOS-10.14.6-orange.svg?style=flat)](https://www.apple.com/macos)
+*  [![Xcode](https://img.shields.io/badge/Xcode-10.13(10G8)-orange.svg?style=flat)](https://developer.apple.com/xcode/)
+*  [![Swift](https://img.shields.io/badge/Swift-5.0-orange.svg?style=flat)](https://swift.org)
 
 
 
