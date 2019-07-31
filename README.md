@@ -79,8 +79,8 @@ xLib6000 is included in this project as a framework. It provides the API to the 
 
 ## Known Issues
 
-Please see ChangeLog.txt for a running list of changes (starting at v2.0.5) and KnownIssues.md for a list of the known issues.
+Please see ChangeLog.txt for a running list of changes  and KnownIssues.md for a list of the known issues.
 
-Please reports any bugs you observe to douglas.adams@me.com
+Please report any bugs you observe to douglas.adams@me.com
 
 
