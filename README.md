@@ -15,7 +15,7 @@
 
 ## Usage
 
-![Flex](https://img.shields.io/badge/Flex_Version-v2.5.x-blue.svg)
+[![Flex](https://img.shields.io/badge/Flex_Version-v2.5.x-blue.svg)](https://www.flexradio.com)
 
 
 ## This is my initial work on the v3 API, it is not fully tested and is only compatible with Flex v2.5.x Radios. 
