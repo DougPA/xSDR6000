@@ -45,6 +45,8 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   // MARK: - Private properties
   
   private let _log                          = NSApp.delegate as! AppDelegate
+  private var _radios                       : [DiscoveredRadio] {
+    return Discovery.sharedInstance.discoveredRadios }
   private var _api                          = Api.sharedInstance
   private var _mainWindowController         : MainWindowController?
   private var _preferencesStoryboard        : NSStoryboard?
@@ -139,7 +141,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     // limit color pickers to the ColorWheel
     NSColorPanel.setPickerMask(NSColorPanel.Options.wheelModeMask)
 
-   // is the default Radio available?
+    // is the default Radio available?
     if let defaultRadio = defaultRadioFound() {
       
       // YES, open the default radio
@@ -359,8 +361,6 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   /// - Parameter sender:         the Menu item
   ///
   @IBAction func nextSlice(_ sender: AnyObject) {
-    
-   Swift.print("nextSlice")
     
     if let slice = Slice.findActive() {
       let slicesOnThisPan = Api.sharedInstance.radio!.slices.values.sorted { $0.frequency < $1.frequency }
@@ -637,7 +637,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
       usleep(2_000_000)
       
       // has the default Radio been found?
-      if let radio = _api.discoveredRadios.first(where: { $0.serialNumber == defaultSerialNumber} ) {
+      if let radio = _radios.first(where: { $0.serialNumber == defaultSerialNumber} ) {
         
         // YES, Save it in case something changed
         Defaults[.defaultRadioSerialNumber] = defaultSerialNumber
@@ -657,6 +657,8 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   ///
   private func addNotifications() {
     
+    NC.makeObserver(self, with: #selector(guiClientHasBeenAdded(_:)), of: .guiClientHasBeenAdded)
+
     NC.makeObserver(self, with: #selector(meterHasBeenAdded(_:)), of: .meterHasBeenAdded)
     
     NC.makeObserver(self, with: #selector(radioHasBeenAdded(_:)), of: .radioHasBeenAdded)
@@ -672,6 +674,22 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     NC.makeObserver(self, with: #selector(radioUpgradeRequired(_:)), of: .radioUpgradeRequired)
     
     NC.makeObserver(self, with: #selector(tcpPingFirstResponse(_:)), of: .tcpPingFirstResponse)
+  }
+  /// Process guiClientHasBeenAdded Notification
+  ///
+  /// - Parameter note:       a Notification instance
+  ///
+  @objc private func guiClientHasBeenAdded(_ note: Notification) {
+    
+    if let guiClient = note.object as? GuiClient {
+      
+      // is it me?
+      if guiClient.handle == _api.connectionHandle {
+        //YES, persist it
+        Defaults[.clientId] = guiClient.clientId
+        _log.msg("Gui ClientId persisted:   Id = \(guiClient.clientId ?? "")", level: .info, function: #function, file: #file, line: #line)
+      }
+    }
   }
   /// Process .meterHasBeenAdded Notification
   ///
@@ -904,7 +922,6 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
   func openRadio(_ radio: DiscoveredRadio?, isWan: Bool = false, wanHandle: String = "") -> Bool {
     
     if let _ = _radioPickerTabViewController {
-      Swift.print("Should dismiss")
       self._radioPickerTabViewController = nil
     }
 

@@ -135,7 +135,7 @@ class ConnectedClientsViewController            : NSViewController, NSTableViewD
     case "Program":
       view.textField!.stringValue = _guiClients[row].program
     case "ClientId":
-      view.textField!.stringValue = _guiClients[row].clientId?.uuidString ?? ""
+      view.textField!.stringValue = _guiClients[row].clientId ?? ""
     default:
       _log.msg("Unknown table column: \(tableColumn!.identifier.rawValue)", level: .error, function: #function, file: #file, line: #line)
     }

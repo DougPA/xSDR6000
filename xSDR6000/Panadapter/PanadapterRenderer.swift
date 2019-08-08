@@ -103,10 +103,6 @@ public final class PanadapterRenderer       : NSObject {
     
     _metalView = view
     
-    // save the Metal device
-    _metalView.device = MTLCreateSystemDefaultDevice()
-    _device = _metalView.device
-    
     // configure the Metal view to be drawn on demand only
     _metalView.isPaused = true
     _metalView.enableSetNeedsDisplay = false
@@ -116,16 +112,13 @@ public final class PanadapterRenderer       : NSObject {
     // set the Metal view Clear color
     clearColor(color)
     
-    // create all of the objects
-    setupPersistentObjects()
-    
     view.delegate = self
   }
   
   // ----------------------------------------------------------------------------
   // MARK: - Internal methods
   
-  func updateConstants(size: CGSize) {
+  func setConstants(size: CGSize) {
     // Constants struct mapping (bytes)
     //  <--- 4 ---> <--- 4 ---> <--- 4 ---> <-- empty -->              delta, height, maxNumberOfBins
     
@@ -168,8 +161,10 @@ public final class PanadapterRenderer       : NSObject {
   
   /// Setup Objects, Buffers & State
   ///
-  private func setupPersistentObjects() {
+  func setup(device: MTLDevice) {
     
+    _device = device
+
     // create and populate Spectrum buffers
     let dataSize = _spectrumValues.count * MemoryLayout.stride(ofValue: _spectrumValues[0])
     for _ in 0..<PanadapterRenderer.kNumberSpectrumBuffers {

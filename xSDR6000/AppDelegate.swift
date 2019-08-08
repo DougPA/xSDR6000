@@ -19,7 +19,7 @@ final class AppDelegate                     : NSObject, NSApplicationDelegate , 
   
   // App parameters
   static let kName                          = "xSDR6000"
-  static let kVersion                       = Version("2.5.1.2019_07_17" )
+  static let kVersion                       = Version("2.5.1.2019_08_??" )
   
   // Log parameters
   static let kLoggerName                    = AppDelegate.kName
@@ -43,10 +43,10 @@ final class AppDelegate                     : NSObject, NSApplicationDelegate , 
       case "-logerror":
         return .error
       default:
-        return .warning
+        return .debug
       }
     } else {
-      return .warning
+      return .debug
     }
   }
 

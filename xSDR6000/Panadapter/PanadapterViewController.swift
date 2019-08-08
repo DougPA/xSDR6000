@@ -102,46 +102,62 @@ final class PanadapterViewController        : NSViewController, NSGestureRecogni
     _panadapter?.xPixels = view.frame.width
     _panadapter?.yPixels = view.frame.height
     
-    // update the Constant values with the new size
-    _panadapterRenderer.updateConstants(size: view.frame.size)
-
-    // get the list of possible Db level spacings
-    _dbLegendSpacings = Defaults[.dbLegendSpacings]
+    // setup
+    if let device = makeDevice(view: _panadapterView) {
     
-    // Click, LEFT in panadapter
-    _clickLeft = NSClickGestureRecognizer(target: self, action: #selector(clickLeft(_:)))
-    _clickLeft.buttonMask = kLeftButton
-    _clickLeft.numberOfClicksRequired = 2
-    _clickLeft.delegate = self
-    _dbLegendView.addGestureRecognizer(_clickLeft)
+      _panadapterRenderer.setConstants(size: view.frame.size)
+      _panadapterRenderer.setup(device: device)
 
-    // Click, RIGHT in panadapter
-    _clickRight = NSClickGestureRecognizer(target: self, action: #selector(clickRight(_:)))
-    _clickRight.buttonMask = kRightButton
-    _clickRight.numberOfClicksRequired = 1
-    _clickRight.delegate = self
-    _dbLegendView.addGestureRecognizer(_clickRight)
+      // get the list of possible Db level spacings
+      _dbLegendSpacings = Defaults[.dbLegendSpacings]
 
-    // Pan, LEFT in panadapter
-    _panCenter = NSPanGestureRecognizer(target: self, action: #selector(panLeft(_:)))
-    _panCenter.buttonMask = kLeftButton
-    _panCenter.delegate = self
-    _dbLegendView.addGestureRecognizer(_panCenter)
+      // Click, LEFT in panadapter
+      _clickLeft = NSClickGestureRecognizer(target: self, action: #selector(clickLeft(_:)))
+      _clickLeft.buttonMask = kLeftButton
+      _clickLeft.numberOfClicksRequired = 2
+      _clickLeft.delegate = self
+      _dbLegendView.addGestureRecognizer(_clickLeft)
 
-    // Pan, LEFT in Frequency legend
-    _panBandwidth = NSPanGestureRecognizer(target: self, action: #selector(panLeft(_:)))
-    _panBandwidth.buttonMask = kLeftButton
-    _panBandwidth.delegate = self
-    _frequencyLegendView.addGestureRecognizer(_panBandwidth)
+      // Click, RIGHT in panadapter
+      _clickRight = NSClickGestureRecognizer(target: self, action: #selector(clickRight(_:)))
+      _clickRight.buttonMask = kRightButton
+      _clickRight.numberOfClicksRequired = 1
+      _clickRight.delegate = self
+      _dbLegendView.addGestureRecognizer(_clickRight)
 
-    // pass a reference to the Panadapter
-    _frequencyLegendView.configure(panadapter: _panadapter)
-    _dbLegendView.configure(panadapter: _panadapter)
+      // Pan, LEFT in panadapter
+      _panCenter = NSPanGestureRecognizer(target: self, action: #selector(panLeft(_:)))
+      _panCenter.buttonMask = kLeftButton
+      _panCenter.delegate = self
+      _dbLegendView.addGestureRecognizer(_panCenter)
 
-    setupObservations()
-    
-    // make the Renderer the Stream Handler
-    _panadapter?.delegate = _panadapterRenderer
+      // Pan, LEFT in Frequency legend
+      _panBandwidth = NSPanGestureRecognizer(target: self, action: #selector(panLeft(_:)))
+      _panBandwidth.buttonMask = kLeftButton
+      _panBandwidth.delegate = self
+      _frequencyLegendView.addGestureRecognizer(_panBandwidth)
+
+      // pass a reference to the Panadapter
+      _frequencyLegendView.configure(panadapter: _panadapter)
+      _dbLegendView.configure(panadapter: _panadapter)
+
+      setupObservations()
+
+      // make the Renderer the Stream Handler
+      _panadapter?.delegate = _panadapterRenderer
+
+    } else {
+      
+      let alert = NSAlert()
+      alert.alertStyle = .warning
+      alert.messageText = "This Mac does not support Metal graphics."
+      alert.informativeText = """
+      Metal is required by xSDR6000 for the Panadapter & Waterfall displays.
+      """
+      alert.addButton(withTitle: "Ok")
+      alert.runModal()
+      NSApp.terminate(self)
+    }
   }
   #if XDEBUG
   deinit {
@@ -410,6 +426,19 @@ final class PanadapterViewController        : NSViewController, NSGestureRecogni
   // ----------------------------------------------------------------------------
   // MARK: - Private methods
   
+  /// Obtain the default Metal Device
+  ///
+  /// - Parameter view:         an MTKView
+  /// - Returns:                a MTLDevice
+  ///
+  private func makeDevice(view: MTKView) -> MTLDevice? {
+    
+    if let device = MTLCreateSystemDefaultDevice() {
+      view.device = device
+      return device
+    }
+    return nil
+  }
   /// Find the Slice at a frequency (if any)
   ///
   /// - Parameter freq:       the target frequency
@@ -643,7 +672,7 @@ final class PanadapterViewController        : NSViewController, NSGestureRecogni
     _panadapter?.yPixels = view.frame.height
 
     // update the Constant values with the new size
-    _panadapterRenderer.updateConstants(size: view.frame.size)
+    _panadapterRenderer.setConstants(size: view.frame.size)
     
     positionFlags()
   }

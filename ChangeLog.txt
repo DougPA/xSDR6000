@@ -1,5 +1,25 @@
 xSDR6000 V3 Change Log
 
+v2.5.1.2019_08_07
+
+WanRadioPicckerViewController.swift - refactor "_availableRemoteRadios" to "_radios"
+LanRadioPicckerViewController.swift - refactor "_discoveredRadios" to "_radios"
+PanadapterViewController.swift - handle case where Metal not available
+WaterfallViewController.swift - handle case where Metal not available
+PanadapterRenderer.swift - make similar to WaterfallRenderer.swift
+Multiple - incorporate the Discovery singleton
+xSDR6000 scheme - unchecked "allow debugging when using document versions browser"
+AppDelegate.swift - changed default log level to "debug" (removed parameter from scheme)
+
+
+v2.5.1.2019_08_01
+
+RadioViewController.swift - addition of guiClientHasBeenAdded to notificationsAdd()
+ConnectedClientsViewController.swift - minor corrections
+LanRadioPickerViewController.swift - minor corrections
+WanRadioPickerViewController.swift - minor corrections
+
+
 v2.5.1.2019_07_25
 
 xLib6000.framework - updated to v2.5.1.2019_07_25

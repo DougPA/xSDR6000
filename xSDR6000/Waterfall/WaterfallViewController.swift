@@ -84,19 +84,22 @@ final class WaterfallViewController               : NSViewController, NSGestureR
     _waterfallView.enableSetNeedsDisplay = false
     
     // setup
-    _waterfallRenderer.setConstants(size: view.frame.size)
-    _waterfallRenderer.setup(device: makeDevice(view: _waterfallView))
-    
-    _waterfallView.delegate = _waterfallRenderer
-    _waterfallView.clearColor = Colors.clearColor
-
-    // setup the gradient texture
-    _waterfallRenderer.setGradient( loadGradient(index: _waterfall!.gradientIndex) )
-
-    setupObservations()
-
-    // make the Renderer the Stream Handler
-    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(3), execute: {  self._waterfall?.delegate = self._waterfallRenderer })
+    if let device = makeDevice(view: _waterfallView) {
+      
+      _waterfallRenderer.setConstants(size: view.frame.size)
+      _waterfallRenderer.setup(device: device)
+      
+      _waterfallView.delegate = _waterfallRenderer
+      _waterfallView.clearColor = Colors.clearColor
+      
+      // setup the gradient texture
+      _waterfallRenderer.setGradient( loadGradient(index: _waterfall!.gradientIndex) )
+      
+      setupObservations()
+      
+      // make the Renderer the Stream Handler
+      DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(3), execute: {  self._waterfall?.delegate = self._waterfallRenderer })
+    }
   }
   #if XDEBUG
   deinit {
@@ -194,13 +197,13 @@ final class WaterfallViewController               : NSViewController, NSGestureR
   /// - Parameter view:         an MTKView
   /// - Returns:                a MTLDevice
   ///
-  private func makeDevice(view: MTKView) -> MTLDevice {
+  private func makeDevice(view: MTKView) -> MTLDevice? {
     
-    guard let device = MTLCreateSystemDefaultDevice() else {
-      fatalError("Unable to obtain a Metal Device")
+    if let device = MTLCreateSystemDefaultDevice() {
+      view.device = device
+      return device
     }
-    view.device = device
-    return device
+    return nil
   }
   /// start observations & Notification
   ///

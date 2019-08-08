@@ -46,9 +46,9 @@ final class WANRadioPickerViewController    : NSViewController, NSTableViewDeleg
   @IBOutlet private weak var _testButton    : NSButton!
   
   private var _api                          = Api.sharedInstance
+  private var _radios                       = [DiscoveredRadio]()           // Radios discovered
   private let _log                          = (NSApp.delegate as! AppDelegate)
   private var _auth0ViewController          : Auth0ViewController?
-  private var _availableRemoteRadios        = [DiscoveredRadio]()           // Radios discovered
   private weak var _delegate                : RadioPickerDelegate? {
     return representedObject as? RadioPickerDelegate
   }
@@ -342,7 +342,7 @@ final class WANRadioPickerViewController    : NSViewController, NSTableViewDeleg
       }
       
       // clear tableview
-      _availableRemoteRadios.removeAll()
+      _radios.removeAll()
       reload()
       
       // disconnect with Smartlink server
@@ -545,7 +545,7 @@ final class WANRadioPickerViewController    : NSViewController, NSTableViewDeleg
   func wanRadioListReceived(wanRadioList: [DiscoveredRadio]) {
     
     // relaod to display the updated list
-    _availableRemoteRadios = wanRadioList
+    _radios = wanRadioList
     reload()
   }
   /// Received user settings from server
@@ -720,7 +720,7 @@ final class WANRadioPickerViewController    : NSViewController, NSTableViewDeleg
   func numberOfRows(in aTableView: NSTableView) -> Int {
     
     // get the number of rows
-    return _availableRemoteRadios.count
+    return _radios.count
   }
   
   // ----------------------------------------------------------------------------
@@ -742,13 +742,13 @@ final class WANRadioPickerViewController    : NSViewController, NSTableViewDeleg
     // set the stringValue of the cell's text field to the appropriate field
     switch tableColumn!.identifier.rawValue {
     case "model":
-      cellView.textField!.stringValue = _availableRemoteRadios[row].model
+      cellView.textField!.stringValue = _radios[row].model
     case "nickname":
-      cellView.textField!.stringValue = _availableRemoteRadios[row].nickname
+      cellView.textField!.stringValue = _radios[row].nickname
     case "status":
-      cellView.textField!.stringValue = _availableRemoteRadios[row].status
+      cellView.textField!.stringValue = _radios[row].status
     case "publicIp":
-      cellView.textField!.stringValue = _availableRemoteRadios[row].publicIp
+      cellView.textField!.stringValue = _radios[row].publicIp
     default:
       break
     }
@@ -769,12 +769,12 @@ final class WANRadioPickerViewController    : NSViewController, NSTableViewDeleg
       _testButton.isEnabled = true
 
       // YES, a row is selected
-      _selectedRadio = _availableRemoteRadios[_radioTableView.selectedRow]
+      _selectedRadio = _radios[_radioTableView.selectedRow]
       
       // set the "select button" title appropriately
       var isActive = false
       if let activeRadio = _api.activeRadio {
-        isActive = ( activeRadio == _availableRemoteRadios[_radioTableView.selectedRow] && (_api.isWan) )
+        isActive = ( activeRadio == _radios[_radioTableView.selectedRow] && (_api.isWan) )
       }
       _selectButton.title = (isActive ? kDisconnectTitle : kConnectTitle)
     } else {
