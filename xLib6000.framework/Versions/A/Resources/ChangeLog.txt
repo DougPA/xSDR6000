@@ -3,6 +3,7 @@ xLib6000 V3 Change Log
 v2.5.1.2019_08_07
 
 xLib6000 scheme - unchecked "allow debugging when using document versions browser"
+WaterfallCommands.swift - corrected command syntax
 
 
 v2.5.1.2019_08_01
