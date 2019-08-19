@@ -496,6 +496,32 @@ extension Float {
   }
 }
 
+extension URL {
+  
+  /// setup the Support folders
+  ///
+  static var appSupport : URL { return FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first! }
+  static var logs : URL { return createAsNeeded("Logs") }
+  static var macros : URL { return createAsNeeded("Macros") }
+  
+  static func createAsNeeded(_ folder: String) -> URL {
+    let fileManager = FileManager.default
+    let folderUrl = appSupport.appendingPathComponent( folder )
+    
+    // does the folder exist?
+    if fileManager.fileExists( atPath: folderUrl.path ) == false {
+      
+      // NO, create it
+      do {
+        try fileManager.createDirectory( at: folderUrl, withIntermediateDirectories: false, attributes: nil)
+      } catch let error as NSError {
+        fatalError("Error creating App Support folder: \(error.localizedDescription)")
+      }
+    }
+    return folderUrl
+  }
+}
+
 // ----------------------------------------------------------------------------
 // MARK: - TOP-LEVEL FUNCTIONS
 

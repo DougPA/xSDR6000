@@ -152,7 +152,7 @@ final class TxViewController                      : NSViewController {
         if response == NSApplication.ModalResponse.alertFirstButtonReturn { return }
         
         // save profile
-        Profile.save("tx_list", name: acc.stringValue)
+        Profile.save(Profile.Group.tx.rawValue + "_list", name: acc.stringValue)
       } )
       
     } else {
@@ -164,7 +164,7 @@ final class TxViewController                      : NSViewController {
         if response == NSApplication.ModalResponse.alertFirstButtonReturn { return }
         
         // delete profile
-        Profile.delete("tx_list", name: acc.stringValue)
+        Profile.delete(Profile.Group.tx.rawValue + "_list", name: acc.stringValue)
         self._txProfile.selectItem(at: 0)
       } )
     }

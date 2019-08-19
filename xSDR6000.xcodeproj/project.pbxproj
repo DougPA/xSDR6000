@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		9103D9EE22B92712002AB99F /* ObjcExceptionBridging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9103D9EC22B92711002AB99F /* ObjcExceptionBridging.framework */; };
 		9103D9EF22B92712002AB99F /* ObjcExceptionBridging.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9103D9EC22B92711002AB99F /* ObjcExceptionBridging.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		9103D9F022B92712002AB99F /* XCGLogger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9103D9ED22B92711002AB99F /* XCGLogger.framework */; };
+		9103D9F022B92712002AB99F /* XCGLogger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9103D9ED22B92711002AB99F /* XCGLogger.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		9103D9F122B92712002AB99F /* XCGLogger.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9103D9ED22B92711002AB99F /* XCGLogger.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9124B4002194BC150036FF2E /* ControlsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9124B3FF2194BC150036FF2E /* ControlsViewController.swift */; };
 		913615B421C0B178005EA591 /* PCWPrefsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913615B321C0B178005EA591 /* PCWPrefsViewController.swift */; };

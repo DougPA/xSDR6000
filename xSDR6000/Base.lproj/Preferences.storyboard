@@ -30,7 +30,7 @@
         <!--Preference Tabs-->
         <scene sceneID="rdp-1L-oes">
             <objects>
-                <tabViewController selectedTabViewItemIndex="0" id="f5E-4P-cEO" userLabel="Preference Tabs" customClass="PreferencesTabViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
+                <tabViewController selectedTabViewItemIndex="8" id="f5E-4P-cEO" userLabel="Preference Tabs" customClass="PreferencesTabViewController" customModule="xSDR6000" customModuleProvider="target" sceneMemberID="viewController">
                     <tabViewItems>
                         <tabViewItem identifier="Radio" id="VqQ-ZR-z6L">
                             <nil key="label"/>
@@ -403,10 +403,10 @@
                                         </customSpacing>
                                     </stackView>
                                     <stackView distribution="fillProportionally" orientation="horizontal" alignment="centerY" spacing="12" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Rz0-xa-hQK" userLabel="Tnf Stack View">
-                                        <rect key="frame" x="0.0" y="229" width="278" height="23"/>
+                                        <rect key="frame" x="0.0" y="215" width="278" height="50"/>
                                         <subviews>
                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eM6-d3-Bc3" userLabel="Tnf label">
-                                                <rect key="frame" x="-2" y="3" width="54" height="17"/>
+                                                <rect key="frame" x="-2" y="17" width="54" height="17"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="50" id="2r5-dQ-cHB"/>
                                                 </constraints>
@@ -417,7 +417,7 @@
                                                 </textFieldCell>
                                             </textField>
                                             <colorWell identifier="tnfActive" translatesAutoresizingMaskIntoConstraints="NO" id="tcB-Ys-pgW" userLabel="Tnf Active Color Well">
-                                                <rect key="frame" x="62" y="0.0" width="50" height="23"/>
+                                                <rect key="frame" x="62" y="14" width="50" height="23"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="50" id="oaV-wm-MwX"/>
                                                     <constraint firstAttribute="height" constant="23" id="voy-sh-3O4"/>
@@ -428,7 +428,7 @@
                                                 </connections>
                                             </colorWell>
                                             <button identifier="TnfActiveReset" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="XMY-KY-HBE">
-                                                <rect key="frame" x="124" y="4" width="40" height="15"/>
+                                                <rect key="frame" x="124" y="17" width="40" height="15"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="40" id="w7o-lc-glK"/>
                                                 </constraints>
@@ -441,7 +441,7 @@
                                                 </connections>
                                             </button>
                                             <colorWell identifier="tnfInactive" translatesAutoresizingMaskIntoConstraints="NO" id="Cnc-qb-6Ax" userLabel="Tnf Active Color Well">
-                                                <rect key="frame" x="176" y="0.0" width="50" height="23"/>
+                                                <rect key="frame" x="176" y="0.0" width="50" height="50"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="50" id="054-WT-EWG"/>
                                                 </constraints>
@@ -451,7 +451,7 @@
                                                 </connections>
                                             </colorWell>
                                             <button identifier="TnfInactiveReset" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7ub-xn-xvs">
-                                                <rect key="frame" x="238" y="4" width="40" height="15"/>
+                                                <rect key="frame" x="238" y="17" width="40" height="15"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="40" id="4km-I2-Slz"/>
                                                 </constraints>
@@ -466,7 +466,6 @@
                                         </subviews>
                                         <constraints>
                                             <constraint firstItem="tcB-Ys-pgW" firstAttribute="centerY" secondItem="eM6-d3-Bc3" secondAttribute="centerY" id="8Ug-JT-lBD"/>
-                                            <constraint firstItem="eM6-d3-Bc3" firstAttribute="top" secondItem="Rz0-xa-hQK" secondAttribute="top" constant="3" id="Fi4-hL-xGI"/>
                                             <constraint firstItem="XMY-KY-HBE" firstAttribute="centerY" secondItem="tcB-Ys-pgW" secondAttribute="centerY" id="NaK-Ao-Zh4"/>
                                             <constraint firstItem="eM6-d3-Bc3" firstAttribute="centerY" secondItem="Rz0-xa-hQK" secondAttribute="centerY" id="Wbm-KD-1zb"/>
                                             <constraint firstItem="7ub-xn-xvs" firstAttribute="centerY" secondItem="XMY-KY-HBE" secondAttribute="centerY" id="hmo-Wk-2D0"/>
@@ -487,7 +486,7 @@
                                         </customSpacing>
                                     </stackView>
                                     <stackView distribution="fillProportionally" orientation="horizontal" alignment="centerY" spacing="12" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1xc-zn-aPf" userLabel="Slices Stack View">
-                                        <rect key="frame" x="0.0" y="183" width="278" height="23"/>
+                                        <rect key="frame" x="0.0" y="179" width="278" height="23"/>
                                         <subviews>
                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="N8N-xp-bll" userLabel="Slices label">
                                                 <rect key="frame" x="-2" y="3" width="54" height="17"/>
@@ -571,7 +570,7 @@
                                         </customSpacing>
                                     </stackView>
                                     <stackView distribution="equalSpacing" orientation="horizontal" alignment="centerY" spacing="30" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dpy-7d-z4o" userLabel="Slice Filter Stack View">
-                                        <rect key="frame" x="26" y="138" width="214" height="23"/>
+                                        <rect key="frame" x="26" y="134" width="214" height="23"/>
                                         <subviews>
                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uDI-7p-NKC" userLabel="Slice Filter label">
                                                 <rect key="frame" x="-2" y="3" width="68" height="17"/>
@@ -623,7 +622,7 @@
                                         </customSpacing>
                                     </stackView>
                                     <stackView distribution="fillProportionally" orientation="horizontal" alignment="centerY" spacing="30" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Bo6-H6-Ff6" userLabel="Marker Stack View">
-                                        <rect key="frame" x="47" y="92" width="193" height="23"/>
+                                        <rect key="frame" x="47" y="90" width="193" height="23"/>
                                         <subviews>
                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yoe-LH-ULa" userLabel="Marker label">
                                                 <rect key="frame" x="-2" y="3" width="47" height="17"/>
@@ -675,7 +674,7 @@
                                         </customSpacing>
                                     </stackView>
                                     <stackView distribution="fillProportionally" orientation="horizontal" alignment="centerY" spacing="30" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1fO-8x-KpD" userLabel="Segment Edge Stack View">
-                                        <rect key="frame" x="1" y="46" width="239" height="23"/>
+                                        <rect key="frame" x="1" y="45" width="239" height="23"/>
                                         <subviews>
                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="991-Qa-Xke" userLabel="Segment Edge label">
                                                 <rect key="frame" x="-2" y="3" width="93" height="17"/>
@@ -781,7 +780,6 @@
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="9ve-A0-6V4" firstAttribute="leading" secondItem="K2N-AR-0ZL" secondAttribute="leading" constant="70" id="79t-uA-kn8"/>
-                                    <constraint firstItem="Rz0-xa-hQK" firstAttribute="top" secondItem="9ve-A0-6V4" secondAttribute="bottom" constant="5" id="Lsn-RO-k2Q"/>
                                     <constraint firstAttribute="trailing" secondItem="Bo6-H6-Ff6" secondAttribute="trailing" constant="38" id="Owi-Wp-Lfx"/>
                                     <constraint firstAttribute="height" constant="300" id="gEU-WM-kta"/>
                                     <constraint firstItem="9ve-A0-6V4" firstAttribute="top" secondItem="K2N-AR-0ZL" secondAttribute="top" constant="5" id="h5D-VH-sFz"/>

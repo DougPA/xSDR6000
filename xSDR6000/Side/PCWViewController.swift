@@ -168,7 +168,7 @@ final class PCWViewController                     : NSViewController {
         if response == NSApplication.ModalResponse.alertFirstButtonReturn { return }
         if acc.stringValue != "" {
           // save profile
-          Profile.save("mic_list", name: acc.stringValue)
+          Profile.save(Profile.Group.mic.rawValue + "_list", name: acc.stringValue)
         }
       } )
     
@@ -181,7 +181,7 @@ final class PCWViewController                     : NSViewController {
         if response == NSApplication.ModalResponse.alertFirstButtonReturn { return }
         
         // delete profile
-        Profile.delete("mic_list", name: acc.stringValue)
+        Profile.delete(Profile.Group.mic.rawValue + "_list", name: acc.stringValue)
       } )
     }
   }

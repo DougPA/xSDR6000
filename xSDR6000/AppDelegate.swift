@@ -19,7 +19,7 @@ final class AppDelegate                     : NSObject, NSApplicationDelegate , 
   
   // App parameters
   static let kName                          = "xSDR6000"
-  static let kVersion                       = Version("2.5.1.2019_08_??" )
+  static let kVersion                       = Version("2.5.1.2019_08_19" )
   
   // Log parameters
   static let kLoggerName                    = AppDelegate.kName
@@ -49,7 +49,7 @@ final class AppDelegate                     : NSObject, NSApplicationDelegate , 
       return .debug
     }
   }
-
+  
   // lazy setup of the XCGLogger
   lazy var log: XCGLogger = {
     
@@ -63,13 +63,13 @@ final class AppDelegate                     : NSObject, NSApplicationDelegate , 
     let systemDestination = AppleSystemLogDestination(identifier: AppDelegate.kLoggerName + ".systemDestination")
     
     // Optionally set some configuration options
-    systemDestination.outputLevel = logLevel
-    systemDestination.showLogIdentifier = false
-    systemDestination.showFileName = true
-    systemDestination.showFunctionName = false
-    systemDestination.showThreadName = false
-    systemDestination.showLevel = true
-    systemDestination.showLineNumber = false
+    systemDestination.outputLevel           = logLevel
+    systemDestination.showLogIdentifier     = false
+    systemDestination.showFileName          = false
+    systemDestination.showFunctionName      = false
+    systemDestination.showThreadName        = false
+    systemDestination.showLevel             = true
+    systemDestination.showLineNumber        = false
     
     // Add the destination to the logger
     log.add(destination: systemDestination)
@@ -77,20 +77,21 @@ final class AppDelegate                     : NSObject, NSApplicationDelegate , 
     #endif
     
     // Create a file log destination
-    let fileDestination = AutoRotatingFileDestination(writeToFile: FileManager.appFolder.appendingPathComponent(AppDelegate.kLogFile), identifier: AppDelegate.kLoggerName + ".autoRotatingFileDestination")
+    let fileDestination = AutoRotatingFileDestination(writeToFile: URL.logs.appendingPathComponent(AppDelegate.kLogFile), identifier: AppDelegate.kLoggerName + ".autoRotatingFileDestination")
     
     // Optionally set some configuration options
     fileDestination.targetMaxFileSize       = AppDelegate.kMaxFileSize
     fileDestination.targetMaxLogFiles       = AppDelegate.kMaxLogFiles
     fileDestination.outputLevel             = logLevel
     fileDestination.showLogIdentifier       = false
+    fileDestination.showFileName            = false
     fileDestination.showFunctionName        = true
     fileDestination.showThreadName          = true
     fileDestination.showLevel               = true
-    fileDestination.showFileName            = true
     fileDestination.showLineNumber          = true
+    
     fileDestination.showDate                = true
-
+    
     // Process this destination in the background
     fileDestination.logQueue = XCGLogger.logQueue
     

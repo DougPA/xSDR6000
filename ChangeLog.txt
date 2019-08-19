@@ -1,5 +1,14 @@
 xSDR6000 V3 Change Log
 
+v2.5.1.2019_08_19
+
+AppDelegate.swift - made logging same as xAPITester (logs in "Application Support/Logs")
+Main.storyboard - put Markers button in default Toolbar
+Preferences.storyboard - fixed constraints ambiguity in Colors Preferences
+AppExtensions.swift - added URL Extension
+RadioViewController.swift - in viewDidLoad() added log of xSDR6000 & xLib6000 versions
+
+
 v2.5.1.2019_08_07
 
 WanRadioPicckerViewController.swift - refactor "_availableRemoteRadios" to "_radios"

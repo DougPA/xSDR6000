@@ -123,6 +123,9 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     // FIXME: Is this necessary???
     _activity = ProcessInfo().beginActivity(options: [.latencyCritical, .idleSystemSleepDisabled], reason: "Good Reason")
 
+    // log versions (before connected)
+    _log.msg( "\(AppDelegate.kName) v\(AppDelegate.kVersion.string), \(Api.kName) v\(Api.kVersion.string)", level: .info, function: #function, file: #file, line: #line)
+
     // get/create a Client Id
     _clientId = clientId()
     
@@ -559,6 +562,7 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
       
       // format and set the window title
       title = "v\(radio.version)     \(radio.nickname) (\(_api.isWan ? "SmartLink" : "Local"))"
+    
     }
     DispatchQueue.main.async { [weak self] in
       // Title
