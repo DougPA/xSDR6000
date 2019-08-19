@@ -1,8 +1,11 @@
 xLib6000 V3 Change Log
 
-v2.5.1.2019_08_??
+v2.5.1.2019_08_19
 
 Meter.swift - added code to send sliceMeterHasBeenAdded / sliceMeterWillBeRemoved
+Api.swift - corrections to setupCommands()
+Api.swift - allow user to continue even if versions do not match
+Notifications.swift renamed radioDowngradeRequired & radioUpgradeRequired (drop "Required")")
 
 
 v2.5.1.2019_08_07

@@ -17,7 +17,7 @@
 ![Flex](https://img.shields.io/badge/Flex_Version-v2.5.x-blue.svg)
 
 
-## This is my initial work on the v3 API, it is not fully tested and is only compatible with Flex v2.5.x Radios. 
+## This is my initial work on the v3 API, it is not fully tested and is only compatible with Flex v2.5.x Radios. I'm in the process of moving 350 miles so I won't be doing much with this for the next 60 days or so (until ~ October, 2019). I am very thankful for all of you who have tried this software and/or reported issues back to me. Please be patient, I'll be back after my move settles down.
 
 Please see the v2 Branch of this repo for a version that is compatible with pre-v2.5.x Radios.
 A Future version of this library will support all Radio versions.
