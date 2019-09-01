@@ -1,5 +1,11 @@
 xLib6000 V3 Change Log
 
+v2.5.1.2019_09_01
+
+Radio.swift - in parseClient(_:radio:queue:inUse:) added check that client status is for a Gui-client
+Vita.swift - in class parseGuiClients(handles:programs:stations:) added guard that handle not ""
+
+
 v2.5.1.2019_08_31
 
 Vita.swift - commented out guard in class parseGuiClients(handles:programs:stations:)
