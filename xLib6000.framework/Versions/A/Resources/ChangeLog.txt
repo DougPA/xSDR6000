@@ -3,6 +3,7 @@ xLib6000 V3 Change Log
 v2.5.1.2019_08_31
 
 Vita.swift - commented out guard in class parseGuiClients(handles:programs:stations:)
+Vita.swift - in class parseGuiClients(handles:programs:stations:) guard that there is at least one value
 
 
 v2.5.1.2019_08_19
