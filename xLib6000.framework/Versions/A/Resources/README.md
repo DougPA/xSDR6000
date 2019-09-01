@@ -4,6 +4,7 @@
 
 
 ## Mac implementation of the FlexRadio (TM) series 6000 API (FlexLib)
+##      For Radios with Version 2.5.1 or higher
 
 ### Built on:
 *  ![MacOS](https://img.shields.io/badge/macOS-10.14.6-orange.svg?style=flat)
@@ -25,8 +26,8 @@ A Future version of this library will support all Radio versions.
 Flex Radios can have one of four different version groups:
 *  v1.x.x, the v1 API
 *  v2.0.x thru v2.4.9, the v2 API <<-- supported by the v2 branch
-*  v2.5.1 to less than v3.0.0, the v3 API without MultiFlex <<-- supported by this branch
-*  v3.x.x, the v3 API with MultiFlex
+*  v2.5.1 to less than v3.0.0, the v3 API without MultiFlex <<-- supported by the v3 branch
+*  v3.x.x, the v3 API with MultiFlex <<-- supported by the v3 branch (in the future)
 
 
 

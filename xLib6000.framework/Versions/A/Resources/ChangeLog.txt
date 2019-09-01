@@ -1,5 +1,10 @@
 xLib6000 V3 Change Log
 
+v2.5.1.2019_08_31
+
+Vita.swift - commented out guard in class parseGuiClients(handles:programs:stations:)
+
+
 v2.5.1.2019_08_19
 
 Meter.swift - added code to send sliceMeterHasBeenAdded / sliceMeterWillBeRemoved
