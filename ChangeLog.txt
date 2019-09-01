@@ -1,5 +1,11 @@
 xSDR6000 V3 Change Log
 
+v2.5.1.2019_09_01
+
+ConnectedCLientsViewController.swift - commented out use of guiClientHasBeenUpdated
+RadioViewCOntroller.swift - corrected radioUpgrade & radioDowngrade to allow user to continue
+
+
 v2.5.1.2019_08_19
 
 AppDelegate.swift - made logging same as xAPITester (logs in "Application Support/Logs")
@@ -11,8 +17,8 @@ RadioViewController.swift - in viewDidLoad() added log of xSDR6000 & xLib6000 ve
 
 v2.5.1.2019_08_07
 
-WanRadioPicckerViewController.swift - refactor "_availableRemoteRadios" to "_radios"
-LanRadioPicckerViewController.swift - refactor "_discoveredRadios" to "_radios"
+WanRadioPickerViewController.swift - refactor "_availableRemoteRadios" to "_radios"
+LanRadioPickerViewController.swift - refactor "_discoveredRadios" to "_radios"
 PanadapterViewController.swift - handle case where Metal not available
 WaterfallViewController.swift - handle case where Metal not available
 PanadapterRenderer.swift - make similar to WaterfallRenderer.swift

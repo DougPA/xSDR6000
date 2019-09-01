@@ -674,8 +674,8 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
 
     NC.makeObserver(self, with: #selector(tcpDidDisconnect(_:)), of: .tcpDidDisconnect)
 
-    NC.makeObserver(self, with: #selector(radioDowngradeRequired(_:)), of: .radioDowngradeRequired)
-    NC.makeObserver(self, with: #selector(radioUpgradeRequired(_:)), of: .radioUpgradeRequired)
+    NC.makeObserver(self, with: #selector(radioDowngrade(_:)), of: .radioDowngrade)
+    NC.makeObserver(self, with: #selector(radioUpgrade(_:)), of: .radioUpgrade)
     
     NC.makeObserver(self, with: #selector(tcpPingFirstResponse(_:)), of: .tcpPingFirstResponse)
   }
@@ -837,11 +837,11 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
       self.closeRadio()
     }
   }
-  /// Process .radioDowngradeRequired Notification
+  /// Process .radioDowngrade Notification
   ///
   /// - Parameter note:         a Notification instance
   ///
-  @objc private func radioDowngradeRequired(_ note: Notification) {
+  @objc private func radioDowngrade(_ note: Notification) {
     
     let versions = note.object as! [Version]
     
@@ -850,24 +850,29 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     DispatchQueue.main.async {
       let alert = NSAlert()
       alert.alertStyle = .warning
-      alert.messageText = "The Radio's version is not supported by this version of \(AppDelegate.kName)."
+      alert.messageText = "The Radio's version may not be supported by this version of \(AppDelegate.kName)."
       alert.informativeText = """
       Radio:\t\tv\(versions[1].string)
       xSDR6000:\tv\(versions[0].shortString)
       
-      Use SmartSDR to DOWNGRADE the Radio
+      You can use SmartSDR to DOWNGRADE the Radio
       \t\t\tOR
       Install a newer version of \(AppDelegate.kName)
       """
-      alert.addButton(withTitle: "Ok")
-      alert.beginSheetModal(for: self.view.window!, completionHandler: { (response) in  NSApp.terminate(self) })
+      alert.addButton(withTitle: "Close")
+      alert.addButton(withTitle: "Continue")
+      alert.beginSheetModal(for: self.view.window!, completionHandler: { (response) in
+        if response == NSApplication.ModalResponse.alertFirstButtonReturn {
+          NSApp.terminate(self)
+        }
+      })
     }
   }
-  /// Process .radioUpgradeRequired Notification
+  /// Process .radioUpgrade Notification
   ///
   /// - Parameter note:         a Notification instance
   ///
-  @objc private func radioUpgradeRequired(_ note: Notification) {
+  @objc private func radioUpgrade(_ note: Notification) {
     
     let versions = note.object as! [Version]
     
@@ -875,17 +880,22 @@ final class RadioViewController             : NSSplitViewController, RadioPicker
     DispatchQueue.main.async {
       let alert = NSAlert()
       alert.alertStyle = .warning
-      alert.messageText = "The Radio's version is not supported by this version of \(AppDelegate.kName)."
+      alert.messageText = "The Radio's version may not be supported by this version of \(AppDelegate.kName)."
       alert.informativeText = """
       Radio:\t\tv\(versions[1].string)
       xSDR6000:\tv\(versions[0].shortString)
       
-      Use SmartSDR to UPGRADE the Radio
+      You can use SmartSDR to UPGRADE the Radio
       \t\t\tOR
       Install an older version of \(AppDelegate.kName)
       """
-      alert.addButton(withTitle: "Ok")
-      alert.beginSheetModal(for: self.view.window!, completionHandler: { (response) in  NSApp.terminate(self) })
+      alert.addButton(withTitle: "Close")
+      alert.addButton(withTitle: "Continue")
+      alert.beginSheetModal(for: self.view.window!, completionHandler: { (response) in
+        if response == NSApplication.ModalResponse.alertFirstButtonReturn {
+          NSApp.terminate(self)
+        }
+      })
     }
   }
   /// Process .tcpPingFirstResponse Notification

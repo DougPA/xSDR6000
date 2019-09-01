@@ -41,7 +41,7 @@ class ConnectedClientsViewController            : NSViewController, NSTableViewD
   private func addNotifications() {
     
     NC.makeObserver(self, with: #selector(guiClientHasBeenAdded(_:)), of: .guiClientHasBeenAdded)
-    NC.makeObserver(self, with: #selector(guiClientHasBeenUpdated(_:)), of: .guiClientHasBeenUpdated)
+//    NC.makeObserver(self, with: #selector(guiClientHasBeenUpdated(_:)), of: .guiClientHasBeenUpdated)
     NC.makeObserver(self, with: #selector(guiClientHasBeenRemoved(_:)), of: .guiClientHasBeenRemoved)
   }
   /// Process guiClientHasBeenAdded Notification
@@ -62,18 +62,18 @@ class ConnectedClientsViewController            : NSViewController, NSTableViewD
   ///
   /// - Parameter note:       a Notification instance
   ///
-  @objc private func guiClientHasBeenUpdated(_ note: Notification) {
-    
-    if let guiClient = note.object as? GuiClient {
-      if let index = _guiClients.firstIndex(of: guiClient) {
-        _guiClients[index] = guiClient
-        
-        DispatchQueue.main.async { [weak self] in
-          self?._tableView.reloadData()
-        }
-      }
-    }
-  }
+//  @objc private func guiClientHasBeenUpdated(_ note: Notification) {
+//
+//    if let guiClient = note.object as? GuiClient {
+//      if let index = _guiClients.firstIndex(of: guiClient) {
+//        _guiClients[index] = guiClient
+//
+//        DispatchQueue.main.async { [weak self] in
+//          self?._tableView.reloadData()
+//        }
+//      }
+//    }
+//  }
   /// Process guiClientHasBeenRemoved Notification
   ///
   /// - Parameter note:       a Notification instance
