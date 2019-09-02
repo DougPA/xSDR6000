@@ -15,7 +15,7 @@ FOUNDATION_EXPORT double xLib6000VersionNumber;
 FOUNDATION_EXPORT const unsigned char xLib6000VersionString[];
 
 // CocoaAsyncSocket is embedded in this project as source code
-//      version 7.6.1 as of 2017-06-24
+//      version 7.6.3 as of 2019-09-02
 //      see https://github.com/robbiehanson/CocoaAsyncSocket
 
 #import "xLib6000/GCDAsyncSocket.h"
