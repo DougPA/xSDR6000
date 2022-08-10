@@ -1,6 +1,9 @@
 # xSDR6000 v2
 ## Mac Client for the FlexRadio (TM) 6000 series software defined radios.
 
+# DEPRECATED - please see github.com/K3TZR for current code
+
+
 ### Built on:
 
 *  macOS 10.14.5 (Deployment Target of macOS 10.12)
